@@ -4,7 +4,7 @@
 
 - **[``Crixet``](https://crixet.com/)** Aplicación gratuita de edición y compilación, permite acceso desde diferentes dispositivos.
 
--**[``Crixet``](https://www.overleaf.com/)** Otra alternativa para edición y compilación. Condición de gratuidad más estricta.
+-**[``Overleaf``](https://www.overleaf.com/)** Otra alternativa para edición y compilación. Condición de gratuidad más estricta.
 
 ## Python
 
