@@ -14,3 +14,11 @@ Se desarrollo una herramienta publica transforma un fichero que sigue la norma C
 Tambien se ha descubirto que el pdf generado por CVN lleva embebido un esquema xml que representa el curriculumn 
 y sirve para ser importado en diversos sitemas. A demas es el esquema que lee la herramienta de ROH para hacer
 la traduccion
+
+repositiorio de la traducciont: https://github.com/deustohercules/CVN
+
+repositirio de la tecnologia: https://github.com/deustohercules/ROH-1
+
+pagina oficial: https://www.um.es/web/hercules/ontologias
+
+description? https://deustohercules.github.io/roh/roh/index.html
