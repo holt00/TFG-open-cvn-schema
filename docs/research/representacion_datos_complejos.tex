@@ -1,0 +1,152 @@
+\documentclass[12pt,a4paper,twoside]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{mathptmx}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{enumerate}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{parskip}
+
+\geometry{top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm}
+
+\onehalfspacing
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+\captionsetup{font=small,labelfont=bf}
+
+\newtheorem{teorema}{Teorema}
+\newtheorem{proposicion}{Proposición}
+\newtheorem{definicion}{Definición}
+\newtheorem{ejemplo}{Ejemplo}
+\newtheorem{lema}{Lema}
+
+\title{Representación de Datos Complejos en Sistemas de Información Académica}
+\author{TFG - Universidad de Castilla-La Mancha}
+\date{\today}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LO,LE]{\leftmark}
+\fancyhead[RO,RE]{\thepage}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\chapter{Introducción}
+\label{chap:introduccion}
+
+\section{Contexto y motivación}
+\label{sec:contexto}
+
+
+\section{Objetivos}
+\label{sec:objetivos}
+
+
+\section{Estructura del documento}
+\label{sec:estructura}
+
+
+\chapter{Estado del Arte}
+\label{chap:estado_del_arte}
+
+\section{Formatos existentes para CV académicos}
+\label{sec:formatos_existentes}
+
+
+\section{Limitaciones y necesidades actuales}
+\label{sec:limitaciones}
+
+
+\chapter{Fundamentos Teóricos}
+\label{chap:fundamentos}
+
+\section{Esquemas de datos y representación de información}
+\label{sec:esquemas_datos}
+
+
+\section{Validación de datos con Pydantic}
+\label{sec:pydantic}
+
+
+\section{Normativas y estándares académicos}
+\label{sec:estandares}
+
+
+\chapter{Metodología}
+\label{chap:metodologia}
+
+\section{Diseño del esquema de datos}
+\label{sec:diseno_esquema}
+
+
+\section{Implementación de validadores}
+\label{sec:implementacion_validadores}
+
+
+\section{Desarrollo de herramientas de exportación}
+\label{sec:herramientas_exportacion}
+
+
+\chapter{Resultados}
+\label{chap:resultados}
+
+\section{Esquema propuesto}
+\label{sec:esquema_propuesto}
+
+
+\section{Herramientas desarrolladas}
+\label{sec:herramientas_desarrolladas}
+
+
+\section{Validación y pruebas}
+\label{sec:validacion}
+
+
+\chapter{Discusión}
+\label{chap:discusion}
+
+\section{Análisis de resultados}
+\label{sec:analisis_resultados}
+
+
+\section{Comparación con soluciones existentes}
+\label{sec:comparacion}
+
+
+\section{Limitaciones y trabajo futuro}
+\label{sec:futuro}
+
+
+\chapter{Conclusiones}
+\label{chap:conclusiones}
+
+
+\chapter{Bibliografía}
+\label{chap:bibliografia}
+
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+\end{document}
