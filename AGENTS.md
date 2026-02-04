@@ -10,7 +10,7 @@ This is an academic TFG (Trabajo de Fin de Grado) project focused on creating an
 - Pydantic (data validation)
 - MongoDB (planned for data storage)
 - LaTeX (documentation and export)
-- OpenAI/Groq (AI-powered migration tools)
+- AI API (TBD) para herramientas de migración inteligente
 
 **Current Status:** Research and planning phase - implementation not yet started.
 
@@ -123,7 +123,7 @@ from .validators import validate_orcid
 - **Private members**: Prefix with underscore `_private_method()`
 - **Files/Modules**: `snake_case.py`
 
-### Type Hints (Mandatory for Public APIs)
+### Type Hints (Siempre que sea posible)
 ```python
 from typing import Dict, List, Optional, Union
 from datetime import datetime

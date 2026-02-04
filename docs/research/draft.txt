@@ -1,0 +1,16 @@
+Hemos visto que existe una tecnologia llamada Red de Ontologias Hercules (ROH) que esta basada 
+en estandares abiertos internacionales (VIVO) y compativilizdo con CVN.
+
+Esta tecnologia, basada en Linked Open Data, es una red ontologica creada para modelar exhaustibamente el dominio
+academico y de investigacion.
+Es un proyecto impulsado por la universidad de Murcia esta basado en una arquitectura modular que le permite
+amoldarse a las necesidades del proyecto en concreto.
+Durante su desarrollo se comprobo por medio de benchmarks que este estandar era capaz de representar completamente
+la norma CVN.
+Se desarrollo una herramienta publica transforma un fichero que sigue la norma CVN a ROH.
+
+
+
+Tambien se ha descubirto que el pdf generado por CVN lleva embebido un esquema xml que representa el curriculumn 
+y sirve para ser importado en diversos sitemas. A demas es el esquema que lee la herramienta de ROH para hacer
+la traduccion
