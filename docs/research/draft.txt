@@ -1,3 +1,7 @@
+Dado que Curriculumn Vitae Normalizado es un estandar que intenta hacer una definicion extensiba de los posibles campos y
+
+
+
 Hemos visto que existe una tecnologia llamada Red de Ontologias Hercules (ROH) que esta basada 
 en estandares abiertos internacionales (VIVO) y compativilizdo con CVN.
 
