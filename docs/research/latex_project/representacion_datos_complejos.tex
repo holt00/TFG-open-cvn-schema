@@ -1,151 +1,124 @@
-\documentclass[12pt,a4paper,twoside]{report}
+\documentclass[12pt,a4paper]{article}
 
-\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
 \usepackage[T1]{fontenc}
-\usepackage[spanish,es-tabla]{babel}
-\usepackage{mathptmx}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
 \usepackage{geometry}
-\usepackage{hyperref}
-\usepackage{fancyhdr}
-\usepackage{setspace}
-\usepackage{enumerate}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{float}
+\geometry{margin=2.5cm}
+
+\usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{parskip}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
 
-\geometry{top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm}
+\usepackage{cite}
 
-\onehalfspacing
+\setlength{\parskip}{1em}
 
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    filecolor=black,
-    urlcolor=blue,
-    citecolor=black
-}
-
-\captionsetup{font=small,labelfont=bf}
-
-\newtheorem{teorema}{Teorema}
-\newtheorem{proposicion}{Proposición}
-\newtheorem{definicion}{Definición}
-\newtheorem{ejemplo}{Ejemplo}
-\newtheorem{lema}{Lema}
-
-\title{Representación de Datos Complejos en Sistemas de Información Académica}
-\author{TFG - Universidad de Castilla-La Mancha}
-
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[LO,LE]{\leftmark}
-\fancyhead[RO,RE]{\thepage}
-
+% (La portada se define manualmente con titlepage; no usamos \maketitle)
 \begin{document}
 
-\maketitle
+\begin{titlepage}
+
+  \centering
+  \vspace*{0.35\textheight}  {\LARGE\bfseries Reporte de investigación sobre CVN\par}
+  \vspace{0.75em}
+  {\large Investigación sobre el estado del arte de representación de información curricular compleja\par}
+  \vspace{1.5em}
+  {\large Carlos Martínez Jaén\par}
+  \vspace{0.75em}
+
+  {\large \today\par}
+\end{titlepage}
+
+
+
+
 
 \tableofcontents
-\newpage
+\clearpage
+\begin{abstract}
 
-\chapter{Introducción}
-\label{chap:introduccion}
-
-\section{Contexto y motivación}
-\label{sec:contexto}
+Resumen breve (5--8 líneas) de los hallazgos más relevantes, el objetivo del reporte y el estado actual del TFM.
+\end{abstract}
 
 
-\section{Objetivos}
-\label{sec:objetivos}
 
 
-\section{Estructura del documento}
-\label{sec:estructura}
+\section{Análisis CVN}
 
 
-\chapter{Estado del Arte}
-\label{chap:estado_del_arte}
+Según la definición de CNV obtenida de la propia página web de la norma~\cite{cvn_web}: «CVN es una norma estándar que define un mismo formato de presentación de los datos curriculares de los investigadores y que posibilita la interoperabilidad con las diferentes bases de datos de las instituciones». A grandes rasgos, sirve para aumentar la comodidad a la hora de la creación de CV de investigadores, según dicen en su web, para no tener que empezar desde cero cada vez que quieres hacer un CV nuevo para un contexto diferente. También es útil para representar el CV de manera unificada en diferentes convocatorias de ayudas, etc.
 
-\section{Formatos existentes para CV académicos}
-\label{sec:formatos_existentes}
+CVN es una infraestructura que está formada por varias partes: 
+\begin{itemize}
+\item La base es una norma que regula los campos de un currículum estándar (aparentemente sin obligatoriedad de ninguno), permitiendo que los CV tengan cohesión en un único formato. 
+\item La web que almacena la documentación del estándar. 
+\item CVN ofrece un editor de currículums \textit{online}, permitiendo crear, modificar, importar y exportar currículums. 
+\item El editor cuenta con una herramienta que permite a los investigadores importar publicaciones desde distintos medios.
+\end{itemize}
 
+El currículum creado en el editor se puede exportar a un fichero PDF que representa la información del currículum. Dicho PDF lleva incrustado un archivo tipo XML que representa toda la información del currículum siguiendo el esquema XSD. El objetivo del XML es facilitar el procesamiento de manera electrónica del CV para que no sea necesario introducir los datos a mano en los diferentes formularios ni que se tenga que recurrir al análisis del texto contenido en el PDF. Asimismo, el conjunto de los dos archivos es firmado digitalmente por la FECYT para acreditar que ese CV cumple con la norma CVN. Esto garantiza que el currículum representado en el PDF sigue la norma, pero también invalida cualquier cambio o modificación realizada sobre el propio currículum, viéndose los creadores de CV obligados a realizar cualquier corrección o modificación de los datos a través del editor oficial de currículums.
 
-\section{Limitaciones y necesidades actuales}
-\label{sec:limitaciones}
+Debido a la manera de incrustado del XML, es posible que la extracción del mismo sea compleja de manejar. Además, es probable que existan inconsistencias entre el XML y el contenido mostrado en el PDF.
 
+\section{Estado del Arte}
+\subsection{Modelos Conceptuales}
 
-\chapter{Fundamentos Teóricos}
-\label{chap:fundamentos}
+\subsubsection{CERIF}
 
-\section{Esquemas de datos y representación de información}
-\label{sec:esquemas_datos}
+\subsubsection{VIVO}
 
-
-\section{Validación de datos con Pydantic}
-\label{sec:pydantic}
-
-
-\section{Normativas y estándares académicos}
-\label{sec:estandares}
+\subsubsection{ROH}
 
 
-\chapter{Metodología}
-\label{chap:metodologia}
 
-\section{Diseño del esquema de datos}
-\label{sec:diseno_esquema}
+\subsection{Procedimiento}
+Explica el proceso seguido (recolección, preprocesamiento, herramientas, software, etc.).
 
-
-\section{Implementación de validadores}
-\label{sec:implementacion_validadores}
+.
 
 
-\section{Desarrollo de herramientas de exportación}
-\label{sec:herramientas_exportacion}
 
+.
 
-\chapter{Resultados}
-\label{chap:resultados}
+\section{Hallazgos}
+\subsection{Hallazgo 1}
+Descripción del hallazgo, evidencia (tabla/figura) e interpretación.
 
-\section{Esquema propuesto}
-\label{sec:esquema_propuesto}
+\subsection{Hallazgo 2}
+Descripción del hallazgo, evidencia (tabla/figura) e interpretación.
 
+\subsection{Resultados cuantitativos (si aplica)}
+Incluye métricas, intervalos, pruebas estadísticas o análisis comparativos.
 
-\section{Herramientas desarrolladas}
-\label{sec:herramientas_desarrolladas}
+\section{Discusión}
+\subsection{Implicaciones}
+Qué significan los hallazgos para el objetivo del TFM.
 
+\subsection{Limitaciones}
+Limitaciones de datos, método, validez interna/externa, amenazas, etc.
 
-\section{Validación y pruebas}
-\label{sec:validacion}
+\section{Próximos pasos y plan de trabajo}
+\begin{itemize}
+  \item Tareas inmediatas (1--2 semanas).
+  \item Tareas a medio plazo (hasta la siguiente reunión).
+  \item Riesgos y mitigaciones.
+\end{itemize}
 
+\section{Preguntas para el tutor}
+\begin{enumerate}
+  \item Pregunta 1.
+  \item Pregunta 2.
+  \item Pregunta 3.
+\end{enumerate}
 
-\chapter{Discusión}
-\label{chap:discusion}
-
-\section{Análisis de resultados}
-\label{sec:analisis_resultados}
-
-
-\section{Comparación con soluciones existentes}
-\label{sec:comparacion}
-
-
-\section{Limitaciones y trabajo futuro}
-\label{sec:futuro}
-
-
-\chapter{Conclusiones}
-\label{chap:conclusiones}
-
-
-\chapter{Bibliografía}
-\label{chap:bibliografia}
-
-\bibliographystyle{apalike}
-\bibliography{referencias}
+\section*{Anexos (opcional)}
+Material adicional (tablas extendidas, detalles técnicos, etc.).
+\bibliographystyle{IEEEtran}\bibliography{bibliografia}
 
 \end{document}
+
+}

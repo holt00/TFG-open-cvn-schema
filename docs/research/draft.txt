@@ -1,24 +1,3 @@
-Segun la definicion de CNV obtenida de la propia pagina web de la norma, "CVN es una Norma estándar que define un mismo formato de 
-presentación de los datos curriculares de los investigadores y que posibilita la interoperabilidad con las diferentes bases de datos 
-de las instituciones." A grandes rasgos sirve para aumentar la momodidad a la hora de la creacion de CV de investigadores, segun dicen en su web,
-para no tener que empezar desde cero cada vez que quieres hacer un CV nuevo para un contexto diferente. Tambien es util para representar el 
-CV de manera unificada en diferentes convocatorias de ayudas, etc.
-
-CVN es una infraestructura que esta formada por varias partes. La base es una Norma que regula los campos de un curriculumn estandar (aparentemente
-sin obligatoriedad de ninguno) permitiendo que los cvs tengan cohesion en un unico formato. La Web qeu almacena la documentacion del estandar. A demas,
-CVN ofrece un editor de curriculumns online, permitiendo crear,modificar, importar y exportar corriculumns. El editor cuenta con una herramienta 
-que permite a los investigaroers importar publicaciones desde distintos medios.
-
-El curriculumn creado en el editor se puede exportar a a un fichero PDF que representa la informacion del curriculumn. Dicho PDF lleva incrustado
-un archivo tipo XML que representa toda la informacion del curriculumn siguiendo el esquema XSD. El objetivo del XML es facilitar el procesamiento
-de manera electornica del CV para que no sea necesario introducir los datos a mano en los diferentes formularios ni que se tenga que recurrir a el
-analisis del texto contenido en el PDF. Asimismo, el conjunto de los dos archvos es firmado digitalmente por la FECYT para acreditar que ese CV 
-cumple con la norma CVN. Esto garantiza que el curriculumn representado en el PDF sigue la norma pero tambien invalida cualquier cambio o
-modificacion realizada sobre el propio curriculumn, viendose los creadores de CV obligados a realizar cualquier correccion o modificacion de
-los datos a traves del editor oficial de curriculumns.
-
-Debido a la manera de incrustado del xml es posible que la extraccion del mismo sea compleja de manejar. A demas es probable que existan
-incosistencias entre el xml y el contenido mostrado en el PDF.
 
 
 
@@ -49,3 +28,6 @@ pagina oficial hercules: https://www.um.es/web/hercules/ontologias
 description? https://deustohercules.github.io/roh/roh/index.html
 
 Pagina oficial CVN: https://cvn.fecyt.es/
+
+
+pagina CERIF:https://eurocris.org/services/main-features-cerif
