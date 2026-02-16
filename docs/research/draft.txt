@@ -2,6 +2,7 @@
 
 
 
+
 Hemos visto que existe una tecnologia llamada Red de Ontologias Hercules (ROH) que esta basada 
 en estandares abiertos internacionales (VIVO) y compativilizdo con CVN.
 
