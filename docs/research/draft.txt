@@ -1,5 +1,18 @@
+Red de ontologias Hercules (ROH) es una adaptacion de VIVO a las necesidades especificas de la legistlacion española. ROH no es un simple formato,
+es una infraestrucutra ontologica completa desarrollada por la Universidad de Murcia para unificar la gestion de la investigacion en todas las universidades
+del pais. ROH es una red de ontologias basada en Web Ontology lenguaje (OWL), permitiendo el modelage granular de la realidad universitaria. Consta
+de principalmente 2 partes:
 
+\begin{itemize}
+\item Nucleo: Define conceptos universales basandose en VIVO y en CERIF
+\item Modulos verticales: Son modulos opcionales diseñados especificamente para modelar conceptos que existen unicamente en España
+\end{itemize}
 
+Similar a lo que ocurre con VIVO, ROH al ser una Web Semantica y estar formado por RDF requiere un gran poder de computo para poder gestionarlo,
+imposivilitando su aplicacion directa al trabajo. Sin embargo se puede obtener ideas de esta infraestrucura y aplicarlas a nuestro estandar. ROH
+es completamente compatible con CVN, al haber sido diseñado con las particularidades españolas en mente. A demas de ser compatible por diseño,
+el equipo que diseño y mantiene ROH ha desarrollado una herramienta que permite utilizar el XML que esta embebido en CVN para importar la informacion
+presente en el CVN especifico a ROH. Tanto el codigo completo de ROH como el de la herramienta de parsing estan publicos en github.
 
 
 
