@@ -69,7 +69,7 @@ Debido a la manera de incrustado del XML, es posible que la extracción del mism
 
 \subsubsection{CERIF}
 
-Common European Research Information Format (CERIF) es, en la práctica, el estándar europeo para la gestión, intercambio y almacenamiento de la información de investigación. Este estándar es mantenido por euroCRIS y la Unión Europea recomienda su adopción a los Estados miembros. Está diseñado para garantizar la interoperabilidad entre los diferentes sistemas CRIS (Current Research Information System) utilizados por los países de la Unión.
+Common European Research Information Format (CERIF) es, en la práctica, el estándar europeo para la gestión, intercambio y almacenamiento de la información de investigación \cite{eurocris_cerif}. Este estándar es mantenido por euroCRIS y la Unión Europea recomienda su adopción a los Estados miembros. Está diseñado para garantizar la interoperabilidad entre los diferentes sistemas CRIS (Current Research Information System) utilizados por los países de la Unión.
 
 CERIF destaca por su alto nivel de abstracción y normalización, lo que permite modelar entidades complejas propias del tipo de información a representar. También permite representar las relaciones temporales y semánticas con una precisión superior a la de los modelos convencionales. Su arquitectura se basó originalmente en un modelo entidad-relación; sin embargo, ha evolucionado hacia XML. Gracias a esto, sirve como puente entre diferentes sistemas CRIS de ciencia abierta.
 
@@ -77,18 +77,22 @@ No obstante, este formato ha experimentado una nueva evolución que lo ha empuja
 
 \subsubsection{VIVO}
 
+VIVO constituye una aproximación radicalmente distinta al anteriormente mencionado CERIF \cite{vivo_project}. En lugar de basarse en tablas relacionales rígidas, utiliza tecnologías de Web Semántica que modelan la información mediante grafos semánticos (RDF). Su ontología integra vocabularios de múltiples estándares abiertos para personas, bibliografía y conceptos (FOAF, BIBO y SKOS, respectivamente), permitiendo que los datos se publiquen como Linked Open Data. Esto permite que la información almacenada en formato VIVO sea rastreable y legible por cualquier aplicación de Web Semántica, lo cual facilita la colaboración interdisciplinar e interinstitucional.
+
+Si bien ofrece una gran versatilidad a la hora de representar diferentes conceptos, VIVO es un estándar pesado que requiere una gran capacidad de procesamiento y una infraestructura de servidor robusta. Por este motivo VIVO no resulta un esquema adecuado para el objetivo de este trabajo. Cabe añadir que VIVO se creó y se mantiene con el fin de dar visibilidad pública a la ciencia (y a sus participantes) para cualquier interesado, por lo tanto, no está diseñado para la gestión documental interna
+
 \subsubsection{ROH}
 
-
+La Red de Ontologías Hércules (ROH) es una adaptación de VIVO a las necesidades específicas de la legislación española \cite{hercules_ontologias}. ROH no es meramente un formato, sino una infraestructura ontológica completa desarrollada por la Universidad de Murcia para unificar la gestión de la investigación en todas las universidades del país. Se trata de una red de ontologías basada en Web Ontology Language (OWL), lo que permite el modelado granular de la realidad universitaria \cite{roh_documentation}. Consta principalmente de dos partes:
+\begin{itemize}
+\item Núcleo: Define conceptos universales basándose en VIVO y en CERIF.
+\item Módulos verticales: Son módulos opcionales diseñados específicamente para modelar conceptos que existen únicamente en España.
+\end{itemize}
+De manera similar a lo que ocurre con VIVO, ROH, al basarse en tecnologías de la Web Semántica y estar formado por RDF, requiere una gran potencia de cómputo para su gestión, lo cual hace inviable su aplicación directa en este trabajo. No obstante, es posible extraer conceptos de esta infraestructura y aplicarlos al estándar propuesto. ROH es completamente compatible con CVN, al haber sido diseñado considerando las particularidades españolas. Además de ser compatible por diseño, el equipo que diseñó y mantiene ROH ha desarrollado una herramienta que permite utilizar el XML embebido en CVN para importar la información presente en un CVN específico a ROH. Tanto el código completo de ROH \cite{roh_github} como el de la herramienta de parsing \cite{cvn_github} se encuentran disponibles públicamente en GitHub.
 
 \subsection{Procedimiento}
 Explica el proceso seguido (recolección, preprocesamiento, herramientas, software, etc.).
 
-.
-
-
-
-.
 
 \section{Hallazgos}
 \subsection{Hallazgo 1}
@@ -123,7 +127,10 @@ Limitaciones de datos, método, validez interna/externa, amenazas, etc.
 
 \section*{Anexos (opcional)}
 Material adicional (tablas extendidas, detalles técnicos, etc.).
-\bibliographystyle{IEEEtran}\bibliography{bibliografia}
+
+\bibliographystyle{IEEEtran}
+\newpage
+\bibliography{bibliografia}
 
 \end{document}
 
