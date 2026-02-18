@@ -21,9 +21,9 @@
 \begin{document}
 
 \begin{titlepage}
-
   \centering
-  \vspace*{0.35\textheight}  {\LARGE\bfseries Reporte de investigación sobre CVN\par}
+  \vspace*{0.35\textheight}
+  {\LARGE\bfseries Reporte de investigación sobre CVN\par}
   \vspace{0.75em}
   {\large Investigación sobre el estado del arte de representación de información curricular compleja\par}
   \vspace{1.5em}
@@ -33,31 +33,23 @@
   {\large \today\par}
 \end{titlepage}
 
-
-
-
-
 \tableofcontents
 \clearpage
-\begin{abstract}
 
+\begin{abstract}
 Resumen breve (5--8 líneas) de los hallazgos más relevantes, el objetivo del reporte y el estado actual del TFM.
 \end{abstract}
 
-
-
-
 \section{Análisis CVN}
-
 
 Según la definición de CNV obtenida de la propia página web de la norma~\cite{cvn_web}: «CVN es una norma estándar que define un mismo formato de presentación de los datos curriculares de los investigadores y que posibilita la interoperabilidad con las diferentes bases de datos de las instituciones». A grandes rasgos, sirve para aumentar la comodidad a la hora de la creación de CV de investigadores, según dicen en su web, para no tener que empezar desde cero cada vez que quieres hacer un CV nuevo para un contexto diferente. También es útil para representar el CV de manera unificada en diferentes convocatorias de ayudas, etc.
 
 CVN es una infraestructura que está formada por varias partes: 
 \begin{itemize}
-\item La base es una norma que regula los campos de un currículum estándar (aparentemente sin obligatoriedad de ninguno), permitiendo que los CV tengan cohesión en un único formato. 
-\item La web que almacena la documentación del estándar. 
-\item CVN ofrece un editor de currículums \textit{online}, permitiendo crear, modificar, importar y exportar currículums. 
-\item El editor cuenta con una herramienta que permite a los investigadores importar publicaciones desde distintos medios.
+  \item La base es una norma que regula los campos de un currículum estándar (aparentemente sin obligatoriedad de ninguno), permitiendo que los CV tengan cohesión en un único formato. 
+  \item La web que almacena la documentación del estándar. 
+  \item CVN ofrece un editor de currículums \textit{online}, permitiendo crear, modificar, importar y exportar currículums. 
+  \item El editor cuenta con una herramienta que permite a los investigadores importar publicaciones desde distintos medios.
 \end{itemize}
 
 El currículum creado en el editor se puede exportar a un fichero PDF que representa la información del currículum. Dicho PDF lleva incrustado un archivo tipo XML que representa toda la información del currículum siguiendo el esquema XSD. El objetivo del XML es facilitar el procesamiento de manera electrónica del CV para que no sea necesario introducir los datos a mano en los diferentes formularios ni que se tenga que recurrir al análisis del texto contenido en el PDF. Asimismo, el conjunto de los dos archivos es firmado digitalmente por la FECYT para acreditar que ese CV cumple con la norma CVN. Esto garantiza que el currículum representado en el PDF sigue la norma, pero también invalida cualquier cambio o modificación realizada sobre el propio currículum, viéndose los creadores de CV obligados a realizar cualquier corrección o modificación de los datos a través del editor oficial de currículums.
@@ -85,53 +77,19 @@ Si bien ofrece una gran versatilidad a la hora de representar diferentes concept
 
 La Red de Ontologías Hércules (ROH) es una adaptación de VIVO a las necesidades específicas de la legislación española \cite{hercules_ontologias}. ROH no es meramente un formato, sino una infraestructura ontológica completa desarrollada por la Universidad de Murcia para unificar la gestión de la investigación en todas las universidades del país. Se trata de una red de ontologías basada en Web Ontology Language (OWL), lo que permite el modelado granular de la realidad universitaria \cite{roh_documentation}. Consta principalmente de dos partes:
 \begin{itemize}
-\item Núcleo: Define conceptos universales basándose en VIVO y en CERIF.
-\item Módulos verticales: Son módulos opcionales diseñados específicamente para modelar conceptos que existen únicamente en España.
+  \item Núcleo: Define conceptos universales basándose en VIVO y en CERIF.
+  \item Módulos verticales: Son módulos opcionales diseñados específicamente para modelar conceptos que existen únicamente en España.
 \end{itemize}
 De manera similar a lo que ocurre con VIVO, ROH, al basarse en tecnologías de la Web Semántica y estar formado por RDF, requiere una gran potencia de cómputo para su gestión, lo cual hace inviable su aplicación directa en este trabajo. No obstante, es posible extraer conceptos de esta infraestructura y aplicarlos al estándar propuesto. ROH es completamente compatible con CVN, al haber sido diseñado considerando las particularidades españolas. Además de ser compatible por diseño, el equipo que diseñó y mantiene ROH ha desarrollado una herramienta que permite utilizar el XML embebido en CVN para importar la información presente en un CVN específico a ROH. Tanto el código completo de ROH \cite{roh_github} como el de la herramienta de parsing \cite{cvn_github} se encuentran disponibles públicamente en GitHub.
 
-\subsection{Procedimiento}
-Explica el proceso seguido (recolección, preprocesamiento, herramientas, software, etc.).
+\subsection{Modelos de serializacion}
 
 
-\section{Hallazgos}
-\subsection{Hallazgo 1}
-Descripción del hallazgo, evidencia (tabla/figura) e interpretación.
-
-\subsection{Hallazgo 2}
-Descripción del hallazgo, evidencia (tabla/figura) e interpretación.
-
-\subsection{Resultados cuantitativos (si aplica)}
-Incluye métricas, intervalos, pruebas estadísticas o análisis comparativos.
-
-\section{Discusión}
-\subsection{Implicaciones}
-Qué significan los hallazgos para el objetivo del TFM.
-
-\subsection{Limitaciones}
-Limitaciones de datos, método, validez interna/externa, amenazas, etc.
-
-\section{Próximos pasos y plan de trabajo}
-\begin{itemize}
-  \item Tareas inmediatas (1--2 semanas).
-  \item Tareas a medio plazo (hasta la siguiente reunión).
-  \item Riesgos y mitigaciones.
-\end{itemize}
-
-\section{Preguntas para el tutor}
-\begin{enumerate}
-  \item Pregunta 1.
-  \item Pregunta 2.
-  \item Pregunta 3.
-\end{enumerate}
-
-\section*{Anexos (opcional)}
-Material adicional (tablas extendidas, detalles técnicos, etc.).
 
 \bibliographystyle{IEEEtran}
 \newpage
 \bibliography{bibliografia}
 
-\end{document}
 
-}
+
+\end{document}
