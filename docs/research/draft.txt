@@ -5,3 +5,7 @@ Cerif separa la estructura de los datos y la estructura semantica, lo que permit
 El problema es que es muy complejo, se deberia simplificar mucho.
 
 
+Dado que inicialente se debe crear una manera de representar la informacion agnostica al lenguaje, 
+necesitamos algo que nos permita definir toda la informacion antes de pasarlo a Json o python. Tras investigar algo
+al respecto he llegado a la concplusion que lo mejor seria utilizar UML para modelar la informacion de tal manera qeu
+queda separada de cualquier representacion lofica o fisica.
