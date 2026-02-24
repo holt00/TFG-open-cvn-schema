@@ -91,8 +91,22 @@ Debido a la naturaleza de XML, es necesario el uso de etiquetas de apertura y ci
 
 \subsubsection{JavaScript Object Notation (JSON)}
 
+JSON \cite{json_org_es} se ha establecido como el estándar en cuanto al traspaso de datos para API REST y arquitecturas de microservicios, sustituyendo al anterior rey, XML, gracias a su ligereza y versatilidad.
 
-\subsection{Modelo Hibrido/mixto}
+JSON cuenta con una sintaxis de clave-valor, lo que resulta en un fichero mucho más compacto y eficiente, y elimina las redundancias propias de XML. Esto reduce significativamente el coste de procesamiento en la comunicación con LLM, siendo también sencillo y rápido de \textit{parsear}. Gracias a la estructura anteriormente mencionada, JSON se mapea directamente con estructuras de datos nativas de prácticamente todos los lenguajes de programación; en el caso de Python, es representado por un diccionario. Dado que su mapeo no es exclusivo de Python, futuras implementaciones en otros lenguajes podrían aprovechar todo lo relativo a JSON para sus propios desarrollos.
+
+Si bien JSON carece de la validación estricta propia de XML, el estándar JSON Schema permite definir la estructura, los tipos de datos y las restricciones del documento JSON, ofreciendo una experiencia de validación similar a XSD. La herramienta Pydantic utiliza este esquema para realizar validaciones en tiempo de ejecución.
+
+Debido a la propia naturaleza de JSON, este es mucho menos expresivo que XML, lo que dificulta su lectura, además de carecer de semántica explícita, y puede tender a la redundancia si el esquema no está bien definido para evitarla. Estos son problemas fácilmente solucionables con una buena lógica adicional en el lado de la aplicación.
+
+Existe el estándar JSON for Linking Data (JSON-LD) \cite{json_ld_org}, que permite inyectar semánticas de grafos (RDF), como las usadas por VIVO y ROH, en los documentos JSON estándar sin necesidad de sacrificar la simplicidad del formato. Se introduce el decorador \texttt{@context}, que permite mapear las claves de JSON a URI universales de ontologías. Esto propicia que el fichero JSON pueda ser tratado como un JSON típico y normal, o como un grafo de conocimiento.
+
+\subsubsection{YAML Ain't Markup Language (YAML)}
+
+YAML \cite{yaml_org} es un superconjunto de JSON que ha sido optimizado para la legibilidad humana; es excelente para la creación de archivos de configuración debido a su limpieza visual. Este estándar es menos verboso que JSON, lo que reduciría aún más los costes de procesamiento de los LLM. Sin embargo, el procesamiento de YAML es más costoso y lento que el de JSON.
+
+ 
+\subsection{Modelo Hibrido: Linked Data Modeling Language (LinkML)}
 
 
 \section{Modelage Agnostico}
