@@ -31,22 +31,4 @@ Visual Paradigm: Cuenta con un motor de ingeniería directa (Forward Engineering
 StarUML: Dispone de una extensión llamada stuml-python que genera esqueletos de clases.
 
 
-
-
-
-XML
-
-Como ya hemos mencionado anteriormente, CVN utiliza un fichero XML, embebido en el PDF que se exporta, para representar
-la informacion curricular de tal manera que sea facilmente accesible por los diferentes sistemas informaticos que requieran
-extraerla.La gran ventaja que ofrece XML es que cuenta con XSD, es el esquema que permive validar un fichero. El validador 
-permite definir la estructura del documento final, establecer tipos de datos, restringir valores, deffinir jerarquias 
-complejas y validar la integridad del fichero XML, entre otras.
-
-Debido a la naturaleza de XML, es necesario el uso de etiquetas de apertura y cierre, lo qeu conlleva a un aumento significativo
-del tamaño del fichero. Este aumento se traduce en un procesado computacionalmente mas costoso y lento a demas de un mayor 
-consumo te tockens a la hora de interactuar con LLMs. No nos podemos olvidar qeu a diferencia de JSON, que tratare a continuacion,
-tratable nativamente por python, XML requiere de uso de librerias externas para el parseo del documento, siendo una forma menos
-pythonica de procesar la informacion. En adicion, debido a la robustez del esquema XSD, el mantenimiento del estandar se
-tornaria lento y costoso.
-
-    
+LinkML
