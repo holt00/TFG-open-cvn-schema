@@ -37,7 +37,7 @@
 \clearpage
 
 \begin{abstract}
-Resumen breve (5--8 líneas) de los hallazgos más relevantes, el objetivo del reporte y el estado actual del TFM.
+Este reporte investiga el estado del arte en la representación de información curricular compleja, partiendo de un análisis exhaustivo del estándar español CVN. Se evalúan diversos modelos conceptuales (CERIF, VIVO, ROH), formatos de serialización (XML, JSON, YAML) y soluciones híbridas (LinkML), determinando que las opciones basadas en la Web Semántica presentan una complejidad técnica desproporcionada para el alcance del trabajo. Como alternativa óptima, se propone un enfoque de modelado agnóstico basado en UML y OCL para definir el marco conceptual de los datos, utilizando la herramienta BESSER para transformar automáticamente estos modelos en clases validadoras de Pydantic.
 \end{abstract}
 
 \section{Análisis CVN}
@@ -101,6 +101,8 @@ Debido a la propia naturaleza de JSON, este es mucho menos expresivo que XML, lo
 
 Existe el estándar JSON for Linking Data (JSON-LD) \cite{json_ld_org}, que permite inyectar semánticas de grafos (RDF), como las usadas por VIVO y ROH, en los documentos JSON estándar sin necesidad de sacrificar la simplicidad del formato. Se introduce el decorador \texttt{@context}, que permite mapear las claves de JSON a URI universales de ontologías. Esto propicia que el fichero JSON pueda ser tratado como un JSON típico y normal, o como un grafo de conocimiento.
 
+\newpage
+
 \subsubsection{YAML Ain't Markup Language (YAML)}
 
 YAML \cite{yaml_org} es un superconjunto de JSON que ha sido optimizado para la legibilidad humana; es excelente para la creación de archivos de configuración debido a su limpieza visual. Este estándar es menos verboso que JSON, lo que reduciría aún más los costes de procesamiento de los LLM. Sin embargo, el procesamiento de YAML es más costoso y lento que el de JSON.
@@ -108,10 +110,37 @@ YAML \cite{yaml_org} es un superconjunto de JSON que ha sido optimizado para la 
  
 \subsection{Modelo Hibrido: Linked Data Modeling Language (LinkML)}
 
+LinkML \cite{linkml_io} es un \textit{framework} de modelado flexible y de código abierto que permite definir estructuralmente los datos utilizando un esquema YAML legible. Su filosofía fundamental es la de actuar como un puente entre diferentes \textit{frameworks} de trabajo interdisciplinares. Los modelos están construidos en torno a conceptos centrales de clases y atributos. Al estar definido en YAML, tiene las mismas características y, por lo tanto, permite mantener un equilibrio entre una alta legibilidad y una gran capacidad para definir jerarquías o relaciones.
+
+Esta definición de los datos es agnóstica al lenguaje, ya que no se basa aún en ninguna tecnología subyacente. Con este esquema creado, se puede hacer uso de su cadena de herramientas desarrolladas en Python, que nos permite la generación automática de clases para múltiples lenguajes, esquemas JSON, creación de esquemas DDL para SQL e incluso páginas web estáticas en las que se representa el esquema de la información.
+
+Esta tecnología está diseñada para poder conectarse e integrar de una manera fluida las ontologías y los grafos de conocimiento propios de ROH y VIVO en pos de enriquecer los datos semánticamente. La manera en la que se define permitiría establecer el esquema una única vez y generar la infraestructura a partir de él, eliminando la necesidad de modificar cada uno de los elementos estructurales en caso de requerirse.
+
+Sin embargo, el uso de LinkML está pensado para proyectos colaborativos mucho más complejos que este Trabajo de Fin de Grado, y no tendría mucho sentido utilizarlo si no se van a usar contextos semánticos como ROH, ya que supondría un número de pasos extra a ejecutar y depender de una tecnología muy compleja y completa para utilizar únicamente una pequeña parte de todo lo que nos puede ofrecer. Por esto, considero que no es la mejor opción.
+
 
 \section{Modelage Agnostico}
 
+Tras investigar el estado del arte de la representación de datos complejos, he llegado a la conclusión de que el uso de cualquiera de las tecnologías punteras para este trabajo sería excesivo y desproporcionado, dado que todas estas tecnologías están pensadas para casos de uso órdenes de magnitud más complejos que el que aquí nos atañe.
 
+\newpage
+
+De lo explorado en este documento, podríamos utilizar únicamente los modelos de serialización, ya que son mucho más sencillos y nos permitirían completar los requerimientos del trabajo sin tener que incurrir en sobreingeniería. Sin embargo, uno de ellos destaca por encima del resto: JSON debería ser el elegido para realizar la definición del estándar. Pese a la buena decisión que pueda parecer, JSON no es una opción realmente válida, ya que no es completamente agnóstica al lenguaje y resulta costosa de entender a simple vista y de mantener.
+
+Por ello, debemos buscar otra alternativa. Haciendo memoria sobre las diferentes asignaturas del grado, he recordado varias del cuarto cuatrimestre en las que nos introdujeron al \textit{Unified Modeling Language} (UML) \cite{omg_uml}. UML es el estándar de oro en la ingeniería del software para la especificación, visualización y documentación de sistemas.
+
+En nuestro contexto, UML nos permitiría definir un marco conceptual riguroso e independiente de la tecnología a utilizar. UML cuenta con diferentes elementos que nos ayudarían a llevarlo a cabo:
+
+\begin{itemize}
+\item Clases y atributos: nos permitirían definir las entidades fundamentales y sus características de bajo nivel.
+\item Multiplicidad y restricciones: nos permiten especificar la cardinalidad de las relaciones.
+\item Relaciones semánticas: usando asociaciones dirigidas, agregaciones y composiciones, deberíamos poder representar todas las posibles relaciones.
+\item Herencia: nos permitiría crear jerarquías.
+\end{itemize}
+
+Pese a la potencia de UML de forma nativa, existen ciertas limitaciones con las que cuenta este lenguaje; una de ellas es la incapacidad de establecer restricciones al contenido de los campos. Para solventar esta limitación, existe el \textit{Object Constraint Language} (OCL) \cite{omg_ocl} dentro del propio estándar UML, un lenguaje declarativo que nos permite definir restricciones.
+
+Existe una herramienta que permite transformar modelos UML con OCL en clases de Pydantic, llamada BESSER \cite{besser_pydantic}.
 
 
 
