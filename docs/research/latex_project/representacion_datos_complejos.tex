@@ -1,0 +1,153 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\usepackage{cite}
+
+\setlength{\parskip}{1em}
+
+% (La portada se define manualmente con titlepage; no usamos \maketitle)
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{0.35\textheight}
+  {\LARGE\bfseries Reporte de investigación sobre CVN\par}
+  \vspace{0.75em}
+  {\large Investigación sobre el estado del arte de representación de información curricular compleja\par}
+  \vspace{1.5em}
+  {\large Carlos Martínez Jaén\par}
+  \vspace{0.75em}
+
+  {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+\begin{abstract}
+Este reporte investiga el estado del arte en la representación de información curricular compleja, partiendo de un análisis exhaustivo del estándar español CVN. Se evalúan diversos modelos conceptuales (CERIF, VIVO, ROH), formatos de serialización (XML, JSON, YAML) y soluciones híbridas (LinkML), determinando que las opciones basadas en la Web Semántica presentan una complejidad técnica desproporcionada para el alcance del trabajo. Como alternativa óptima, se propone un enfoque de modelado agnóstico basado en UML y OCL para definir el marco conceptual de los datos, utilizando la herramienta BESSER para transformar automáticamente estos modelos en clases validadoras de Pydantic.
+\end{abstract}
+
+\section{Análisis CVN}
+
+Según la definición de CNV obtenida de la propia página web de la norma~\cite{cvn_web}: «CVN es una norma estándar que define un mismo formato de presentación de los datos curriculares de los investigadores y que posibilita la interoperabilidad con las diferentes bases de datos de las instituciones». A grandes rasgos, sirve para aumentar la comodidad a la hora de la creación de CV de investigadores, según dicen en su web, para no tener que empezar desde cero cada vez que quieres hacer un CV nuevo para un contexto diferente. También es útil para representar el CV de manera unificada en diferentes convocatorias de ayudas, etc.
+
+CVN es una infraestructura que está formada por varias partes: 
+\begin{itemize}
+  \item La base es una norma que regula los campos de un currículum estándar (aparentemente sin obligatoriedad de ninguno), permitiendo que los CV tengan cohesión en un único formato. 
+  \item La web que almacena la documentación del estándar. 
+  \item CVN ofrece un editor de currículums \textit{online}, permitiendo crear, modificar, importar y exportar currículums. 
+  \item El editor cuenta con una herramienta que permite a los investigadores importar publicaciones desde distintos medios.
+\end{itemize}
+
+El currículum creado en el editor se puede exportar a un fichero PDF que representa la información del currículum. Dicho PDF lleva incrustado un archivo tipo XML que representa toda la información del currículum siguiendo el esquema XSD. El objetivo del XML es facilitar el procesamiento de manera electrónica del CV para que no sea necesario introducir los datos a mano en los diferentes formularios ni que se tenga que recurrir al análisis del texto contenido en el PDF. Asimismo, el conjunto de los dos archivos es firmado digitalmente por la FECYT para acreditar que ese CV cumple con la norma CVN. Esto garantiza que el currículum representado en el PDF sigue la norma, pero también invalida cualquier cambio o modificación realizada sobre el propio currículum, viéndose los creadores de CV obligados a realizar cualquier corrección o modificación de los datos a través del editor oficial de currículums.
+
+Debido a la manera de incrustado del XML, es posible que la extracción del mismo sea compleja de manejar. Además, es probable que existan inconsistencias entre el XML y el contenido mostrado en el PDF.
+
+\section{Estado del Arte}
+\subsection{Modelos Conceptuales}
+
+\subsubsection{CERIF}
+
+Common European Research Information Format (CERIF) es, en la práctica, el estándar europeo para la gestión, intercambio y almacenamiento de la información de investigación \cite{eurocris_cerif}. Este estándar es mantenido por euroCRIS y la Unión Europea recomienda su adopción a los Estados miembros. Está diseñado para garantizar la interoperabilidad entre los diferentes sistemas CRIS (Current Research Information System) utilizados por los países de la Unión.
+
+CERIF destaca por su alto nivel de abstracción y normalización, lo que permite modelar entidades complejas propias del tipo de información a representar. También permite representar las relaciones temporales y semánticas con una precisión superior a la de los modelos convencionales. Su arquitectura se basó originalmente en un modelo entidad-relación; sin embargo, ha evolucionado hacia XML. Gracias a esto, sirve como puente entre diferentes sistemas CRIS de ciencia abierta.
+
+No obstante, este formato ha experimentado una nueva evolución que lo ha empujado hacia tecnologías de Web Semántica y Linked Open Data, dando lugar a CERIF-RDF y a mapeos ontológicos como VIVO o ROH (que se detallarán más adelante), los cuales buscan una mayor flexibilidad. Dado que la tendencia actual se inclina hacia modelos y formatos más ligeros que sean fácilmente consumibles por API, impulsada por la necesidad de agilizar el intercambio de información, el formato CERIF tradicional no suele ser la opción preferente en estos casos, ya que conllevaría una complejidad técnica y computacional innecesaria.
+
+\subsubsection{VIVO}
+
+VIVO constituye una aproximación radicalmente distinta al anteriormente mencionado CERIF \cite{vivo_project}. En lugar de basarse en tablas relacionales rígidas, utiliza tecnologías de Web Semántica que modelan la información mediante grafos semánticos (RDF). Su ontología integra vocabularios de múltiples estándares abiertos para personas, bibliografía y conceptos (FOAF, BIBO y SKOS, respectivamente), permitiendo que los datos se publiquen como Linked Open Data. Esto permite que la información almacenada en formato VIVO sea rastreable y legible por cualquier aplicación de Web Semántica, lo cual facilita la colaboración interdisciplinar e interinstitucional.
+
+Si bien ofrece una gran versatilidad a la hora de representar diferentes conceptos, VIVO es un estándar pesado que requiere una gran capacidad de procesamiento y una infraestructura de servidor robusta. Por este motivo VIVO no resulta un esquema adecuado para el objetivo de este trabajo. Cabe añadir que VIVO se creó y se mantiene con el fin de dar visibilidad pública a la ciencia (y a sus participantes) para cualquier interesado, por lo tanto, no está diseñado para la gestión documental interna
+
+\subsubsection{ROH}
+
+La Red de Ontologías Hércules (ROH) es una adaptación de VIVO a las necesidades específicas de la legislación española \cite{hercules_ontologias}. ROH no es meramente un formato, sino una infraestructura ontológica completa desarrollada por la Universidad de Murcia para unificar la gestión de la investigación en todas las universidades del país. Se trata de una red de ontologías basada en Web Ontology Language (OWL), lo que permite el modelado granular de la realidad universitaria \cite{roh_documentation}. Consta principalmente de dos partes:
+\begin{itemize}
+  \item Núcleo: Define conceptos universales basándose en VIVO y en CERIF.
+  \item Módulos verticales: Son módulos opcionales diseñados específicamente para modelar conceptos que existen únicamente en España.
+\end{itemize}
+De manera similar a lo que ocurre con VIVO, ROH, al basarse en tecnologías de la Web Semántica y estar formado por RDF, requiere una gran potencia de cómputo para su gestión, lo cual hace inviable su aplicación directa en este trabajo. No obstante, es posible extraer conceptos de esta infraestructura y aplicarlos al estándar propuesto. ROH es completamente compatible con CVN, al haber sido diseñado considerando las particularidades españolas. Además de ser compatible por diseño, el equipo que diseñó y mantiene ROH ha desarrollado una herramienta que permite utilizar el XML embebido en CVN para importar la información presente en un CVN específico a ROH. Tanto el código completo de ROH \cite{roh_github} como el de la herramienta de parsing \cite{cvn_github} se encuentran disponibles públicamente en GitHub.
+
+\subsection{Modelos de serializacion}
+
+\subsubsection{Extensible Markup Language (XML)}
+Como ya hemos mencionado anteriormente, CVN utiliza un fichero XML \cite{w3c_xml}, embebido en el PDF que se exporta, para representar la información curricular de tal manera que sea fácilmente accesible por los diferentes sistemas informáticos que requieran extraerla. La gran ventaja que ofrece XML es que cuenta con XSD, el esquema que permite validar un fichero. El validador permite definir la estructura del documento final, establecer tipos de datos, restringir valores, definir jerarquías complejas y validar la integridad del fichero XML, entre otras.
+
+Debido a la naturaleza de XML, es necesario el uso de etiquetas de apertura y cierre, lo que conlleva un aumento significativo del tamaño del fichero. Este aumento se traduce en un procesado computacionalmente más costoso y lento, además de un mayor consumo de \textit{tokens} a la hora de interactuar con LLM. No podemos olvidar que, a diferencia de JSON, que trataremos a continuación, tratable nativamente por Python, XML requiere el uso de librerías externas para el \textit{parseo} del documento, siendo una forma menos \textit{pythónica} de procesar la información. Adicionalmente, debido a la robustez del esquema XSD, el mantenimiento del estándar se tornaría lento y costoso.
+
+\subsubsection{JavaScript Object Notation (JSON)}
+
+JSON \cite{json_org_es} se ha establecido como el estándar en cuanto al traspaso de datos para API REST y arquitecturas de microservicios, sustituyendo al anterior rey, XML, gracias a su ligereza y versatilidad.
+
+JSON cuenta con una sintaxis de clave-valor, lo que resulta en un fichero mucho más compacto y eficiente, y elimina las redundancias propias de XML. Esto reduce significativamente el coste de procesamiento en la comunicación con LLM, siendo también sencillo y rápido de \textit{parsear}. Gracias a la estructura anteriormente mencionada, JSON se mapea directamente con estructuras de datos nativas de prácticamente todos los lenguajes de programación; en el caso de Python, es representado por un diccionario. Dado que su mapeo no es exclusivo de Python, futuras implementaciones en otros lenguajes podrían aprovechar todo lo relativo a JSON para sus propios desarrollos.
+
+Si bien JSON carece de la validación estricta propia de XML, el estándar JSON Schema permite definir la estructura, los tipos de datos y las restricciones del documento JSON, ofreciendo una experiencia de validación similar a XSD. La herramienta Pydantic utiliza este esquema para realizar validaciones en tiempo de ejecución.
+
+Debido a la propia naturaleza de JSON, este es mucho menos expresivo que XML, lo que dificulta su lectura, además de carecer de semántica explícita, y puede tender a la redundancia si el esquema no está bien definido para evitarla. Estos son problemas fácilmente solucionables con una buena lógica adicional en el lado de la aplicación.
+
+Existe el estándar JSON for Linking Data (JSON-LD) \cite{json_ld_org}, que permite inyectar semánticas de grafos (RDF), como las usadas por VIVO y ROH, en los documentos JSON estándar sin necesidad de sacrificar la simplicidad del formato. Se introduce el decorador \texttt{@context}, que permite mapear las claves de JSON a URI universales de ontologías. Esto propicia que el fichero JSON pueda ser tratado como un JSON típico y normal, o como un grafo de conocimiento.
+
+\newpage
+
+\subsubsection{YAML Ain't Markup Language (YAML)}
+
+YAML \cite{yaml_org} es un superconjunto de JSON que ha sido optimizado para la legibilidad humana; es excelente para la creación de archivos de configuración debido a su limpieza visual. Este estándar es menos verboso que JSON, lo que reduciría aún más los costes de procesamiento de los LLM. Sin embargo, el procesamiento de YAML es más costoso y lento que el de JSON.
+
+ 
+\subsection{Modelo Hibrido: Linked Data Modeling Language (LinkML)}
+
+LinkML \cite{linkml_io} es un \textit{framework} de modelado flexible y de código abierto que permite definir estructuralmente los datos utilizando un esquema YAML legible. Su filosofía fundamental es la de actuar como un puente entre diferentes \textit{frameworks} de trabajo interdisciplinares. Los modelos están construidos en torno a conceptos centrales de clases y atributos. Al estar definido en YAML, tiene las mismas características y, por lo tanto, permite mantener un equilibrio entre una alta legibilidad y una gran capacidad para definir jerarquías o relaciones.
+
+Esta definición de los datos es agnóstica al lenguaje, ya que no se basa aún en ninguna tecnología subyacente. Con este esquema creado, se puede hacer uso de su cadena de herramientas desarrolladas en Python, que nos permite la generación automática de clases para múltiples lenguajes, esquemas JSON, creación de esquemas DDL para SQL e incluso páginas web estáticas en las que se representa el esquema de la información.
+
+Esta tecnología está diseñada para poder conectarse e integrar de una manera fluida las ontologías y los grafos de conocimiento propios de ROH y VIVO en pos de enriquecer los datos semánticamente. La manera en la que se define permitiría establecer el esquema una única vez y generar la infraestructura a partir de él, eliminando la necesidad de modificar cada uno de los elementos estructurales en caso de requerirse.
+
+Sin embargo, el uso de LinkML está pensado para proyectos colaborativos mucho más complejos que este Trabajo de Fin de Grado, y no tendría mucho sentido utilizarlo si no se van a usar contextos semánticos como ROH, ya que supondría un número de pasos extra a ejecutar y depender de una tecnología muy compleja y completa para utilizar únicamente una pequeña parte de todo lo que nos puede ofrecer. Por esto, considero que no es la mejor opción.
+
+
+\section{Modelage Agnostico}
+
+Tras investigar el estado del arte de la representación de datos complejos, he llegado a la conclusión de que el uso de cualquiera de las tecnologías punteras para este trabajo sería excesivo y desproporcionado, dado que todas estas tecnologías están pensadas para casos de uso órdenes de magnitud más complejos que el que aquí nos atañe.
+
+\newpage
+
+De lo explorado en este documento, podríamos utilizar únicamente los modelos de serialización, ya que son mucho más sencillos y nos permitirían completar los requerimientos del trabajo sin tener que incurrir en sobreingeniería. Sin embargo, uno de ellos destaca por encima del resto: JSON debería ser el elegido para realizar la definición del estándar. Pese a la buena decisión que pueda parecer, JSON no es una opción realmente válida, ya que no es completamente agnóstica al lenguaje y resulta costosa de entender a simple vista y de mantener.
+
+Por ello, debemos buscar otra alternativa. Haciendo memoria sobre las diferentes asignaturas del grado, he recordado varias del cuarto cuatrimestre en las que nos introdujeron al \textit{Unified Modeling Language} (UML) \cite{omg_uml}. UML es el estándar de oro en la ingeniería del software para la especificación, visualización y documentación de sistemas.
+
+En nuestro contexto, UML nos permitiría definir un marco conceptual riguroso e independiente de la tecnología a utilizar. UML cuenta con diferentes elementos que nos ayudarían a llevarlo a cabo:
+
+\begin{itemize}
+\item Clases y atributos: nos permitirían definir las entidades fundamentales y sus características de bajo nivel.
+\item Multiplicidad y restricciones: nos permiten especificar la cardinalidad de las relaciones.
+\item Relaciones semánticas: usando asociaciones dirigidas, agregaciones y composiciones, deberíamos poder representar todas las posibles relaciones.
+\item Herencia: nos permitiría crear jerarquías.
+\end{itemize}
+
+Pese a la potencia de UML de forma nativa, existen ciertas limitaciones con las que cuenta este lenguaje; una de ellas es la incapacidad de establecer restricciones al contenido de los campos. Para solventar esta limitación, existe el \textit{Object Constraint Language} (OCL) \cite{omg_ocl} dentro del propio estándar UML, un lenguaje declarativo que nos permite definir restricciones.
+
+Existe una herramienta que permite transformar modelos UML con OCL en clases de Pydantic, llamada BESSER \cite{besser_pydantic}.
+
+
+
+\bibliographystyle{IEEEtran}
+\newpage
+\bibliography{bibliografia}
+
+
+
+\end{document}
