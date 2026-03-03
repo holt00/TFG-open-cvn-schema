@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Este Trabajo de Fin de Grado (TFG) tiene como objetivo definir un esquema de datos (basado en JSON) para la representación de currículos en el ámbito universitario y de investigación en España. El proyecto busca solucionar la falta de estándares de bajo nivel en el formato CVN actual, facilitando el desarrollo de herramientas abiertas.
+Este Trabajo de Fin de Grado (TFG) tiene como objetivo definir un esquema de representación agnóstico al lenguaje para la representación de currículos en el ámbito universitario y de investigación en España. El proyecto busca solucionar la falta de estándares de bajo nivel en el formato CVN actual, facilitando el desarrollo de herramientas abiertas. Además, el proyecto tiene como objetivo la creación de una herramienta para la importación, modificación, almacenado y exportación utilizando el nuevo formato.
 
 ## Objetivos
 
@@ -11,16 +11,3 @@ Este Trabajo de Fin de Grado (TFG) tiene como objetivo definir un esquema de dat
 3. **Exportación:** Desarrollar herramientas para exportar a LaTeX.
 4. **Importación Inteligente:** Utilizar LLMs para migrar CVNs existentes (PDF/FECYT) al nuevo formato.
 
-## Tecnologías
-
-* **Lenguaje:** Python 3.x (A decidir aun)
-* **Validación:** Pydantic
-* **Base de Datos:** MongoDB (NoSQL)
-* **IA:** OpenAI API / Groq
-* **Documentación:** LaTeX
-
-<!--## Instalación
-```bash
-pip install -r requirements.txt
-```
--->
