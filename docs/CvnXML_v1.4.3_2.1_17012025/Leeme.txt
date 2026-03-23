@@ -1,0 +1,24 @@
+-------------------
+Contenido de CvnXML
+-------------------
+Los archivos contenidos en este fichero tienen la información necesaria para la codificación de un currículum (Modelo creado por los grupos de trabajo coordinados por la FECYT) en formato  CVN-XML
+
+XSD
+---
+- CVN.xsd: Esquema que valida la codificación de un currículum vítae. 
+- ISOUtilities.xsd: esquema con tablas ISO
+- AuxTable.xsd: Esquema con tablas auxiliares
+- Common.xsd: Contiene tipos de datos comunes
+- SpecificationManual.xsd: Esquema que valida el manual de especificaciones 
+
+XML
+---
+- CVNTreeModel.xml: Representación en XML de CVNTreeModel
+- SpecificationManual.xml: Representación en XML del manual de especificaciones Manual de Especificaciones Técnicas*.pdf
+
+Manual
+------
+
+- Manual de Especificaciones Técnicas v*.pdf: Relación de Campos y tablas auxiliares utilizados en CVN
+- TreeModel_v*.pdf: Explicación de esquema CVNTreeModel_v1.0.xsd
+
