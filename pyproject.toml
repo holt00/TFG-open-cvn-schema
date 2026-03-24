@@ -1,7 +1,7 @@
 [project]
-name = "tfg-open-cnv-schema"
+name = "tfg-open-cvn-schema"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 dependencies = []
