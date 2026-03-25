@@ -400,20 +400,25 @@ Agents must therefore separate:
 **Done when**
 - The sub-issues are completed and their outputs integrate into a coherent, documented pipeline
 
-### Issue #11 - Prepare project infrastructure for code generation
+### Issue #11 - Project infrastructure for code generation (completed)
 
-**Goal**
-- Create the project foundation required for reproducible code generation and schema processing
+**Status**
+- Issue `#11` has already been completed and should now be treated as the baseline infrastructure for the rest of the CVN generation roadmap.
+- Subsequent issues must build on this foundation instead of replanning repository layout, dependency organization, or generator configuration from scratch.
 
-**Required steps**
-1. Add and pin the required dependencies in `pyproject.toml`
-2. Create the initial `src/` layout separating generated artifacts from hand-written code
-3. Add base configuration for `xsdata` and any required generation settings
-4. Define where code generation scripts or modules should live
-5. Document the rule that generated files are not edited manually
-6. Ensure the initial layout can host both structural bindings and semantic model generation
+**What issue `#11` established**
+- The repository now follows a two-layer pipeline architecture:
+  1. structural/interoperability bindings generated from the official XSDs,
+  2. semantic/domain generation built on normalized metadata and mapping rules.
+- `#11` explicitly does **not** generate final bindings or domain models; it prepares the reproducible infrastructure required for issues `#12` onward.
 
-**Recommended repository layout**
+**Infrastructure decisions already taken**
+- The project uses a `src/` layout as the base for Python packages.
+- The repository separates generated artifacts, manual pipeline logic, and domain models.
+- The canonical source package for generation remains `docs/CvnXML_v1.4.3_2.1_17012025`.
+- The structural layer is treated as a faithful XSD/XML interoperability layer, not as the final domain model.
+
+**Established repository layout**
 
 ```text
 src/
@@ -422,34 +427,77 @@ src/
 │   ├── specification_manual/
 │   └── tree_model/
 ├── cvn_codegen/
-│   ├── load_spec.py
-│   ├── load_tree.py
-│   ├── normalize.py
-│   ├── mapping.py
-│   └── emit_models.py
 └── models/
     └── cvn/
 ```
 
-**Dependency expectations**
-- Include tooling for XSD/XML processing and generation, expected baseline being `xsdata` and `xsdata-pydantic`
-- Use pinned versions to keep academic reproducibility
-- If testing or linting is introduced here because it becomes necessary for the pipeline, document that explicitly
+- `src/generated/` is reserved for code generated automatically from the official schemas.
+- `src/generated/cvn/` is the target package for bindings rooted at `XSD/CVN.xsd`.
+- `src/generated/specification_manual/` is the target package for bindings rooted at `XSD/SpecificationManual.xsd`.
+- `src/generated/tree_model/` is the target package for bindings rooted at `XSD/CVNTreeModel_v1.0.xsd`.
+- `src/cvn_codegen/` is the official location for hand-maintained pipeline logic.
+- `src/models/cvn/` is reserved for semantic/domain models emitted or maintained as the project-facing API layer.
 
-**Implementation notes**
-- Keep generated output in a package isolated from hand-maintained modules because some generators format entire directories
-- Prefer one obvious configuration file for generation rather than ad hoc CLI-only invocations
-- Decide early whether generation scripts live under `src/cvn_codegen/` or a `scripts/` directory and keep it consistent
+**Dependency baseline already established**
+- Dependency management uses `uv`.
+- Code-generation tooling is intentionally separated from runtime dependencies.
+- The current agreed organization is:
+  - `project.dependencies` for true runtime dependencies,
+  - `[dependency-groups].codegen` for generation tooling.
+- The codegen dependency baseline is:
+  - `xsdata[cli,lxml]`
+  - `xsdata-pydantic`
+- Dependency pinning/restriction is part of academic reproducibility, with `uv.lock` treated as part of the reproducible environment.
 
-**Expected outputs**
-- dependency setup
-- initial package structure
-- generator configuration
-- documentation of repository conventions for generated code
+**Why `lxml` is part of the baseline**
+- It provides more robust XML/XSD processing than minimal standard-library parsing for this use case.
+- It is appropriate for namespace-sensitive XML, imported/included XSDs, and large schema processing.
+- It aligns well with `xsdata` for structural generation workflows.
+
+**`xsdata` configuration baseline already established**
+- A single versioned configuration file is used for structural code generation.
+- The agreed configuration file path is `config/.xsdata.xml`.
+- The generator output format is `pydantic`.
+- The configuration is for the structural layer only; semantic simplification belongs to later issues.
+- Structural generation must remain reproducible and idempotent: same canonical inputs, same config, same package targets.
+
+**Structural generation policy already established**
+- Structural models should prioritize fidelity to the official schemas over ergonomic domain design.
+- The following are acceptable in the structural layer when required by the schemas:
+  - wrapper-heavy technical types,
+  - large enums,
+  - `choice` constructs,
+  - recursive references.
+- These are not reasons to skip generation; they are expected characteristics of the interoperability layer.
+
+**Manual pipeline location and scope**
+- `src/cvn_codegen/` is the stable package for manual pipeline logic.
+- This package is expected to host modules for loading XML metadata, normalization, mapping, overrides, and domain-model emission.
+- The initially anticipated module split is provisional and may evolve as implementation proceeds.
+- The stable decision is the package location, not a permanently fixed list of filenames.
+
+**Working convention established by `#11`**
+- Generated code under `src/generated/` must not be edited manually.
+- Any semantic cleanup, transformation, override, or domain-oriented interpretation must live outside `src/generated/`.
+- If future automation scripts are introduced, they should act as thin entrypoints and delegate real logic to `src/cvn_codegen/`.
+- Full automation of the workflow is deferred to later roadmap work, especially issue `#17`.
+
+**Implications for later issues**
+- Issue `#12` should use `config/.xsdata.xml` and the established package targets to generate structural bindings.
+- Issues `#13` to `#15` should build on the existing split between structural bindings, pipeline logic, and domain models.
+- Agents should not reopen the `src/` layout, dependency grouping, or `xsdata` config location unless a concrete implementation blocker is found.
+
+**Done in `#11`**
+- dependency baseline defined and organized for reproducible code generation,
+- initial `src/` layout established,
+- official location of pipeline logic fixed,
+- versioned `xsdata` configuration introduced,
+- repository conventions for generated vs manual code established,
+- two-layer architecture validated as the foundation for the remaining roadmap.
 
 **Notes for agents**
-- Keep the structure conservative and easy to evolve
-- Optimize for maintainability over premature abstraction
+- Treat issue `#11` as completed groundwork, not as pending design work.
+- Reuse the established infrastructure unless the user explicitly asks for a redesign or an implementation constraint makes a change unavoidable.
 
 ### Issue #12 - Generate structural Pydantic bindings from CVN XSDs
 
