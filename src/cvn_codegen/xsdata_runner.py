@@ -30,12 +30,16 @@ class RunnerError(Exception):
 
 REPO_ROOT : typing.Final[pathlib.Path] = pathlib.Path(__file__).resolve().parent.parent.parent
 #Ruta raiz del repositorio
+
 XSDATA_CONFIG_FILE_PATH : typing.Final[pathlib.Path] = REPO_ROOT/ "config" / ".xsdata.xml"
 #Ruta del archivo de configuracion del xsdata
+
 CANONICAL_XSD_DIR : typing.Final[pathlib.Path] = REPO_ROOT / "docs" / "CvnXML_v1.4.3_2.1_17012025" / "XSD"
 #ruta donde se encuentran los archivos xsd
+
 GENERATED_ROOT_DIR : typing.Final[pathlib.Path] = REPO_ROOT / "src" / "generated"
 #ruta raiz donde se guardaran los archivos generados 
+
 TARGET_TABLE : typing.Final[dict[str, XSDTargetSpec]] = {
     "cvn": XSDTargetSpec(
         name="cvn",
@@ -56,6 +60,11 @@ TARGET_TABLE : typing.Final[dict[str, XSDTargetSpec]] = {
         output_dir = GENERATED_ROOT_DIR / "tree_model"
     )
 }
+#Tabla que mapea el nombre logico del xsd a su especificacion completa
+
+EXECUTION_ORDER_ALL : typing.Final[list[str]] = ["cvn", "specification_manual", "tree_model"]
+#lista de las claves de TARGET_TABLE en el orden en el que deben ser ejecutados 
+
 
 #---------------- Zona de definicion de funciones ----------------
 
@@ -70,7 +79,6 @@ def xsdata_target_resolver (target_name : str) -> list[XSDTargetSpec]:
     Raises:
         RunnerError: Si el nombre del objetivo no es reconocido.
     """
-    EXECUTION_ORDER_ALL = ["cvn", "specification_manual", "tree_model"]
 
     if target_name == "all":
         return [TARGET_TABLE[name] for name in EXECUTION_ORDER_ALL]
@@ -80,7 +88,16 @@ def xsdata_target_resolver (target_name : str) -> list[XSDTargetSpec]:
         raise RunnerError(f"Target '{target_name}' no reconocido. Opciones válidas: {EXECUTION_ORDER_ALL + ['all']}")
 
 
+def validate_xsdata_prerequistes(target : XSDTargetSpec) -> None:
+    """
+    Valida que se cumplan los prerrequisitos para ejecutar xsdata en el objetivo dado.
+    Args:
+        target (XSDTargetSpec): La especificacion del objetivo a validar.
+    Raises:
+        RunnerError: Si no se cumple algun prerrequisito.
+    """
 
+    
 
 
 #TODO al final de la implementacion del archivo dejar los imports de typing y parthlib con los imports unicos necesarios
