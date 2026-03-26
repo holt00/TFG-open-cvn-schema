@@ -96,8 +96,29 @@ def validate_xsdata_prerequistes(target : XSDTargetSpec) -> None:
     Raises:
         RunnerError: Si no se cumple algun prerrequisito.
     """
+    #comprobaciones del archivo de configuracion
+    if not XSDATA_CONFIG_FILE_PATH.is_file():
+        raise RunnerError(f"El archivo de configuración de xsdata '{XSDATA_CONFIG_FILE_PATH}' no existe o no es un archivo.")
 
+
+    #comprobaciones del archivo source_xsd
+    if not isinstance(target, XSDTargetSpec): 
+        raise RunnerError(f"El objetivo {target} no es una instancia de XSDTargetSpec.")
+
+    if not target.source_xsd.is_file():
+        raise RunnerError(f"El archivo XSD '{target.source_xsd}' no existe o no es un archivo")
     
+    if not target.source_xsd.suffix.lower() == ".xsd":
+        raise RunnerError(f"El archivo '{target.source_xsd}' debe ser un fichero \".xsd\", sim embargo es de tipo \"{target.source_xsd.suffix}\"")
+
+
+    #comprobacion de que el directorio raiz de salida existe
+
+    if not GENERATED_ROOT_DIR.is_dir():
+        raise RunnerError(f"El directorio raíz de salida '{GENERATED_ROOT_DIR}' no existe o no es un directorio.")
+
+
+
 
 
 #TODO al final de la implementacion del archivo dejar los imports de typing y parthlib con los imports unicos necesarios
