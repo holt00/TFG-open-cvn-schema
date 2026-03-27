@@ -88,6 +88,35 @@ def xsdata_target_resolver (target_name : str) -> list[XSDTargetSpec]:
         raise RunnerError(f"Target '{target_name}' no reconocido. Opciones válidas: {EXECUTION_ORDER_ALL + ['all']}")
 
 
+def is_path_within(output_dir : pathlib.Path, root_dir : pathlib.Path) -> bool:
+    """
+    Valida que el directorio de salida dado se encuentre dentro del directorio raíz de generación.
+    Args:
+        output_dir (pathlib.Path): El directorio de salida a validar.
+        root_dir (pathlib.Path): El directorio raíz de generación.
+    Returns:
+        bool: True si el directorio de salida se encuentra dentro del directorio raíz de generación
+    """
+    output_dir_resolved = output_dir.resolve()
+    root_dir_resolved = root_dir.resolve()
+    return output_dir_resolved.is_relative_to(root_dir_resolved)
+
+def validate_xsdata_and_xsdata_pydantic()-> None:
+    """
+    Valida que xsdata y su plugin de pydantic estén instalados y accesibles desde la línea de comandos.
+    Raises:
+        RunnerError: Si xsdata o el plugin de pydantic no están instalados o no son accesibles.
+    """
+    try:
+        subprocess.run(["uv","run","xsdata", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        raise RunnerError("xsdata no está instalado o no es accesible desde la línea de comandos.") from e
+
+    try:
+        subprocess.run(["uv","run","xsdata-pydantic","--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        raise RunnerError("El plugin xsdata-pydantic no está instalado o no es accesible desde la línea de comandos.") from e
+
 def validate_xsdata_prerequistes(target : XSDTargetSpec) -> None:
     """
     Valida que se cumplan los prerrequisitos para ejecutar xsdata en el objetivo dado.
@@ -116,6 +145,11 @@ def validate_xsdata_prerequistes(target : XSDTargetSpec) -> None:
 
     if not GENERATED_ROOT_DIR.is_dir():
         raise RunnerError(f"El directorio raíz de salida '{GENERATED_ROOT_DIR}' no existe o no es un directorio.")
+
+    #comprobacion de que el directorio de salida se encuentra dentro del directorio raiz de generacion
+    if not is_path_within(target.output_dir, GENERATED_ROOT_DIR):
+        raise RunnerError(f"El directorio de salida '{target.output_dir}' no se encuentra dentro del directorio raíz de generación '{GENERATED_ROOT_DIR}'.")
+    
 
 
 
