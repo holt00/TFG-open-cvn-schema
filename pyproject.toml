@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "tfg-open-cvn-schema"
 version = "0.1.0"
@@ -14,3 +18,9 @@ codegen = [
 testing = [
     "pytest>=9.0.2",
 ]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

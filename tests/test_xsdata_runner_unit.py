@@ -36,9 +36,9 @@ def test_resolve_single_target_returns_expected_spec():
         f"Expected package name to be 'generated.{target_name}', but got '{resolved_target[0].package}'."
     )
     assert str(resolved_target[0].source_xsd).endswith(
-        f"{target_name.capitalize()}.xsd"
+        f"{target_name.upper()}.xsd"
     ), (
-        f"Expected source XSD path to contain '{target_name.capitalize()}.xsd', but got '{resolved_target[0].source_xsd}'."
+        f"Expected source XSD path to contain '{target_name.upper()}.xsd', but got '{resolved_target[0].source_xsd}'."
     )
     assert str(resolved_target[0].output_dir).endswith(
         "src/generated/" + target_name
