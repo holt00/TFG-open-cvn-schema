@@ -4,6 +4,10 @@ from cvn_codegen.xsdata_runner import (
     XSDTargetSpec,
     RunnerError,
     xsdata_target_resolver,
+    build_xsdata_command,
+    validate_generated_output,
+    TARGET_TABLE as TT,
+    XSDATA_CONFIG_FILE_PATH as config_path,
 )
 
 
@@ -44,14 +48,13 @@ def test_resolve_single_target_returns_expected_spec():
 
 
 def test_resolve_all_returns_targets_in_stable_order():
-    
-    #Arrange
-    expected_targets : list[str] = ["cvn", "specification_manual", "tree_model"]
+    # Arrange
+    expected_targets: list[str] = ["cvn", "specification_manual", "tree_model"]
 
-    #Act
+    # Act
     resolved_targets = xsdata_target_resolver("all")
 
-    #Assert
+    # Assert
     assert isinstance(resolved_targets, list), (
         f"Expected result to be a list, but got {type(resolved_targets)}."
     )
@@ -67,13 +70,68 @@ def test_resolve_all_returns_targets_in_stable_order():
         )
 
 
-def test_build_xsdata_command_for_cnv_uses_expected_arguments():
-    pass
-
-
 def test_invalid_target_raises_runner_error():
-    pass
+    # Arrange
+    invalid_target_name = "invalid_target"
+    valid_target_names = ["cvn", "specification_manual", "tree_model", "all"]
+
+    # Act & Assert
+    with pt.raises(RunnerError) as exc_info:
+        xsdata_target_resolver(invalid_target_name)
+
+    assert isinstance(exc_info.value, RunnerError), (
+        f"Expected exception to be of type RunnerError, but got {type(exc_info.value)}."
+    )
+
+    assert (
+        str(exc_info.value)
+        == f"Target '{invalid_target_name}' no reconocido. Opciones válidas: {valid_target_names}"
+    ), (
+        f"Expected error message to be 'Target '{invalid_target_name}' no reconocido. Opciones válidas: {valid_target_names}', but got '{str(exc_info.value)}'."
+    )
 
 
-def test_smoke_test_model_creates_python_files():
-    pass
+def test_build_xsdata_command_for_cvn_uses_expected_arguments():
+    # Arrange
+    expected_target: XSDTargetSpec = TT["cvn"]
+    expected_args_list: list[str] = [
+        "uv",
+        "run",
+        "xsdata",
+        "generate",
+        "--config",
+        str(config_path),
+        "--package",
+        str(expected_target.package),
+        str(expected_target.source_xsd),
+    ]
+
+    # Act
+    built_command = build_xsdata_command(expected_target)
+
+    # Assert
+    assert isinstance(built_command, list), (
+        f"Expected command to be a list, but got {type(built_command)}."
+    )
+    assert built_command == expected_args_list, (
+        f"Expected command to be {expected_args_list}, but got {built_command}."
+    )
+
+
+def test_validate_generated_output_fails_for_empty_directory(tmp_path):
+    # Arrange
+    target = XSDTargetSpec(
+        name="dummy",
+        source_xsd=tmp_path / "dummy.xsd",
+        package="generated.dummy",
+        output_dir=tmp_path / "generated_output",
+    )
+    target.output_dir.mkdir()
+
+    # Act / Assert
+    with pt.raises(RunnerError) as exc_info:
+        validate_generated_output(target)
+
+    assert "está vacío" in str(exc_info.value), (
+        f"Expected error message to mention empty directory, but got '{str(exc_info.value)}'."
+    )
