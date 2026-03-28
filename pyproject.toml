@@ -11,3 +11,6 @@ codegen = [
     "xsdata-pydantic>=24.5",
     "xsdata[cli,lxml]>=26.2",
 ]
+testing = [
+    "pytest>=9.0.2",
+]
