@@ -1,9 +1,9 @@
-import argparse
-import subprocess
+from argparse import ArgumentParser
+from subprocess import run, CalledProcessError
 from dataclasses import dataclass
-import pathlib
-import typing
-import shutil
+from pathlib import Path
+from typing import Final
+from shutil import rmtree
 
 
 
@@ -15,9 +15,9 @@ class XSDTargetSpec:
     Esta clase representa la configuracion del objetivo de generación de código a partir de un archivo XSD.
     """
     name : str #nombre logico del objetivo
-    source_xsd : pathlib.Path #ruta original del archivo xsd
+    source_xsd : Path #ruta original del archivo xsd
     package : str #nombre del paquete destino en el que se generará el código
-    output_dir : pathlib.Path #ruta del directorio donde se guardará el archivo generado
+    output_dir : Path #ruta del directorio donde se guardará el archivo generado
 
 
 #---------------- Zona de definicion de excepciones ----------------
@@ -29,19 +29,19 @@ class RunnerError(Exception):
 
 #---------------- Zona de definicion de constantes ----------------
 
-REPO_ROOT : typing.Final[pathlib.Path] = pathlib.Path(__file__).resolve().parent.parent.parent
+REPO_ROOT : Final[Path] = Path(__file__).resolve().parent.parent.parent
 #Ruta raiz del repositorio
 
-XSDATA_CONFIG_FILE_PATH : typing.Final[pathlib.Path] = REPO_ROOT/ "config" / ".xsdata.xml"
+XSDATA_CONFIG_FILE_PATH : Final[Path] = REPO_ROOT/ "config" / ".xsdata.xml"
 #Ruta del archivo de configuracion del xsdata
 
-CANONICAL_XSD_DIR : typing.Final[pathlib.Path] = REPO_ROOT / "docs" / "CvnXML_v1.4.3_2.1_17012025" / "XSD"
+CANONICAL_XSD_DIR : Final[Path] = REPO_ROOT / "docs" / "CvnXML_v1.4.3_2.1_17012025" / "XSD"
 #ruta donde se encuentran los archivos xsd
 
-GENERATED_ROOT_DIR : typing.Final[pathlib.Path] = REPO_ROOT / "src" / "generated"
+GENERATED_ROOT_DIR : Final[Path] = REPO_ROOT / "src" / "generated"
 #ruta raiz donde se guardaran los archivos generados 
 
-TARGET_TABLE : typing.Final[dict[str, XSDTargetSpec]] = {
+TARGET_TABLE : Final[dict[str, XSDTargetSpec]] = {
     "cvn": XSDTargetSpec(
         name="cvn",
         source_xsd = CANONICAL_XSD_DIR / "CVN.xsd",
@@ -63,7 +63,7 @@ TARGET_TABLE : typing.Final[dict[str, XSDTargetSpec]] = {
 }
 #Tabla que mapea el nombre logico del xsd a su especificacion completa
 
-EXECUTION_ORDER_ALL : typing.Final[list[str]] = ["cvn", "specification_manual", "tree_model"]
+EXECUTION_ORDER_ALL : Final[list[str]] = ["cvn", "specification_manual", "tree_model"]
 #lista de las claves de TARGET_TABLE en el orden en el que deben ser ejecutados 
 
 
@@ -89,7 +89,7 @@ def xsdata_target_resolver (target_name : str) -> list[XSDTargetSpec]:
         raise RunnerError(f"Target '{target_name}' no reconocido. Opciones válidas: {EXECUTION_ORDER_ALL + ['all']}")
 
 
-def is_path_within(output_dir : pathlib.Path, root_dir : pathlib.Path) -> bool:
+def is_path_within(output_dir : Path, root_dir : Path) -> bool:
     """
     Valida que el directorio de salida dado se encuentre dentro del directorio raíz de generación.
     Args:
@@ -109,13 +109,13 @@ def validate_xsdata_and_xsdata_pydantic()-> None:
         RunnerError: Si xsdata o el plugin de pydantic no están instalados o no son accesibles.
     """
     try:
-        subprocess.run(["uv","run","xsdata", "--version"], check=True, capture_output=True, text=True)
-    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        run(["uv","run","xsdata", "--version"], check=True, capture_output=True, text=True)
+    except (CalledProcessError, FileNotFoundError) as e:
         raise RunnerError("xsdata no está instalado o no es accesible desde la línea de comandos.") from e
 
     try:
-        subprocess.run(["uv","run","python","-c","import xsdata_pydantic"], check=True, capture_output=True, text=True)
-    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        run(["uv","run","python","-c","import xsdata_pydantic"], check=True, capture_output=True, text=True)
+    except (CalledProcessError, FileNotFoundError) as e:
         raise RunnerError("El plugin xsdata-pydantic no está instalado o no es accesible desde la línea de comandos.") from e
 
 
@@ -176,7 +176,7 @@ def clean_generated_code(target : XSDTargetSpec) -> None:
     for item in target.output_dir.iterdir():
         try:
             if item.is_dir() and not item.is_symlink():
-                shutil.rmtree(item)
+                rmtree(item)
             else:
                 item.unlink()
         except OSError as e:
@@ -213,8 +213,8 @@ def execute_xsdata_command(target : XSDTargetSpec) -> None:
     """
     command = build_xsdata_command(target)
     try:
-        subprocess.run(command, check=True)
-    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        run(command, check=True)
+    except (CalledProcessError, FileNotFoundError) as e:
         raise RunnerError(f"Error al ejecutar el comando '{' '.join(command)}': {e}") from e
 
 
@@ -276,8 +276,8 @@ def run_targets_generation(targets: list[XSDTargetSpec]) -> None:
     for archivo in generated_outputs:
         print(f" - {archivo}")
 
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Runner de generación de código a partir de archivos XSD utilizando xsdata.")
+def build_parser() -> ArgumentParser:
+    parser = ArgumentParser(description="Runner de generación de código a partir de archivos XSD utilizando xsdata.")
     parser.add_argument(
         "target",
         choices=EXECUTION_ORDER_ALL + ["all"],
