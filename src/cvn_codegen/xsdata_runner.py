@@ -66,6 +66,10 @@ TARGET_TABLE : Final[dict[str, XSDTargetSpec]] = {
 EXECUTION_ORDER_ALL : Final[list[str]] = ["cvn", "specification_manual", "tree_model"]
 #lista de las claves de TARGET_TABLE en el orden en el que deben ser ejecutados 
 
+TARGET_OVERRIDES : Final[dict[str, list[str]]] = {
+    "tree_model": ["--unnest-classes"],
+}
+#Tabla que mapea el nombre logico del xsd a una lista de argumentos adicionales que se le pasaran a xsdata al generar ese objetivo
 
 #---------------- Zona de definicion de funciones ----------------
 
@@ -190,6 +194,7 @@ def build_xsdata_command(target : XSDTargetSpec) -> list[str]:
     Returns:
         list[str]: El comando de xsdata construido como una lista de argumentos.
     """
+    
     command = [
         "uv",
         "run",
@@ -199,8 +204,10 @@ def build_xsdata_command(target : XSDTargetSpec) -> list[str]:
         str(XSDATA_CONFIG_FILE_PATH),
         "--package",
         target.package,
-        str(target.source_xsd)
     ]
+    command.extend(TARGET_OVERRIDES.get(target.name, []))
+    command.append(str(target.source_xsd))
+
     return command
 
 def execute_xsdata_command(target : XSDTargetSpec) -> None:
@@ -213,7 +220,7 @@ def execute_xsdata_command(target : XSDTargetSpec) -> None:
     """
     command = build_xsdata_command(target)
     try:
-        run(command, check=True)
+        run(command, check=True, cwd=REPO_ROOT / "src" )
     except (CalledProcessError, FileNotFoundError) as e:
         raise RunnerError(f"Error al ejecutar el comando '{' '.join(command)}': {e}") from e
 
