@@ -51,6 +51,48 @@ Issue `#13` will build a normalized metadata layer from
 - overlap report between manual and tree model
 - list of unresolved references and mismatches
 
+## Agreed Execution Plan
+
+The implementation of issue `#13` will follow this agreed execution process.
+
+### Main Objective
+
+- build a normalized metadata layer from `SpecificationManual.xml` and
+  `CVNTreeModel.xml` that can be consumed by later issues through stable views
+  keyed by CVN `code` and by technical `xml_path`
+- preserve traceability to the source XML files and make mismatches explicit
+  instead of hiding them
+
+### Execution Steps
+
+1. define the normalization output contract
+2. design the minimal module structure under `src/cvn_codegen/`
+3. implement extraction from `SpecificationManual.xml`
+4. implement extraction from `CVNTreeModel.xml`
+5. define and document `xml_path` construction rules
+6. unify both sources into normalized views
+7. implement consistency and mismatch reporting
+8. expose a reusable internal API for later issues
+9. add unit and integration tests
+10. document decisions, deviations, and newly discovered limits
+11. update persistent documentation and any additional files required to keep
+    the repository coherent
+
+### Execution Notes
+
+- the issue is now considered started
+- development will proceed step by step
+- code under `src/generated/` must not be edited manually
+- hand-maintained normalization logic belongs in `src/cvn_codegen/`
+- `src/models/cvn/` remains out of scope for this issue
+
+## Current Execution State
+
+- Issue status: in progress
+- Current step: step `1` - define the normalization output contract
+- Next milestone after step `1`: design the minimal module structure for the
+  normalization layer
+
 ## Known Inputs From Earlier Issues
 
 - structural bindings exist for the manual and tree-model XSDs
@@ -67,4 +109,4 @@ Issue `#13` will build a normalized metadata layer from
 
 ## Status
 
-- Status: pending
+- Status: in progress
