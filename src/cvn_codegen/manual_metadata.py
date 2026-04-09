@@ -8,7 +8,6 @@ from cvn_codegen.normalization_types import (
     ManualCodeEntry,
     SourceTrace,
 )
-from typing import Optional
 import logging
 
 logging.basicConfig(
@@ -30,7 +29,7 @@ def load_specification_manual(specification_manual_path: Path) -> SpecificationM
     specification_manual = xml_parser.from_path(specification_manual_path, SpecificationManual)
     return specification_manual
     
-def select_name_detail(name_details: list[NameType.NameDetail], preferred_language: str = "spa") -> Optional[NameType.NameDetail]:
+def select_name_detail(name_details: list[NameType.NameDetail], preferred_language: str = "spa") -> NameType.NameDetail | None:
     
     if not name_details:
         return None
