@@ -17,3 +17,7 @@ def load_specification_manual(specification_manual_path: Path) -> SpecificationM
 
 def select_name_detail(name_details: list[NameType.NameDetail], preferred_language: str = "spa") -> Optional[NameType.NameDetail]:
     pass
+def build_manual_code_entry(item: SpecificationManual.Manual.Item,) -> ManualCodeEntry:
+    pass
+
+def extract_manual_entries(specification_manual: SpecificationManual) -> dict[str, ManualCodeEntry]:
