@@ -90,6 +90,24 @@ Authoritative record:
 
 - `docs/roadmap/issues/issue-12-structural-bindings.md`
 
+## Documented Maintenance Hotfixes
+
+### Hotfix `#1`
+
+- Goal:
+  replace operational `print` usage in the xsdata runner with `logging` and
+  document the repository convention for logging and string interpolation
+- Scope:
+  - define a module logger in `src/cvn_codegen/xsdata_runner.py`
+  - replace runner progress and error `print` calls with the appropriate
+    logging level
+  - document that `print` is reserved for direct console interaction
+  - document f-strings as the project standard for interpolated strings
+
+Authoritative record:
+
+- `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
+
 ## Future Work Focus
 
 ### Issue `#13`

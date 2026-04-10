@@ -19,6 +19,7 @@ Anyone resuming work on the repository should start here after reading
 - Project: open CVN schema and tooling for Spanish academic CV processing
 - Current pipeline stage: structural generation from official XSDs completed
 - Last documented issues: `#11` and `#12`
+- Last documented hotfix: `#1`
 - Next planned issue: `#13`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
@@ -57,6 +58,8 @@ Anyone resuming work on the repository should start here after reading
   issue `#16`
 - `docs/roadmap/issues/issue-17-workflow-documentation.md`: planned scope of
   issue `#17`
+- `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
+  record for the runner logging convention update
 
 ### Development And Contribution
 
@@ -94,6 +97,7 @@ docs/CvnXML_v1.4.3_2.1_17012025/
 
 - Issue `#11`: `docs/roadmap/issues/issue-11-project-infrastructure.md`
 - Issue `#12`: `docs/roadmap/issues/issue-12-structural-bindings.md`
+- Hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 
 Each issue document records:
 

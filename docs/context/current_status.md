@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-04-06
+- Last updated: 2026-04-10
 
 ## Completed Or Stabilized Work
 
@@ -33,6 +33,15 @@
   - `SpecificationManual.xml`: OK
   - `CVNTreeModel.xml`: fails due to XML/XSD mismatch, documented in
     `docs/pipeline/known_limitations.md`
+
+### Hotfix `#1`
+
+- `src/cvn_codegen/xsdata_runner.py` now reports operational status through
+  `logging` instead of `print`
+- `print` is reserved for direct console interaction examples and ad hoc shell
+  snippets
+- project conventions now explicitly require f-strings for string interpolation
+  in repository code instead of old `%`-style formatting
 
 ## Current Technical Baseline
 
@@ -92,3 +101,4 @@ uv run pytest tests/test_xsdata_runner_smoke.py -v
 4. `docs/roadmap/issues/issue-11-project-infrastructure.md`
 5. `docs/roadmap/issues/issue-12-structural-bindings.md`
 6. `docs/pipeline/known_limitations.md`
+7. `docs/roadmap/hotfixes/
