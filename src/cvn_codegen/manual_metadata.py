@@ -10,12 +10,7 @@ from cvn_codegen.normalization_types import (
 )
 import logging
 
-logging.basicConfig(
-    filename="app.log",
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    encoding="utf-8"
-)
+logger = logging.getLogger(__name__)
 
 def load_specification_manual(specification_manual_path: Path) -> SpecificationManual:
     
@@ -34,7 +29,7 @@ def select_name_detail(name_details: list[NameType.NameDetail], preferred_langua
     if not name_details:
         return None
     for detail in name_details:
-        if str(detail.lang) == preferred_language:
+        if getattr(detail.lang, "value", detail.lang) == preferred_language:
             return detail
     return name_details[0]
 
@@ -78,7 +73,7 @@ def extract_manual_entries(specification_manual: SpecificationManual) -> dict[st
     for item in specification_manual.manual.item:
         entry: ManualCodeEntry = build_manual_code_entry(item)
         if entry.code in entry_ny_code:
-            logging.warning(f"Duplicate code '{entry.code}' found in specification manual.")
+            logger.warning(f"Duplicate code '{entry.code}' found in specification manual.")
             raise ValueError(f"Duplicate code '{entry.code}' found in specification manual.")
         entry_ny_code[entry.code] = entry
     
