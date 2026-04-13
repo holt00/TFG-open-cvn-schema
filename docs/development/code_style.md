@@ -26,6 +26,9 @@ Use this order:
 ### Documentation
 
 - Use concise docstrings for public functions and classes
+- Use Google-style Python docstrings for repository code
+- Write Python docstrings in English, even when user-facing discussion happens
+  in another language
 - Keep comments rare and only when the code is not self-explanatory
 - Document references to external standards when relevant
 

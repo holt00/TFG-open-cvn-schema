@@ -8,6 +8,19 @@ from xml.etree.ElementTree import Element
 
 
 def load_tree_model(tree_model_path: Path) -> Element:
+    """Load and parse the canonical CVN tree model XML file.
+
+    Args:
+        tree_model_path (Path): Path to the canonical ``CVNTreeModel.xml``
+            file.
+
+    Returns:
+        Element: Root XML element of the parsed tree model document.
+
+    Raises:
+        ValueError: If ``tree_model_path`` is not a ``Path``.
+        FileNotFoundError: If the target XML file does not exist.
+    """
     if not isinstance(tree_model_path, Path):
         raise ValueError(
             f"tree_model_path must be a Path object, got {type(tree_model_path)} instead."
@@ -22,12 +35,29 @@ def load_tree_model(tree_model_path: Path) -> Element:
 
 
 def strip_namespace(tag: str) -> str:
+    """Return the local XML tag name without its namespace prefix.
+
+    Args:
+        tag (str): XML tag in expanded namespace form or plain local form.
+
+    Returns:
+        str: Local tag name without namespace information.
+    """
     if "}" in tag:
         return tag.split("}", 1)[1]
     return tag
 
 
 def get_attribute(element: Element, attribute_name: str) -> str | None:
+    """Get an XML attribute value by local attribute name.
+
+    Args:
+        element (Element): XML element to inspect.
+        attribute_name (str): Local attribute name to search for.
+
+    Returns:
+        str | None: Attribute value if found, otherwise ``None``.
+    """
     for attr_name, attr_value in element.attrib.items():
         local_name = strip_namespace(attr_name)
         if local_name == attribute_name:
@@ -36,6 +66,15 @@ def get_attribute(element: Element, attribute_name: str) -> str | None:
 
 
 def build_xml_path(path_segments: list[str]) -> str:
+    """Build a stable XML-like path from normalized path segments.
+
+    Args:
+        path_segments (list[str]): Ordered path segments collected during tree
+            traversal.
+
+    Returns:
+        str: Absolute path representation starting with ``/``.
+    """
     if not path_segments:
         return "/"
     return "/" + "/".join(path_segments)
@@ -49,6 +88,26 @@ def build_tree_path_entry(
     tree_value: str | None,
     xml_path: str,
 ) -> TreePathEntry:
+    """Create a normalized tree-path entry from extracted tree metadata.
+
+    Args:
+        code (str): CVN code associated with the current tree node.
+        tree_cvn_item_code (str | None): Enclosing ``CVNItem`` code when the
+            current node belongs to a CVN item block.
+        tree_property_name (str | None): Technical property name containing the
+            current node.
+        tree_indicator_name (str | None): Technical indicator name of the
+            current node.
+        tree_value (str | None): Optional ``Value`` content associated with the
+            current indicator.
+        xml_path (str): Stable XML-like path of the current node.
+
+    Returns:
+        TreePathEntry: Normalized tree-model metadata entry.
+
+    Raises:
+        ValueError: If ``code`` is empty after normalization.
+    """
     normalized_code = str(code).strip()
 
     if not normalized_code:
@@ -77,6 +136,20 @@ def collect_indicator_entries(
     tree_cvn_item_code: str | None,
     tree_property_name: str | None,
 ) -> list[TreePathEntry]:
+    """Collect normalized entries from an ``Indicator`` subtree.
+
+    Args:
+        indicator_element (Element): Current ``Indicator`` XML element.
+        current_path_segments (list[str]): Path segments accumulated up to the
+            parent node.
+        tree_cvn_item_code (str | None): Enclosing ``CVNItem`` code when
+            available.
+        tree_property_name (str | None): Enclosing technical property name.
+
+    Returns:
+        list[TreePathEntry]: Normalized entries extracted from the indicator and
+        all nested indicator descendants.
+    """
     entries: list[TreePathEntry] = []
 
     indicator_name = get_attribute(indicator_element, "name")
@@ -133,6 +206,19 @@ def collect_property_entries(
     current_path_segments: list[str],
     tree_cvn_item_code: str | None,
 ) -> list[TreePathEntry]:
+    """Collect normalized entries from a ``Property`` subtree.
+
+    Args:
+        property_element (Element): Current ``Property`` XML element.
+        current_path_segments (list[str]): Path segments accumulated up to the
+            parent container.
+        tree_cvn_item_code (str | None): Enclosing ``CVNItem`` code when
+            available.
+
+    Returns:
+        list[TreePathEntry]: Normalized entries extracted from the property and
+        all nested indicators.
+    """
     entries: list[TreePathEntry] = []
     property_name = get_attribute(property_element, "name")
     property_code = get_attribute(property_element, "code")
@@ -168,6 +254,18 @@ def collect_property_entries(
 
 
 def extract_tree_entries(root: Element) -> list[TreePathEntry]:
+    """Traverse the parsed tree model and extract normalized tree entries.
+
+    Args:
+        root (Element): Root XML element of the parsed tree model document.
+
+    Returns:
+        list[TreePathEntry]: All normalized entries extracted from ``Version``,
+        ``Agent``, and ``CVNItem`` branches.
+
+    Raises:
+        ValueError: If the parsed XML does not contain a ``Node`` element.
+    """
     entries: list[TreePathEntry] = []
     node_element: Element | None = None
     for child in root:
@@ -218,6 +316,16 @@ def extract_tree_entries(root: Element) -> list[TreePathEntry]:
 
 
 def load_and_extract_tree_entries(tree_model_path: Path) -> list[TreePathEntry]:
+    """Load the tree model XML and extract all normalized entries.
+
+    Args:
+        tree_model_path (Path): Path to the canonical ``CVNTreeModel.xml``
+            file.
+
+    Returns:
+        list[TreePathEntry]: All normalized entries extracted from the tree
+        model.
+    """
     root = load_tree_model(tree_model_path)
     return extract_tree_entries(root)
 
@@ -225,6 +333,14 @@ def load_and_extract_tree_entries(tree_model_path: Path) -> list[TreePathEntry]:
 def index_tree_entries_by_code(
     tree_entries: list[TreePathEntry],
 ) -> dict[str, tuple[TreePathEntry, ...]]:
+    """Group tree entries by CVN code.
+
+    Args:
+        tree_entries (list[TreePathEntry]): Extracted normalized tree entries.
+
+    Returns:
+        dict[str, tuple[TreePathEntry, ...]]: Entries grouped by code.
+    """
     grouped_entries: dict[str, list[TreePathEntry]] = {}
     for entry in tree_entries:
         grouped_entries.setdefault(entry.code, []).append(entry)
@@ -234,6 +350,14 @@ def index_tree_entries_by_code(
 def index_tree_entries_by_xml_path(
     tree_entries: list[TreePathEntry],
 ) -> dict[str, tuple[TreePathEntry, ...]]:
+    """Group tree entries by technical XML path.
+
+    Args:
+        tree_entries (list[TreePathEntry]): Extracted normalized tree entries.
+
+    Returns:
+        dict[str, tuple[TreePathEntry, ...]]: Entries grouped by XML path.
+    """
     grouped_entries: dict[str, list[TreePathEntry]] = {}
     for entry in tree_entries:
         grouped_entries.setdefault(entry.xml_path, []).append(entry)
