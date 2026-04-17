@@ -151,6 +151,24 @@ The implementation of issue `#13` will follow this agreed execution process.
 - a repository-level convention for `xml_path` has been defined and validated
   against the available tree-model documentation and the canonical XML
 
+### Step `6` - Unified Normalized Views
+
+- in progress
+- the normalization orchestration layer has started in
+  `src/cvn_codegen/normalization.py`
+- the current implementation already covers:
+  - collection of the full code universe from manual and tree-model sources
+  - construction of a normalized per-code view through
+    `NormalizedCodeEntry`
+  - assembly of a normalized code index
+  - orchestration of the full loading and normalization flow into
+    `NormalizationResult`
+- the current step still needs:
+  - verification through dedicated tests for `normalization.py`
+  - review of resulting counts and overlap expectations against the documented
+    project baseline
+  - transition into step `7` for explicit mismatch reporting
+
 ## Agreed `xml_path` Convention
 
 ### Purpose
@@ -273,7 +291,8 @@ The implementation of issue `#13` will follow this agreed execution process.
 - Current step: step `6` - unify both sources into normalized views
 - Last completed step: step `5` - define and document `xml_path` construction
   rules
-- Next milestone after step `6`: implement consistency and mismatch reporting
+- Next milestone after step `6`: validate the orchestration layer and then
+  implement consistency and mismatch reporting
 
 ## Known Inputs From Earlier Issues
 

@@ -1,5 +1,4 @@
 from pathlib import Path
-from re import match
 
 from cvn_codegen.manual_metadata import (
     extract_manual_entries,
@@ -19,6 +18,18 @@ from cvn_codegen.normalization_types import (
 
 def collect_all_code(manual_entries_by_code: dict[str, ManualCodeEntry], 
                      tree_entries_by_code: dict[str, tuple[TreePathEntry,...]]) -> tuple [str,...]:
+    """Collect the full set of CVN codes from manual and tree-model sources.
+    Args:
+        manual_entries_by_code (dict[str, ManualCodeEntry]): Manual entries
+            indexed by CVN code.
+        tree_entries_by_code (dict[str, tuple[TreePathEntry, ...]]): Tree-model
+            entries grouped by CVN code.
+    Returns:
+        tuple[str, ...]: Sorted tuple containing every unique code found in
+        either source.
+    Raises:
+        ValueError: If either input is not a dictionary.
+    """
     
     if not isinstance(manual_entries_by_code, dict):
         raise ValueError(f"Expected manual_entries_by_code to be a dict, but got {type(manual_entries_by_code)}.")
@@ -37,6 +48,18 @@ def collect_all_code(manual_entries_by_code: dict[str, ManualCodeEntry],
 
 def build_normalized_code (code : str, manual_entries_by_code: dict[str, ManualCodeEntry],
                            tree_entries_by_code: dict[str, tuple[TreePathEntry,...]]) -> NormalizedCodeEntry:
+    """Build the normalized view for a single CVN code.
+    Args:
+        code (str): CVN code to normalize.
+        manual_entries_by_code (dict[str, ManualCodeEntry]): Manual entries
+            indexed by CVN code.
+        tree_entries_by_code (dict[str, tuple[TreePathEntry, ...]]): Tree-model
+            entries grouped by CVN code.
+    Returns:
+        NormalizedCodeEntry: Aggregated normalized entry for the requested code.
+    Raises:
+        ValueError: If the provided code is empty after normalization.
+    """
 
     normalized_code = code.strip()
 
@@ -62,6 +85,16 @@ def build_normalized_code (code : str, manual_entries_by_code: dict[str, ManualC
 
 def build_normalized_code_index(manual_entries_by_code: dict[str, ManualCodeEntry],
                                 tree_entries_by_code: dict[str, tuple[TreePathEntry,...]]) -> dict[str, NormalizedCodeEntry]:
+    
+    """Build the normalized index keyed by CVN code.
+    Args:
+        manual_entries_by_code (dict[str, ManualCodeEntry]): Manual entries
+            indexed by CVN code.
+        tree_entries_by_code (dict[str, tuple[TreePathEntry, ...]]): Tree-model
+            entries grouped by CVN code.
+    Returns:
+        dict[str, NormalizedCodeEntry]: Normalized entries indexed by CVN code.
+    """
 
     all_codes = collect_all_code(manual_entries_by_code, tree_entries_by_code)
 
@@ -74,6 +107,20 @@ def build_normalized_code_index(manual_entries_by_code: dict[str, ManualCodeEntr
     return normalized_entries_by_code
 
 def build_normalization_result(specification_manual_path: Path, tree_model_path: Path) -> NormalizationResult:
+
+    """Run the normalization orchestration for the canonical metadata sources.
+    Args:
+        specification_manual_path (Path): Path to the canonical
+            ``SpecificationManual.xml`` file.
+        tree_model_path (Path): Path to the canonical ``CVNTreeModel.xml`` file.
+    Returns:
+        NormalizationResult: Aggregated normalization result containing:
+        - normalized entries by code
+        - tree entries by XML path
+        - codes present only in the manual
+        - codes present only in the tree model
+        - currently empty mismatch collection
+    """
     
     specification_manual = load_specification_manual(specification_manual_path)
 
