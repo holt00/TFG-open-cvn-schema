@@ -153,7 +153,7 @@ The implementation of issue `#13` will follow this agreed execution process.
 
 ### Step `6` - Unified Normalized Views
 
-- in progress
+- completed
 - the normalization orchestration layer has started in
   `src/cvn_codegen/normalization.py`
 - the current implementation already covers:
@@ -163,11 +163,35 @@ The implementation of issue `#13` will follow this agreed execution process.
   - assembly of a normalized code index
   - orchestration of the full loading and normalization flow into
     `NormalizationResult`
-- the current step still needs:
-  - verification through dedicated tests for `normalization.py`
-  - review of resulting counts and overlap expectations against the documented
-    project baseline
-  - transition into step `7` for explicit mismatch reporting
+- dedicated tests exist for `normalization.py`
+
+### Step `7` - Consistency And Mismatch Reporting
+
+- completed
+- mismatch reporting is now implemented in
+  `src/cvn_codegen/normalization_report.py`
+- the current implementation covers:
+  - reusable mismatch construction through `build_mismatch`
+  - `MANUAL_ONLY_CODE` reporting
+  - `TREE_ONLY_CODE` reporting
+  - explicit structural reporting for the two known unexpected `<Type>` child
+    elements in `CVNTreeModel.xml`
+  - combined mismatch aggregation for inclusion in `NormalizationResult`
+- the normalization orchestration layer now populates
+  `NormalizationResult.mismatches`
+- tests now exist for:
+  - `normalization_report.py`
+  - mismatch integration in `normalization.py`
+- current known reported structural cases:
+  - `060.030.070.220`
+  - `060.030.070.230`
+- scope decision for issue `#13`:
+  - the current mismatch set is considered sufficient for this issue
+  - issue `#13` should report known documented source inconsistencies and
+    source-overlap mismatches, but should not expand yet into a broader dynamic
+    anomaly-detection framework
+  - richer mismatch discovery may be added later if needed, but it is not a
+    blocker for completing the normalization stage of issue `#13`
 
 ## Agreed `xml_path` Convention
 
@@ -288,11 +312,10 @@ The implementation of issue `#13` will follow this agreed execution process.
 ## Current Execution State
 
 - Issue status: in progress
-- Current step: step `6` - unify both sources into normalized views
-- Last completed step: step `5` - define and document `xml_path` construction
-  rules
-- Next milestone after step `6`: validate the orchestration layer and then
-  implement consistency and mismatch reporting
+- Current step: step `8` - expose a reusable internal API for later issues
+- Last completed step: step `7` - implement consistency and mismatch reporting
+- Next milestone after step `8`: add final tests and documentation updates for
+  issue `#13`
 
 ## Known Inputs From Earlier Issues
 

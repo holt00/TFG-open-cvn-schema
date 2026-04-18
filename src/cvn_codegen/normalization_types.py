@@ -13,6 +13,7 @@ class NormalizationMismatchKind(str, Enum):
     EMPTY_CODE = "empty_code"
     INVALID_XML_PATH = "invalid_xml_path"
     AMBIGUOUS_XML_PATH = "ambiguous_xml_path"
+    UNEXPECTED_TREE_ELEMENT = "unexpected_tree_element"
 
 
 @dataclass(frozen=True)

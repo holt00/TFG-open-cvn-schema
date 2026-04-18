@@ -200,7 +200,8 @@ def test_build_normalization_result_returns_expected_shape():
     assert isinstance(normalization_result.by_xml_path, dict)
     assert isinstance(normalization_result.manual_only_codes, tuple)
     assert isinstance(normalization_result.tree_only_codes, tuple)
-    assert normalization_result.mismatches == ()
+    assert isinstance(normalization_result.mismatches, tuple)
+    assert len(normalization_result.mismatches) >= 2
 
 
 def test_build_normalization_result_contains_known_code_and_expected_overlap_examples():
@@ -219,3 +220,11 @@ def test_build_normalization_result_contains_known_code_and_expected_overlap_exa
     assert "030.010.000.250" in normalization_result.tree_only_codes, (
         "Expected code '030.010.000.250' to be present among tree-only codes."
     )
+    assert any(
+        mismatch.code == "030.010.000.250"
+        for mismatch in normalization_result.mismatches
+    ), "Expected mismatch collection to include tree-only code '030.010.000.250'."
+    assert any(
+        mismatch.code == "060.030.070.220"
+        for mismatch in normalization_result.mismatches
+    ), "Expected mismatch collection to include known unexpected <Type> case '060.030.070.220'."
