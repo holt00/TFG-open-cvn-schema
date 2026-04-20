@@ -1,9 +1,28 @@
+"""Mismatch reporting helpers for Issue #13 normalization.
+
+This module converts known source inconsistencies and source-overlap findings
+into normalized mismatch records that can be attached to the final
+``NormalizationResult``.
+"""
+
 from cvn_codegen.normalization_types import NormalizationMismatch, NormalizationMismatchKind
 
 
 
 
 def build_mismatch(kind : NormalizationMismatchKind, message : str, code : str | None = None, xml_path : str | None = None) -> NormalizationMismatch:
+    """Build one normalization mismatch record.
+
+    Args:
+        kind (NormalizationMismatchKind): Mismatch category.
+        message (str): Human-readable mismatch description.
+        code (str | None): CVN code associated with mismatch when available.
+        xml_path (str | None): Technical XML path associated with mismatch when
+            available.
+
+    Returns:
+        NormalizationMismatch: Constructed mismatch record.
+    """
     return NormalizationMismatch(
         kind=kind,
         code=code,
@@ -12,6 +31,16 @@ def build_mismatch(kind : NormalizationMismatchKind, message : str, code : str |
     )
 
 def collect_manual_only_mismatches(manual_only_codes: tuple[str,...]) -> tuple[NormalizationMismatch,...]:
+    """Build mismatches for codes present only in specification manual.
+
+    Args:
+        manual_only_codes (tuple[str, ...]): Codes found in
+            ``SpecificationManual.xml`` but not in ``CVNTreeModel.xml``.
+
+    Returns:
+        tuple[NormalizationMismatch, ...]: Mismatch records for manual-only
+        codes.
+    """
     mismatches = []
     for code in manual_only_codes:
         mismatches.append(build_mismatch(
@@ -22,6 +51,16 @@ def collect_manual_only_mismatches(manual_only_codes: tuple[str,...]) -> tuple[N
     return tuple(mismatches)
 
 def collect_tree_only_mismatches(tree_only_codes: tuple[str,...]) -> tuple[NormalizationMismatch,...]:
+    """Build mismatches for codes present only in tree model.
+
+    Args:
+        tree_only_codes (tuple[str, ...]): Codes found in ``CVNTreeModel.xml``
+            but not in ``SpecificationManual.xml``.
+
+    Returns:
+        tuple[NormalizationMismatch, ...]: Mismatch records for tree-only
+        codes.
+    """
     mismatches = []
     for code in tree_only_codes:
         mismatches.append(build_mismatch(
@@ -32,6 +71,12 @@ def collect_tree_only_mismatches(tree_only_codes: tuple[str,...]) -> tuple[Norma
     return tuple(mismatches)
 
 def collect_tree_structure_mismatches() -> tuple[NormalizationMismatch,...]:
+    """Build mismatches for known structural issues in canonical tree model.
+
+    Returns:
+        tuple[NormalizationMismatch, ...]: Known structural mismatch records for
+        canonical ``CVNTreeModel.xml`` anomalies.
+    """
     return (
         build_mismatch(
             kind=NormalizationMismatchKind.UNEXPECTED_TREE_ELEMENT,
@@ -59,7 +104,21 @@ def collect_tree_structure_mismatches() -> tuple[NormalizationMismatch,...]:
 
         ),
     )
+
+
 def collect_normalization_mismatches(manual_only_codes: tuple[str, ...],tree_only_codes: tuple[str, ...],) -> tuple[NormalizationMismatch, ...]:
+    """Collect all mismatches currently reported by normalization layer.
+
+    Args:
+        manual_only_codes (tuple[str, ...]): Codes present only in
+            ``SpecificationManual.xml``.
+        tree_only_codes (tuple[str, ...]): Codes present only in
+            ``CVNTreeModel.xml``.
+
+    Returns:
+        tuple[NormalizationMismatch, ...]: Combined mismatch collection for the
+        current normalization run.
+    """
     manual_only_mismatches = collect_manual_only_mismatches(manual_only_codes)
     tree_only_mismatches = collect_tree_only_mismatches(tree_only_codes)
     tree_structure_mismatches = collect_tree_structure_mismatches()

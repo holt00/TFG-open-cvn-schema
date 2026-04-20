@@ -193,6 +193,37 @@ The implementation of issue `#13` will follow this agreed execution process.
   - richer mismatch discovery may be added later if needed, but it is not a
     blocker for completing the normalization stage of issue `#13`
 
+### Step `8` - Reusable Internal API
+
+- in progress
+- the agreed API strategy for issue `#13` is:
+  - use `build_normalization_result(...)` from
+    `src/cvn_codegen/normalization.py` as the recommended consumer entry point
+  - keep helper functions importable when later issues need partial reuse, but
+    treat them as secondary helpers rather than the preferred integration path
+- current official entry point:
+  - `from cvn_codegen.normalization import build_normalization_result`
+- current API guarantees for later issues:
+  - normalized view by CVN `code`
+  - normalized view by technical `xml_path`
+  - explicit `manual_only_codes`
+  - explicit `tree_only_codes`
+  - explicit known mismatch collection
+- current helper functions remain importable for advanced or partial reuse:
+  - `collect_all_code(...)`
+  - `build_normalized_code(...)`
+  - `build_normalized_code_index(...)`
+- scope decision for this step:
+  - no additional convenience wrapper such as
+    `build_normalization_result_from_canonical_sources()` will be added for now
+  - explicit path-based orchestration remains preferred because it is clearer,
+    easier to test, and less tightly coupled to repository constants
+- expected downstream use:
+  - issue `#14` should consume normalization primarily through
+    `build_normalization_result(...)`
+  - direct imports from extraction modules should be avoided unless a later step
+    has a specific need for lower-level access
+
 ## Agreed `xml_path` Convention
 
 ### Purpose
@@ -314,8 +345,8 @@ The implementation of issue `#13` will follow this agreed execution process.
 - Issue status: in progress
 - Current step: step `8` - expose a reusable internal API for later issues
 - Last completed step: step `7` - implement consistency and mismatch reporting
-- Next milestone after step `8`: add final tests and documentation updates for
-  issue `#13`
+- Next milestone after step `8`: finalize test coverage and then update
+  persistent project documentation for issue `#13`
 
 ## Known Inputs From Earlier Issues
 
