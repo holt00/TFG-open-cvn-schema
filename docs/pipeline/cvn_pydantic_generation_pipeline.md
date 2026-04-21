@@ -126,6 +126,20 @@ This means:
 - `src/generated/` is an interoperability layer
 - future semantic cleanup belongs outside `src/generated/`
 
+### Current Normalization Entry Point
+
+- the recommended repository entry point for normalized metadata is:
+  - `cvn_codegen.normalization.build_normalization_result(...)`
+- this entry point returns the integrated normalization layer used by later
+  roadmap issues, including:
+  - normalized entries by CVN code
+  - tree entries by technical XML path
+  - source-exclusive code sets
+  - currently documented mismatch reporting
+- lower-level helper functions inside `cvn_codegen.normalization` remain
+  importable when needed, but they are not the preferred integration surface for
+  later stages
+
 ## Repository Layout
 
 ```text

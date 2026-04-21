@@ -68,9 +68,32 @@ do not need to rediscover them.
 - Confirmed discrepancy:
   - the XML includes `<Type>` inside `Indicator`
   - the XSD only declares `Value` and `Child` inside `Indicator`
+- Confirmed scope of the discrepancy:
+  - the canonical XML contains `438` `Indicator` nodes with
+    `mo:name="Type"`, which is compatible with the documented tree-model
+    structure
+  - only `2` real child elements named `<Type>` were found in the canonical XML
+  - those `2` unexpected child elements appear under:
+    - `Indicator mo:name="Type" mo:code="060.030.070.220"`
+    - `Indicator mo:name="Type" mo:code="060.030.070.230"`
+  - both unexpected child elements contain the value:
+    `CVN_QualityTypeType@AuxTable.xsd`
+- Comparison with the tree-model documentation:
+  - `TreeModel_v1.0 20090331 v1.0.pdf` defines `Indicator` children as only
+    `Value` and `Child`
+  - the document does not describe `<Type>` as an allowed child element of
+    `Indicator`
+  - this makes the two `<Type>` elements a source inconsistency, not a
+    documented feature of the tree model
 - Practical consequence:
   - the generated `tree_model` binding is correct with respect to the XSD, but
     cannot fully parse the canonical XML file
+- Normalization consequence:
+  - issue `#13` should treat `xml_path` as a structural path built from
+    `CVNTreeModel`, `Node`, `CVNItem`, `Property`, and `Indicator`
+  - the unexpected `<Type>` child elements should be recorded as explicit
+    mismatches or special-case findings, not folded into the standard structural
+    path model
 - Parse status:
   - `SpecificationManual.xml`: parse OK
   - `CVNTreeModel.xml`: parse blocked by XML/XSD mismatch

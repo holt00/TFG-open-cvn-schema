@@ -26,6 +26,9 @@ Use this order:
 ### Documentation
 
 - Use concise docstrings for public functions and classes
+- Use Google-style Python docstrings for repository code
+- Write Python docstrings in English, even when user-facing discussion happens
+  in another language
 - Keep comments rare and only when the code is not self-explanatory
 - Document references to external standards when relevant
 
@@ -33,6 +36,23 @@ Use this order:
 
 - Use specific exceptions where possible
 - Wrap external tool failures with project-specific exceptions when needed
+
+### Logging And Console Output
+
+- Use `logging` for operational messages, progress reporting, and error
+  reporting inside repository code
+- Reserve `print` for direct console interactions, short shell examples, or
+  explicit user-facing terminal snippets
+- Define module loggers with `logging.getLogger(__name__)`
+- Use the logging level that matches the situation: `info` for normal progress,
+  `error` for controlled failures, and `exception` when a traceback should be
+  recorded
+
+### String Formatting
+
+- Use f-strings for interpolated strings, for example
+  `f"target '{target_name}' no reconocido"`
+- Do not use old `%`-style string formatting in repository code
 
 ## Generated Code Boundaries
 
