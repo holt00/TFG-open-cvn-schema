@@ -11,9 +11,10 @@ to versioned documentation under `docs/`.
 Every new session should read these files in order before making changes:
 
 1. `AGENTS.md`
-2. `docs/context/project_context_index.md`
-3. `docs/context/current_status.md`
-4. The relevant issue document under `docs/roadmap/issues/`
+2. `PROJECT_GUIDE.md`
+3. `docs/context/project_context_index.md`
+4. `docs/context/current_status.md`
+5. The relevant issue document under `docs/roadmap/issues/`
 
 ## Repository-Specific Rules
 
@@ -31,6 +32,7 @@ Every new session should read these files in order before making changes:
 
 ### Entry Points
 
+- human project guide: `PROJECT_GUIDE.md`
 - context index: `docs/context/project_context_index.md`
 - current state: `docs/context/current_status.md`
 
@@ -52,6 +54,7 @@ Every new session should read these files in order before making changes:
 - issue `#16`: `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`
 - issue `#17`: `docs/roadmap/issues/issue-17-workflow-documentation.md`
 - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
+- hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
 
 ### Development Reference
 
@@ -69,5 +72,7 @@ At the end of any issue implementation, update:
 2. `docs/context/current_status.md`
 3. `docs/pipeline/known_limitations.md` if a new limitation was found
 4. `docs/roadmap/cvn_generation_roadmap.md` if the issue status changed
+5. `PROJECT_GUIDE.md` when the human-facing project entry guidance, document
+   map, contributor reading order, or repository orientation changes
 
 Update `AGENTS.md` only when the document map or operational rules change.

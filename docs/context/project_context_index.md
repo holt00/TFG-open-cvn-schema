@@ -3,23 +3,34 @@
 ## Purpose
 
 This document is the single documentation entry point for future sessions.
-Anyone resuming work on the repository should start here after reading
-`AGENTS.md`.
+Humans should normally start with `PROJECT_GUIDE.md` before coming here.
+Agents should also read `AGENTS.md` before this file.
 
 ## Mandatory Reading Order
 
-1. `AGENTS.md`
+### For Humans
+
+1. `PROJECT_GUIDE.md`
 2. `docs/context/project_context_index.md`
 3. `docs/context/current_status.md`
 4. `docs/roadmap/issues/<current-issue>.md`
 5. Supporting documents linked from the current issue file
+
+### For Agents
+
+1. `AGENTS.md`
+2. `PROJECT_GUIDE.md`
+3. `docs/context/project_context_index.md`
+4. `docs/context/current_status.md`
+5. `docs/roadmap/issues/<current-issue>.md`
+6. Supporting documents linked from the current issue file
 
 ## Current Project Snapshot
 
 - Project: open CVN schema and tooling for Spanish academic CV processing
 - Current pipeline stage: structural generation from official XSDs completed
 - Last documented issues: `#11` and `#12`
-- Last documented hotfix: `#1`
+- Last documented hotfix: `#2`
 - Next planned issue: `#13`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
@@ -28,6 +39,7 @@ Anyone resuming work on the repository should start here after reading
 ### Entry Points
 
 - `README.md`: repository overview for humans
+- `PROJECT_GUIDE.md`: human-oriented project entry point
 - `AGENTS.md`: operational rules for agents and pointer map
 - `docs/context/current_status.md`: current project state and next actions
 
@@ -60,6 +72,8 @@ Anyone resuming work on the repository should start here after reading
   issue `#17`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
+- `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance
+  record for the human project entry point and update protocol alignment
 
 ### Development And Contribution
 
@@ -98,6 +112,7 @@ docs/CvnXML_v1.4.3_2.1_17012025/
 - Issue `#11`: `docs/roadmap/issues/issue-11-project-infrastructure.md`
 - Issue `#12`: `docs/roadmap/issues/issue-12-structural-bindings.md`
 - Hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
+- Hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
 
 Each issue document records:
 

@@ -108,6 +108,23 @@ Authoritative record:
 
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 
+### Hotfix `#2`
+
+- Goal:
+  introduce `PROJECT_GUIDE.md` as the human repository entry point and align
+  the documentation maintenance protocol with that change
+- Scope:
+  - create a human-oriented entry point equivalent in practical guidance to
+    `AGENTS.md`
+  - stop routing human readers through `AGENTS.md` from top-level docs
+  - distinguish human and agent reading orders in the persistent context docs
+  - require updating `PROJECT_GUIDE.md` when human-facing repository guidance
+    changes
+
+Authoritative record:
+
+- `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
+
 ## Future Work Focus
 
 ### Issue `#13`
