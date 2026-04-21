@@ -58,6 +58,8 @@ Anyone resuming work on the repository should start here after reading
   issue `#16`
 - `docs/roadmap/issues/issue-17-workflow-documentation.md`: planned scope of
   issue `#17`
+- `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`:
+  implementation record for issue `#25`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 
@@ -97,6 +99,8 @@ docs/CvnXML_v1.4.3_2.1_17012025/
 
 - Issue `#11`: `docs/roadmap/issues/issue-11-project-infrastructure.md`
 - Issue `#12`: `docs/roadmap/issues/issue-12-structural-bindings.md`
+- Issue `#25`:
+  `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 - Hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 
 Each issue document records:
