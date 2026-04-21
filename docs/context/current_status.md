@@ -43,6 +43,17 @@
 - project conventions now explicitly require f-strings for string interpolation
   in repository code instead of old `%`-style formatting
 
+### Hotfix `#2`
+
+- `PROJECT_GUIDE.md` now exists as the human-oriented repository entry point
+- `README.md` and `CONTRIBUTING.md` now direct human readers to
+  `PROJECT_GUIDE.md` instead of `AGENTS.md`
+- the documentation update protocol now explicitly requires updating
+  `PROJECT_GUIDE.md` when the human-facing project guidance or documentation map
+  changes
+- `AGENTS.md` remains the agent-specific entry point and now references the
+  human guide as its counterpart
+
 ### Issue `#13`
 
 - normalization output contract is implemented through typed structures in
