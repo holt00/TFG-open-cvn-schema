@@ -23,7 +23,7 @@ Before starting any implementation work, read these files in order:
 ### Environment
 
 ```bash
-uv sync --group codegen --group --all-groups
+uv sync --group codegen --group testing
 uv pip install -e .
 ```
 
@@ -51,10 +51,27 @@ uv run python -m cvn_codegen.xsdata_runner all
 Run tests:
 
 ```bash
-uv run pytest
+uv run pytest tests
 uv run pytest tests/test_xsdata_runner_unit.py -v
 uv run pytest tests/test_xsdata_runner_smoke.py -v
 ```
+
+All automated tests should be added under `tests/`.
+
+## Pull Request CI
+
+Pull requests targeting `main` and `development` run the automated repository
+test suite through GitHub Actions.
+
+The CI entry point is:
+
+```bash
+uv run pytest tests
+```
+
+The workflow reports a `tests` check back to the pull request. Repository branch
+protection or rulesets can mark that check as required so merges are blocked
+until the test suite passes.
 
 ## Documentation Update Protocol
 

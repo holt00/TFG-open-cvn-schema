@@ -51,6 +51,8 @@ Every new session should read these files in order before making changes:
 - issue `#15`: `docs/roadmap/issues/issue-15-domain-model-generator.md`
 - issue `#16`: `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`
 - issue `#17`: `docs/roadmap/issues/issue-17-workflow-documentation.md`
+- issue `#25`:
+  `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 
 ### Development Reference
