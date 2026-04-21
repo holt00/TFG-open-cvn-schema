@@ -131,4 +131,4 @@ uv run pytest tests/test_xsdata_runner_smoke.py -v
 4. `docs/roadmap/issues/issue-11-project-infrastructure.md`
 5. `docs/roadmap/issues/issue-12-structural-bindings.md`
 6. `docs/pipeline/known_limitations.md`
-7. `docs/roadmap/hotfixes/
+7. `docs/roadmap/hotfixes/`
