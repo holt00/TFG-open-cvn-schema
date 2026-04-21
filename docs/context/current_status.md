@@ -84,6 +84,18 @@
   - the two documented unexpected `<Type>` child elements in
     `CVNTreeModel.xml`
 
+### Issue `#25`
+
+- a GitHub Actions workflow now exists at `.github/workflows/pr-tests.yml`
+- pull requests targeting `main` or `development` now run the repository test
+  suite automatically when opened, reopened, or updated
+- the workflow installs the documented `uv` environment, performs the editable
+  install, and runs `uv run pytest tests`
+- the workflow job is named `tests` so GitHub can report a stable PR check
+- all automated repository tests are expected to live under `tests/`
+- merge blocking depends on GitHub branch protection or rulesets marking the
+  `tests` check as required
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -134,6 +146,12 @@ uv run pytest tests/test_xsdata_runner_unit.py -v
 uv run pytest tests/test_xsdata_runner_smoke.py -v
 ```
 
+Run the full repository test suite:
+
+```bash
+uv run pytest tests
+```
+
 ## Files Future Sessions Must Read
 
 1. `docs/context/project_context_index.md`
@@ -141,5 +159,7 @@ uv run pytest tests/test_xsdata_runner_smoke.py -v
 3. `docs/roadmap/cvn_generation_roadmap.md`
 4. `docs/roadmap/issues/issue-11-project-infrastructure.md`
 5. `docs/roadmap/issues/issue-12-structural-bindings.md`
-6. `docs/pipeline/known_limitations.md`
-7. `docs/roadmap/hotfixes/`
+6. `docs/roadmap/issues/issue-13-normalization.md`
+7. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
+8. `docs/pipeline/known_limitations.md`
+9. `docs/roadmap/hotfixes/`

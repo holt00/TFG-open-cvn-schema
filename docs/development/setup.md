@@ -79,9 +79,16 @@ uv run python -m cvn_codegen.xsdata_runner all
 ### Tests
 
 ```bash
-uv run pytest
+uv run pytest tests
 uv run pytest tests/test_xsdata_runner_unit.py -v
 uv run pytest tests/test_xsdata_runner_smoke.py -v
+```
+
+All automated tests should live under `tests/` so the local and CI entry point
+remains:
+
+```bash
+uv run pytest tests
 ```
 
 ### Parse Smoke Checks

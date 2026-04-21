@@ -33,6 +33,7 @@ Goal:
 | `#15` | Implement the domain Pydantic model generator | Pending | Depends on `#13` and `#14` |
 | `#16` | Add automated tests for the generation pipeline | Pending | Extend from smoke tests to pipeline tests |
 | `#17` | Document and automate the complete workflow | Pending | Final workflow and documentation closure |
+| `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
 
 ## Original Integration Checkpoints
 
@@ -184,6 +185,20 @@ Authoritative record:
   - limitation documentation
   - obvious regeneration entry point
   - final repository documentation updates
+
+### Issue `#25`
+
+- Goal:
+  add a GitHub Actions pull-request test workflow for `main` and `development`
+- Required scope:
+  - run on pull requests targeting `main` and `development`
+  - use the documented Python and `uv` environment
+  - execute all automated tests under `tests/`
+  - expose a stable status check for branch protection
+
+Authoritative record:
+
+- `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 
 ## Required Companion Documents
 
