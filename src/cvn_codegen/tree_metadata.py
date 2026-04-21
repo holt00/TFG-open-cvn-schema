@@ -200,6 +200,38 @@ def collect_indicator_entries(
             )
     return entries
 
+def collect_cvn_item_entries(cvn_item_element: Element,current_path_segments: list[str]) -> list[TreePathEntry]:
+    """Collect normalized entries from a nested ``CVNItem`` subtree.
+
+    Args:
+        cvn_item_element (Element): Current ``CVNItem`` XML element.
+        current_path_segments (list[str]): Path segments accumulated up to the
+            parent node that contains this nested CVN item.
+
+    Returns:
+        list[TreePathEntry]: Normalized entries extracted from the nested CVN
+        item and its property descendants.
+    """
+    
+    entries = []
+    tree_cvn_item_code = get_attribute(cvn_item_element, "code")
+    if tree_cvn_item_code is not None and tree_cvn_item_code.strip():
+        cvn_item_segment = f"CVNItem[@code='{tree_cvn_item_code.strip()}']"
+    else:
+        cvn_item_segment = "CVNItem"
+    cvn_item_path_segments = current_path_segments + [cvn_item_segment]
+    for child in cvn_item_element:
+        if strip_namespace(child.tag) != "Property":
+            continue
+        entries.extend(
+            collect_property_entries(
+                property_element=child,
+                current_path_segments=cvn_item_path_segments,
+                tree_cvn_item_code=tree_cvn_item_code,
+            )
+        )
+    return entries
+
 
 def collect_property_entries(
     property_element: Element,
@@ -240,16 +272,21 @@ def collect_property_entries(
             )
         )
     for child in property_element:
-        if strip_namespace(child.tag) != "Indicator":
-            continue
-        entries.extend(
-            collect_indicator_entries(
+        child_tag = strip_namespace(child.tag)
+        if child_tag == "Indicator":
+            entries.extend(collect_indicator_entries(
                 indicator_element=child,
                 current_path_segments=property_path_segments,
                 tree_cvn_item_code=tree_cvn_item_code,
                 tree_property_name=property_name,
+            ))
+        elif child_tag == "CVNItem":
+            entries.extend(
+                collect_cvn_item_entries(
+                    cvn_item_element=child,
+                    current_path_segments=property_path_segments,
+                )
             )
-        )
     return entries
 
 

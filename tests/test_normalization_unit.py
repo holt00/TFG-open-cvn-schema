@@ -228,3 +228,34 @@ def test_build_normalization_result_contains_known_code_and_expected_overlap_exa
         mismatch.code == "060.030.070.220"
         for mismatch in normalization_result.mismatches
     ), "Expected mismatch collection to include known unexpected <Type> case '060.030.070.220'."
+
+
+def test_build_normalization_result_matches_documented_baseline_counts():
+    # Arrange
+    specification_manual_path = SPECIFICATION_MANUAL_XML
+    tree_model_path = TREE_MODEL_XML
+
+    # Act
+    normalization_result = build_normalization_result(
+        specification_manual_path,
+        tree_model_path,
+    )
+
+    # Assert
+    assert len(normalization_result.by_code) == 1457, (
+        f"Expected 1457 total normalized codes, but got {len(normalization_result.by_code)}."
+    )
+    assert len(normalization_result.manual_only_codes) == 27, (
+        f"Expected 27 manual-only codes, but got {len(normalization_result.manual_only_codes)}."
+    )
+    assert len(normalization_result.tree_only_codes) == 1, (
+        f"Expected 1 tree-only code, but got {len(normalization_result.tree_only_codes)}."
+    )
+    overlap_count = (
+        len(normalization_result.by_code)
+        - len(normalization_result.manual_only_codes)
+        - len(normalization_result.tree_only_codes)
+    )
+    assert overlap_count == 1429, (
+        f"Expected 1429 overlapping codes, but got {overlap_count}."
+    )
