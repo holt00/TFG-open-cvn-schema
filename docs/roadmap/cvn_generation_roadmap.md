@@ -28,7 +28,7 @@ Goal:
 | --- | --- | --- | --- |
 | `#11` | Project infrastructure for code generation | Completed | Baseline repository layout and config established |
 | `#12` | Generate structural Pydantic bindings from CVN XSDs | Completed with documented limitations | Tree model XML/XSD mismatch remains documented |
-| `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Pending | Next planned issue |
+| `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Completed | Normalization, mismatch reporting, reusable API, and tests implemented; baseline overlap counts verified |
 | `#14` | Define semantic mapping rules and override policy | Pending | Depends on normalized metadata |
 | `#15` | Implement the domain Pydantic model generator | Pending | Depends on `#13` and `#14` |
 | `#16` | Add automated tests for the generation pipeline | Pending | Extend from smoke tests to pipeline tests |

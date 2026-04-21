@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-04-10
+- Last updated: 2026-04-21
 
 ## Completed Or Stabilized Work
 
@@ -43,6 +43,36 @@
 - project conventions now explicitly require f-strings for string interpolation
   in repository code instead of old `%`-style formatting
 
+### Issue `#13`
+
+- normalization output contract is implemented through typed structures in
+  `src/cvn_codegen/normalization_types.py`
+- extraction from `SpecificationManual.xml` is implemented in
+  `src/cvn_codegen/manual_metadata.py`
+- extraction from `CVNTreeModel.xml` is implemented in
+  `src/cvn_codegen/tree_metadata.py`
+- normalization orchestration is implemented in
+  `src/cvn_codegen/normalization.py`
+- mismatch reporting is implemented in
+  `src/cvn_codegen/normalization_report.py`
+- nested `CVNItem` traversal under `Property` is implemented to match the
+  documented tree-model structure and restore the expected overlap counts
+- normalization-related verification passes for:
+  - `tests/test_manual_metadata_unit.py`
+  - `tests/test_tree_metadata_unit.py`
+  - `tests/test_normalization_report_unit.py`
+  - `tests/test_normalization_unit.py`
+- verified normalization baseline:
+  - total normalized codes: `1457`
+  - manual-only codes: `27`
+  - tree-only codes: `1`
+  - overlapping codes: `1429`
+- current mismatch reporting includes:
+  - codes present only in `SpecificationManual.xml`
+  - codes present only in `CVNTreeModel.xml`
+  - the two documented unexpected `<Type>` child elements in
+    `CVNTreeModel.xml`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -54,9 +84,9 @@
 
 ## Next Planned Issue
 
-- Next issue to start: `#13`
+- Next issue to start: `#14`
 - Issue document to read first:
-  - `docs/roadmap/issues/issue-13-normalization.md`
+  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
 
 ## Blocking Or Relevant Limitations
 

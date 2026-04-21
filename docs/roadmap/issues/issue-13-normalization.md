@@ -51,6 +51,61 @@ Issue `#13` will build a normalized metadata layer from
 - overlap report between manual and tree model
 - list of unresolved references and mismatches
 
+## Adjustments Made During Implementation
+
+The original plan was refined in several important ways during execution:
+
+1. `SpecificationManual.xml` was normalized through the generated structural
+   binding, but `CVNTreeModel.xml` had to be normalized through tolerant direct
+   XML traversal because the canonical XML does not fully conform to its XSD
+2. the normalization layer was implemented as a set of typed modules under
+   `src/cvn_codegen/` instead of a single monolithic script
+3. `xml_path` was defined as a structural path rooted at `CVNTreeModel`, built
+   only from the documented tree-model nodes and excluding `Value` and other
+   non-structural content
+4. mismatch reporting was intentionally limited for issue `#13` to known and
+   documented source inconsistencies plus source-overlap mismatches, instead of
+   introducing a broader dynamic anomaly-detection framework
+5. the initial tree-model traversal was incomplete because it ignored nested
+   `CVNItem` elements under `Property`; this was corrected after the stronger
+   baseline-count integration test exposed the discrepancy with the documented
+   overlap counts
+
+## Implementation Performed
+
+The following hand-maintained modules were implemented for issue `#13`:
+
+- `src/cvn_codegen/normalization_types.py`
+  - typed normalization contracts and mismatch kinds
+- `src/cvn_codegen/manual_metadata.py`
+  - extraction and normalization of `SpecificationManual.xml`
+- `src/cvn_codegen/tree_metadata.py`
+  - tolerant extraction and traversal of `CVNTreeModel.xml`
+- `src/cvn_codegen/normalization.py`
+  - orchestration of both sources into unified normalized views
+- `src/cvn_codegen/normalization_report.py`
+  - mismatch construction and aggregation
+
+The implemented normalization layer now provides:
+
+- a normalized per-code view through `NormalizedCodeEntry`
+- a normalized per-path view through grouped `TreePathEntry` values
+- explicit source-overlap sets:
+  - `manual_only_codes`
+  - `tree_only_codes`
+- explicit mismatch records through `NormalizationMismatch`
+
+The recommended internal API entry point for later issues is:
+
+- `cvn_codegen.normalization.build_normalization_result(...)`
+
+The following test modules were added or extended during issue `#13`:
+
+- `tests/test_manual_metadata_unit.py`
+- `tests/test_tree_metadata_unit.py`
+- `tests/test_normalization_report_unit.py`
+- `tests/test_normalization_unit.py`
+
 ## Agreed Execution Plan
 
 The implementation of issue `#13` will follow this agreed execution process.
@@ -195,7 +250,7 @@ The implementation of issue `#13` will follow this agreed execution process.
 
 ### Step `8` - Reusable Internal API
 
-- in progress
+- completed
 - the agreed API strategy for issue `#13` is:
   - use `build_normalization_result(...)` from
     `src/cvn_codegen/normalization.py` as the recommended consumer entry point
@@ -223,6 +278,34 @@ The implementation of issue `#13` will follow this agreed execution process.
     `build_normalization_result(...)`
   - direct imports from extraction modules should be avoided unless a later step
     has a specific need for lower-level access
+
+### Step `9` - Tests
+
+- completed
+- normalization-related test coverage now exists for:
+  - `manual_metadata.py`
+  - `tree_metadata.py`
+  - `normalization.py`
+  - `normalization_report.py`
+- dedicated mismatch-report tests pass
+- dedicated normalization orchestration tests pass
+- a stronger baseline-count integration assertion was added and now passes
+- the previous count mismatch was caused by incomplete tree-model traversal:
+  nested `CVNItem` elements under `Property` were not being traversed even
+  though the tree-model specification allows them
+- after fixing nested `CVNItem` traversal, the normalization layer now matches
+  the documented baseline:
+  - total normalized codes: `1457`
+  - manual-only codes: `27`
+  - tree-only codes: `1`
+  - overlapping codes: `1429`
+- normalization-related verification executed successfully for:
+  - `tests/test_manual_metadata_unit.py`
+  - `tests/test_tree_metadata_unit.py`
+  - `tests/test_normalization_report_unit.py`
+  - `tests/test_normalization_unit.py`
+- result:
+  - `42` tests passed
 
 ## Agreed `xml_path` Convention
 
@@ -342,11 +425,89 @@ The implementation of issue `#13` will follow this agreed execution process.
 
 ## Current Execution State
 
-- Issue status: in progress
-- Current step: step `8` - expose a reusable internal API for later issues
-- Last completed step: step `7` - implement consistency and mismatch reporting
-- Next milestone after step `8`: finalize test coverage and then update
-  persistent project documentation for issue `#13`
+- Issue status: completed
+- Current step: none
+- Last completed step: step `11` - update persistent project documentation and
+  close issue `#13`
+- Next milestone: issue `#14` - define semantic mapping rules and override
+  policy
+
+## Verification
+
+Normalization-related verification was executed with:
+
+```bash
+uv run pytest tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py -v
+```
+
+Result:
+
+- `42` tests passed
+
+Verified normalization baseline after the nested `CVNItem` traversal fix:
+
+- total normalized codes: `1457`
+- manual-only codes: `27`
+- tree-only codes: `1`
+- overlapping codes: `1429`
+- documented tree-only code still present:
+  - `030.010.000.250`
+- documented unexpected tree structure mismatches still present:
+  - `060.030.070.220`
+  - `060.030.070.230`
+
+## Findings
+
+### Positive Results
+
+- the normalization layer now reproduces the documented overlap counts from the
+  project architecture notes
+- the canonical source package can now be traversed and normalized end-to-end
+  without relying on invalid repairs to generated code
+- mismatch reporting is explicit and integrated into the final normalization
+  result
+- the normalization API is stable enough for later semantic mapping work
+
+### Important Implementation Finding
+
+- `Property` nodes in `CVNTreeModel.xml` may contain nested `CVNItem` elements,
+  as described in the tree-model documentation
+- those nested `CVNItem` branches must be traversed to obtain the documented
+  overlap counts
+- without that traversal, many valid tree-modeled codes are incorrectly
+  classified as manual-only
+
+### Controlled Scope Finding
+
+- issue `#13` can responsibly stop at known documented mismatches and source
+  overlap reporting
+- broader dynamic anomaly discovery is useful future work, but not required to
+  make the normalization layer reusable for issue `#14`
+
+## Known Limitations
+
+- the canonical `CVNTreeModel.xml` still diverges from its documented and XSD
+  model through two unexpected child `<Type>` elements
+- mismatch reporting for issue `#13` is intentionally limited to:
+  - `MANUAL_ONLY_CODE`
+  - `TREE_ONLY_CODE`
+  - known `UNEXPECTED_TREE_ELEMENT` cases
+- richer structural anomaly discovery is deferred
+
+Authoritative limitation record:
+
+- `docs/pipeline/known_limitations.md`
+
+## Impact On Future Issues
+
+- issue `#14` should consume normalized metadata through
+  `build_normalization_result(...)` as the preferred integration entry point
+- issue `#14` can now assume that the documented code overlap baseline has been
+  verified in tests
+- issue `#14` should define the semantic policy for any anomalies that are known
+  but intentionally left outside the current mismatch scope
+- issue `#15` can build on a stable per-code and per-path normalization layer
+  without needing to know extraction details from the source XML files
 
 ## Known Inputs From Earlier Issues
 
@@ -364,4 +525,4 @@ The implementation of issue `#13` will follow this agreed execution process.
 
 ## Status
 
-- Status: in progress
+- Status: completed and verified
