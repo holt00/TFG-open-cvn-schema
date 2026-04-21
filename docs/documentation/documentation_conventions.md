@@ -35,6 +35,14 @@ sessions must update it.
 - `docs/development/setup.md`: environment and commands
 - `docs/development/code_style.md`: style and conventions
 
+## Code Documentation Conventions
+
+- Python docstrings in repository code should use Google-style sections such as
+  `Args:`, `Returns:`, and `Raises:` when applicable
+- Python docstrings should be written in English to keep the codebase
+  internally consistent
+- Comments in code should remain rare and should only explain non-obvious logic
+
 ## Mandatory Sections For Issue Documents
 
 Every issue file under `docs/roadmap/issues/` must include these sections:

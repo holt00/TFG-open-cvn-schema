@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import logging
 from subprocess import run, CalledProcessError
 from dataclasses import dataclass
 from pathlib import Path
@@ -6,83 +7,94 @@ from typing import Final
 from shutil import rmtree
 
 
+logger = logging.getLogger(__name__)
 
-#---------------- Zona de definicion de tipos de datos ----------------
+
+# ---------------- Data type definitions ----------------
+
 
 @dataclass
 class XSDTargetSpec:
     """
-    Esta clase representa la configuracion del objetivo de generación de código a partir de un archivo XSD.
+    Represent the configuration for one XSD code-generation target.
     """
-    name : str #nombre logico del objetivo
-    source_xsd : Path #ruta original del archivo xsd
-    package : str #nombre del paquete destino en el que se generará el código
-    output_dir : Path #ruta del directorio donde se guardará el archivo generado
+
+    name: str  # logical target name
+    source_xsd: Path  # source XSD file path
+    package: str  # destination package name for generated code
+    output_dir: Path  # destination directory for generated files
 
 
-#---------------- Zona de definicion de excepciones ----------------
+# ---------------- Exception definitions ----------------
+
 
 class RunnerError(Exception):
-    """Excepcion base para errores relacionados con la ejecución del runner de xsdata."""
+    """Base exception for xsdata runner execution errors."""
+
     pass
 
 
-#---------------- Zona de definicion de constantes ----------------
+# ---------------- Constant definitions ----------------
 
-REPO_ROOT : Final[Path] = Path(__file__).resolve().parent.parent.parent
-#Ruta raiz del repositorio
+REPO_ROOT: Final[Path] = Path(__file__).resolve().parent.parent.parent
+# Repository root path
 
-XSDATA_CONFIG_FILE_PATH : Final[Path] = REPO_ROOT/ "config" / ".xsdata.xml"
-#Ruta del archivo de configuracion del xsdata
+XSDATA_CONFIG_FILE_PATH: Final[Path] = REPO_ROOT / "config" / ".xsdata.xml"
+# xsdata configuration file path
 
-CANONICAL_XSD_DIR : Final[Path] = REPO_ROOT / "docs" / "CvnXML_v1.4.3_2.1_17012025" / "XSD"
-#ruta donde se encuentran los archivos xsd
+CANONICAL_XSD_DIR: Final[Path] = (
+    REPO_ROOT / "docs" / "CvnXML_v1.4.3_2.1_17012025" / "XSD"
+)
+# Directory containing the canonical XSD files
 
-GENERATED_ROOT_DIR : Final[Path] = REPO_ROOT / "src" / "generated"
-#ruta raiz donde se guardaran los archivos generados 
+GENERATED_ROOT_DIR: Final[Path] = REPO_ROOT / "src" / "generated"
+# Root directory for generated output
 
-TARGET_TABLE : Final[dict[str, XSDTargetSpec]] = {
+TARGET_TABLE: Final[dict[str, XSDTargetSpec]] = {
     "cvn": XSDTargetSpec(
         name="cvn",
-        source_xsd = CANONICAL_XSD_DIR / "CVN.xsd",
-        package = "generated.cvn",
-        output_dir = GENERATED_ROOT_DIR / "cvn"
+        source_xsd=CANONICAL_XSD_DIR / "CVN.xsd",
+        package="generated.cvn",
+        output_dir=GENERATED_ROOT_DIR / "cvn",
     ),
     "specification_manual": XSDTargetSpec(
         name="specification_manual",
-        source_xsd = CANONICAL_XSD_DIR / "SpecificationManual.xsd",
-        package = "generated.specification_manual",
-        output_dir = GENERATED_ROOT_DIR / "specification_manual"
+        source_xsd=CANONICAL_XSD_DIR / "SpecificationManual.xsd",
+        package="generated.specification_manual",
+        output_dir=GENERATED_ROOT_DIR / "specification_manual",
     ),
     "tree_model": XSDTargetSpec(
         name="tree_model",
-        source_xsd = CANONICAL_XSD_DIR / "CVNTreeModel_v1.0.xsd",
-        package = "generated.tree_model",
-        output_dir = GENERATED_ROOT_DIR / "tree_model"
-    )
+        source_xsd=CANONICAL_XSD_DIR / "CVNTreeModel_v1.0.xsd",
+        package="generated.tree_model",
+        output_dir=GENERATED_ROOT_DIR / "tree_model",
+    ),
 }
-#Tabla que mapea el nombre logico del xsd a su especificacion completa
+# Map from logical target name to full target specification
 
-EXECUTION_ORDER_ALL : Final[list[str]] = ["cvn", "specification_manual", "tree_model"]
-#lista de las claves de TARGET_TABLE en el orden en el que deben ser ejecutados 
+EXECUTION_ORDER_ALL: Final[list[str]] = ["cvn", "specification_manual", "tree_model"]
+# Target keys in the order they must be executed
 
-TARGET_OVERRIDES : Final[dict[str, list[str]]] = {
+TARGET_OVERRIDES: Final[dict[str, list[str]]] = {
     "tree_model": ["--unnest-classes"],
 }
-#Tabla que mapea el nombre logico del xsd a una lista de argumentos adicionales que se le pasaran a xsdata al generar ese objetivo
+# Map from logical target name to additional xsdata CLI arguments
 
-#---------------- Zona de definicion de funciones ----------------
+# ---------------- Function definitions ----------------
 
-def xsdata_target_resolver (target_name : str) -> list[XSDTargetSpec]:
+
+def xsdata_target_resolver(target_name: str) -> list[XSDTargetSpec]:
     """
-    Resuelve el nombre del objetivo a su especificacion completa.
+    Resolve a target name into one or more target specifications.
+
     Args:
-        target_name (str): El nombre del objetivo a resolver.
+        target_name (str): Target name to resolve.
+
     Returns:
-        list[XSDTargetSpec]: Una lista con la especificacion/es completa/s de los objetivos.
+        list[XSDTargetSpec]: Resolved target specifications.
 
     Raises:
-        RunnerError: Si el nombre del objetivo no es reconocido.
+        RunnerError: If the target name is not recognized.
     """
 
     if target_name == "all":
@@ -90,93 +102,127 @@ def xsdata_target_resolver (target_name : str) -> list[XSDTargetSpec]:
     elif target_name in TARGET_TABLE:
         return [TARGET_TABLE[target_name]]
     else:
-        raise RunnerError(f"Target '{target_name}' no reconocido. Opciones válidas: {EXECUTION_ORDER_ALL + ['all']}")
+        raise RunnerError(
+            f"Target '{target_name}' no reconocido. Opciones válidas: {EXECUTION_ORDER_ALL + ['all']}"
+        )
 
 
-def is_path_within(output_dir : Path, root_dir : Path) -> bool:
+def is_path_within(output_dir: Path, root_dir: Path) -> bool:
     """
-    Valida que el directorio de salida dado se encuentre dentro del directorio raíz de generación.
+    Check whether an output directory is inside the generated root directory.
+
     Args:
-        output_dir (pathlib.Path): El directorio de salida a validar.
-        root_dir (pathlib.Path): El directorio raíz de generación.
+        output_dir (pathlib.Path): Output directory to validate.
+        root_dir (pathlib.Path): Generated root directory.
+
     Returns:
-        bool: True si el directorio de salida se encuentra dentro del directorio raíz de generación
+        bool: True if the output directory is within the generated root.
     """
     output_dir_resolved = output_dir.resolve()
     root_dir_resolved = root_dir.resolve()
     return output_dir_resolved.is_relative_to(root_dir_resolved)
 
-def validate_xsdata_and_xsdata_pydantic()-> None:
+
+def validate_xsdata_and_xsdata_pydantic() -> None:
     """
-    Valida que xsdata y su plugin de pydantic estén instalados y accesibles desde la línea de comandos.
+    Validate that xsdata and xsdata-pydantic are available from the CLI.
+
     Raises:
-        RunnerError: Si xsdata o el plugin de pydantic no están instalados o no son accesibles.
+        RunnerError: If xsdata or xsdata-pydantic is not installed or not accessible.
     """
     try:
-        run(["uv","run","xsdata", "--version"], check=True, capture_output=True, text=True)
+        run(
+            ["uv", "run", "xsdata", "--version"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
     except (CalledProcessError, FileNotFoundError) as e:
-        raise RunnerError("xsdata no está instalado o no es accesible desde la línea de comandos.") from e
+        raise RunnerError(
+            "xsdata no está instalado o no es accesible desde la línea de comandos."
+        ) from e
 
     try:
-        run(["uv","run","python","-c","import xsdata_pydantic"], check=True, capture_output=True, text=True)
+        run(
+            ["uv", "run", "python", "-c", "import xsdata_pydantic"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
     except (CalledProcessError, FileNotFoundError) as e:
-        raise RunnerError("El plugin xsdata-pydantic no está instalado o no es accesible desde la línea de comandos.") from e
+        raise RunnerError(
+            "El plugin xsdata-pydantic no está instalado o no es accesible desde la línea de comandos."
+        ) from e
 
 
-def validate_xsdata_prerequistes(target : XSDTargetSpec) -> None:
+def validate_xsdata_prerequistes(target: XSDTargetSpec) -> None:
     """
-    Valida que se cumplan los prerrequisitos para ejecutar xsdata en el objetivo dado.
+    Validate the prerequisites required to run xsdata for a target.
+
     Args:
-        target (XSDTargetSpec): La especificacion del objetivo a validar.
+        target (XSDTargetSpec): Target specification to validate.
+
     Raises:
-        RunnerError: Si no se cumple algun prerrequisito.
+        RunnerError: If any prerequisite is not satisfied.
     """
-    #comprobaciones del archivo de configuracion
+    # Validate configuration file existence.
     if not XSDATA_CONFIG_FILE_PATH.is_file():
-        raise RunnerError(f"El archivo de configuración de xsdata '{XSDATA_CONFIG_FILE_PATH}' no existe o no es un archivo.")
+        raise RunnerError(
+            f"El archivo de configuración de xsdata '{XSDATA_CONFIG_FILE_PATH}' no existe o no es un archivo."
+        )
 
-
-    #comprobaciones del archivo source_xsd
-    if not isinstance(target, XSDTargetSpec): 
+    # Validate the source XSD file.
+    if not isinstance(target, XSDTargetSpec):
         raise RunnerError(f"El objetivo {target} no es una instancia de XSDTargetSpec.")
 
     if not target.source_xsd.is_file():
-        raise RunnerError(f"El archivo XSD '{target.source_xsd}' no existe o no es un archivo")
-    
+        raise RunnerError(
+            f"El archivo XSD '{target.source_xsd}' no existe o no es un archivo"
+        )
+
     if not target.source_xsd.suffix.lower() == ".xsd":
-        raise RunnerError(f"El archivo '{target.source_xsd}' debe ser un fichero \".xsd\", sim embargo es de tipo \"{target.source_xsd.suffix}\"")
+        raise RunnerError(
+            f'El archivo \'{target.source_xsd}\' debe ser un fichero ".xsd", sim embargo es de tipo "{target.source_xsd.suffix}"'
+        )
 
-
-    #comprobacion de que el directorio raiz de salida existe
+    # Validate generated root directory existence.
 
     if not GENERATED_ROOT_DIR.is_dir():
-        raise RunnerError(f"El directorio raíz de salida '{GENERATED_ROOT_DIR}' no existe o no es un directorio.")
+        raise RunnerError(
+            f"El directorio raíz de salida '{GENERATED_ROOT_DIR}' no existe o no es un directorio."
+        )
 
-    #comprobacion de que el directorio de salida se encuentra dentro del directorio raiz de generacion
+    # Validate that the output directory stays inside the generated root.
     if not is_path_within(target.output_dir, GENERATED_ROOT_DIR):
-        raise RunnerError(f"El directorio de salida '{target.output_dir}' no se encuentra dentro del directorio raíz de generación '{GENERATED_ROOT_DIR}'.")
-    
-    validate_xsdata_and_xsdata_pydantic()    
+        raise RunnerError(
+            f"El directorio de salida '{target.output_dir}' no se encuentra dentro del directorio raíz de generación '{GENERATED_ROOT_DIR}'."
+        )
+
+    validate_xsdata_and_xsdata_pydantic()
 
 
-
-def clean_generated_code(target : XSDTargetSpec) -> None:
+def clean_generated_code(target: XSDTargetSpec) -> None:
     """
-    Limpia la salida generada anteriormente para cada uno de los objetivos
+    Remove previously generated output for a target.
+
     Args:
-        target (XSDTargetSpec): La especificacion del objetivo a limpiar.
-    
+        target (XSDTargetSpec): Target specification to clean.
+
     Raises:
-        RunnerError: Si ocurre un error al limpiar el código generado.
+        RunnerError: If an error occurs while cleaning generated code.
     """
     if not is_path_within(target.output_dir, GENERATED_ROOT_DIR):
-        raise RunnerError(f"El directorio de salida '{target.output_dir}' no se encuentra dentro del directorio raíz de generación '{GENERATED_ROOT_DIR}'.")
-    
+        raise RunnerError(
+            f"El directorio de salida '{target.output_dir}' no se encuentra dentro del directorio raíz de generación '{GENERATED_ROOT_DIR}'."
+        )
+
     if target.output_dir.resolve() == GENERATED_ROOT_DIR.resolve():
-        raise RunnerError(f"El directorio de salida '{target.output_dir}' no puede ser el mismo que el directorio raíz de generación '{GENERATED_ROOT_DIR}' para evitar borrados accidentales.")
+        raise RunnerError(
+            f"El directorio de salida '{target.output_dir}' no puede ser el mismo que el directorio raíz de generación '{GENERATED_ROOT_DIR}' para evitar borrados accidentales."
+        )
 
     target.output_dir.mkdir(parents=True, exist_ok=True)
-    
+
     for item in target.output_dir.iterdir():
         try:
             if item.is_dir() and not item.is_symlink():
@@ -184,23 +230,28 @@ def clean_generated_code(target : XSDTargetSpec) -> None:
             else:
                 item.unlink()
         except OSError as e:
-            raise RunnerError(f"Error al limpiar el código generado en '{item}': {e}") from e
+            raise RunnerError(
+                f"Error al limpiar el código generado en '{item}': {e}"
+            ) from e
 
-def build_xsdata_command(target : XSDTargetSpec) -> list[str]:
+
+def build_xsdata_command(target: XSDTargetSpec) -> list[str]:
     """
-    Construye el comando de xsdata para generar el código a partir del objetivo dado.
+    Build the xsdata command for one generation target.
+
     Args:
-        target (XSDTargetSpec): La especificacion del objetivo para el cual construir el comando.
+        target (XSDTargetSpec): Target specification for command generation.
+
     Returns:
-        list[str]: El comando de xsdata construido como una lista de argumentos.
+        list[str]: xsdata command expressed as a list of CLI arguments.
     """
-    
+
     command = [
         "uv",
         "run",
         "xsdata",
         "generate",
-        "--config", 
+        "--config",
         str(XSDATA_CONFIG_FILE_PATH),
         "--package",
         target.package,
@@ -210,46 +261,61 @@ def build_xsdata_command(target : XSDTargetSpec) -> list[str]:
 
     return command
 
-def execute_xsdata_command(target : XSDTargetSpec) -> None:
+
+def execute_xsdata_command(target: XSDTargetSpec) -> None:
     """
-    Ejecuta el comando de xsdata dado.
+    Execute the xsdata command for a target.
+
     Args:
-        target (XSDTargetSpec): El objetivo para el cual ejecutar el comando.
+        target (XSDTargetSpec): Target specification to execute.
+
     Raises:
-        RunnerError: Si ocurre un error durante la ejecución del comando.
+        RunnerError: If command execution fails.
     """
     command = build_xsdata_command(target)
     try:
-        run(command, check=True, cwd=REPO_ROOT / "src" )
+        run(command, check=True, cwd=REPO_ROOT / "src")
     except (CalledProcessError, FileNotFoundError) as e:
-        raise RunnerError(f"Error al ejecutar el comando '{' '.join(command)}': {e}") from e
+        raise RunnerError(
+            f"Error al ejecutar el comando '{' '.join(command)}': {e}"
+        ) from e
 
 
-def validate_generated_output(target : XSDTargetSpec) -> None:
+def validate_generated_output(target: XSDTargetSpec) -> None:
     """
-    Valida que se ha generado el código correctamente para el objetivo dado.
+    Validate that code generation produced Python output for a target.
+
     Args:
-        target (XSDTargetSpec): El objetivo para el cual validar el código generado.
+        target (XSDTargetSpec): Target specification to validate.
+
     Raises:
-        RunnerError: Si no se encuentra ningún archivo .py en el directorio de salida después de la generación.
+        RunnerError: If the output directory is missing, empty, or contains no Python files.
     """
     if not target.output_dir.is_dir():
-        raise RunnerError(f"El directorio de salida '{target.output_dir}' no existe o no es un directorio después de ejecutar xsdata para el objetivo '{target.name}'.")
-    
+        raise RunnerError(
+            f"El directorio de salida '{target.output_dir}' no existe o no es un directorio después de ejecutar xsdata para el objetivo '{target.name}'."
+        )
+
     if not any(target.output_dir.iterdir()):
-        raise RunnerError(f"El directorio de salida '{target.output_dir}' está vacío después de ejecutar xsdata para el objetivo '{target.name}'.")
+        raise RunnerError(
+            f"El directorio de salida '{target.output_dir}' está vacío después de ejecutar xsdata para el objetivo '{target.name}'."
+        )
 
     if not any(target.output_dir.glob("**/*.py")):
-        raise RunnerError(f"No se encontraron archivos .py generados en '{target.output_dir}' después de ejecutar xsdata para el objetivo '{target.name}'.")
-    
-    
+        raise RunnerError(
+            f"No se encontraron archivos .py generados en '{target.output_dir}' después de ejecutar xsdata para el objetivo '{target.name}'."
+        )
+
+
 def run_xsdata_generation_per_target(target: XSDTargetSpec) -> None:
     """
-    Ejecuta el proceso completo de generación de código a partir de un archivo XSD para el objetivo dado, incluyendo validaciones, limpieza y ejecución del comando de xsdata.
+    Run the full xsdata generation workflow for one target.
+
     Args:
-        target (XSDTargetSpec): El objetivo para el cual ejecutar el proceso de generación de código.
+        target (XSDTargetSpec): Target specification to generate.
+
     Raises:
-        RunnerError: Si ocurre algún error durante el proceso de generación de código.
+        RunnerError: If any step in the generation workflow fails.
     """
 
     validate_xsdata_prerequistes(target)
@@ -261,47 +327,61 @@ def run_xsdata_generation_per_target(target: XSDTargetSpec) -> None:
     validate_generated_output(target)
 
 
-
 def run_targets_generation(targets: list[XSDTargetSpec]) -> None:
     """
-    Lanza el proceso de generación de código a partir de archivos XSD para una lista de objetivos dada, ejecutando el proceso completo para cada objetivo en orden.
+    Run xsdata generation sequentially for a list of targets.
+
     Args:
-        targets (list[XSDTargetSpec]): La lista de objetivos para los cuales ejecutar el proceso de generación de código.
+        targets (list[XSDTargetSpec]): Target specifications to generate.
+
     Raises:
-        RunnerError: Si ocurre algún error durante el proceso de generación de código para alguno de los objetivos.
+        RunnerError: If generation fails for any target.
     """
     generated_outputs: list[str] = []
 
     for target in targets:
-        print(f"Ejecutando generación de código para el objetivo '{target.name}'...")
+        logger.info(
+            f"Ejecutando generación de código para el objetivo '{target.name}'..."
+        )
         run_xsdata_generation_per_target(target)
-        print(f"Generación de código para el objetivo '{target.name}' completada exitosamente.\n")
+        logger.info(
+            f"Generación de código para el objetivo '{target.name}' completada exitosamente."
+        )
         generated_outputs.append(f"{target.name} -> {target.output_dir}")
 
-    print("Proceso de generación de código para todos los objetivos completado exitosamente.")
-    print("Archivos generados:")
+    logger.info(
+        "Proceso de generación de código para todos los objetivos completado exitosamente."
+    )
+    logger.info("Archivos generados:")
     for archivo in generated_outputs:
-        print(f" - {archivo}")
+        logger.info(f" - {archivo}")
+
 
 def build_parser() -> ArgumentParser:
-    parser = ArgumentParser(description="Runner de generación de código a partir de archivos XSD utilizando xsdata.")
+    parser = ArgumentParser(
+        description="Runner de generación de código a partir de archivos XSD utilizando xsdata."
+    )
     parser.add_argument(
         "target",
         choices=EXECUTION_ORDER_ALL + ["all"],
         type=str,
-        help=f"El objetivo de generación de código a ejecutar. Opciones válidas: {EXECUTION_ORDER_ALL + ['all']}"
+        help=f"El objetivo de generación de código a ejecutar. Opciones válidas: {EXECUTION_ORDER_ALL + ['all']}",
     )
     return parser
 
-def main() -> int :
-    """Función principal del runner de generación de código a partir de archivos XSD utilizando xsdata. Esta función se encarga de parsear los argumentos de línea de comandos, resolver los objetivos a ejecutar y lanzar el proceso de generación de código para cada objetivo en orden.
+
+def main() -> int:
+    """Run the xsdata generation CLI entry point.
+
     Returns:
-        int: El código de salida del programa. 0 si la ejecución fue exitosa, 1 si ocurrió un error.
+        int: Process exit code. Returns ``0`` on success and ``1`` on failure.
     """
+
+    logging.basicConfig(level=logging.INFO)
 
     try:
         parser = build_parser()
-        
+
         arguments = parser.parse_args()
 
         execution_list = xsdata_target_resolver(arguments.target)
@@ -309,12 +389,13 @@ def main() -> int :
         run_targets_generation(execution_list)
 
     except RunnerError as e:
-        print(f"Error: {e}")
+        logger.error(f"Error: {e}")
         return 1
 
     return 0
 
+
 if __name__ == "__main__":
     raise SystemExit(main())
 
-#TODO al final de la implementacion del archivo dejar los imports de typing y parthlib con los imports unicos necesarios
+# TODO: keep only the imports that remain necessary after implementation stabilizes.

@@ -23,7 +23,7 @@ Before starting any implementation work, read these files in order:
 ### Environment
 
 ```bash
-uv sync --group codegen --group testing
+uv sync --group codegen --group --all-groups
 uv pip install -e .
 ```
 
