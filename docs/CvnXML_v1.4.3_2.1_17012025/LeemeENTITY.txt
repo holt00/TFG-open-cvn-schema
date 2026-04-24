@@ -1,0 +1,25 @@
+---------------------
+Contenido de Entidades
+---------------------
+Los archivos contenidos en este fichero tienen información de la estructura utilizada en el proyecto CVN para la codificación de entidades.
+
+Se trata de un esquema más avanzado que Entity.xsd. Las entidades exportadas son las mismas. Este esquema incluye más propiedades para el detalle de las entidades
+
+Manual
+------
+- Entidades_esquema_Entity_v1.4.xsd_2008-07-04 v1.0.pdf: Documento explicativo sobre la estructura utilizada en el proyecto CVN para la codificación de entidades.
+
+XSD
+---
+- Entity_v1.4.xsd: Esquema que valida el fichero de entidades
+- EntityUtilities_v1.4.xsd: esquema con tablas utilizadas para la codificación de entidades
+- ISOUtilities.xsd: esquema con tablas ISO
+- CVNUtilities_v1.0.xsd: Esquema con tablas comunes a otros esquemas de CVN
+
+XML
+---
+- Entity.xml: Representación en XML de la lista entidades
+
+HTML
+----
+- Entity_v1.4.html: Representación en formato HTML del esquema Entity_v1.4.xsd

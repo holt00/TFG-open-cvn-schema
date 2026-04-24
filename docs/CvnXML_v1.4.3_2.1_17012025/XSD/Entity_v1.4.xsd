@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by Rosa Hernández (Fundación Española de Ciencua y Tecnología) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:entity="http://cv.normalizado.org/entity" xmlns:cvn="http://cv.normalizado.org/cvn" targetNamespace="http://cv.normalizado.org/entity" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			Version: 1.4.0
+			Date: 2008-06-26
+		</xs:documentation>
+		<xs:documentation>
+				Author:FECYT 
+				http://www.fecyt.es
+				http://cv.normalizado.org
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://cv.normalizado.org/cvn" schemaLocation="ISOUtilities.xsd"/>
+	<xs:import namespace="http://cv.normalizado.org/cvn" schemaLocation="CVNUtilities_v1.0.xsd"/>
+	<xs:import namespace="http://cv.normalizado.org/cvn" schemaLocation="EntityUtilities_v1.4.xsd"/>
+	<xs:element name="Entity">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="item" type="entity:ItemType" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="version" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ItemType">
+		<xs:sequence>
+			<xs:element name="ItemId" type="xs:string"/>
+			<xs:element name="Nature" type="cvn:CVN_ENTITY_NATURE" minOccurs="0"/>
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="Function">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Code" type="cvn:CVN_ENTITY_FUNCTION"/>
+							<xs:element name="ItemAncestorId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:element name="Type" type="cvn:CVN_ENTITY_TYPE" minOccurs="0"/>
+			<xs:element name="ItemAddress" type="entity:DirectionType"/>
+			<xs:element name="ItemDescription" type="entity:DescriptionType" maxOccurs="unbounded"/>
+			<xs:element name="Synonym" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Denomination" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="URL" type="xs:string" minOccurs="0"/>
+			<xs:element name="ItemNote" type="entity:NoteType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Delegate" type="xs:string" minOccurs="0"/>
+			<!-- Delegate sobre su propio itemId para elementos sin referenciar-->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DescriptionType">
+		<xs:sequence>
+			<xs:element name="Acronym" type="xs:string" minOccurs="0"/>
+			<xs:element name="Text" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="lang" type="cvn:ISO_639"/>
+	</xs:complexType>
+	<xs:complexType name="DirectionType">
+		<xs:sequence>
+			<xs:element name="CountryCode" type="cvn:ISO_3166"/>
+			<xs:element name="AddressType" type="entity:AddressType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NoteType">
+		<xs:sequence>
+			<xs:element name="Item" type="xs:string"/>
+			<xs:element name="Code" type="xs:string"/>
+			<xs:element name="Description" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="lang" type="cvn:ISO_639"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="Region" type="entity:RegionType" minOccurs="0"/>
+			<xs:element name="Province" type="entity:ProvinceType" minOccurs="0"/>
+			<xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="City" type="xs:string" minOccurs="0"/>
+			<xs:element name="Street" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="type" type="cvn:CVN_STREET_TYPE"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OtherInformation" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="lang" type="cvn:ISO_639"/>
+	</xs:complexType>
+	<xs:complexType name="RegionType">
+		<xs:sequence>
+			<xs:element name="Code" type="cvn:CVN_Region" minOccurs="0"/>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProvinceType">
+		<xs:sequence>
+			<xs:element name="Code" type="cvn:CVN_Province" minOccurs="0"/>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
