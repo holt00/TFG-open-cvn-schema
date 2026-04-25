@@ -28,10 +28,11 @@ Agents should also read `AGENTS.md` before this file.
 ## Current Project Snapshot
 
 - Project: open CVN schema and tooling for Spanish academic CV processing
-- Current pipeline stage: structural generation from official XSDs completed
-- Last documented issues: `#11` and `#12`
-- Last documented hotfix: `#2`
-- Next planned issue: `#13`
+- Current pipeline stage: structural generation completed and metadata
+  normalization completed for the core manual and tree-model sources
+- Last documented issues: `#11`, `#12`, `#13`, and `#25`
+- Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`
+- Next planned issue: `#14`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -61,7 +62,7 @@ Agents should also read `AGENTS.md` before this file.
   issue `#11`
 - `docs/roadmap/issues/issue-12-structural-bindings.md`: full record of issue
   `#12`
-- `docs/roadmap/issues/issue-13-normalization.md`: planned scope of issue `#13`
+- `docs/roadmap/issues/issue-13-normalization.md`: full record of issue `#13`
 - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: planned scope of
   issue `#14`
 - `docs/roadmap/issues/issue-15-domain-model-generator.md`: planned scope of
@@ -76,6 +77,16 @@ Agents should also read `AGENTS.md` before this file.
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance
   record for the human project entry point and update protocol alignment
+- `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`:
+  maintenance record for the source-package documentation expansion and
+  consistency cleanup
+- `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`:
+  corrective plan for expanding the structural scope of issues `#11` and `#12`
+- `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`:
+  corrective plan for extending issue `#13` with auxiliary-reference resolution
+- `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`:
+  corrective plan for replanning the pending semantic and workflow issues after
+  the auxiliary source-package analysis
 
 ### Development And Contribution
 
@@ -88,6 +99,36 @@ Agents should also read `AGENTS.md` before this file.
 ### Supporting Background Material
 
 - `docs/informe_estructura_cvnxml_v1.4.3.md`: structural analysis background
+- `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the
+  auxiliary `Entity`, `ReferenceTables/Subtypes`, and `Thesaurus` families in
+  the canonical source package
+- `docs/cvn_source_package_annex_table_coverage.md`: practical map of Annex I
+  tables to core XSDs, side packages, and unresolved manual-only cases
+- `docs/cvn_annex_priority_table_families.md`: detailed reference for the
+  high-priority Annex I table families that most affect semantic modeling
+- `docs/cvn_annex_table_families_batch3.md`: detailed reference for the next
+  group of Annex I families covering participation, summons, programme,
+  publication, support, and event tables
+- `docs/cvn_annex_table_families_batch4.md`: detailed reference for the next
+  group of Annex I families covering activity, management, scope, language,
+  time, qualification, access, and evaluation tables
+- `docs/cvn_annex_table_families_batch5.md`: detailed reference for the next
+  group of Annex I families covering subject, stay, dedication, duration,
+  formation, teaching, prizes, and thematic tables
+- `docs/cvn_annex_table_families_batch6.md`: detailed reference for the next
+  group of Annex I families covering region, province, sex, and situation
+  tables
+- `docs/cvn_annex_table_families_batch7.md`: detailed reference for the next
+  group of Annex I families covering agency, collaboration, and cooperation
+  tables, including unresolved `CVN_AGENCY_C`
+- `docs/cvn_annex_table_families_batch8.md`: detailed reference for the final
+  Annex I batch covering intervention, supervision, category, and residual test
+  tables
+- `docs/cvn_serialization_patterns_reference.md`: explicit reference of the
+  serialization patterns used by CVN controlled tables, subtype-backed values,
+  catalogs, and unresolved references
+- `docs/cvn_field_reference_traceability.md`: operational guide from normalized
+  CVN fields to tables, catalogs, backing artifacts, and serialization patterns
 - `docs/propuesta_modelado_uml_ocl_cvn.md`: domain modeling background
 - `references/`: external references and tutorial links
 
@@ -97,6 +138,7 @@ The canonical package used by the generation pipeline is:
 
 ```text
 docs/CvnXML_v1.4.3_2.1_17012025/
+|- auxiliary catalog families: Entity, ReferenceTables/Subtypes, Thesaurus
 |- XML/
 |  |- SpecificationManual.xml
 |  `- CVNTreeModel.xml
@@ -113,10 +155,19 @@ docs/CvnXML_v1.4.3_2.1_17012025/
 
 - Issue `#11`: `docs/roadmap/issues/issue-11-project-infrastructure.md`
 - Issue `#12`: `docs/roadmap/issues/issue-12-structural-bindings.md`
+- Issue `#13`: `docs/roadmap/issues/issue-13-normalization.md`
 - Issue `#25`:
   `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 - Hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 - Hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
+- Hotfix `#3`:
+  `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`
+- Hotfix `#4`:
+  `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+- Hotfix `#5`:
+  `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+- Hotfix `#6`:
+  `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
 
 Each issue document records:
 

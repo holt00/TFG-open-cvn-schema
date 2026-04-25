@@ -192,7 +192,13 @@ still need to be made explicitly:
 
 - structural bindings preserve fidelity but expose known limitations for
   `choice`, multiplicity, and wrapper ergonomics
-- external reference tables remain unresolved from the official package alone
+- the official source package does include side-package material for several
+  references previously treated as opaque placeholders:
+  - `ENTITY@Entity.xsd` is represented by the `Entity` family
+  - `THESAURUS@thesaurus.xsd` is represented by the `Thesaurus` family
+  - many Annex-I tables are materialized in `ReferenceTables.xml`
+- not all manual references are fully resolved from the package alone; a known
+  example is `CVN_AGENCY_C`
 
 ## Status
 

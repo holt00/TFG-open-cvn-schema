@@ -11,6 +11,19 @@ La idea principal es distinguir con claridad cuatro capas que aparecen mezcladas
 3. **Modelado tecnico del arbol XML CVN**
 4. **Esquemas XSD de validacion**
 
+Ademas de esas cuatro capas, el paquete oficial incluye familias auxiliares que
+no forman parte del nucleo minimo del pipeline pero si son relevantes para
+interpretar correctamente referencias del manual y tablas del Anexo I:
+
+1. **Catalogo de entidades** (`Entity`)
+2. **Tablas de referencia y subtipos** (`ReferenceTables` y `Subtypes`)
+3. **Tesauros multilingues** (`Thesaurus`)
+
+La documentacion detallada de esas familias se ha separado en:
+
+- `docs/cvn_source_package_auxiliary_artifacts.md`
+- `docs/cvn_source_package_annex_table_coverage.md`
+
 Si se entiende esta separacion, el paquete deja de parecer un conjunto de archivos heterogeneos y pasa a verse como una especificacion relativamente coherente.
 
 ---
@@ -816,3 +829,25 @@ Para cualquier trabajo serio de modelado, especialmente si se quiere llegar a un
 - dejar el **tree model** y los **XSD** como capa de mapeo y validacion, no como fuente principal del dominio
 
 En otras palabras: el valor real del paquete no esta en copiar su XML, sino en separar adecuadamente **conceptos**, **reglas** y **serializacion**.
+
+---
+
+## Complementos importantes del paquete oficial
+
+El analisis anterior cubre el nucleo minimo necesario para entender y empezar a
+usar la norma CVN. Sin embargo, el paquete oficial completo contiene ademas
+familias auxiliares que deben tenerse en cuenta para una lectura exhaustiva del
+sistema:
+
+- `Entity`: registro normalizado de instituciones y entidades, con esquema y XML
+  propios
+- `ReferenceTables` y `Subtypes`: materializacion XML de buena parte del Anexo I
+  y reglas de codificacion para la propiedad `Subtype`
+- `Thesaurus`: vocabulario jerarquico multilingue para palabras clave y
+  materias
+
+Para evitar duplicar analisis y mantener cada bloque en un documento util para
+consulta posterior, la documentacion completa de estas familias se encuentra en:
+
+- `docs/cvn_source_package_auxiliary_artifacts.md`
+- `docs/cvn_source_package_annex_table_coverage.md`

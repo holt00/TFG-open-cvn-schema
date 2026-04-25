@@ -35,6 +35,15 @@ Goal:
 | `#17` | Document and automate the complete workflow | Pending | Final workflow and documentation closure |
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
 
+Corrective planning after hotfixes `#4`, `#5`, and `#6`:
+
+- issues `#11` and `#12` require documented structural-scope expansion to the
+  auxiliary source-package families
+- issue `#13` requires a documented additive resolution layer for auxiliary
+  reference sources
+- issue `#14` must be started with those corrective documents in scope rather
+  than using the older reduced pipeline assumption
+
 ## Original Integration Checkpoints
 
 1. structural bindings reproducible from the canonical XSD package
@@ -126,6 +135,48 @@ Authoritative record:
 
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
 
+### Hotfix `#3`
+
+- Goal:
+  document the canonical source package beyond the core structural subset and
+  preserve the auxiliary-family and Annex-I coverage analysis needed by later
+  issues
+
+Authoritative record:
+
+- `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`
+
+### Hotfix `#4`
+
+- Goal:
+  correct the structural scope of issues `#11` and `#12` so the repository
+  infrastructure and structural generation plan cover the auxiliary source
+  package families
+
+Authoritative record:
+
+- `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+
+### Hotfix `#5`
+
+- Goal:
+  correct issue `#13` so normalization grows from plain manual/tree alignment
+  into an additive resolution layer over auxiliary reference sources
+
+Authoritative record:
+
+- `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+
+### Hotfix `#6`
+
+- Goal:
+  realign the roadmap for issues `#8`, `#14`, `#15`, `#16`, and `#17` around
+  the auxiliary catalog integration now known to be required
+
+Authoritative record:
+
+- `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+
 ## Future Work Focus
 
 ### Issue `#13`
@@ -151,6 +202,8 @@ Authoritative record:
   - naming rules
   - `choice` and wrapper treatment
   - explicit override mechanism
+  - semantic treatment for auxiliary reference families and serialization
+    patterns described by hotfixes `#5` and `#6`
 
 ### Issue `#15`
 
@@ -162,6 +215,8 @@ Authoritative record:
   - emit first representative domain models
   - factor reusable shared domain components where appropriate
   - keep output deterministic and traceable
+  - generate distinct domain representations for enums, subtype-backed tables,
+    registries, thesauri, and unresolved references
 
 ### Issue `#16`
 
@@ -174,6 +229,8 @@ Authoritative record:
   - semantic mapping tests
   - import tests
   - end-to-end pipeline coverage
+  - regression coverage for auxiliary structural targets and reference-resolution
+    behavior
 
 ### Issue `#17`
 
@@ -185,6 +242,8 @@ Authoritative record:
   - limitation documentation
   - obvious regeneration entry point
   - final repository documentation updates
+  - explicit documentation of auxiliary structural generation and
+    auxiliary-reference resolution stages
 
 ### Issue `#25`
 

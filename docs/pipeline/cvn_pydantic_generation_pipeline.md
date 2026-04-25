@@ -11,19 +11,47 @@ The canonical source package is:
 
 ```text
 docs/CvnXML_v1.4.3_2.1_17012025/
+|- Leeme.txt
+|- LeemeENTITY.txt
+|- LeemeREFERENCETABLES.txt
+|- LeemeTHESAURUS.txt
+|- CVN_README.md
+|- Manual/
+|  |- Manual de Especificaciones Técnicas v1.4.3_v2.1.pdf
+|  |- TreeModel_v1.0 20090331 v1.0.pdf
+|  |- Entidades_esquema_Entity_v1.4.xsd_2008-07-04 v1.0.pdf
+|  |- ReferenceTables.pdf
+|  |- Subtypes_v1.1.pdf
+|  `- Tesauros 2008-01-23 v1.0.pdf
 |- XML/
 |  |- SpecificationManual.xml
-|  `- CVNTreeModel.xml
+|  |- CVNTreeModel.xml
+|  |- Entity.xml
+|  |- ReferenceTables.xml
+|  |- Subtype_Spa.xml
+|  |- Thesaurus.xml
+|  |- Thesaurus_Eng.xml
+|  `- Thesaurus_Spa.xml
 `- XSD/
    |- CVN.xsd
    |- Common.xsd
    |- AuxTable.xsd
    |- ISOUtilities.xsd
    |- SpecificationManual.xsd
-   `- CVNTreeModel_v1.0.xsd
+   |- CVNTreeModel_v1.0.xsd
+   |- Entity_v1.4.xsd
+   |- EntityUtilities_v1.4.xsd
+   |- ISOUtilitiesENTITY.xsd
+   |- CVNUtilities_v1.0.xsd
+   |- ReferenceTables.xsd
+   |- ISOUtilitiesREFERENCETABLES.xsd
+   |- Subtypes.xsd
+   |- Thesaurus.xsd
+   `- ISOUtilitiesTHESAURUS.xsd
 ```
 
-These artifacts represent three different but related layers.
+These artifacts represent three different but related layers, plus a set of
+auxiliary catalog families that the core CVN package references indirectly.
 
 ### Layer 1 - Final CVN XML Structure
 
@@ -45,6 +73,19 @@ These artifacts represent three different but related layers.
 - `XSD/SpecificationManual.xsd` validates the manual XML
 - `XSD/CVNTreeModel_v1.0.xsd` validates the tree model XML
 
+### Layer 4 - Auxiliary Catalog Families
+
+- `XML/Entity.xml` and `XSD/Entity_v1.4.xsd` define a normalized institution and
+  organization registry used by CVN through references such as
+  `ENTITY@Entity.xsd`
+- `XML/ReferenceTables.xml` and `XSD/ReferenceTables.xsd` materialize a large
+  portion of the Annex I auxiliary tables in XML form
+- `XML/Subtype_Spa.xml` and `XSD/Subtypes.xsd` define the codification layer for
+  `Subtype` values derived from auxiliary tables
+- `XML/Thesaurus.xml`, `XML/Thesaurus_Eng.xml`, `XML/Thesaurus_Spa.xml`, and
+  `XSD/Thesaurus.xsd` define the hierarchical keyword thesaurus referenced from
+  fields such as `THESAURUS@thesaurus.xsd`
+
 ## Observed Relationships Between Files
 
 - `XSD/CVN.xsd` includes `Common.xsd` and `AuxTable.xsd`
@@ -54,6 +95,12 @@ These artifacts represent three different but related layers.
 - `XML/SpecificationManual.xml` is validated by `XSD/SpecificationManual.xsd`
 - `XML/CVNTreeModel.xml` is validated by `XSD/CVNTreeModel_v1.0.xsd` in
   principle, although a documented inconsistency exists in practice
+- `XML/Entity.xml` is validated by `XSD/Entity_v1.4.xsd` in conceptual terms,
+  although the preserved repository layout differs from the relative
+  `schemaLocation` strings used in the original files
+- `XML/ReferenceTables.xml` is validated by `XSD/ReferenceTables.xsd`
+- `XML/Subtype_Spa.xml` is validated by `XSD/Subtypes.xsd`
+- `XML/Thesaurus*.xml` is validated by `XSD/Thesaurus.xsd`
 
 The conceptual relationship is:
 
@@ -66,6 +113,18 @@ CVNTreeModel.xml
 
 CVN.xsd + Common.xsd + AuxTable.xsd + ISOUtilities.xsd
   -> valid XML structure and controlled value types
+
+Entity.xml + Entity_v1.4.xsd + helpers
+  -> normalized external entity registry used by CVN references
+
+ReferenceTables.xml + ReferenceTables.xsd
+  -> machine-readable auxiliary tables corresponding to Annex I
+
+Subtype_Spa.xml + Subtypes.xsd
+  -> codification bridge from auxiliary table values to `Subtype`
+
+Thesaurus.xml + Thesaurus.xsd
+  -> hierarchical multilingual keyword vocabulary
 ```
 
 ## Observed Structural Characteristics
@@ -95,17 +154,24 @@ CVN.xsd + Common.xsd + AuxTable.xsd + ISOUtilities.xsd
 
 ### Reference Table Situation
 
-Resolvable internally:
+Resolvable internally in the core or auxiliary package:
 
 - `ISO_3166`
 - `ISO_639`
 - tables in `AuxTable.xsd`
-
-External or unresolved:
-
-- `ENTITY@Entity.xsd`
-- `THESAURUS@thesaurus.xsd`
+- tables in `ReferenceTables.xml`
 - `UNESCO_CODES`
+
+Available as side-package registries rather than direct core XSD enums:
+
+- `ENTITY@Entity.xsd` -> represented by `Entity_v1.4.xsd` and `Entity.xml`
+- `THESAURUS@thesaurus.xsd` -> represented by `Thesaurus.xsd` and
+  `Thesaurus*.xml`
+
+Still unresolved or requiring explicit semantic policy:
+
+- some manual references do not map cleanly to a side-package table from the
+  package alone, for example `CVN_AGENCY_C`
 
 ## Architecture Decision
 

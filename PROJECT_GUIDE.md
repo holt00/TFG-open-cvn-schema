@@ -88,8 +88,8 @@ files in order:
   record of issue `#11`
 - `docs/roadmap/issues/issue-12-structural-bindings.md`: authoritative record
   of issue `#12`
-- `docs/roadmap/issues/issue-13-normalization.md`: authoritative record and
-  planned scope around issue `#13`
+- `docs/roadmap/issues/issue-13-normalization.md`: authoritative record of issue
+  `#13`
 - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: planned scope of
   issue `#14`
 - `docs/roadmap/issues/issue-15-domain-model-generator.md`: planned scope of
@@ -98,11 +98,24 @@ files in order:
   issue `#16`
 - `docs/roadmap/issues/issue-17-workflow-documentation.md`: planned scope of
   issue `#17`
+- `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`:
+  authoritative record of issue `#25`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance
   record for the human project entry point and documentation update protocol
   alignment
+- `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`:
+  maintenance record for the source-package documentation expansion and
+  consistency cleanup
+- `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`:
+  corrective plan for extending issues `#11` and `#12` to the auxiliary source
+  package families
+- `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`:
+  corrective plan for extending issue `#13` with auxiliary-reference resolution
+- `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`:
+  corrective plan for replanning issues `#8`, `#14` to `#17`, and the CI impact
+  from the auxiliary catalog integration
 
 ### Development Reference
 
@@ -111,12 +124,48 @@ files in order:
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy,
   cross-linking rules, and update protocol
 
+### Source Package Analysis
+
+- `docs/informe_estructura_cvnxml_v1.4.3.md`: detailed analysis of the core CVN
+  package structure and usage
+- `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the
+  auxiliary `Entity`, `ReferenceTables/Subtypes`, and `Thesaurus` families
+- `docs/cvn_source_package_annex_table_coverage.md`: practical mapping of Annex
+  I tables to core XSDs, side packages, and unresolved manual-only cases
+- `docs/cvn_annex_priority_table_families.md`: detailed reference for the
+  high-impact Annex I table families most relevant to semantic mapping work
+- `docs/cvn_annex_table_families_batch3.md`: detailed reference for the next
+  group of Annex I families covering participation, summons, programme,
+  publication, support, and event tables
+- `docs/cvn_annex_table_families_batch4.md`: detailed reference for the next
+  group of Annex I families covering activity, management, scope, language,
+  time, qualification, access, and evaluation tables
+- `docs/cvn_annex_table_families_batch5.md`: detailed reference for the next
+  group of Annex I families covering subject, stay, dedication, duration,
+  formation, teaching, prizes, and thematic tables
+- `docs/cvn_annex_table_families_batch6.md`: detailed reference for the next
+  group of Annex I families covering region, province, sex, and situation
+  tables
+- `docs/cvn_annex_table_families_batch7.md`: detailed reference for the next
+  group of Annex I families covering agency, collaboration, and cooperation
+  tables, including unresolved `CVN_AGENCY_C`
+- `docs/cvn_annex_table_families_batch8.md`: detailed reference for the final
+  Annex I batch covering intervention, supervision, category, and residual test
+  tables
+- `docs/cvn_serialization_patterns_reference.md`: explicit reference of the
+  serialization patterns used by CVN controlled tables, subtype-backed values,
+  catalogs, and unresolved manual references
+- `docs/cvn_field_reference_traceability.md`: operational traceability guide
+  from normalized CVN fields to tables, side-package catalogs, backing artifacts,
+  and serialization patterns
+
 ## Canonical Source Artifacts
 
 The canonical package used by the generation pipeline is:
 
 ```text
 docs/CvnXML_v1.4.3_2.1_17012025/
+|- auxiliary catalog families: Entity, ReferenceTables/Subtypes, Thesaurus
 |- XML/
 |  |- SpecificationManual.xml
 |  `- CVNTreeModel.xml

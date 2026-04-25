@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-04-21
+- Last updated: 2026-04-25
 
 ## Completed Or Stabilized Work
 
@@ -54,6 +54,20 @@
 - `AGENTS.md` remains the agent-specific entry point and now references the
   human guide as its counterpart
 
+### Hotfix `#3`
+
+- the repository now contains persistent documentation covering the auxiliary
+  families of the canonical CVN source package and the full detailed sweep of
+  `ReferenceTables.xml`
+- the repository now contains dedicated references for:
+  - serialization patterns
+  - field-to-table traceability from the normalized manual layer
+- documentation consistency issues across entry-point and context files were
+  corrected so that current status, roadmap references, and reading order remain
+  aligned
+- a maintenance record for this documentation-only patch exists at:
+  - `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`
+
 ### Issue `#13`
 
 - normalization output contract is implemented through typed structures in
@@ -96,6 +110,83 @@
 - merge blocking depends on GitHub branch protection or rulesets marking the
   `tests` check as required
 
+### Source Package Documentation Expansion
+
+- the canonical CVN source package is now documented beyond the core structural
+  subset
+- new persistent reference documents added in this documentation expansion are:
+  - `docs/cvn_source_package_auxiliary_artifacts.md`
+  - `docs/cvn_source_package_annex_table_coverage.md`
+  - `docs/cvn_annex_priority_table_families.md`
+  - `docs/cvn_annex_table_families_batch3.md`
+  - `docs/cvn_annex_table_families_batch4.md`
+  - `docs/cvn_annex_table_families_batch5.md`
+  - `docs/cvn_annex_table_families_batch6.md`
+  - `docs/cvn_annex_table_families_batch7.md`
+  - `docs/cvn_annex_table_families_batch8.md`
+  - `docs/cvn_serialization_patterns_reference.md`
+  - `docs/cvn_field_reference_traceability.md`
+- the repository now records the role and relationships of the auxiliary
+  families:
+  - `Entity`
+  - `ReferenceTables/Subtypes`
+  - `Thesaurus`
+- detailed coverage of the tables present in `ReferenceTables.xml` is now
+  complete
+- `CVN_AGENCY_C` is now explicitly documented as a manual reference without a
+  clean matching table in `ReferenceTables.xml`
+- `CVN_KNOW_A` is now documented as a subtype-backed industrial-property table
+- `CVN_INTERVENTION_A` and `CVN_PRUEBA` are now explicitly documented as tables
+  present in `ReferenceTables.xml` without clear current use in
+  `SpecificationManual.xml`
+- the auxiliary artifact documentation now also records real XML usage patterns
+  for `Entity.xml` and `Thesaurus.xml`
+- the repository now documents how to interpret the already-implemented
+  `ManualCodeEntry.manual_reference_table` field without changing the existing
+  normalization core
+- the pipeline architecture documentation now reflects that these families are
+  part of the canonical source bundle and not merely external placeholders
+- the limitation register now records:
+  - historical packaging drift in the auxiliary families
+  - unresolved Annex-I table references such as `CVN_AGENCY_C`
+
+### Hotfix `#4`
+
+- a corrective hotfix record now exists for extending the structural scope of
+  issues `#11` and `#12` to the auxiliary source-package families
+- the documented required retrofit covers structural generation targets for:
+  - `ReferenceTables.xsd`
+  - `Subtypes.xsd`
+  - `Entity_v1.4.xsd`
+  - `Thesaurus.xsd`
+  - optional repository-derived `UNESCOCodes.xsd`
+- the hotfix is documentation-only and does not yet modify runner code,
+  generated packages, or tests
+
+### Hotfix `#5`
+
+- a corrective hotfix record now exists for extending issue `#13` with an
+  additive auxiliary-reference resolution layer
+- the documented required retrofit covers resolution of
+  `ManualCodeEntry.manual_reference_table` against:
+  - `ReferenceTables.xml`
+  - `Subtype_Spa.xml`
+  - `Entity.xml`
+  - `Thesaurus*.xml`
+- the hotfix is documentation-only and does not yet modify normalization code or
+  tests
+
+### Hotfix `#6`
+
+- a corrective hotfix record now exists for replanning issue `#8` and pending
+  issues `#14` to `#17` around the auxiliary-source integration stage
+- the documented required roadmap correction now makes explicit that the pending
+  semantic work depends on:
+  - structural visibility of auxiliary families
+  - auxiliary-reference resolution over normalized manual metadata
+- the hotfix is documentation-only and does not yet modify the pending issue
+  files themselves
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -108,6 +199,10 @@
 ## Next Planned Issue
 
 - Next issue to start: `#14`
+- Required corrective references before starting:
+  - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+  - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+  - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
 - Issue document to read first:
   - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
 
@@ -152,14 +247,35 @@ Run the full repository test suite:
 uv run pytest tests
 ```
 
-## Files Future Sessions Must Read
+## Files Future Sessions Should Read After The Entry Points
 
-1. `docs/context/project_context_index.md`
-2. `docs/context/current_status.md`
-3. `docs/roadmap/cvn_generation_roadmap.md`
-4. `docs/roadmap/issues/issue-11-project-infrastructure.md`
-5. `docs/roadmap/issues/issue-12-structural-bindings.md`
-6. `docs/roadmap/issues/issue-13-normalization.md`
-7. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
-8. `docs/pipeline/known_limitations.md`
-9. `docs/roadmap/hotfixes/`
+Read the standard entry points first:
+
+1. `AGENTS.md`
+2. `PROJECT_GUIDE.md`
+3. `docs/context/project_context_index.md`
+4. `docs/context/current_status.md`
+
+Then continue with these supporting files as needed:
+
+1. `docs/roadmap/cvn_generation_roadmap.md`
+2. `docs/roadmap/issues/issue-11-project-infrastructure.md`
+3. `docs/roadmap/issues/issue-12-structural-bindings.md`
+4. `docs/roadmap/issues/issue-13-normalization.md`
+5. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
+6. `docs/pipeline/known_limitations.md`
+7. `docs/roadmap/hotfixes/`
+8. `docs/cvn_source_package_auxiliary_artifacts.md`
+9. `docs/cvn_source_package_annex_table_coverage.md`
+10. `docs/cvn_annex_priority_table_families.md`
+11. `docs/cvn_annex_table_families_batch3.md`
+12. `docs/cvn_annex_table_families_batch4.md`
+13. `docs/cvn_annex_table_families_batch5.md`
+14. `docs/cvn_annex_table_families_batch6.md`
+15. `docs/cvn_annex_table_families_batch7.md`
+16. `docs/cvn_annex_table_families_batch8.md`
+17. `docs/cvn_serialization_patterns_reference.md`
+18. `docs/cvn_field_reference_traceability.md`
+19. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+20. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+21. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`

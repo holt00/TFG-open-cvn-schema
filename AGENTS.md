@@ -57,6 +57,14 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 - hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
+- hotfix `#3`:
+  `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`
+- hotfix `#4`:
+  `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+- hotfix `#5`:
+  `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+- hotfix `#6`:
+  `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
 
 ### Development Reference
 
