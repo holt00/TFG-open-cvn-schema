@@ -3,13 +3,16 @@
 ## Summary
 
 This maintenance record documents the documentation-only patch applied during the
-session that expanded repository coverage of the canonical CVN source package.
+session that expanded repository coverage of the canonical CVN source package,
+including auxiliary modules recently added to the delivered source bundle sent
+by FECYT.
 
 ## Motivation
 
 The repository already documented the core CVN structural artifacts, but the
-canonical source bundle also included several auxiliary families and a large set
-of Annex I tables that were not documented in equivalent depth.
+canonical source bundle sent by FECYT also included several recently added
+auxiliary families and a large set of Annex I tables that were not documented
+in equivalent depth.
 
 That gap made later semantic work harder because future sessions would still need
 to reopen the original package to understand:
@@ -68,7 +71,8 @@ This patch established the following persistent knowledge in the repository.
 
 ### 1. Side-Package Families Are Now Explicitly Documented
 
-The repository now documents the structure, role, and relationships of:
+The repository now documents the structure, role, and relationships of the
+recently added auxiliary modules sent by FECYT:
 
 - `Entity`
 - `ReferenceTables/Subtypes`

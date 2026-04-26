@@ -145,7 +145,8 @@
   `ManualCodeEntry.manual_reference_table` field without changing the existing
   normalization core
 - the pipeline architecture documentation now reflects that these families are
-  part of the canonical source bundle and not merely external placeholders
+  part of the canonical source bundle recently delivered by FECYT and not
+  merely external placeholders
 - the limitation register now records:
   - historical packaging drift in the auxiliary families
   - unresolved Annex-I table references such as `CVN_AGENCY_C`
@@ -153,7 +154,8 @@
 ### Hotfix `#4`
 
 - a corrective hotfix record now exists for extending the structural scope of
-  issues `#11` and `#12` to the auxiliary source-package families
+  issues `#11` and `#12` to the auxiliary source-package families recently
+  added in the bundle sent by FECYT
 - the documented required retrofit covers structural generation targets for:
   - `ReferenceTables.xsd`
   - `Subtypes.xsd`
@@ -179,7 +181,8 @@
 ### Hotfix `#6`
 
 - a corrective hotfix record now exists for replanning issue `#8` and pending
-  issues `#14` to `#17` around the auxiliary-source integration stage
+  issues `#14` to `#17` around the auxiliary-source integration stage introduced
+  by the modules recently added in the bundle sent by FECYT
 - the documented required roadmap correction now makes explicit that the pending
   semantic work depends on:
   - structural visibility of auxiliary families

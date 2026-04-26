@@ -86,7 +86,8 @@ Agents should also read `AGENTS.md` before this file.
   corrective plan for extending issue `#13` with auxiliary-reference resolution
 - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`:
   corrective plan for replanning the pending semantic and workflow issues after
-  the auxiliary source-package analysis
+  the analysis of the auxiliary modules recently added in the source bundle sent
+  by FECYT
 
 ### Development And Contribution
 

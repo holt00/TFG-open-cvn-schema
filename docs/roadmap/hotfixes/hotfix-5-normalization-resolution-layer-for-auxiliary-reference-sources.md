@@ -4,8 +4,9 @@
 
 Hotfix `#5` records the normalization retrofit required after hotfix `#3`
 showed that `ManualCodeEntry.manual_reference_table` points to several kinds of
-machine-readable sources, not only to opaque strings awaiting later manual
-interpretation.
+machine-readable sources introduced through auxiliary modules recently added in
+the source bundle sent by FECYT, not only to opaque strings awaiting later
+manual interpretation.
 
 Issue `#13` successfully normalized `SpecificationManual.xml` and
 `CVNTreeModel.xml`, but it deliberately stopped before resolving the technical

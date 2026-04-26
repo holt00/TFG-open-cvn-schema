@@ -38,7 +38,7 @@ Goal:
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
 - issues `#11` and `#12` require documented structural-scope expansion to the
-  auxiliary source-package families
+  auxiliary source-package families recently added in the bundle sent by FECYT
 - issue `#13` requires a documented additive resolution layer for auxiliary
   reference sources
 - issue `#14` must be started with those corrective documents in scope rather

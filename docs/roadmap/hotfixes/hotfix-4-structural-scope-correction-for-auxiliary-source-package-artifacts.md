@@ -11,8 +11,9 @@ The repository already implemented the core structural layer for:
 - `SpecificationManual.xsd`
 - `CVNTreeModel_v1.0.xsd`
 
-But the canonical package also contains machine-readable auxiliary families that
-were left outside the structural generation plan:
+But the canonical package version recently delivered by FECYT also contains
+machine-readable auxiliary families that were newly added and left outside the
+structural generation plan:
 
 - `ReferenceTables.xsd`
 - `Subtypes.xsd`
@@ -27,8 +28,9 @@ source package scope.
 ## Motivation
 
 Hotfix `#3` established that the canonical CVN package is not only the core
-manual, tree model, and CVN XSDs. It also contains auxiliary catalogs and
-supporting schemas that are relevant to later semantic work.
+manual, tree model, and CVN XSDs. The source bundle recently sent by FECYT also
+contains newly added auxiliary catalogs and supporting schemas that are
+relevant to later semantic work.
 
 Without this retrofit:
 
