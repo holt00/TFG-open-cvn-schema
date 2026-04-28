@@ -211,6 +211,40 @@ The implementation session that applies this hotfix should verify at minimum:
 4. any successful auxiliary parse smoke checks that the preserved package layout
    allows
 
+## Implementation Development Path
+
+When this hotfix is executed, development should follow this order so risk stays
+controlled and documentation reflects only validated behavior.
+
+1. capture a pre-change baseline for the existing core structural targets
+   (`cvn`, `specification_manual`, `tree_model`), including:
+   - importability
+   - runner test state
+   - generated file inventory
+2. extend runner scope only with the canonical auxiliary targets:
+   - `reference_tables`
+   - `subtypes`
+   - `entity`
+   - `thesaurus`
+3. explicitly exclude `UNESCOCodes.xsd` from first-class runner target scope for
+   this hotfix, because that standalone artifact is repository-derived and not
+   part of the canonical auxiliary-family baseline
+4. validate regression safety with both checks before documentation updates:
+   - strict file-level reproducibility checks on previously generated core
+     packages
+   - behavioral checks (imports, runner tests, parse flows)
+5. attempt parse execution for auxiliary XML/XSD pairs and treat failures as
+   fix targets first, using reproducible runner/config or execution-level
+   adjustments when possible
+6. only if parse failures cannot be solved without violating repository
+   structural boundaries, record exact blocking causes as documented known
+   behavior
+7. defer final documentation updates until code, generation, and verification
+   gates pass
+
+This path is intended to prevent regression drift in previously generated core
+bindings while adding auxiliary structural coverage.
+
 ## Impact On Future Issues
 
 - issue `#13` can no longer be treated as the final technical input boundary for
@@ -222,5 +256,5 @@ The implementation session that applies this hotfix should verify at minimum:
 
 ## Status
 
-- Status: documented as required corrective work
-- Implementation state: pending
+- Status: implementation in progress
+- Implementation state: in progress
