@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by FLORENCIO NUÑEZ (FECYT) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:thesaurus="http://cv.normalizado.org/thesaurus" xmlns:cvn="http://cv.normalizado.org/cvn" targetNamespace="http://cv.normalizado.org/thesaurus" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			Version: 1.0.0
+		</xs:documentation>
+		<xs:documentation>
+				Author:FECYT 
+				http://www.fecyt.es
+				http://cv.normalizado.org
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://cv.normalizado.org/cvn" schemaLocation="ISOUtilities.xsd"/>
+	<xs:element name="Thesaurus">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="item" type="thesaurus:itemType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="itemType">
+		<xs:sequence>
+			<xs:element name="itemId" type="xs:string"/>
+			<xs:element name="itemOrder" type="xs:int"/>
+			<xs:element name="itemAncestorId" type="xs:string" minOccurs="0"/>
+			<xs:element name="itemDescription" type="thesaurus:nameType" maxOccurs="unbounded"/>
+			<xs:element name="itemNote" type="thesaurus:nameType" minOccurs="0"/>
+			<!-- Permite la posibilidad de que un item se pueda dar de baja y delegar su responsabilidad
+				en otro item referenciando mediante este elemento -->
+			<xs:element name="delegate" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="nameType">
+		<xs:sequence>
+			<xs:element name="NameDetail" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" type="xs:string"/>
+						<xs:element name="ShortName" type="xs:string" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="lang" type="cvn:ISO_639" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -8,7 +8,7 @@ threads or agent prompts.
 
 Before starting any implementation work, read these files in order:
 
-1. `AGENTS.md`
+1. `PROJECT_GUIDE.md`
 2. `docs/context/project_context_index.md`
 3. `docs/context/current_status.md`
 4. The issue file you are going to work on under `docs/roadmap/issues/`
@@ -82,6 +82,9 @@ session. At minimum, update:
 2. `docs/context/current_status.md`
 3. `docs/pipeline/known_limitations.md` if a new limitation was discovered
 4. `docs/roadmap/cvn_generation_roadmap.md` if the roadmap state changed
+5. `PROJECT_GUIDE.md` when the human-facing project entry guidance,
+   documentation map, contributor reading order, or repository orientation
+   changes
 
 Update `AGENTS.md` only when the documentation map or the operational rules for
 agents change.

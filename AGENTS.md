@@ -11,9 +11,10 @@ to versioned documentation under `docs/`.
 Every new session should read these files in order before making changes:
 
 1. `AGENTS.md`
-2. `docs/context/project_context_index.md`
-3. `docs/context/current_status.md`
-4. The relevant issue document under `docs/roadmap/issues/`
+2. `PROJECT_GUIDE.md`
+3. `docs/context/project_context_index.md`
+4. `docs/context/current_status.md`
+5. The relevant issue document under `docs/roadmap/issues/`
 
 ## Repository-Specific Rules
 
@@ -31,6 +32,7 @@ Every new session should read these files in order before making changes:
 
 ### Entry Points
 
+- human project guide: `PROJECT_GUIDE.md`
 - context index: `docs/context/project_context_index.md`
 - current state: `docs/context/current_status.md`
 
@@ -54,6 +56,15 @@ Every new session should read these files in order before making changes:
 - issue `#25`:
   `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
+- hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
+- hotfix `#3`:
+  `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`
+- hotfix `#4`:
+  `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+- hotfix `#5`:
+  `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+- hotfix `#6`:
+  `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
 
 ### Development Reference
 
@@ -71,5 +82,7 @@ At the end of any issue implementation, update:
 2. `docs/context/current_status.md`
 3. `docs/pipeline/known_limitations.md` if a new limitation was found
 4. `docs/roadmap/cvn_generation_roadmap.md` if the issue status changed
+5. `PROJECT_GUIDE.md` when the human-facing project entry guidance, document
+   map, contributor reading order, or repository orientation changes
 
 Update `AGENTS.md` only when the document map or operational rules change.

@@ -101,6 +101,45 @@ do not need to rediscover them.
   - issue `#13` must treat the tree-model XML as a source of truth for
     normalization even when the XSD does not describe it completely
 
+### Auxiliary Catalog Families Preserve Historical Packaging Drift
+
+- affected families:
+  - `Entity`
+  - `ReferenceTables/Subtypes`
+  - `Thesaurus`
+- confirmed issues:
+  - XML `schemaLocation` values assume colocated XSD files, while the preserved
+    repository package stores XML and XSD in separate directories
+  - several `Leeme*.txt` files mention filenames that do not exactly match the
+    preserved repository filenames, such as `Subtypes.xml` instead of
+    `Subtype_Spa.xml`, or lowercase thesaurus filenames that differ from the
+    actual files
+  - side families duplicate ISO helper schemas instead of using one fully shared
+    physical artifact
+  - `Subtypes` materials preserve version drift between PDF, XSD, and XML files
+- impact:
+  - package exploration and automated file resolution cannot rely on filenames or
+    relative schema locations alone
+  - tooling must resolve these families through repository-aware path mapping and
+    documented semantic relationships
+- expected follow-up:
+  - issue `#14` should define semantic policy for side-package references
+  - issue `#15` should decide which of these auxiliary artifacts become domain
+    sources versus support registries
+
+### Some Annex-I Table References Remain Unresolved From The Package Alone
+
+- confirmed example:
+  - `CVN_AGENCY_C` appears referenced from the manual material but does not map
+    cleanly to a matching table in `ReferenceTables.xml`
+- impact:
+  - not every table name from the manual can yet be promoted to a strict
+    machine-resolved enum or closed catalog using the source package alone
+- expected follow-up:
+  - issue `#14` should define open versus closed treatment for unresolved tables
+  - issue `#15` should preserve such cases as explicit external or manual-only
+    references unless stronger evidence is introduced
+
 ## Documentation Rule
 
 Whenever a new limitation is discovered, add it here and reference the issue

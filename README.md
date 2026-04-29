@@ -63,12 +63,14 @@ partir del chat o de issues externos.
 
 Para obtener el contexto del proyecto y el estado real de implementacion, leer:
 
-1. `AGENTS.md`
+1. `PROJECT_GUIDE.md`
 2. `docs/context/project_context_index.md`
 3. `docs/context/current_status.md`
 
 ## Documentos Clave
 
+- guia principal del proyecto:
+  `PROJECT_GUIDE.md`
 - indice de contexto del proyecto:
   `docs/context/project_context_index.md`
 - estado actual del proyecto:

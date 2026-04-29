@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with Exchanger XML editor by Floren  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:entityType="http://cv.normalizado.org/cvn" xmlns:cvn="http://cv.normalizado.org/cvn" targetNamespace="http://cv.normalizado.org/cvn" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation>
+			Version:  1.4.0
+		</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>
+				Author:FECYT 
+				http://www.fecyt.es
+				http://cv.normalizado.org
+		</xs:documentation>
+	</xs:annotation>
+	<!-- 
+		#####################################################
+			Tabla de tipos de Entidades
+		######################################################		
+	-->
+	<xs:simpleType name="CVN_ENTITY_NATURE">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="000"/>
+			<xs:enumeration value="010"/>
+			<xs:enumeration value="020"/>
+			<!--000: Pública-->
+			<!--010: Privada-->
+			<!--020: Mixta-->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CVN_ENTITY_FUNCTION">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="000"/>
+			<xs:enumeration value="010"/>
+			<xs:enumeration value="020"/>
+			<xs:enumeration value="030"/>
+			<!--000: Investigación-->
+			<!--010: Trabajo-->
+			<!--020: Docencia-->
+			<!--030: Salud-->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CVN_ENTITY_TYPE">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="000"/>
+			<xs:enumeration value="010"/>
+			<xs:enumeration value="020"/>
+			<xs:enumeration value="030"/>
+			<xs:enumeration value="040"/>
+			<xs:enumeration value="050"/>
+			<xs:enumeration value="060"/>
+			<xs:enumeration value="080"/>
+			<xs:enumeration value="090"/>
+			<xs:enumeration value="100"/>
+			<xs:enumeration value="110"/>
+			<xs:enumeration value="120"/>
+			<xs:enumeration value="130"/>
+			<xs:enumeration value="140"/>
+			<xs:enumeration value="150"/>
+			<xs:enumeration value="OTHERS"/>
+			<!--000	Universidad-->
+			<!--010	Instituto  Universitario de Investigación-->
+			<!--020	Centros y Estructuras Universitarios y Asimilados-->
+			<!--030	Departamento Universitario-->
+			<!--040	Fundación-->
+			<!--050	Agencia Estatal-->
+			<!--060	Organismo Público de Investigación-->
+			<!--080	Entidad Empresarial-->
+			<!--090	Entidad Gestora del Sistema Nacional de Salud-->
+			<!--100	Instituciones Sanitarias-->
+			<!--110	Centro Tecnológico-->
+			<!--120	Centro de I+D-->
+			<!--130	Asociaciones y Agrupaciones-->
+			<!--140	CIBER-->
+			<!--150	Centros de Innovación y Tecnología-->
+			<!--OTHERS	Organismo, Otros-->
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

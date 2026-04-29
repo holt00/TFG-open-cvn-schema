@@ -10,6 +10,7 @@ sessions must update it.
 ### Repository Entry Files
 
 - `README.md`: human overview
+- `PROJECT_GUIDE.md`: human-oriented project entry point and documentation map
 - `AGENTS.md`: operational rules and document map for agents
 - `CONTRIBUTING.md`: developer onboarding and update obligations
 
@@ -66,6 +67,8 @@ At the end of every issue session, update at minimum:
 2. `docs/context/current_status.md`
 3. `docs/pipeline/known_limitations.md` when a new limitation appears
 4. `docs/roadmap/cvn_generation_roadmap.md` when issue state changes
+5. `PROJECT_GUIDE.md` when the repository entry guidance, documentation map,
+   contributor reading order, or human-facing project orientation changes
 
 Update `AGENTS.md` only if:
 
@@ -93,6 +96,7 @@ Update `AGENTS.md` only if:
 ## Cross-Linking Rules
 
 - `AGENTS.md` must point to the context index
+- `PROJECT_GUIDE.md` must point to the context index
 - the context index must point to current status, roadmap, issues, pipeline,
   and ADRs
 - issue files must link to supporting architecture and limitation documents

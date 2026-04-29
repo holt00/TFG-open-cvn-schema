@@ -32,3 +32,6 @@ that mapping manually.
 
 `AGENTS.md` is no longer the repository knowledge base. It is now the agent
 entry point that points to the canonical documents above.
+
+`PROJECT_GUIDE.md` is the human-facing root entry point for understanding the
+repository.

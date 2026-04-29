@@ -42,13 +42,17 @@ made the baseline operational.
 
 ### Repository Layout
 
-The baseline layout established by issue `#11` is:
+The baseline layout established by issue `#11` and corrected by hotfix `#4` is:
 
 ```text
 src/
 ├── generated/
 │   ├── cvn/
+│   ├── reference_tables/
+│   ├── subtypes/
+│   ├── entity/
 │   ├── specification_manual/
+│   ├── thesaurus/
 │   └── tree_model/
 ├── cvn_codegen/
 └── models/
@@ -78,6 +82,9 @@ The infrastructure was validated by successfully using it in issue `#12` to:
 - generate structural bindings under `src/generated/`
 - import the runner from `cvn_codegen`
 - run `pytest` against the runner tests
+- extend structural generation coverage to the canonical auxiliary families
+  (`reference_tables`, `subtypes`, `entity`, `thesaurus`) without breaking the
+  existing core generation baseline
 
 ## Findings
 
@@ -95,6 +102,8 @@ The infrastructure was validated by successfully using it in issue `#12` to:
 ## Impact On Future Issues
 
 - Issue `#12` reuses the exact structural package layout defined here
+- Structural generation now explicitly covers both core and auxiliary source
+  package families under the same baseline layout
 - Issues `#13` to `#15` depend on the separation between generated artifacts and
   manual pipeline logic
 - Issue `#17` will document the workflow, but it is grounded in the structure
