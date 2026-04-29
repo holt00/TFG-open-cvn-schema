@@ -1,0 +1,26 @@
+---------------------
+Contenido de Tesauros
+---------------------
+Los archivos contenidos en este fichero tienen información de la estructura utilizada en el proyecto CVN para la codificación de palabras clave (tesauros).
+
+Thesaurus_v1.1.zip. contiene los mismos tesauros utilizando un esquema más avanzado. Este esquema incluye más propiedades para el detalle de los tesauros
+
+Manual
+------
+- Tesauros 2008-01-23 v1.0.pdf: Documento explicativo sobre la estructura utilizada en el proyecto CVN para la codificación de tesauros.
+
+XSD
+---
+- Thesaurus.xsd: Esquema que valida el fichero de tesauros 
+- ISOUtilities.xsd: esquema con tablas ISO
+
+XML
+---
+- Thesaurus.xml: Representación en XML de la lista tesauros (Conjunto Inglés y Español)
+- Thesaurus_eng.xml Representación en XML de la lista tesauros solo en Inglés
+- Thesaurus_esp.xml Representación en XML de la lista tesauros solo en Español
+
+HTML
+----
+- Thesaurus.html: Representación en formato HTML del esquema Thesaurus.xsd
+

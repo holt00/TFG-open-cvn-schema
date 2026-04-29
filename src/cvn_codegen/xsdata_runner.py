@@ -69,10 +69,34 @@ TARGET_TABLE: Final[dict[str, XSDTargetSpec]] = {
         package="generated.tree_model",
         output_dir=GENERATED_ROOT_DIR / "tree_model",
     ),
+    "reference_tables": XSDTargetSpec(
+        name="reference_tables",
+        source_xsd=CANONICAL_XSD_DIR / "ReferenceTables.xsd",
+        package="generated.reference_tables",
+        output_dir=GENERATED_ROOT_DIR / "reference_tables",
+    ),
+    "subtypes": XSDTargetSpec(
+        name="subtypes",
+        source_xsd=CANONICAL_XSD_DIR / "Subtypes.xsd",
+        package="generated.subtypes",
+        output_dir=GENERATED_ROOT_DIR / "subtypes",
+    ),
+    "entity": XSDTargetSpec(
+        name="entity",
+        source_xsd=CANONICAL_XSD_DIR / "Entity_v1.4.xsd",
+        package="generated.entity",
+        output_dir=GENERATED_ROOT_DIR / "entity",
+    ),
+    "thesaurus": XSDTargetSpec(
+        name="thesaurus",
+        source_xsd=CANONICAL_XSD_DIR / "Thesaurus.xsd",
+        package="generated.thesaurus",
+        output_dir=GENERATED_ROOT_DIR / "thesaurus",
+    ),
 }
 # Map from logical target name to full target specification
 
-EXECUTION_ORDER_ALL: Final[list[str]] = ["cvn", "specification_manual", "tree_model"]
+EXECUTION_ORDER_ALL: Final[list[str]] = ["cvn", "specification_manual", "tree_model", "reference_tables", "subtypes", "entity", "thesaurus"]
 # Target keys in the order they must be executed
 
 TARGET_OVERRIDES: Final[dict[str, list[str]]] = {

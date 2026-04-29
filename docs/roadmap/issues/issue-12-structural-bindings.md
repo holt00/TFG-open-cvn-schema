@@ -3,7 +3,8 @@
 ## Summary
 
 Issue `#12` generated the structural Pydantic bindings for the three official
-schema concerns, standardized execution through a dedicated runner, and added
+core schema concerns, was later corrected by hotfix `#4` to include auxiliary
+schema families, standardized execution through a dedicated runner, and added
 smoke tests for the generation workflow.
 
 ## Original Goal
@@ -57,7 +58,7 @@ The following runner was introduced:
 Responsibilities implemented:
 
 - resolve supported targets (`cvn`, `specification_manual`, `tree_model`,
-  `all`)
+  `reference_tables`, `subtypes`, `entity`, `thesaurus`, `all`)
 - validate prerequisites
 - clean the destination package before generation
 - build deterministic xsdata commands
@@ -71,6 +72,10 @@ Bindings were generated under:
 - `src/generated/cvn/`
 - `src/generated/specification_manual/`
 - `src/generated/tree_model/`
+- `src/generated/reference_tables/`
+- `src/generated/subtypes/`
+- `src/generated/entity/`
+- `src/generated/thesaurus/`
 
 ### Tests Added
 
@@ -88,6 +93,10 @@ Generation was successfully executed for:
 - `CVN.xsd`
 - `SpecificationManual.xsd`
 - `CVNTreeModel_v1.0.xsd`
+- `ReferenceTables.xsd`
+- `Subtypes.xsd`
+- `Entity_v1.4.xsd`
+- `Thesaurus.xsd`
 
 ### Import Checks
 
@@ -97,6 +106,20 @@ The generated packages are importable:
 - `generated.cvn`
 - `generated.specification_manual`
 - `generated.tree_model`
+- `generated.reference_tables`
+- `generated.subtypes`
+- `generated.entity`
+- `generated.thesaurus`
+
+### Core Regression Checks After Auxiliary Expansion
+
+- File-level core reproducibility remained stable after auxiliary generation:
+  - `src/generated/cvn`: `5` Python files
+  - `src/generated/specification_manual`: `3` Python files
+  - `src/generated/tree_model`: `2` Python files
+- Behavioral core checks remained stable:
+  - runner tests passed
+  - core imports remained valid
 
 ### Parse Smoke Checks
 
@@ -113,14 +136,42 @@ The generated packages are importable:
 - Cause: the canonical XML contains `<Type>` inside `Indicator`, but
   `CVNTreeModel_v1.0.xsd` only declares `Value` and `Child` in that position
 
+#### `ReferenceTables.xml`
+
+- Result: success
+- Parser: `xsdata_pydantic.bindings.XmlParser`
+- Root class: `generated.reference_tables.reference_tables.ReferenceTables`
+
+#### `Subtype_Spa.xml`
+
+- Result: success
+- Parser: `xsdata_pydantic.bindings.XmlParser`
+- Root class: `generated.subtypes.subtypes.Cvnsubtype`
+
+#### `Entity.xml`
+
+- Result: success
+- Parser: `xsdata_pydantic.bindings.XmlParser`
+- Root class: `generated.entity.entity_v1_4.Entity`
+
+#### `Thesaurus.xml`
+
+- Result: success
+- Parser: `xsdata_pydantic.bindings.XmlParser`
+- Root class: `generated.thesaurus.thesaurus.Thesaurus`
+
 ## Findings
 
 ### Positive Results
 
 - Structural bindings for all three source concerns can be generated
+- Structural bindings for the four canonical auxiliary families can also be
+  generated reproducibly
 - Generated packages under `src/generated/` are importable
 - The runner standardizes generation successfully
 - `SpecificationManual.xml` can be parsed with the generated binding
+- Auxiliary parse checks for `ReferenceTables.xml`, `Subtype_Spa.xml`,
+  `Entity.xml`, and `Thesaurus.xml` are executable with generated bindings
 
 ### Detected Structural Limitations
 
@@ -151,6 +202,8 @@ justified generation overrides. Semantic cleanup belongs to later issues.
 
 - Issue `#13` must normalize metadata with awareness that the tree-model XML is
   not perfectly aligned with its XSD
+- Issue `#13` and later semantic work can now rely on structural visibility for
+  both core and auxiliary schema families
 - Issue `#14` must define how to restore semantic meaning for `choice`, wrapper
   types, and multiplicity constraints
 - Issue `#15` must emit domain models that correct the ergonomic limitations of

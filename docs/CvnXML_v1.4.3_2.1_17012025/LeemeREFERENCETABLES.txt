@@ -1,0 +1,21 @@
+-----------------------------
+Contenido de ReferenceTables
+-----------------------------
+Los archivos contenidos en este fichero tienen la información necesaria para la codificación de las tablas de referencia y subtipos de cvnXML
+
+XSD
+---
+- ReferenceTables.xsd: Esquema que valida las tablas de referencia de CVN. 
+- ISOUtilities.xsd: Esquema que valida las tablas ISO
+- Subtypes.xsd: Esquema que valida los subtipos de un currículum vítae
+
+XML
+---
+- ReferenceTables.xml: Representación en XML de las tablas contenidas en el especificaciones Manual de Especificaciones (Anexo I)
+- Subtypes.xml: Representación en XML de la tabla de subtipos
+
+PDF
+---
+- ReferenceTables.pdf: Explicación del modo de codificar las tablas de referencia
+- Subtypes_v1.1.pdf: Explicación del modo de codificar subtipos
+
