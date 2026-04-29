@@ -153,17 +153,27 @@
 
 ### Hotfix `#4`
 
-- a corrective hotfix record now exists for extending the structural scope of
-  issues `#11` and `#12` to the auxiliary source-package families recently
-  added in the bundle sent by FECYT
-- the documented required retrofit covers structural generation targets for:
+- the hotfix corrective scope for issues `#11` and `#12` is now implemented for
+  canonical auxiliary source-package families
+- structural generation targets now include:
   - `ReferenceTables.xsd`
   - `Subtypes.xsd`
   - `Entity_v1.4.xsd`
   - `Thesaurus.xsd`
-  - optional repository-derived `UNESCOCodes.xsd`
-- the hotfix is documentation-only and does not yet modify runner code,
-  generated packages, or tests
+- generated packages now exist under:
+  - `src/generated/reference_tables`
+  - `src/generated/subtypes`
+  - `src/generated/entity`
+  - `src/generated/thesaurus`
+- runner and smoke/unit test coverage were expanded for auxiliary targets
+- auxiliary parse checks are executable for:
+  - `ReferenceTables.xml`
+  - `Subtype_Spa.xml`
+  - `Entity.xml`
+  - `Thesaurus.xml`
+- core regression validation after auxiliary integration passed with both:
+  - file-level checks (`cvn=5`, `specification_manual=3`, `tree_model=2`)
+  - behavioral checks (runner tests, imports, parse checks)
 
 ### Hotfix `#5`
 

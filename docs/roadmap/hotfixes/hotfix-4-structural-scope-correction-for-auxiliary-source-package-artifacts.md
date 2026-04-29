@@ -19,11 +19,9 @@ structural generation plan:
 - `Subtypes.xsd`
 - `Entity_v1.4.xsd`
 - `Thesaurus.xsd`
-- repository-derived `UNESCOCodes.xsd`
 
-This hotfix does not implement those changes. It documents exactly how issues
-`#11` and `#12` must be corrected so the repository baseline matches the real
-source package scope.
+This hotfix originally documented the corrective path for issues `#11` and
+`#12`. The correction path is now implemented and validated.
 
 ## Motivation
 
@@ -77,11 +75,6 @@ At minimum, the repository must treat these as planned generated packages:
 - `src/generated/entity/`
 - `src/generated/thesaurus/`
 
-Optional but recommended if the isolated extracted artifact remains part of the
-repository contract:
-
-- `src/generated/unesco_codes/`
-
 ### Hand-Maintained Pipeline Areas Required
 
 Issue `#11` should also be retroactively understood as reserving space for
@@ -121,10 +114,6 @@ supported target list include at least:
 - `entity`
 - `thesaurus`
 
-Optional but recommended if treated as a first-class repository artifact:
-
-- `unesco_codes`
-
 ### Expected Target Mapping
 
 The corrected target mapping should follow this pattern:
@@ -133,7 +122,6 @@ The corrected target mapping should follow this pattern:
 - `Subtypes.xsd` -> `generated.subtypes`
 - `Entity_v1.4.xsd` -> `generated.entity`
 - `Thesaurus.xsd` -> `generated.thesaurus`
-- `UNESCOCodes.xsd` -> `generated.unesco_codes`
 
 ### Runner Changes Required
 
@@ -256,5 +244,5 @@ bindings while adding auxiliary structural coverage.
 
 ## Status
 
-- Status: implementation in progress
-- Implementation state: in progress
+- Status: implemented and validated
+- Implementation state: completed

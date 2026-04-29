@@ -37,8 +37,9 @@ Goal:
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
-- issues `#11` and `#12` require documented structural-scope expansion to the
-  auxiliary source-package families recently added in the bundle sent by FECYT
+- hotfix `#4` structural-scope correction for issues `#11` and `#12` is now
+  applied, including structural generation for the canonical auxiliary schema
+  families (`reference_tables`, `subtypes`, `entity`, `thesaurus`)
 - issue `#13` requires a documented additive resolution layer for auxiliary
   reference sources
 - issue `#14` must be started with those corrective documents in scope rather
@@ -85,13 +86,17 @@ Authoritative record:
   - generate from `CVN.xsd`
   - generate from `SpecificationManual.xsd`
   - generate from `CVNTreeModel_v1.0.xsd`
+  - generate from `ReferenceTables.xsd`
+  - generate from `Subtypes.xsd`
+  - generate from `Entity_v1.4.xsd`
+  - generate from `Thesaurus.xsd`
   - verify include/import resolution
   - verify module importability
   - test real parsing flows where possible
   - record structural limitations detected during generation
 - Implemented outcome:
   - standardized xsdata runner added
-  - structural bindings generated for all three source concerns
+  - structural bindings generated for core and canonical auxiliary concerns
   - runner tests added
   - `SpecificationManual.xml` parse verified
   - `CVNTreeModel.xml` mismatch documented
