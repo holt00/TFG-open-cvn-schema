@@ -2,6 +2,54 @@ from dataclasses import dataclass, field
 from typing import List
 from enum import Enum
 
+class ReferenceResolutionStatus(str, Enum):
+    """Enumerate the reference resolution statuses."""
+
+    NO_REFERENCE = "no_reference"
+    RESOLVED = "resolved"
+    UNRESOLVED = "unresolved"
+    AMBIGUOUS = "ambiguous"
+
+class ReferenceSourceFamily(str, Enum):
+    """Enumerate the reference source families."""
+
+    REFERENCE_TABLE = "reference_table"
+    SUBTYPE_BACKED_TABLE = "subtype_backed_table"
+    SIDE_PACKAGE_REGISTRY = "side_package_registry"
+    SIDE_PACKAGE_THESAURUS = "side_package_thesaurus"
+    UNRESOLVED_MANUAL_ONLY = "unresolved_manual_only"
+
+class SerializationPattern(str, Enum):
+    """Enumerate the serialization patterns."""
+
+    FILTER_VALUE = "filter_value"
+    QUALITY_MEASURE = "quality_measure"
+    SCOPE_TYPE = "scope_type"
+    EXTERNAL_PK_TYPE = "external_pk_type"
+    ENTITY_TYPE = "entity_type"
+    DEDICATION = "dedication"
+    PHYSICAL_DIMENSION_TYPE = "physical_dimension_type"
+    SUBJECT_DESCRIPTION = "subject_description"
+    SUBTYPE = "subtype"
+    SIDE_PACKAGE_REGISTRY = "side_package_registry"
+    SIDE_PACKAGE_THESAURUS = "side_package_thesaurus"
+    UNRESOLVED = "unresolved"
+    UNKNOWN_PRESENT_BUT_RESOLVED = "unknown_present_but_resolved"
+
+
+class SemanticReferenceKind(str, Enum):
+    """Enumerate the semantic reference kinds."""
+
+    COMPACT_ENUM_LIKE_TABLE = "compact_enum_like_table"
+    COMPACT_SCALE_OR_MEASURE = "compact_scale_or_measure"
+    IDENTIFIER_TYPE_TABLE = "identifier_type_table"
+    SCOPE_TABLE = "scope_table"
+    SUBTYPE_BACKED_CONTROLLED_FAMILY = "subtype_backed_controlled_family"
+    HIERARCHICAL_THEMATIC_CLASSIFICATION = "hierarchical_thematic_classification"
+    SIDE_PACKAGE_REGISTRY = "side_package_registry"
+    SIDE_PACKAGE_THESAURUS_OR_VOCABULARY = "side_package_thesaurus_or_vocabulary"
+    UNRESOLVED_MANUAL_ONLY_REFERENCE = "unresolved_manual_only_reference"
+    UNDER_TRACED_REFERENCE_TABLE = "under_traced_reference_table"
 
 class NormalizationMismatchKind(str, Enum):
     """Enumerate the mismatch categories recognized during normalization."""
@@ -30,6 +78,30 @@ class SourceTrace:
     xml_path: str | None = None
     source_code: str | None = None
 
+@dataclass(frozen=True)
+class ReferenceResolutionTrace:
+    """Store traceability details for auxiliary-reference resolution."""
+
+    manual_reference: str | None
+    resolved_from_artifact: str | None
+    resolution_rule: str
+    supporting_metadata: tuple[str, ...] = ()
+    manual_code: str | None = None
+    
+@dataclass(frozen=True)
+class ReferenceResolution:
+    """Represent resolved auxiliary-reference metadata for one manual reference."""
+    raw_reference: str | None
+    status: ReferenceResolutionStatus
+    source_family: ReferenceSourceFamily | None
+    source_artifact: str | None
+    resolved_name: str | None
+    serialization_pattern: SerializationPattern | None
+    semantic_kind: SemanticReferenceKind | None
+    is_subtype_backed: bool
+    subtype_metadata_present: bool | None
+    diagnostic_message: str | None
+    trace: ReferenceResolutionTrace
 
 @dataclass(frozen=True)
 class ManualCodeEntry:
@@ -105,12 +177,15 @@ class NormalizedCodeEntry:
             the code.
         source_files (tuple[str, ...]): Source files contributing to the
             aggregate entry.
+        reference_resolution (ReferenceResolution | None): Resolved auxiliary
+            reference metadata attached to the aggregate entry when available.
     """
 
     code: str
     manual: ManualCodeEntry | None
     tree_paths: tuple[TreePathEntry, ...]
     source_files: tuple[str, ...]
+    reference_resolution: ReferenceResolution | None = None
 
 
 @dataclass(frozen=True)
