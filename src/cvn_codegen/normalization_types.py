@@ -62,6 +62,10 @@ class NormalizationMismatchKind(str, Enum):
     INVALID_XML_PATH = "invalid_xml_path"
     AMBIGUOUS_XML_PATH = "ambiguous_xml_path"
     UNEXPECTED_TREE_ELEMENT = "unexpected_tree_element"
+    UNRESOLVED_MANUAL_REFERENCE = "unresolved_manual_reference"
+    AMBIGUOUS_AUXILIARY_RESOLUTION = "ambiguous_auxiliary_resolution"
+    MISSING_SUBTYPE_SUPPORT = "missing_subtype_support"
+    UNDER_TRACED_REFERENCE_TABLE = "under_traced_reference_table"
 
 
 @dataclass(frozen=True)
