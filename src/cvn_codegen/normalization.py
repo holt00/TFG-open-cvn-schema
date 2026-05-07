@@ -23,6 +23,12 @@ from cvn_codegen.normalization_types import (
 )
 from cvn_codegen.normalization_report import collect_normalization_mismatches
 
+from cvn_codegen.auxiliary_sources import build_auxiliary_source_bundle
+from cvn_codegen.auxiliary_sources.bundle import AuxiliarySourceBundle
+from cvn_codegen.auxiliary_sources.reference_resolution import (
+    resolve_manual_reference,
+)
+
 def collect_all_code(
     manual_entries_by_code: dict[str, ManualCodeEntry],
     tree_entries_by_code: dict[str, tuple[TreePathEntry, ...]],
@@ -66,6 +72,7 @@ def build_normalized_code(
     code: str,
     manual_entries_by_code: dict[str, ManualCodeEntry],
     tree_entries_by_code: dict[str, tuple[TreePathEntry, ...]],
+    auxiliary_bundle: AuxiliarySourceBundle | None = None,
 ) -> NormalizedCodeEntry:
     """Build the normalized view for a single CVN code.
 
@@ -90,24 +97,30 @@ def build_normalized_code(
     
     manual_entry = manual_entries_by_code.get(normalized_code)
     tree_paths = tree_entries_by_code.get(normalized_code, ())
-
-    source_files: list[str] = []
-
+    source_files_set: set[str] = set()
     if manual_entry is not None:
-        source_files.append("SpecificationManual.xml")
-    if source_files:
-        source_files.extend({entry.trace.source_file for entry in tree_paths})
-    
+        source_files_set.add("SpecificationManual.xml")
+    if tree_paths:
+        source_files_set.update(entry.trace.source_file for entry in tree_paths)
+    reference_resolution = None
+    if manual_entry is not None and auxiliary_bundle is not None:
+        reference_resolution = resolve_manual_reference(
+            raw_reference=manual_entry.manual_reference_table,
+            auxiliary_bundle=auxiliary_bundle,
+            manual_code=manual_entry.code,
+        )
     return NormalizedCodeEntry(
         code=normalized_code,
         manual=manual_entry,
         tree_paths=tree_paths,
-        source_files=tuple(set(source_files)),
+        source_files=tuple(sorted(source_files_set)),
+        reference_resolution=reference_resolution,
     )
 
 def build_normalized_code_index(
     manual_entries_by_code: dict[str, ManualCodeEntry],
     tree_entries_by_code: dict[str, tuple[TreePathEntry, ...]],
+    auxiliary_bundle: AuxiliarySourceBundle | None = None,
 ) -> dict[str, NormalizedCodeEntry]:
     """Build the normalized index keyed by CVN code.
 
@@ -130,6 +143,7 @@ def build_normalized_code_index(
             code,
             manual_entries_by_code,
             tree_entries_by_code,
+            auxiliary_bundle=auxiliary_bundle,
         )
         normalized_entries_by_code[code] = normalized_entry
     
@@ -138,6 +152,11 @@ def build_normalized_code_index(
 def build_normalization_result(
     specification_manual_path: Path,
     tree_model_path: Path,
+    *,
+    reference_tables_path: Path | None = None,
+    subtypes_path: Path | None = None,
+    entity_path: Path | None = None,
+    thesaurus_path: Path | None = None,
 ) -> NormalizationResult:
 
     """Run the normalization orchestration for the canonical metadata sources.
@@ -167,9 +186,19 @@ def build_normalization_result(
 
     tree_entries_by_xml_path = index_tree_entries_by_xml_path(tree_entries)
 
+    auxiliary_bundle: AuxiliarySourceBundle | None = None
+    if reference_tables_path is not None and subtypes_path is not None:
+        auxiliary_bundle = build_auxiliary_source_bundle(
+            reference_tables_path=reference_tables_path,
+            subtypes_path=subtypes_path,
+            entity_path=entity_path,
+            thesaurus_path=thesaurus_path,
+        )
+
     normalized_entries_by_code = build_normalized_code_index(
         manual_entries_by_code,
         tree_entries_by_code,
+        auxiliary_bundle=auxiliary_bundle,
     )
 
     manual_codes = set(manual_entries_by_code)
