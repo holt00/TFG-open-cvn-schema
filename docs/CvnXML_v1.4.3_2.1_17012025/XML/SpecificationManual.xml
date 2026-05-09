@@ -41414,7 +41414,7 @@ Segundo Apellido: García</Text>
         <Text lang="spa">Indique las empresas o entidades que están explotando la licencia.</Text>
       </Definition>
       <Obligatory>false</Obligatory>
-      <ReferenceTable>ENTITY@entity.xsd</ReferenceTable>
+      <ReferenceTable>ENTITY@Entity.xsd</ReferenceTable>
       <Multiplicity>true</Multiplicity>
       <Length>0</Length>
       <Extension/>
@@ -41631,7 +41631,7 @@ Segundo Apellido: García</Text>
         <Text lang="spa">Nombre oficial de la entidad titular de la patente o modelo de utilidad.</Text>
       </Definition>
       <Obligatory>false</Obligatory>
-      <ReferenceTable>ENTITY@entity.xsd</ReferenceTable>
+      <ReferenceTable>ENTITY@Entity.xsd</ReferenceTable>
       <Multiplicity>false</Multiplicity>
       <Length>0</Length>
       <Extension/>

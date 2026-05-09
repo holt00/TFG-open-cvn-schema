@@ -207,8 +207,13 @@ def build_normalization_result(
     manual_only_codes = tuple(sorted(manual_codes - tree_codes))
     tree_only_codes = tuple(sorted(tree_codes - manual_codes))
 
-    mismatches = collect_normalization_mismatches(manual_only_codes, tree_only_codes) 
-
+    mismatches = collect_normalization_mismatches(
+            manual_only_codes=manual_only_codes,
+            tree_only_codes=tree_only_codes,
+            normalized_entries_by_code=normalized_entries_by_code,
+            auxiliary_bundle=auxiliary_bundle,
+        )
+    
     return NormalizationResult(
         by_code=normalized_entries_by_code,
         by_xml_path=tree_entries_by_xml_path,

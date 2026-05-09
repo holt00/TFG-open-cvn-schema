@@ -46,7 +46,7 @@ instead of consuming a stable normalized layer.
 This hotfix remains focused on issue `#13`, but it is no longer only a passive
 planning record.
 
-Development has now started for the normalization retrofit described here.
+The normalization retrofit described here has now been implemented.
 
 The implementation scope of this hotfix is intentionally narrow and must stay
 centered on normalization enrichment, not on structural-generation expansion or
@@ -504,6 +504,83 @@ The implementation session that applies this hotfix should verify at minimum:
 7. successful normalization-grade parse coverage for `Entity.xml` and canonical
    thesaurus inputs used by the implementation
 
+## Implemented Outcome
+
+The current repository implementation now provides the following validated
+additive layer over the original issue `#13` baseline.
+
+### Contract Outcome
+
+- `src/cvn_codegen/normalization_types.py` now includes typed auxiliary
+  resolution metadata through:
+  - `ReferenceResolutionStatus`
+  - `ReferenceSourceFamily`
+  - `SerializationPattern`
+  - `SemanticReferenceKind`
+  - `ReferenceResolutionTrace`
+  - `ReferenceResolution`
+- `NormalizedCodeEntry` now carries additive `reference_resolution` metadata
+  without replacing `ManualCodeEntry.manual_reference_table`
+
+### Auxiliary Loader Outcome
+
+- normalization-grade auxiliary-source support now exists under
+  `src/cvn_codegen/auxiliary_sources/`
+- canonical auxiliary metadata can now be loaded for:
+  - `ReferenceTables.xml`
+  - `Subtype_Spa.xml`
+  - `Entity.xml`
+  - `Thesaurus.xml`
+- a reusable `AuxiliarySourceBundle` now aggregates those inputs for the
+  normalization stage
+
+### Resolution Outcome
+
+- manual reference resolution is now implemented as a deterministic layer over
+  normalized manual entries
+- the current implementation resolves and classifies at minimum:
+  - direct `ReferenceTables.xml` tables such as `CVN_SEX_A`
+  - subtype-backed families such as `CVN_KNOW_A`
+  - side-package registry references such as `ENTITY@Entity.xsd`
+  - side-package thesaurus references such as `THESAURUS@thesaurus.xsd`
+  - hierarchical thematic references such as `UNESCO_CODES`
+  - unresolved documented exceptions such as `CVN_AGENCY_C`
+  - under-traced documented tables such as `CVN_INTERVENTION_A` and
+    `CVN_PRUEBA`
+
+### Reporting Outcome
+
+- `src/cvn_codegen/normalization_report.py` now reports auxiliary-resolution
+  findings in addition to the original core mismatch set
+- the current auxiliary-resolution mismatch categories implemented are:
+  - unresolved manual reference
+  - ambiguous auxiliary resolution
+  - missing subtype support
+  - under-traced reference table
+
+### Verification Outcome
+
+- the validated normalization baseline from issue `#13` is preserved:
+  - total normalized codes: `1457`
+  - manual-only codes: `27`
+  - tree-only codes: `1`
+  - overlapping codes: `1429`
+- the current implementation reports the following mismatch distribution when
+  auxiliary sources are enabled:
+  - `27` `MANUAL_ONLY_CODE`
+  - `1` `TREE_ONLY_CODE`
+  - `2` `UNEXPECTED_TREE_ELEMENT`
+  - `1` `UNRESOLVED_MANUAL_REFERENCE`
+  - `2` `UNDER_TRACED_REFERENCE_TABLE`
+
+### Documented Implementation Limits Still Present
+
+- `Subtype_Spa.xml` proves subtype catalog availability but does not provide a
+  direct table-family key such as `CVN_KNOW_A` for strict per-table subtype
+  verification
+- the current unresolved auxiliary-reference set therefore includes:
+  - `CVN_AGENCY_C`
+
 ## Impact On Future Issues
 
 - issue `#14` should consume resolved auxiliary-reference metadata instead of
@@ -517,5 +594,5 @@ The implementation session that applies this hotfix should verify at minimum:
 
 ## Status
 
-- Status: in progress
-- Implementation state: development started
+- Status: implemented and verified with documented limitations
+- Implementation state: completed

@@ -41,20 +41,17 @@ def _is_subtype_backed_table(
         return False
     return table_metadata.xml_data_type == "Subtype@Subtypes.xsd"
 def _has_subtype_support(
-    normalized_reference: str | None,
     auxiliary_bundle: AuxiliarySourceBundle,
 ) -> bool:
-    """Check whether subtype metadata exists for a normalized reference name.
+    """Check whether subtype catalog metadata is available.
     Args:
-        normalized_reference (str | None): Normalized manual reference name.
         auxiliary_bundle (AuxiliarySourceBundle): Aggregated auxiliary-source
             metadata bundle.
     Returns:
-        bool: ``True`` when subtype metadata is available for the normalized
-        reference name, otherwise ``False``.
+        bool: ``True`` when the subtype catalog was loaded and contains entries,
+        otherwise ``False``.
     """
-    if normalized_reference is None:
-        return False
+    return bool(auxiliary_bundle.subtypes_by_source_code)
     return normalized_reference in auxiliary_bundle.subtypes_by_source_code
 def _build_resolution_trace(
     manual_reference: str | None,
@@ -334,7 +331,6 @@ def resolve_manual_reference(
         subtype_metadata_present = None
         if is_subtype_backed:
             subtype_metadata_present = _has_subtype_support(
-                normalized_reference=normalized_reference,
                 auxiliary_bundle=auxiliary_bundle,
             )
         source_family = ReferenceSourceFamily.REFERENCE_TABLE

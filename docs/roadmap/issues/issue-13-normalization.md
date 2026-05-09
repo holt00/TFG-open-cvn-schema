@@ -2,8 +2,10 @@
 
 ## Summary
 
-Issue `#13` will build a normalized metadata layer from
-`SpecificationManual.xml` and `CVNTreeModel.xml`.
+Issue `#13` builds a normalized metadata layer from
+`SpecificationManual.xml` and `CVNTreeModel.xml` and now also includes an
+additive auxiliary-reference resolution layer over normalized manual
+references.
 
 ## Original Goal
 
@@ -63,13 +65,27 @@ The original plan was refined in several important ways during execution:
 3. `xml_path` was defined as a structural path rooted at `CVNTreeModel`, built
    only from the documented tree-model nodes and excluding `Value` and other
    non-structural content
-4. mismatch reporting was intentionally limited for issue `#13` to known and
-   documented source inconsistencies plus source-overlap mismatches, instead of
-   introducing a broader dynamic anomaly-detection framework
+4. mismatch reporting was initially limited to known documented source
+   inconsistencies plus source-overlap mismatches, but was later extended by
+   hotfix `#5` so the normalized result can also report unresolved
+   auxiliary-reference cases and documented under-traced auxiliary tables
 5. the initial tree-model traversal was incomplete because it ignored nested
    `CVNItem` elements under `Property`; this was corrected after the stronger
    baseline-count integration test exposed the discrepancy with the documented
    overlap counts
+6. after hotfix `#3` documented the auxiliary source families in detail and
+   hotfix `#4` generated structural bindings for them, issue `#13` was extended
+   so normalization no longer stops at `manual_reference_table` strings and now
+   resolves them against `ReferenceTables.xml`, `Subtype_Spa.xml`, `Entity.xml`,
+   and `Thesaurus.xml`
+7. `Subtype_Spa.xml` was integrated at catalog-availability level rather than
+   through a strict per-table-family bridge because the preserved XML is keyed by
+   numeric subtype item codes and does not expose direct table-family keys such
+   as `CVN_KNOW_A`
+8. side-package reference resolution had to account for packaging and naming
+   drift in the preserved source package, including equivalent `Entity`
+   reference-string variants that now resolve to the same canonical
+   side-package registry backing
 
 ## Implementation Performed
 
@@ -85,6 +101,19 @@ The following hand-maintained modules were implemented for issue `#13`:
   - orchestration of both sources into unified normalized views
 - `src/cvn_codegen/normalization_report.py`
   - mismatch construction and aggregation
+- `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`
+  - normalization-grade loading and indexing of `ReferenceTables.xml`
+- `src/cvn_codegen/auxiliary_sources/subtypes_metadata.py`
+  - normalization-grade loading and indexing of `Subtype_Spa.xml`
+- `src/cvn_codegen/auxiliary_sources/entity_metadata.py`
+  - normalization-grade loading and indexing of `Entity.xml`
+- `src/cvn_codegen/auxiliary_sources/thesaurus_metadata.py`
+  - normalization-grade loading and indexing of `Thesaurus.xml`
+- `src/cvn_codegen/auxiliary_sources/bundle.py`
+  - aggregation of auxiliary-source metadata for normalization
+- `src/cvn_codegen/auxiliary_sources/reference_resolution.py`
+  - deterministic auxiliary-reference resolution, serialization-pattern
+    classification, and semantic-reference-kind classification
 
 The implemented normalization layer now provides:
 
@@ -94,6 +123,14 @@ The implemented normalization layer now provides:
   - `manual_only_codes`
   - `tree_only_codes`
 - explicit mismatch records through `NormalizationMismatch`
+- additive auxiliary-reference metadata through
+  `NormalizedCodeEntry.reference_resolution`
+- artifact-level resolution of manual references to:
+  - direct `ReferenceTables.xml` tables
+  - subtype-backed table families
+  - side-package entity registries
+  - side-package thesaurus vocabularies
+  - unresolved documented exceptions
 
 The recommended internal API entry point for later issues is:
 
@@ -105,6 +142,8 @@ The following test modules were added or extended during issue `#13`:
 - `tests/test_tree_metadata_unit.py`
 - `tests/test_normalization_report_unit.py`
 - `tests/test_normalization_unit.py`
+- `tests/test_auxiliary_source_loaders_unit.py`
+- `tests/test_auxiliary_reference_resolution_unit.py`
 
 ## Agreed Execution Plan
 
@@ -231,6 +270,8 @@ The implementation of issue `#13` will follow this agreed execution process.
   - `TREE_ONLY_CODE` reporting
   - explicit structural reporting for the two known unexpected `<Type>` child
     elements in `CVNTreeModel.xml`
+  - auxiliary unresolved-reference reporting
+  - documented under-traced auxiliary-table reporting
   - combined mismatch aggregation for inclusion in `NormalizationResult`
 - the normalization orchestration layer now populates
   `NormalizationResult.mismatches`
@@ -240,13 +281,15 @@ The implementation of issue `#13` will follow this agreed execution process.
 - current known reported structural cases:
   - `060.030.070.220`
   - `060.030.070.230`
-- scope decision for issue `#13`:
-  - the current mismatch set is considered sufficient for this issue
-  - issue `#13` should report known documented source inconsistencies and
-    source-overlap mismatches, but should not expand yet into a broader dynamic
-    anomaly-detection framework
-  - richer mismatch discovery may be added later if needed, but it is not a
-    blocker for completing the normalization stage of issue `#13`
+- current known auxiliary-resolution cases explicitly reported:
+  - `CVN_AGENCY_C`
+  - `CVN_INTERVENTION_A`
+  - `CVN_PRUEBA`
+- scope decision for issue `#13` after hotfix `#5`:
+  - the normalization stage should now report both overlap mismatches and the
+    minimum auxiliary-resolution findings needed by issue `#14`
+  - broader dynamic anomaly discovery beyond those categories remains out of
+    scope
 
 ### Step `8` - Reusable Internal API
 
@@ -287,6 +330,8 @@ The implementation of issue `#13` will follow this agreed execution process.
   - `tree_metadata.py`
   - `normalization.py`
   - `normalization_report.py`
+  - auxiliary-source loaders
+  - auxiliary-reference resolution
 - dedicated mismatch-report tests pass
 - dedicated normalization orchestration tests pass
 - a stronger baseline-count integration assertion was added and now passes
@@ -304,8 +349,45 @@ The implementation of issue `#13` will follow this agreed execution process.
   - `tests/test_tree_metadata_unit.py`
   - `tests/test_normalization_report_unit.py`
   - `tests/test_normalization_unit.py`
-- result:
-  - `42` tests passed
+  - `tests/test_auxiliary_source_loaders_unit.py`
+  - `tests/test_auxiliary_reference_resolution_unit.py`
+
+### Step `10` - Auxiliary-Reference Resolution Enrichment
+
+- completed
+- the normalization layer now loads canonical auxiliary-source metadata through
+  a dedicated `auxiliary_sources` subpackage under `src/cvn_codegen/`
+- `build_normalization_result(...)` now accepts optional keyword-only paths for:
+  - `ReferenceTables.xml`
+  - `Subtype_Spa.xml`
+  - `Entity.xml`
+  - `Thesaurus.xml`
+- when those auxiliary paths are provided, normalization now enriches each
+  `NormalizedCodeEntry` with:
+  - resolution status
+  - resolved source family
+  - resolved artifact traceability
+  - serialization pattern classification
+  - semantic reference kind classification
+- the current implementation explicitly resolves and classifies at minimum:
+  - direct reference-table cases such as `CVN_SEX_A`
+  - subtype-backed families such as `CVN_KNOW_A`
+  - side-package registry references such as `ENTITY@Entity.xsd`
+  - side-package thesaurus references such as `THESAURUS@thesaurus.xsd`
+  - hierarchical thematic classifications such as `UNESCO_CODES`
+  - unresolved cases such as `CVN_AGENCY_C`
+  - documented under-traced tables such as `CVN_INTERVENTION_A` and
+    `CVN_PRUEBA`
+
+### Step `11` - Source-File Traceability Correction
+
+- completed
+- `build_normalized_code(...)` now builds `source_files` correctly for all three
+  source-overlap shapes:
+  - manual-only
+  - tree-only
+  - combined manual/tree
+- tree-only entries no longer lose their `CVNTreeModel.xml` source traceability
 
 ## Agreed `xml_path` Convention
 
@@ -425,24 +507,25 @@ The implementation of issue `#13` will follow this agreed execution process.
 
 ## Current Execution State
 
-- Issue status: completed
+- Issue status: completed with auxiliary-reference resolution enrichment
 - Current step: none
-- Last completed step: step `11` - update persistent project documentation and
-  close issue `#13`
+- Last completed step: step `11` - auxiliary-reference resolution enrichment,
+  regression verification, and persistent documentation update
 - Next milestone: issue `#14` - define semantic mapping rules and override
-  policy
+  policy over the enriched normalization output
 
 ## Verification
 
 Normalization-related verification was executed with:
 
 ```bash
-uv run pytest tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py -v
+uv run pytest tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py -v
 ```
 
 Result:
 
-- `42` tests passed
+- targeted normalization, auxiliary-loader, and auxiliary-resolution tests now
+  pass with the preserved normalization baseline still intact
 
 Verified normalization baseline after the nested `CVNItem` traversal fix:
 
@@ -456,6 +539,19 @@ Verified normalization baseline after the nested `CVNItem` traversal fix:
   - `060.030.070.220`
   - `060.030.070.230`
 
+Verified auxiliary-resolution mismatch distribution in the current
+implementation:
+
+- `27` `MANUAL_ONLY_CODE`
+- `1` `TREE_ONLY_CODE`
+- `2` `UNEXPECTED_TREE_ELEMENT`
+- `1` `UNRESOLVED_MANUAL_REFERENCE`
+- `2` `UNDER_TRACED_REFERENCE_TABLE`
+
+Currently unresolved references reported by the enriched normalization layer:
+
+- `CVN_AGENCY_C`
+
 ## Findings
 
 ### Positive Results
@@ -467,6 +563,11 @@ Verified normalization baseline after the nested `CVNItem` traversal fix:
 - mismatch reporting is explicit and integrated into the final normalization
   result
 - the normalization API is stable enough for later semantic mapping work
+- the normalization result now includes deterministic auxiliary-reference
+  resolution metadata that later issues can consume directly instead of
+  rebuilding source resolution from prose documents
+- canonical `Entity.xml` and `Thesaurus.xml` can now be parsed at
+  normalization-grade depth and used as artifact-level side-package backings
 
 ### Important Implementation Finding
 
@@ -479,20 +580,32 @@ Verified normalization baseline after the nested `CVNItem` traversal fix:
 
 ### Controlled Scope Finding
 
-- issue `#13` can responsibly stop at known documented mismatches and source
-  overlap reporting
-- broader dynamic anomaly discovery is useful future work, but not required to
-  make the normalization layer reusable for issue `#14`
+- issue `#13` now goes beyond raw overlap reporting and includes the minimum
+  auxiliary-reference resolution layer needed by issue `#14`
+- broader dynamic anomaly discovery and full domain policy still remain future
+  work
+
+### Auxiliary-Resolution Findings
+
+- `Subtype_Spa.xml` can be loaded and used as proof that subtype catalog data is
+  available, but the preserved XML does not expose a direct table-family key such
+  as `CVN_KNOW_A` for strict per-table subtype verification
+- the canonical manual preserves equivalent `Entity` reference-string variants,
+  and the current implementation now canonicalizes them so they resolve to the
+  same `Entity.xml` side-package registry backing
+- `CVN_INTERVENTION_A` and `CVN_PRUEBA` are now carried as explicit
+  under-traced auxiliary-table findings instead of remaining prose-only facts
 
 ## Known Limitations
 
 - the canonical `CVNTreeModel.xml` still diverges from its documented and XSD
   model through two unexpected child `<Type>` elements
-- mismatch reporting for issue `#13` is intentionally limited to:
-  - `MANUAL_ONLY_CODE`
-  - `TREE_ONLY_CODE`
-  - known `UNEXPECTED_TREE_ELEMENT` cases
-- richer structural anomaly discovery is deferred
+- `Subtype_Spa.xml` is keyed by numeric subtype item codes and does not provide a
+  direct table-family bridge such as `CVN_KNOW_A`, so the current normalization
+  layer records subtype catalog availability rather than a strict per-table
+  subtype verification
+- richer structural anomaly discovery remains deferred beyond the currently
+  implemented overlap and auxiliary-resolution categories
 
 Authoritative limitation record:
 
@@ -504,8 +617,9 @@ Authoritative limitation record:
   `build_normalization_result(...)` as the preferred integration entry point
 - issue `#14` can now assume that the documented code overlap baseline has been
   verified in tests
-- issue `#14` should define the semantic policy for any anomalies that are known
-  but intentionally left outside the current mismatch scope
+- issue `#14` should consume `reference_resolution` metadata and define the
+  semantic policy for any still-open anomalies such as the lack of a direct
+  table-family bridge in `Subtype_Spa.xml`
 - issue `#15` can build on a stable per-code and per-path normalization layer
   without needing to know extraction details from the source XML files
 
@@ -525,4 +639,4 @@ Authoritative limitation record:
 
 ## Status
 
-- Status: completed and verified
+- Status: completed and verified with auxiliary-reference resolution enrichment
