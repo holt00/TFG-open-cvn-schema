@@ -11,24 +11,24 @@ The repository already implemented the core structural layer for:
 - `SpecificationManual.xsd`
 - `CVNTreeModel_v1.0.xsd`
 
-But the canonical package also contains machine-readable auxiliary families that
-were left outside the structural generation plan:
+But the canonical package version recently delivered by FECYT also contains
+machine-readable auxiliary families that were newly added and left outside the
+structural generation plan:
 
 - `ReferenceTables.xsd`
 - `Subtypes.xsd`
 - `Entity_v1.4.xsd`
 - `Thesaurus.xsd`
-- repository-derived `UNESCOCodes.xsd`
 
-This hotfix does not implement those changes. It documents exactly how issues
-`#11` and `#12` must be corrected so the repository baseline matches the real
-source package scope.
+This hotfix originally documented the corrective path for issues `#11` and
+`#12`. The correction path is now implemented and validated.
 
 ## Motivation
 
 Hotfix `#3` established that the canonical CVN package is not only the core
-manual, tree model, and CVN XSDs. It also contains auxiliary catalogs and
-supporting schemas that are relevant to later semantic work.
+manual, tree model, and CVN XSDs. The source bundle recently sent by FECYT also
+contains newly added auxiliary catalogs and supporting schemas that are
+relevant to later semantic work.
 
 Without this retrofit:
 
@@ -75,11 +75,6 @@ At minimum, the repository must treat these as planned generated packages:
 - `src/generated/entity/`
 - `src/generated/thesaurus/`
 
-Optional but recommended if the isolated extracted artifact remains part of the
-repository contract:
-
-- `src/generated/unesco_codes/`
-
 ### Hand-Maintained Pipeline Areas Required
 
 Issue `#11` should also be retroactively understood as reserving space for
@@ -119,10 +114,6 @@ supported target list include at least:
 - `entity`
 - `thesaurus`
 
-Optional but recommended if treated as a first-class repository artifact:
-
-- `unesco_codes`
-
 ### Expected Target Mapping
 
 The corrected target mapping should follow this pattern:
@@ -131,7 +122,6 @@ The corrected target mapping should follow this pattern:
 - `Subtypes.xsd` -> `generated.subtypes`
 - `Entity_v1.4.xsd` -> `generated.entity`
 - `Thesaurus.xsd` -> `generated.thesaurus`
-- `UNESCOCodes.xsd` -> `generated.unesco_codes`
 
 ### Runner Changes Required
 
@@ -209,6 +199,40 @@ The implementation session that applies this hotfix should verify at minimum:
 4. any successful auxiliary parse smoke checks that the preserved package layout
    allows
 
+## Implementation Development Path
+
+When this hotfix is executed, development should follow this order so risk stays
+controlled and documentation reflects only validated behavior.
+
+1. capture a pre-change baseline for the existing core structural targets
+   (`cvn`, `specification_manual`, `tree_model`), including:
+   - importability
+   - runner test state
+   - generated file inventory
+2. extend runner scope only with the canonical auxiliary targets:
+   - `reference_tables`
+   - `subtypes`
+   - `entity`
+   - `thesaurus`
+3. explicitly exclude `UNESCOCodes.xsd` from first-class runner target scope for
+   this hotfix, because that standalone artifact is repository-derived and not
+   part of the canonical auxiliary-family baseline
+4. validate regression safety with both checks before documentation updates:
+   - strict file-level reproducibility checks on previously generated core
+     packages
+   - behavioral checks (imports, runner tests, parse flows)
+5. attempt parse execution for auxiliary XML/XSD pairs and treat failures as
+   fix targets first, using reproducible runner/config or execution-level
+   adjustments when possible
+6. only if parse failures cannot be solved without violating repository
+   structural boundaries, record exact blocking causes as documented known
+   behavior
+7. defer final documentation updates until code, generation, and verification
+   gates pass
+
+This path is intended to prevent regression drift in previously generated core
+bindings while adding auxiliary structural coverage.
+
 ## Impact On Future Issues
 
 - issue `#13` can no longer be treated as the final technical input boundary for
@@ -220,5 +244,5 @@ The implementation session that applies this hotfix should verify at minimum:
 
 ## Status
 
-- Status: documented as required corrective work
-- Implementation state: pending
+- Status: implemented and validated
+- Implementation state: completed

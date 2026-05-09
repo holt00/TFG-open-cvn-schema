@@ -212,7 +212,11 @@ This means:
 src/
 ├── generated/
 │   ├── cvn/
+│   ├── reference_tables/
+│   ├── subtypes/
+│   ├── entity/
 │   ├── specification_manual/
+│   ├── thesaurus/
 │   └── tree_model/
 ├── cvn_codegen/
 └── models/
@@ -240,6 +244,10 @@ src/
   - `cvn`
   - `specification_manual`
   - `tree_model`
+  - `reference_tables`
+  - `subtypes`
+  - `entity`
+  - `thesaurus`
   - `all`
 
 The runner:
@@ -254,6 +262,10 @@ The runner:
 - `generated.cvn` -> `src/generated/cvn`
 - `generated.specification_manual` -> `src/generated/specification_manual`
 - `generated.tree_model` -> `src/generated/tree_model`
+- `generated.reference_tables` -> `src/generated/reference_tables`
+- `generated.subtypes` -> `src/generated/subtypes`
+- `generated.entity` -> `src/generated/entity`
+- `generated.thesaurus` -> `src/generated/thesaurus`
 
 ### Target-Specific Override
 
@@ -268,18 +280,30 @@ The runner:
 - `CVN.xsd`: generated successfully
 - `SpecificationManual.xsd`: generated successfully
 - `CVNTreeModel_v1.0.xsd`: generated successfully with target-specific override
+- `ReferenceTables.xsd`: generated successfully
+- `Subtypes.xsd`: generated successfully
+- `Entity_v1.4.xsd`: generated successfully
+- `Thesaurus.xsd`: generated successfully
 
 ### Importability
 
 - `generated.cvn`: import OK
 - `generated.specification_manual`: import OK
 - `generated.tree_model`: import OK
+- `generated.reference_tables`: import OK
+- `generated.subtypes`: import OK
+- `generated.entity`: import OK
+- `generated.thesaurus`: import OK
 
 ### Parse Smoke
 
 - `SpecificationManual.xml`: parse OK
 - `CVNTreeModel.xml`: parse fails due to source XML/XSD inconsistency, not due
   to a broken generated module
+- `ReferenceTables.xml`: parse OK
+- `Subtype_Spa.xml`: parse OK
+- `Entity.xml`: parse OK
+- `Thesaurus.xml`: parse OK
 
 ## Known Limitations
 

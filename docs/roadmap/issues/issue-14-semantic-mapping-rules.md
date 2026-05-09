@@ -192,8 +192,9 @@ still need to be made explicitly:
 
 - structural bindings preserve fidelity but expose known limitations for
   `choice`, multiplicity, and wrapper ergonomics
-- the official source package does include side-package material for several
-  references previously treated as opaque placeholders:
+- the official source package version recently delivered by FECYT includes
+  side-package material for several references that must now be treated as
+  recently added auxiliary modules rather than opaque placeholders:
   - `ENTITY@Entity.xsd` is represented by the `Entity` family
   - `THESAURUS@thesaurus.xsd` is represented by the `Thesaurus` family
   - many Annex-I tables are materialized in `ReferenceTables.xml`

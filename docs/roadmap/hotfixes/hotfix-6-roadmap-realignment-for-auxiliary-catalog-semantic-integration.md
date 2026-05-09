@@ -13,7 +13,8 @@ reach semantic work after only two technical preparation stages:
 
 After the auxiliary source-package analysis from hotfix `#3`, that sequencing is
 no longer sufficient. Future issues must explicitly incorporate the auxiliary
-catalog families and the resolution layer built over them.
+catalog families recently added in the source bundle sent by FECYT and the
+resolution layer built over them.
 
 This hotfix does not implement those future issues. It documents exactly how the
 already created issue set must be replanned.

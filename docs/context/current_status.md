@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-04-25
+- Last updated: 2026-05-07
 
 ## Completed Or Stabilized Work
 
@@ -80,6 +80,11 @@
   `src/cvn_codegen/normalization.py`
 - mismatch reporting is implemented in
   `src/cvn_codegen/normalization_report.py`
+- auxiliary-source loading and resolution support is now implemented under:
+  - `src/cvn_codegen/auxiliary_sources/`
+- normalized aggregate entries now include additive
+  `reference_resolution` metadata for manual references when auxiliary-source
+  inputs are provided
 - nested `CVNItem` traversal under `Property` is implemented to match the
   documented tree-model structure and restore the expected overlap counts
 - normalization-related verification passes for:
@@ -87,6 +92,8 @@
   - `tests/test_tree_metadata_unit.py`
   - `tests/test_normalization_report_unit.py`
   - `tests/test_normalization_unit.py`
+  - `tests/test_auxiliary_source_loaders_unit.py`
+  - `tests/test_auxiliary_reference_resolution_unit.py`
 - verified normalization baseline:
   - total normalized codes: `1457`
   - manual-only codes: `27`
@@ -97,6 +104,19 @@
   - codes present only in `CVNTreeModel.xml`
   - the two documented unexpected `<Type>` child elements in
     `CVNTreeModel.xml`
+  - unresolved auxiliary references
+  - documented under-traced auxiliary tables
+- current auxiliary-reference resolution explicitly covers:
+  - direct `ReferenceTables.xml` tables
+  - subtype-backed table families through auxiliary catalog availability
+  - side-package registry references backed by `Entity.xml`
+  - side-package thesaurus references backed by `Thesaurus.xml`
+  - hierarchical thematic cases such as `UNESCO_CODES`
+- currently unresolved auxiliary references reported by normalization include:
+  - `CVN_AGENCY_C`
+- documented under-traced auxiliary tables now reported explicitly:
+  - `CVN_INTERVENTION_A`
+  - `CVN_PRUEBA`
 
 ### Issue `#25`
 
@@ -145,41 +165,62 @@
   `ManualCodeEntry.manual_reference_table` field without changing the existing
   normalization core
 - the pipeline architecture documentation now reflects that these families are
-  part of the canonical source bundle and not merely external placeholders
+  part of the canonical source bundle recently delivered by FECYT and not
+  merely external placeholders
 - the limitation register now records:
   - historical packaging drift in the auxiliary families
   - unresolved Annex-I table references such as `CVN_AGENCY_C`
 
 ### Hotfix `#4`
 
-- a corrective hotfix record now exists for extending the structural scope of
-  issues `#11` and `#12` to the auxiliary source-package families
-- the documented required retrofit covers structural generation targets for:
+- the hotfix corrective scope for issues `#11` and `#12` is now implemented for
+  canonical auxiliary source-package families
+- structural generation targets now include:
   - `ReferenceTables.xsd`
   - `Subtypes.xsd`
   - `Entity_v1.4.xsd`
   - `Thesaurus.xsd`
-  - optional repository-derived `UNESCOCodes.xsd`
-- the hotfix is documentation-only and does not yet modify runner code,
-  generated packages, or tests
+- generated packages now exist under:
+  - `src/generated/reference_tables`
+  - `src/generated/subtypes`
+  - `src/generated/entity`
+  - `src/generated/thesaurus`
+- runner and smoke/unit test coverage were expanded for auxiliary targets
+- auxiliary parse checks are executable for:
+  - `ReferenceTables.xml`
+  - `Subtype_Spa.xml`
+  - `Entity.xml`
+  - `Thesaurus.xml`
+- core regression validation after auxiliary integration passed with both:
+  - file-level checks (`cvn=5`, `specification_manual=3`, `tree_model=2`)
+  - behavioral checks (runner tests, imports, parse checks)
 
 ### Hotfix `#5`
 
-- a corrective hotfix record now exists for extending issue `#13` with an
-  additive auxiliary-reference resolution layer
-- the documented required retrofit covers resolution of
-  `ManualCodeEntry.manual_reference_table` against:
+- the corrective hotfix for extending issue `#13` with an additive
+  auxiliary-reference resolution layer is now implemented
+- the implemented retrofit resolves `ManualCodeEntry.manual_reference_table`
+  against:
   - `ReferenceTables.xml`
   - `Subtype_Spa.xml`
   - `Entity.xml`
   - `Thesaurus*.xml`
-- the hotfix is documentation-only and does not yet modify normalization code or
-  tests
+- the normalization contract now includes additive resolution metadata through:
+  - `ReferenceResolution`
+  - `ReferenceResolutionTrace`
+- the normalization orchestration now accepts auxiliary-source inputs and
+  enriches `NormalizedCodeEntry` values with `reference_resolution`
+- dedicated loader and resolution tests now exist for the hotfix implementation
+- current documented implementation limits remain:
+  - `Subtype_Spa.xml` proves subtype catalog availability but does not expose a
+    direct table-family key such as `CVN_KNOW_A`
+  - side-package resolution remains artifact-level and not domain-level
 
 ### Hotfix `#6`
 
 - a corrective hotfix record now exists for replanning issue `#8` and pending
-  issues `#14` to `#17` around the auxiliary-source integration stage
+  issues `#14` to `#17` around the auxiliary-source integration stage introduced
+  by the modules recently added in the bundle sent by FECYT
 - the documented required roadmap correction now makes explicit that the pending
   semantic work depends on:
   - structural visibility of auxiliary families
@@ -214,6 +255,8 @@
 - Some attributes are generated as `object`
 - `CVNTreeModel.xml` contains `<Type>` under `Indicator`, but
   `CVNTreeModel_v1.0.xsd` does not declare that child element
+- `Subtype_Spa.xml` does not provide a direct table-family bridge for strict
+  per-table subtype verification in the current normalization layer
 
 All of these are documented in:
 

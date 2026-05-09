@@ -31,7 +31,11 @@ models.
 
 - Epic in progress
 - `#11` and `#12` completed
-- `#13` is the next planned issue
+- hotfix `#3` documented auxiliary modules recently added in the source bundle
+  sent by FECYT
+- hotfixes `#4`, `#5`, and `#6` record the corrective replanning required to
+  integrate those modules into the structural, normalization, and semantic
+  stages
 
 ## Supporting Roadmap Document
 
