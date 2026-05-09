@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from pathlib import Path
+
 from xsdata_pydantic.bindings import XmlParser
-from generated.thesaurus.thesaurus import NameType, Thesaurus
+
+from generated.thesaurus.thesaurus import Thesaurus
 @dataclass(frozen=True)
 class ThesaurusCatalogMetadata:
     """Store normalization-grade metadata for the canonical thesaurus."""

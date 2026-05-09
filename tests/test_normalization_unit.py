@@ -28,7 +28,6 @@ from cvn_codegen.tree_metadata import (
 from cvn_codegen.auxiliary_sources.bundle import build_auxiliary_source_bundle
 from cvn_codegen.normalization_types import (
     ReferenceSourceFamily,
-    SemanticReferenceKind,
 )
 
 REPO_ROOT = Path(__file__).resolve().parent.parent

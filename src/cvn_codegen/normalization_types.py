@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from typing import List
 from enum import Enum
 
 class ReferenceResolutionStatus(str, Enum):
