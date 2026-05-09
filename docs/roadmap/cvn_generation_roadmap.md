@@ -28,8 +28,8 @@ Goal:
 | --- | --- | --- | --- |
 | `#11` | Project infrastructure for code generation | Completed | Baseline repository layout and config established |
 | `#12` | Generate structural Pydantic bindings from CVN XSDs | Completed with documented limitations | Tree model XML/XSD mismatch remains documented |
-| `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Completed | Normalization, mismatch reporting, reusable API, and tests implemented; baseline overlap counts verified |
-| `#14` | Define semantic mapping rules and override policy | Pending | Depends on normalized metadata |
+| `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Completed | Core normalization and auxiliary-reference resolution enrichment implemented; baseline overlap counts preserved |
+| `#14` | Define semantic mapping rules and override policy | Pending | Depends on enriched normalization metadata from issue `#13` |
 | `#15` | Implement the domain Pydantic model generator | Pending | Depends on `#13` and `#14` |
 | `#16` | Add automated tests for the generation pipeline | Pending | Extend from smoke tests to pipeline tests |
 | `#17` | Document and automate the complete workflow | Pending | Final workflow and documentation closure |
@@ -40,8 +40,9 @@ Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 - hotfix `#4` structural-scope correction for issues `#11` and `#12` is now
   applied, including structural generation for the canonical auxiliary schema
   families (`reference_tables`, `subtypes`, `entity`, `thesaurus`)
-- issue `#13` requires a documented additive resolution layer for auxiliary
-  reference sources
+- hotfix `#5` additive auxiliary-reference resolution layer is now implemented
+  in issue `#13`, including normalization-grade loading of `ReferenceTables`,
+  `Subtypes`, `Entity`, and `Thesaurus` artifacts
 - issue `#14` must be started with those corrective documents in scope rather
   than using the older reduced pipeline assumption
 
@@ -167,6 +168,12 @@ Authoritative record:
 - Goal:
   correct issue `#13` so normalization grows from plain manual/tree alignment
   into an additive resolution layer over auxiliary reference sources
+- Implemented outcome:
+  - normalization contract enriched with typed auxiliary-reference metadata
+  - normalization orchestration extended with optional auxiliary-source inputs
+  - deterministic resolution now covers direct tables, subtype-backed families,
+    side-package registries, side-package thesauri, hierarchical thematic
+    references, unresolved cases, and under-traced documented tables
 
 Authoritative record:
 

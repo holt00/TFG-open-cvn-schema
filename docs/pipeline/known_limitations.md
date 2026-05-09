@@ -140,6 +140,23 @@ do not need to rediscover them.
   - issue `#15` should preserve such cases as explicit external or manual-only
     references unless stronger evidence is introduced
 
+### `Subtype_Spa.xml` Does Not Provide A Direct Table-Family Bridge
+
+- confirmed behavior:
+  - `Subtype_Spa.xml` can be parsed and used to prove subtype catalog
+    availability
+  - the preserved XML is keyed by numeric subtype item codes such as `001`,
+    `002`, and not by reference-table family names such as `CVN_KNOW_A`
+- impact:
+  - the current normalization layer can classify tables as subtype-backed and
+    record that subtype catalog data is available, but it does not yet verify a
+    strict per-table-family bridge directly from `Subtype_Spa.xml`
+- expected follow-up:
+  - issue `#14` should decide whether subtype-backed semantic policy needs a
+    stronger bridge than catalog availability alone
+  - later maintenance work may add a stricter bridge only if reliable evidence
+    is introduced from the preserved source package
+
 ## Documentation Rule
 
 Whenever a new limitation is discovered, add it here and reference the issue
