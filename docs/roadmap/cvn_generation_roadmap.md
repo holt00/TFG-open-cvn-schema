@@ -29,10 +29,10 @@ Goal:
 | `#11` | Project infrastructure for code generation | Completed | Baseline repository layout and config established |
 | `#12` | Generate structural Pydantic bindings from CVN XSDs | Completed with documented limitations | Tree model XML/XSD mismatch remains documented |
 | `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Completed | Core normalization and auxiliary-reference resolution enrichment implemented; baseline overlap counts preserved |
-| `#14` | Define semantic mapping rules and override policy | Pending | Depends on enriched normalization metadata from issue `#13` |
-| `#15` | Implement the domain Pydantic model generator | Pending | Depends on `#13` and `#14` |
-| `#16` | Add automated tests for the generation pipeline | Pending | Extend from smoke tests to pipeline tests |
-| `#17` | Document and automate the complete workflow | Pending | Final workflow and documentation closure |
+| `#14` | Define semantic mapping rules and override policy | Pending | Depends on auxiliary structural visibility from hotfix `#4` and enriched normalization metadata from issue `#13` after hotfix `#5` |
+| `#15` | Implement the domain Pydantic model generator | Pending | Depends on `#14` semantic policy and consumes enriched normalized metadata rather than rediscovering sources |
+| `#16` | Add automated tests for the generation pipeline | Pending | Must cover both core pipeline and auxiliary enrichment path |
+| `#17` | Document and automate the complete workflow | Pending | Must document corrected full workflow including auxiliary stages |
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
@@ -45,14 +45,21 @@ Corrective planning after hotfixes `#4`, `#5`, and `#6`:
   `Subtypes`, `Entity`, and `Thesaurus` artifacts
 - issue `#14` must be started with those corrective documents in scope rather
   than using the older reduced pipeline assumption
+- pending issue documents for `#14` to `#17` must therefore be read as consumers
+  of already-implemented upstream structural and normalization layers, not as
+  discovery plans for those layers
 
 ## Original Integration Checkpoints
 
 1. structural bindings reproducible from the canonical XSD package
 2. manual and tree-model metadata cross-indexable by CVN code
-3. mapping rules for typing, naming, enums, multiplicity, and overrides
-4. domain models regenerable from normalized metadata
-5. documented and tested end-to-end workflow
+3. normalized metadata includes deterministic auxiliary-reference resolution and
+   classification
+4. mapping rules for typing, naming, controlled-reference treatment,
+   multiplicity, and overrides
+5. domain models regenerable from semantic policy and enriched normalized
+   metadata
+6. documented and tested end-to-end workflow
 
 ## Issue Summaries
 
@@ -209,13 +216,16 @@ Authoritative record:
   define deterministic mapping rules from normalized CVN metadata to domain
   models
 - Required scope:
+  - consume enriched `reference_resolution` metadata from issue `#13`
   - type mapping rules
-  - enum vs string policy
+  - semantic policy per normalized reference kind
   - naming rules
   - `choice` and wrapper treatment
   - explicit override mechanism
   - semantic treatment for auxiliary reference families and serialization
     patterns described by hotfixes `#5` and `#6`
+  - avoid re-deriving source-family or subtype-backed detection already handled
+    by normalization
 
 ### Issue `#15`
 
@@ -227,8 +237,11 @@ Authoritative record:
   - emit first representative domain models
   - factor reusable shared domain components where appropriate
   - keep output deterministic and traceable
-  - generate distinct domain representations for enums, subtype-backed tables,
-    registries, thesauri, and unresolved references
+  - generate distinct domain representations for enums, open coded values,
+    subtype-backed tables, registries, thesauri, hierarchical references,
+    unresolved references, and under-traced references
+  - consume semantic policy and normalized reference classifications rather than
+    re-discovering auxiliary-source meaning in generator code
 
 ### Issue `#16`
 
@@ -238,7 +251,9 @@ Authoritative record:
   - fixtures from canonical XML files
   - parsing tests
   - normalization tests
+  - auxiliary-resolution tests
   - semantic mapping tests
+  - generator output tests per semantic class
   - import tests
   - end-to-end pipeline coverage
   - regression coverage for auxiliary structural targets and reference-resolution
@@ -256,6 +271,8 @@ Authoritative record:
   - final repository documentation updates
   - explicit documentation of auxiliary structural generation and
     auxiliary-reference resolution stages
+  - explicit source-of-truth order for controlled-reference resolution and
+    fallback behavior
 
 ### Issue `#25`
 

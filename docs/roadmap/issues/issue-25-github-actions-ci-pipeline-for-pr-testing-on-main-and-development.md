@@ -105,8 +105,10 @@ Expected GitHub verification after the workflow file is pushed:
 
 - future test additions should remain under `tests/` so they are included by the
   CI entry point without extra workflow maintenance
-- issue `#16` can build on this workflow if the repository later needs broader
-  pipeline coverage beyond the current test suite
+- issue `#16` can build on this workflow with broader coverage for:
+  - auxiliary structural generation tests
+  - normalization-resolution regression tests
+  - future semantic-policy and domain-generator tests
 - issue `#17` can reference this workflow as part of the final documented
   contributor and regeneration workflow
 

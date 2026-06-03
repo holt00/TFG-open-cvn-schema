@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-05-07
+- Last updated: 2026-05-09
 
 ## Completed Or Stabilized Work
 
@@ -225,8 +225,10 @@
   semantic work depends on:
   - structural visibility of auxiliary families
   - auxiliary-reference resolution over normalized manual metadata
-- the hotfix is documentation-only and does not yet modify the pending issue
-  files themselves
+- the affected pending issue documents and roadmap records are now updated so
+  they describe semantic and workflow work as consumers of the already
+  implemented hotfix `#4` and hotfix `#5` layers instead of future discovery
+  tasks
 
 ## Current Technical Baseline
 
@@ -246,6 +248,13 @@
   - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
 - Issue document to read first:
   - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
+- Corrected starting assumption for issue `#14`:
+  - semantic policy starts from enriched normalization output that already
+    includes typed `reference_resolution` metadata
+  - issue `#14` should not rebuild source-resolution logic for direct tables,
+    subtype-backed references, side-package registries, side-package thesauri,
+    hierarchical thematic references, unresolved references, or under-traced
+    tables
 
 ## Blocking Or Relevant Limitations
 
