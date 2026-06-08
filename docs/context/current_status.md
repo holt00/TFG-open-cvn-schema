@@ -2,7 +2,11 @@
 
 ## Status Date
 
-- Last updated: 2026-05-09
+<<<<<<< Updated upstream
+- Last updated: 2026-05-07
+=======
+- Last updated: 2026-06-08
+>>>>>>> Stashed changes
 
 ## Completed Or Stabilized Work
 
@@ -230,6 +234,28 @@
   implemented hotfix `#4` and hotfix `#5` layers instead of future discovery
   tasks
 
+### Issue `#14` Planning
+
+- the semantic mapping rules issue now has an agreed execution policy recorded
+  in `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
+- the policy plan fixes the semantic input contract around the implemented
+  normalization names `reference_resolution.source_artifact` and
+  `reference_resolution.semantic_kind`
+- issue `#14` implementation is expected to create explicit typed policy
+  contracts under `src/cvn_codegen/` without editing `src/generated/`
+- the agreed policy covers:
+  - semantic base kinds
+  - controlled-reference domain shapes
+  - strict enum eligibility
+  - wrapper and `xs:choice` treatment
+  - presence and cardinality mapping
+  - Spanish-first domain naming
+  - deterministic override precedence
+  - representative validation cases for handoff into issue `#15`
+- pending issue documents `#15`, `#16`, and `#17` are aligned with the agreed
+  semantic-policy handoff before issue `#14` code implementation starts
+- no final domain model emission is implemented yet; that remains issue `#15`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -239,9 +265,9 @@
   `generated.*` resolves to `src/generated/*`
 - `tree_model` generation requires a target-specific override
 
-## Next Planned Issue
+## Next Planned Work
 
-- Next issue to start: `#14`
+- Next work item: implement issue `#14` semantic policy contracts and tests
 - Required corrective references before starting:
   - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
   - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
