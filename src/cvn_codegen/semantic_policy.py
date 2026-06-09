@@ -8,6 +8,17 @@ from cvn_codegen.normalization_types import (
     SerializationPattern,
 )
 
+PRESERVED_ACRONYMS = frozenset(
+    {
+        "cvn",
+        "unesco",
+        "orcid",
+        "doi",
+        "isbn",
+        "issn",
+        "h",
+    }
+)
 
 class SemanticBaseKind(str, Enum):
     """Classify the semantic base kind inferred from normalized manual metadata."""
@@ -173,6 +184,14 @@ class OverrideRule:
     normalized_name: str | None = None
     structural_limitation_flags: tuple[StructuralLimitationFlag, ...] = ()
     notes: tuple[str, ...] = ()
+
+@dataclass(frozen=True)
+class OverrideSelection:
+    """Describe the selected override and any same-priority conflict."""
+
+    selected_override: OverrideRule | None
+    conflict_detected: bool
+    matched_rule_ids: tuple[str, ...] = ()
 
 @dataclass(frozen=True)
 class ValidationCaseDefinition:
@@ -578,6 +597,95 @@ def build_default_semantic_policy_bundle() -> SemanticPolicyBundle:
         ),
     )
 
+def normalize_ascii_text(value: str) -> str:
+    """Normalize text to ASCII-compatible identifier input."""
+
+    replacements = {
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u",
+        "ü": "u",
+        "ñ": "n",
+        "Á": "A",
+        "É": "E",
+        "Í": "I",
+        "Ó": "O",
+        "Ú": "U",
+        "Ü": "U",
+        "Ñ": "N",
+    }
+    normalized_value = value
+    for source, replacement in replacements.items():
+        normalized_value = normalized_value.replace(source, replacement)
+    return normalized_value
+
+def build_snake_case_identifier(value: str) -> str:
+    """Build a deterministic snake_case identifier from a label."""
+    normalized_value = normalize_ascii_text(value)
+    identifier_parts: list[str] = []
+    current_part: list[str] = []
+    for character in normalized_value:
+        if character.isalnum():
+            current_part.append(character.lower())
+            continue
+        if current_part:
+            identifier_parts.append("".join(current_part))
+            current_part = []
+    if current_part:
+        identifier_parts.append("".join(current_part))
+    identifier = "_".join(identifier_parts)
+    if not identifier:
+        return "unnamed"
+    if identifier[0].isdigit():
+        return f"field_{identifier}"
+    return identifier
+
+def build_pascal_case_identifier(value: str) -> str:
+    """Build a deterministic PascalCase identifier from a label."""
+    snake_case_identifier = build_snake_case_identifier(value)
+    parts = tuple(
+        part
+        for part in snake_case_identifier.split("_")
+        if part
+    )
+    if not parts:
+        return "Unnamed"
+    pascal_parts = tuple(
+        part.upper() if part in PRESERVED_ACRONYMS else part.capitalize()
+        for part in parts
+    )
+    return "".join(pascal_parts)
+
+
+
+def select_naming_source_label(entry: NormalizedCodeEntry) -> str:
+    """Select the best available label for domain-facing naming."""
+    manual_entry = entry.manual
+    if manual_entry is None:
+        return entry.code
+    if manual_entry.manual_name:
+        return manual_entry.manual_name
+    if manual_entry.manual_short_name:
+        return manual_entry.manual_short_name
+    return entry.code
+
+def build_naming_policy(entry: NormalizedCodeEntry) -> NamingPolicy:
+    """Build the naming policy for one normalized entry."""
+    source_label = select_naming_source_label(entry)
+    normalized_field_name = build_snake_case_identifier(source_label)
+    normalized_class_name = build_pascal_case_identifier(source_label)
+    return NamingPolicy(
+        normalized_field_name=normalized_field_name,
+        normalized_class_name=normalized_class_name,
+        naming_confidence=PolicyConfidence.MEDIUM,
+        source_label=source_label,
+        notes=(
+            "Spanish-first naming source selected from normalized manual metadata.",
+        ),
+    )
+
 
 def build_semantic_field_policy(
     entry: NormalizedCodeEntry,
@@ -590,11 +698,9 @@ def build_semantic_field_policy(
     xml_paths = tuple(tree_path.xml_path for tree_path in entry.tree_paths)
     manual_type = None
     manual_reference_table = None
-    manual_name = None
     if manual_entry is not None:
         manual_type = manual_entry.manual_type
         manual_reference_table = manual_entry.manual_reference_table
-        manual_name = manual_entry.manual_name
     base_kind = SemanticBaseKind.UNKNOWN
     base_confidence = PolicyConfidence.REQUIRES_REVIEW
     base_rule = "base_type_unknown"
@@ -668,17 +774,8 @@ def build_semantic_field_policy(
             cardinality_kind = CardinalityKind.SINGLE
         multiplicity_rule = "manual_presence_and_cardinality"
     
-    source_label = manual_name
-    normalized_field_name = entry.code.replace(".", "_")
-    naming_policy = NamingPolicy(
-        normalized_field_name=normalized_field_name,
-        normalized_class_name=None,
-        naming_confidence=PolicyConfidence.MEDIUM,
-        source_label=source_label,
-        notes=(
-            "Temporary code-based name; full Spanish-first naming policy is implemented in task 7.",
-        ),
-    )
+    naming_policy = build_naming_policy(entry)
+
     structural_limitation_flags: tuple[StructuralLimitationFlag, ...] = ()
     
     reference_source_family = None
@@ -709,11 +806,11 @@ def build_semantic_field_policy(
             base_rule,
             reference_rule,
             multiplicity_rule,
-            "naming:code_placeholder",
+            "naming:spanish_first_label",
         ),
         diagnostics=diagnostics,
     )
-    return SemanticFieldPolicy(
+    field_policy = SemanticFieldPolicy(
         code=entry.code,
         xml_paths=xml_paths,
         base_kind=base_kind,
@@ -726,4 +823,195 @@ def build_semantic_field_policy(
         naming_policy=naming_policy,
         structural_limitation_flags=structural_limitation_flags,
         decision_trace=decision_trace,
+    )
+    override_selection = select_applicable_override(
+        entry=entry,
+        overrides=bundle.overrides,
+    )
+    return apply_override_to_field_policy(
+        field_policy=field_policy,
+        override_selection=override_selection,
+    )
+
+def override_matches_entry(
+    override: OverrideRule,
+    entry: NormalizedCodeEntry,
+) -> bool:
+    """Return whether an override targets the normalized entry."""
+    if override.target_code is not None and override.target_code != entry.code:
+        return False
+    if override.target_xml_path is not None:
+        xml_paths = {tree_path.xml_path for tree_path in entry.tree_paths}
+        if override.target_xml_path not in xml_paths:
+            return False
+    reference_resolution = entry.reference_resolution
+    if override.target_semantic_reference_kind is not None:
+        if reference_resolution is None:
+            return False
+        if (
+            override.target_semantic_reference_kind
+            != reference_resolution.semantic_kind
+        ):
+            return False
+    if override.target_serialization_pattern is not None:
+        if reference_resolution is None:
+            return False
+        if (
+            override.target_serialization_pattern
+            != reference_resolution.serialization_pattern
+        ):
+            return False
+    return True
+def get_override_specificity(override: OverrideRule) -> int:
+    """Return precedence rank for one override target."""
+    if override.target_code is not None and override.target_xml_path is not None:
+        return 4
+    if override.target_code is not None:
+        return 3
+    if override.target_xml_path is not None:
+        return 2
+    if (
+        override.target_semantic_reference_kind is not None
+        or override.target_serialization_pattern is not None
+    ):
+        return 1
+    return 0
+
+def select_applicable_override(
+    entry: NormalizedCodeEntry,
+    overrides: tuple[OverrideRule, ...],
+) -> OverrideSelection:
+    """Select the highest-precedence override for a normalized entry."""
+    matching_overrides = tuple(
+        override
+        for override in overrides
+        if override_matches_entry(override, entry)
+    )
+    if not matching_overrides:
+        return OverrideSelection(
+            selected_override=None,
+            conflict_detected=False,
+            matched_rule_ids=(),
+        )
+    ranked_overrides = tuple(
+        (get_override_specificity(override), override)
+        for override in matching_overrides
+    )
+    highest_rank = max(rank for rank, _override in ranked_overrides)
+    highest_rank_overrides = tuple(
+        override
+        for rank, override in ranked_overrides
+        if rank == highest_rank
+    )
+    if len(highest_rank_overrides) > 1:
+        return OverrideSelection(
+            selected_override=None,
+            conflict_detected=True,
+            matched_rule_ids=tuple(
+                override.rule_id for override in highest_rank_overrides
+            ),
+        )
+    selected_override = next(iter(highest_rank_overrides), None)
+    if selected_override is None:
+        return OverrideSelection(
+            selected_override=None,
+            conflict_detected=False,
+            matched_rule_ids=(),
+        )
+    return OverrideSelection(
+        selected_override=selected_override,
+        conflict_detected=False,
+        matched_rule_ids=(selected_override.rule_id,),
+    )
+
+def apply_override_to_field_policy(
+    field_policy: SemanticFieldPolicy,
+    override_selection: OverrideSelection,
+) -> SemanticFieldPolicy:
+    """Apply a selected override to semantic-policy outputs."""
+    if override_selection.conflict_detected:
+        return SemanticFieldPolicy(
+            code=field_policy.code,
+            xml_paths=field_policy.xml_paths,
+            base_kind=field_policy.base_kind,
+            domain_shape_kind=field_policy.domain_shape_kind,
+            fallback_shape_kind=field_policy.fallback_shape_kind,
+            enum_eligibility=field_policy.enum_eligibility,
+            presence_kind=field_policy.presence_kind,
+            cardinality_kind=field_policy.cardinality_kind,
+            policy_confidence=PolicyConfidence.REQUIRES_REVIEW,
+            naming_policy=field_policy.naming_policy,
+            structural_limitation_flags=field_policy.structural_limitation_flags,
+            decision_trace=field_policy.decision_trace,
+            notes=field_policy.notes
+            + (
+                "Override conflict detected for matching rule IDs: "
+                + ", ".join(override_selection.matched_rule_ids),
+            ),
+        )
+    override = override_selection.selected_override
+    if override is None:
+        return field_policy
+    naming_policy = field_policy.naming_policy
+    if override.normalized_name is not None:
+        naming_policy = NamingPolicy(
+            normalized_field_name=override.normalized_name,
+            normalized_class_name=field_policy.naming_policy.normalized_class_name,
+            naming_confidence=(
+                field_policy.naming_policy.naming_confidence
+                if override.policy_confidence is None
+                else override.policy_confidence
+            ),
+            source_label=field_policy.naming_policy.source_label,
+            notes=field_policy.naming_policy.notes
+            + (
+                f"Naming overridden by rule '{override.rule_id}'.",
+            ),
+        )
+    return SemanticFieldPolicy(
+        code=field_policy.code,
+        xml_paths=field_policy.xml_paths,
+        base_kind=field_policy.base_kind,
+        domain_shape_kind=(
+            field_policy.domain_shape_kind
+            if override.domain_shape_kind is None
+            else override.domain_shape_kind
+        ),
+        fallback_shape_kind=(
+            field_policy.fallback_shape_kind
+            if override.fallback_shape_kind is None
+            else override.fallback_shape_kind
+        ),
+        enum_eligibility=(
+            field_policy.enum_eligibility
+            if override.enum_eligibility is None
+            else override.enum_eligibility
+        ),
+        presence_kind=(
+            field_policy.presence_kind
+            if override.presence_kind is None
+            else override.presence_kind
+        ),
+        cardinality_kind=(
+            field_policy.cardinality_kind
+            if override.cardinality_kind is None
+            else override.cardinality_kind
+        ),
+        policy_confidence=(
+            field_policy.policy_confidence
+            if override.policy_confidence is None
+            else override.policy_confidence
+        ),
+        naming_policy=naming_policy,
+        structural_limitation_flags=(
+            field_policy.structural_limitation_flags
+            if not override.structural_limitation_flags
+            else override.structural_limitation_flags
+        ),
+        decision_trace=field_policy.decision_trace,
+        notes=field_policy.notes
+        + (
+            f"Applied override rule '{override.rule_id}'.",
+            *override.notes,
+        ),
     )
