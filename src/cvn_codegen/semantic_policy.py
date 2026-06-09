@@ -20,6 +20,19 @@ PRESERVED_ACRONYMS = frozenset(
     }
 )
 
+TEMPORARY_REVIEW_REQUIRED_REFERENCES = frozenset(
+    {
+        "CVN_SEX_A",
+        "CVN_ENTITY_TYPE",
+    }
+)
+
+WRAPPER_AUTO_APPLICATION_LIMITATION = (
+    "NormalizedCodeEntry does not expose structural wrapper type names yet; "
+    "wrapper policy is currently validated by wrapper-name cases and not "
+    "automatically attached to field policies."
+)
+
 class SemanticBaseKind(str, Enum):
     """Classify the semantic base kind inferred from normalized manual metadata."""
 
@@ -240,6 +253,54 @@ class SemanticPolicyBundle:
     wrapper_policies_by_name: dict[str, ChoiceWrapperPolicy]
     overrides: tuple[OverrideRule, ...] = ()
     validation_cases: tuple[ValidationCaseDefinition, ...] = ()
+
+def apply_temporary_enum_review_policy(
+    reference_name: str | None,
+    domain_shape_kind: DomainShapeKind,
+    enum_eligibility: EnumEligibility,
+    policy_confidence: PolicyConfidence,
+) -> tuple[DomainShapeKind, EnumEligibility, PolicyConfidence, str | None]:
+    """Apply temporary review-required enum policy until hotfix #7 is implemented."""
+
+    if reference_name not in TEMPORARY_REVIEW_REQUIRED_REFERENCES:
+        return domain_shape_kind, enum_eligibility, policy_confidence, None
+
+    return (
+        domain_shape_kind,
+        EnumEligibility.REVIEW_REQUIRED,
+        PolicyConfidence.REQUIRES_REVIEW,
+        f"temporary_enum_review_required:{reference_name}",
+    )
+def get_choice_wrapper_policy(
+    wrapper_name: str,
+    bundle: SemanticPolicyBundle,
+) -> ChoiceWrapperPolicy | None:
+    """Return semantic policy for a known structural wrapper type."""
+
+    normalized_wrapper_name = wrapper_name.strip()
+    if not normalized_wrapper_name:
+        return None
+
+    return bundle.wrapper_policies_by_name.get(normalized_wrapper_name)
+
+def validate_wrapper_case(
+    validation_case: ValidationCaseDefinition,
+    bundle: SemanticPolicyBundle,
+) -> ChoiceWrapperPolicy | None:
+    """Resolve wrapper policy for one validation case."""
+
+    if validation_case.wrapper_name is None:
+        return None
+
+    return get_choice_wrapper_policy(
+        wrapper_name=validation_case.wrapper_name,
+        bundle=bundle,
+    )
+
+def get_wrapper_auto_application_limitation() -> str:
+    """Return current limitation for automatic wrapper policy application."""
+
+    return WRAPPER_AUTO_APPLICATION_LIMITATION
 
 def build_default_semantic_policy_bundle() -> SemanticPolicyBundle:
     """Build the default semantic policy bundle for issue #14."""
@@ -491,8 +552,8 @@ def build_default_semantic_policy_bundle() -> SemanticPolicyBundle:
                 reference_name="CVN_SEX_A",
                 expected_base_kind=SemanticBaseKind.CONTROLLED_REFERENCE,
                 expected_domain_shape_kind=DomainShapeKind.STRICT_ENUM_CANDIDATE,
-                expected_enum_eligibility=EnumEligibility.ELIGIBLE,
-                expected_confidence=PolicyConfidence.HIGH,
+                expected_enum_eligibility=EnumEligibility.REVIEW_REQUIRED,
+                expected_confidence=PolicyConfidence.REQUIRES_REVIEW,
             ),
             ValidationCaseDefinition(
                 case_id="compact_open_entity_type",
@@ -500,7 +561,7 @@ def build_default_semantic_policy_bundle() -> SemanticPolicyBundle:
                 code="010.010.000.040",
                 reference_name="CVN_ENTITY_TYPE",
                 expected_base_kind=SemanticBaseKind.CONTROLLED_REFERENCE,
-                expected_domain_shape_kind=DomainShapeKind.OPEN_CODED_VALUE,
+                expected_domain_shape_kind=DomainShapeKind.STRICT_ENUM_CANDIDATE,
                 expected_enum_eligibility=EnumEligibility.REVIEW_REQUIRED,
                 expected_confidence=PolicyConfidence.REQUIRES_REVIEW,
             ),
@@ -719,6 +780,8 @@ def build_semantic_field_policy(
         base_kind = base_type_policy.base_kind
         base_confidence = base_type_policy.confidence
         base_rule = f"manual_type:{manual_type}"
+    elif manual_type is not None:
+        base_rule = f"manual_type_unknown:{manual_type}"
     
     domain_shape_kind = DomainShapeKind.PLAIN_VALUE
     fallback_shape_kind = None
@@ -760,6 +823,23 @@ def build_semantic_field_policy(
         reference_rule = (
             f"serialization_pattern:{reference_serialization_pattern.value}"
         )
+    
+    reference_name = None
+    if reference_resolution is not None:
+        reference_name = reference_resolution.resolved_name
+
+    (
+        domain_shape_kind,
+        enum_eligibility,
+        policy_confidence,
+        enum_rule,
+    ) = apply_temporary_enum_review_policy(
+        reference_name=reference_name,
+        domain_shape_kind=domain_shape_kind,
+        enum_eligibility=enum_eligibility,
+        policy_confidence=policy_confidence,
+    )
+
     presence_kind = PresenceKind.UNKNOWN
     cardinality_kind = CardinalityKind.UNKNOWN
     multiplicity_rule = "multiplicity_unknown"
@@ -794,6 +874,14 @@ def build_semantic_field_policy(
         semantic_reference_kind = reference_resolution.semantic_kind
         if reference_resolution.diagnostic_message is not None:
             diagnostics = (reference_resolution.diagnostic_message,)
+    applied_rules = (
+        base_rule,
+        reference_rule,
+        multiplicity_rule,
+        "naming:spanish_first_label",
+    )
+    if enum_rule is not None:
+        applied_rules = applied_rules + (enum_rule,)
     decision_trace = SemanticDecisionTrace(
         code=entry.code,
         xml_paths=xml_paths,
@@ -802,12 +890,7 @@ def build_semantic_field_policy(
         reference_source_artifact=reference_source_artifact,
         serialization_pattern=serialization_pattern,
         semantic_reference_kind=semantic_reference_kind,
-        applied_rules=(
-            base_rule,
-            reference_rule,
-            multiplicity_rule,
-            "naming:spanish_first_label",
-        ),
+        applied_rules=applied_rules,
         diagnostics=diagnostics,
     )
     field_policy = SemanticFieldPolicy(

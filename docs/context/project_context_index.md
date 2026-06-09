@@ -88,6 +88,9 @@ Agents should also read `AGENTS.md` before this file.
   corrective plan for replanning the pending semantic and workflow issues after
   the analysis of the auxiliary modules recently added in the source bundle sent
   by FECYT
+- `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`:
+  corrective plan for dynamic strict-enum eligibility evaluation across
+  `ReferenceTables.xml` without semantic-policy hardcoding
 
 ### Development And Contribution
 
@@ -169,6 +172,8 @@ docs/CvnXML_v1.4.3_2.1_17012025/
   `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
 - Hotfix `#6`:
   `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+- Hotfix `#7`:
+  `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
 
 Each issue document records:
 

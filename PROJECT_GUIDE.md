@@ -116,6 +116,9 @@ files in order:
 - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`:
   corrective plan for replanning issues `#8`, `#14` to `#17`, and the CI impact
   from the auxiliary catalog integration
+- `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`:
+  corrective plan for replacing hardcoded enum decisions with dynamic
+  `ReferenceTables.xml` evidence in the normalization-to-semantic handoff
 
 ### Development Reference
 

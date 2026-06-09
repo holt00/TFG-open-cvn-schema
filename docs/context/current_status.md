@@ -230,6 +230,19 @@
   implemented hotfix `#4` and hotfix `#5` layers instead of future discovery
   tasks
 
+### Hotfix `#7`
+
+- a new corrective hotfix record now exists for replacing table-specific
+  semantic enum decisions with dynamic `ReferenceTables.xml` evidence
+- the documented required correction makes explicit that strict enum
+  eligibility for compact controlled tables cannot remain hardcoded in issue
+  `#14`
+- the corrective plan requires additive evidence in the normalization handoff
+  so semantic policy can evaluate all relevant direct reference tables
+  dynamically
+- the hotfix record is currently documentation-only and implementation remains
+  pending
+
 ### Issue `#14` Planning
 
 - the semantic mapping rules issue now has an agreed execution policy recorded

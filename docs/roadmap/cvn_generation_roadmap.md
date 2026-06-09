@@ -196,6 +196,17 @@ Authoritative record:
 
 - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
 
+### Hotfix `#7`
+
+- Goal:
+  replace hardcoded semantic enum decisions with dynamic
+  `ReferenceTables.xml` evidence carried through the normalization-to-semantic
+  handoff
+
+Authoritative record:
+
+- `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
+
 ## Future Work Focus
 
 ### Issue `#13`
