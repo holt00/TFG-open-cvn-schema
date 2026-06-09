@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from enum import Enum
 
+
 from cvn_codegen.normalization_types import (
+    NormalizedCodeEntry,
     SemanticReferenceKind,
     SerializationPattern,
 )
@@ -574,4 +576,154 @@ def build_default_semantic_policy_bundle() -> SemanticPolicyBundle:
                 expected_confidence=PolicyConfidence.HIGH,
             ),
         ),
+    )
+
+
+def build_semantic_field_policy(
+    entry: NormalizedCodeEntry,
+    bundle: SemanticPolicyBundle,
+) -> SemanticFieldPolicy:
+    """Build the semantic policy decision for one normalized CVN entry."""
+
+    manual_entry = entry.manual
+    reference_resolution = entry.reference_resolution
+    xml_paths = tuple(tree_path.xml_path for tree_path in entry.tree_paths)
+    manual_type = None
+    manual_reference_table = None
+    manual_name = None
+    if manual_entry is not None:
+        manual_type = manual_entry.manual_type
+        manual_reference_table = manual_entry.manual_reference_table
+        manual_name = manual_entry.manual_name
+    base_kind = SemanticBaseKind.UNKNOWN
+    base_confidence = PolicyConfidence.REQUIRES_REVIEW
+    base_rule = "base_type_unknown"
+    base_type_policy = None
+    if manual_type is not None:
+        base_type_policy = bundle.base_type_policies_by_manual_type.get(manual_type)
+    if (
+        manual_type == "Alphanumeric"
+        and reference_resolution is not None
+        and reference_resolution.semantic_kind is not None
+    ):
+        base_kind = SemanticBaseKind.CONTROLLED_REFERENCE
+        base_confidence = PolicyConfidence.HIGH
+        base_rule = "alphanumeric_with_controlled_reference"
+    elif base_type_policy is not None:
+        base_kind = base_type_policy.base_kind
+        base_confidence = base_type_policy.confidence
+        base_rule = f"manual_type:{manual_type}"
+    
+    domain_shape_kind = DomainShapeKind.PLAIN_VALUE
+    fallback_shape_kind = None
+    enum_eligibility = EnumEligibility.INELIGIBLE
+    policy_confidence = base_confidence
+    reference_rule = "no_reference"
+    reference_kind_policy = None
+    semantic_kind = None
+    if reference_resolution is not None:
+        semantic_kind = reference_resolution.semantic_kind
+
+    if semantic_kind is not None:
+        reference_kind_policy = bundle.reference_kind_policies.get(
+            semantic_kind
+        )
+    if reference_kind_policy is not None and semantic_kind is not None:
+        domain_shape_kind = reference_kind_policy.domain_shape_kind
+        fallback_shape_kind = reference_kind_policy.fallback_shape_kind
+        enum_eligibility = reference_kind_policy.enum_eligibility
+        policy_confidence = reference_kind_policy.confidence
+        reference_rule = f"semantic_kind:{semantic_kind.value}"
+    serialization_refinement = None
+    reference_serialization_pattern = None
+    if reference_resolution is not None:
+        reference_serialization_pattern = reference_resolution.serialization_pattern
+
+    if reference_serialization_pattern is not None:
+        serialization_refinement = bundle.serialization_pattern_refinements.get(
+            reference_serialization_pattern
+        )
+    if (
+        serialization_refinement is not None
+        and reference_serialization_pattern is not None
+    ):
+        domain_shape_kind = serialization_refinement.domain_shape_kind
+        fallback_shape_kind = serialization_refinement.fallback_shape_kind
+        enum_eligibility = serialization_refinement.enum_eligibility
+        policy_confidence = serialization_refinement.confidence
+        reference_rule = (
+            f"serialization_pattern:{reference_serialization_pattern.value}"
+        )
+    presence_kind = PresenceKind.UNKNOWN
+    cardinality_kind = CardinalityKind.UNKNOWN
+    multiplicity_rule = "multiplicity_unknown"
+    if manual_entry is not None:
+        if manual_entry.manual_obligatory is True:
+            presence_kind = PresenceKind.REQUIRED
+        elif manual_entry.manual_obligatory is False:
+            presence_kind = PresenceKind.OPTIONAL
+        if manual_entry.manual_multiplicity is True:
+            cardinality_kind = CardinalityKind.REPEATED
+        elif manual_entry.manual_multiplicity is False:
+            cardinality_kind = CardinalityKind.SINGLE
+        multiplicity_rule = "manual_presence_and_cardinality"
+    
+    source_label = manual_name
+    normalized_field_name = entry.code.replace(".", "_")
+    naming_policy = NamingPolicy(
+        normalized_field_name=normalized_field_name,
+        normalized_class_name=None,
+        naming_confidence=PolicyConfidence.MEDIUM,
+        source_label=source_label,
+        notes=(
+            "Temporary code-based name; full Spanish-first naming policy is implemented in task 7.",
+        ),
+    )
+    structural_limitation_flags: tuple[StructuralLimitationFlag, ...] = ()
+    
+    reference_source_family = None
+    reference_source_artifact = None
+    serialization_pattern = None
+    semantic_reference_kind = None
+    diagnostics: tuple[str, ...] = ()
+    if reference_resolution is not None:
+        reference_source_family = (
+            None
+            if reference_resolution.source_family is None
+            else reference_resolution.source_family.value
+        )
+        reference_source_artifact = reference_resolution.source_artifact
+        serialization_pattern = reference_resolution.serialization_pattern
+        semantic_reference_kind = reference_resolution.semantic_kind
+        if reference_resolution.diagnostic_message is not None:
+            diagnostics = (reference_resolution.diagnostic_message,)
+    decision_trace = SemanticDecisionTrace(
+        code=entry.code,
+        xml_paths=xml_paths,
+        manual_reference_table=manual_reference_table,
+        reference_source_family=reference_source_family,
+        reference_source_artifact=reference_source_artifact,
+        serialization_pattern=serialization_pattern,
+        semantic_reference_kind=semantic_reference_kind,
+        applied_rules=(
+            base_rule,
+            reference_rule,
+            multiplicity_rule,
+            "naming:code_placeholder",
+        ),
+        diagnostics=diagnostics,
+    )
+    return SemanticFieldPolicy(
+        code=entry.code,
+        xml_paths=xml_paths,
+        base_kind=base_kind,
+        domain_shape_kind=domain_shape_kind,
+        fallback_shape_kind=fallback_shape_kind,
+        enum_eligibility=enum_eligibility,
+        presence_kind=presence_kind,
+        cardinality_kind=cardinality_kind,
+        policy_confidence=policy_confidence,
+        naming_policy=naming_policy,
+        structural_limitation_flags=structural_limitation_flags,
+        decision_trace=decision_trace,
     )
