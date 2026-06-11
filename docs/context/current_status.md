@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-06-08
+- Last updated: 2026-06-10
 
 ## Completed Or Stabilized Work
 
@@ -124,7 +124,7 @@
 - pull requests targeting `main` or `development` now run the repository test
   suite automatically when opened, reopened, or updated
 - the workflow installs the documented `uv` environment, performs the editable
-  install, and runs `uv run pytest tests`
+  install, and runs `uv run pytest -n auto tests`
 - the workflow job is named `tests` so GitHub can report a stable PR check
 - all automated repository tests are expected to live under `tests/`
 - merge blocking depends on GitHub branch protection or rulesets marking the
@@ -243,16 +243,18 @@
 - the hotfix record is currently documentation-only and implementation remains
   pending
 
-### Issue `#14` Planning
+### Issue `#14`
 
-- the semantic mapping rules issue now has an agreed execution policy recorded
-  in `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-- the policy plan fixes the semantic input contract around the implemented
-  normalization names `reference_resolution.source_artifact` and
+- the semantic mapping rules issue is implemented in
+  `src/cvn_codegen/semantic_policy.py`
+- semantic-policy unit tests are implemented in
+  `tests/test_semantic_policy_unit.py`
+- the implemented policy consumes the issue `#13` normalization contract,
+  including `reference_resolution.source_artifact` and
   `reference_resolution.semantic_kind`
-- issue `#14` implementation is expected to create explicit typed policy
-  contracts under `src/cvn_codegen/` without editing `src/generated/`
-- the agreed policy covers:
+- issue `#14` created explicit typed policy contracts under
+  `src/cvn_codegen/` without editing `src/generated/`
+- the implemented policy covers:
   - semantic base kinds
   - controlled-reference domain shapes
   - strict enum eligibility
@@ -261,8 +263,13 @@
   - Spanish-first domain naming
   - deterministic override precedence
   - representative validation cases for handoff into issue `#15`
-- pending issue documents `#15`, `#16`, and `#17` are aligned with the agreed
-  semantic-policy handoff before issue `#14` code implementation starts
+- issue `#14` uses a temporary review-required policy for representative compact
+  enum-like tables such as `CVN_SEX_A` and `CVN_ENTITY_TYPE` instead of
+  hardcoded final enum decisions
+- the permanent fix for dynamic strict-enum eligibility across all relevant
+  `ReferenceTables.xml` tables is documented by hotfix `#7`
+- the user reported that the semantic-policy tests, regression tests, and full
+  repository test suite passed after implementation
 - no final domain model emission is implemented yet; that remains issue `#15`
 
 ## Current Technical Baseline
@@ -276,17 +283,20 @@
 
 ## Next Planned Work
 
-- Next work item: implement issue `#14` semantic policy contracts and tests
+- Next work item: implement issue `#15` domain Pydantic model generator
 - Required corrective references before starting:
   - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
   - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
   - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+  - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
 - Issue document to read first:
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-- Corrected starting assumption for issue `#14`:
-  - semantic policy starts from enriched normalization output that already
-    includes typed `reference_resolution` metadata
-  - issue `#14` should not rebuild source-resolution logic for direct tables,
+  - `docs/roadmap/issues/issue-15-domain-model-generator.md`
+- Corrected starting assumption for issue `#15`:
+  - the generator should consume `SemanticPolicyBundle` and
+    `SemanticFieldPolicy` outputs instead of redefining semantic classification
+  - the generator should preserve `SemanticDecisionTrace` for CVN code, XML path,
+    manual reference, and auxiliary-source resolution traceability
+  - issue `#15` should not rebuild source-resolution logic for direct tables,
     subtype-backed references, side-package registries, side-package thesauri,
     hierarchical thematic references, unresolved references, or under-traced
     tables
@@ -301,6 +311,8 @@
   `CVNTreeModel_v1.0.xsd` does not declare that child element
 - `Subtype_Spa.xml` does not provide a direct table-family bridge for strict
   per-table subtype verification in the current normalization layer
+- dynamic strict enum eligibility for compact `ReferenceTables.xml` tables still
+  needs hotfix `#7` evidence in the normalization-to-semantic handoff
 
 All of these are documented in:
 
@@ -308,7 +320,7 @@ All of these are documented in:
 
 ## Useful Commands
 
-Synchronize the environment:
+Synchronize the environment, including multicore pytest support:
 
 ```bash
 uv sync --group codegen --group testing
@@ -328,10 +340,10 @@ uv run pytest tests/test_xsdata_runner_unit.py -v
 uv run pytest tests/test_xsdata_runner_smoke.py -v
 ```
 
-Run the full repository test suite:
+Run the full repository test suite with multicore pytest:
 
 ```bash
-uv run pytest tests
+uv run pytest -n auto tests
 ```
 
 ## Files Future Sessions Should Read After The Entry Points

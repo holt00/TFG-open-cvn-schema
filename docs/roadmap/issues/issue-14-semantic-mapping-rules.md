@@ -441,8 +441,8 @@ File-modification rule:
     regress
 - Commands:
   - `uv run pytest tests/test_semantic_policy_unit.py -v`
-  - `uv run pytest tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`
-  - `uv run pytest tests`
+  - `uv run pytest -n auto tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`
+  - `uv run pytest -n auto tests`
 - Subtask `14.1 / 15`:
   - run semantic-policy tests
 - Subtask `14.2 / 15`:
@@ -636,8 +636,8 @@ names should carry `naming_confidence=REQUIRES_REVIEW`.
 | Case | Role | Expected policy result |
 | --- | --- | --- |
 | `000.010.000.020` / `Nombre` | simple scalar | `PLAIN_VALUE`, `TEXT`, enum ineligible |
-| `CVN_SEX_A` / `000.010.000.030` | compact closed enum-like table | `STRICT_ENUM_CANDIDATE`, enum eligible |
-| `CVN_ENTITY_TYPE` / `010.010.000.040` | compact open/review controlled table | `OPEN_CODED_VALUE`, enum review required |
+| `CVN_SEX_A` / `000.010.000.030` | compact closed enum-like table | temporary `STRICT_ENUM_CANDIDATE`, enum review required |
+| `CVN_ENTITY_TYPE` / `010.010.000.040` | compact open/review controlled table | temporary `STRICT_ENUM_CANDIDATE`, enum review required |
 | `CVN_KNOW_A` / `050.030.010.030` | subtype-backed family | `SUBTYPE_BACKED_VALUE`, enum ineligible |
 | `ENTITY@Entity.xsd` / `010.010.000.020` | side-package registry | `REGISTRY_REFERENCE`, enum ineligible |
 | `THESAURUS@thesaurus.xsd` / `010.010.000.260` | side-package vocabulary | `VOCABULARY_REFERENCE`, enum ineligible |
@@ -679,22 +679,76 @@ Issue `#15` should:
   under-traced.
 - Generated structural bindings do not enforce `xs:choice` mutual exclusivity.
 - Generated list defaults do not reliably enforce every `minOccurs` constraint.
+- Strict enum eligibility for compact `ReferenceTables.xml` tables is currently
+  implemented with a temporary review-required policy for representative cases
+  until hotfix `#7` extends the normalization-to-semantic handoff with dynamic
+  per-table enum evidence.
 - Final domain model emission remains deferred to issue `#15`.
+
+## Adjustments Made During Implementation
+
+- The original representative inventory expected `CVN_SEX_A` to be treated as an
+  enum-eligible compact table and `CVN_ENTITY_TYPE` to be treated as an
+  open-coded reviewed table.
+- During implementation, that plan was corrected because the current issue `#14`
+  input contract does not yet expose enough dynamic `ReferenceTables.xml`
+  evidence to evaluate all compact enum-like tables generically.
+- To avoid hardcoding table-specific final behavior inside semantic policy, the
+  current implementation uses a temporary minimal approach for reviewed compact
+  examples:
+  - keep compact reviewed tables as `STRICT_ENUM_CANDIDATE`
+  - mark their `enum_eligibility` as `REVIEW_REQUIRED`
+  - mark their `policy_confidence` as `REQUIRES_REVIEW`
+- This temporary approach currently applies to representative reviewed cases such
+  as `CVN_SEX_A` and `CVN_ENTITY_TYPE` and is explicitly transitional rather
+  than final policy.
+- The permanent fix has been split into hotfix `#7`, documented at:
+  `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
+- When hotfix `#7` is implemented, these temporary reviewed cases must be
+  reevaluated dynamically from typed `ReferenceTables.xml` evidence instead of
+  table-name-based temporary handling.
 
 ## Implementation Performed
 
-- No semantic-policy code implementation has been performed yet.
-- This document now records the accepted execution plan and reporting protocol
-  for issue `#14`.
+- Semantic-policy contract and resolver work is implemented under
+  `src/cvn_codegen/semantic_policy.py`.
+- The implementation includes:
+  - semantic policy enums and dataclasses
+  - default `SemanticPolicyBundle` construction
+  - semantic field-policy resolution from `NormalizedCodeEntry`
+  - base type, reference-kind, serialization-pattern, presence, and cardinality
+    policy resolution
+  - deterministic override selection and same-rank conflict detection
+  - override application limited to semantic-policy outputs
+  - Spanish-first naming helpers with ASCII-normalized identifiers
+  - wrapper-policy lookup and validation helpers for known `xs:choice` wrappers
+  - representative validation inventory for the issue `#15` handoff
+  - temporary compact-table review-required policy for representative enum-like
+    cases until hotfix `#7` supplies dynamic enum evidence
+- Unit tests for the semantic policy are implemented in
+  `tests/test_semantic_policy_unit.py`.
+- This document records the accepted execution plan, the reporting protocol, and
+  the temporary compact-table plan adjustment introduced during implementation.
 
 ## Verification
 
-- No code tests have been run for issue `#14` because no semantic-policy
-  implementation exists yet.
-- Future verification must cover semantic-policy construction, lookup
-  precedence, override conflict handling, base type mapping, reference-kind
-  mapping, enum eligibility, wrapper policy, naming policy, and representative
-  validation cases.
+- The user reported that all Task `14 / 15` tests passed after implementation.
+- Verification covered:
+  - semantic-policy construction
+  - base type mapping
+  - reference-kind and serialization-pattern mapping
+  - enum eligibility and temporary review-required handling
+  - presence and cardinality mapping
+  - naming policy
+  - override precedence and same-rank conflict behavior
+  - wrapper policy helpers
+  - representative validation inventory
+  - normalization and auxiliary-reference regression coverage
+  - full repository test suite
+- Commands used for issue closure should follow the current fast-test convention:
+  - `uv run pytest tests/test_semantic_policy_unit.py -v`
+  - `uv run pytest -n auto tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`
+  - `uv run pytest -n auto tests`
 
 ## Findings
 
@@ -706,12 +760,20 @@ Issue `#15` should:
   facts.
 - `CVN_ENTITY_TYPE` is not safe for blind strict-enum generation because its
   compact controlled table has open/review behavior.
+- The current issue `#14` contract is sufficient for semantic-kind and
+  serialization-pattern policy, but not yet sufficient for dynamic strict enum
+  eligibility over all compact `ReferenceTables.xml` tables.
+- Temporary reviewed handling for `CVN_SEX_A` and `CVN_ENTITY_TYPE` is an
+  implementation bridge only and must be replaced by hotfix `#7`.
 
 ## Impact On Future Issues
 
 - Issue `#15` must consume `SemanticPolicyBundle` and generate concrete domain
   artifacts from semantic-policy outputs rather than redefining semantic
   classification.
+- Issue `#15` must preserve `SemanticDecisionTrace` so generated domain models
+  can be traced back to CVN codes, XML paths, manual references, and normalized
+  auxiliary-source resolution.
 - Issue `#16` must test semantic-policy behavior separately from generator
   output behavior.
 - Issue `#17` must document `SemanticPolicyBundle` as the source-of-truth
@@ -719,4 +781,4 @@ Issue `#15` should:
 
 ## Status
 
-- Status: planned with accepted execution policy
+- Status: completed

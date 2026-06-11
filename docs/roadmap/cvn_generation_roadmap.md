@@ -29,8 +29,8 @@ Goal:
 | `#11` | Project infrastructure for code generation | Completed | Baseline repository layout and config established |
 | `#12` | Generate structural Pydantic bindings from CVN XSDs | Completed with documented limitations | Tree model XML/XSD mismatch remains documented |
 | `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Completed | Core normalization and auxiliary-reference resolution enrichment implemented; baseline overlap counts preserved |
-| `#14` | Define semantic mapping rules and override policy | Planned with agreed execution policy | Semantic policy plan documented; implementation still pending and depends on enriched normalization metadata from issue `#13` after hotfix `#5` |
-| `#15` | Implement the domain Pydantic model generator | Pending | Depends on `#14` semantic policy and consumes enriched normalized metadata rather than rediscovering sources |
+| `#14` | Define semantic mapping rules and override policy | Completed | Semantic policy bundle, resolver, overrides, naming, wrapper policies, validation inventory, and tests implemented |
+| `#15` | Implement the domain Pydantic model generator | Next | Depends on completed `#14` semantic policy and consumes enriched normalized metadata rather than rediscovering sources |
 | `#16` | Add automated tests for the generation pipeline | Pending | Must cover both core pipeline and auxiliary enrichment path |
 | `#17` | Document and automate the complete workflow | Pending | Must document corrected full workflow including auxiliary stages |
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
@@ -43,9 +43,9 @@ Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 - hotfix `#5` additive auxiliary-reference resolution layer is now implemented
   in issue `#13`, including normalization-grade loading of `ReferenceTables`,
   `Subtypes`, `Entity`, and `Thesaurus` artifacts
-- issue `#14` must be started with those corrective documents in scope rather
+- issue `#14` has been completed with those corrective documents in scope rather
   than using the older reduced pipeline assumption
-- pending issue documents for `#14` to `#17` must therefore be read as consumers
+- pending issue documents for `#15` to `#17` must therefore be read as consumers
   of already-implemented upstream structural and normalization layers, not as
   discovery plans for those layers
 
@@ -237,10 +237,12 @@ Authoritative record:
     patterns described by hotfixes `#5` and `#6`
   - avoid re-deriving source-family or subtype-backed detection already handled
     by normalization
-- Planning outcome:
+- Implemented outcome:
   - typed semantic policy families, enum categories, override precedence,
-    Spanish-first naming, strict enum eligibility, wrapper treatment, and
-    representative validation cases are now documented in the issue record
+    Spanish-first naming, temporary review-required enum eligibility, wrapper
+    treatment, and representative validation cases are implemented and tested
+  - hotfix `#7` remains the follow-up for dynamic strict enum eligibility over
+    compact `ReferenceTables.xml` evidence
 
 ### Issue `#15`
 
@@ -257,6 +259,8 @@ Authoritative record:
     unresolved references, and under-traced references
   - consume semantic policy and normalized reference classifications rather than
     re-discovering auxiliary-source meaning in generator code
+  - preserve `SemanticDecisionTrace` in generated artifacts or metadata so CVN
+    source traceability survives the domain-generation step
 
 ### Issue `#16`
 

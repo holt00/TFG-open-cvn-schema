@@ -18,7 +18,7 @@ do not need to rediscover them.
   - generated Pydantic models may accept states that are invalid with respect to
     the source XSD
 - Expected follow-up:
-  - issue `#14` should define policy
+  - issue `#14` defines the semantic policy
   - issue `#15` should restore domain-facing semantics
 
 ### `minOccurs` Is Not Enforced For Generated Lists
@@ -29,7 +29,8 @@ do not need to rediscover them.
   - empty lists may be accepted in object construction even when the XSD
     expects at least one element
 - Expected follow-up:
-  - issue `#14` and issue `#15`
+  - issue `#14` records semantic cardinality policy
+  - issue `#15` should decide concrete generated validation behavior
 
 ### Some Attributes Are Typed As `object`
 
@@ -38,7 +39,8 @@ do not need to rediscover them.
   - validation is weaker than the XSD suggests
   - ergonomics are worse for downstream code
 - Expected follow-up:
-  - issue `#14` and issue `#15`
+  - issue `#14` defines semantic treatment outside generated bindings
+  - issue `#15` should avoid leaking weak structural types into domain models
 
 ### XML Helper Types Are Less Ergonomic Than Primitives
 
@@ -47,7 +49,8 @@ do not need to rediscover them.
 - Impact:
   - structural fidelity is preserved, but programmatic usage is more delicate
 - Expected follow-up:
-  - issue `#14` and issue `#15`
+  - issue `#14` defines semantic base-kind policy
+  - issue `#15` should map these cases into usable domain-facing shapes
 
 ## Generation Process Limitations
 
@@ -123,7 +126,7 @@ do not need to rediscover them.
   - tooling must resolve these families through repository-aware path mapping and
     documented semantic relationships
 - expected follow-up:
-  - issue `#14` should define semantic policy for side-package references
+  - issue `#14` defines semantic policy for side-package references
   - issue `#15` should decide which of these auxiliary artifacts become domain
     sources versus support registries
 
@@ -136,7 +139,7 @@ do not need to rediscover them.
   - not every table name from the manual can yet be promoted to a strict
     machine-resolved enum or closed catalog using the source package alone
 - expected follow-up:
-  - issue `#14` should define open versus closed treatment for unresolved tables
+  - issue `#14` defines open versus closed treatment for unresolved tables
   - issue `#15` should preserve such cases as explicit external or manual-only
     references unless stronger evidence is introduced
 
@@ -152,10 +155,32 @@ do not need to rediscover them.
     record that subtype catalog data is available, but it does not yet verify a
     strict per-table-family bridge directly from `Subtype_Spa.xml`
 - expected follow-up:
-  - issue `#14` should decide whether subtype-backed semantic policy needs a
-    stronger bridge than catalog availability alone
+  - issue `#14` treats subtype-backed families as enum-ineligible until stronger
+    bridge evidence exists
   - later maintenance work may add a stricter bridge only if reliable evidence
     is introduced from the preserved source package
+
+### Strict Enum Eligibility Needs Dynamic Reference-Table Evidence
+
+- confirmed behavior:
+  - issue `#14` can classify compact enum-like references by semantic kind and
+    serialization pattern
+  - the current normalization-to-semantic handoff does not yet expose per-table
+    enum evidence such as item count, code stability, label quality, hierarchy,
+    delegate/open behavior, or `OTHERS` handling
+  - representative compact tables such as `CVN_SEX_A` and `CVN_ENTITY_TYPE` are
+    therefore marked as strict-enum candidates with `REVIEW_REQUIRED` eligibility
+    rather than final enum decisions
+- impact:
+  - issue `#15` must not generate strict enums solely from compact enum-like
+    semantic kind
+  - strict enum generation must wait for explicit eligibility evidence or a
+    deliberate override
+- expected follow-up:
+  - hotfix `#7` should add dynamic `ReferenceTables.xml` enum evidence to the
+    normalization-to-semantic handoff
+  - issue `#15` should honor `EnumEligibility.REVIEW_REQUIRED` as non-final for
+    strict enum emission
 
 ## Documentation Rule
 

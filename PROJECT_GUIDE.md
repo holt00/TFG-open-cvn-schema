@@ -90,8 +90,8 @@ files in order:
   of issue `#12`
 - `docs/roadmap/issues/issue-13-normalization.md`: authoritative record of issue
   `#13`
-- `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: planned scope of
-  issue `#14`
+- `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: authoritative
+  record of issue `#14`
 - `docs/roadmap/issues/issue-15-domain-model-generator.md`: planned scope of
   issue `#15`
 - `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`: planned scope of

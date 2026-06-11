@@ -498,7 +498,7 @@ Minimum commands:
 uv run pytest tests/test_auxiliary_source_loaders_unit.py -v
 uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v
 uv run pytest tests/test_semantic_policy_unit.py -v
-uv run pytest tests
+uv run pytest -n auto tests
 ```
 
 ## Impact On Future Issues
