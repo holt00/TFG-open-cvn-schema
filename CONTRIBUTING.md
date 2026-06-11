@@ -48,10 +48,15 @@ uv run python -m cvn_codegen.xsdata_runner tree_model
 uv run python -m cvn_codegen.xsdata_runner all
 ```
 
-Run tests:
+Run tests with multicore pytest:
 
 ```bash
-uv run pytest tests
+uv run pytest -n auto tests
+```
+
+Run targeted single-file checks while iterating:
+
+```bash
 uv run pytest tests/test_xsdata_runner_unit.py -v
 uv run pytest tests/test_xsdata_runner_smoke.py -v
 ```
@@ -66,7 +71,7 @@ test suite through GitHub Actions.
 The CI entry point is:
 
 ```bash
-uv run pytest tests
+uv run pytest -n auto tests
 ```
 
 The workflow reports a `tests` check back to the pull request. Repository branch

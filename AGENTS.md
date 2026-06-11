@@ -65,6 +65,8 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
 - hotfix `#6`:
   `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+- hotfix `#7`:
+  `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
 
 ### Development Reference
 

@@ -2,8 +2,12 @@
 
 ## Summary
 
-Issue `#14` will define the rules that transform normalized CVN metadata into
-domain-oriented Pydantic models.
+Issue `#14` defines the deterministic semantic policy that translates enriched
+normalized CVN metadata into domain-oriented generation decisions for issue
+`#15`.
+
+The issue does not emit final domain models. Final domain model generation
+remains deferred to issue `#15`.
 
 ## Original Goal
 
@@ -19,299 +23,22 @@ domain-oriented Pydantic models.
 5. create an explicit override mechanism
 6. document all decisions in versioned repository files
 
-<<<<<<< Updated upstream
-=======
 ## Corrected Prerequisite Chain
 
-Issue `#14` no longer begins from only raw normalized manual and tree metadata.
-It must start from the validated enriched normalization output implemented in
-issue `#13` after hotfix `#5`, with auxiliary structural visibility already in
-place from hotfix `#4`.
+Issue `#14` starts from the validated enriched normalization output implemented
+in issue `#13` after hotfix `#5`, with auxiliary structural visibility already
+in place from hotfix `#4`.
 
-The corrected semantic-policy input now includes at minimum:
-
-- `manual_type`
-- `manual_multiplicity`
-- `manual_obligatory`
-- `xml_path`
-- `reference_resolution.status`
-- `reference_resolution.source_family`
-- `reference_resolution.source_artifact`
-- `reference_resolution.serialization_pattern`
-- `reference_resolution.semantic_kind`
-- `reference_resolution.trace`
-
-Issue `#14` must consume that typed metadata. It must not rebuild source-family,
-side-package, subtype-backed, or hierarchical-reference detection from prose
-documents or ad hoc table-name inspection.
-
->>>>>>> Stashed changes
-## Planned Execution Steps
-
-The implementation of issue `#14` should begin from the normalized metadata
-layer produced in issue `#13` and should leave issue `#15` with an explicit,
-<<<<<<< Updated upstream
-deterministic semantic policy to consume.
-=======
-deterministic semantic policy to consume without reopening source-discovery
-questions.
-
-## Agreed Execution Plan
-
-The following plan was agreed before starting implementation work on issue
-`#14`. It is the operative execution sequence for the issue and should guide the
-step-by-step development session.
-
-### Step `1 / 9` - Define Exact Scope Boundary
-
-- Step summary:
-  - define the exact execution boundary of issue `#14` so semantic policy,
-    normalization responsibilities, and generator responsibilities stay clearly
-    separated
-- Step type:
-  - standards, contracts, and documentation
-- Files to modify or add if needed:
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-  - `docs/adr/` if a stronger architecture decision must be recorded
-- Root task `1 / 9`:
-  - fix what belongs to issue `#14` and what remains deferred to issue `#15`
-- Subtask `1.1 / 9`:
-  - list the exact semantic-policy inputs consumed from `NormalizationResult`
-- Subtask `1.2 / 9`:
-  - list the exact outputs expected from the semantic policy layer
-- Subtask `1.3 / 9`:
-  - make explicit which upstream source-resolution logic must not be
-    reimplemented in issue `#14`
-
-### Step `2 / 9` - Design Semantic Output Contract
-
-- Step summary:
-  - define the machine-readable contract that issue `#15` will consume so later
-    generation does not depend on prose interpretation
-- Step type:
-  - contract definition and technical design
-- Files to modify or add if needed:
-  - one or more new hand-maintained semantic-policy modules under
-    `src/cvn_codegen/`
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-- Root task `2 / 9`:
-  - define the output shape of the semantic policy layer
-- Subtask `2.1 / 9`:
-  - decide the minimum record families needed, such as field-level semantic
-    rules, naming rules, and override records
-- Subtask `2.2 / 9`:
-  - decide the indexing keys used by the policy, such as CVN `code`,
-    `xml_path`, `reference_resolution.semantic_kind`, or serialization pattern
-- Subtask `2.3 / 9`:
-  - decide whether the contract should use dataclasses, enums, typed
-    dictionaries, or another explicit typed structure
-
-### Step `3 / 9` - Build Representative Case Inventory
-
-- Step summary:
-  - collect real normalized cases covering the main semantic categories so the
-    policy is grounded in validated repository inputs
-- Step type:
-  - analysis and traceability
-- Files to modify or add if needed:
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-  - optional auxiliary analysis notes if a persistent inventory becomes useful
-- Root task `3 / 9`:
-  - select a representative set of enriched normalized entries
-- Subtask `3.1 / 9`:
-  - include a compact enum-like direct table case such as `CVN_SEX_A`
-- Subtask `3.2 / 9`:
-  - include a subtype-backed case such as `CVN_KNOW_A`
-- Subtask `3.3 / 9`:
-  - include a side-package registry case such as `ENTITY@Entity.xsd`
-- Subtask `3.4 / 9`:
-  - include a side-package thesaurus case such as `THESAURUS@thesaurus.xsd`
-- Subtask `3.5 / 9`:
-  - include a hierarchical thematic case such as `UNESCO_CODES`
-- Subtask `3.6 / 9`:
-  - include an unresolved case such as `CVN_AGENCY_C`
-- Subtask `3.7 / 9`:
-  - include an under-traced case such as `CVN_INTERVENTION_A` or `CVN_PRUEBA`
-
-### Step `4 / 9` - Define Base Type, Wrapper, And Multiplicity Rules
-
-- Step summary:
-  - define the common semantic rules for scalar types, XML helper wrappers, and
-    multiplicity behavior before handling controlled-reference policy
-- Step type:
-  - semantic design and contract definition
-- Files to modify or add if needed:
-  - one or more new hand-maintained semantic-policy modules under
-    `src/cvn_codegen/`
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-  - `docs/pipeline/known_limitations.md` if new limitations are found
-- Root task `4 / 9`:
-  - map manual types and structural wrappers to intended domain-facing types
-- Subtask `4.1 / 9`:
-  - decide the semantic treatment of `Alphanumeric`, `Date`, `Double`,
-    `Boolean`, and `Duration`
-- Subtask `4.2 / 9`:
-  - decide which XML helper wrappers collapse to primitives and which should
-    stay as dedicated value objects
-- Subtask `4.3 / 9`:
-  - decide how `manual_obligatory` and `manual_multiplicity` become required,
-    optional, or repeated domain fields
-- Subtask `4.4 / 9`:
-  - document impacts from known structural limitations such as `xs:choice`,
-    weak `minOccurs` enforcement, and attributes typed as `object`
-
-### Step `5 / 9` - Define Policy Per Semantic Reference Kind
-
-- Step summary:
-  - define the core semantic treatment for each normalized
-    `SemanticReferenceKind`
-- Step type:
-  - semantic design
-- Files to modify or add if needed:
-  - one or more new hand-maintained semantic-policy modules under
-    `src/cvn_codegen/`
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-- Root task `5 / 9`:
-  - define open-versus-closed treatment and semantic shape by normalized
-    reference kind
-- Subtask `5.1 / 9`:
-  - compact enum-like table
-- Subtask `5.2 / 9`:
-  - compact scale or measure table
-- Subtask `5.3 / 9`:
-  - identifier-type table
-- Subtask `5.4 / 9`:
-  - scope table
-- Subtask `5.5 / 9`:
-  - subtype-backed controlled family
-- Subtask `5.6 / 9`:
-  - hierarchical thematic classification
-- Subtask `5.7 / 9`:
-  - side-package registry
-- Subtask `5.8 / 9`:
-  - side-package thesaurus or vocabulary
-- Subtask `5.9 / 9`:
-  - unresolved manual-only reference
-- Subtask `5.10 / 9`:
-  - technically present but under-traced table
-
-### Step `6 / 9` - Define Naming And Traceability Rules
-
-- Step summary:
-  - define how domain-facing names are derived while preserving CVN code and
-    XML traceability
-- Step type:
-  - standards and technical design
-- Files to modify or add if needed:
-  - one or more new hand-maintained semantic-policy modules under
-    `src/cvn_codegen/`
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-- Root task `6 / 9`:
-  - define naming rules for future domain classes, fields, and modules
-- Subtask `6.1 / 9`:
-  - decide the naming-language policy, including the role of Spanish academic
-    terminology
-- Subtask `6.2 / 9`:
-  - decide how multilingual manual labels are normalized into stable
-    identifiers
-- Subtask `6.3 / 9`:
-  - define collision-resolution rules for repeated or technically noisy names
-- Subtask `6.4 / 9`:
-  - define how semantic outputs preserve traceability back to CVN `code` and
-    `xml_path`
-
-### Step `7 / 9` - Design Override Mechanism
-
-- Step summary:
-  - design explicit override support for cases that generic semantic rules
-    cannot resolve safely
-- Step type:
-  - contract definition and technical design
-- Files to modify or add if needed:
-  - one or more new hand-maintained override modules under `src/cvn_codegen/`
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-- Root task `7 / 9`:
-  - define override granularity, structure, and precedence
-- Subtask `7.1 / 9`:
-  - decide whether overrides can target CVN `code`
-- Subtask `7.2 / 9`:
-  - decide whether overrides can target `xml_path`
-- Subtask `7.3 / 9`:
-  - decide whether overrides can target `reference_resolution.semantic_kind`
-- Subtask `7.4 / 9`:
-  - decide whether overrides can target serialization pattern
-- Subtask `7.5 / 9`:
-  - define precedence rules when multiple generic or specific rules collide
-
-### Step `8 / 9` - Validate Policy Against Real Cases
-
-- Step summary:
-  - verify that the semantic policy can classify and explain representative real
-    cases without reopening unresolved semantic design work in issue `#15`
-- Step type:
-  - validation, documentation, and possible contract-level test preparation
-- Files to modify or add if needed:
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-  - `docs/pipeline/known_limitations.md` if a new limitation is discovered
-  - optional semantic-policy tests if validation is captured in executable form
-- Root task `8 / 9`:
-  - validate the policy against representative normalized examples
-- Subtask `8.1 / 9`:
-  - validate a simple scalar field
-- Subtask `8.2 / 9`:
-  - validate a compact closed controlled table
-- Subtask `8.3 / 9`:
-  - validate a compact open controlled table
-- Subtask `8.4 / 9`:
-  - validate registry, thesaurus, and hierarchical references
-- Subtask `8.5 / 9`:
-  - validate a subtype-backed controlled family
-- Subtask `8.6 / 9`:
-  - validate unresolved and under-traced references
-- Subtask `8.7 / 9`:
-  - validate wrapper, `choice`, recursion, and override cases
-
-### Step `9 / 9` - Document Final Policy And Prepare Handoff
-
-- Step summary:
-  - record final semantic-policy decisions, unresolved limits, and the handoff
-    contract that issue `#15` will consume
-- Step type:
-  - documentation and issue closure preparation
-- Files to modify or add if needed:
-  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-  - `docs/context/current_status.md`
-  - `docs/roadmap/cvn_generation_roadmap.md`
-  - `docs/pipeline/known_limitations.md` if new limitations are found
-- Root task `9 / 9`:
-  - document the final policy and prepare the downstream handoff to issue `#15`
-- Subtask `9.1 / 9`:
-  - record any deviations from the original issue plan
-- Subtask `9.2 / 9`:
-  - leave a clear downstream checklist for issue `#15`
-- Subtask `9.3 / 9`:
-  - update roadmap and context documents when issue state changes
->>>>>>> Stashed changes
-
-## Established Semantic Policy Plan
-
-The issue `#14` planning session established the decisions below. These
-decisions are the operative specification for implementation work.
-
-### Scope Boundary
-
-Issue `#14` consumes only typed normalized metadata from issue `#13` as policy
-inputs. Raw XML, raw XSD, and generated structural classes may be inspected for
-human validation or override evidence, but they must not become base semantic
-inputs.
-
-Required normalized inputs are:
+The corrected semantic-policy input includes at minimum:
 
 - `code`
-- `xml_path`
-- `manual_type`
-- `manual_multiplicity`
-- `manual_obligatory`
+- `manual.manual_name`
+- `manual.manual_short_name`
+- `manual.manual_type`
+- `manual.manual_multiplicity`
+- `manual.manual_obligatory`
+- `manual.manual_reference_table`
+- `tree_paths[].xml_path`
 - `reference_resolution.status`
 - `reference_resolution.source_family`
 - `reference_resolution.source_artifact`
@@ -320,10 +47,448 @@ Required normalized inputs are:
 - `reference_resolution.semantic_kind`
 - `reference_resolution.trace`
 
-Issue `#14` must not reimplement source-family detection, serialization-pattern
-classification, semantic-kind classification, side-package detection,
-subtype-backed detection, unresolved-reference detection, under-traced-table
-detection, manual/tree overlap computation, or `xml_path` construction.
+Issue `#14` consumes that typed metadata. It must not rebuild source-family,
+side-package, subtype-backed, hierarchical-reference, unresolved-reference, or
+under-traced-table detection from prose documents or ad hoc table-name
+inspection.
+
+## Accepted Execution Protocol
+
+The user accepted this execution plan before implementation starts.
+
+At every execution step, the implementer must report:
+
+- current task number and task name
+- current subtask number and subtask name, when a subtask is being executed
+- short initial summary of what the task or subtask will do
+- short final result for the task or subtask
+- whether the user must modify any file manually
+- next step to follow
+
+File-modification rule:
+
+- documentation changes may be performed when explicitly requested
+- code changes should be left for the user unless the user explicitly authorizes
+  the agent to edit code
+- generated code under `src/generated/` must not be edited manually
+
+## Accepted Execution Plan
+
+### Task `1 / 15` - Clean And Stabilize Issue Documentation
+
+- Task summary:
+  - remove merge-conflict markers, duplicated sections, and stale field names so
+    issue `#14` has one authoritative plan
+- Files involved:
+  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
+  - `docs/context/current_status.md` if conflict markers remain there
+  - `docs/roadmap/cvn_generation_roadmap.md` if conflict markers remain there
+- Subtask `1.1 / 15`:
+  - resolve `<<<<<<<`, `=======`, and `>>>>>>>` markers
+- Subtask `1.2 / 15`:
+  - remove duplicated plan, implementation, verification, findings, and impact
+    sections
+- Subtask `1.3 / 15`:
+  - align field names with the implemented normalization contract:
+    `reference_resolution.source_artifact` and
+    `reference_resolution.semantic_kind`
+- Subtask `1.4 / 15`:
+  - keep issue status as planned until implementation and verification finish
+- User manual modifications needed:
+  - none expected for documentation cleanup unless the user wants wording changes
+- Next step:
+  - verify the upstream normalization contract
+
+### Task `2 / 15` - Verify Upstream Normalization Contract
+
+- Task summary:
+  - confirm the exact Python structures issue `#14` may consume from issue `#13`
+- Files to inspect:
+  - `src/cvn_codegen/normalization_types.py`
+  - `src/cvn_codegen/normalization.py`
+  - `src/cvn_codegen/auxiliary_sources/reference_resolution.py`
+  - `tests/test_normalization_unit.py`
+  - `tests/test_auxiliary_reference_resolution_unit.py`
+- Subtask `2.1 / 15`:
+  - confirm `ManualCodeEntry`, `TreePathEntry`, `NormalizedCodeEntry`, and
+    `NormalizationResult`
+- Subtask `2.2 / 15`:
+  - confirm `ReferenceResolution`, `ReferenceResolutionTrace`,
+    `ReferenceResolutionStatus`, `ReferenceSourceFamily`, `SerializationPattern`,
+    and `SemanticReferenceKind`
+- Subtask `2.3 / 15`:
+  - confirm `build_normalization_result(...)` as the preferred consumer entry
+    point
+- Subtask `2.4 / 15`:
+  - record any mismatch between planned semantic inputs and implemented contract
+- User manual modifications needed:
+  - none unless code contract differs from documented expectations
+- Next step:
+  - define the semantic policy contract
+
+### Task `3 / 15` - Define Semantic Policy Contract
+
+- Task summary:
+  - design the typed structures that issue `#15` will consume mechanically
+- Expected code location:
+  - `src/cvn_codegen/semantic_policy.py`
+- Subtask `3.1 / 15`:
+  - define policy enums:
+    `SemanticBaseKind`, `WrapperPolicyKind`, `PresenceKind`,
+    `CardinalityKind`, `StructuralLimitationFlag`, `DomainShapeKind`,
+    `PolicyConfidence`, and `EnumEligibility`
+- Subtask `3.2 / 15`:
+  - define policy records:
+    `PolicyMetadata`, `SemanticDecisionTrace`, `BaseTypePolicy`,
+    `ReferenceKindPolicy`, `NamingPolicy`, `MultiplicityPolicy`,
+    `ChoiceWrapperPolicy`, `OverrideRule`, `ValidationCaseDefinition`,
+    `SemanticFieldPolicy`, and `SemanticPolicyBundle`
+- Subtask `3.3 / 15`:
+  - expose deterministic lookup maps by CVN `code`, `xml_path`,
+    `SemanticReferenceKind`, `SerializationPattern`, `manual_type`, and wrapper
+    family
+- User manual modifications needed:
+  - code file must be created by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - build default semantic policy bundle
+
+### Task `4 / 15` - Build Default Semantic Policy Bundle
+
+- Task summary:
+  - implement default reusable semantic policy values independent from concrete
+    normalized entries
+- Expected code location:
+  - `src/cvn_codegen/semantic_policy.py`
+- Subtask `4.1 / 15`:
+  - create `build_default_semantic_policy_bundle()`
+- Subtask `4.2 / 15`:
+  - include base policies by `manual_type`
+- Subtask `4.3 / 15`:
+  - include reference-kind policies by `SemanticReferenceKind`
+- Subtask `4.4 / 15`:
+  - include serialization refinements by `SerializationPattern`
+- Subtask `4.5 / 15`:
+  - include wrapper policies for known high-value `xs:choice` wrappers
+- User manual modifications needed:
+  - code file must be edited by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - implement semantic field policy resolution
+
+### Task `5 / 15` - Resolve Semantic Policy For One Normalized Entry
+
+- Task summary:
+  - define how one `NormalizedCodeEntry` becomes one `SemanticFieldPolicy`
+- Expected code location:
+  - `src/cvn_codegen/semantic_policy.py`
+- Subtask `5.1 / 15`:
+  - create `build_semantic_field_policy(entry, bundle)`
+- Subtask `5.2 / 15`:
+  - calculate `base_kind`
+- Subtask `5.3 / 15`:
+  - calculate `domain_shape_kind` and `fallback_shape_kind`
+- Subtask `5.4 / 15`:
+  - calculate `presence_kind` and `cardinality_kind`
+- Subtask `5.5 / 15`:
+  - calculate `enum_eligibility` and `policy_confidence`
+- Subtask `5.6 / 15`:
+  - attach `SemanticDecisionTrace` preserving CVN code, XML path, reference
+    resolution, and rule sources
+- User manual modifications needed:
+  - code file must be edited by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - implement override precedence
+
+### Task `6 / 15` - Implement Override Precedence
+
+- Task summary:
+  - make exceptions explicit, reviewable, and deterministic
+- Expected code location:
+  - `src/cvn_codegen/semantic_policy.py`
+- Subtask `6.1 / 15`:
+  - support override target `code + xml_path`
+- Subtask `6.2 / 15`:
+  - support override target `code`
+- Subtask `6.3 / 15`:
+  - support override target `xml_path`
+- Subtask `6.4 / 15`:
+  - support override target `reference_resolution.semantic_kind`
+- Subtask `6.5 / 15`:
+  - support override target `reference_resolution.serialization_pattern`
+- Subtask `6.6 / 15`:
+  - apply precedence order:
+    `code + xml_path`, `code`, `xml_path`, `semantic_kind`,
+    `serialization_pattern`, `manual_type`, wrapper, presence/cardinality,
+    defaults
+- Subtask `6.7 / 15`:
+  - mark same-priority conflicts as `PolicyConfidence.REQUIRES_REVIEW`
+- User manual modifications needed:
+  - code file must be edited by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - implement naming policy
+
+### Task `7 / 15` - Implement Naming Policy
+
+- Task summary:
+  - generate future domain-facing names while preserving source traceability
+- Expected code location:
+  - `src/cvn_codegen/semantic_policy.py`
+- Subtask `7.1 / 15`:
+  - use Spanish `manual_name` as the default label source
+- Subtask `7.2 / 15`:
+  - use `manual_short_name` only when clearer and non-ambiguous
+- Subtask `7.3 / 15`:
+  - normalize identifiers to ASCII
+- Subtask `7.4 / 15`:
+  - produce `snake_case` fields and modules
+- Subtask `7.5 / 15`:
+  - produce `PascalCase` class names
+- Subtask `7.6 / 15`:
+  - preserve acronyms such as `CVN`, `UNESCO`, `ORCID`, `DOI`, `ISBN`, `ISSN`,
+    and `H`
+- Subtask `7.7 / 15`:
+  - resolve collisions by readable Spanish name, then semantic context, then CVN
+    code suffix
+- User manual modifications needed:
+  - code file must be edited by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - implement base type policy
+
+### Task `8 / 15` - Implement Base Type Policy
+
+- Task summary:
+  - map manual types to semantic base kinds without choosing final Python output
+    types
+- Expected code location:
+  - `src/cvn_codegen/semantic_policy.py`
+- Subtask `8.1 / 15`:
+  - map `Alphanumeric` without resolved controlled reference to `TEXT`
+- Subtask `8.2 / 15`:
+  - map `Alphanumeric` with `reference_resolution.semantic_kind` to
+    `CONTROLLED_REFERENCE`
+- Subtask `8.3 / 15`:
+  - map `Date` to `DATE_LIKE`
+- Subtask `8.4 / 15`:
+  - map `Double` to `DECIMAL_NUMBER`
+- Subtask `8.5 / 15`:
+  - map `Boolean` to `BOOLEAN`
+- Subtask `8.6 / 15`:
+  - map `Duration` to `DURATION_LIKE`
+- Subtask `8.7 / 15`:
+  - map missing or unknown types to `UNKNOWN`
+- User manual modifications needed:
+  - code file must be edited by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - implement reference-kind policy
+
+### Task `9 / 15` - Implement Reference-Kind Policy
+
+- Task summary:
+  - map normalized `SemanticReferenceKind` values to domain shape decisions
+- Expected code location:
+  - `src/cvn_codegen/semantic_policy.py`
+- Subtask `9.1 / 15`:
+  - map `COMPACT_ENUM_LIKE_TABLE` to `STRICT_ENUM_CANDIDATE`, fallback
+    `OPEN_CODED_VALUE`
+- Subtask `9.2 / 15`:
+  - map `COMPACT_SCALE_OR_MEASURE` to `MEASURE_OR_SCALE_VALUE`
+- Subtask `9.3 / 15`:
+  - map `IDENTIFIER_TYPE_TABLE` to `IDENTIFIER_REFERENCE`
+- Subtask `9.4 / 15`:
+  - map `SCOPE_TABLE` to `SCOPE_REFERENCE`
+- Subtask `9.5 / 15`:
+  - map `SUBTYPE_BACKED_CONTROLLED_FAMILY` to `SUBTYPE_BACKED_VALUE`
+- Subtask `9.6 / 15`:
+  - map `HIERARCHICAL_THEMATIC_CLASSIFICATION` to
+    `HIERARCHICAL_CODE_REFERENCE`
+- Subtask `9.7 / 15`:
+  - map `SIDE_PACKAGE_REGISTRY` to `REGISTRY_REFERENCE`
+- Subtask `9.8 / 15`:
+  - map `SIDE_PACKAGE_THESAURUS_OR_VOCABULARY` to `VOCABULARY_REFERENCE`
+- Subtask `9.9 / 15`:
+  - map `UNRESOLVED_MANUAL_ONLY_REFERENCE` to `UNRESOLVED_REFERENCE`
+- Subtask `9.10 / 15`:
+  - map `UNDER_TRACED_REFERENCE_TABLE` to `UNDER_TRACED_REFERENCE`
+- User manual modifications needed:
+  - code file must be edited by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - implement enum eligibility
+
+### Task `10 / 15` - Implement Enum Eligibility Policy
+
+- Task summary:
+  - decide when controlled references may become strict enum candidates
+- Expected code location:
+  - `src/cvn_codegen/semantic_policy.py`
+- Subtask `10.1 / 15`:
+  - mark direct compact `REFERENCE_TABLE` cases as eligible only when no risk
+    flags exist
+- Subtask `10.2 / 15`:
+  - reject hierarchies, delegates, subtype-backed tables, side packages,
+    unresolved references, and under-traced references
+- Subtask `10.3 / 15`:
+  - mark `CVN_SEX_A` as expected strict-enum candidate
+- Subtask `10.4 / 15`:
+  - mark `CVN_ENTITY_TYPE` as open or review-required rather than blind strict
+    enum
+- User manual modifications needed:
+  - code file must be edited by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - implement wrapper policy
+
+### Task `11 / 15` - Implement Wrapper And Choice Policy
+
+- Task summary:
+  - preserve high-value `xs:choice` semantics lost by structural bindings
+- Expected code location:
+  - `src/cvn_codegen/semantic_policy.py`
+- Subtask `11.1 / 15`:
+  - classify `FlexibleDatesType` as `CHOICE_OBJECT_CANDIDATE`
+- Subtask `11.2 / 15`:
+  - classify `OfficialIdType` as `CHOICE_OBJECT_CANDIDATE`
+- Subtask `11.3 / 15`:
+  - classify `EntityTypeType` as `CHOICE_OBJECT_CANDIDATE`
+- Subtask `11.4 / 15`:
+  - classify `EntityNameType` as `CHOICE_OBJECT_CANDIDATE`
+- Subtask `11.5 / 15`:
+  - attach `CHOICE_NOT_ENFORCED`, `LIST_MIN_OCCURS_WEAK`,
+    `OBJECT_TYPED_ATTRIBUTE`, and `WRAPPER_ERGONOMICS` flags when applicable
+- Subtask `11.6 / 15`:
+  - collapse only wrappers that add no domain meaning and no required structural
+    traceability
+- User manual modifications needed:
+  - code file must be edited by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - build representative validation inventory
+
+### Task `12 / 15` - Build Representative Validation Inventory
+
+- Task summary:
+  - define real cases that prove the policy covers all semantic categories
+- Files involved:
+  - `src/cvn_codegen/semantic_policy.py`
+  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
+- Subtask `12.1 / 15`:
+  - include simple scalar case `000.010.000.020`
+- Subtask `12.2 / 15`:
+  - include compact enum-like case `CVN_SEX_A` / `000.010.000.030`
+- Subtask `12.3 / 15`:
+  - include compact open or review case `CVN_ENTITY_TYPE`
+- Subtask `12.4 / 15`:
+  - include subtype-backed case `CVN_KNOW_A`
+- Subtask `12.5 / 15`:
+  - include side-package registry case `ENTITY@Entity.xsd`
+- Subtask `12.6 / 15`:
+  - include side-package vocabulary case `THESAURUS@thesaurus.xsd`
+- Subtask `12.7 / 15`:
+  - include hierarchical thematic case `UNESCO_CODES`
+- Subtask `12.8 / 15`:
+  - include unresolved case `CVN_AGENCY_C`
+- Subtask `12.9 / 15`:
+  - include under-traced cases `CVN_INTERVENTION_A` and `CVN_PRUEBA`
+- Subtask `12.10 / 15`:
+  - include wrapper cases `FlexibleDatesType`, `OfficialIdType`,
+    `EntityTypeType`, and `EntityNameType`
+- User manual modifications needed:
+  - code inventory must be edited by the user unless explicit code-edit approval
+    is given
+- Next step:
+  - add tests
+
+### Task `13 / 15` - Add Semantic Policy Tests
+
+- Task summary:
+  - make issue `#14` behavior executable and protect handoff to issue `#15`
+- Expected test location:
+  - `tests/test_semantic_policy_unit.py`
+- Subtask `13.1 / 15`:
+  - test policy enums and default bundle construction
+- Subtask `13.2 / 15`:
+  - test base type mapping
+- Subtask `13.3 / 15`:
+  - test reference-kind mapping
+- Subtask `13.4 / 15`:
+  - test enum eligibility
+- Subtask `13.5 / 15`:
+  - test presence and cardinality mapping
+- Subtask `13.6 / 15`:
+  - test naming normalization and collision fallback
+- Subtask `13.7 / 15`:
+  - test override precedence and same-priority conflict behavior
+- Subtask `13.8 / 15`:
+  - test wrapper policies
+- Subtask `13.9 / 15`:
+  - test representative real cases through `build_normalization_result(...)`
+    with auxiliary paths
+- User manual modifications needed:
+  - test file must be created by the user unless explicit code-edit approval is
+    given
+- Next step:
+  - run verification commands
+
+### Task `14 / 15` - Verify Implementation
+
+- Task summary:
+  - prove semantic policy works and existing normalization behavior did not
+    regress
+- Commands:
+  - `uv run pytest tests/test_semantic_policy_unit.py -v`
+  - `uv run pytest -n auto tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`
+  - `uv run pytest -n auto tests`
+- Subtask `14.1 / 15`:
+  - run semantic-policy tests
+- Subtask `14.2 / 15`:
+  - run normalization and auxiliary regression tests
+- Subtask `14.3 / 15`:
+  - run full test suite
+- Subtask `14.4 / 15`:
+  - document failures exactly if any command fails
+- User manual modifications needed:
+  - none unless tests expose code or doc changes required
+- Next step:
+  - update closure documentation
+
+### Task `15 / 15` - Update Final Documentation And Handoff
+
+- Task summary:
+  - close issue `#14` with implementation details, verification, limitations, and
+    issue `#15` handoff
+- Files involved:
+  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
+  - `docs/context/current_status.md`
+  - `docs/roadmap/cvn_generation_roadmap.md`
+  - `docs/pipeline/known_limitations.md` only if a new limitation is found
+- Subtask `15.1 / 15`:
+  - record implementation performed
+- Subtask `15.2 / 15`:
+  - record verification commands and results
+- Subtask `15.3 / 15`:
+  - record findings and limitations
+- Subtask `15.4 / 15`:
+  - update issue status when implementation is verified
+- Subtask `15.5 / 15`:
+  - leave explicit handoff checklist for issue `#15`
+- User manual modifications needed:
+  - none expected for documentation closure unless the user wants wording changes
+- Next step:
+  - start issue `#15` only after issue `#14` is implemented and verified
+
+## Established Semantic Policy Decisions
+
+### Scope Boundary
+
+Issue `#14` consumes only typed normalized metadata from issue `#13` as policy
+inputs. Raw XML, raw XSD, and generated structural classes may be inspected for
+human validation or override evidence, but they must not become base semantic
+inputs.
 
 If a repeated semantic decision needs raw source inspection, the missing data
 belongs in issue `#13`. If the need is isolated and not generalizable, issue
@@ -331,9 +496,9 @@ belongs in issue `#13`. If the need is isolated and not generalizable, issue
 
 ### Contract Families
 
-The semantic policy contract should be implemented as explicit typed Python
-structures, using `dataclass` records and `Enum` values. The root contract should
-be an indexed `SemanticPolicyBundle`.
+The semantic policy contract should use explicit typed Python structures with
+`dataclass` records and `Enum` values. The root contract should be an indexed
+`SemanticPolicyBundle`.
 
 Minimum contract families are:
 
@@ -349,13 +514,7 @@ Minimum contract families are:
 - `PolicyMetadata`
 - `SemanticDecisionTrace`
 
-The bundle should expose deterministic lookups by CVN `code`, `xml_path`,
-`reference_resolution.semantic_kind`, `reference_resolution.serialization_pattern`,
-`manual_type`, and wrapper family.
-
 ### Policy Enums
-
-The semantic contract should define these policy categories:
 
 | Category | Values |
 | --- | --- |
@@ -392,13 +551,14 @@ Overrides must not mutate normalized input facts such as `code`, `xml_path`,
 `reference_resolution.source_family`, `reference_resolution.semantic_kind`,
 `reference_resolution.serialization_pattern`, or upstream trace facts.
 
-Same-priority conflicts should produce `PolicyConfidence.REQUIRES_REVIEW` rather
-than silently choosing one rule.
+Same-priority conflicts should produce `PolicyConfidence.REQUIRES_REVIEW`
+rather than silently choosing one rule.
 
 ### Base Type Policy
 
 Issue `#14` defines semantic base kinds, not final Python/domain output types.
-Issue `#15` will map these semantic kinds to concrete generated Python artifacts.
+Issue `#15` will map these semantic kinds to concrete generated Python
+artifacts.
 
 | `manual_type` condition | Semantic base kind |
 | --- | --- |
@@ -433,7 +593,7 @@ field shape and validation behavior.
 
 | `reference_resolution.semantic_kind` | Domain shape | Fallback shape | Enum eligibility default | Confidence default |
 | --- | --- | --- | --- | --- |
-| `COMPACT_ENUM_LIKE_TABLE` | `STRICT_ENUM_CANDIDATE` | `OPEN_CODED_VALUE` | eligibility criteria required | `HIGH` or `REVIEW_REQUIRED` |
+| `COMPACT_ENUM_LIKE_TABLE` | `STRICT_ENUM_CANDIDATE` | `OPEN_CODED_VALUE` | eligibility criteria required | `HIGH` or `REQUIRES_REVIEW` |
 | `COMPACT_SCALE_OR_MEASURE` | `MEASURE_OR_SCALE_VALUE` | `OPEN_CODED_VALUE` | `REVIEW_REQUIRED` | `MEDIUM` |
 | `IDENTIFIER_TYPE_TABLE` | `IDENTIFIER_REFERENCE` | `OPEN_CODED_VALUE` | `INELIGIBLE` for full identifier | `MEDIUM` |
 | `SCOPE_TABLE` | `SCOPE_REFERENCE` | `OPEN_CODED_VALUE` | eligibility criteria required | `MEDIUM` |
@@ -471,29 +631,29 @@ Collision resolution should prefer readable Spanish names first, then semantic
 context, then CVN-code suffix as the last deterministic fallback. Ambiguous
 names should carry `naming_confidence=REQUIRES_REVIEW`.
 
-### Representative Inventory And Validation Results
+## Representative Inventory And Expected Results
 
-| Case | Role | Expected policy result | Validation |
-| --- | --- | --- | --- |
-| `000.010.000.020` / `Nombre` | simple scalar | `PLAIN_VALUE`, `TEXT`, enum ineligible | pass |
-| `CVN_SEX_A` / `000.010.000.030` | compact closed enum-like table | `STRICT_ENUM_CANDIDATE`, enum eligible | pass |
-| `CVN_ENTITY_TYPE` / `010.010.000.040` | compact open/review controlled table | `OPEN_CODED_VALUE`, enum review required | pass |
-| `CVN_KNOW_A` / `050.030.010.030` | subtype-backed family | `SUBTYPE_BACKED_VALUE`, enum ineligible | pass |
-| `ENTITY@Entity.xsd` / `010.010.000.020` | side-package registry | `REGISTRY_REFERENCE`, enum ineligible | pass |
-| `THESAURUS@thesaurus.xsd` / `010.010.000.260` | side-package vocabulary | `VOCABULARY_REFERENCE`, enum ineligible | pass |
-| `UNESCO_CODES` / `010.010.000.220` | hierarchical thematic classification | `HIERARCHICAL_CODE_REFERENCE`, enum ineligible | pass |
-| `CVN_AGENCY_C` / `060.010.000.030` | unresolved manual-only reference | `UNRESOLVED_REFERENCE`, review required | pass |
-| `CVN_INTERVENTION_A` | under-traced table, primary case | `UNDER_TRACED_REFERENCE`, review required | pass |
-| `CVN_PRUEBA` | under-traced table, secondary case | `UNDER_TRACED_REFERENCE`, review required | pass |
-| `FlexibleDatesType` | `xs:choice` date wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags | pass |
-| `OfficialIdType` | `xs:choice` identifier wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags | pass |
-| `EntityTypeType` | `xs:choice` entity type wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags | pass |
-| `EntityNameType` | `xs:choice` entity name wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags | pass |
+| Case | Role | Expected policy result |
+| --- | --- | --- |
+| `000.010.000.020` / `Nombre` | simple scalar | `PLAIN_VALUE`, `TEXT`, enum ineligible |
+| `CVN_SEX_A` / `000.010.000.030` | compact closed enum-like table | temporary `STRICT_ENUM_CANDIDATE`, enum review required |
+| `CVN_ENTITY_TYPE` / `010.010.000.040` | compact open/review controlled table | temporary `STRICT_ENUM_CANDIDATE`, enum review required |
+| `CVN_KNOW_A` / `050.030.010.030` | subtype-backed family | `SUBTYPE_BACKED_VALUE`, enum ineligible |
+| `ENTITY@Entity.xsd` / `010.010.000.020` | side-package registry | `REGISTRY_REFERENCE`, enum ineligible |
+| `THESAURUS@thesaurus.xsd` / `010.010.000.260` | side-package vocabulary | `VOCABULARY_REFERENCE`, enum ineligible |
+| `UNESCO_CODES` / `010.010.000.220` | hierarchical thematic classification | `HIERARCHICAL_CODE_REFERENCE`, enum ineligible |
+| `CVN_AGENCY_C` / `060.010.000.030` | unresolved manual-only reference | `UNRESOLVED_REFERENCE`, review required |
+| `CVN_INTERVENTION_A` | under-traced table, primary case | `UNDER_TRACED_REFERENCE`, review required |
+| `CVN_PRUEBA` | under-traced table, secondary case | `UNDER_TRACED_REFERENCE`, review required |
+| `FlexibleDatesType` | `xs:choice` date wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags |
+| `OfficialIdType` | `xs:choice` identifier wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags |
+| `EntityTypeType` | `xs:choice` entity type wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags |
+| `EntityNameType` | `xs:choice` entity name wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags |
 
-Under-traced tables may not produce generated domain fields in issue `#15` unless
-future normalized entries reference them.
+Under-traced tables may not produce generated domain fields in issue `#15`
+unless future normalized entries reference them.
 
-### Handoff Checklist For Issue `#15`
+## Handoff Checklist For Issue `#15`
 
 Issue `#15` should:
 
@@ -510,271 +670,85 @@ Issue `#15` should:
 10. avoid under-traced field output unless normalized metadata later references
     those tables
 
-### Established Open Limits
-
-The following limitations remain visible for issue `#15`:
+## Known Limitations
 
 - `Subtype_Spa.xml` lacks a strict per-table bridge such as `CVN_KNOW_A` to
-  subtype records
-- `CVN_AGENCY_C` remains unresolved from the package alone
+  subtype records.
+- `CVN_AGENCY_C` remains unresolved from the source package alone.
 - `CVN_INTERVENTION_A` and `CVN_PRUEBA` remain technically present but
-  under-traced
-- generated bindings do not enforce `xs:choice` mutual exclusivity
-- generated list defaults do not reliably enforce `minOccurs`
-- final domain emission remains deferred to issue `#15`
-
-### Main Objective
-
-- define a stable semantic mapping policy that translates normalized CVN
-  metadata into domain-oriented generation rules for types, naming,
-  multiplicity, controlled vocabularies, and explicit exceptions
-- keep semantic cleanup outside `src/generated/` and preserve CVN code
-  traceability for every domain-facing decision
-<<<<<<< Updated upstream
-=======
-- preserve semantic distinctions already surfaced by
-  `reference_resolution.semantic_kind` and
-  `reference_resolution.serialization_pattern` instead of collapsing all
-  controlled references into one policy bucket
->>>>>>> Stashed changes
-
-### Execution Steps
-
-1. define the semantic output contract
-2. inventory representative normalized cases
-3. define base type-mapping rules
-4. define controlled-table policy
-5. define naming rules for domain artifacts
-6. define multiplicity and optionality rules
-7. define treatment for `choice`, wrappers, and recursion
-8. design the override mechanism
-9. validate rules against representative examples
-10. document the final policy and unresolved limits
-
-### Step `1` - Define The Semantic Output Contract
-
-- decide which hand-maintained structure will represent semantic mapping rules
-  for later consumption
-- the contract should be explicit enough for issue `#15` to consume without
-  reinterpreting prose documentation
-- the contract should support both generic rules and targeted per-code or
-  per-pattern exceptions
-
-### Step `2` - Inventory Representative Normalized Cases
-
-- review normalized entries from issue `#13` and select representative samples
-  across manual types, multiplicity combinations, reference tables, wrappers,
-  and known `choice` structures
-- use this inventory to ensure semantic policy is grounded in real repository
-  inputs rather than hypothetical cases
-- preserve traceability from each representative case back to CVN `code`,
-  `xml_path`, and source metadata
-
-### Step `3` - Define Base Type-Mapping Rules
-
-- map the current manual type families to intended domain-facing types
-- current normalized manual types observed in the canonical manual are:
-  - `Alphanumeric`
-  - `Date`
-  - `Double`
-  - `Boolean`
-  - `Duration`
-- decide which structural XML helper types collapse to primitives and which, if
-  any, should remain distinct domain value objects
-- keep the result deterministic and independent from direct structural class
-  names where those names are only XML-oriented wrappers
-
-### Step `4` - Define Controlled-Table Policy
-
-<<<<<<< Updated upstream
-- classify reference tables into semantic categories such as:
-  - internal CVN controlled tables that may become enums
-  - ISO or other large standardized tables that may require a different policy
-  - external or unresolved tables that cannot safely become closed enums from
-    the canonical package alone
-- decide which controlled sets become strict enums and which remain strings,
-  aliases, or external-reference representations
-- document the reasoning so issue `#15` can apply the same policy
-=======
-- use `reference_resolution.semantic_kind` as the main policy input
-  rather than rediscovering categories from raw table names alone
-- semantic policy must handle at minimum these normalized kinds:
-  - compact enum-like table
-  - compact scale or measure table
-  - identifier-type table
-  - scope table
-  - subtype-backed controlled family
-  - hierarchical thematic classification
-  - side-package registry
-  - side-package thesaurus or vocabulary
-  - unresolved manual-only reference
-  - technically present but under-traced table
-- define open versus closed treatment for each kind
-- define enum eligibility rules for compact internal tables
-- define explicit treatment for:
-  - `Entity`-backed registry references
-  - `Thesaurus`-backed vocabulary references
-  - `UNESCO_CODES` hierarchical thematic references
-  - subtype-backed `Subtype@Subtypes.xsd` families
-  - unresolved references such as `CVN_AGENCY_C`
-  - under-traced tables such as `CVN_INTERVENTION_A` and `CVN_PRUEBA`
-- document reasoning so issue `#15` can apply policy mechanically
->>>>>>> Stashed changes
-
-### Step `5` - Define Naming Rules For Domain Artifacts
-
-- define naming rules for classes, fields, and modules in the future semantic
-  generation layer
-- decide how multilingual manual labels are normalized into stable identifiers
-- define how to resolve naming collisions, repeated labels, technical suffixes,
-  and XML-oriented names that should not leak into the future domain API by
-  default
-- preserve code-level traceability even when domain names differ from technical
-  XML names
-
-### Step `6` - Define Multiplicity And Optionality Rules
-
-- define how `manual_obligatory` and `manual_multiplicity` map to required
-  fields, optional fields, and `list[T]`
-- define how later generation should behave when structural defaults from the
-  generated bindings are weaker than the intended domain semantics
-- keep the policy clear enough to restore semantic meaning lost in the
-  structural layer
-
-### Step `7` - Define Treatment For `choice`, Wrappers, And Recursion
-
-- define a semantic policy for the known high-value `xs:choice` cases already
-  documented in the repository, including:
-  - `FlexibleDatesType`
-  - `OfficialIdType`
-  - `EntityTypeType`
-  - `EntityNameType`
-- decide when wrappers are collapsed, when mutually exclusive alternatives
-  become unions or dedicated domain objects, and how recursive structures are
-  represented without reproducing raw XML complexity
-- keep this policy aligned with the architectural rule that structural fidelity
-  belongs to `src/generated/`, while semantic cleanup belongs to later layers
-
-### Step `8` - Design The Override Mechanism
-
-- create an explicit override strategy for cases that cannot be handled by the
-  generic mapping algorithm alone
-- decide the granularity of overrides, for example by CVN `code`, manual type,
-<<<<<<< Updated upstream
-  reference table, or technical path
-=======
-  `reference_resolution.semantic_kind`, serialization pattern, reference table,
-  or technical path
->>>>>>> Stashed changes
-- keep overrides versioned, reviewable, and separate from generated output
-
-### Step `9` - Validate Rules Against Representative Examples
-
-- check the proposed policy against a representative set of normalized cases
-- validation should include at least:
-  - a simple scalar field
-  - a controlled table expected to become an enum
-  - a controlled table expected to remain open
-  - a `choice` structure
-  - a wrapper-based field such as date or duration
-  - a case that requires an explicit override
-- goal: ensure issue `#15` can consume the policy without reopening semantic
-  design questions already settled here
-
-### Step `10` - Document The Final Policy And Unresolved Limits
-
-- record final decisions in versioned repository documentation
-- document any semantic ambiguities that remain unresolved after issue `#14`
-- if a new limitation is discovered, record it in
-  `docs/pipeline/known_limitations.md`
-- if issue state changes, update the roadmap and current status documents in the
-  same session
-
-## Questions Still To Decide
-
-Before issue `#14` can be considered fully specified, some semantic decisions
-still need to be made explicitly:
-
-1. whether future domain-facing names should prefer Spanish academic
-   terminology, English conceptual terminology, or a documented hybrid rule
-2. which categories of controlled tables should become strict enums and which
-   should remain open representations
-3. how external reference tables such as `ENTITY@Entity.xsd`,
-   `THESAURUS@thesaurus.xsd`, and `UNESCO_CODES` should be represented in the
-   semantic layer
-4. whether wrappers like flexible dates and durations should become primitives,
-   unions, or dedicated value objects in the future domain API
-5. what exact shape the override registry should take so later generation stays
-   deterministic and reviewable
-
-## Minimum Decisions Required
-
-1. which wrappers collapse to primitives in the domain layer
-2. which controlled sets become enums and which remain strings
-3. how multilingual names affect class and field naming
-4. how multiplicity becomes optional fields versus `list[T]`
-5. how external reference tables remain represented
-6. how code-specific exceptions are registered outside the generic algorithm
-
-## Constraints To Respect
-
-- many structural XSD types are technical wrappers rather than domain concepts
-- some reference tables are internal and some are external to the package
-- `choice` appears rarely but in high-value structures
-- XML interoperability metadata should not leak into the future domain API by
-  default
-
-## Relevant Known Inputs
-
-- structural bindings preserve fidelity but expose known limitations for
-  `choice`, multiplicity, and wrapper ergonomics
-<<<<<<< Updated upstream
-=======
-- auxiliary structural bindings now exist for:
-  - `ReferenceTables.xsd`
-  - `Subtypes.xsd`
-  - `Entity_v1.4.xsd`
-  - `Thesaurus.xsd`
-- normalized aggregate entries already include additive
-  `reference_resolution` metadata with typed status, source family,
-  serialization pattern, semantic kind, and traceability
->>>>>>> Stashed changes
-- the official source package version recently delivered by FECYT includes
-  side-package material for several references that must now be treated as
-  recently added auxiliary modules rather than opaque placeholders:
-  - `ENTITY@Entity.xsd` is represented by the `Entity` family
-  - `THESAURUS@thesaurus.xsd` is represented by the `Thesaurus` family
-  - many Annex-I tables are materialized in `ReferenceTables.xml`
-- not all manual references are fully resolved from the package alone; a known
-  example is `CVN_AGENCY_C`
+  under-traced.
+- Generated structural bindings do not enforce `xs:choice` mutual exclusivity.
+- Generated list defaults do not reliably enforce every `minOccurs` constraint.
+- Strict enum eligibility for compact `ReferenceTables.xml` tables is currently
+  implemented with a temporary review-required policy for representative cases
+  until hotfix `#7` extends the normalization-to-semantic handoff with dynamic
+  per-table enum evidence.
+- Final domain model emission remains deferred to issue `#15`.
 
 ## Adjustments Made During Implementation
 
-- No code implementation has been performed yet.
-- Pre-implementation planning corrected the issue scope so semantic policy
-  consumes enriched normalized metadata from issue `#13` instead of inspecting
-  raw auxiliary sources as primary inputs.
-- The policy input names were aligned with the implemented normalization
-  contract: `reference_resolution.source_artifact` and
-  `reference_resolution.semantic_kind`.
-- Future issue documents for `#15`, `#16`, and `#17` were aligned with the
-  agreed semantic-policy handoff before starting code.
+- The original representative inventory expected `CVN_SEX_A` to be treated as an
+  enum-eligible compact table and `CVN_ENTITY_TYPE` to be treated as an
+  open-coded reviewed table.
+- During implementation, that plan was corrected because the current issue `#14`
+  input contract does not yet expose enough dynamic `ReferenceTables.xml`
+  evidence to evaluate all compact enum-like tables generically.
+- To avoid hardcoding table-specific final behavior inside semantic policy, the
+  current implementation uses a temporary minimal approach for reviewed compact
+  examples:
+  - keep compact reviewed tables as `STRICT_ENUM_CANDIDATE`
+  - mark their `enum_eligibility` as `REVIEW_REQUIRED`
+  - mark their `policy_confidence` as `REQUIRES_REVIEW`
+- This temporary approach currently applies to representative reviewed cases such
+  as `CVN_SEX_A` and `CVN_ENTITY_TYPE` and is explicitly transitional rather
+  than final policy.
+- The permanent fix has been split into hotfix `#7`, documented at:
+  `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
+- When hotfix `#7` is implemented, these temporary reviewed cases must be
+  reevaluated dynamically from typed `ReferenceTables.xml` evidence instead of
+  table-name-based temporary handling.
 
 ## Implementation Performed
 
-- None yet. Issue `#14` is planned with an agreed execution policy, but semantic
-  policy modules, tests, and validation code are not implemented.
+- Semantic-policy contract and resolver work is implemented under
+  `src/cvn_codegen/semantic_policy.py`.
+- The implementation includes:
+  - semantic policy enums and dataclasses
+  - default `SemanticPolicyBundle` construction
+  - semantic field-policy resolution from `NormalizedCodeEntry`
+  - base type, reference-kind, serialization-pattern, presence, and cardinality
+    policy resolution
+  - deterministic override selection and same-rank conflict detection
+  - override application limited to semantic-policy outputs
+  - Spanish-first naming helpers with ASCII-normalized identifiers
+  - wrapper-policy lookup and validation helpers for known `xs:choice` wrappers
+  - representative validation inventory for the issue `#15` handoff
+  - temporary compact-table review-required policy for representative enum-like
+    cases until hotfix `#7` supplies dynamic enum evidence
+- Unit tests for the semantic policy are implemented in
+  `tests/test_semantic_policy_unit.py`.
+- This document records the accepted execution plan, the reporting protocol, and
+  the temporary compact-table plan adjustment introduced during implementation.
 
 ## Verification
 
-- Documentation consistency was checked through issue-doc review and
-  `git diff --check`.
-- No code tests have been run for issue `#14` because no implementation exists
-  yet.
-- Future verification must cover semantic-policy construction, lookup
-  precedence, override conflict handling, base type mapping, reference-kind
-  mapping, enum eligibility, wrapper policy, naming policy, and representative
-  validation cases.
+- The user reported that all Task `14 / 15` tests passed after implementation.
+- Verification covered:
+  - semantic-policy construction
+  - base type mapping
+  - reference-kind and serialization-pattern mapping
+  - enum eligibility and temporary review-required handling
+  - presence and cardinality mapping
+  - naming policy
+  - override precedence and same-rank conflict behavior
+  - wrapper policy helpers
+  - representative validation inventory
+  - normalization and auxiliary-reference regression coverage
+  - full repository test suite
+- Commands used for issue closure should follow the current fast-test convention:
+  - `uv run pytest tests/test_semantic_policy_unit.py -v`
+  - `uv run pytest -n auto tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`
+  - `uv run pytest -n auto tests`
 
 ## Findings
 
@@ -786,23 +760,20 @@ still need to be made explicitly:
   facts.
 - `CVN_ENTITY_TYPE` is not safe for blind strict-enum generation because its
   compact controlled table has open/review behavior.
-
-## Known Limitations
-
-- `Subtype_Spa.xml` lacks a strict per-table bridge such as `CVN_KNOW_A` to
-  subtype records.
-- `CVN_AGENCY_C` remains unresolved from the source package alone.
-- `CVN_INTERVENTION_A` and `CVN_PRUEBA` remain technically present but
-  under-traced.
-- Generated structural bindings do not enforce `xs:choice` mutual exclusivity.
-- Generated list defaults do not reliably enforce every `minOccurs` constraint.
-- Final domain model emission remains deferred to issue `#15`.
+- The current issue `#14` contract is sufficient for semantic-kind and
+  serialization-pattern policy, but not yet sufficient for dynamic strict enum
+  eligibility over all compact `ReferenceTables.xml` tables.
+- Temporary reviewed handling for `CVN_SEX_A` and `CVN_ENTITY_TYPE` is an
+  implementation bridge only and must be replaced by hotfix `#7`.
 
 ## Impact On Future Issues
 
 - Issue `#15` must consume `SemanticPolicyBundle` and generate concrete domain
   artifacts from semantic-policy outputs rather than redefining semantic
   classification.
+- Issue `#15` must preserve `SemanticDecisionTrace` so generated domain models
+  can be traced back to CVN codes, XML paths, manual references, and normalized
+  auxiliary-source resolution.
 - Issue `#16` must test semantic-policy behavior separately from generator
   output behavior.
 - Issue `#17` must document `SemanticPolicyBundle` as the source-of-truth
@@ -810,4 +781,4 @@ still need to be made explicitly:
 
 ## Status
 
-- Status: planned with agreed execution policy
+- Status: completed

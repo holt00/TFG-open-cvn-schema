@@ -27,7 +27,8 @@ tests and local execution.
 
 - `codegen`: structural generation tooling, including `xsdata` and
   `xsdata-pydantic`
-- `testing`: test dependencies, currently centered on `pytest`
+- `testing`: test dependencies, including `pytest` and `pytest-xdist` for
+  multicore test execution
 
 The project should use dependency groups whenever it is reasonably possible and
 useful to separate concerns. As a rule:
@@ -78,8 +79,15 @@ uv run python -m cvn_codegen.xsdata_runner all
 
 ### Tests
 
+Use multicore pytest for full-suite and multi-file verification:
+
 ```bash
-uv run pytest tests
+uv run pytest -n auto tests
+```
+
+Use targeted single-file commands while iterating on one area:
+
+```bash
 uv run pytest tests/test_xsdata_runner_unit.py -v
 uv run pytest tests/test_xsdata_runner_smoke.py -v
 ```
@@ -88,8 +96,12 @@ All automated tests should live under `tests/` so the local and CI entry point
 remains:
 
 ```bash
-uv run pytest tests
+uv run pytest -n auto tests
 ```
+
+Use `uv run pytest --durations=20 tests` when investigating slow tests. Use
+plain non-parallel `pytest` only when debugging order-dependent or
+process-isolation failures.
 
 ### Parse Smoke Checks
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:cvn="http://cv.normalizado.org/cvn"
+           xmlns:unescoCodes="http://cv.normalizado.org/unescoCodes"
+           targetNamespace="http://cv.normalizado.org/unescoCodes"
+           elementFormDefault="unqualified"
+           attributeFormDefault="unqualified">
+  <xs:annotation>
+    <xs:documentation>
+      Standalone schema extracted from the UNESCO_CODES table contained in
+      ReferenceTables.xml of the official CVN package.
+    </xs:documentation>
+    <xs:documentation>
+      Source package path: docs/CvnXML_v1.4.3_2.1_17012025/XML/ReferenceTables.xml
+      Original table metadata:
+      - name: UNESCO_CODES
+      - version: 1.0.1
+      - source: UNESCO
+      - ancestorTable: UNESCO_CODES
+      - XMLDataType: UNESCO_CODES@ReferenceTables.xsd
+      - XMLProperty: Subject
+      - XMLIndicator: Description
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:import namespace="http://cv.normalizado.org/cvn" schemaLocation="ISOUtilitiesREFERENCETABLES.xsd"/>
+
+  <xs:element name="UNESCOCodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Item" type="unescoCodes:UnescoCodeItemType" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:string" use="required"/>
+      <xs:attribute name="source" type="xs:string" use="required"/>
+      <xs:attribute name="ancestorTable" type="xs:string" use="optional"/>
+      <xs:attribute name="XMLDataType" type="xs:string" use="optional"/>
+      <xs:attribute name="XMLProperty" type="xs:string" use="optional"/>
+      <xs:attribute name="XMLIndicator" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="UnescoCodeItemType">
+    <xs:sequence>
+      <xs:element name="Code" type="xs:string"/>
+      <xs:element name="Order" type="xs:int"/>
+      <xs:element name="Name" type="unescoCodes:LocalizedNameGroupType"/>
+      <xs:element name="AntecesorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="Link" type="xs:boolean"/>
+      <xs:element name="ItemNote" type="unescoCodes:LocalizedNameGroupType" minOccurs="0"/>
+      <xs:element name="Delegate" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LocalizedNameGroupType">
+    <xs:sequence>
+      <xs:element name="NameDetail" type="unescoCodes:LocalizedNameDetailType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LocalizedNameDetailType">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string"/>
+      <xs:element name="ShortName" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="lang" type="cvn:ISO_639" use="required"/>
+  </xs:complexType>
+</xs:schema>

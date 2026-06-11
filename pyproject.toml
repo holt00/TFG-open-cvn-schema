@@ -17,6 +17,7 @@ codegen = [
 ]
 testing = [
     "pytest>=9.0.2",
+    "pytest-xdist>=3.8.0",
 ]
 
 [tool.setuptools]
