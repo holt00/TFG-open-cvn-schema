@@ -28,11 +28,11 @@ Agents should also read `AGENTS.md` before this file.
 ## Current Project Snapshot
 
 - Project: open CVN schema and tooling for Spanish academic CV processing
-- Current pipeline stage: structural generation completed and metadata
-  normalization completed for the core manual and tree-model sources
-- Last documented issues: `#11`, `#12`, `#13`, and `#25`
-- Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`
-- Next planned issue: `#14`
+- Current pipeline stage: structural generation, metadata normalization, and
+  semantic policy completed
+- Last documented issues: `#11`, `#12`, `#13`, `#14`, and `#25`
+- Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`
+- Next planned issue: `#15`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -63,7 +63,7 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/roadmap/issues/issue-12-structural-bindings.md`: full record of issue
   `#12`
 - `docs/roadmap/issues/issue-13-normalization.md`: full record of issue `#13`
-- `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: planned scope of
+- `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: full record of
   issue `#14`
 - `docs/roadmap/issues/issue-15-domain-model-generator.md`: planned scope of
   issue `#15`
@@ -88,6 +88,9 @@ Agents should also read `AGENTS.md` before this file.
   corrective plan for replanning the pending semantic and workflow issues after
   the analysis of the auxiliary modules recently added in the source bundle sent
   by FECYT
+- `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`:
+  corrective plan for dynamic strict-enum eligibility evaluation across
+  `ReferenceTables.xml` without semantic-policy hardcoding
 
 ### Development And Contribution
 
@@ -169,6 +172,8 @@ docs/CvnXML_v1.4.3_2.1_17012025/
   `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
 - Hotfix `#6`:
   `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+- Hotfix `#7`:
+  `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
 
 Each issue document records:
 

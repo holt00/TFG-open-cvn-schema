@@ -5,6 +5,19 @@
 Issue `#16` will expand the current smoke tests into a reproducible test suite
 for the structural and semantic generation workflow.
 
+## Corrected Prerequisite Chain
+
+Issue `#16` must test pipeline stages that are already broader than the
+original core-only roadmap assumed.
+
+The corrected test scope begins from these implemented upstream realities:
+
+1. auxiliary structural generation targets were added by hotfix `#4`
+2. enriched normalization with deterministic auxiliary-reference resolution was
+   added by hotfix `#5`
+3. issue `#14` and issue `#15` are expected to consume those layers rather than
+   rediscover them
+
 ## Original Goal
 
 - validate the pipeline end-to-end and protect against regressions
@@ -72,7 +85,8 @@ generator failures can be separated from semantic-policy failures.
 1. structural parsing smoke tests for generated bindings
 2. normalization tests using real XML inputs
 3. regression tests for `choice` and recursion-related cases where relevant
-4. tests for enum-vs-string mapping decisions
+4. tests for semantic-class-driven mapping decisions, including enum-vs-open
+   treatment where relevant
 5. end-to-end generation tests for importable domain outputs
 
 ## Known Inputs From Earlier Issues

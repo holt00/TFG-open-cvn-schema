@@ -56,7 +56,7 @@ Implemented behavior:
 - installs the editable project package with:
   - `uv pip install -e .`
 - runs the full automated test suite from `tests/` with:
-  - `uv run pytest tests`
+  - `uv run pytest -n auto tests`
 
 The workflow job is named `tests` so GitHub can expose a stable pull-request
 check name for repository rules.
@@ -67,7 +67,7 @@ Implementation verification for issue `#25` is based on the same command the
 workflow executes:
 
 ```bash
-uv run pytest tests
+uv run pytest -n auto tests
 ```
 
 Expected GitHub verification after the workflow file is pushed:
@@ -85,7 +85,8 @@ Expected GitHub verification after the workflow file is pushed:
   test execution
 - the workflow follows the same `uv`-based environment setup already documented
   for local development
-- using `uv run pytest tests` keeps the CI scope aligned with the repository
+- using `uv run pytest -n auto tests` keeps the CI scope aligned with the
+  repository while using all available GitHub-hosted runner cores
   convention that all automated tests live under `tests/`
 
 ### Operational Finding
@@ -105,8 +106,10 @@ Expected GitHub verification after the workflow file is pushed:
 
 - future test additions should remain under `tests/` so they are included by the
   CI entry point without extra workflow maintenance
-- issue `#16` can build on this workflow if the repository later needs broader
-  pipeline coverage beyond the current test suite
+- issue `#16` can build on this workflow with broader coverage for:
+  - auxiliary structural generation tests
+  - normalization-resolution regression tests
+  - future semantic-policy and domain-generator tests
 - issue `#17` can reference this workflow as part of the final documented
   contributor and regeneration workflow
 

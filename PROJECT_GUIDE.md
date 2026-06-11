@@ -90,8 +90,8 @@ files in order:
   of issue `#12`
 - `docs/roadmap/issues/issue-13-normalization.md`: authoritative record of issue
   `#13`
-- `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: planned scope of
-  issue `#14`
+- `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: authoritative
+  record of issue `#14`
 - `docs/roadmap/issues/issue-15-domain-model-generator.md`: planned scope of
   issue `#15`
 - `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`: planned scope of
@@ -116,6 +116,9 @@ files in order:
 - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`:
   corrective plan for replanning issues `#8`, `#14` to `#17`, and the CI impact
   from the auxiliary catalog integration
+- `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`:
+  corrective plan for replacing hardcoded enum decisions with dynamic
+  `ReferenceTables.xml` evidence in the normalization-to-semantic handoff
 
 ### Development Reference
 
