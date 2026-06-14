@@ -9,6 +9,7 @@ from cvn_codegen.normalization_types import (
     SerializationPattern,
     SourceTrace,
     TreePathEntry,
+    ReferenceTableEnumEvidence,
 )
 from cvn_codegen.semantic_policy import (
     CardinalityKind,
@@ -21,6 +22,8 @@ from cvn_codegen.semantic_policy import (
     SemanticPolicyBundle,
     StructuralLimitationFlag,
     WrapperPolicyKind,
+    MAX_STRICT_ENUM_ITEM_COUNT,
+    evaluate_reference_table_enum_eligibility,
     build_default_semantic_policy_bundle,
     build_semantic_field_policy,
     get_choice_wrapper_policy,
@@ -104,6 +107,34 @@ def build_reference_resolution(
             resolved_from_artifact="ReferenceTables.xml",
             resolution_rule="test_reference_resolution",
         ),
+    )
+
+def build_reference_table_enum_evidence(
+    *,
+    table_name: str = "CVN_TEST",
+    item_count: int = 2,
+    has_hierarchy: bool = False,
+    has_delegate: bool = False,
+    has_other_like_entry: bool = False,
+    has_duplicate_codes: bool = False,
+    has_duplicate_preferred_labels: bool = False,
+    has_blank_code: bool = False,
+    has_blank_preferred_label: bool = False,
+) -> ReferenceTableEnumEvidence:
+    return ReferenceTableEnumEvidence(
+        table_name=table_name,
+        item_count=item_count,
+        has_hierarchy=has_hierarchy,
+        has_delegate=has_delegate,
+        has_other_like_entry=has_other_like_entry,
+        has_duplicate_codes=has_duplicate_codes,
+        has_duplicate_preferred_labels=has_duplicate_preferred_labels,
+        has_blank_code=has_blank_code,
+        has_blank_preferred_label=has_blank_preferred_label,
+        normalized_codes=("000", "010"),
+        preferred_labels=("Uno", "Dos"),
+        normalized_preferred_labels=("UNO", "DOS"),
+        open_world_signals=(),
     )
 
 def test_build_default_semantic_policy_bundle_returns_expected_shape():
@@ -223,8 +254,9 @@ def test_build_semantic_field_policy_maps_compact_enum_like_table():
     # Assert
     assert field_policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE
     assert field_policy.fallback_shape_kind == DomainShapeKind.OPEN_CODED_VALUE
-    assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED
-    assert field_policy.policy_confidence == PolicyConfidence.REQUIRES_REVIEW
+    assert field_policy.enum_eligibility == EnumEligibility.INELIGIBLE
+    assert field_policy.policy_confidence == PolicyConfidence.HIGH
+    assert "enum_evidence:missing_enum_evidence" in field_policy.decision_trace.applied_rules
 
 
 def test_build_semantic_field_policy_maps_scale_or_measure_table():
@@ -832,3 +864,122 @@ def test_validation_inventory_wrapper_cases_have_wrapper_names():
     for validation_case in wrapper_cases:
         assert validation_case.expected_confidence is not None
         assert validate_wrapper_case(validation_case, bundle) is not None
+
+
+def test_evaluate_reference_table_enum_eligibility_marks_closed_compact_table_eligible():
+
+    # Arrange
+    evidence = build_reference_table_enum_evidence(
+        table_name="CVN_SEX_A",
+        item_count=2,
+    )
+    # Act
+    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(
+        evidence=evidence,
+        source_family=ReferenceSourceFamily.REFERENCE_TABLE,
+        semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+        is_subtype_backed=False,
+    )
+    # Assert
+    assert eligibility == EnumEligibility.ELIGIBLE
+    assert confidence == PolicyConfidence.HIGH
+    assert reasons == ("strict_enum_eligible",)
+
+def test_evaluate_reference_table_enum_eligibility_requires_review_for_other_like_entry():
+    # Arrange
+    evidence = build_reference_table_enum_evidence(
+        has_other_like_entry=True,
+    )
+    # Act
+    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(
+        evidence=evidence,
+        source_family=ReferenceSourceFamily.REFERENCE_TABLE,
+        semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+        is_subtype_backed=False,
+    )
+    # Assert
+    assert eligibility == EnumEligibility.REVIEW_REQUIRED
+    assert confidence == PolicyConfidence.REQUIRES_REVIEW
+    assert "other_like_entry" in reasons
+
+def test_evaluate_reference_table_enum_eligibility_rejects_subtype_backed_table():
+    # Arrange
+    evidence = build_reference_table_enum_evidence(table_name="CVN_KNOW_A")
+    # Act
+    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(
+        evidence=evidence,
+        source_family=ReferenceSourceFamily.SUBTYPE_BACKED_TABLE,
+        semantic_kind=SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY,
+        is_subtype_backed=True,
+    )
+    # Assert
+    assert eligibility == EnumEligibility.INELIGIBLE
+    assert confidence == PolicyConfidence.HIGH
+    assert "source_family_not_reference_table" in reasons
+    assert "semantic_kind_not_compact_enum_like_table" in reasons
+    assert "subtype_backed" in reasons
+
+def test_evaluate_reference_table_enum_eligibility_rejects_hierarchical_table():
+    # Arrange
+    evidence = build_reference_table_enum_evidence(
+        table_name="UNESCO_CODES",
+        item_count=2513,
+        has_hierarchy=True,
+    )
+    # Act
+    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(
+        evidence=evidence,
+        source_family=ReferenceSourceFamily.REFERENCE_TABLE,
+        semantic_kind=SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION,
+        is_subtype_backed=False,
+    )
+    # Assert
+    assert eligibility == EnumEligibility.INELIGIBLE
+    assert confidence == PolicyConfidence.HIGH
+    assert "semantic_kind_not_compact_enum_like_table" in reasons
+    assert "hierarchy_present" in reasons
+
+def test_evaluate_reference_table_enum_eligibility_rejects_side_package_registry():
+    # Act
+    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(
+        evidence=None,
+        source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+        semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+        is_subtype_backed=False,
+    )
+    # Assert
+    assert eligibility == EnumEligibility.INELIGIBLE
+    assert confidence == PolicyConfidence.HIGH
+    assert "source_family_not_reference_table" in reasons
+    assert "missing_enum_evidence" in reasons
+
+def test_evaluate_reference_table_enum_eligibility_rejects_unresolved_reference():
+    # Act
+    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(
+        evidence=None,
+        source_family=ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY,
+        semantic_kind=SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE,
+        is_subtype_backed=False,
+    )
+    # Assert
+    assert eligibility == EnumEligibility.INELIGIBLE
+    assert confidence == PolicyConfidence.HIGH
+    assert "source_family_not_reference_table" in reasons
+    assert "missing_enum_evidence" in reasons
+
+def test_evaluate_reference_table_enum_eligibility_rejects_missing_evidence():
+    # Act
+    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(
+        evidence=None,
+        source_family=ReferenceSourceFamily.REFERENCE_TABLE,
+        semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+        is_subtype_backed=False,
+    )
+    # Assert
+    assert eligibility == EnumEligibility.INELIGIBLE
+    assert confidence == PolicyConfidence.HIGH
+    assert "missing_enum_evidence" in reasons
+
+def test_max_strict_enum_item_count_is_repository_policy_constant():
+    # Assert
+    assert MAX_STRICT_ENUM_ITEM_COUNT == 64

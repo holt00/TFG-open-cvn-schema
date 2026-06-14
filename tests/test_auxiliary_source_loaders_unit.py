@@ -65,3 +65,30 @@ def test_build_auxiliary_source_bundle_loads_all_requested_sources():
     assert "001" in auxiliary_bundle.subtypes_by_source_code
     assert auxiliary_bundle.entity_catalog is not None
     assert auxiliary_bundle.thesaurus_catalog is not None
+
+def test_reference_table_metadata_exposes_enum_evidence_for_cvn_sex_a():
+    # Arrange / Act
+    metadata_by_name = load_reference_tables_metadata(REFERENCE_TABLES_XML)
+    metadata = metadata_by_name["CVN_SEX_A"]
+    # Assert
+    assert metadata.item_codes
+    assert metadata.preferred_labels
+    assert metadata.normalized_codes == ("000", "010")
+    assert metadata.has_hierarchy is False
+    assert metadata.has_delegate is False
+    assert metadata.has_blank_code is False
+    assert metadata.has_blank_preferred_label is False
+    assert metadata.has_duplicate_codes is False
+    assert metadata.has_duplicate_preferred_labels is False
+def test_reference_table_metadata_detects_open_world_signals_for_cvn_entity_type():
+    # Arrange / Act
+    metadata_by_name = load_reference_tables_metadata(REFERENCE_TABLES_XML)
+    metadata = metadata_by_name["CVN_ENTITY_TYPE"]
+    # Assert
+    assert metadata.has_delegate is True
+    assert metadata.has_other_like_entry is True
+    assert "delegate_present" in metadata.open_world_signals
+    assert any(
+        signal.startswith("label_token:")
+        for signal in metadata.open_world_signals
+    )

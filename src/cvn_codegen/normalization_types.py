@@ -92,6 +92,24 @@ class ReferenceResolutionTrace:
     manual_code: str | None = None
     
 @dataclass(frozen=True)
+class ReferenceTableEnumEvidence:
+    """Store enum-eligibility evidence extracted from ReferenceTables.xml."""
+    table_name: str
+    item_count: int
+    has_hierarchy: bool
+    has_delegate: bool
+    has_other_like_entry: bool
+    has_duplicate_codes: bool
+    has_duplicate_preferred_labels: bool
+    has_blank_code: bool
+    has_blank_preferred_label: bool
+    normalized_codes: tuple[str, ...]
+    preferred_labels: tuple[str, ...]
+    normalized_preferred_labels: tuple[str, ...]
+    open_world_signals: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class ReferenceResolution:
     """Represent resolved auxiliary-reference metadata for one manual reference."""
     raw_reference: str | None
@@ -105,6 +123,7 @@ class ReferenceResolution:
     subtype_metadata_present: bool | None
     diagnostic_message: str | None
     trace: ReferenceResolutionTrace
+    reference_table_enum_evidence: ReferenceTableEnumEvidence | None = None
 
 @dataclass(frozen=True)
 class ManualCodeEntry:

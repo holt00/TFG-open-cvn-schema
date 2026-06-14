@@ -2,7 +2,7 @@
   "info": {
     "id": "ses_14823e9fbffeFodh3HZOfkrHhE",
     "slug": "proud-nebula",
-    "projectID": "e0b0778bfe28b901e9871cf3338439bea4a7411f",
+    "projectID": "45a3c1cf48499d5543f705ffed8bae493a6c734e",
     "directory": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
     "path": "",
     "title": "Plan de ejecución para htofix 7",
@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 313712,
-      "output": 11386,
-      "reasoning": 3739,
+      "input": 812136,
+      "output": 20127,
+      "reasoning": 6751,
       "cache": {
-        "read": 1361920,
+        "read": 2462208,
         "write": 0
       }
     },
     "time": {
       "created": 1781201114628,
-      "updated": 1781203899979
+      "updated": 1781432477809
     }
   },
   "messages": [
@@ -40,14 +40,14 @@
         "time": {
           "created": 1781201204914
         },
+        "summary": {
+          "diffs": []
+        },
         "agent": "plan",
         "model": {
           "providerID": "openai",
           "modelID": "gpt-5.5",
           "variant": "high"
-        },
-        "summary": {
-          "diffs": []
         },
         "id": "msg_eb7dd767c001yomNGDebtz9O5s",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
@@ -80,116 +80,116 @@
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "Called the Read tool with the following input: {\"filePath\":\"/home/carlos/uni/tfg/TFG-open-cvn-schema/README.md\"}",
+          "synthetic": true,
           "id": "prt_eb7dd76d2002AmxvVOqmRC68pB",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/README.md</path>\n<type>file</type>\n<content>\n1: # Open CVN\n2: \n3: ## Descripcion\n4: \n5: Este repositorio contiene un Trabajo de Fin de Grado orientado a definir un\n6: esquema de datos abierto para la representacion de curriculos en el ambito\n7: universitario y de investigacion en Espana, tomando como punto de partida el\n8: formato CVN.\n9: \n10: El problema de partida es que, aunque el CVN existe como formato normalizado,\n11: la elaboracion, mantenimiento y adaptacion de curriculos a distintos contextos\n12: sigue consumiendo mucho tiempo y dificulta el desarrollo de herramientas\n13: abiertas interoperables. Una de las causas es la ausencia de una definicion de\n14: bajo nivel suficientemente clara para representar y procesar estos datos.\n15: \n16: ## Objetivo Del Proyecto\n17: \n18: El objetivo general del TFG es definir un esquema de datos que permita la\n19: gestion automatizada de curriculos academicos y de investigacion en Espana.\n20: \n21: Ese objetivo se descompone en varias lineas de trabajo:\n22: \n23: 1. estudiar el formato CVN actual y analizar sus limitaciones\n24: 2. proponer un formato de bajo nivel agnostico respecto al formato final de\n25:    representacion\n26: 3. definir un esquema final basado en JSON, apto para ficheros de texto y bases\n27:    de datos NoSQL\n28: 4. desarrollar una aplicacion en Python para lectura y validacion de curriculos\n29:    utilizando Pydantic\n30: 5. desarrollar herramientas de almacenamiento local y exportacion a LaTeX\n31: 6. explorar el uso de LLM para importar curriculos generados por herramientas\n32:    externas como la aplicacion de la FECYT\n33: \n34: ## Alcance Actual Del Repositorio\n35: \n36: La infraestructura que actualmente se esta construyendo para generar modelos\n37: Pydantic es solo una parte del proyecto total. En esta fase, el foco del\n38: repositorio esta en sentar la base tecnica del pipeline que permitira:\n39: \n40: 1. traducir los artefactos oficiales CVN XML/XSD a bindings estructurales\n41:    Pydantic\n42: 2. normalizar la metadata funcional y tecnica del paquete oficial\n43: 3. generar mas adelante modelos de dominio reutilizables y un esquema final mas\n44:    limpio\n45: \n46: Esta base es necesaria para el parser/validador en Python, pero no agota el TFG:\n47: todavia quedan por delante la definicion del modelo final, la capa JSON, la\n48: exportacion a LaTeX, y la futura exploracion de una herramienta de importacion\n49: basada en LLM.\n50: \n51: ## Direccion Tecnica Actual\n52: \n53: El repositorio sigue una arquitectura de dos capas:\n54: \n55: 1. bindings estructurales generados a partir del paquete oficial CVN\n56: 2. modelos semanticos y de dominio que se generaran sobre metadata normalizada\n57: \n58: La arquitectura, el estado actual y el roadmap se documentan en el propio\n59: repositorio para que futuras sesiones no dependan de reconstruir el contexto a\n60: partir del chat o de issues externos.\n61: \n62: ## Punto De Entrada\n63: \n64: Para obtener el contexto del proyecto y el estado real de implementacion, leer:\n65: \n66: 1. `PROJECT_GUIDE.md`\n67: 2. `docs/context/project_context_index.md`\n68: 3. `docs/context/current_status.md`\n69: \n70: ## Documentos Clave\n71: \n72: - guia principal del proyecto:\n73:   `PROJECT_GUIDE.md`\n74: - indice de contexto del proyecto:\n75:   `docs/context/project_context_index.md`\n76: - estado actual del proyecto:\n77:   `docs/context/current_status.md`\n78: - arquitectura del pipeline:\n79:   `docs/pipeline/cvn_pydantic_generation_pipeline.md`\n80: - roadmap completo:\n81:   `docs/roadmap/cvn_generation_roadmap.md`\n82: - guia de contribucion y setup:\n83:   `CONTRIBUTING.md`\n84: \n\n(End of file - total 84 lines)\n</content>",
+          "synthetic": true,
           "id": "prt_eb7dd76d2003cPP8yzHdoR4F5F",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "file",
-          "url": "file:///home/carlos/uni/tfg/TFG-open-cvn-schema/README.md",
-          "filename": "README.md",
           "mime": "text/plain",
+          "filename": "README.md",
+          "url": "file:///home/carlos/uni/tfg/TFG-open-cvn-schema/README.md",
           "id": "prt_eb7dd76d2004DWSZvIvAwNsZcO",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "Called the Read tool with the following input: {\"filePath\":\"/home/carlos/uni/tfg/TFG-open-cvn-schema/PROJECT_GUIDE.md\"}",
+          "synthetic": true,
           "id": "prt_eb7dd76d20055n1snYO8dLktS1",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/PROJECT_GUIDE.md</path>\n<type>file</type>\n<content>\n1: # Project Guide\n2: \n3: ## Purpose\n4: \n5: This file is the human entry point for understanding the repository.\n6: It summarizes the project purpose, the current implementation focus, the\n7: documentation structure, and the repository rules that matter to contributors\n8: and maintainers.\n9: \n10: ## What This Repository Is\n11: \n12: This repository contains a Trabajo de Fin de Grado focused on defining an open\n13: data schema for representing academic and research CVs in Spain, taking the\n14: CVN format as the starting point.\n15: \n16: The long-term goal is not only to mirror the official CVN package, but to make\n17: curriculum data easier to validate, transform, store, and export through open\n18: tooling.\n19: \n20: ## Current Technical Scope\n21: \n22: The repository is currently centered on the generation pipeline that turns the\n23: official CVN XML/XSD package into reproducible Python artifacts.\n24: \n25: Current and planned layers are:\n26: \n27: 1. structural bindings generated from the official CVN XML/XSD package\n28: 2. normalized metadata extracted from the official supporting XML documents\n29: 3. semantic mapping rules that recover domain meaning from the structural layer\n30: 4. domain-oriented Pydantic models built over normalized metadata\n31: \n32: This means the repository is currently implementing the technical foundation\n33: for the future parser, validator, JSON-oriented schema, and downstream export\n34: work. It is not yet the full end-user CV tooling envisioned by the TFG.\n35: \n36: ## Recommended Reading Order For Humans\n37: \n38: When you need to understand the project state before making changes, read these\n39: files in order:\n40: \n41: 1. `PROJECT_GUIDE.md`\n42: 2. `docs/context/project_context_index.md`\n43: 3. `docs/context/current_status.md`\n44: 4. the relevant issue document under `docs/roadmap/issues/`\n45: 5. supporting architecture or limitation documents linked from that issue\n46: \n47: ## Repository Rules And Conventions\n48: \n49: - Treat `docs/CvnXML_v1.4.3_2.1_17012025/` as the canonical source package for\n50:   the CVN generation roadmap\n51: - Do not edit `src/generated/` manually\n52: - Keep hand-maintained pipeline logic in `src/cvn_codegen/`\n53: - Keep future semantic or domain models in `src/models/cvn/`\n54: - Follow issue order unless there is a deliberate reason to work out of order\n55: - Record implementation deviations from the original issue plan in the issue\n56:   document for that issue\n57: - Update persistent documentation in the same session as the code change\n58: \n59: ## Documentation Map\n60: \n61: ### Entry Points\n62: \n63: - `README.md`: high-level repository overview\n64: - `PROJECT_GUIDE.md`: human-oriented project entry point\n65: - `AGENTS.md`: operational rules and document map for agents\n66: - `CONTRIBUTING.md`: contributor onboarding and documentation obligations\n67: \n68: ### Current State And Context\n69: \n70: - `docs/context/project_context_index.md`: documentation index and reading map\n71: - `docs/context/current_status.md`: latest implementation state and next steps\n72: \n73: ### Architecture And Limits\n74: \n75: - `docs/pipeline/cvn_pydantic_generation_pipeline.md`: architecture of the CVN\n76:   generation workflow\n77: - `docs/pipeline/known_limitations.md`: structural limitations, source-package\n78:   inconsistencies, and follow-up implications\n79: - `docs/adr/`: architecture decision records\n80: \n81: ### Roadmap And Issue History\n82: \n83: - `docs/roadmap/cvn_generation_roadmap.md`: roadmap from issue `#8` through\n84:   issue `#17`\n85: - `docs/roadmap/issues/issue-08-epic-cvn-automation.md`: epic summary and\n86:   checkpoints\n87: - `docs/roadmap/issues/issue-11-project-infrastructure.md`: authoritative\n88:   record of issue `#11`\n89: - `docs/roadmap/issues/issue-12-structural-bindings.md`: authoritative record\n90:   of issue `#12`\n91: - `docs/roadmap/issues/issue-13-normalization.md`: authoritative record of issue\n92:   `#13`\n93: - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: authoritative\n94:   record of issue `#14`\n95: - `docs/roadmap/issues/issue-15-domain-model-generator.md`: planned scope of\n96:   issue `#15`\n97: - `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`: planned scope of\n98:   issue `#16`\n99: - `docs/roadmap/issues/issue-17-workflow-documentation.md`: planned scope of\n100:   issue `#17`\n101: - `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`:\n102:   authoritative record of issue `#25`\n103: - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance\n104:   record for the runner logging convention update\n105: - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance\n106:   record for the human project entry point and documentation update protocol\n107:   alignment\n108: - `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`:\n109:   maintenance record for the source-package documentation expansion and\n110:   consistency cleanup\n111: - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`:\n112:   corrective plan for extending issues `#11` and `#12` to the auxiliary source\n113:   package families\n114: - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`:\n115:   corrective plan for extending issue `#13` with auxiliary-reference resolution\n116: - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`:\n117:   corrective plan for replanning issues `#8`, `#14` to `#17`, and the CI impact\n118:   from the auxiliary catalog integration\n119: - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`:\n120:   corrective plan for replacing hardcoded enum decisions with dynamic\n121:   `ReferenceTables.xml` evidence in the normalization-to-semantic handoff\n122: \n123: ### Development Reference\n124: \n125: - `docs/development/setup.md`: environment and execution commands\n126: - `docs/development/code_style.md`: code style, typing, and conventions\n127: - `docs/documentation/documentation_conventions.md`: documentation taxonomy,\n128:   cross-linking rules, and update protocol\n129: \n130: ### Source Package Analysis\n131: \n132: - `docs/informe_estructura_cvnxml_v1.4.3.md`: detailed analysis of the core CVN\n133:   package structure and usage\n134: - `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the\n135:   auxiliary `Entity`, `ReferenceTables/Subtypes`, and `Thesaurus` families\n136: - `docs/cvn_source_package_annex_table_coverage.md`: practical mapping of Annex\n137:   I tables to core XSDs, side packages, and unresolved manual-only cases\n138: - `docs/cvn_annex_priority_table_families.md`: detailed reference for the\n139:   high-impact Annex I table families most relevant to semantic mapping work\n140: - `docs/cvn_annex_table_families_batch3.md`: detailed reference for the next\n141:   group of Annex I families covering participation, summons, programme,\n142:   publication, support, and event tables\n143: - `docs/cvn_annex_table_families_batch4.md`: detailed reference for the next\n144:   group of Annex I families covering activity, management, scope, language,\n145:   time, qualification, access, and evaluation tables\n146: - `docs/cvn_annex_table_families_batch5.md`: detailed reference for the next\n147:   group of Annex I families covering subject, stay, dedication, duration,\n148:   formation, teaching, prizes, and thematic tables\n149: - `docs/cvn_annex_table_families_batch6.md`: detailed reference for the next\n150:   group of Annex I families covering region, province, sex, and situation\n151:   tables\n152: - `docs/cvn_annex_table_families_batch7.md`: detailed reference for the next\n153:   group of Annex I families covering agency, collaboration, and cooperation\n154:   tables, including unresolved `CVN_AGENCY_C`\n155: - `docs/cvn_annex_table_families_batch8.md`: detailed reference for the final\n156:   Annex I batch covering intervention, supervision, category, and residual test\n157:   tables\n158: - `docs/cvn_serialization_patterns_reference.md`: explicit reference of the\n159:   serialization patterns used by CVN controlled tables, subtype-backed values,\n160:   catalogs, and unresolved manual references\n161: - `docs/cvn_field_reference_traceability.md`: operational traceability guide\n162:   from normalized CVN fields to tables, side-package catalogs, backing artifacts,\n163:   and serialization patterns\n164: \n165: ## Canonical Source Artifacts\n166: \n167: The canonical package used by the generation pipeline is:\n168: \n169: ```text\n170: docs/CvnXML_v1.4.3_2.1_17012025/\n171: |- auxiliary catalog families: Entity, ReferenceTables/Subtypes, Thesaurus\n172: |- XML/\n173: |  |- SpecificationManual.xml\n174: |  `- CVNTreeModel.xml\n175: `- XSD/\n176:    |- CVN.xsd\n177:    |- Common.xsd\n178:    |- AuxTable.xsd\n179:    |- ISOUtilities.xsd\n180:    |- SpecificationManual.xsd\n181:    `- CVNTreeModel_v1.0.xsd\n182: ```\n183: \n184: ## Where Implementation History Lives\n185: \n186: Each issue document under `docs/roadmap/issues/` records:\n187: \n188: - original goal\n189: - original planned steps\n190: - implementation adjustments made during execution\n191: - artifacts created\n192: - verification performed\n193: - findings and limitations\n194: - impact on later issues\n195: \n196: ## How To Resume Work\n197: \n198: When resuming the repository after time away:\n199: \n200: 1. read `docs/context/current_status.md`\n201: 2. read the last completed issue document\n202: 3. read the next issue document from the roadmap\n203: 4. review `docs/pipeline/known_limitations.md`\n204: 5. only then start implementation work\n\n(End of file - total 204 lines)\n</content>",
+          "synthetic": true,
           "id": "prt_eb7dd76d2006WCP3uAoqlluroc",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "file",
-          "url": "file:///home/carlos/uni/tfg/TFG-open-cvn-schema/PROJECT_GUIDE.md",
-          "filename": "PROJECT_GUIDE.md",
           "mime": "text/plain",
+          "filename": "PROJECT_GUIDE.md",
+          "url": "file:///home/carlos/uni/tfg/TFG-open-cvn-schema/PROJECT_GUIDE.md",
           "id": "prt_eb7dd76d200750PmdvcOO63oCy",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "Called the Read tool with the following input: {\"filePath\":\"/home/carlos/uni/tfg/TFG-open-cvn-schema/AGENTS.md\"}",
+          "synthetic": true,
           "id": "prt_eb7dd76d2008FE31pKT3Iv4boq",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/AGENTS.md</path>\n<type>file</type>\n<content>\n1: # AGENTS.md - Operational Guide For Repository Agents\n2: \n3: ## Purpose\n4: \n5: This file is the operational entry point for agents working in this repository.\n6: It is not the project knowledge base. Persistent project context has been moved\n7: to versioned documentation under `docs/`.\n8: \n9: ## Mandatory Reading Order\n10: \n11: Every new session should read these files in order before making changes:\n12: \n13: 1. `AGENTS.md`\n14: 2. `PROJECT_GUIDE.md`\n15: 3. `docs/context/project_context_index.md`\n16: 4. `docs/context/current_status.md`\n17: 5. The relevant issue document under `docs/roadmap/issues/`\n18: \n19: ## Repository-Specific Rules\n20: \n21: - Treat `docs/CvnXML_v1.4.3_2.1_17012025/` as the canonical source package for\n22:   the CVN generation roadmap\n23: - Do not edit `src/generated/` manually\n24: - Keep hand-maintained pipeline logic in `src/cvn_codegen/`\n25: - Keep future semantic or domain models in `src/models/cvn/`\n26: - Follow issue order unless the user explicitly requests otherwise\n27: - Record implementation deviations from the original issue plan in the issue\n28:   document for that issue\n29: - Update persistent documentation in the same session as the code change\n30: \n31: ## Documentation Map\n32: \n33: ### Entry Points\n34: \n35: - human project guide: `PROJECT_GUIDE.md`\n36: - context index: `docs/context/project_context_index.md`\n37: - current state: `docs/context/current_status.md`\n38: \n39: ### Architecture And Limits\n40: \n41: - pipeline architecture: `docs/pipeline/cvn_pydantic_generation_pipeline.md`\n42: - known limitations: `docs/pipeline/known_limitations.md`\n43: - architecture decisions: `docs/adr/`\n44: \n45: ### Roadmap And Issue Records\n46: \n47: - roadmap overview: `docs/roadmap/cvn_generation_roadmap.md`\n48: - epic summary: `docs/roadmap/issues/issue-08-epic-cvn-automation.md`\n49: - issue `#11`: `docs/roadmap/issues/issue-11-project-infrastructure.md`\n50: - issue `#12`: `docs/roadmap/issues/issue-12-structural-bindings.md`\n51: - issue `#13`: `docs/roadmap/issues/issue-13-normalization.md`\n52: - issue `#14`: `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n53: - issue `#15`: `docs/roadmap/issues/issue-15-domain-model-generator.md`\n54: - issue `#16`: `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`\n55: - issue `#17`: `docs/roadmap/issues/issue-17-workflow-documentation.md`\n56: - issue `#25`:\n57:   `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`\n58: - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`\n59: - hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`\n60: - hotfix `#3`:\n61:   `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`\n62: - hotfix `#4`:\n63:   `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`\n64: - hotfix `#5`:\n65:   `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`\n66: - hotfix `#6`:\n67:   `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`\n68: - hotfix `#7`:\n69:   `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n70: \n71: ### Development Reference\n72: \n73: - setup and commands: `docs/development/setup.md`\n74: - code style and conventions: `docs/development/code_style.md`\n75: - documentation conventions: `docs/documentation/documentation_conventions.md`\n76: - old AGENTS content migration map:\n77:   `docs/documentation/agents_content_migration_map.md`\n78: \n79: ## Documentation Update Protocol\n80: \n81: At the end of any issue implementation, update:\n82: \n83: 1. the issue document under `docs/roadmap/issues/`\n84: 2. `docs/context/current_status.md`\n85: 3. `docs/pipeline/known_limitations.md` if a new limitation was found\n86: 4. `docs/roadmap/cvn_generation_roadmap.md` if the issue status changed\n87: 5. `PROJECT_GUIDE.md` when the human-facing project entry guidance, document\n88:    map, contributor reading order, or repository orientation changes\n89: \n90: Update `AGENTS.md` only when the document map or operational rules change.\n\n(End of file - total 90 lines)\n</content>",
+          "synthetic": true,
           "id": "prt_eb7dd76d2009ZOdxlNie2QByed",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "file",
-          "url": "file:///home/carlos/uni/tfg/TFG-open-cvn-schema/AGENTS.md",
-          "filename": "AGENTS.md",
           "mime": "text/plain",
+          "filename": "AGENTS.md",
+          "url": "file:///home/carlos/uni/tfg/TFG-open-cvn-schema/AGENTS.md",
           "id": "prt_eb7dd76d200aLkgdWQu2o53mly",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "Called the Read tool with the following input: {\"filePath\":\"/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md\"}",
+          "synthetic": true,
           "id": "prt_eb7dd76d200b43H08ZHueEQX2p",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md</path>\n<type>file</type>\n<content>\n1: # Hotfix 7 - Dynamic Reference Table Enum Eligibility Evaluation\n2: \n3: ## Summary\n4: \n5: Hotfix `#7` records the corrective work required because issue `#14` currently\n6: has enough normalized metadata to classify manual references by semantic family,\n7: but it still does not have enough machine-readable evidence to evaluate strict\n8: enum eligibility dynamically across all `ReferenceTables.xml` tables.\n9: \n10: The current semantic policy work can safely say that a reference is a compact\n11: enum-like controlled table, but it cannot yet decide, in a generic and\n12: evidence-backed way, whether that table should be treated as:\n13: \n14: - a strict closed enum candidate\n15: - a review-required compact controlled set\n16: - an open-coded value that should not be emitted as a strict enum\n17: \n18: This gap led to an undesirable implementation temptation: temporary\n19: table-specific hardcoding for cases such as `CVN_SEX_A` or `CVN_ENTITY_TYPE`.\n20: \n21: That shortcut must not become the long-term policy. The repository needs a\n22: dynamic evaluation path over all relevant `ReferenceTables.xml` tables so future\n23: semantic and generation work can scale without accumulating ad hoc exceptions.\n24: \n25: This hotfix defines exactly how to add that evidence path while keeping the\n26: architectural rule that issue `#14` consumes normalized typed metadata instead\n27: of reopening raw auxiliary-source inspection on every semantic decision.\n28: \n29: ## Motivation\n30: \n31: The repository already contains two important partial layers:\n32: \n33: 1. issue `#13` resolves `manual_reference_table` to typed auxiliary-source\n34:    metadata and exposes `reference_resolution`\n35: 2. issue `#14` maps `SemanticReferenceKind` and `SerializationPattern` to\n36:    domain-shape candidates\n37: \n38: What is still missing is a third layer between them:\n39: \n40: - machine-readable enum-eligibility evidence extracted from\n41:   `ReferenceTables.xml`\n42: \n43: Without that layer, issue `#14` cannot answer these questions generically for\n44: all compact enum-like tables:\n45: \n46: - does table have hierarchy?\n47: - does table use delegate-based open behavior?\n48: - does table include obvious \"other\" catch-all items?\n49: - are codes and preferred labels stable enough for enum emission?\n50: - is table small enough to be a practical strict enum candidate?\n51: \n52: If this hotfix is not applied:\n53: \n54: - issue `#14` will remain conservative but semantically incomplete\n55: - issue `#15` will either overuse `REVIEW_REQUIRED` or drift into hardcoded\n56:   table-name logic\n57: - future contributors will not know where strict enum eligibility is meant to be\n58:   evaluated\n59: \n60: ## Scope Of This Hotfix\n61: \n62: This hotfix is both a planning correction and an implementation contract.\n63: \n64: It does not require full domain-model generation. It does require extending the\n65: normalization-to-semantic handoff so issue `#14` can evaluate enum eligibility\n66: dynamically and reproducibly for every relevant table materialized in\n67: `ReferenceTables.xml`.\n68: \n69: This hotfix includes:\n70: \n71: - extension of normalization-grade `ReferenceTables.xml` metadata\n72: - additive enum-evidence fields in typed normalization contracts\n73: - deterministic dynamic enum-eligibility evaluation rules\n74: - replacement of table-specific hardcoding with evidence-backed policy\n75: - tests and validation cases for reviewed representative tables\n76: \n77: This hotfix does not include:\n78: \n79: - changes to `src/generated/`\n80: - semantic-policy decisions for side-package registries or thesauri beyond their\n81:   already defined ineligibility\n82: - domain-model generation output in issue `#15`\n83: - fuzzy or LLM-based interpretation of table meaning\n84: \n85: ## Issues Affected\n86: \n87: - issue `#13`\n88: - issue `#14`\n89: - issue `#15` as downstream consumer\n90: - issue `#16` for test coverage\n91: - issue `#17` for workflow documentation\n92: \n93: ## Core Problem Statement\n94: \n95: ### What Exists Today\n96: \n97: The current `ReferenceTableMetadata` extracted in\n98: `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py` already carries:\n99: \n100: - `table_name`\n101: - `version`\n102: - `ancestor_table`\n103: - `source`\n104: - `xml_data_type`\n105: - `xml_property`\n106: - `xml_indicator`\n107: - `item_count`\n108: - `has_hierarchy`\n109: - `has_delegate`\n110: \n111: That is enough for semantic-kind classification, but not enough for strict enum\n112: eligibility.\n113: \n114: The current `ReferenceResolution` in `src/cvn_codegen/normalization_types.py`\n115: does not expose table-level evidence such as:\n116: \n117: - normalized item codes\n118: - preferred labels\n119: - duplicate-code detection\n120: - duplicate-label detection\n121: - presence of obvious \"other\" / catch-all entries\n122: - explicit open-world signals for enum emission\n123: \n124: ### What Must Be True After This Hotfix\n125: \n126: After this hotfix is implemented, issue `#14` must be able to evaluate enum\n127: eligibility for all resolved `REFERENCE_TABLE` compact enum-like tables without\n128: hardcoding specific table names in semantic policy logic.\n129: \n130: The only acceptable table-specific exceptions after this hotfix are:\n131: \n132: - explicit review overrides stored as versioned `OverrideRule` data\n133: - not hidden `if table_name == ...` branches inside semantic-policy code\n134: \n135: ## Required Changes To Issue `#13`\n136: \n137: Issue `#13` remains the correct stage for extracting and normalizing the\n138: evidence needed by issue `#14`.\n139: \n140: Issue `#14` must not scan `ReferenceTables.xml` ad hoc for every semantic\n141: decision. It should consume typed evidence already attached to normalized\n142: entries.\n143: \n144: ### Contract Extension Required\n145: \n146: `src/cvn_codegen/normalization_types.py` must be extended with an additive typed\n147: record that carries enum-eligibility evidence for reference tables.\n148: \n149: The preferred exact name is:\n150: \n151: - `ReferenceTableEnumEvidence`\n152: \n153: The preferred exact attachment point is:\n154: \n155: - `ReferenceResolution.reference_table_enum_evidence`\n156: \n157: This field must be:\n158: \n159: - `None` for non-`ReferenceTables.xml` sources\n160: - populated for resolved direct `REFERENCE_TABLE` and\n161:   `SUBTYPE_BACKED_TABLE` cases\n162: \n163: ### New Type Required\n164: \n165: Issue `#13` should add this typed structure or a field-equivalent contract with\n166: the same information:\n167: \n168: ```python\n169: @dataclass(frozen=True)\n170: class ReferenceTableEnumEvidence:\n171:     table_name: str\n172:     item_count: int\n173:     has_hierarchy: bool\n174:     has_delegate: bool\n175:     has_other_like_entry: bool\n176:     has_duplicate_codes: bool\n177:     has_duplicate_preferred_labels: bool\n178:     has_blank_code: bool\n179:     has_blank_preferred_label: bool\n180:     normalized_codes: tuple[str, ...]\n181:     preferred_labels: tuple[str, ...]\n182:     normalized_preferred_labels: tuple[str, ...]\n183:     open_world_signals: tuple[str, ...]\n184: ```\n185: \n186: The exact field names may differ only if all of the above facts remain present\n187: and testable.\n188: \n189: ### `ReferenceTableMetadata` Extension Required\n190: \n191: `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py` must be\n192: extended so `ReferenceTableMetadata` itself exposes enough raw normalized facts\n193: to build `ReferenceTableEnumEvidence` deterministically.\n194: \n195: At minimum, add these fields to `ReferenceTableMetadata`:\n196: \n197: - `item_codes: tuple[str, ...]`\n198: - `preferred_labels: tuple[str, ...]`\n199: - `normalized_codes: tuple[str, ...]`\n200: - `normalized_preferred_labels: tuple[str, ...]`\n201: - `has_blank_code: bool`\n202: - `has_blank_preferred_label: bool`\n203: - `has_duplicate_codes: bool`\n204: - `has_duplicate_preferred_labels: bool`\n205: - `has_other_like_entry: bool`\n206: - `open_world_signals: tuple[str, ...]`\n207: \n208: ### Preferred Label Extraction Rule\n209: \n210: When building table metadata from `ReferenceTables.xml`, each item must select a\n211: preferred label deterministically from the available multilingual `NameDetail`\n212: values.\n213: \n214: Use this order:\n215: \n216: 1. Spanish label if present\n217: 2. English label if Spanish is missing\n218: 3. first available label otherwise\n219: \n220: The implementation must not leave preferred-label selection implicit.\n221: \n222: ### Normalization Rules For Evidence\n223: \n224: When computing dynamic enum evidence, normalize codes and labels with explicit,\n225: repository-local deterministic rules.\n226: \n227: Minimum normalization required:\n228: \n229: 1. strip leading and trailing whitespace\n230: 2. collapse repeated internal whitespace to single spaces\n231: 3. convert labels to ASCII-compatible uppercase for signal detection\n232: 4. preserve original preferred labels separately from normalized labels\n233: 5. preserve original item codes separately from normalized codes\n234: \n235: ### Open-World Signal Detection Rules\n236: \n237: The implementation must compute `has_other_like_entry` and\n238: `open_world_signals` deterministically.\n239: \n240: Use these minimum signals:\n241: \n242: #### Label-Based Other-Like Tokens\n243: \n244: After normalization to uppercase ASCII, treat these exact tokens as open-world\n245: signals when used as a full label or clear standalone term:\n246: \n247: - `OTRO`\n248: - `OTRA`\n249: - `OTROS`\n250: - `OTRAS`\n251: - `OTHER`\n252: - `OTHERS`\n253: - `RESTO`\n254: - `NO CONSTA`\n255: - `SIN ESPECIFICAR`\n256: \n257: #### Structural Open Signals\n258: \n259: Also record open-world signals for:\n260: \n261: - any table with `has_delegate=True`\n262: - any item with blank preferred label\n263: - any item with blank code\n264: \n265: The implementation should store the actual matched reasons in\n266: `open_world_signals`, for example:\n267: \n268: - `label_token:OTHERS`\n269: - `delegate_present`\n270: - `blank_preferred_label`\n271: \n272: ### Duplicate Detection Rules\n273: \n274: `has_duplicate_codes` must be `True` when normalized item codes repeat.\n275: \n276: `has_duplicate_preferred_labels` must be `True` when normalized preferred labels\n277: repeat after empty labels are excluded.\n278: \n279: These duplicate flags do not automatically make the table ineligible, but they\n280: must block automatic `ELIGIBLE` and downgrade the table to review-required.\n281: \n282: ### Wiring Required In Reference Resolution\n283: \n284: `src/cvn_codegen/auxiliary_sources/reference_resolution.py` must attach\n285: `ReferenceTableEnumEvidence` whenever a manual reference resolves to\n286: `ReferenceTables.xml`.\n287: \n288: That means `resolve_manual_reference(...)` must:\n289: \n290: 1. keep current source-family and semantic-kind behavior unchanged\n291: 2. build enum evidence from `ReferenceTableMetadata`\n292: 3. attach that evidence to `ReferenceResolution`\n293: 4. preserve `None` for non-reference-table source families\n294: \n295: ## Required Changes To Issue `#14`\n296: \n297: Issue `#14` must stop using hardcoded reference-name logic for strict enum\n298: eligibility.\n299: \n300: ### Current Undesired State\n301: \n302: The current semantic-policy direction risks either:\n303: \n304: - hardcoding reviewed cases such as `CVN_SEX_A`\n305: - or leaving every compact enum-like table as permanently\n306:   `REVIEW_REQUIRED`\n307: \n308: Neither is sufficient.\n309: \n310: ### Correct Enum Eligibility Evaluation Function\n311: \n312: `src/cvn_codegen/semantic_policy.py` must add one deterministic helper with\n313: equivalent behavior to:\n314: \n315: ```python\n316: def evaluate_reference_table_enum_eligibility(\n317:     evidence: ReferenceTableEnumEvidence | None,\n318:     source_family: ReferenceSourceFamily | None,\n319:     semantic_kind: SemanticReferenceKind | None,\n320:     is_subtype_backed: bool,\n321: ) -> tuple[EnumEligibility, PolicyConfidence, tuple[str, ...]]:\n322:     ...\n323: ```\n324: \n325: The helper must return:\n326: \n327: - final `EnumEligibility`\n328: - final `PolicyConfidence`\n329: - machine-readable rule reasons or blockers\n330: \n331: ### Exact Eligibility Rules Required\n332: \n333: The function must evaluate rules in this order.\n334: \n335: #### Immediate Ineligibility\n336: \n337: Return `INELIGIBLE` when any of these are true:\n338: \n339: 1. `source_family` is not `REFERENCE_TABLE`\n340: 2. `semantic_kind` is not `COMPACT_ENUM_LIKE_TABLE`\n341: 3. `is_subtype_backed` is `True`\n342: 4. `evidence is None`\n343: 5. `evidence.has_hierarchy` is `True`\n344: 6. `evidence.has_delegate` is `True`\n345: \n346: These cases are not review candidates for strict enum emission. They are not\n347: closed compact tables.\n348: \n349: #### Review Required\n350: \n351: Return `REVIEW_REQUIRED` when immediate ineligibility does not apply, but any of\n352: these are true:\n353: \n354: 1. `evidence.has_other_like_entry` is `True`\n355: 2. `evidence.has_blank_code` is `True`\n356: 3. `evidence.has_blank_preferred_label` is `True`\n357: 4. `evidence.has_duplicate_codes` is `True`\n358: 5. `evidence.has_duplicate_preferred_labels` is `True`\n359: 6. `evidence.item_count == 0`\n360: 7. `evidence.item_count > 64`\n361: \n362: The `64` threshold must be versioned as a named repository constant, for\n363: example:\n364: \n365: - `MAX_STRICT_ENUM_ITEM_COUNT = 64`\n366: \n367: This threshold is not a semantic truth of CVN. It is a repository policy limit\n368: for practical strict-enum generation.\n369: \n370: #### Eligible\n371: \n372: Return `ELIGIBLE` only when all of these are true:\n373: \n374: 1. source family is direct `REFERENCE_TABLE`\n375: 2. semantic kind is `COMPACT_ENUM_LIKE_TABLE`\n376: 3. not subtype-backed\n377: 4. no hierarchy\n378: 5. no delegate\n379: 6. no other-like/open-world label\n380: 7. no blank codes\n381: 8. no blank preferred labels\n382: 9. no duplicate codes\n383: 10. no duplicate preferred labels\n384: 11. `1 <= item_count <= MAX_STRICT_ENUM_ITEM_COUNT`\n385: \n386: ### Domain Shape Interaction Required\n387: \n388: Dynamic enum evaluation must not silently flatten semantic kinds.\n389: \n390: Use these exact outputs:\n391: \n392: 1. if enum eligibility is `ELIGIBLE`:\n393:    - keep `domain_shape_kind=STRICT_ENUM_CANDIDATE`\n394:    - set `policy_confidence=HIGH`\n395: 2. if enum eligibility is `REVIEW_REQUIRED`:\n396:    - keep `domain_shape_kind=STRICT_ENUM_CANDIDATE`\n397:    - keep fallback `OPEN_CODED_VALUE`\n398:    - set `policy_confidence=REQUIRES_REVIEW`\n399: 3. if enum eligibility is `INELIGIBLE` because the table is not a compact direct\n400:    enum candidate:\n401:    - let the reference-kind matrix already drive non-enum shapes\n402: \n403: Important correction:\n404: \n405: This hotfix does **not** require issue `#14` to convert every reviewed compact\n406: table into `OPEN_CODED_VALUE` immediately. It only requires dynamic eligibility\n407: evaluation instead of hardcoding.\n408: \n409: That means `CVN_ENTITY_TYPE` should no longer be hardcoded in semantic policy.\n410: It should land in `REVIEW_REQUIRED` unless machine-readable open-world evidence\n411: forces a stronger result.\n412: \n413: ### Validation Expectation Correction Required\n414: \n415: Issue `#14` validation cases must stop treating reviewed examples as hardcoded\n416: special cases.\n417: \n418: Update expectations as follows:\n419: \n420: 1. `CVN_SEX_A`\n421:    - expected `EnumEligibility.ELIGIBLE`\n422:    - expected confidence `HIGH`\n423:    - result must come from dynamic evidence, not `if table_name == \"CVN_SEX_A\"`\n424: 2. `CVN_ENTITY_TYPE`\n425:    - expected `EnumEligibility.REVIEW_REQUIRED`\n426:    - expected confidence `REQUIRES_REVIEW`\n427:    - result must come from dynamic evidence, not hardcoded table-name override\n428: \n429: ## Required Changes To Tests\n430: \n431: ### Extend Auxiliary Loader Tests\n432: \n433: `tests/test_auxiliary_source_loaders_unit.py` must add assertions proving that\n434: `ReferenceTableMetadata` now exposes enum-evidence fields.\n435: \n436: Minimum new checks:\n437: \n438: 1. `CVN_SEX_A` has non-empty `item_codes`\n439: 2. `CVN_SEX_A` has non-empty `preferred_labels`\n440: 3. `CVN_SEX_A` reports `has_hierarchy is False`\n441: 4. `CVN_SEX_A` reports `has_delegate is False`\n442: \n443: ### Extend Resolution Tests\n444: \n445: `tests/test_auxiliary_reference_resolution_unit.py` must add checks that:\n446: \n447: 1. resolved reference-table cases attach non-`None`\n448:    `reference_table_enum_evidence`\n449: 2. side-package and unresolved cases attach `None`\n450: 3. subtype-backed cases still attach evidence but remain semantically ineligible\n451: \n452: ### Add Semantic Policy Tests\n453: \n454: When issue `#16` or the issue `#14` test phase adds semantic-policy tests, the\n455: minimum required dynamic enum checks are:\n456: \n457: 1. `CVN_SEX_A` becomes `ELIGIBLE` dynamically\n458: 2. `CVN_ENTITY_TYPE` becomes `REVIEW_REQUIRED` dynamically\n459: 3. subtype-backed `CVN_KNOW_A` remains `INELIGIBLE`\n460: 4. hierarchical `UNESCO_CODES` remains `INELIGIBLE`\n461: 5. side-package registry references remain `INELIGIBLE`\n462: 6. unresolved references remain `INELIGIBLE`\n463: \n464: ## Files Expected To Change When Applying This Hotfix\n465: \n466: Minimum code files:\n467: \n468: - `src/cvn_codegen/normalization_types.py`\n469: - `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`\n470: - `src/cvn_codegen/auxiliary_sources/reference_resolution.py`\n471: - `src/cvn_codegen/semantic_policy.py`\n472: - `tests/test_auxiliary_source_loaders_unit.py`\n473: - `tests/test_auxiliary_reference_resolution_unit.py`\n474: - future semantic-policy tests under `tests/`\n475: \n476: Minimum documentation files:\n477: \n478: - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n479: - `docs/context/current_status.md`\n480: - `docs/pipeline/known_limitations.md` if a new limitation appears\n481: - `docs/roadmap/cvn_generation_roadmap.md` if issue state changes\n482: \n483: ## Verification Strategy When Implemented\n484: \n485: The implementation session that applies this hotfix must verify all of these:\n486: \n487: 1. `ReferenceTableMetadata` exposes dynamic enum-evidence fields\n488: 2. `ReferenceResolution` carries evidence for direct reference-table resolutions\n489: 3. issue `#14` no longer uses table-name hardcoding for enum eligibility\n490: 4. `CVN_SEX_A` passes dynamically as eligible\n491: 5. `CVN_ENTITY_TYPE` lands dynamically in review-required\n492: 6. subtype-backed, hierarchical, side-package, unresolved, and under-traced\n493:    families remain non-eligible\n494: \n495: Minimum commands:\n496: \n497: ```bash\n498: uv run pytest tests/test_auxiliary_source_loaders_unit.py -v\n499: uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v\n500: uv run pytest tests/test_semantic_policy_unit.py -v\n501: uv run pytest -n auto tests\n502: ```\n503: \n504: ## Impact On Future Issues\n505: \n506: - removes pressure to hardcode reviewed table names in issue `#14`\n507: - gives issue `#15` a scalable strict-enum decision input\n508: - gives issue `#16` a concrete dynamic-evaluation test target\n509: - lets issue `#17` document a reproducible policy instead of a manually curated\n510:   exception list\n511: \n512: ## Status\n513: \n514: - Status: documented as required corrective work\n515: - Implementation state: pending\n\n(End of file - total 515 lines)\n</content>",
+          "synthetic": true,
           "id": "prt_eb7dd76d200cav13gUYuifgcRm",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "file",
-          "url": "file:///home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
-          "filename": "docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
           "mime": "text/plain",
+          "filename": "docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
+          "url": "file:///home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
           "id": "prt_eb7dd76d200dGqEANT8okxGowv",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "Called the Read tool with the following input: {\"filePath\":\"/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md\"}",
+          "synthetic": true,
           "id": "prt_eb7dd76d200enthvAJcQ61IxhT",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md</path>\n<type>file</type>\n<content>\n1: # Hotfix 7 - Dynamic Reference Table Enum Eligibility Evaluation\n2: \n3: ## Summary\n4: \n5: Hotfix `#7` records the corrective work required because issue `#14` currently\n6: has enough normalized metadata to classify manual references by semantic family,\n7: but it still does not have enough machine-readable evidence to evaluate strict\n8: enum eligibility dynamically across all `ReferenceTables.xml` tables.\n9: \n10: The current semantic policy work can safely say that a reference is a compact\n11: enum-like controlled table, but it cannot yet decide, in a generic and\n12: evidence-backed way, whether that table should be treated as:\n13: \n14: - a strict closed enum candidate\n15: - a review-required compact controlled set\n16: - an open-coded value that should not be emitted as a strict enum\n17: \n18: This gap led to an undesirable implementation temptation: temporary\n19: table-specific hardcoding for cases such as `CVN_SEX_A` or `CVN_ENTITY_TYPE`.\n20: \n21: That shortcut must not become the long-term policy. The repository needs a\n22: dynamic evaluation path over all relevant `ReferenceTables.xml` tables so future\n23: semantic and generation work can scale without accumulating ad hoc exceptions.\n24: \n25: This hotfix defines exactly how to add that evidence path while keeping the\n26: architectural rule that issue `#14` consumes normalized typed metadata instead\n27: of reopening raw auxiliary-source inspection on every semantic decision.\n28: \n29: ## Motivation\n30: \n31: The repository already contains two important partial layers:\n32: \n33: 1. issue `#13` resolves `manual_reference_table` to typed auxiliary-source\n34:    metadata and exposes `reference_resolution`\n35: 2. issue `#14` maps `SemanticReferenceKind` and `SerializationPattern` to\n36:    domain-shape candidates\n37: \n38: What is still missing is a third layer between them:\n39: \n40: - machine-readable enum-eligibility evidence extracted from\n41:   `ReferenceTables.xml`\n42: \n43: Without that layer, issue `#14` cannot answer these questions generically for\n44: all compact enum-like tables:\n45: \n46: - does table have hierarchy?\n47: - does table use delegate-based open behavior?\n48: - does table include obvious \"other\" catch-all items?\n49: - are codes and preferred labels stable enough for enum emission?\n50: - is table small enough to be a practical strict enum candidate?\n51: \n52: If this hotfix is not applied:\n53: \n54: - issue `#14` will remain conservative but semantically incomplete\n55: - issue `#15` will either overuse `REVIEW_REQUIRED` or drift into hardcoded\n56:   table-name logic\n57: - future contributors will not know where strict enum eligibility is meant to be\n58:   evaluated\n59: \n60: ## Scope Of This Hotfix\n61: \n62: This hotfix is both a planning correction and an implementation contract.\n63: \n64: It does not require full domain-model generation. It does require extending the\n65: normalization-to-semantic handoff so issue `#14` can evaluate enum eligibility\n66: dynamically and reproducibly for every relevant table materialized in\n67: `ReferenceTables.xml`.\n68: \n69: This hotfix includes:\n70: \n71: - extension of normalization-grade `ReferenceTables.xml` metadata\n72: - additive enum-evidence fields in typed normalization contracts\n73: - deterministic dynamic enum-eligibility evaluation rules\n74: - replacement of table-specific hardcoding with evidence-backed policy\n75: - tests and validation cases for reviewed representative tables\n76: \n77: This hotfix does not include:\n78: \n79: - changes to `src/generated/`\n80: - semantic-policy decisions for side-package registries or thesauri beyond their\n81:   already defined ineligibility\n82: - domain-model generation output in issue `#15`\n83: - fuzzy or LLM-based interpretation of table meaning\n84: \n85: ## Issues Affected\n86: \n87: - issue `#13`\n88: - issue `#14`\n89: - issue `#15` as downstream consumer\n90: - issue `#16` for test coverage\n91: - issue `#17` for workflow documentation\n92: \n93: ## Core Problem Statement\n94: \n95: ### What Exists Today\n96: \n97: The current `ReferenceTableMetadata` extracted in\n98: `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py` already carries:\n99: \n100: - `table_name`\n101: - `version`\n102: - `ancestor_table`\n103: - `source`\n104: - `xml_data_type`\n105: - `xml_property`\n106: - `xml_indicator`\n107: - `item_count`\n108: - `has_hierarchy`\n109: - `has_delegate`\n110: \n111: That is enough for semantic-kind classification, but not enough for strict enum\n112: eligibility.\n113: \n114: The current `ReferenceResolution` in `src/cvn_codegen/normalization_types.py`\n115: does not expose table-level evidence such as:\n116: \n117: - normalized item codes\n118: - preferred labels\n119: - duplicate-code detection\n120: - duplicate-label detection\n121: - presence of obvious \"other\" / catch-all entries\n122: - explicit open-world signals for enum emission\n123: \n124: ### What Must Be True After This Hotfix\n125: \n126: After this hotfix is implemented, issue `#14` must be able to evaluate enum\n127: eligibility for all resolved `REFERENCE_TABLE` compact enum-like tables without\n128: hardcoding specific table names in semantic policy logic.\n129: \n130: The only acceptable table-specific exceptions after this hotfix are:\n131: \n132: - explicit review overrides stored as versioned `OverrideRule` data\n133: - not hidden `if table_name == ...` branches inside semantic-policy code\n134: \n135: ## Required Changes To Issue `#13`\n136: \n137: Issue `#13` remains the correct stage for extracting and normalizing the\n138: evidence needed by issue `#14`.\n139: \n140: Issue `#14` must not scan `ReferenceTables.xml` ad hoc for every semantic\n141: decision. It should consume typed evidence already attached to normalized\n142: entries.\n143: \n144: ### Contract Extension Required\n145: \n146: `src/cvn_codegen/normalization_types.py` must be extended with an additive typed\n147: record that carries enum-eligibility evidence for reference tables.\n148: \n149: The preferred exact name is:\n150: \n151: - `ReferenceTableEnumEvidence`\n152: \n153: The preferred exact attachment point is:\n154: \n155: - `ReferenceResolution.reference_table_enum_evidence`\n156: \n157: This field must be:\n158: \n159: - `None` for non-`ReferenceTables.xml` sources\n160: - populated for resolved direct `REFERENCE_TABLE` and\n161:   `SUBTYPE_BACKED_TABLE` cases\n162: \n163: ### New Type Required\n164: \n165: Issue `#13` should add this typed structure or a field-equivalent contract with\n166: the same information:\n167: \n168: ```python\n169: @dataclass(frozen=True)\n170: class ReferenceTableEnumEvidence:\n171:     table_name: str\n172:     item_count: int\n173:     has_hierarchy: bool\n174:     has_delegate: bool\n175:     has_other_like_entry: bool\n176:     has_duplicate_codes: bool\n177:     has_duplicate_preferred_labels: bool\n178:     has_blank_code: bool\n179:     has_blank_preferred_label: bool\n180:     normalized_codes: tuple[str, ...]\n181:     preferred_labels: tuple[str, ...]\n182:     normalized_preferred_labels: tuple[str, ...]\n183:     open_world_signals: tuple[str, ...]\n184: ```\n185: \n186: The exact field names may differ only if all of the above facts remain present\n187: and testable.\n188: \n189: ### `ReferenceTableMetadata` Extension Required\n190: \n191: `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py` must be\n192: extended so `ReferenceTableMetadata` itself exposes enough raw normalized facts\n193: to build `ReferenceTableEnumEvidence` deterministically.\n194: \n195: At minimum, add these fields to `ReferenceTableMetadata`:\n196: \n197: - `item_codes: tuple[str, ...]`\n198: - `preferred_labels: tuple[str, ...]`\n199: - `normalized_codes: tuple[str, ...]`\n200: - `normalized_preferred_labels: tuple[str, ...]`\n201: - `has_blank_code: bool`\n202: - `has_blank_preferred_label: bool`\n203: - `has_duplicate_codes: bool`\n204: - `has_duplicate_preferred_labels: bool`\n205: - `has_other_like_entry: bool`\n206: - `open_world_signals: tuple[str, ...]`\n207: \n208: ### Preferred Label Extraction Rule\n209: \n210: When building table metadata from `ReferenceTables.xml`, each item must select a\n211: preferred label deterministically from the available multilingual `NameDetail`\n212: values.\n213: \n214: Use this order:\n215: \n216: 1. Spanish label if present\n217: 2. English label if Spanish is missing\n218: 3. first available label otherwise\n219: \n220: The implementation must not leave preferred-label selection implicit.\n221: \n222: ### Normalization Rules For Evidence\n223: \n224: When computing dynamic enum evidence, normalize codes and labels with explicit,\n225: repository-local deterministic rules.\n226: \n227: Minimum normalization required:\n228: \n229: 1. strip leading and trailing whitespace\n230: 2. collapse repeated internal whitespace to single spaces\n231: 3. convert labels to ASCII-compatible uppercase for signal detection\n232: 4. preserve original preferred labels separately from normalized labels\n233: 5. preserve original item codes separately from normalized codes\n234: \n235: ### Open-World Signal Detection Rules\n236: \n237: The implementation must compute `has_other_like_entry` and\n238: `open_world_signals` deterministically.\n239: \n240: Use these minimum signals:\n241: \n242: #### Label-Based Other-Like Tokens\n243: \n244: After normalization to uppercase ASCII, treat these exact tokens as open-world\n245: signals when used as a full label or clear standalone term:\n246: \n247: - `OTRO`\n248: - `OTRA`\n249: - `OTROS`\n250: - `OTRAS`\n251: - `OTHER`\n252: - `OTHERS`\n253: - `RESTO`\n254: - `NO CONSTA`\n255: - `SIN ESPECIFICAR`\n256: \n257: #### Structural Open Signals\n258: \n259: Also record open-world signals for:\n260: \n261: - any table with `has_delegate=True`\n262: - any item with blank preferred label\n263: - any item with blank code\n264: \n265: The implementation should store the actual matched reasons in\n266: `open_world_signals`, for example:\n267: \n268: - `label_token:OTHERS`\n269: - `delegate_present`\n270: - `blank_preferred_label`\n271: \n272: ### Duplicate Detection Rules\n273: \n274: `has_duplicate_codes` must be `True` when normalized item codes repeat.\n275: \n276: `has_duplicate_preferred_labels` must be `True` when normalized preferred labels\n277: repeat after empty labels are excluded.\n278: \n279: These duplicate flags do not automatically make the table ineligible, but they\n280: must block automatic `ELIGIBLE` and downgrade the table to review-required.\n281: \n282: ### Wiring Required In Reference Resolution\n283: \n284: `src/cvn_codegen/auxiliary_sources/reference_resolution.py` must attach\n285: `ReferenceTableEnumEvidence` whenever a manual reference resolves to\n286: `ReferenceTables.xml`.\n287: \n288: That means `resolve_manual_reference(...)` must:\n289: \n290: 1. keep current source-family and semantic-kind behavior unchanged\n291: 2. build enum evidence from `ReferenceTableMetadata`\n292: 3. attach that evidence to `ReferenceResolution`\n293: 4. preserve `None` for non-reference-table source families\n294: \n295: ## Required Changes To Issue `#14`\n296: \n297: Issue `#14` must stop using hardcoded reference-name logic for strict enum\n298: eligibility.\n299: \n300: ### Current Undesired State\n301: \n302: The current semantic-policy direction risks either:\n303: \n304: - hardcoding reviewed cases such as `CVN_SEX_A`\n305: - or leaving every compact enum-like table as permanently\n306:   `REVIEW_REQUIRED`\n307: \n308: Neither is sufficient.\n309: \n310: ### Correct Enum Eligibility Evaluation Function\n311: \n312: `src/cvn_codegen/semantic_policy.py` must add one deterministic helper with\n313: equivalent behavior to:\n314: \n315: ```python\n316: def evaluate_reference_table_enum_eligibility(\n317:     evidence: ReferenceTableEnumEvidence | None,\n318:     source_family: ReferenceSourceFamily | None,\n319:     semantic_kind: SemanticReferenceKind | None,\n320:     is_subtype_backed: bool,\n321: ) -> tuple[EnumEligibility, PolicyConfidence, tuple[str, ...]]:\n322:     ...\n323: ```\n324: \n325: The helper must return:\n326: \n327: - final `EnumEligibility`\n328: - final `PolicyConfidence`\n329: - machine-readable rule reasons or blockers\n330: \n331: ### Exact Eligibility Rules Required\n332: \n333: The function must evaluate rules in this order.\n334: \n335: #### Immediate Ineligibility\n336: \n337: Return `INELIGIBLE` when any of these are true:\n338: \n339: 1. `source_family` is not `REFERENCE_TABLE`\n340: 2. `semantic_kind` is not `COMPACT_ENUM_LIKE_TABLE`\n341: 3. `is_subtype_backed` is `True`\n342: 4. `evidence is None`\n343: 5. `evidence.has_hierarchy` is `True`\n344: 6. `evidence.has_delegate` is `True`\n345: \n346: These cases are not review candidates for strict enum emission. They are not\n347: closed compact tables.\n348: \n349: #### Review Required\n350: \n351: Return `REVIEW_REQUIRED` when immediate ineligibility does not apply, but any of\n352: these are true:\n353: \n354: 1. `evidence.has_other_like_entry` is `True`\n355: 2. `evidence.has_blank_code` is `True`\n356: 3. `evidence.has_blank_preferred_label` is `True`\n357: 4. `evidence.has_duplicate_codes` is `True`\n358: 5. `evidence.has_duplicate_preferred_labels` is `True`\n359: 6. `evidence.item_count == 0`\n360: 7. `evidence.item_count > 64`\n361: \n362: The `64` threshold must be versioned as a named repository constant, for\n363: example:\n364: \n365: - `MAX_STRICT_ENUM_ITEM_COUNT = 64`\n366: \n367: This threshold is not a semantic truth of CVN. It is a repository policy limit\n368: for practical strict-enum generation.\n369: \n370: #### Eligible\n371: \n372: Return `ELIGIBLE` only when all of these are true:\n373: \n374: 1. source family is direct `REFERENCE_TABLE`\n375: 2. semantic kind is `COMPACT_ENUM_LIKE_TABLE`\n376: 3. not subtype-backed\n377: 4. no hierarchy\n378: 5. no delegate\n379: 6. no other-like/open-world label\n380: 7. no blank codes\n381: 8. no blank preferred labels\n382: 9. no duplicate codes\n383: 10. no duplicate preferred labels\n384: 11. `1 <= item_count <= MAX_STRICT_ENUM_ITEM_COUNT`\n385: \n386: ### Domain Shape Interaction Required\n387: \n388: Dynamic enum evaluation must not silently flatten semantic kinds.\n389: \n390: Use these exact outputs:\n391: \n392: 1. if enum eligibility is `ELIGIBLE`:\n393:    - keep `domain_shape_kind=STRICT_ENUM_CANDIDATE`\n394:    - set `policy_confidence=HIGH`\n395: 2. if enum eligibility is `REVIEW_REQUIRED`:\n396:    - keep `domain_shape_kind=STRICT_ENUM_CANDIDATE`\n397:    - keep fallback `OPEN_CODED_VALUE`\n398:    - set `policy_confidence=REQUIRES_REVIEW`\n399: 3. if enum eligibility is `INELIGIBLE` because the table is not a compact direct\n400:    enum candidate:\n401:    - let the reference-kind matrix already drive non-enum shapes\n402: \n403: Important correction:\n404: \n405: This hotfix does **not** require issue `#14` to convert every reviewed compact\n406: table into `OPEN_CODED_VALUE` immediately. It only requires dynamic eligibility\n407: evaluation instead of hardcoding.\n408: \n409: That means `CVN_ENTITY_TYPE` should no longer be hardcoded in semantic policy.\n410: It should land in `REVIEW_REQUIRED` unless machine-readable open-world evidence\n411: forces a stronger result.\n412: \n413: ### Validation Expectation Correction Required\n414: \n415: Issue `#14` validation cases must stop treating reviewed examples as hardcoded\n416: special cases.\n417: \n418: Update expectations as follows:\n419: \n420: 1. `CVN_SEX_A`\n421:    - expected `EnumEligibility.ELIGIBLE`\n422:    - expected confidence `HIGH`\n423:    - result must come from dynamic evidence, not `if table_name == \"CVN_SEX_A\"`\n424: 2. `CVN_ENTITY_TYPE`\n425:    - expected `EnumEligibility.REVIEW_REQUIRED`\n426:    - expected confidence `REQUIRES_REVIEW`\n427:    - result must come from dynamic evidence, not hardcoded table-name override\n428: \n429: ## Required Changes To Tests\n430: \n431: ### Extend Auxiliary Loader Tests\n432: \n433: `tests/test_auxiliary_source_loaders_unit.py` must add assertions proving that\n434: `ReferenceTableMetadata` now exposes enum-evidence fields.\n435: \n436: Minimum new checks:\n437: \n438: 1. `CVN_SEX_A` has non-empty `item_codes`\n439: 2. `CVN_SEX_A` has non-empty `preferred_labels`\n440: 3. `CVN_SEX_A` reports `has_hierarchy is False`\n441: 4. `CVN_SEX_A` reports `has_delegate is False`\n442: \n443: ### Extend Resolution Tests\n444: \n445: `tests/test_auxiliary_reference_resolution_unit.py` must add checks that:\n446: \n447: 1. resolved reference-table cases attach non-`None`\n448:    `reference_table_enum_evidence`\n449: 2. side-package and unresolved cases attach `None`\n450: 3. subtype-backed cases still attach evidence but remain semantically ineligible\n451: \n452: ### Add Semantic Policy Tests\n453: \n454: When issue `#16` or the issue `#14` test phase adds semantic-policy tests, the\n455: minimum required dynamic enum checks are:\n456: \n457: 1. `CVN_SEX_A` becomes `ELIGIBLE` dynamically\n458: 2. `CVN_ENTITY_TYPE` becomes `REVIEW_REQUIRED` dynamically\n459: 3. subtype-backed `CVN_KNOW_A` remains `INELIGIBLE`\n460: 4. hierarchical `UNESCO_CODES` remains `INELIGIBLE`\n461: 5. side-package registry references remain `INELIGIBLE`\n462: 6. unresolved references remain `INELIGIBLE`\n463: \n464: ## Files Expected To Change When Applying This Hotfix\n465: \n466: Minimum code files:\n467: \n468: - `src/cvn_codegen/normalization_types.py`\n469: - `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`\n470: - `src/cvn_codegen/auxiliary_sources/reference_resolution.py`\n471: - `src/cvn_codegen/semantic_policy.py`\n472: - `tests/test_auxiliary_source_loaders_unit.py`\n473: - `tests/test_auxiliary_reference_resolution_unit.py`\n474: - future semantic-policy tests under `tests/`\n475: \n476: Minimum documentation files:\n477: \n478: - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n479: - `docs/context/current_status.md`\n480: - `docs/pipeline/known_limitations.md` if a new limitation appears\n481: - `docs/roadmap/cvn_generation_roadmap.md` if issue state changes\n482: \n483: ## Verification Strategy When Implemented\n484: \n485: The implementation session that applies this hotfix must verify all of these:\n486: \n487: 1. `ReferenceTableMetadata` exposes dynamic enum-evidence fields\n488: 2. `ReferenceResolution` carries evidence for direct reference-table resolutions\n489: 3. issue `#14` no longer uses table-name hardcoding for enum eligibility\n490: 4. `CVN_SEX_A` passes dynamically as eligible\n491: 5. `CVN_ENTITY_TYPE` lands dynamically in review-required\n492: 6. subtype-backed, hierarchical, side-package, unresolved, and under-traced\n493:    families remain non-eligible\n494: \n495: Minimum commands:\n496: \n497: ```bash\n498: uv run pytest tests/test_auxiliary_source_loaders_unit.py -v\n499: uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v\n500: uv run pytest tests/test_semantic_policy_unit.py -v\n501: uv run pytest -n auto tests\n502: ```\n503: \n504: ## Impact On Future Issues\n505: \n506: - removes pressure to hardcode reviewed table names in issue `#14`\n507: - gives issue `#15` a scalable strict-enum decision input\n508: - gives issue `#16` a concrete dynamic-evaluation test target\n509: - lets issue `#17` document a reproducible policy instead of a manually curated\n510:   exception list\n511: \n512: ## Status\n513: \n514: - Status: documented as required corrective work\n515: - Implementation state: pending\n\n(End of file - total 515 lines)\n</content>",
+          "synthetic": true,
           "id": "prt_eb7dd76d200f3VotKcnLjGy9RM",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd767c001yomNGDebtz9O5s"
@@ -198,11 +198,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201205083,
+          "completed": 1781201211974
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -214,24 +219,19 @@
           "output": 21,
           "reasoning": 199,
           "cache": {
-            "write": 0,
-            "read": 10752
+            "read": 10752,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201205083,
-          "completed": 1781201211974
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7dd775b002XKFblGdRlfdwSL",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7dd7d8b001kCYHpOwbW2DFw0",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd775b002XKFblGdRlfdwSL"
@@ -239,15 +239,15 @@
         {
           "type": "reasoning",
           "text": "",
-          "time": {
-            "start": 1781201207469,
-            "end": 1781201211208
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_0fa4da67069bc5a0016a2af9375bac819194cb92a9c1b80868",
               "reasoningEncryptedContent": "gAAAAABqKvk71a4h3zrkDKUGwl1cpacIBGBc_AlBI4C_eYjZ8WuNfZzjyMN9_VGetjkfcinTmJY1sk3sVTPe0e7K-RX8rb7lpxM3spee4RLhxDepOsZhzedRvg0PdNqmauFovjhtWbuCg3z2IIyajvUzowevU3VzZzGKAvpvIg8MB6yDYig7lNg6KvaV3L7QOi7HMyrB6y-89Y7tLh1eYsBW5AaZSuNWrvCmbgUUXZiOKgzMegzIPHnZwJ70ybFohiLOdV67hn38d2CA-IjnHNBJLtz2Z2mU0qzeTFpg3xS0acHGp8qvcMu_tKgqaFWhUUFV3ZsCgiv4O5JLGsD_AnvdQsw11Dy8KpzwBScQKq-7zuZq4adxB2HA_U86mfphPgQbjWpuxfywPe3j4OgjdA8yBxvytQU4a0ym66-JhSBsaQ918V7xIEUiAap9w0ay87WNC5f_X6kUPI7oShc5DbL8lcVubLo1vwwe2i28Lw0-_dT0PRdPF3QmmlBK6qhzy7OLDWbgKAwfUi-owuohSS5-R0a5Mf7bAIzE96f8Wcitv_hwl0j_boTE4b-z7rbR5ba0x2CSA8H_N4lxzQzNJP7DVXPqY3nxAgQKln7bosvWc4VKxSbsfLLKI_cCikeLnYISE4nlqdMABYT15JldJxUrnXee7G6iK4a3hpTmLXIFnmVu92Ff2NGNveHLPlHcRjYJ0oFI9YSV_OYo7-iSxLUV4TPJLm0prYyoa1Hd5bv9U0u7YDrjOBmhwDCyf5vsU2G45BAfZQFI_Ttw8LzORI_iUkOgBbJpA_Kd8dXJZ_wPc-YoUTIsYPSanyqbfnfQ50hIHb8oJPUZjbDTq-awcTUfmNVz7Tk1XMhqEIo89NM8LQjyOCWtr5tU0vXtYDSxilsnLLEjrhIa6sX7huFy-JWgKukUrXgojwGMmFmTlqf7-9XGi5m0NeFVT6or9Z6TdvR1YDB9uc0ZRo1Vt12CebjXj2ARgYFRhu0juMaKFnK6lCxn-dbN5TefdUS5zgiuepsK1GecvFu6k3rV_nYKjpi6sfpIU4GOv4pHZWwLWPmYiJkWHK_jZ_uCqmWOU7t790WEkby5pTNK7MZq2w1tLhmGAqqQhHzIXKM-_sokHfwkKZvnYLrIoNlM91tk_P-GqDSl-oeuYUuN9cemx-ShZUoceJi2D-YEkUF0suSRS6WOcVvOWL0S-rBEd56n9xBws7UFlETSXLDMtJMj8mFixpj3iNxvPiMwRYMG1hhnmv6LgzSmeeRRy1RAMGwdORcQ_AeCIz-VjXKaiu62FrNnayRZTlRqIUIi_VGiDE0oB5--wbDH28c4PP87hOyUAFWHEYZWFP-4AHWxL0K50h1f-XSN2orxFY4uHxBeUFZAp_CVRGJrjFwyZmNaripuYmK1kwJFivrnwVWenxT1pdzhevJFMwZIjej_0Mf285_BfVSUWaCe9HaCxNNUYGQgdcAbEr8LAO-54vjAlEYMoM3jEJL0VysnzB4rbrXnDbk2RV275VXkx-L20vLvlrN9WwSA8f4q-Ov4lcwkzuAntLngHKDNXWlm5ifzYtLec4OVCTsicZXqYerEkEkqCmoACDe9_Ze5o6awhZ-y1b5Gdx4NnuDFBCjmV-ECJPgL_YQ6lQXB0e0gZVNa5g6EWUPYwJ5OYkdvLaBi_rbP_k1Y9sh7PUR59BdiTSaIdrvWQWIEMw7L485zntTVL78CYHMwZ7ltekR_y1sWkDNZg0mF9zp5NrtOlnN6n4GKZPlh0rlrtvqvOLVW9juCzXGKVGU3zbsAVWlX_dTf-1LJZczeKB1cFNnSmiudBOCFyD631dihV8CfUk0aHJ-AT6uMkJJrxE6_UrcZHw00HCDDTZvmddgeO-azbfe8DxQnSv63Hnth2fxNkIycuegErWfjurbjQyy_S32HR9f1qsPU6zyDeLsTa_vQsZoUOsKuZZj7JU29YvE3CQKZ6n8eAQXelC39NclEFIEWSAsQ3y_V-T7k8IgePqlrKVvDXvKy7H6QMMs0CPKeA5tZRqVNxgdx23sOQzCV6G2nC_bHwZGwNlvSZqUzahmQKHhgXVGpkTgklayZ3wvST3G01FBOI01GANbk994nUt6VmE5Ip8gmpHOxTZMZq9oDZJfIR2lX5Qyf0AGX80K0Ycyi36d9i3GxnHG7b2DITyAtTzLeGPoaAYBrzZmcI-PF1S8dZ49mYFtR9qQWMEHH9pONDemeq2bFdBsa15D-vkk3fu-uH_tDQ8kW4aR3i-r5cvX3Nl-MULHYQogkY_e7dORiYUp7prQ="
             }
+          },
+          "time": {
+            "start": 1781201207469,
+            "end": 1781201211208
           },
           "id": "prt_eb7dd80ad001DhEP9h0FgsnfXZ",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -255,20 +255,20 @@
         },
         {
           "type": "tool",
-          "tool": "skill",
           "callID": "call_1WyHk381olzEuwrzbdC4yKFp",
+          "tool": "skill",
           "state": {
             "status": "completed",
             "input": {
               "name": "using-superpowers"
             },
             "output": "<skill_content name=\"using-superpowers\">\n# Skill: using-superpowers\n\n<SUBAGENT-STOP>\nIf you were dispatched as a subagent to execute a specific task, skip this skill.\n</SUBAGENT-STOP>\n\n<EXTREMELY-IMPORTANT>\nIf you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.\n\nIF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.\n\nThis is not negotiable. This is not optional. You cannot rationalize your way out of this.\n</EXTREMELY-IMPORTANT>\n\n## Instruction Priority\n\nSuperpowers skills override default system prompt behavior, but **user instructions always take precedence**:\n\n1. **User's explicit instructions** (CLAUDE.md, GEMINI.md, AGENTS.md, direct requests) — highest priority\n2. **Superpowers skills** — override default system behavior where they conflict\n3. **Default system prompt** — lowest priority\n\nIf CLAUDE.md, GEMINI.md, or AGENTS.md says \"don't use TDD\" and a skill says \"always use TDD,\" follow the user's instructions. The user is in control.\n\n## How to Access Skills\n\n**In Claude Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you—follow it directly. Never use the Read tool on skill files.\n\n**In Copilot CLI:** Use the `skill` tool. Skills are auto-discovered from installed plugins. The `skill` tool works the same as Claude Code's `Skill` tool.\n\n**In Gemini CLI:** Skills activate via the `activate_skill` tool. Gemini loads skill metadata at session start and activates the full content on demand.\n\n**In other environments:** Check your platform's documentation for how skills are loaded.\n\n## Platform Adaptation\n\nSkills use Claude Code tool names. Non-CC platforms: see `references/copilot-tools.md` (Copilot CLI), `references/codex-tools.md` (Codex) for tool equivalents. Gemini CLI users get the tool mapping loaded automatically via GEMINI.md.\n\n# Using Skills\n\n## The Rule\n\n**Invoke relevant or requested skills BEFORE any response or action.** Even a 1% chance a skill might apply means that you should invoke the skill to check. If an invoked skill turns out to be wrong for the situation, you don't need to use it.\n\n```dot\ndigraph skill_flow {\n    \"User message received\" [shape=doublecircle];\n    \"About to EnterPlanMode?\" [shape=doublecircle];\n    \"Already brainstormed?\" [shape=diamond];\n    \"Invoke brainstorming skill\" [shape=box];\n    \"Might any skill apply?\" [shape=diamond];\n    \"Invoke Skill tool\" [shape=box];\n    \"Announce: 'Using [skill] to [purpose]'\" [shape=box];\n    \"Has checklist?\" [shape=diamond];\n    \"Create TodoWrite todo per item\" [shape=box];\n    \"Follow skill exactly\" [shape=box];\n    \"Respond (including clarifications)\" [shape=doublecircle];\n\n    \"About to EnterPlanMode?\" -> \"Already brainstormed?\";\n    \"Already brainstormed?\" -> \"Invoke brainstorming skill\" [label=\"no\"];\n    \"Already brainstormed?\" -> \"Might any skill apply?\" [label=\"yes\"];\n    \"Invoke brainstorming skill\" -> \"Might any skill apply?\";\n\n    \"User message received\" -> \"Might any skill apply?\";\n    \"Might any skill apply?\" -> \"Invoke Skill tool\" [label=\"yes, even 1%\"];\n    \"Might any skill apply?\" -> \"Respond (including clarifications)\" [label=\"definitely not\"];\n    \"Invoke Skill tool\" -> \"Announce: 'Using [skill] to [purpose]'\";\n    \"Announce: 'Using [skill] to [purpose]'\" -> \"Has checklist?\";\n    \"Has checklist?\" -> \"Create TodoWrite todo per item\" [label=\"yes\"];\n    \"Has checklist?\" -> \"Follow skill exactly\" [label=\"no\"];\n    \"Create TodoWrite todo per item\" -> \"Follow skill exactly\";\n}\n```\n\n## Red Flags\n\nThese thoughts mean STOP—you're rationalizing:\n\n| Thought | Reality |\n|---------|---------|\n| \"This is just a simple question\" | Questions are tasks. Check for skills. |\n| \"I need more context first\" | Skill check comes BEFORE clarifying questions. |\n| \"Let me explore the codebase first\" | Skills tell you HOW to explore. Check first. |\n| \"I can check git/files quickly\" | Files lack conversation context. Check for skills. |\n| \"Let me gather information first\" | Skills tell you HOW to gather information. |\n| \"This doesn't need a formal skill\" | If a skill exists, use it. |\n| \"I remember this skill\" | Skills evolve. Read current version. |\n| \"This doesn't count as a task\" | Action = task. Check for skills. |\n| \"The skill is overkill\" | Simple things become complex. Use it. |\n| \"I'll just do this one thing first\" | Check BEFORE doing anything. |\n| \"This feels productive\" | Undisciplined action wastes time. Skills prevent this. |\n| \"I know what that means\" | Knowing the concept ≠ using the skill. Invoke it. |\n\n## Skill Priority\n\nWhen multiple skills could apply, use this order:\n\n1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach the task\n2. **Implementation skills second** (frontend-design, mcp-builder) - these guide execution\n\n\"Let's build X\" → brainstorming first, then implementation skills.\n\"Fix this bug\" → debugging first, then domain-specific skills.\n\n## Skill Types\n\n**Rigid** (TDD, debugging): Follow exactly. Don't adapt away discipline.\n\n**Flexible** (patterns): Adapt principles to context.\n\nThe skill itself tells you which.\n\n## User Instructions\n\nInstructions say WHAT, not HOW. \"Add X\" or \"Fix Y\" doesn't mean skip workflows.\n\nBase directory for this skill: file:///home/carlos/.agents/skills/using-superpowers\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>/home/carlos/.agents/skills/using-superpowers/references/copilot-tools.md</file>\n<file>/home/carlos/.agents/skills/using-superpowers/references/gemini-tools.md</file>\n<file>/home/carlos/.agents/skills/using-superpowers/references/codex-tools.md</file>\n</skill_files>\n</skill_content>",
+            "title": "Loaded skill: using-superpowers",
             "metadata": {
               "name": "using-superpowers",
               "dir": "/home/carlos/.agents/skills/using-superpowers",
               "truncated": false
             },
-            "title": "Loaded skill: using-superpowers",
             "time": {
               "start": 1781201211787,
               "end": 1781201211809
@@ -284,20 +284,20 @@
           "messageID": "msg_eb7dd775b002XKFblGdRlfdwSL"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 27429,
             "input": 16457,
             "output": 21,
             "reasoning": 199,
             "cache": {
-              "write": 0,
-              "read": 10752
+              "read": 10752,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7dd91fe001TGrCZZYS0JZmoQ",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd775b002XKFblGdRlfdwSL"
@@ -306,11 +306,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201211981,
+          "completed": 1781201216597
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -322,44 +327,39 @@
           "output": 19,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 27136
+            "read": 27136,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201211981,
-          "completed": 1781201216597
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7dd924d001TwEKAFeSkwgB9E",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7dd9de70014TL5L5thdHRVd5",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd924d001TwEKAFeSkwgB9E"
         },
         {
           "type": "tool",
-          "tool": "skill",
           "callID": "call_TPN8j5IaTEeaZI4yp2qq9qim",
+          "tool": "skill",
           "state": {
             "status": "completed",
             "input": {
               "name": "caveman"
             },
             "output": "<skill_content name=\"caveman\">\n# Skill: caveman\n\nRespond terse like smart caveman. All technical substance stay. Only fluff die.\n\n## Persistence\n\nACTIVE EVERY RESPONSE. No revert after many turns. No filler drift. Still active if unsure. Off only: \"stop caveman\" / \"normal mode\".\n\nDefault: **full**. Switch: `/caveman lite|full|ultra`.\n\n## Rules\n\nDrop: articles (a/an/the), filler (just/really/basically/actually/simply), pleasantries (sure/certainly/of course/happy to), hedging. Fragments OK. Short synonyms (big not extensive, fix not \"implement a solution for\"). Technical terms exact. Code blocks unchanged. Errors quoted exact.\n\nPattern: `[thing] [action] [reason]. [next step].`\n\nNot: \"Sure! I'd be happy to help you with that. The issue you're experiencing is likely caused by...\"\nYes: \"Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:\"\n\n## Intensity\n\n| Level | What change |\n|-------|------------|\n| **lite** | No filler/hedging. Keep articles + full sentences. Professional but tight |\n| **full** | Drop articles, fragments OK, short synonyms. Classic caveman |\n| **ultra** | Abbreviate (DB/auth/config/req/res/fn/impl), strip conjunctions, arrows for causality (X → Y), one word when one word enough |\n| **wenyan-lite** | Semi-classical. Drop filler/hedging but keep grammar structure, classical register |\n| **wenyan-full** | Maximum classical terseness. Fully 文言文. 80-90% character reduction. Classical sentence patterns, verbs precede objects, subjects often omitted, classical particles (之/乃/為/其) |\n| **wenyan-ultra** | Extreme abbreviation while keeping classical Chinese feel. Maximum compression, ultra terse |\n\nExample — \"Why React component re-render?\"\n- lite: \"Your component re-renders because you create a new object reference each render. Wrap it in `useMemo`.\"\n- full: \"New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`.\"\n- ultra: \"Inline obj prop → new ref → re-render. `useMemo`.\"\n- wenyan-lite: \"組件頻重繪，以每繪新生對象參照故。以 useMemo 包之。\"\n- wenyan-full: \"物出新參照，致重繪。useMemo .Wrap之。\"\n- wenyan-ultra: \"新參照→重繪。useMemo Wrap。\"\n\nExample — \"Explain database connection pooling.\"\n- lite: \"Connection pooling reuses open connections instead of creating new ones per request. Avoids repeated handshake overhead.\"\n- full: \"Pool reuse open DB connections. No new connection per request. Skip handshake overhead.\"\n- ultra: \"Pool = reuse DB conn. Skip handshake → fast under load.\"\n- wenyan-full: \"池reuse open connection。不每req新開。skip handshake overhead。\"\n- wenyan-ultra: \"池reuse conn。skip handshake → fast。\"\n\n## Auto-Clarity\n\nDrop caveman for: security warnings, irreversible action confirmations, multi-step sequences where fragment order risks misread, user asks to clarify or repeats question. Resume caveman after clear part done.\n\nExample — destructive op:\n> **Warning:** This will permanently delete all rows in the `users` table and cannot be undone.\n> ```sql\n> DROP TABLE users;\n> ```\n> Caveman resume. Verify backup exist first.\n\n## Boundaries\n\nCode/commits/PRs: write normal. \"stop caveman\" or \"normal mode\": revert. Level persist until changed or session end.\n\nBase directory for this skill: file:///home/carlos/.agents/skills/caveman\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n\n</skill_files>\n</skill_content>",
+            "title": "Loaded skill: caveman",
             "metadata": {
               "name": "caveman",
               "dir": "/home/carlos/.agents/skills/caveman",
               "truncated": false
             },
-            "title": "Loaded skill: caveman",
             "time": {
               "start": 1781201216385,
               "end": 1781201216406
@@ -375,20 +375,20 @@
           "messageID": "msg_eb7dd924d001TwEKAFeSkwgB9E"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 28866,
             "input": 1711,
             "output": 19,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 27136
+              "read": 27136,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7dda401001wAb8Xy2qJWAHQy",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dd924d001TwEKAFeSkwgB9E"
@@ -397,11 +397,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201216602,
+          "completed": 1781201218737
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -413,44 +418,39 @@
           "output": 19,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 28672
+            "read": 28672,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201216602,
-          "completed": 1781201218737
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7dda45a002ztd15RfJt9jFln",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7dda7bc001pWYfBCAskLcmUS",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dda45a002ztd15RfJt9jFln"
         },
         {
           "type": "tool",
-          "tool": "skill",
           "callID": "call_K0Q3vnL2D2s9UczCMWeQfzT7",
+          "tool": "skill",
           "state": {
             "status": "completed",
             "input": {
               "name": "writing-plans"
             },
             "output": "<skill_content name=\"writing-plans\">\n# Skill: writing-plans\n\n# Writing Plans\n\n## Overview\n\nWrite comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.\n\nAssume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.\n\n**Announce at start:** \"I'm using the writing-plans skill to create the implementation plan.\"\n\n**Context:** This should be run in a dedicated worktree (created by brainstorming skill).\n\n**Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`\n- (User preferences for plan location override this default)\n\n## Scope Check\n\nIf the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.\n\n## File Structure\n\nBefore defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.\n\n- Design units with clear boundaries and well-defined interfaces. Each file should have one clear responsibility.\n- You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.\n- Files that change together should live together. Split by responsibility, not by technical layer.\n- In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure - but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.\n\nThis structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.\n\n## Bite-Sized Task Granularity\n\n**Each step is one action (2-5 minutes):**\n- \"Write the failing test\" - step\n- \"Run it to make sure it fails\" - step\n- \"Implement the minimal code to make the test pass\" - step\n- \"Run the tests and make sure they pass\" - step\n- \"Commit\" - step\n\n## Plan Document Header\n\n**Every plan MUST start with this header:**\n\n```markdown\n# [Feature Name] Implementation Plan\n\n> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.\n\n**Goal:** [One sentence describing what this builds]\n\n**Architecture:** [2-3 sentences about approach]\n\n**Tech Stack:** [Key technologies/libraries]\n\n---\n```\n\n## Task Structure\n\n````markdown\n### Task N: [Component Name]\n\n**Files:**\n- Create: `exact/path/to/file.py`\n- Modify: `exact/path/to/existing.py:123-145`\n- Test: `tests/exact/path/to/test.py`\n\n- [ ] **Step 1: Write the failing test**\n\n```python\ndef test_specific_behavior():\n    result = function(input)\n    assert result == expected\n```\n\n- [ ] **Step 2: Run test to verify it fails**\n\nRun: `pytest tests/path/test.py::test_name -v`\nExpected: FAIL with \"function not defined\"\n\n- [ ] **Step 3: Write minimal implementation**\n\n```python\ndef function(input):\n    return expected\n```\n\n- [ ] **Step 4: Run test to verify it passes**\n\nRun: `pytest tests/path/test.py::test_name -v`\nExpected: PASS\n\n- [ ] **Step 5: Commit**\n\n```bash\ngit add tests/path/test.py src/path/file.py\ngit commit -m \"feat: add specific feature\"\n```\n````\n\n## No Placeholders\n\nEvery step must contain the actual content an engineer needs. These are **plan failures** — never write them:\n- \"TBD\", \"TODO\", \"implement later\", \"fill in details\"\n- \"Add appropriate error handling\" / \"add validation\" / \"handle edge cases\"\n- \"Write tests for the above\" (without actual test code)\n- \"Similar to Task N\" (repeat the code — the engineer may be reading tasks out of order)\n- Steps that describe what to do without showing how (code blocks required for code steps)\n- References to types, functions, or methods not defined in any task\n\n## Remember\n- Exact file paths always\n- Complete code in every step — if a step changes code, show the code\n- Exact commands with expected output\n- DRY, YAGNI, TDD, frequent commits\n\n## Self-Review\n\nAfter writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.\n\n**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.\n\n**2. Placeholder scan:** Search your plan for red flags — any of the patterns from the \"No Placeholders\" section above. Fix them.\n\n**3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.\n\nIf you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.\n\n## Execution Handoff\n\nAfter saving the plan, offer execution choice:\n\n**\"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**\n\n**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration\n\n**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints\n\n**Which approach?\"**\n\n**If Subagent-Driven chosen:**\n- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development\n- Fresh subagent per task + two-stage review\n\n**If Inline Execution chosen:**\n- **REQUIRED SUB-SKILL:** Use superpowers:executing-plans\n- Batch execution with checkpoints for review\n\nBase directory for this skill: file:///home/carlos/.agents/skills/writing-plans\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>/home/carlos/.agents/skills/writing-plans/plan-document-reviewer-prompt.md</file>\n</skill_files>\n</skill_content>",
+            "title": "Loaded skill: writing-plans",
             "metadata": {
               "name": "writing-plans",
               "dir": "/home/carlos/.agents/skills/writing-plans",
               "truncated": false
             },
-            "title": "Loaded skill: writing-plans",
             "time": {
               "start": 1781201218518,
               "end": 1781201218562
@@ -466,20 +466,20 @@
           "messageID": "msg_eb7dda45a002ztd15RfJt9jFln"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 29751,
             "input": 1060,
             "output": 19,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 28672
+              "read": 28672,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7ddac77001dCJtQHxtcmMoOZ",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7dda45a002ztd15RfJt9jFln"
@@ -488,11 +488,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201218741,
+          "completed": 1781201229519
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -504,24 +509,19 @@
           "output": 277,
           "reasoning": 207,
           "cache": {
-            "write": 0,
-            "read": 29184
+            "read": 29184,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201218741,
-          "completed": 1781201229519
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7ddacb50020kvCd50MUvEAjO",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7ddb042001SL4GtSHLyd2z1I",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7ddacb50020kvCd50MUvEAjO"
@@ -529,15 +529,15 @@
         {
           "type": "reasoning",
           "text": "",
-          "time": {
-            "start": 1781201220145,
-            "end": 1781201224366
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_0b2b5b210a76e5cf016a2af9443590819195e4567a28bc1cc4",
               "reasoningEncryptedContent": "gAAAAABqKvlILcwd2JuubiRVvYXTSCZR4xvh8Lq5Ku2WlWNMuGk7_xConXKoPxLQFDugNror7LEEgdKRW-Vr3o-HRnrOpFUQ3rp2KtC4iWejTCkU3cftPjlRyjuW-MVBzkPiEqnZpV-mRT35lGxEPQ2VEf01pO7x2XXZTPeGVho41vugV4sEs5Om_YvIg0dtqmqnSJFVT-pNcA9gKfevzyqSJ2dlc_-N-tiaFr1WmFc4tIn1qUJCc1gG3-9PqVicH2Q2c4SOaMjCo-WKEfrJIHjtm3J_Cq6FAuP93ZuU9lm_g-cglIK04rSWTuYtk6PslNO2zFdIUNNBqt-B-S5Qntm0f_e9afdoqZcrznkr4wgDoFpbXOlRRemGoMZ-LG7TkkkVZNjzcKl08MVNKTyBTql4EDdTAvJCXN0IdLO-41DpU-SJiso5S0hRvrpdkoNcUrCZu-xKhIdEVGTwy5rMW5Ol1kFszh0YMc49ez9OkQTDnNFb8Fky9y913dznsmQ9jJaESowyGtlL7XUifkw9-Ev_NrxMRXEsQvBM7qav0ue8ZVH76VvjU4td7ihcPFcH1AgojfFQ3cnT_wrYJ_Osf4Az6YazwKi5L7KpychMsmHzKs_AYIcyKwB9ESgOpaVAZWZcGxBskeQ1AeuJmlyjidWnJ54G4KPPE094M8NRmo_4XLhKxVfXnx6w9iO0OxwRLkym5AR9GaZ9ptsLVRCnn3jlOQm21qptwTx4iKYGmVln2pcSkhEk8UREQ2Y05v4HYDh5xWSNpCy18n8tcDrHw_Y7Jeinr4JLMZdxjlCoOX8nI4CPD_8Ql2MgYfMwcbH9mkj7XGJOfMgkdk-wJzOjk0yozPQYsD-rS3MNZQ7m6AYiWYB58M6vyslkhQyI01B850jX-p0vC_d0MfKXjuMdzvmS4vdy6Yilts50tonrSRxiuCnL0gUBMojdVbjoDVDVkBsZw42NzsIlZDTEZHX-JR9spTV3EmvUTMYQ8QdUjBcyNqtRkJF73hQKl5r0lov1PF8PIJvBX07P8fLmPhkis5Fz7TbHGgjtr4C5uzYpdU5Iv6jLbf5d6hcD4FQXJDXpX64FU3uKWciqXqQgknua856bbjn8WJ2bMv4ApAMfJPMbtlUbPRlXOOyC148VbyAnFLsW1ZNfJDi3czFh07Ar3dvt90-l4zsA9kmTIahudtE0Fsx64rP-A8ziMzsxQaPaN290wAvTDv44QAzHYXyReP3xsyRTYePSb-HywA2lLg4HyxMbMXVkHm9Z6A0fcuM0VBaUIlRwnsNOv-19BG2l41Ih7oNeFLJBa6I1l_xcAKPtrXHbhdgUAXn_77nnmD3vEB57OyXPwyeE4sGUq76b2W-7Es8YrcnlDunxoAP2auIRdE7pQrQyV-eomrCZywgLIxIYR7VN6bMfSO6qy19qfONrVnflqdJxp07rquMmNIIZU1yEPPi9DAj8oRcqwmx5IHB4R-ldIjsYvf3EbTzud5x_LhUy-gAKfiqxh-djC_jbykDhZrkrKJ767eEmbung81jZN4eg2ETtfG1lRSSNbsz4NT5HGVbaR7P8BWlr1ONdbtix1kzHvLJcaKXK8xBLhfrcelL4pY_2-OKacs3ekXsshfqjQx1gNvbFetSV5PBtzC5DHpmt1pDo3ad29lRFCqBVzeGhM7TND7NxlLBrwC6TUcFXsbBFoOQ0BF80Wa0yqY33A7MRCWV08V9c92FqHC1eGpejcLM6i2MSSojxr1ZHWyWj3CWca6uUKlEWG9jAR2_YbsOt6K5xtLzCXQxd9WVXq6jTbA0tSqGvQbOwan3rK8hUDLzB0SacMBoq2QHKCRRIz2f3wOi77cfnuHpVD7ra5TXVtZIoDTwWwUPoZb12rCz99sShP1dMrI-Aj7RgEaTXbOdlFlkYhHNa6StKhU_Y7RNfwG5g2o6eF5QzNymyHV5Q9yWYK_Y80SkFo1EEHxXcU0mNEDtBXEsm0RQ_ALXdHUMdhXMcoLaqz4llvjzaJd9En6MvaqI6fcz3_6O2lu7Zus9lZSbZMhbslnUb2ek614fEbB0xAx7BmwXijYJRCwicLFQjC9zngZ4t5uwAHt_9kUSHnma5RQ7GeJCzdCUQPcPMBM4hx7Hw2QK3V6bVnEuyVnWTZZk7PWo7YfcofkgPkA6L_caMfwCiwoNuNAbgNNiWdw3L"
             }
+          },
+          "time": {
+            "start": 1781201220145,
+            "end": 1781201224366
           },
           "id": "prt_eb7ddb231001CE4jIFW26TPxVS",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -562,8 +562,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_RNFZTFuF7jEdFItNRtZyPJc9",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -572,6 +572,7 @@
               "limit": 2000
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/context/project_context_index.md</path>\n<type>file</type>\n<content>\n1: # Project Context Index\n2: \n3: ## Purpose\n4: \n5: This document is the single documentation entry point for future sessions.\n6: Humans should normally start with `PROJECT_GUIDE.md` before coming here.\n7: Agents should also read `AGENTS.md` before this file.\n8: \n9: ## Mandatory Reading Order\n10: \n11: ### For Humans\n12: \n13: 1. `PROJECT_GUIDE.md`\n14: 2. `docs/context/project_context_index.md`\n15: 3. `docs/context/current_status.md`\n16: 4. `docs/roadmap/issues/<current-issue>.md`\n17: 5. Supporting documents linked from the current issue file\n18: \n19: ### For Agents\n20: \n21: 1. `AGENTS.md`\n22: 2. `PROJECT_GUIDE.md`\n23: 3. `docs/context/project_context_index.md`\n24: 4. `docs/context/current_status.md`\n25: 5. `docs/roadmap/issues/<current-issue>.md`\n26: 6. Supporting documents linked from the current issue file\n27: \n28: ## Current Project Snapshot\n29: \n30: - Project: open CVN schema and tooling for Spanish academic CV processing\n31: - Current pipeline stage: structural generation, metadata normalization, and\n32:   semantic policy completed\n33: - Last documented issues: `#11`, `#12`, `#13`, `#14`, and `#25`\n34: - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`\n35: - Next planned issue: `#15`\n36: - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`\n37: \n38: ## Documentation Map\n39: \n40: ### Entry Points\n41: \n42: - `README.md`: repository overview for humans\n43: - `PROJECT_GUIDE.md`: human-oriented project entry point\n44: - `AGENTS.md`: operational rules for agents and pointer map\n45: - `docs/context/current_status.md`: current project state and next actions\n46: \n47: ### Architecture And Pipeline\n48: \n49: - `docs/pipeline/cvn_pydantic_generation_pipeline.md`: technical architecture\n50:   of the CVN generation pipeline\n51: - `docs/pipeline/known_limitations.md`: structural limitations, detected\n52:   discrepancies, and follow-up implications\n53: - `docs/adr/`: architecture decision records\n54: \n55: ### Roadmap And Issue History\n56: \n57: - `docs/roadmap/cvn_generation_roadmap.md`: roadmap from issue `#8` through\n58:   `#17`\n59: - `docs/roadmap/issues/issue-08-epic-cvn-automation.md`: epic summary and\n60:   checkpoints\n61: - `docs/roadmap/issues/issue-11-project-infrastructure.md`: full record of\n62:   issue `#11`\n63: - `docs/roadmap/issues/issue-12-structural-bindings.md`: full record of issue\n64:   `#12`\n65: - `docs/roadmap/issues/issue-13-normalization.md`: full record of issue `#13`\n66: - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: full record of\n67:   issue `#14`\n68: - `docs/roadmap/issues/issue-15-domain-model-generator.md`: planned scope of\n69:   issue `#15`\n70: - `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`: planned scope of\n71:   issue `#16`\n72: - `docs/roadmap/issues/issue-17-workflow-documentation.md`: planned scope of\n73:   issue `#17`\n74: - `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`:\n75:   implementation record for issue `#25`\n76: - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance\n77:   record for the runner logging convention update\n78: - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance\n79:   record for the human project entry point and update protocol alignment\n80: - `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`:\n81:   maintenance record for the source-package documentation expansion and\n82:   consistency cleanup\n83: - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`:\n84:   corrective plan for expanding the structural scope of issues `#11` and `#12`\n85: - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`:\n86:   corrective plan for extending issue `#13` with auxiliary-reference resolution\n87: - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`:\n88:   corrective plan for replanning the pending semantic and workflow issues after\n89:   the analysis of the auxiliary modules recently added in the source bundle sent\n90:   by FECYT\n91: - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`:\n92:   corrective plan for dynamic strict-enum eligibility evaluation across\n93:   `ReferenceTables.xml` without semantic-policy hardcoding\n94: \n95: ### Development And Contribution\n96: \n97: - `docs/development/setup.md`: environment and execution commands\n98: - `docs/development/code_style.md`: code style, typing, and documentation rules\n99: - `docs/documentation/documentation_conventions.md`: documentation taxonomy and\n100:   update protocol\n101: - `CONTRIBUTING.md`: contributor onboarding and documentation obligations\n102: \n103: ### Supporting Background Material\n104: \n105: - `docs/informe_estructura_cvnxml_v1.4.3.md`: structural analysis background\n106: - `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the\n107:   auxiliary `Entity`, `ReferenceTables/Subtypes`, and `Thesaurus` families in\n108:   the canonical source package\n109: - `docs/cvn_source_package_annex_table_coverage.md`: practical map of Annex I\n110:   tables to core XSDs, side packages, and unresolved manual-only cases\n111: - `docs/cvn_annex_priority_table_families.md`: detailed reference for the\n112:   high-priority Annex I table families that most affect semantic modeling\n113: - `docs/cvn_annex_table_families_batch3.md`: detailed reference for the next\n114:   group of Annex I families covering participation, summons, programme,\n115:   publication, support, and event tables\n116: - `docs/cvn_annex_table_families_batch4.md`: detailed reference for the next\n117:   group of Annex I families covering activity, management, scope, language,\n118:   time, qualification, access, and evaluation tables\n119: - `docs/cvn_annex_table_families_batch5.md`: detailed reference for the next\n120:   group of Annex I families covering subject, stay, dedication, duration,\n121:   formation, teaching, prizes, and thematic tables\n122: - `docs/cvn_annex_table_families_batch6.md`: detailed reference for the next\n123:   group of Annex I families covering region, province, sex, and situation\n124:   tables\n125: - `docs/cvn_annex_table_families_batch7.md`: detailed reference for the next\n126:   group of Annex I families covering agency, collaboration, and cooperation\n127:   tables, including unresolved `CVN_AGENCY_C`\n128: - `docs/cvn_annex_table_families_batch8.md`: detailed reference for the final\n129:   Annex I batch covering intervention, supervision, category, and residual test\n130:   tables\n131: - `docs/cvn_serialization_patterns_reference.md`: explicit reference of the\n132:   serialization patterns used by CVN controlled tables, subtype-backed values,\n133:   catalogs, and unresolved references\n134: - `docs/cvn_field_reference_traceability.md`: operational guide from normalized\n135:   CVN fields to tables, catalogs, backing artifacts, and serialization patterns\n136: - `docs/propuesta_modelado_uml_ocl_cvn.md`: domain modeling background\n137: - `references/`: external references and tutorial links\n138: \n139: ## Canonical Source Artifacts\n140: \n141: The canonical package used by the generation pipeline is:\n142: \n143: ```text\n144: docs/CvnXML_v1.4.3_2.1_17012025/\n145: |- auxiliary catalog families: Entity, ReferenceTables/Subtypes, Thesaurus\n146: |- XML/\n147: |  |- SpecificationManual.xml\n148: |  `- CVNTreeModel.xml\n149: `- XSD/\n150:    |- CVN.xsd\n151:    |- Common.xsd\n152:    |- AuxTable.xsd\n153:    |- ISOUtilities.xsd\n154:    |- SpecificationManual.xsd\n155:    `- CVNTreeModel_v1.0.xsd\n156: ```\n157: \n158: ## Where To Find The State Of Each Implemented Issue\n159: \n160: - Issue `#11`: `docs/roadmap/issues/issue-11-project-infrastructure.md`\n161: - Issue `#12`: `docs/roadmap/issues/issue-12-structural-bindings.md`\n162: - Issue `#13`: `docs/roadmap/issues/issue-13-normalization.md`\n163: - Issue `#25`:\n164:   `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`\n165: - Hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`\n166: - Hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`\n167: - Hotfix `#3`:\n168:   `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`\n169: - Hotfix `#4`:\n170:   `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`\n171: - Hotfix `#5`:\n172:   `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`\n173: - Hotfix `#6`:\n174:   `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`\n175: - Hotfix `#7`:\n176:   `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n177: \n178: Each issue document records:\n179: \n180: - original goal\n181: - original planned steps\n182: - implementation adjustments made during execution\n183: - artifacts created\n184: - verification performed\n185: - findings and limitations\n186: - impact on later issues\n187: \n188: ## Resume Work Checklist\n189: \n190: When starting a new session:\n191: \n192: 1. Read `docs/context/current_status.md`\n193: 2. Read the last completed issue document\n194: 3. Read the next issue document from the roadmap\n195: 4. Review `docs/pipeline/known_limitations.md`\n196: 5. Only then start implementation work\n\n(End of file - total 196 lines)\n</content>",
+            "title": "docs/context/project_context_index.md",
             "metadata": {
               "preview": "# Project Context Index\n\n## Purpose\n\nThis document is the single documentation entry point for future sessions.\nHumans should normally start with `PROJECT_GUIDE.md` before coming here.\nAgents should also read `AGENTS.md` before this file.\n\n## Mandatory Reading Order\n\n### For Humans\n\n1. `PROJECT_GUIDE.md`\n2. `docs/context/project_context_index.md`\n3. `docs/context/current_status.md`\n4. `docs/roadmap/issues/<current-issue>.md`\n5. Supporting documents linked from the current issue file\n\n### For Agents\n",
               "truncated": false,
@@ -586,7 +587,6 @@
                 "truncated": false
               }
             },
-            "title": "docs/context/project_context_index.md",
             "time": {
               "start": 1781201228996,
               "end": 1781201229019
@@ -603,8 +603,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_6dlAhoxLni5yQbGYeQgaYb5l",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -613,6 +613,7 @@
               "limit": 2000
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/context/current_status.md</path>\n<type>file</type>\n<content>\n1: # Current Status\n2: \n3: ## Status Date\n4: \n5: - Last updated: 2026-06-10\n6: \n7: ## Completed Or Stabilized Work\n8: \n9: ### Issue `#11`\n10: \n11: - Repository structure for the CVN generation pipeline is in place\n12: - `src/generated/` is the destination for generated structural bindings\n13: - `src/cvn_codegen/` is the location for hand-maintained pipeline logic\n14: - `src/models/cvn/` exists as the target location for future domain models\n15: - `config/.xsdata.xml` exists as the shared structural generation config\n16: - `pyproject.toml` contains the code generation dependency group\n17: \n18: ### Issue `#12`\n19: \n20: - Structural bindings are generated for:\n21:   - `CVN.xsd`\n22:   - `SpecificationManual.xsd`\n23:   - `CVNTreeModel_v1.0.xsd`\n24: - Generated packages exist under:\n25:   - `src/generated/cvn`\n26:   - `src/generated/specification_manual`\n27:   - `src/generated/tree_model`\n28: - A standardized generation runner exists at:\n29:   - `src/cvn_codegen/xsdata_runner.py`\n30: - Unit tests and smoke tests for the runner exist under `tests/`\n31: - Package imports for generated bindings are working\n32: - Real parse smoke result:\n33:   - `SpecificationManual.xml`: OK\n34:   - `CVNTreeModel.xml`: fails due to XML/XSD mismatch, documented in\n35:     `docs/pipeline/known_limitations.md`\n36: \n37: ### Hotfix `#1`\n38: \n39: - `src/cvn_codegen/xsdata_runner.py` now reports operational status through\n40:   `logging` instead of `print`\n41: - `print` is reserved for direct console interaction examples and ad hoc shell\n42:   snippets\n43: - project conventions now explicitly require f-strings for string interpolation\n44:   in repository code instead of old `%`-style formatting\n45: \n46: ### Hotfix `#2`\n47: \n48: - `PROJECT_GUIDE.md` now exists as the human-oriented repository entry point\n49: - `README.md` and `CONTRIBUTING.md` now direct human readers to\n50:   `PROJECT_GUIDE.md` instead of `AGENTS.md`\n51: - the documentation update protocol now explicitly requires updating\n52:   `PROJECT_GUIDE.md` when the human-facing project guidance or documentation map\n53:   changes\n54: - `AGENTS.md` remains the agent-specific entry point and now references the\n55:   human guide as its counterpart\n56: \n57: ### Hotfix `#3`\n58: \n59: - the repository now contains persistent documentation covering the auxiliary\n60:   families of the canonical CVN source package and the full detailed sweep of\n61:   `ReferenceTables.xml`\n62: - the repository now contains dedicated references for:\n63:   - serialization patterns\n64:   - field-to-table traceability from the normalized manual layer\n65: - documentation consistency issues across entry-point and context files were\n66:   corrected so that current status, roadmap references, and reading order remain\n67:   aligned\n68: - a maintenance record for this documentation-only patch exists at:\n69:   - `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`\n70: \n71: ### Issue `#13`\n72: \n73: - normalization output contract is implemented through typed structures in\n74:   `src/cvn_codegen/normalization_types.py`\n75: - extraction from `SpecificationManual.xml` is implemented in\n76:   `src/cvn_codegen/manual_metadata.py`\n77: - extraction from `CVNTreeModel.xml` is implemented in\n78:   `src/cvn_codegen/tree_metadata.py`\n79: - normalization orchestration is implemented in\n80:   `src/cvn_codegen/normalization.py`\n81: - mismatch reporting is implemented in\n82:   `src/cvn_codegen/normalization_report.py`\n83: - auxiliary-source loading and resolution support is now implemented under:\n84:   - `src/cvn_codegen/auxiliary_sources/`\n85: - normalized aggregate entries now include additive\n86:   `reference_resolution` metadata for manual references when auxiliary-source\n87:   inputs are provided\n88: - nested `CVNItem` traversal under `Property` is implemented to match the\n89:   documented tree-model structure and restore the expected overlap counts\n90: - normalization-related verification passes for:\n91:   - `tests/test_manual_metadata_unit.py`\n92:   - `tests/test_tree_metadata_unit.py`\n93:   - `tests/test_normalization_report_unit.py`\n94:   - `tests/test_normalization_unit.py`\n95:   - `tests/test_auxiliary_source_loaders_unit.py`\n96:   - `tests/test_auxiliary_reference_resolution_unit.py`\n97: - verified normalization baseline:\n98:   - total normalized codes: `1457`\n99:   - manual-only codes: `27`\n100:   - tree-only codes: `1`\n101:   - overlapping codes: `1429`\n102: - current mismatch reporting includes:\n103:   - codes present only in `SpecificationManual.xml`\n104:   - codes present only in `CVNTreeModel.xml`\n105:   - the two documented unexpected `<Type>` child elements in\n106:     `CVNTreeModel.xml`\n107:   - unresolved auxiliary references\n108:   - documented under-traced auxiliary tables\n109: - current auxiliary-reference resolution explicitly covers:\n110:   - direct `ReferenceTables.xml` tables\n111:   - subtype-backed table families through auxiliary catalog availability\n112:   - side-package registry references backed by `Entity.xml`\n113:   - side-package thesaurus references backed by `Thesaurus.xml`\n114:   - hierarchical thematic cases such as `UNESCO_CODES`\n115: - currently unresolved auxiliary references reported by normalization include:\n116:   - `CVN_AGENCY_C`\n117: - documented under-traced auxiliary tables now reported explicitly:\n118:   - `CVN_INTERVENTION_A`\n119:   - `CVN_PRUEBA`\n120: \n121: ### Issue `#25`\n122: \n123: - a GitHub Actions workflow now exists at `.github/workflows/pr-tests.yml`\n124: - pull requests targeting `main` or `development` now run the repository test\n125:   suite automatically when opened, reopened, or updated\n126: - the workflow installs the documented `uv` environment, performs the editable\n127:   install, and runs `uv run pytest -n auto tests`\n128: - the workflow job is named `tests` so GitHub can report a stable PR check\n129: - all automated repository tests are expected to live under `tests/`\n130: - merge blocking depends on GitHub branch protection or rulesets marking the\n131:   `tests` check as required\n132: \n133: ### Source Package Documentation Expansion\n134: \n135: - the canonical CVN source package is now documented beyond the core structural\n136:   subset\n137: - new persistent reference documents added in this documentation expansion are:\n138:   - `docs/cvn_source_package_auxiliary_artifacts.md`\n139:   - `docs/cvn_source_package_annex_table_coverage.md`\n140:   - `docs/cvn_annex_priority_table_families.md`\n141:   - `docs/cvn_annex_table_families_batch3.md`\n142:   - `docs/cvn_annex_table_families_batch4.md`\n143:   - `docs/cvn_annex_table_families_batch5.md`\n144:   - `docs/cvn_annex_table_families_batch6.md`\n145:   - `docs/cvn_annex_table_families_batch7.md`\n146:   - `docs/cvn_annex_table_families_batch8.md`\n147:   - `docs/cvn_serialization_patterns_reference.md`\n148:   - `docs/cvn_field_reference_traceability.md`\n149: - the repository now records the role and relationships of the auxiliary\n150:   families:\n151:   - `Entity`\n152:   - `ReferenceTables/Subtypes`\n153:   - `Thesaurus`\n154: - detailed coverage of the tables present in `ReferenceTables.xml` is now\n155:   complete\n156: - `CVN_AGENCY_C` is now explicitly documented as a manual reference without a\n157:   clean matching table in `ReferenceTables.xml`\n158: - `CVN_KNOW_A` is now documented as a subtype-backed industrial-property table\n159: - `CVN_INTERVENTION_A` and `CVN_PRUEBA` are now explicitly documented as tables\n160:   present in `ReferenceTables.xml` without clear current use in\n161:   `SpecificationManual.xml`\n162: - the auxiliary artifact documentation now also records real XML usage patterns\n163:   for `Entity.xml` and `Thesaurus.xml`\n164: - the repository now documents how to interpret the already-implemented\n165:   `ManualCodeEntry.manual_reference_table` field without changing the existing\n166:   normalization core\n167: - the pipeline architecture documentation now reflects that these families are\n168:   part of the canonical source bundle recently delivered by FECYT and not\n169:   merely external placeholders\n170: - the limitation register now records:\n171:   - historical packaging drift in the auxiliary families\n172:   - unresolved Annex-I table references such as `CVN_AGENCY_C`\n173: \n174: ### Hotfix `#4`\n175: \n176: - the hotfix corrective scope for issues `#11` and `#12` is now implemented for\n177:   canonical auxiliary source-package families\n178: - structural generation targets now include:\n179:   - `ReferenceTables.xsd`\n180:   - `Subtypes.xsd`\n181:   - `Entity_v1.4.xsd`\n182:   - `Thesaurus.xsd`\n183: - generated packages now exist under:\n184:   - `src/generated/reference_tables`\n185:   - `src/generated/subtypes`\n186:   - `src/generated/entity`\n187:   - `src/generated/thesaurus`\n188: - runner and smoke/unit test coverage were expanded for auxiliary targets\n189: - auxiliary parse checks are executable for:\n190:   - `ReferenceTables.xml`\n191:   - `Subtype_Spa.xml`\n192:   - `Entity.xml`\n193:   - `Thesaurus.xml`\n194: - core regression validation after auxiliary integration passed with both:\n195:   - file-level checks (`cvn=5`, `specification_manual=3`, `tree_model=2`)\n196:   - behavioral checks (runner tests, imports, parse checks)\n197: \n198: ### Hotfix `#5`\n199: \n200: - the corrective hotfix for extending issue `#13` with an additive\n201:   auxiliary-reference resolution layer is now implemented\n202: - the implemented retrofit resolves `ManualCodeEntry.manual_reference_table`\n203:   against:\n204:   - `ReferenceTables.xml`\n205:   - `Subtype_Spa.xml`\n206:   - `Entity.xml`\n207:   - `Thesaurus*.xml`\n208: - the normalization contract now includes additive resolution metadata through:\n209:   - `ReferenceResolution`\n210:   - `ReferenceResolutionTrace`\n211: - the normalization orchestration now accepts auxiliary-source inputs and\n212:   enriches `NormalizedCodeEntry` values with `reference_resolution`\n213: - dedicated loader and resolution tests now exist for the hotfix implementation\n214: - current documented implementation limits remain:\n215:   - `Subtype_Spa.xml` proves subtype catalog availability but does not expose a\n216:     direct table-family key such as `CVN_KNOW_A`\n217:   - side-package resolution remains artifact-level and not domain-level\n218: \n219: ### Hotfix `#6`\n220: \n221: - a corrective hotfix record now exists for replanning issue `#8` and pending\n222:   issues `#14` to `#17` around the auxiliary-source integration stage introduced\n223:   by the modules recently added in the bundle sent by FECYT\n224: - the documented required roadmap correction now makes explicit that the pending\n225:   semantic work depends on:\n226:   - structural visibility of auxiliary families\n227:   - auxiliary-reference resolution over normalized manual metadata\n228: - the affected pending issue documents and roadmap records are now updated so\n229:   they describe semantic and workflow work as consumers of the already\n230:   implemented hotfix `#4` and hotfix `#5` layers instead of future discovery\n231:   tasks\n232: \n233: ### Hotfix `#7`\n234: \n235: - a new corrective hotfix record now exists for replacing table-specific\n236:   semantic enum decisions with dynamic `ReferenceTables.xml` evidence\n237: - the documented required correction makes explicit that strict enum\n238:   eligibility for compact controlled tables cannot remain hardcoded in issue\n239:   `#14`\n240: - the corrective plan requires additive evidence in the normalization handoff\n241:   so semantic policy can evaluate all relevant direct reference tables\n242:   dynamically\n243: - the hotfix record is currently documentation-only and implementation remains\n244:   pending\n245: \n246: ### Issue `#14`\n247: \n248: - the semantic mapping rules issue is implemented in\n249:   `src/cvn_codegen/semantic_policy.py`\n250: - semantic-policy unit tests are implemented in\n251:   `tests/test_semantic_policy_unit.py`\n252: - the implemented policy consumes the issue `#13` normalization contract,\n253:   including `reference_resolution.source_artifact` and\n254:   `reference_resolution.semantic_kind`\n255: - issue `#14` created explicit typed policy contracts under\n256:   `src/cvn_codegen/` without editing `src/generated/`\n257: - the implemented policy covers:\n258:   - semantic base kinds\n259:   - controlled-reference domain shapes\n260:   - strict enum eligibility\n261:   - wrapper and `xs:choice` treatment\n262:   - presence and cardinality mapping\n263:   - Spanish-first domain naming\n264:   - deterministic override precedence\n265:   - representative validation cases for handoff into issue `#15`\n266: - issue `#14` uses a temporary review-required policy for representative compact\n267:   enum-like tables such as `CVN_SEX_A` and `CVN_ENTITY_TYPE` instead of\n268:   hardcoded final enum decisions\n269: - the permanent fix for dynamic strict-enum eligibility across all relevant\n270:   `ReferenceTables.xml` tables is documented by hotfix `#7`\n271: - the user reported that the semantic-policy tests, regression tests, and full\n272:   repository test suite passed after implementation\n273: - no final domain model emission is implemented yet; that remains issue `#15`\n274: \n275: ## Current Technical Baseline\n276: \n277: - Build backend: `setuptools`\n278: - Source layout: `src/`\n279: - Editable install used for local development\n280: - Structural code generation is executed from `src/` so the package name\n281:   `generated.*` resolves to `src/generated/*`\n282: - `tree_model` generation requires a target-specific override\n283: \n284: ## Next Planned Work\n285: \n286: - Next work item: implement issue `#15` domain Pydantic model generator\n287: - Required corrective references before starting:\n288:   - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`\n289:   - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`\n290:   - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`\n291:   - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n292: - Issue document to read first:\n293:   - `docs/roadmap/issues/issue-15-domain-model-generator.md`\n294: - Corrected starting assumption for issue `#15`:\n295:   - the generator should consume `SemanticPolicyBundle` and\n296:     `SemanticFieldPolicy` outputs instead of redefining semantic classification\n297:   - the generator should preserve `SemanticDecisionTrace` for CVN code, XML path,\n298:     manual reference, and auxiliary-source resolution traceability\n299:   - issue `#15` should not rebuild source-resolution logic for direct tables,\n300:     subtype-backed references, side-package registries, side-package thesauri,\n301:     hierarchical thematic references, unresolved references, or under-traced\n302:     tables\n303: \n304: ## Blocking Or Relevant Limitations\n305: \n306: - Structural bindings do not preserve `xs:choice` semantics as strict mutual\n307:   exclusivity in Pydantic\n308: - Some `minOccurs` constraints are not enforced by generated list defaults\n309: - Some attributes are generated as `object`\n310: - `CVNTreeModel.xml` contains `<Type>` under `Indicator`, but\n311:   `CVNTreeModel_v1.0.xsd` does not declare that child element\n312: - `Subtype_Spa.xml` does not provide a direct table-family bridge for strict\n313:   per-table subtype verification in the current normalization layer\n314: - dynamic strict enum eligibility for compact `ReferenceTables.xml` tables still\n315:   needs hotfix `#7` evidence in the normalization-to-semantic handoff\n316: \n317: All of these are documented in:\n318: \n319: - `docs/pipeline/known_limitations.md`\n320: \n321: ## Useful Commands\n322: \n323: Synchronize the environment, including multicore pytest support:\n324: \n325: ```bash\n326: uv sync --group codegen --group testing\n327: uv pip install -e .\n328: ```\n329: \n330: Run structural generation:\n331: \n332: ```bash\n333: uv run python -m cvn_codegen.xsdata_runner all\n334: ```\n335: \n336: Run runner tests:\n337: \n338: ```bash\n339: uv run pytest tests/test_xsdata_runner_unit.py -v\n340: uv run pytest tests/test_xsdata_runner_smoke.py -v\n341: ```\n342: \n343: Run the full repository test suite with multicore pytest:\n344: \n345: ```bash\n346: uv run pytest -n auto tests\n347: ```\n348: \n349: ## Files Future Sessions Should Read After The Entry Points\n350: \n351: Read the standard entry points first:\n352: \n353: 1. `AGENTS.md`\n354: 2. `PROJECT_GUIDE.md`\n355: 3. `docs/context/project_context_index.md`\n356: 4. `docs/context/current_status.md`\n357: \n358: Then continue with these supporting files as needed:\n359: \n360: 1. `docs/roadmap/cvn_generation_roadmap.md`\n361: 2. `docs/roadmap/issues/issue-11-project-infrastructure.md`\n362: 3. `docs/roadmap/issues/issue-12-structural-bindings.md`\n363: 4. `docs/roadmap/issues/issue-13-normalization.md`\n364: 5. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`\n365: 6. `docs/pipeline/known_limitations.md`\n366: 7. `docs/roadmap/hotfixes/`\n367: 8. `docs/cvn_source_package_auxiliary_artifacts.md`\n368: 9. `docs/cvn_source_package_annex_table_coverage.md`\n369: 10. `docs/cvn_annex_priority_table_families.md`\n370: 11. `docs/cvn_annex_table_families_batch3.md`\n371: 12. `docs/cvn_annex_table_families_batch4.md`\n372: 13. `docs/cvn_annex_table_families_batch5.md`\n373: 14. `docs/cvn_annex_table_families_batch6.md`\n374: 15. `docs/cvn_annex_table_families_batch7.md`\n375: 16. `docs/cvn_annex_table_families_batch8.md`\n376: 17. `docs/cvn_serialization_patterns_reference.md`\n377: 18. `docs/cvn_field_reference_traceability.md`\n378: 19. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`\n379: 20. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`\n380: 21. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`\n\n(End of file - total 380 lines)\n</content>",
+            "title": "docs/context/current_status.md",
             "metadata": {
               "preview": "# Current Status\n\n## Status Date\n\n- Last updated: 2026-06-10\n\n## Completed Or Stabilized Work\n\n### Issue `#11`\n\n- Repository structure for the CVN generation pipeline is in place\n- `src/generated/` is the destination for generated structural bindings\n- `src/cvn_codegen/` is the location for hand-maintained pipeline logic\n- `src/models/cvn/` exists as the target location for future domain models\n- `config/.xsdata.xml` exists as the shared structural generation config\n- `pyproject.toml` contains the code generation dependency group\n\n### Issue `#12`\n\n- Structural bindings are generated for:",
               "truncated": false,
@@ -627,7 +628,6 @@
                 "truncated": false
               }
             },
-            "title": "docs/context/current_status.md",
             "time": {
               "start": 1781201229293,
               "end": 1781201229361
@@ -644,8 +644,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_bNzLzOkcdi5mstAy8G2Qx0FW",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -654,6 +654,7 @@
               "limit": 2500
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/issues/issue-14-semantic-mapping-rules.md</path>\n<type>file</type>\n<content>\n1: # Issue 14 - Define Semantic Mapping Rules And Override Policy\n2: \n3: ## Summary\n4: \n5: Issue `#14` defines the deterministic semantic policy that translates enriched\n6: normalized CVN metadata into domain-oriented generation decisions for issue\n7: `#15`.\n8: \n9: The issue does not emit final domain models. Final domain model generation\n10: remains deferred to issue `#15`.\n11: \n12: ## Original Goal\n13: \n14: - create deterministic type, naming, enum, multiplicity, and override rules for\n15:   the semantic generation layer\n16: \n17: ## Original Plan\n18: \n19: 1. define type-mapping rules\n20: 2. decide enum vs string treatment for controlled tables\n21: 3. define naming rules for classes, fields, and modules\n22: 4. define how to treat `choice`, wrappers, and recursion\n23: 5. create an explicit override mechanism\n24: 6. document all decisions in versioned repository files\n25: \n26: ## Corrected Prerequisite Chain\n27: \n28: Issue `#14` starts from the validated enriched normalization output implemented\n29: in issue `#13` after hotfix `#5`, with auxiliary structural visibility already\n30: in place from hotfix `#4`.\n31: \n32: The corrected semantic-policy input includes at minimum:\n33: \n34: - `code`\n35: - `manual.manual_name`\n36: - `manual.manual_short_name`\n37: - `manual.manual_type`\n38: - `manual.manual_multiplicity`\n39: - `manual.manual_obligatory`\n40: - `manual.manual_reference_table`\n41: - `tree_paths[].xml_path`\n42: - `reference_resolution.status`\n43: - `reference_resolution.source_family`\n44: - `reference_resolution.source_artifact`\n45: - `reference_resolution.resolved_name`\n46: - `reference_resolution.serialization_pattern`\n47: - `reference_resolution.semantic_kind`\n48: - `reference_resolution.trace`\n49: \n50: Issue `#14` consumes that typed metadata. It must not rebuild source-family,\n51: side-package, subtype-backed, hierarchical-reference, unresolved-reference, or\n52: under-traced-table detection from prose documents or ad hoc table-name\n53: inspection.\n54: \n55: ## Accepted Execution Protocol\n56: \n57: The user accepted this execution plan before implementation starts.\n58: \n59: At every execution step, the implementer must report:\n60: \n61: - current task number and task name\n62: - current subtask number and subtask name, when a subtask is being executed\n63: - short initial summary of what the task or subtask will do\n64: - short final result for the task or subtask\n65: - whether the user must modify any file manually\n66: - next step to follow\n67: \n68: File-modification rule:\n69: \n70: - documentation changes may be performed when explicitly requested\n71: - code changes should be left for the user unless the user explicitly authorizes\n72:   the agent to edit code\n73: - generated code under `src/generated/` must not be edited manually\n74: \n75: ## Accepted Execution Plan\n76: \n77: ### Task `1 / 15` - Clean And Stabilize Issue Documentation\n78: \n79: - Task summary:\n80:   - remove merge-conflict markers, duplicated sections, and stale field names so\n81:     issue `#14` has one authoritative plan\n82: - Files involved:\n83:   - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n84:   - `docs/context/current_status.md` if conflict markers remain there\n85:   - `docs/roadmap/cvn_generation_roadmap.md` if conflict markers remain there\n86: - Subtask `1.1 / 15`:\n87:   - resolve `<<<<<<<`, `=======`, and `>>>>>>>` markers\n88: - Subtask `1.2 / 15`:\n89:   - remove duplicated plan, implementation, verification, findings, and impact\n90:     sections\n91: - Subtask `1.3 / 15`:\n92:   - align field names with the implemented normalization contract:\n93:     `reference_resolution.source_artifact` and\n94:     `reference_resolution.semantic_kind`\n95: - Subtask `1.4 / 15`:\n96:   - keep issue status as planned until implementation and verification finish\n97: - User manual modifications needed:\n98:   - none expected for documentation cleanup unless the user wants wording changes\n99: - Next step:\n100:   - verify the upstream normalization contract\n101: \n102: ### Task `2 / 15` - Verify Upstream Normalization Contract\n103: \n104: - Task summary:\n105:   - confirm the exact Python structures issue `#14` may consume from issue `#13`\n106: - Files to inspect:\n107:   - `src/cvn_codegen/normalization_types.py`\n108:   - `src/cvn_codegen/normalization.py`\n109:   - `src/cvn_codegen/auxiliary_sources/reference_resolution.py`\n110:   - `tests/test_normalization_unit.py`\n111:   - `tests/test_auxiliary_reference_resolution_unit.py`\n112: - Subtask `2.1 / 15`:\n113:   - confirm `ManualCodeEntry`, `TreePathEntry`, `NormalizedCodeEntry`, and\n114:     `NormalizationResult`\n115: - Subtask `2.2 / 15`:\n116:   - confirm `ReferenceResolution`, `ReferenceResolutionTrace`,\n117:     `ReferenceResolutionStatus`, `ReferenceSourceFamily`, `SerializationPattern`,\n118:     and `SemanticReferenceKind`\n119: - Subtask `2.3 / 15`:\n120:   - confirm `build_normalization_result(...)` as the preferred consumer entry\n121:     point\n122: - Subtask `2.4 / 15`:\n123:   - record any mismatch between planned semantic inputs and implemented contract\n124: - User manual modifications needed:\n125:   - none unless code contract differs from documented expectations\n126: - Next step:\n127:   - define the semantic policy contract\n128: \n129: ### Task `3 / 15` - Define Semantic Policy Contract\n130: \n131: - Task summary:\n132:   - design the typed structures that issue `#15` will consume mechanically\n133: - Expected code location:\n134:   - `src/cvn_codegen/semantic_policy.py`\n135: - Subtask `3.1 / 15`:\n136:   - define policy enums:\n137:     `SemanticBaseKind`, `WrapperPolicyKind`, `PresenceKind`,\n138:     `CardinalityKind`, `StructuralLimitationFlag`, `DomainShapeKind`,\n139:     `PolicyConfidence`, and `EnumEligibility`\n140: - Subtask `3.2 / 15`:\n141:   - define policy records:\n142:     `PolicyMetadata`, `SemanticDecisionTrace`, `BaseTypePolicy`,\n143:     `ReferenceKindPolicy`, `NamingPolicy`, `MultiplicityPolicy`,\n144:     `ChoiceWrapperPolicy`, `OverrideRule`, `ValidationCaseDefinition`,\n145:     `SemanticFieldPolicy`, and `SemanticPolicyBundle`\n146: - Subtask `3.3 / 15`:\n147:   - expose deterministic lookup maps by CVN `code`, `xml_path`,\n148:     `SemanticReferenceKind`, `SerializationPattern`, `manual_type`, and wrapper\n149:     family\n150: - User manual modifications needed:\n151:   - code file must be created by the user unless explicit code-edit approval is\n152:     given\n153: - Next step:\n154:   - build default semantic policy bundle\n155: \n156: ### Task `4 / 15` - Build Default Semantic Policy Bundle\n157: \n158: - Task summary:\n159:   - implement default reusable semantic policy values independent from concrete\n160:     normalized entries\n161: - Expected code location:\n162:   - `src/cvn_codegen/semantic_policy.py`\n163: - Subtask `4.1 / 15`:\n164:   - create `build_default_semantic_policy_bundle()`\n165: - Subtask `4.2 / 15`:\n166:   - include base policies by `manual_type`\n167: - Subtask `4.3 / 15`:\n168:   - include reference-kind policies by `SemanticReferenceKind`\n169: - Subtask `4.4 / 15`:\n170:   - include serialization refinements by `SerializationPattern`\n171: - Subtask `4.5 / 15`:\n172:   - include wrapper policies for known high-value `xs:choice` wrappers\n173: - User manual modifications needed:\n174:   - code file must be edited by the user unless explicit code-edit approval is\n175:     given\n176: - Next step:\n177:   - implement semantic field policy resolution\n178: \n179: ### Task `5 / 15` - Resolve Semantic Policy For One Normalized Entry\n180: \n181: - Task summary:\n182:   - define how one `NormalizedCodeEntry` becomes one `SemanticFieldPolicy`\n183: - Expected code location:\n184:   - `src/cvn_codegen/semantic_policy.py`\n185: - Subtask `5.1 / 15`:\n186:   - create `build_semantic_field_policy(entry, bundle)`\n187: - Subtask `5.2 / 15`:\n188:   - calculate `base_kind`\n189: - Subtask `5.3 / 15`:\n190:   - calculate `domain_shape_kind` and `fallback_shape_kind`\n191: - Subtask `5.4 / 15`:\n192:   - calculate `presence_kind` and `cardinality_kind`\n193: - Subtask `5.5 / 15`:\n194:   - calculate `enum_eligibility` and `policy_confidence`\n195: - Subtask `5.6 / 15`:\n196:   - attach `SemanticDecisionTrace` preserving CVN code, XML path, reference\n197:     resolution, and rule sources\n198: - User manual modifications needed:\n199:   - code file must be edited by the user unless explicit code-edit approval is\n200:     given\n201: - Next step:\n202:   - implement override precedence\n203: \n204: ### Task `6 / 15` - Implement Override Precedence\n205: \n206: - Task summary:\n207:   - make exceptions explicit, reviewable, and deterministic\n208: - Expected code location:\n209:   - `src/cvn_codegen/semantic_policy.py`\n210: - Subtask `6.1 / 15`:\n211:   - support override target `code + xml_path`\n212: - Subtask `6.2 / 15`:\n213:   - support override target `code`\n214: - Subtask `6.3 / 15`:\n215:   - support override target `xml_path`\n216: - Subtask `6.4 / 15`:\n217:   - support override target `reference_resolution.semantic_kind`\n218: - Subtask `6.5 / 15`:\n219:   - support override target `reference_resolution.serialization_pattern`\n220: - Subtask `6.6 / 15`:\n221:   - apply precedence order:\n222:     `code + xml_path`, `code`, `xml_path`, `semantic_kind`,\n223:     `serialization_pattern`, `manual_type`, wrapper, presence/cardinality,\n224:     defaults\n225: - Subtask `6.7 / 15`:\n226:   - mark same-priority conflicts as `PolicyConfidence.REQUIRES_REVIEW`\n227: - User manual modifications needed:\n228:   - code file must be edited by the user unless explicit code-edit approval is\n229:     given\n230: - Next step:\n231:   - implement naming policy\n232: \n233: ### Task `7 / 15` - Implement Naming Policy\n234: \n235: - Task summary:\n236:   - generate future domain-facing names while preserving source traceability\n237: - Expected code location:\n238:   - `src/cvn_codegen/semantic_policy.py`\n239: - Subtask `7.1 / 15`:\n240:   - use Spanish `manual_name` as the default label source\n241: - Subtask `7.2 / 15`:\n242:   - use `manual_short_name` only when clearer and non-ambiguous\n243: - Subtask `7.3 / 15`:\n244:   - normalize identifiers to ASCII\n245: - Subtask `7.4 / 15`:\n246:   - produce `snake_case` fields and modules\n247: - Subtask `7.5 / 15`:\n248:   - produce `PascalCase` class names\n249: - Subtask `7.6 / 15`:\n250:   - preserve acronyms such as `CVN`, `UNESCO`, `ORCID`, `DOI`, `ISBN`, `ISSN`,\n251:     and `H`\n252: - Subtask `7.7 / 15`:\n253:   - resolve collisions by readable Spanish name, then semantic context, then CVN\n254:     code suffix\n255: - User manual modifications needed:\n256:   - code file must be edited by the user unless explicit code-edit approval is\n257:     given\n258: - Next step:\n259:   - implement base type policy\n260: \n261: ### Task `8 / 15` - Implement Base Type Policy\n262: \n263: - Task summary:\n264:   - map manual types to semantic base kinds without choosing final Python output\n265:     types\n266: - Expected code location:\n267:   - `src/cvn_codegen/semantic_policy.py`\n268: - Subtask `8.1 / 15`:\n269:   - map `Alphanumeric` without resolved controlled reference to `TEXT`\n270: - Subtask `8.2 / 15`:\n271:   - map `Alphanumeric` with `reference_resolution.semantic_kind` to\n272:     `CONTROLLED_REFERENCE`\n273: - Subtask `8.3 / 15`:\n274:   - map `Date` to `DATE_LIKE`\n275: - Subtask `8.4 / 15`:\n276:   - map `Double` to `DECIMAL_NUMBER`\n277: - Subtask `8.5 / 15`:\n278:   - map `Boolean` to `BOOLEAN`\n279: - Subtask `8.6 / 15`:\n280:   - map `Duration` to `DURATION_LIKE`\n281: - Subtask `8.7 / 15`:\n282:   - map missing or unknown types to `UNKNOWN`\n283: - User manual modifications needed:\n284:   - code file must be edited by the user unless explicit code-edit approval is\n285:     given\n286: - Next step:\n287:   - implement reference-kind policy\n288: \n289: ### Task `9 / 15` - Implement Reference-Kind Policy\n290: \n291: - Task summary:\n292:   - map normalized `SemanticReferenceKind` values to domain shape decisions\n293: - Expected code location:\n294:   - `src/cvn_codegen/semantic_policy.py`\n295: - Subtask `9.1 / 15`:\n296:   - map `COMPACT_ENUM_LIKE_TABLE` to `STRICT_ENUM_CANDIDATE`, fallback\n297:     `OPEN_CODED_VALUE`\n298: - Subtask `9.2 / 15`:\n299:   - map `COMPACT_SCALE_OR_MEASURE` to `MEASURE_OR_SCALE_VALUE`\n300: - Subtask `9.3 / 15`:\n301:   - map `IDENTIFIER_TYPE_TABLE` to `IDENTIFIER_REFERENCE`\n302: - Subtask `9.4 / 15`:\n303:   - map `SCOPE_TABLE` to `SCOPE_REFERENCE`\n304: - Subtask `9.5 / 15`:\n305:   - map `SUBTYPE_BACKED_CONTROLLED_FAMILY` to `SUBTYPE_BACKED_VALUE`\n306: - Subtask `9.6 / 15`:\n307:   - map `HIERARCHICAL_THEMATIC_CLASSIFICATION` to\n308:     `HIERARCHICAL_CODE_REFERENCE`\n309: - Subtask `9.7 / 15`:\n310:   - map `SIDE_PACKAGE_REGISTRY` to `REGISTRY_REFERENCE`\n311: - Subtask `9.8 / 15`:\n312:   - map `SIDE_PACKAGE_THESAURUS_OR_VOCABULARY` to `VOCABULARY_REFERENCE`\n313: - Subtask `9.9 / 15`:\n314:   - map `UNRESOLVED_MANUAL_ONLY_REFERENCE` to `UNRESOLVED_REFERENCE`\n315: - Subtask `9.10 / 15`:\n316:   - map `UNDER_TRACED_REFERENCE_TABLE` to `UNDER_TRACED_REFERENCE`\n317: - User manual modifications needed:\n318:   - code file must be edited by the user unless explicit code-edit approval is\n319:     given\n320: - Next step:\n321:   - implement enum eligibility\n322: \n323: ### Task `10 / 15` - Implement Enum Eligibility Policy\n324: \n325: - Task summary:\n326:   - decide when controlled references may become strict enum candidates\n327: - Expected code location:\n328:   - `src/cvn_codegen/semantic_policy.py`\n329: - Subtask `10.1 / 15`:\n330:   - mark direct compact `REFERENCE_TABLE` cases as eligible only when no risk\n331:     flags exist\n332: - Subtask `10.2 / 15`:\n333:   - reject hierarchies, delegates, subtype-backed tables, side packages,\n334:     unresolved references, and under-traced references\n335: - Subtask `10.3 / 15`:\n336:   - mark `CVN_SEX_A` as expected strict-enum candidate\n337: - Subtask `10.4 / 15`:\n338:   - mark `CVN_ENTITY_TYPE` as open or review-required rather than blind strict\n339:     enum\n340: - User manual modifications needed:\n341:   - code file must be edited by the user unless explicit code-edit approval is\n342:     given\n343: - Next step:\n344:   - implement wrapper policy\n345: \n346: ### Task `11 / 15` - Implement Wrapper And Choice Policy\n347: \n348: - Task summary:\n349:   - preserve high-value `xs:choice` semantics lost by structural bindings\n350: - Expected code location:\n351:   - `src/cvn_codegen/semantic_policy.py`\n352: - Subtask `11.1 / 15`:\n353:   - classify `FlexibleDatesType` as `CHOICE_OBJECT_CANDIDATE`\n354: - Subtask `11.2 / 15`:\n355:   - classify `OfficialIdType` as `CHOICE_OBJECT_CANDIDATE`\n356: - Subtask `11.3 / 15`:\n357:   - classify `EntityTypeType` as `CHOICE_OBJECT_CANDIDATE`\n358: - Subtask `11.4 / 15`:\n359:   - classify `EntityNameType` as `CHOICE_OBJECT_CANDIDATE`\n360: - Subtask `11.5 / 15`:\n361:   - attach `CHOICE_NOT_ENFORCED`, `LIST_MIN_OCCURS_WEAK`,\n362:     `OBJECT_TYPED_ATTRIBUTE`, and `WRAPPER_ERGONOMICS` flags when applicable\n363: - Subtask `11.6 / 15`:\n364:   - collapse only wrappers that add no domain meaning and no required structural\n365:     traceability\n366: - User manual modifications needed:\n367:   - code file must be edited by the user unless explicit code-edit approval is\n368:     given\n369: - Next step:\n370:   - build representative validation inventory\n371: \n372: ### Task `12 / 15` - Build Representative Validation Inventory\n373: \n374: - Task summary:\n375:   - define real cases that prove the policy covers all semantic categories\n376: - Files involved:\n377:   - `src/cvn_codegen/semantic_policy.py`\n378:   - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n379: - Subtask `12.1 / 15`:\n380:   - include simple scalar case `000.010.000.020`\n381: - Subtask `12.2 / 15`:\n382:   - include compact enum-like case `CVN_SEX_A` / `000.010.000.030`\n383: - Subtask `12.3 / 15`:\n384:   - include compact open or review case `CVN_ENTITY_TYPE`\n385: - Subtask `12.4 / 15`:\n386:   - include subtype-backed case `CVN_KNOW_A`\n387: - Subtask `12.5 / 15`:\n388:   - include side-package registry case `ENTITY@Entity.xsd`\n389: - Subtask `12.6 / 15`:\n390:   - include side-package vocabulary case `THESAURUS@thesaurus.xsd`\n391: - Subtask `12.7 / 15`:\n392:   - include hierarchical thematic case `UNESCO_CODES`\n393: - Subtask `12.8 / 15`:\n394:   - include unresolved case `CVN_AGENCY_C`\n395: - Subtask `12.9 / 15`:\n396:   - include under-traced cases `CVN_INTERVENTION_A` and `CVN_PRUEBA`\n397: - Subtask `12.10 / 15`:\n398:   - include wrapper cases `FlexibleDatesType`, `OfficialIdType`,\n399:     `EntityTypeType`, and `EntityNameType`\n400: - User manual modifications needed:\n401:   - code inventory must be edited by the user unless explicit code-edit approval\n402:     is given\n403: - Next step:\n404:   - add tests\n405: \n406: ### Task `13 / 15` - Add Semantic Policy Tests\n407: \n408: - Task summary:\n409:   - make issue `#14` behavior executable and protect handoff to issue `#15`\n410: - Expected test location:\n411:   - `tests/test_semantic_policy_unit.py`\n412: - Subtask `13.1 / 15`:\n413:   - test policy enums and default bundle construction\n414: - Subtask `13.2 / 15`:\n415:   - test base type mapping\n416: - Subtask `13.3 / 15`:\n417:   - test reference-kind mapping\n418: - Subtask `13.4 / 15`:\n419:   - test enum eligibility\n420: - Subtask `13.5 / 15`:\n421:   - test presence and cardinality mapping\n422: - Subtask `13.6 / 15`:\n423:   - test naming normalization and collision fallback\n424: - Subtask `13.7 / 15`:\n425:   - test override precedence and same-priority conflict behavior\n426: - Subtask `13.8 / 15`:\n427:   - test wrapper policies\n428: - Subtask `13.9 / 15`:\n429:   - test representative real cases through `build_normalization_result(...)`\n430:     with auxiliary paths\n431: - User manual modifications needed:\n432:   - test file must be created by the user unless explicit code-edit approval is\n433:     given\n434: - Next step:\n435:   - run verification commands\n436: \n437: ### Task `14 / 15` - Verify Implementation\n438: \n439: - Task summary:\n440:   - prove semantic policy works and existing normalization behavior did not\n441:     regress\n442: - Commands:\n443:   - `uv run pytest tests/test_semantic_policy_unit.py -v`\n444:   - `uv run pytest -n auto tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`\n445:   - `uv run pytest -n auto tests`\n446: - Subtask `14.1 / 15`:\n447:   - run semantic-policy tests\n448: - Subtask `14.2 / 15`:\n449:   - run normalization and auxiliary regression tests\n450: - Subtask `14.3 / 15`:\n451:   - run full test suite\n452: - Subtask `14.4 / 15`:\n453:   - document failures exactly if any command fails\n454: - User manual modifications needed:\n455:   - none unless tests expose code or doc changes required\n456: - Next step:\n457:   - update closure documentation\n458: \n459: ### Task `15 / 15` - Update Final Documentation And Handoff\n460: \n461: - Task summary:\n462:   - close issue `#14` with implementation details, verification, limitations, and\n463:     issue `#15` handoff\n464: - Files involved:\n465:   - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n466:   - `docs/context/current_status.md`\n467:   - `docs/roadmap/cvn_generation_roadmap.md`\n468:   - `docs/pipeline/known_limitations.md` only if a new limitation is found\n469: - Subtask `15.1 / 15`:\n470:   - record implementation performed\n471: - Subtask `15.2 / 15`:\n472:   - record verification commands and results\n473: - Subtask `15.3 / 15`:\n474:   - record findings and limitations\n475: - Subtask `15.4 / 15`:\n476:   - update issue status when implementation is verified\n477: - Subtask `15.5 / 15`:\n478:   - leave explicit handoff checklist for issue `#15`\n479: - User manual modifications needed:\n480:   - none expected for documentation closure unless the user wants wording changes\n481: - Next step:\n482:   - start issue `#15` only after issue `#14` is implemented and verified\n483: \n484: ## Established Semantic Policy Decisions\n485: \n486: ### Scope Boundary\n487: \n488: Issue `#14` consumes only typed normalized metadata from issue `#13` as policy\n489: inputs. Raw XML, raw XSD, and generated structural classes may be inspected for\n490: human validation or override evidence, but they must not become base semantic\n491: inputs.\n492: \n493: If a repeated semantic decision needs raw source inspection, the missing data\n494: belongs in issue `#13`. If the need is isolated and not generalizable, issue\n495: `#14` may express it as an explicit override with trace evidence.\n496: \n497: ### Contract Families\n498: \n499: The semantic policy contract should use explicit typed Python structures with\n500: `dataclass` records and `Enum` values. The root contract should be an indexed\n501: `SemanticPolicyBundle`.\n502: \n503: Minimum contract families are:\n504: \n505: - `SemanticPolicyBundle`\n506: - `SemanticFieldPolicy`\n507: - `ReferenceKindPolicy`\n508: - `BaseTypePolicy`\n509: - `NamingPolicy`\n510: - `MultiplicityPolicy`\n511: - `ChoiceWrapperPolicy`\n512: - `OverrideRule`\n513: - `ValidationCaseDefinition`\n514: - `PolicyMetadata`\n515: - `SemanticDecisionTrace`\n516: \n517: ### Policy Enums\n518: \n519: | Category | Values |\n520: | --- | --- |\n521: | `SemanticBaseKind` | `TEXT`, `CONTROLLED_REFERENCE`, `DATE_LIKE`, `DECIMAL_NUMBER`, `BOOLEAN`, `DURATION_LIKE`, `UNKNOWN` |\n522: | `WrapperPolicyKind` | `COLLAPSE`, `VALUE_OBJECT_CANDIDATE`, `CHOICE_OBJECT_CANDIDATE`, `PRESERVE_STRUCTURAL_TRACE` |\n523: | `PresenceKind` | `REQUIRED`, `OPTIONAL`, `UNKNOWN` |\n524: | `CardinalityKind` | `SINGLE`, `REPEATED`, `UNKNOWN` |\n525: | `StructuralLimitationFlag` | `CHOICE_NOT_ENFORCED`, `LIST_MIN_OCCURS_WEAK`, `OBJECT_TYPED_ATTRIBUTE`, `WRAPPER_ERGONOMICS` |\n526: | `DomainShapeKind` | `PLAIN_VALUE`, `STRICT_ENUM_CANDIDATE`, `OPEN_CODED_VALUE`, `MEASURE_OR_SCALE_VALUE`, `IDENTIFIER_REFERENCE`, `SCOPE_REFERENCE`, `SUBTYPE_BACKED_VALUE`, `HIERARCHICAL_CODE_REFERENCE`, `REGISTRY_REFERENCE`, `VOCABULARY_REFERENCE`, `UNRESOLVED_REFERENCE`, `UNDER_TRACED_REFERENCE` |\n527: | `PolicyConfidence` | `HIGH`, `MEDIUM`, `LOW`, `REQUIRES_REVIEW` |\n528: | `EnumEligibility` | `ELIGIBLE`, `INELIGIBLE`, `REVIEW_REQUIRED` |\n529: \n530: ### Lookup And Override Precedence\n531: \n532: Semantic policy resolution must use this precedence order:\n533: \n534: 1. `code + xml_path` override\n535: 2. `code` override\n536: 3. `xml_path` override\n537: 4. `reference_resolution.semantic_kind` policy or override\n538: 5. `reference_resolution.serialization_pattern` refinement\n539: 6. `manual_type` base policy\n540: 7. wrapper policy\n541: 8. presence/cardinality policy\n542: 9. global defaults\n543: \n544: Overrides may change only semantic-policy outputs such as `domain_shape_kind`,\n545: `fallback_shape_kind`, `enum_eligibility`, `policy_confidence`,\n546: `wrapper_policy`, `presence_kind`, `cardinality_kind`, `normalized_name`,\n547: `naming_confidence`, `structural_limitation_flags`, notes, and diagnostics.\n548: \n549: Overrides must not mutate normalized input facts such as `code`, `xml_path`,\n550: `manual_type`, `manual_reference_table`, `reference_resolution.status`,\n551: `reference_resolution.source_family`, `reference_resolution.semantic_kind`,\n552: `reference_resolution.serialization_pattern`, or upstream trace facts.\n553: \n554: Same-priority conflicts should produce `PolicyConfidence.REQUIRES_REVIEW`\n555: rather than silently choosing one rule.\n556: \n557: ### Base Type Policy\n558: \n559: Issue `#14` defines semantic base kinds, not final Python/domain output types.\n560: Issue `#15` will map these semantic kinds to concrete generated Python\n561: artifacts.\n562: \n563: | `manual_type` condition | Semantic base kind |\n564: | --- | --- |\n565: | `Alphanumeric` without resolved controlled reference | `TEXT` |\n566: | `Alphanumeric` with `reference_resolution.semantic_kind` | `CONTROLLED_REFERENCE` |\n567: | `Date` | `DATE_LIKE` |\n568: | `Double` | `DECIMAL_NUMBER` |\n569: | `Boolean` | `BOOLEAN` |\n570: | `Duration` | `DURATION_LIKE` |\n571: | missing or unknown manual type | `UNKNOWN` |\n572: \n573: Wrappers should collapse only when they add no domain information and do not\n574: represent meaningful `xs:choice`, variable granularity, or structural\n575: traceability concerns. `FlexibleDatesType`, `OfficialIdType`, `EntityTypeType`,\n576: and `EntityNameType` must be marked as `CHOICE_OBJECT_CANDIDATE`.\n577: \n578: ### Presence And Cardinality Policy\n579: \n580: | Normalized field | Value | Policy output |\n581: | --- | --- | --- |\n582: | `manual_obligatory` | `True` | `PresenceKind.REQUIRED` |\n583: | `manual_obligatory` | `False` | `PresenceKind.OPTIONAL` |\n584: | `manual_obligatory` | `None` | `PresenceKind.UNKNOWN` |\n585: | `manual_multiplicity` | `True` | `CardinalityKind.REPEATED` |\n586: | `manual_multiplicity` | `False` | `CardinalityKind.SINGLE` |\n587: | `manual_multiplicity` | `None` | `CardinalityKind.UNKNOWN` |\n588: \n589: Issue `#14` records semantic cardinality. Issue `#15` decides concrete Pydantic\n590: field shape and validation behavior.\n591: \n592: ### Reference Kind Policy Matrix\n593: \n594: | `reference_resolution.semantic_kind` | Domain shape | Fallback shape | Enum eligibility default | Confidence default |\n595: | --- | --- | --- | --- | --- |\n596: | `COMPACT_ENUM_LIKE_TABLE` | `STRICT_ENUM_CANDIDATE` | `OPEN_CODED_VALUE` | eligibility criteria required | `HIGH` or `REQUIRES_REVIEW` |\n597: | `COMPACT_SCALE_OR_MEASURE` | `MEASURE_OR_SCALE_VALUE` | `OPEN_CODED_VALUE` | `REVIEW_REQUIRED` | `MEDIUM` |\n598: | `IDENTIFIER_TYPE_TABLE` | `IDENTIFIER_REFERENCE` | `OPEN_CODED_VALUE` | `INELIGIBLE` for full identifier | `MEDIUM` |\n599: | `SCOPE_TABLE` | `SCOPE_REFERENCE` | `OPEN_CODED_VALUE` | eligibility criteria required | `MEDIUM` |\n600: | `SUBTYPE_BACKED_CONTROLLED_FAMILY` | `SUBTYPE_BACKED_VALUE` | `SUBTYPE_BACKED_VALUE` | `INELIGIBLE` until strict bridge exists | `MEDIUM` |\n601: | `HIERARCHICAL_THEMATIC_CLASSIFICATION` | `HIERARCHICAL_CODE_REFERENCE` | `HIERARCHICAL_CODE_REFERENCE` | `INELIGIBLE` | `HIGH` |\n602: | `SIDE_PACKAGE_REGISTRY` | `REGISTRY_REFERENCE` | `REGISTRY_REFERENCE` | `INELIGIBLE` | `HIGH` |\n603: | `SIDE_PACKAGE_THESAURUS_OR_VOCABULARY` | `VOCABULARY_REFERENCE` | `VOCABULARY_REFERENCE` | `INELIGIBLE` | `HIGH` |\n604: | `UNRESOLVED_MANUAL_ONLY_REFERENCE` | `UNRESOLVED_REFERENCE` | `UNRESOLVED_REFERENCE` | `INELIGIBLE` | `REQUIRES_REVIEW` |\n605: | `UNDER_TRACED_REFERENCE_TABLE` | `UNDER_TRACED_REFERENCE` | `UNDER_TRACED_REFERENCE` | `INELIGIBLE` | `REQUIRES_REVIEW` |\n606: \n607: Strict enum eligibility requires a resolved `REFERENCE_TABLE` source, no\n608: hierarchy, no delegate, not subtype-backed, not side-package, not unresolved,\n609: not under-traced, reasonable item count, stable codes, usable labels, and no\n610: `OTHERS` or delegate-open behavior unless explicitly accepted by override.\n611: \n612: ### Naming Policy\n613: \n614: The domain-facing naming policy is Spanish-first because the tool is aimed at a\n615: Spanish research and university audience.\n616: \n617: Accepted naming rules:\n618: \n619: - use Spanish `manual_name` as the default label source\n620: - use `manual_short_name` only when clearer and non-ambiguous\n621: - normalize domain-facing identifiers to ASCII\n622: - remove accents and punctuation deterministically\n623: - use `snake_case` for fields and modules\n624: - use `PascalCase` for classes\n625: - preserve important acronyms such as `CVN`, `UNESCO`, `ORCID`, `DOI`, `ISBN`,\n626:   `ISSN`, and `H`\n627: - preserve CVN source identifiers literally in trace metadata\n628: - use English technical names for internal codegen and policy-contract classes\n629: \n630: Collision resolution should prefer readable Spanish names first, then semantic\n631: context, then CVN-code suffix as the last deterministic fallback. Ambiguous\n632: names should carry `naming_confidence=REQUIRES_REVIEW`.\n633: \n634: ## Representative Inventory And Expected Results\n635: \n636: | Case | Role | Expected policy result |\n637: | --- | --- | --- |\n638: | `000.010.000.020` / `Nombre` | simple scalar | `PLAIN_VALUE`, `TEXT`, enum ineligible |\n639: | `CVN_SEX_A` / `000.010.000.030` | compact closed enum-like table | temporary `STRICT_ENUM_CANDIDATE`, enum review required |\n640: | `CVN_ENTITY_TYPE` / `010.010.000.040` | compact open/review controlled table | temporary `STRICT_ENUM_CANDIDATE`, enum review required |\n641: | `CVN_KNOW_A` / `050.030.010.030` | subtype-backed family | `SUBTYPE_BACKED_VALUE`, enum ineligible |\n642: | `ENTITY@Entity.xsd` / `010.010.000.020` | side-package registry | `REGISTRY_REFERENCE`, enum ineligible |\n643: | `THESAURUS@thesaurus.xsd` / `010.010.000.260` | side-package vocabulary | `VOCABULARY_REFERENCE`, enum ineligible |\n644: | `UNESCO_CODES` / `010.010.000.220` | hierarchical thematic classification | `HIERARCHICAL_CODE_REFERENCE`, enum ineligible |\n645: | `CVN_AGENCY_C` / `060.010.000.030` | unresolved manual-only reference | `UNRESOLVED_REFERENCE`, review required |\n646: | `CVN_INTERVENTION_A` | under-traced table, primary case | `UNDER_TRACED_REFERENCE`, review required |\n647: | `CVN_PRUEBA` | under-traced table, secondary case | `UNDER_TRACED_REFERENCE`, review required |\n648: | `FlexibleDatesType` | `xs:choice` date wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags |\n649: | `OfficialIdType` | `xs:choice` identifier wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags |\n650: | `EntityTypeType` | `xs:choice` entity type wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags |\n651: | `EntityNameType` | `xs:choice` entity name wrapper | `CHOICE_OBJECT_CANDIDATE` with limitation flags |\n652: \n653: Under-traced tables may not produce generated domain fields in issue `#15`\n654: unless future normalized entries reference them.\n655: \n656: ## Handoff Checklist For Issue `#15`\n657: \n658: Issue `#15` should:\n659: \n660: 1. consume `SemanticPolicyBundle`\n661: 2. avoid re-deriving auxiliary-source resolution\n662: 3. generate by `domain_shape_kind`\n663: 4. preserve `SemanticDecisionTrace`\n664: 5. honor `enum_eligibility`\n665: 6. honor `fallback_shape_kind`\n666: 7. honor wrapper policies\n667: 8. keep domain-facing names Spanish-first and normalized\n668: 9. avoid strict enums for registry, thesaurus, hierarchical, subtype-backed,\n669:    unresolved, or under-traced references\n670: 10. avoid under-traced field output unless normalized metadata later references\n671:     those tables\n672: \n673: ## Known Limitations\n674: \n675: - `Subtype_Spa.xml` lacks a strict per-table bridge such as `CVN_KNOW_A` to\n676:   subtype records.\n677: - `CVN_AGENCY_C` remains unresolved from the source package alone.\n678: - `CVN_INTERVENTION_A` and `CVN_PRUEBA` remain technically present but\n679:   under-traced.\n680: - Generated structural bindings do not enforce `xs:choice` mutual exclusivity.\n681: - Generated list defaults do not reliably enforce every `minOccurs` constraint.\n682: - Strict enum eligibility for compact `ReferenceTables.xml` tables is currently\n683:   implemented with a temporary review-required policy for representative cases\n684:   until hotfix `#7` extends the normalization-to-semantic handoff with dynamic\n685:   per-table enum evidence.\n686: - Final domain model emission remains deferred to issue `#15`.\n687: \n688: ## Adjustments Made During Implementation\n689: \n690: - The original representative inventory expected `CVN_SEX_A` to be treated as an\n691:   enum-eligible compact table and `CVN_ENTITY_TYPE` to be treated as an\n692:   open-coded reviewed table.\n693: - During implementation, that plan was corrected because the current issue `#14`\n694:   input contract does not yet expose enough dynamic `ReferenceTables.xml`\n695:   evidence to evaluate all compact enum-like tables generically.\n696: - To avoid hardcoding table-specific final behavior inside semantic policy, the\n697:   current implementation uses a temporary minimal approach for reviewed compact\n698:   examples:\n699:   - keep compact reviewed tables as `STRICT_ENUM_CANDIDATE`\n700:   - mark their `enum_eligibility` as `REVIEW_REQUIRED`\n701:   - mark their `policy_confidence` as `REQUIRES_REVIEW`\n702: - This temporary approach currently applies to representative reviewed cases such\n703:   as `CVN_SEX_A` and `CVN_ENTITY_TYPE` and is explicitly transitional rather\n704:   than final policy.\n705: - The permanent fix has been split into hotfix `#7`, documented at:\n706:   `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n707: - When hotfix `#7` is implemented, these temporary reviewed cases must be\n708:   reevaluated dynamically from typed `ReferenceTables.xml` evidence instead of\n709:   table-name-based temporary handling.\n710: \n711: ## Implementation Performed\n712: \n713: - Semantic-policy contract and resolver work is implemented under\n714:   `src/cvn_codegen/semantic_policy.py`.\n715: - The implementation includes:\n716:   - semantic policy enums and dataclasses\n717:   - default `SemanticPolicyBundle` construction\n718:   - semantic field-policy resolution from `NormalizedCodeEntry`\n719:   - base type, reference-kind, serialization-pattern, presence, and cardinality\n720:     policy resolution\n721:   - deterministic override selection and same-rank conflict detection\n722:   - override application limited to semantic-policy outputs\n723:   - Spanish-first naming helpers with ASCII-normalized identifiers\n724:   - wrapper-policy lookup and validation helpers for known `xs:choice` wrappers\n725:   - representative validation inventory for the issue `#15` handoff\n726:   - temporary compact-table review-required policy for representative enum-like\n727:     cases until hotfix `#7` supplies dynamic enum evidence\n728: - Unit tests for the semantic policy are implemented in\n729:   `tests/test_semantic_policy_unit.py`.\n730: - This document records the accepted execution plan, the reporting protocol, and\n731:   the temporary compact-table plan adjustment introduced during implementation.\n732: \n733: ## Verification\n734: \n735: - The user reported that all Task `14 / 15` tests passed after implementation.\n736: - Verification covered:\n737:   - semantic-policy construction\n738:   - base type mapping\n739:   - reference-kind and serialization-pattern mapping\n740:   - enum eligibility and temporary review-required handling\n741:   - presence and cardinality mapping\n742:   - naming policy\n743:   - override precedence and same-rank conflict behavior\n744:   - wrapper policy helpers\n745:   - representative validation inventory\n746:   - normalization and auxiliary-reference regression coverage\n747:   - full repository test suite\n748: - Commands used for issue closure should follow the current fast-test convention:\n749:   - `uv run pytest tests/test_semantic_policy_unit.py -v`\n750:   - `uv run pytest -n auto tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`\n751:   - `uv run pytest -n auto tests`\n752: \n753: ## Findings\n754: \n755: - Issue `#14` needs a typed semantic policy contract rather than ad hoc mapping\n756:   logic inside the future generator.\n757: - Raw XML, raw XSD, and generated structural classes may support validation and\n758:   trace evidence, but normalized metadata is the operative semantic input.\n759: - Override policy must change only semantic outputs, not upstream normalized\n760:   facts.\n761: - `CVN_ENTITY_TYPE` is not safe for blind strict-enum generation because its\n762:   compact controlled table has open/review behavior.\n763: - The current issue `#14` contract is sufficient for semantic-kind and\n764:   serialization-pattern policy, but not yet sufficient for dynamic strict enum\n765:   eligibility over all compact `ReferenceTables.xml` tables.\n766: - Temporary reviewed handling for `CVN_SEX_A` and `CVN_ENTITY_TYPE` is an\n767:   implementation bridge only and must be replaced by hotfix `#7`.\n768: \n769: ## Impact On Future Issues\n770: \n771: - Issue `#15` must consume `SemanticPolicyBundle` and generate concrete domain\n772:   artifacts from semantic-policy outputs rather than redefining semantic\n773:   classification.\n774: - Issue `#15` must preserve `SemanticDecisionTrace` so generated domain models\n775:   can be traced back to CVN codes, XML paths, manual references, and normalized\n776:   auxiliary-source resolution.\n777: - Issue `#16` must test semantic-policy behavior separately from generator\n778:   output behavior.\n779: - Issue `#17` must document `SemanticPolicyBundle` as the source-of-truth\n780:   handoff between normalized metadata and domain generation.\n781: \n782: ## Status\n783: \n784: - Status: completed\n\n(End of file - total 784 lines)\n</content>",
+            "title": "docs/roadmap/issues/issue-14-semantic-mapping-rules.md",
             "metadata": {
               "preview": "# Issue 14 - Define Semantic Mapping Rules And Override Policy\n\n## Summary\n\nIssue `#14` defines the deterministic semantic policy that translates enriched\nnormalized CVN metadata into domain-oriented generation decisions for issue\n`#15`.\n\nThe issue does not emit final domain models. Final domain model generation\nremains deferred to issue `#15`.\n\n## Original Goal\n\n- create deterministic type, naming, enum, multiplicity, and override rules for\n  the semantic generation layer\n\n## Original Plan\n\n1. define type-mapping rules\n2. decide enum vs string treatment for controlled tables",
               "truncated": false,
@@ -668,7 +669,6 @@
                 "truncated": false
               }
             },
-            "title": "docs/roadmap/issues/issue-14-semantic-mapping-rules.md",
             "time": {
               "start": 1781201229309,
               "end": 1781201229384
@@ -685,8 +685,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_zzupZ1wt69i44n32LSudqrIa",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -695,6 +695,7 @@
               "limit": 1000
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/development/setup.md</path>\n<type>file</type>\n<content>\n1: # Development Setup\n2: \n3: ## Prerequisites\n4: \n5: - `uv`\n6: - Python `3.14`\n7: \n8: ## Environment Setup\n9: \n10: Pin Python if needed:\n11: \n12: ```bash\n13: uv python pin 3.14\n14: ```\n15: \n16: Create and synchronize the environment:\n17: \n18: ```bash\n19: uv sync --group codegen --group testing\n20: uv pip install -e .\n21: ```\n22: \n23: The editable install is required so the `src/` layout is importable during\n24: tests and local execution.\n25: \n26: ## Dependency Groups\n27: \n28: - `codegen`: structural generation tooling, including `xsdata` and\n29:   `xsdata-pydantic`\n30: - `testing`: test dependencies, including `pytest` and `pytest-xdist` for\n31:   multicore test execution\n32: \n33: The project should use dependency groups whenever it is reasonably possible and\n34: useful to separate concerns. As a rule:\n35: \n36: - keep true runtime dependencies in `[project.dependencies]`\n37: - keep structural generation tooling in `[dependency-groups].codegen`\n38: - keep test-only tooling in `[dependency-groups].testing`\n39: \n40: Create a new dependency group when a set of tools is clearly non-runtime and has\n41: its own execution context, maintenance needs, or reproducibility constraints.\n42: \n43: ## Managing Dependencies\n44: \n45: Add a dependency:\n46: \n47: ```bash\n48: uv add <package-name>\n49: ```\n50: \n51: Add a development-only dependency group member by editing `pyproject.toml` and\n52: running:\n53: \n54: ```bash\n55: uv sync --group codegen --group testing\n56: ```\n57: \n58: When adding a new tool, prefer placing it in an existing dependency group if it\n59: belongs clearly to code generation or testing. Create a new group only when the\n60: tooling serves a separate workflow that would otherwise blur repository setup.\n61: \n62: ## Common Commands\n63: \n64: ### Structural Generation\n65: \n66: Run one target:\n67: \n68: ```bash\n69: uv run python -m cvn_codegen.xsdata_runner cvn\n70: uv run python -m cvn_codegen.xsdata_runner specification_manual\n71: uv run python -m cvn_codegen.xsdata_runner tree_model\n72: ```\n73: \n74: Run all structural targets:\n75: \n76: ```bash\n77: uv run python -m cvn_codegen.xsdata_runner all\n78: ```\n79: \n80: ### Tests\n81: \n82: Use multicore pytest for full-suite and multi-file verification:\n83: \n84: ```bash\n85: uv run pytest -n auto tests\n86: ```\n87: \n88: Use targeted single-file commands while iterating on one area:\n89: \n90: ```bash\n91: uv run pytest tests/test_xsdata_runner_unit.py -v\n92: uv run pytest tests/test_xsdata_runner_smoke.py -v\n93: ```\n94: \n95: All automated tests should live under `tests/` so the local and CI entry point\n96: remains:\n97: \n98: ```bash\n99: uv run pytest -n auto tests\n100: ```\n101: \n102: Use `uv run pytest --durations=20 tests` when investigating slow tests. Use\n103: plain non-parallel `pytest` only when debugging order-dependent or\n104: process-isolation failures.\n105: \n106: ### Parse Smoke Checks\n107: \n108: Parse `SpecificationManual.xml`:\n109: \n110: ```bash\n111: uv run python - <<'PY'\n112: from pathlib import Path\n113: from xsdata_pydantic.bindings import XmlParser\n114: from generated.specification_manual import SpecificationManual\n115: \n116: parser = XmlParser()\n117: result = parser.from_path(\n118:     Path(\"docs/CvnXML_v1.4.3_2.1_17012025/XML/SpecificationManual.xml\"),\n119:     SpecificationManual,\n120: )\n121: print(type(result).__name__)\n122: PY\n123: ```\n124: \n125: Parse `CVNTreeModel.xml` only as a known-limitation check:\n126: \n127: ```bash\n128: uv run python - <<'PY'\n129: from pathlib import Path\n130: from xsdata_pydantic.bindings import XmlParser\n131: from generated.tree_model import CvntreeModel\n132: \n133: parser = XmlParser()\n134: result = parser.from_path(\n135:     Path(\"docs/CvnXML_v1.4.3_2.1_17012025/XML/CVNTreeModel.xml\"),\n136:     CvntreeModel,\n137: )\n138: print(type(result).__name__)\n139: PY\n140: ```\n141: \n142: This currently fails because the XML canonical file diverges from its XSD. See\n143: `docs/pipeline/known_limitations.md`.\n144: \n145: ### Generic Python Execution Patterns\n146: \n147: ```bash\n148: uv run python path/to/script.py\n149: uv run python -m package.module\n150: uv run --python 3.14 python path/to/script.py\n151: ```\n152: \n153: ### Code Quality\n154: \n155: Ruff is not yet configured as a committed project baseline. When it is added,\n156: its commands should also be documented here.\n157: \n158: ## Generated Code Policy\n159: \n160: - Do not edit `src/generated/` manually\n161: - Regenerate from source XSDs instead\n162: - Keep manual logic in `src/cvn_codegen/`\n163: - Keep future domain models in `src/models/cvn/`\n\n(End of file - total 163 lines)\n</content>",
+            "title": "docs/development/setup.md",
             "metadata": {
               "preview": "# Development Setup\n\n## Prerequisites\n\n- `uv`\n- Python `3.14`\n\n## Environment Setup\n\nPin Python if needed:\n\n```bash\nuv python pin 3.14\n```\n\nCreate and synchronize the environment:\n\n```bash\nuv sync --group codegen --group testing\nuv pip install -e .",
               "truncated": false,
@@ -709,7 +710,6 @@
                 "truncated": false
               }
             },
-            "title": "docs/development/setup.md",
             "time": {
               "start": 1781201229320,
               "end": 1781201229375
@@ -726,8 +726,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_5OHX3wo8dWNtlIQdHDEQrflT",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -736,6 +736,7 @@
               "limit": 1000
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/development/code_style.md</path>\n<type>file</type>\n<content>\n1: # Code Style And Project Conventions\n2: \n3: ## Python Style\n4: \n5: ### Imports\n6: \n7: Use this order:\n8: \n9: 1. standard library\n10: 2. third-party dependencies\n11: 3. local project imports\n12: \n13: ### Naming\n14: \n15: - variables and functions: `snake_case`\n16: - classes: `PascalCase`\n17: - constants: `UPPER_SNAKE_CASE`\n18: - modules and file names: `snake_case.py`\n19: \n20: ### Typing\n21: \n22: - Use type hints whenever reasonably possible\n23: - Prefer explicit return types for public functions\n24: - Use concrete types where the contract is stable\n25: \n26: ### Documentation\n27: \n28: - Use concise docstrings for public functions and classes\n29: - Use Google-style Python docstrings for repository code\n30: - Write Python docstrings in English, even when user-facing discussion happens\n31:   in another language\n32: - Keep comments rare and only when the code is not self-explanatory\n33: - Document references to external standards when relevant\n34: \n35: ### Error Handling\n36: \n37: - Use specific exceptions where possible\n38: - Wrap external tool failures with project-specific exceptions when needed\n39: \n40: ### Logging And Console Output\n41: \n42: - Use `logging` for operational messages, progress reporting, and error\n43:   reporting inside repository code\n44: - Reserve `print` for direct console interactions, short shell examples, or\n45:   explicit user-facing terminal snippets\n46: - Define module loggers with `logging.getLogger(__name__)`\n47: - Use the logging level that matches the situation: `info` for normal progress,\n48:   `error` for controlled failures, and `exception` when a traceback should be\n49:   recorded\n50: \n51: ### String Formatting\n52: \n53: - Use f-strings for interpolated strings, for example\n54:   `f\"target '{target_name}' no reconocido\"`\n55: - Do not use old `%`-style string formatting in repository code\n56: \n57: ## Generated Code Boundaries\n58: \n59: - `src/generated/` is generated code and must not be edited manually\n60: - semantic cleanup, overrides, normalization, and domain generation belong\n61:   outside `src/generated/`\n62: - the structural layer favors fidelity over ergonomics\n63: \n64: ## Domain-Specific Conventions\n65: \n66: - Preserve CVN code traceability throughout the pipeline\n67: - Prefer Spanish academic terminology when mirroring source semantics\n68: - Use ORCID, CERIF, and JSON-oriented naming consistently when introducing\n69:   domain-facing models later in the roadmap\n70: \n71: ## Academic Project Conventions\n72: \n73: - Keep architecture decisions documented\n74: - Record limitations explicitly rather than hiding them\n75: - Prioritize reproducibility over convenience for generation workflows\n76: - Ensure future contributors can reconstruct the pipeline from repository docs\n\n(End of file - total 76 lines)\n</content>",
+            "title": "docs/development/code_style.md",
             "metadata": {
               "preview": "# Code Style And Project Conventions\n\n## Python Style\n\n### Imports\n\nUse this order:\n\n1. standard library\n2. third-party dependencies\n3. local project imports\n\n### Naming\n\n- variables and functions: `snake_case`\n- classes: `PascalCase`\n- constants: `UPPER_SNAKE_CASE`\n- modules and file names: `snake_case.py`\n\n### Typing",
               "truncated": false,
@@ -750,7 +751,6 @@
                 "truncated": false
               }
             },
-            "title": "docs/development/code_style.md",
             "time": {
               "start": 1781201229337,
               "end": 1781201229367
@@ -766,20 +766,20 @@
           "messageID": "msg_eb7ddacb50020kvCd50MUvEAjO"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 31703,
             "input": 2035,
             "output": 277,
             "reasoning": 207,
             "cache": {
-              "write": 0,
-              "read": 29184
+              "read": 29184,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7ddd6780017Ux5F4mdRfgD0h",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7ddacb50020kvCd50MUvEAjO"
@@ -788,11 +788,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201229524,
+          "completed": 1781201239416
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -804,24 +809,19 @@
           "output": 388,
           "reasoning": 13,
           "cache": {
-            "write": 0,
-            "read": 30720
+            "read": 30720,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201229524,
-          "completed": 1781201239416
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7ddd6d4002CRulXeL1PNDSGh",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7dddbf4001c42SIUnqNbqs3M",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7ddd6d4002CRulXeL1PNDSGh"
@@ -829,15 +829,15 @@
         {
           "type": "reasoning",
           "text": "**Inspecting code**\n\nI need to inspect the code, making sure everything is in order. It sounds like I should use glob to help with file pattern matching, and I’ll employ a read parallel method to handle multiple files at once. This should make the process more efficient and less time-consuming. I want to ensure I’m catching any potential issues during the inspection, so I'll double-check everything as I go along!",
-          "time": {
-            "start": 1781201231535,
-            "end": 1781201233278
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_03d73630b635bc79016a2af94f94d88191acc52d3753e0c4c6",
               "reasoningEncryptedContent": "gAAAAABqKvlRUSzR5zEI_SxQOOllPap8ZK_-P2bKjHId8e-6pe7lTe1o7isTVZZRm5S7S6ihsoSeXOQryg0wnNMU596DE4PlpLeWK3K2RcAARfbWOrbd7G6lAdmFtnBTF_vbGKMBQjqExOnd5jLuuGk2hP6L_Q9d50QZk2_sr8i4F3NkxvQ7NyT9CVaKcuhWe3I0CBzwq4ywvKVAih3_8DjWIXyyBumucUn5R5ww8jpds-TOg9avI0DJ-Pu7WUEH_pJPrMWHWm2faPc4B9yddvrmtpALoT0k4BiD0tn4eQNZw78w8BltJdCzg4d2TmfdpYXlS0_P6sUhzT_h4A7PFJtjhkpUtwES1ELaW86QPEyI1g8Ijy_ocERntAR8e6ELnHdMvOipDbfvO5a9u4aLpS6zqiRyrU8SIPcETz7oeUbMWzXo5dA44WpvZDyHmXtUuP5zms2q1X0jBmv4RnoIbKASwd3s9YqZ8FiPN2bes9Y0ATo8WjtvV_IRLCbJkpYmdA5o4daphTBoNWrZFKyfKYvW5w89ndVDQ3hkCUAK2dLQt6vzKeUVbjDLWTP59QS-nzmh096K5clBO0Czjh6U8EYu_OeanCgpy36g80AzytPdeMwy5ztJhnpcnjiCyu8L6h7e4BvixfE3ztKcvfZUdaV0pMnPIcdqyeGRNDr-8IintawFN1O9I4CR4kdnd6x67DvTwE6gGJzUbBCvq_xK7fkBGTbVKCbl3uANsgE3HnugA_IONPx47Mc80JRs6Yqd-lv7yV_dOmhBE1X9VANHCEpsDgvSHaq6ANJaHUWlA4UhV527SaP3HURfal7oTfa7ghxxt2FtVGgC1LCPDC2t4y3AiGjG8ahlDZdgWKXBbHx-wX8apRff7cMnNXMI0KyIDcnzcZI3GGfLL9mRb_P4fqPQrteQcuul88sGEWcbNXlGyGxuvPAVJotI2mBgPA1z4t_LvbrAPAvkFgNIMBi4HSNVboFsUzUdyA=="
             }
+          },
+          "time": {
+            "start": 1781201231535,
+            "end": 1781201233278
           },
           "id": "prt_eb7dddeaf0012OIOxths05qzuS",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -862,8 +862,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_Mijr2teS3ANPxmeb0BWce57o",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -872,6 +872,7 @@
               "limit": 2500
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/src/cvn_codegen/normalization_types.py</path>\n<type>file</type>\n<content>\n1: from dataclasses import dataclass, field\n2: from enum import Enum\n3: \n4: class ReferenceResolutionStatus(str, Enum):\n5:     \"\"\"Enumerate the reference resolution statuses.\"\"\"\n6: \n7:     NO_REFERENCE = \"no_reference\"\n8:     RESOLVED = \"resolved\"\n9:     UNRESOLVED = \"unresolved\"\n10:     AMBIGUOUS = \"ambiguous\"\n11: \n12: class ReferenceSourceFamily(str, Enum):\n13:     \"\"\"Enumerate the reference source families.\"\"\"\n14: \n15:     REFERENCE_TABLE = \"reference_table\"\n16:     SUBTYPE_BACKED_TABLE = \"subtype_backed_table\"\n17:     SIDE_PACKAGE_REGISTRY = \"side_package_registry\"\n18:     SIDE_PACKAGE_THESAURUS = \"side_package_thesaurus\"\n19:     UNRESOLVED_MANUAL_ONLY = \"unresolved_manual_only\"\n20: \n21: class SerializationPattern(str, Enum):\n22:     \"\"\"Enumerate the serialization patterns.\"\"\"\n23: \n24:     FILTER_VALUE = \"filter_value\"\n25:     QUALITY_MEASURE = \"quality_measure\"\n26:     SCOPE_TYPE = \"scope_type\"\n27:     EXTERNAL_PK_TYPE = \"external_pk_type\"\n28:     ENTITY_TYPE = \"entity_type\"\n29:     DEDICATION = \"dedication\"\n30:     PHYSICAL_DIMENSION_TYPE = \"physical_dimension_type\"\n31:     SUBJECT_DESCRIPTION = \"subject_description\"\n32:     SUBTYPE = \"subtype\"\n33:     SIDE_PACKAGE_REGISTRY = \"side_package_registry\"\n34:     SIDE_PACKAGE_THESAURUS = \"side_package_thesaurus\"\n35:     UNRESOLVED = \"unresolved\"\n36:     UNKNOWN_PRESENT_BUT_RESOLVED = \"unknown_present_but_resolved\"\n37: \n38: \n39: class SemanticReferenceKind(str, Enum):\n40:     \"\"\"Enumerate the semantic reference kinds.\"\"\"\n41: \n42:     COMPACT_ENUM_LIKE_TABLE = \"compact_enum_like_table\"\n43:     COMPACT_SCALE_OR_MEASURE = \"compact_scale_or_measure\"\n44:     IDENTIFIER_TYPE_TABLE = \"identifier_type_table\"\n45:     SCOPE_TABLE = \"scope_table\"\n46:     SUBTYPE_BACKED_CONTROLLED_FAMILY = \"subtype_backed_controlled_family\"\n47:     HIERARCHICAL_THEMATIC_CLASSIFICATION = \"hierarchical_thematic_classification\"\n48:     SIDE_PACKAGE_REGISTRY = \"side_package_registry\"\n49:     SIDE_PACKAGE_THESAURUS_OR_VOCABULARY = \"side_package_thesaurus_or_vocabulary\"\n50:     UNRESOLVED_MANUAL_ONLY_REFERENCE = \"unresolved_manual_only_reference\"\n51:     UNDER_TRACED_REFERENCE_TABLE = \"under_traced_reference_table\"\n52: \n53: class NormalizationMismatchKind(str, Enum):\n54:     \"\"\"Enumerate the mismatch categories recognized during normalization.\"\"\"\n55: \n56:     MANUAL_ONLY_CODE = \"manual_only_code\"\n57:     TREE_ONLY_CODE = \"tree_only_code\"\n58:     DUPLICATE_MANUAL_CODE = \"duplicate_manual_code\"\n59:     DUPLICATE_TREE_CODE = \"duplicate_tree_code\"\n60:     EMPTY_CODE = \"empty_code\"\n61:     INVALID_XML_PATH = \"invalid_xml_path\"\n62:     AMBIGUOUS_XML_PATH = \"ambiguous_xml_path\"\n63:     UNEXPECTED_TREE_ELEMENT = \"unexpected_tree_element\"\n64:     UNRESOLVED_MANUAL_REFERENCE = \"unresolved_manual_reference\"\n65:     AMBIGUOUS_AUXILIARY_RESOLUTION = \"ambiguous_auxiliary_resolution\"\n66:     MISSING_SUBTYPE_SUPPORT = \"missing_subtype_support\"\n67:     UNDER_TRACED_REFERENCE_TABLE = \"under_traced_reference_table\"\n68: \n69: \n70: @dataclass(frozen=True)\n71: class SourceTrace:\n72:     \"\"\"Store source-document traceability for normalized metadata.\n73: \n74:     Attributes:\n75:         source_file (str): Source XML file name.\n76:         xml_path (str | None): Technical XML path associated with the data.\n77:         source_code (str | None): CVN code associated with the source element.\n78:     \"\"\"\n79: \n80:     source_file: str\n81:     xml_path: str | None = None\n82:     source_code: str | None = None\n83: \n84: @dataclass(frozen=True)\n85: class ReferenceResolutionTrace:\n86:     \"\"\"Store traceability details for auxiliary-reference resolution.\"\"\"\n87: \n88:     manual_reference: str | None\n89:     resolved_from_artifact: str | None\n90:     resolution_rule: str\n91:     supporting_metadata: tuple[str, ...] = ()\n92:     manual_code: str | None = None\n93:     \n94: @dataclass(frozen=True)\n95: class ReferenceResolution:\n96:     \"\"\"Represent resolved auxiliary-reference metadata for one manual reference.\"\"\"\n97:     raw_reference: str | None\n98:     status: ReferenceResolutionStatus\n99:     source_family: ReferenceSourceFamily | None\n100:     source_artifact: str | None\n101:     resolved_name: str | None\n102:     serialization_pattern: SerializationPattern | None\n103:     semantic_kind: SemanticReferenceKind | None\n104:     is_subtype_backed: bool\n105:     subtype_metadata_present: bool | None\n106:     diagnostic_message: str | None\n107:     trace: ReferenceResolutionTrace\n108: \n109: @dataclass(frozen=True)\n110: class ManualCodeEntry:\n111:     \"\"\"Represent normalized metadata extracted from ``SpecificationManual.xml``.\n112: \n113:     Attributes:\n114:         code (str): CVN code of the manual item.\n115:         manual_name (str | None): Preferred localized item name.\n116:         manual_short_name (str | None): Preferred localized short item name.\n117:         manual_type (str | None): Manual-declared technical type.\n118:         manual_obligatory (bool | None): Whether the field is marked as\n119:             obligatory in the manual.\n120:         manual_multiplicity (bool | None): Whether the field is marked as\n121:             multiple in the manual.\n122:         manual_reference_table (str | None): Reference table assigned by the\n123:             manual.\n124:         manual_level (str | None): Hierarchical manual level when present.\n125:         manual_order (int | None): Manual display or processing order.\n126:         manual_link (str | None): Link value declared by the manual.\n127:         manual_length (int | None): Length constraint declared by the manual.\n128:         trace (SourceTrace): Traceability back to the source XML element.\n129:     \"\"\"\n130: \n131:     code: str\n132:     manual_name: str | None\n133:     manual_short_name: str | None\n134:     manual_type: str | None\n135:     manual_obligatory: bool | None\n136:     manual_multiplicity: bool | None\n137:     manual_reference_table: str | None\n138:     manual_level: str | None = None\n139:     manual_order: int | None = None\n140:     manual_link: str | None = None\n141:     manual_length: int | None = None\n142:     trace: SourceTrace = field(\n143:         default_factory=lambda: SourceTrace(source_file=\"SpecificationManual.xml\")\n144:     )\n145: \n146: \n147: @dataclass(frozen=True)\n148: class TreePathEntry:\n149:     \"\"\"Represent normalized metadata extracted from ``CVNTreeModel.xml``.\n150: \n151:     Attributes:\n152:         code (str): CVN code associated with the current tree node.\n153:         tree_cvn_item_code (str | None): Enclosing ``CVNItem`` code when\n154:             available.\n155:         tree_property_name (str | None): Technical property name.\n156:         tree_indicator_name (str | None): Technical indicator name.\n157:         tree_value (str | None): Optional ``Value`` content found in the tree.\n158:         xml_path (str): Stable XML-like path of the current tree node.\n159:         trace (SourceTrace): Traceability back to the source XML element.\n160:     \"\"\"\n161: \n162:     code: str\n163:     tree_cvn_item_code: str | None\n164:     tree_property_name: str | None\n165:     tree_indicator_name: str | None\n166:     tree_value: str | None\n167:     xml_path: str\n168:     trace: SourceTrace\n169: \n170: \n171: @dataclass(frozen=True)\n172: class NormalizedCodeEntry:\n173:     \"\"\"Aggregate normalized manual and tree metadata for one CVN code.\n174: \n175:     Attributes:\n176:         code (str): CVN code represented by this aggregate entry.\n177:         manual (ManualCodeEntry | None): Manual metadata for the code when\n178:             available.\n179:         tree_paths (tuple[TreePathEntry, ...]): Technical tree occurrences for\n180:             the code.\n181:         source_files (tuple[str, ...]): Source files contributing to the\n182:             aggregate entry.\n183:         reference_resolution (ReferenceResolution | None): Resolved auxiliary\n184:             reference metadata attached to the aggregate entry when available.\n185:     \"\"\"\n186: \n187:     code: str\n188:     manual: ManualCodeEntry | None\n189:     tree_paths: tuple[TreePathEntry, ...]\n190:     source_files: tuple[str, ...]\n191:     reference_resolution: ReferenceResolution | None = None\n192: \n193: \n194: @dataclass(frozen=True)\n195: class NormalizationMismatch:\n196:     \"\"\"Describe a detected mismatch during metadata normalization.\n197: \n198:     Attributes:\n199:         kind (NormalizationMismatchKind): Category of mismatch detected.\n200:         code (str | None): CVN code associated with the mismatch when present.\n201:         message (str): Human-readable explanation of the mismatch.\n202:         xml_path (str | None): Technical XML path associated with the mismatch\n203:             when available.\n204:     \"\"\"\n205: \n206:     kind: NormalizationMismatchKind\n207:     code: str | None\n208:     message: str\n209:     xml_path: str | None = None\n210: \n211: \n212: @dataclass(frozen=True)\n213: class NormalizationResult:\n214:     \"\"\"Store the global output of the normalization stage.\n215: \n216:     Attributes:\n217:         by_code (dict[str, NormalizedCodeEntry]): Aggregate normalized view\n218:             keyed by CVN code.\n219:         by_xml_path (dict[str, tuple[TreePathEntry, ...]]): Tree entries keyed\n220:             by technical XML path.\n221:         manual_only_codes (tuple[str, ...]): Codes found only in the\n222:             specification manual.\n223:         tree_only_codes (tuple[str, ...]): Codes found only in the tree model.\n224:         mismatches (tuple[NormalizationMismatch, ...]): Recorded normalization\n225:             mismatches.\n226:     \"\"\"\n227: \n228:     by_code: dict[str, NormalizedCodeEntry]\n229:     by_xml_path: dict[str, tuple[TreePathEntry, ...]]\n230:     manual_only_codes: tuple[str, ...]\n231:     tree_only_codes: tuple[str, ...]\n232:     mismatches: tuple[NormalizationMismatch, ...]\n\n(End of file - total 232 lines)\n</content>",
+            "title": "src/cvn_codegen/normalization_types.py",
             "metadata": {
               "preview": "from dataclasses import dataclass, field\nfrom enum import Enum\n\nclass ReferenceResolutionStatus(str, Enum):\n    \"\"\"Enumerate the reference resolution statuses.\"\"\"\n\n    NO_REFERENCE = \"no_reference\"\n    RESOLVED = \"resolved\"\n    UNRESOLVED = \"unresolved\"\n    AMBIGUOUS = \"ambiguous\"\n\nclass ReferenceSourceFamily(str, Enum):\n    \"\"\"Enumerate the reference source families.\"\"\"\n\n    REFERENCE_TABLE = \"reference_table\"\n    SUBTYPE_BACKED_TABLE = \"subtype_backed_table\"\n    SIDE_PACKAGE_REGISTRY = \"side_package_registry\"\n    SIDE_PACKAGE_THESAURUS = \"side_package_thesaurus\"\n    UNRESOLVED_MANUAL_ONLY = \"unresolved_manual_only\"\n",
               "truncated": false,
@@ -886,7 +887,6 @@
                 "truncated": false
               }
             },
-            "title": "src/cvn_codegen/normalization_types.py",
             "time": {
               "start": 1781201239033,
               "end": 1781201239200
@@ -903,8 +903,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_frEq6N3bDHqU8rMCjigmhnxS",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -913,6 +913,7 @@
               "limit": 2500
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py</path>\n<type>file</type>\n<content>\n1: from dataclasses import dataclass\n2: from pathlib import Path\n3: from xsdata_pydantic.bindings import XmlParser\n4: from generated.reference_tables.reference_tables import ReferenceTables\n5: @dataclass(frozen=True)\n6: class ReferenceTableMetadata:\n7:     \"\"\"Store normalization-grade metadata for one reference table.\"\"\"\n8:     table_name: str\n9:     version: str | None\n10:     ancestor_table: str | None\n11:     source: str | None\n12:     xml_data_type: str | None\n13:     xml_property: str | None\n14:     xml_indicator: str | None\n15:     item_count: int\n16:     has_hierarchy: bool\n17:     has_delegate: bool\n18: def load_reference_tables_xml(reference_tables_path: Path) -> ReferenceTables:\n19:     \"\"\"Load and parse the canonical ``ReferenceTables.xml`` file.\n20:     Args:\n21:         reference_tables_path (Path): Path to the canonical\n22:             ``ReferenceTables.xml`` file.\n23:     Returns:\n24:         ReferenceTables: Parsed reference-tables root object.\n25:     Raises:\n26:         ValueError: If ``reference_tables_path`` is not a ``Path``.\n27:         FileNotFoundError: If the target XML file does not exist.\n28:     \"\"\"\n29:     if not isinstance(reference_tables_path, Path):\n30:         raise ValueError(\n31:             f\"reference_tables_path must be a Path object, got {type(reference_tables_path)} instead.\"\n32:         )\n33:     if not reference_tables_path.is_file():\n34:         raise FileNotFoundError(\n35:             f\"Reference tables file not found at path: {reference_tables_path}\"\n36:         )\n37:     xml_parser = XmlParser()\n38:     reference_tables = xml_parser.from_path(reference_tables_path, ReferenceTables)\n39:     return reference_tables\n40: def build_reference_table_metadata(\n41:     table: ReferenceTables.Table,\n42: ) -> ReferenceTableMetadata:\n43:     \"\"\"Build normalization-grade metadata for one reference table.\n44:     Args:\n45:         table (ReferenceTables.Table): Parsed reference-table entry from the\n46:             structural binding.\n47:     Returns:\n48:         ReferenceTableMetadata: Reduced metadata view used by the normalization\n49:         resolution layer.\n50:     Raises:\n51:         ValueError: If the table name is empty after normalization.\n52:     \"\"\"\n53:     table_name = str(table.name).strip()\n54:     if not table_name:\n55:         raise ValueError(\"Reference table name is empty or whitespace.\")\n56:     # Hierarchy and delegation matter later for semantic-kind classification.\n57:     has_hierarchy = any(item.antecesor_code is not None for item in table.item)\n58:     has_delegate = any(item.delegate is not None for item in table.item)\n59:     return ReferenceTableMetadata(\n60:         table_name=table_name,\n61:         version=None if table.version is None else str(table.version).strip(),\n62:         ancestor_table=(\n63:             None\n64:             if table.antecesor_table is None\n65:             else str(table.antecesor_table).strip()\n66:         ),\n67:         source=None if table.source is None else str(table.source).strip(),\n68:         xml_data_type=(\n69:             None if table.xmldata_type is None else str(table.xmldata_type).strip()\n70:         ),\n71:         xml_property=(\n72:             None if table.xmlproperty is None else str(table.xmlproperty).strip()\n73:         ),\n74:         xml_indicator=(\n75:             None if table.xmlindicator is None else str(table.xmlindicator).strip()\n76:         ),\n77:         item_count=len(table.item),\n78:         has_hierarchy=has_hierarchy,\n79:         has_delegate=has_delegate,\n80:     )\n81: def load_reference_tables_metadata(\n82:     reference_tables_path: Path,\n83: ) -> dict[str, ReferenceTableMetadata]:\n84:     \"\"\"Load and index normalization-grade metadata for all reference tables.\n85:     Args:\n86:         reference_tables_path (Path): Path to the canonical\n87:             ``ReferenceTables.xml`` file.\n88:     Returns:\n89:         dict[str, ReferenceTableMetadata]: Reference-table metadata indexed by\n90:         table name.\n91:     Raises:\n92:         ValueError: If duplicate table names are found in the canonical source.\n93:     \"\"\"\n94:     reference_tables = load_reference_tables_xml(reference_tables_path)\n95:     metadata_by_name: dict[str, ReferenceTableMetadata] = {}\n96:     for table in reference_tables.table:\n97:         metadata = build_reference_table_metadata(table)\n98:         if metadata.table_name in metadata_by_name:\n99:             raise ValueError(\n100:                 f\"Duplicate reference table name '{metadata.table_name}' found in ReferenceTables.xml.\"\n101:             )\n102:         metadata_by_name[metadata.table_name] = metadata\n103:     return metadata_by_name\n\n(End of file - total 103 lines)\n</content>",
+            "title": "src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py",
             "metadata": {
               "preview": "from dataclasses import dataclass\nfrom pathlib import Path\nfrom xsdata_pydantic.bindings import XmlParser\nfrom generated.reference_tables.reference_tables import ReferenceTables\n@dataclass(frozen=True)\nclass ReferenceTableMetadata:\n    \"\"\"Store normalization-grade metadata for one reference table.\"\"\"\n    table_name: str\n    version: str | None\n    ancestor_table: str | None\n    source: str | None\n    xml_data_type: str | None\n    xml_property: str | None\n    xml_indicator: str | None\n    item_count: int\n    has_hierarchy: bool\n    has_delegate: bool\ndef load_reference_tables_xml(reference_tables_path: Path) -> ReferenceTables:\n    \"\"\"Load and parse the canonical ``ReferenceTables.xml`` file.\n    Args:",
               "truncated": false,
@@ -927,7 +928,6 @@
                 "truncated": false
               }
             },
-            "title": "src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py",
             "time": {
               "start": 1781201239049,
               "end": 1781201239228
@@ -944,8 +944,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_af1r1TvoLj49gMZvpUvCfOxS",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -954,6 +954,7 @@
               "limit": 2500
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/src/cvn_codegen/auxiliary_sources/reference_resolution.py</path>\n<type>file</type>\n<content>\n1: from cvn_codegen.auxiliary_sources.bundle import AuxiliarySourceBundle\n2: from cvn_codegen.auxiliary_sources.reference_tables_metadata import (\n3:     ReferenceTableMetadata,\n4: )\n5: from cvn_codegen.normalization_types import (\n6:     ReferenceResolution,\n7:     ReferenceResolutionStatus,\n8:     ReferenceResolutionTrace,\n9:     ReferenceSourceFamily,\n10:     SemanticReferenceKind,\n11:     SerializationPattern\n12: )\n13: UNRESOLVED_MANUAL_REFERENCE_NAMES = frozenset({\"CVN_AGENCY_C\"})\n14: def _normalize_reference_name(raw_reference: str | None) -> str | None:\n15:     \"\"\"Normalize a manual reference value for deterministic resolution.\n16:     Args:\n17:         raw_reference (str | None): Raw manual reference value extracted from\n18:             ``SpecificationManual.xml``.\n19:     Returns:\n20:         str | None: Stripped reference value, or ``None`` when the input is\n21:         missing or empty after normalization.\n22:     \"\"\"\n23:     if raw_reference is None:\n24:         return None\n25:     normalized_reference = raw_reference.strip()\n26:     if not normalized_reference:\n27:         return None\n28:     return normalized_reference\n29: def _is_subtype_backed_table(\n30:     table_metadata: ReferenceTableMetadata | None,\n31: ) -> bool:\n32:     \"\"\"Check whether resolved reference-table metadata is subtype-backed.\n33:     Args:\n34:         table_metadata (ReferenceTableMetadata | None): Resolved reference-table\n35:             metadata when available.\n36:     Returns:\n37:         bool: ``True`` when the resolved table uses\n38:         ``Subtype@Subtypes.xsd``, otherwise ``False``.\n39:     \"\"\"\n40:     if table_metadata is None:\n41:         return False\n42:     return table_metadata.xml_data_type == \"Subtype@Subtypes.xsd\"\n43: def _has_subtype_support(\n44:     auxiliary_bundle: AuxiliarySourceBundle,\n45: ) -> bool:\n46:     \"\"\"Check whether subtype catalog metadata is available.\n47:     Args:\n48:         auxiliary_bundle (AuxiliarySourceBundle): Aggregated auxiliary-source\n49:             metadata bundle.\n50:     Returns:\n51:         bool: ``True`` when the subtype catalog was loaded and contains entries,\n52:         otherwise ``False``.\n53:     \"\"\"\n54:     return bool(auxiliary_bundle.subtypes_by_source_code)\n55:     return normalized_reference in auxiliary_bundle.subtypes_by_source_code\n56: def _build_resolution_trace(\n57:     manual_reference: str | None,\n58:     resolved_from_artifact: str | None,\n59:     resolution_rule: str,\n60:     supporting_metadata: tuple[str, ...] = (),\n61:     manual_code: str | None = None,\n62: ) -> ReferenceResolutionTrace:\n63:     \"\"\"Build traceability metadata for auxiliary-reference resolution.\n64:     Args:\n65:         manual_reference (str | None): Raw manual reference value before\n66:             resolution.\n67:         resolved_from_artifact (str | None): Canonical source artifact used to\n68:             resolve the reference when available.\n69:         resolution_rule (str): Short rule label describing how the resolution\n70:             was obtained.\n71:         supporting_metadata (tuple[str, ...]): Supporting technical metadata\n72:             captured during resolution. Defaults to ``()``.\n73:         manual_code (str | None): CVN manual code associated with the resolved\n74:             reference when available.\n75:     Returns:\n76:         ReferenceResolutionTrace: Resolution-trace record attached to the final\n77:         normalized auxiliary-reference result.\n78:     \"\"\"\n79:     return ReferenceResolutionTrace(\n80:         manual_reference=manual_reference,\n81:         resolved_from_artifact=resolved_from_artifact,\n82:         resolution_rule=resolution_rule,\n83:         supporting_metadata=supporting_metadata,\n84:         manual_code=manual_code,\n85:     )\n86: \n87: def classify_serialization_pattern(\n88:     raw_reference: str | None,\n89:     source_family: ReferenceSourceFamily | None,\n90:     table_metadata: ReferenceTableMetadata | None,\n91: ) -> SerializationPattern | None:\n92:     \"\"\"Classify the serialization pattern for one resolved manual reference.\n93:     Args:\n94:         raw_reference (str | None): Raw manual reference value before\n95:             normalization.\n96:         source_family (ReferenceSourceFamily | None): Resolved source family for\n97:             the manual reference when available.\n98:         table_metadata (ReferenceTableMetadata | None): Resolved\n99:             reference-table metadata when the reference points to\n100:             ``ReferenceTables.xml``.\n101:     Returns:\n102:         SerializationPattern | None: Classified serialization pattern for the\n103:         resolved reference, or ``None`` when the manual field has no reference.\n104:     \"\"\"\n105:     normalized_reference = _normalize_reference_name(raw_reference)\n106:     if normalized_reference is None:\n107:         return None\n108:     if source_family == ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY:\n109:         return SerializationPattern.SIDE_PACKAGE_REGISTRY\n110:     if source_family == ReferenceSourceFamily.SIDE_PACKAGE_THESAURUS:\n111:         return SerializationPattern.SIDE_PACKAGE_THESAURUS\n112:     if source_family == ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY:\n113:         return SerializationPattern.UNRESOLVED\n114:     if table_metadata is None:\n115:         return SerializationPattern.UNKNOWN_PRESENT_BUT_RESOLVED\n116:     if _is_subtype_backed_table(table_metadata):\n117:         return SerializationPattern.SUBTYPE\n118:     if (\n119:         table_metadata.xml_property == \"Filter\"\n120:         and table_metadata.xml_indicator == \"Value\"\n121:     ):\n122:         return SerializationPattern.FILTER_VALUE\n123:     if (\n124:         table_metadata.xml_property == \"Quality\"\n125:         and table_metadata.xml_indicator == \"Measure\"\n126:     ):\n127:         return SerializationPattern.QUALITY_MEASURE\n128:     if (\n129:         table_metadata.xml_property == \"Scope\"\n130:         and table_metadata.xml_indicator == \"Type\"\n131:     ):\n132:         return SerializationPattern.SCOPE_TYPE\n133:     if (\n134:         table_metadata.xml_property == \"ExternalPK\"\n135:         and table_metadata.xml_indicator == \"Type\"\n136:     ):\n137:         return SerializationPattern.EXTERNAL_PK_TYPE\n138:     if (\n139:         table_metadata.xml_property == \"Entity\"\n140:         and table_metadata.xml_indicator == \"Type\"\n141:     ):\n142:         return SerializationPattern.ENTITY_TYPE\n143:     if (\n144:         table_metadata.xml_property == \"Dedication\"\n145:         and table_metadata.xml_indicator is None\n146:     ):\n147:         return SerializationPattern.DEDICATION\n148:     if (\n149:         table_metadata.xml_property == \"PhysicalDimension\"\n150:         and table_metadata.xml_indicator == \"Type\"\n151:     ):\n152:         return SerializationPattern.PHYSICAL_DIMENSION_TYPE\n153:     if (\n154:         table_metadata.xml_property == \"Subject\"\n155:         and table_metadata.xml_indicator == \"Description\"\n156:     ):\n157:         return SerializationPattern.SUBJECT_DESCRIPTION\n158:     return SerializationPattern.UNKNOWN_PRESENT_BUT_RESOLVED\n159: \n160: def classify_semantic_reference_kind(\n161:     raw_reference: str | None,\n162:     source_family: ReferenceSourceFamily | None,\n163:     serialization_pattern: SerializationPattern | None,\n164:     table_metadata: ReferenceTableMetadata | None,\n165:     under_traced_table_names: frozenset[str],\n166: ) -> SemanticReferenceKind | None:\n167:     \"\"\"Classify the semantic reference kind for one resolved manual reference.\n168:     Args:\n169:         raw_reference (str | None): Raw manual reference value before\n170:             normalization.\n171:         source_family (ReferenceSourceFamily | None): Resolved source family for\n172:             the manual reference when available.\n173:         serialization_pattern (SerializationPattern | None): Classified\n174:             serialization pattern for the resolved reference.\n175:         table_metadata (ReferenceTableMetadata | None): Resolved\n176:             reference-table metadata when the reference points to\n177:             ``ReferenceTables.xml``.\n178:         under_traced_table_names (frozenset[str]): Table names that are\n179:             technically present but currently under-traced in repository\n180:             documentation.\n181:     Returns:\n182:         SemanticReferenceKind | None: Classified semantic kind for the resolved\n183:         reference, or ``None`` when the manual field has no reference.\n184:     \"\"\"\n185:     normalized_reference = _normalize_reference_name(raw_reference)\n186:     if normalized_reference is None:\n187:         return None\n188:     if normalized_reference in under_traced_table_names:\n189:         return SemanticReferenceKind.UNDER_TRACED_REFERENCE_TABLE\n190:     if source_family == ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY:\n191:         return SemanticReferenceKind.SIDE_PACKAGE_REGISTRY\n192:     if source_family == ReferenceSourceFamily.SIDE_PACKAGE_THESAURUS:\n193:         return SemanticReferenceKind.SIDE_PACKAGE_THESAURUS_OR_VOCABULARY\n194:     if source_family == ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY:\n195:         return SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE\n196:     if serialization_pattern == SerializationPattern.SUBTYPE:\n197:         return SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY\n198:     if serialization_pattern == SerializationPattern.QUALITY_MEASURE:\n199:         return SemanticReferenceKind.COMPACT_SCALE_OR_MEASURE\n200:     if serialization_pattern == SerializationPattern.EXTERNAL_PK_TYPE:\n201:         return SemanticReferenceKind.IDENTIFIER_TYPE_TABLE\n202:     if serialization_pattern == SerializationPattern.SCOPE_TYPE:\n203:         return SemanticReferenceKind.SCOPE_TABLE\n204:     if serialization_pattern == SerializationPattern.SUBJECT_DESCRIPTION:\n205:         return SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION\n206:     if normalized_reference == \"UNESCO_CODES\":\n207:         return SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION\n208:     if table_metadata is not None and table_metadata.has_hierarchy:\n209:         return SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION\n210:     return SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE\n211: \n212: \n213: def resolve_manual_reference(\n214:     raw_reference: str | None,\n215:     auxiliary_bundle: AuxiliarySourceBundle,\n216:     manual_code: str | None = None,\n217: ) -> ReferenceResolution:\n218:     \"\"\"Resolve one manual reference against canonical auxiliary source metadata.\n219:     Args:\n220:         raw_reference (str | None): Raw manual reference value extracted from\n221:             ``SpecificationManual.xml``.\n222:         auxiliary_bundle (AuxiliarySourceBundle): Aggregated auxiliary-source\n223:             metadata bundle used during normalization.\n224:         manual_code (str | None): CVN manual code associated with the reference\n225:             when available.\n226:     Returns:\n227:         ReferenceResolution: Deterministic auxiliary-reference resolution result\n228:         for the manual reference.\n229:     \"\"\"\n230:     normalized_reference = _normalize_reference_name(raw_reference)\n231:     if normalized_reference is None:\n232:         return ReferenceResolution(\n233:             raw_reference=raw_reference,\n234:             status=ReferenceResolutionStatus.NO_REFERENCE,\n235:             source_family=None,\n236:             source_artifact=None,\n237:             resolved_name=None,\n238:             serialization_pattern=None,\n239:             semantic_kind=None,\n240:             is_subtype_backed=False,\n241:             subtype_metadata_present=None,\n242:             diagnostic_message=None,\n243:             trace=_build_resolution_trace(\n244:                 manual_reference=raw_reference,\n245:                 resolved_from_artifact=None,\n246:                 resolution_rule=\"no_reference\",\n247:                 manual_code=manual_code,\n248:             ),\n249:         )\n250:     if normalized_reference == \"ENTITY@Entity.xsd\":\n251:         serialization_pattern = classify_serialization_pattern(\n252:             raw_reference=normalized_reference,\n253:             source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,\n254:             table_metadata=None,\n255:         )\n256:         semantic_kind = classify_semantic_reference_kind(\n257:             raw_reference=normalized_reference,\n258:             source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,\n259:             serialization_pattern=serialization_pattern,\n260:             table_metadata=None,\n261:             under_traced_table_names=auxiliary_bundle.under_traced_table_names,\n262:         )\n263:         return ReferenceResolution(\n264:             raw_reference=raw_reference,\n265:             status=ReferenceResolutionStatus.RESOLVED,\n266:             source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,\n267:             source_artifact=(\n268:                 None\n269:                 if auxiliary_bundle.entity_catalog is None\n270:                 else auxiliary_bundle.entity_catalog.source_artifact\n271:             ),\n272:             resolved_name=normalized_reference,\n273:             serialization_pattern=serialization_pattern,\n274:             semantic_kind=semantic_kind,\n275:             is_subtype_backed=False,\n276:             subtype_metadata_present=None,\n277:             diagnostic_message=None,\n278:             trace=_build_resolution_trace(\n279:                 manual_reference=raw_reference,\n280:                 resolved_from_artifact=(\n281:                     None\n282:                     if auxiliary_bundle.entity_catalog is None\n283:                     else auxiliary_bundle.entity_catalog.source_artifact\n284:                 ),\n285:                 resolution_rule=\"explicit_side_package_entity\",\n286:                 manual_code=manual_code,\n287:             ),\n288:         )\n289:     if normalized_reference == \"THESAURUS@thesaurus.xsd\":\n290:         serialization_pattern = classify_serialization_pattern(\n291:             raw_reference=normalized_reference,\n292:             source_family=ReferenceSourceFamily.SIDE_PACKAGE_THESAURUS,\n293:             table_metadata=None,\n294:         )\n295:         semantic_kind = classify_semantic_reference_kind(\n296:             raw_reference=normalized_reference,\n297:             source_family=ReferenceSourceFamily.SIDE_PACKAGE_THESAURUS,\n298:             serialization_pattern=serialization_pattern,\n299:             table_metadata=None,\n300:             under_traced_table_names=auxiliary_bundle.under_traced_table_names,\n301:         )\n302:         return ReferenceResolution(\n303:             raw_reference=raw_reference,\n304:             status=ReferenceResolutionStatus.RESOLVED,\n305:             source_family=ReferenceSourceFamily.SIDE_PACKAGE_THESAURUS,\n306:             source_artifact=(\n307:                 None\n308:                 if auxiliary_bundle.thesaurus_catalog is None\n309:                 else auxiliary_bundle.thesaurus_catalog.source_artifact\n310:             ),\n311:             resolved_name=normalized_reference,\n312:             serialization_pattern=serialization_pattern,\n313:             semantic_kind=semantic_kind,\n314:             is_subtype_backed=False,\n315:             subtype_metadata_present=None,\n316:             diagnostic_message=None,\n317:             trace=_build_resolution_trace(\n318:                 manual_reference=raw_reference,\n319:                 resolved_from_artifact=(\n320:                     None\n321:                     if auxiliary_bundle.thesaurus_catalog is None\n322:                     else auxiliary_bundle.thesaurus_catalog.source_artifact\n323:                 ),\n324:                 resolution_rule=\"explicit_side_package_thesaurus\",\n325:                 manual_code=manual_code,\n326:             ),\n327:         )\n328:     table_metadata = auxiliary_bundle.reference_tables_by_name.get(normalized_reference)\n329:     if table_metadata is not None:\n330:         is_subtype_backed = _is_subtype_backed_table(table_metadata)\n331:         subtype_metadata_present = None\n332:         if is_subtype_backed:\n333:             subtype_metadata_present = _has_subtype_support(\n334:                 auxiliary_bundle=auxiliary_bundle,\n335:             )\n336:         source_family = ReferenceSourceFamily.REFERENCE_TABLE\n337:         if is_subtype_backed:\n338:             source_family = ReferenceSourceFamily.SUBTYPE_BACKED_TABLE\n339:         serialization_pattern = classify_serialization_pattern(\n340:             raw_reference=normalized_reference,\n341:             source_family=source_family,\n342:             table_metadata=table_metadata,\n343:         )\n344:         semantic_kind = classify_semantic_reference_kind(\n345:             raw_reference=normalized_reference,\n346:             source_family=source_family,\n347:             serialization_pattern=serialization_pattern,\n348:             table_metadata=table_metadata,\n349:             under_traced_table_names=auxiliary_bundle.under_traced_table_names,\n350:         )\n351:         supporting_metadata = tuple(\n352:             metadata_value\n353:             for metadata_value in (\n354:                 table_metadata.xml_data_type,\n355:                 table_metadata.xml_property,\n356:                 table_metadata.xml_indicator,\n357:             )\n358:             if metadata_value is not None\n359:         )\n360:         diagnostic_message = None\n361:         if (\n362:             semantic_kind == SemanticReferenceKind.UNDER_TRACED_REFERENCE_TABLE\n363:         ):\n364:             diagnostic_message = (\n365:                 f\"Reference table '{normalized_reference}' is technically present \"\n366:                 \"but currently under-traced in repository documentation.\"\n367:             )\n368:         elif is_subtype_backed and subtype_metadata_present is False:\n369:             diagnostic_message = (\n370:                 f\"Reference table '{normalized_reference}' is subtype-backed but \"\n371:                 \"no matching subtype metadata was found.\"\n372:             )\n373:         return ReferenceResolution(\n374:             raw_reference=raw_reference,\n375:             status=ReferenceResolutionStatus.RESOLVED,\n376:             source_family=source_family,\n377:             source_artifact=\"ReferenceTables.xml\",\n378:             resolved_name=normalized_reference,\n379:             serialization_pattern=serialization_pattern,\n380:             semantic_kind=semantic_kind,\n381:             is_subtype_backed=is_subtype_backed,\n382:             subtype_metadata_present=subtype_metadata_present,\n383:             diagnostic_message=diagnostic_message,\n384:             trace=_build_resolution_trace(\n385:                 manual_reference=raw_reference,\n386:                 resolved_from_artifact=\"ReferenceTables.xml\",\n387:                 resolution_rule=\"reference_tables_exact_match\",\n388:                 supporting_metadata=supporting_metadata,\n389:                 manual_code=manual_code,\n390:             ),\n391:         )\n392:     diagnostic_message = None\n393:     if normalized_reference in UNRESOLVED_MANUAL_REFERENCE_NAMES:\n394:         diagnostic_message = (\n395:             f\"Manual reference '{normalized_reference}' does not resolve to \"\n396:             \"ReferenceTables.xml or a supported side-package artifact.\"\n397:         )\n398:     serialization_pattern = classify_serialization_pattern(\n399:         raw_reference=normalized_reference,\n400:         source_family=ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY,\n401:         table_metadata=None,\n402:     )\n403:     semantic_kind = classify_semantic_reference_kind(\n404:         raw_reference=normalized_reference,\n405:         source_family=ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY,\n406:         serialization_pattern=serialization_pattern,\n407:         table_metadata=None,\n408:         under_traced_table_names=auxiliary_bundle.under_traced_table_names,\n409:     )\n410:     return ReferenceResolution(\n411:         raw_reference=raw_reference,\n412:         status=ReferenceResolutionStatus.UNRESOLVED,\n413:         source_family=ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY,\n414:         source_artifact=None,\n415:         resolved_name=normalized_reference,\n416:         serialization_pattern=serialization_pattern,\n417:         semantic_kind=semantic_kind,\n418:         is_subtype_backed=False,\n419:         subtype_metadata_present=None,\n420:         diagnostic_message=diagnostic_message,\n421:         trace=_build_resolution_trace(\n422:             manual_reference=raw_reference,\n423:             resolved_from_artifact=None,\n424:             resolution_rule=\"unresolved_manual_reference\",\n425:             manual_code=manual_code,\n426:         ),\n427:     )\n\n(End of file - total 427 lines)\n</content>",
+            "title": "src/cvn_codegen/auxiliary_sources/reference_resolution.py",
             "metadata": {
               "preview": "from cvn_codegen.auxiliary_sources.bundle import AuxiliarySourceBundle\nfrom cvn_codegen.auxiliary_sources.reference_tables_metadata import (\n    ReferenceTableMetadata,\n)\nfrom cvn_codegen.normalization_types import (\n    ReferenceResolution,\n    ReferenceResolutionStatus,\n    ReferenceResolutionTrace,\n    ReferenceSourceFamily,\n    SemanticReferenceKind,\n    SerializationPattern\n)\nUNRESOLVED_MANUAL_REFERENCE_NAMES = frozenset({\"CVN_AGENCY_C\"})\ndef _normalize_reference_name(raw_reference: str | None) -> str | None:\n    \"\"\"Normalize a manual reference value for deterministic resolution.\n    Args:\n        raw_reference (str | None): Raw manual reference value extracted from\n            ``SpecificationManual.xml``.\n    Returns:\n        str | None: Stripped reference value, or ``None`` when the input is",
               "truncated": false,
@@ -968,7 +969,6 @@
                 "truncated": false
               }
             },
-            "title": "src/cvn_codegen/auxiliary_sources/reference_resolution.py",
             "time": {
               "start": 1781201239069,
               "end": 1781201239233
@@ -985,8 +985,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_pjNkMdjzXF091Z89Pr8joo1x",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -995,6 +995,7 @@
               "limit": 3000
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/src/cvn_codegen/semantic_policy.py</path>\n<type>file</type>\n<content>\n1: from dataclasses import dataclass\n2: from enum import Enum\n3: \n4: \n5: from cvn_codegen.normalization_types import (\n6:     NormalizedCodeEntry,\n7:     SemanticReferenceKind,\n8:     SerializationPattern,\n9: )\n10: \n11: PRESERVED_ACRONYMS = frozenset(\n12:     {\n13:         \"cvn\",\n14:         \"unesco\",\n15:         \"orcid\",\n16:         \"doi\",\n17:         \"isbn\",\n18:         \"issn\",\n19:         \"h\",\n20:     }\n21: )\n22: \n23: TEMPORARY_REVIEW_REQUIRED_REFERENCES = frozenset(\n24:     {\n25:         \"CVN_SEX_A\",\n26:         \"CVN_ENTITY_TYPE\",\n27:     }\n28: )\n29: \n30: WRAPPER_AUTO_APPLICATION_LIMITATION = (\n31:     \"NormalizedCodeEntry does not expose structural wrapper type names yet; \"\n32:     \"wrapper policy is currently validated by wrapper-name cases and not \"\n33:     \"automatically attached to field policies.\"\n34: )\n35: \n36: class SemanticBaseKind(str, Enum):\n37:     \"\"\"Classify the semantic base kind inferred from normalized manual metadata.\"\"\"\n38: \n39:     TEXT = \"text\"\n40:     CONTROLLED_REFERENCE = \"controlled_reference\"\n41:     DATE_LIKE = \"date_like\"\n42:     DECIMAL_NUMBER = \"decimal_number\"\n43:     BOOLEAN = \"boolean\"\n44:     DURATION_LIKE = \"duration_like\"\n45:     UNKNOWN = \"unknown\"\n46: \n47: class WrapperPolicyKind(str, Enum):\n48:     \"\"\"Classify how structural XML wrapper types should be handled semantically.\"\"\"\n49: \n50:     COLLAPSE = \"collapse\"\n51:     VALUE_OBJECT_CANDIDATE = \"value_object_candidate\"\n52:     CHOICE_OBJECT_CANDIDATE = \"choice_object_candidate\"\n53:     PRESERVE_STRUCTURAL_TRACE = \"preserve_structural_trace\"\n54: \n55: class PresenceKind(str, Enum):\n56:     \"\"\"Classify semantic field presence.\"\"\"\n57: \n58:     REQUIRED = \"required\"\n59:     OPTIONAL = \"optional\"\n60:     UNKNOWN = \"unknown\"\n61: \n62: class CardinalityKind(str, Enum):\n63:     \"\"\"Classify semantic field cardinality.\"\"\"\n64: \n65:     SINGLE = \"single\"\n66:     REPEATED = \"repeated\"\n67:     UNKNOWN = \"unknown\"\n68: \n69: class StructuralLimitationFlag(str, Enum):\n70:     \"\"\"Record structural limitations that semantic policy must preserve.\"\"\"\n71: \n72:     CHOICE_NOT_ENFORCED = \"choice_not_enforced\"\n73:     LIST_MIN_OCCURS_WEAK = \"list_min_occurs_weak\"\n74:     OBJECT_TYPED_ATTRIBUTE = \"object_typed_attribute\"\n75:     WRAPPER_ERGONOMICS = \"wrapper_ergonomics\"\n76: \n77: class DomainShapeKind(str, Enum):\n78:     \"\"\"Classify intended domain-facing representation shape.\"\"\"\n79: \n80:     PLAIN_VALUE = \"plain_value\"\n81:     STRICT_ENUM_CANDIDATE = \"strict_enum_candidate\"\n82:     OPEN_CODED_VALUE = \"open_coded_value\"\n83:     MEASURE_OR_SCALE_VALUE = \"measure_or_scale_value\"\n84:     IDENTIFIER_REFERENCE = \"identifier_reference\"\n85:     SCOPE_REFERENCE = \"scope_reference\"\n86:     SUBTYPE_BACKED_VALUE = \"subtype_backed_value\"\n87:     HIERARCHICAL_CODE_REFERENCE = \"hierarchical_code_reference\"\n88:     REGISTRY_REFERENCE = \"registry_reference\"\n89:     VOCABULARY_REFERENCE = \"vocabulary_reference\"\n90:     UNRESOLVED_REFERENCE = \"unresolved_reference\"\n91:     UNDER_TRACED_REFERENCE = \"under_traced_reference\"\n92: \n93: class PolicyConfidence(str, Enum):\n94:     \"\"\"Classify confidence in a semantic policy decision.\"\"\"\n95: \n96:     HIGH = \"high\"\n97:     MEDIUM = \"medium\"\n98:     LOW = \"low\"\n99:     REQUIRES_REVIEW = \"requires_review\"\n100: \n101: class EnumEligibility(str, Enum):\n102:     \"\"\"Classify whether a controlled reference may become a strict enum.\"\"\"\n103: \n104:     ELIGIBLE = \"eligible\"\n105:     INELIGIBLE = \"ineligible\"\n106:     REVIEW_REQUIRED = \"review_required\"\n107: \n108: \n109: @dataclass(frozen=True)\n110: class PolicyMetadata:\n111:     \"\"\"Describe the semantic policy bundle version and scope.\"\"\"\n112: \n113:     policy_name: str\n114:     policy_version: str\n115:     source_issue: str\n116:     notes: tuple[str, ...] = ()\n117: \n118: @dataclass(frozen=True)\n119: class SemanticDecisionTrace:\n120:     \"\"\"Preserve traceability for one semantic policy decision.\"\"\"\n121: \n122:     code: str\n123:     xml_paths: tuple[str, ...]\n124:     manual_reference_table: str | None\n125:     reference_source_family: str | None\n126:     reference_source_artifact: str | None\n127:     serialization_pattern: SerializationPattern | None\n128:     semantic_reference_kind: SemanticReferenceKind | None\n129:     applied_rules: tuple[str, ...]\n130:     diagnostics: tuple[str, ...] = ()\n131: \n132: @dataclass(frozen=True)\n133: class BaseTypePolicy:\n134:     \"\"\"Map one normalized manual type to a semantic base kind.\"\"\"\n135: \n136:     manual_type: str | None\n137:     base_kind: SemanticBaseKind\n138:     confidence: PolicyConfidence\n139:     notes: tuple[str, ...] = ()\n140: \n141: @dataclass(frozen=True)\n142: class ReferenceKindPolicy:\n143:     \"\"\"Map one normalized reference kind to a domain-shape decision.\"\"\"\n144: \n145:     semantic_reference_kind: SemanticReferenceKind\n146:     domain_shape_kind: DomainShapeKind\n147:     fallback_shape_kind: DomainShapeKind\n148:     enum_eligibility: EnumEligibility\n149:     confidence: PolicyConfidence\n150:     notes: tuple[str, ...] = ()\n151: \n152: @dataclass(frozen=True)\n153: class NamingPolicy:\n154:     \"\"\"Describe domain-facing naming decisions for one normalized entry.\"\"\"\n155: \n156:     normalized_field_name: str\n157:     normalized_class_name: str | None\n158:     naming_confidence: PolicyConfidence\n159:     source_label: str | None\n160:     notes: tuple[str, ...] = ()\n161: \n162: @dataclass(frozen=True)\n163: class MultiplicityPolicy:\n164:     \"\"\"Describe semantic presence and cardinality for one normalized entry.\"\"\"\n165: \n166:     presence_kind: PresenceKind\n167:     cardinality_kind: CardinalityKind\n168:     confidence: PolicyConfidence\n169:     notes: tuple[str, ...] = ()\n170: \n171: @dataclass(frozen=True)\n172: class ChoiceWrapperPolicy:\n173:     \"\"\"Describe semantic handling for one structural wrapper type.\"\"\"\n174: \n175:     wrapper_name: str\n176:     wrapper_policy_kind: WrapperPolicyKind\n177:     structural_limitation_flags: tuple[StructuralLimitationFlag, ...]\n178:     confidence: PolicyConfidence\n179:     notes: tuple[str, ...] = ()\n180: \n181: @dataclass(frozen=True)\n182: class OverrideRule:\n183:     \"\"\"Represent one explicit semantic-policy override.\"\"\"\n184: \n185:     rule_id: str\n186:     target_code: str | None = None\n187:     target_xml_path: str | None = None\n188:     target_semantic_reference_kind: SemanticReferenceKind | None = None\n189:     target_serialization_pattern: SerializationPattern | None = None\n190:     domain_shape_kind: DomainShapeKind | None = None\n191:     fallback_shape_kind: DomainShapeKind | None = None\n192:     enum_eligibility: EnumEligibility | None = None\n193:     policy_confidence: PolicyConfidence | None = None\n194:     wrapper_policy_kind: WrapperPolicyKind | None = None\n195:     presence_kind: PresenceKind | None = None\n196:     cardinality_kind: CardinalityKind | None = None\n197:     normalized_name: str | None = None\n198:     structural_limitation_flags: tuple[StructuralLimitationFlag, ...] = ()\n199:     notes: tuple[str, ...] = ()\n200: \n201: @dataclass(frozen=True)\n202: class OverrideSelection:\n203:     \"\"\"Describe the selected override and any same-priority conflict.\"\"\"\n204: \n205:     selected_override: OverrideRule | None\n206:     conflict_detected: bool\n207:     matched_rule_ids: tuple[str, ...] = ()\n208: \n209: @dataclass(frozen=True)\n210: class ValidationCaseDefinition:\n211:     \"\"\"Describe one representative case used to validate semantic policy.\"\"\"\n212: \n213:     case_id: str\n214:     role: str\n215:     code: str | None = None\n216:     reference_name: str | None = None\n217:     wrapper_name: str | None = None\n218:     expected_base_kind: SemanticBaseKind | None = None\n219:     expected_domain_shape_kind: DomainShapeKind | None = None\n220:     expected_enum_eligibility: EnumEligibility | None = None\n221:     expected_confidence: PolicyConfidence | None = None\n222:     notes: tuple[str, ...] = ()\n223: \n224: @dataclass(frozen=True)\n225: class SemanticFieldPolicy:\n226:     \"\"\"Store final semantic policy decision for one normalized field.\"\"\"\n227: \n228:     code: str\n229:     xml_paths: tuple[str, ...]\n230:     base_kind: SemanticBaseKind\n231:     domain_shape_kind: DomainShapeKind\n232:     fallback_shape_kind: DomainShapeKind | None\n233:     enum_eligibility: EnumEligibility\n234:     presence_kind: PresenceKind\n235:     cardinality_kind: CardinalityKind\n236:     policy_confidence: PolicyConfidence\n237:     naming_policy: NamingPolicy\n238:     structural_limitation_flags: tuple[StructuralLimitationFlag, ...]\n239:     decision_trace: SemanticDecisionTrace\n240:     notes: tuple[str, ...] = ()\n241: \n242: @dataclass(frozen=True)\n243: class SemanticPolicyBundle:\n244:     \"\"\"Store the complete semantic policy contract consumed by later generation.\"\"\"\n245: \n246:     metadata: PolicyMetadata\n247:     base_type_policies_by_manual_type: dict[str, BaseTypePolicy]\n248:     reference_kind_policies: dict[SemanticReferenceKind, ReferenceKindPolicy]\n249:     serialization_pattern_refinements: dict[\n250:         SerializationPattern,\n251:         ReferenceKindPolicy,\n252:     ]\n253:     wrapper_policies_by_name: dict[str, ChoiceWrapperPolicy]\n254:     overrides: tuple[OverrideRule, ...] = ()\n255:     validation_cases: tuple[ValidationCaseDefinition, ...] = ()\n256: \n257: def apply_temporary_enum_review_policy(\n258:     reference_name: str | None,\n259:     domain_shape_kind: DomainShapeKind,\n260:     enum_eligibility: EnumEligibility,\n261:     policy_confidence: PolicyConfidence,\n262: ) -> tuple[DomainShapeKind, EnumEligibility, PolicyConfidence, str | None]:\n263:     \"\"\"Apply temporary review-required enum policy until hotfix #7 is implemented.\"\"\"\n264: \n265:     if reference_name not in TEMPORARY_REVIEW_REQUIRED_REFERENCES:\n266:         return domain_shape_kind, enum_eligibility, policy_confidence, None\n267: \n268:     return (\n269:         domain_shape_kind,\n270:         EnumEligibility.REVIEW_REQUIRED,\n271:         PolicyConfidence.REQUIRES_REVIEW,\n272:         f\"temporary_enum_review_required:{reference_name}\",\n273:     )\n274: def get_choice_wrapper_policy(\n275:     wrapper_name: str,\n276:     bundle: SemanticPolicyBundle,\n277: ) -> ChoiceWrapperPolicy | None:\n278:     \"\"\"Return semantic policy for a known structural wrapper type.\"\"\"\n279: \n280:     normalized_wrapper_name = wrapper_name.strip()\n281:     if not normalized_wrapper_name:\n282:         return None\n283: \n284:     return bundle.wrapper_policies_by_name.get(normalized_wrapper_name)\n285: \n286: def validate_wrapper_case(\n287:     validation_case: ValidationCaseDefinition,\n288:     bundle: SemanticPolicyBundle,\n289: ) -> ChoiceWrapperPolicy | None:\n290:     \"\"\"Resolve wrapper policy for one validation case.\"\"\"\n291: \n292:     if validation_case.wrapper_name is None:\n293:         return None\n294: \n295:     return get_choice_wrapper_policy(\n296:         wrapper_name=validation_case.wrapper_name,\n297:         bundle=bundle,\n298:     )\n299: \n300: def get_wrapper_auto_application_limitation() -> str:\n301:     \"\"\"Return current limitation for automatic wrapper policy application.\"\"\"\n302: \n303:     return WRAPPER_AUTO_APPLICATION_LIMITATION\n304: \n305: def build_default_semantic_policy_bundle() -> SemanticPolicyBundle:\n306:     \"\"\"Build the default semantic policy bundle for issue #14.\"\"\"\n307: \n308:     return SemanticPolicyBundle(\n309:         metadata=PolicyMetadata(\n310:             policy_name=\"default_cvn_semantic_policy\",\n311:             policy_version=\"0.1.0\",\n312:             source_issue=\"#14\",\n313:             notes=(\n314:                 \"Default semantic policy for enriched CVN normalization output.\",\n315:                 \"Final domain model generation remains deferred to issue #15.\",\n316:             ),\n317:         ),\n318:         base_type_policies_by_manual_type={\n319:             \"Alphanumeric\": BaseTypePolicy(\n320:                 manual_type=\"Alphanumeric\",\n321:                 base_kind=SemanticBaseKind.TEXT,\n322:                 confidence=PolicyConfidence.HIGH,\n323:                 notes=(\n324:                     \"Alphanumeric maps to text unless a resolved controlled reference is present.\",\n325:                 ),\n326:             ),\n327:             \"Date\": BaseTypePolicy(\n328:                 manual_type=\"Date\",\n329:                 base_kind=SemanticBaseKind.DATE_LIKE,\n330:                 confidence=PolicyConfidence.HIGH,\n331:             ),\n332:             \"Double\": BaseTypePolicy(\n333:                 manual_type=\"Double\",\n334:                 base_kind=SemanticBaseKind.DECIMAL_NUMBER,\n335:                 confidence=PolicyConfidence.HIGH,\n336:             ),\n337:             \"Boolean\": BaseTypePolicy(\n338:                 manual_type=\"Boolean\",\n339:                 base_kind=SemanticBaseKind.BOOLEAN,\n340:                 confidence=PolicyConfidence.HIGH,\n341:             ),\n342:             \"Duration\": BaseTypePolicy(\n343:                 manual_type=\"Duration\",\n344:                 base_kind=SemanticBaseKind.DURATION_LIKE,\n345:                 confidence=PolicyConfidence.HIGH,\n346:             ),\n347:         },\n348:         reference_kind_policies={\n349:             SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE: ReferenceKindPolicy(\n350:                 semantic_reference_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n351:                 domain_shape_kind=DomainShapeKind.STRICT_ENUM_CANDIDATE,\n352:                 fallback_shape_kind=DomainShapeKind.OPEN_CODED_VALUE,\n353:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n354:                 confidence=PolicyConfidence.REQUIRES_REVIEW,\n355:                 notes=(\n356:                     \"Compact enum-like tables need eligibility checks before strict enum generation.\",\n357:                 ),\n358:             ),\n359:             SemanticReferenceKind.COMPACT_SCALE_OR_MEASURE: ReferenceKindPolicy(\n360:                 semantic_reference_kind=SemanticReferenceKind.COMPACT_SCALE_OR_MEASURE,\n361:                 domain_shape_kind=DomainShapeKind.MEASURE_OR_SCALE_VALUE,\n362:                 fallback_shape_kind=DomainShapeKind.OPEN_CODED_VALUE,\n363:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n364:                 confidence=PolicyConfidence.MEDIUM,\n365:             ),\n366:             SemanticReferenceKind.IDENTIFIER_TYPE_TABLE: ReferenceKindPolicy(\n367:                 semantic_reference_kind=SemanticReferenceKind.IDENTIFIER_TYPE_TABLE,\n368:                 domain_shape_kind=DomainShapeKind.IDENTIFIER_REFERENCE,\n369:                 fallback_shape_kind=DomainShapeKind.OPEN_CODED_VALUE,\n370:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n371:                 confidence=PolicyConfidence.MEDIUM,\n372:             ),\n373:             SemanticReferenceKind.SCOPE_TABLE: ReferenceKindPolicy(\n374:                 semantic_reference_kind=SemanticReferenceKind.SCOPE_TABLE,\n375:                 domain_shape_kind=DomainShapeKind.SCOPE_REFERENCE,\n376:                 fallback_shape_kind=DomainShapeKind.OPEN_CODED_VALUE,\n377:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n378:                 confidence=PolicyConfidence.MEDIUM,\n379:             ),\n380:             SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY: ReferenceKindPolicy(\n381:                 semantic_reference_kind=SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY,\n382:                 domain_shape_kind=DomainShapeKind.SUBTYPE_BACKED_VALUE,\n383:                 fallback_shape_kind=DomainShapeKind.SUBTYPE_BACKED_VALUE,\n384:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n385:                 confidence=PolicyConfidence.MEDIUM,\n386:                 notes=(\n387:                     \"Subtype_Spa.xml proves subtype catalog availability but not a strict per-table bridge.\",\n388:                 ),\n389:             ),\n390:             SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION: ReferenceKindPolicy(\n391:                 semantic_reference_kind=SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION,\n392:                 domain_shape_kind=DomainShapeKind.HIERARCHICAL_CODE_REFERENCE,\n393:                 fallback_shape_kind=DomainShapeKind.HIERARCHICAL_CODE_REFERENCE,\n394:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n395:                 confidence=PolicyConfidence.HIGH,\n396:             ),\n397:             SemanticReferenceKind.SIDE_PACKAGE_REGISTRY: ReferenceKindPolicy(\n398:                 semantic_reference_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,\n399:                 domain_shape_kind=DomainShapeKind.REGISTRY_REFERENCE,\n400:                 fallback_shape_kind=DomainShapeKind.REGISTRY_REFERENCE,\n401:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n402:                 confidence=PolicyConfidence.HIGH,\n403:             ),\n404:             SemanticReferenceKind.SIDE_PACKAGE_THESAURUS_OR_VOCABULARY: ReferenceKindPolicy(\n405:                 semantic_reference_kind=SemanticReferenceKind.SIDE_PACKAGE_THESAURUS_OR_VOCABULARY,\n406:                 domain_shape_kind=DomainShapeKind.VOCABULARY_REFERENCE,\n407:                 fallback_shape_kind=DomainShapeKind.VOCABULARY_REFERENCE,\n408:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n409:                 confidence=PolicyConfidence.HIGH,\n410:             ),\n411:             SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE: ReferenceKindPolicy(\n412:                 semantic_reference_kind=SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE,\n413:                 domain_shape_kind=DomainShapeKind.UNRESOLVED_REFERENCE,\n414:                 fallback_shape_kind=DomainShapeKind.UNRESOLVED_REFERENCE,\n415:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n416:                 confidence=PolicyConfidence.REQUIRES_REVIEW,\n417:             ),\n418:             SemanticReferenceKind.UNDER_TRACED_REFERENCE_TABLE: ReferenceKindPolicy(\n419:                 semantic_reference_kind=SemanticReferenceKind.UNDER_TRACED_REFERENCE_TABLE,\n420:                 domain_shape_kind=DomainShapeKind.UNDER_TRACED_REFERENCE,\n421:                 fallback_shape_kind=DomainShapeKind.UNDER_TRACED_REFERENCE,\n422:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n423:                 confidence=PolicyConfidence.REQUIRES_REVIEW,\n424:             ),\n425:         },\n426:         serialization_pattern_refinements={\n427:             SerializationPattern.QUALITY_MEASURE: ReferenceKindPolicy(\n428:                 semantic_reference_kind=SemanticReferenceKind.COMPACT_SCALE_OR_MEASURE,\n429:                 domain_shape_kind=DomainShapeKind.MEASURE_OR_SCALE_VALUE,\n430:                 fallback_shape_kind=DomainShapeKind.OPEN_CODED_VALUE,\n431:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n432:                 confidence=PolicyConfidence.MEDIUM,\n433:             ),\n434:             SerializationPattern.EXTERNAL_PK_TYPE: ReferenceKindPolicy(\n435:                 semantic_reference_kind=SemanticReferenceKind.IDENTIFIER_TYPE_TABLE,\n436:                 domain_shape_kind=DomainShapeKind.IDENTIFIER_REFERENCE,\n437:                 fallback_shape_kind=DomainShapeKind.OPEN_CODED_VALUE,\n438:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n439:                 confidence=PolicyConfidence.MEDIUM,\n440:             ),\n441:             SerializationPattern.SCOPE_TYPE: ReferenceKindPolicy(\n442:                 semantic_reference_kind=SemanticReferenceKind.SCOPE_TABLE,\n443:                 domain_shape_kind=DomainShapeKind.SCOPE_REFERENCE,\n444:                 fallback_shape_kind=DomainShapeKind.OPEN_CODED_VALUE,\n445:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n446:                 confidence=PolicyConfidence.MEDIUM,\n447:             ),\n448:             SerializationPattern.SUBTYPE: ReferenceKindPolicy(\n449:                 semantic_reference_kind=SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY,\n450:                 domain_shape_kind=DomainShapeKind.SUBTYPE_BACKED_VALUE,\n451:                 fallback_shape_kind=DomainShapeKind.SUBTYPE_BACKED_VALUE,\n452:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n453:                 confidence=PolicyConfidence.MEDIUM,\n454:                 notes=(\n455:                     \"Subtype serialization requires subtype-backed representation.\",\n456:                 ),\n457:             ),\n458:             SerializationPattern.SIDE_PACKAGE_REGISTRY: ReferenceKindPolicy(\n459:                 semantic_reference_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,\n460:                 domain_shape_kind=DomainShapeKind.REGISTRY_REFERENCE,\n461:                 fallback_shape_kind=DomainShapeKind.REGISTRY_REFERENCE,\n462:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n463:                 confidence=PolicyConfidence.HIGH,\n464:             ),\n465:             SerializationPattern.SIDE_PACKAGE_THESAURUS: ReferenceKindPolicy(\n466:                 semantic_reference_kind=SemanticReferenceKind.SIDE_PACKAGE_THESAURUS_OR_VOCABULARY,\n467:                 domain_shape_kind=DomainShapeKind.VOCABULARY_REFERENCE,\n468:                 fallback_shape_kind=DomainShapeKind.VOCABULARY_REFERENCE,\n469:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n470:                 confidence=PolicyConfidence.HIGH,\n471:             ),\n472:             SerializationPattern.UNRESOLVED: ReferenceKindPolicy(\n473:                 semantic_reference_kind=SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE,\n474:                 domain_shape_kind=DomainShapeKind.UNRESOLVED_REFERENCE,\n475:                 fallback_shape_kind=DomainShapeKind.UNRESOLVED_REFERENCE,\n476:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n477:                 confidence=PolicyConfidence.REQUIRES_REVIEW,\n478:             ),\n479:             SerializationPattern.SUBJECT_DESCRIPTION: ReferenceKindPolicy(\n480:                 semantic_reference_kind=SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION,\n481:                 domain_shape_kind=DomainShapeKind.HIERARCHICAL_CODE_REFERENCE,\n482:                 fallback_shape_kind=DomainShapeKind.HIERARCHICAL_CODE_REFERENCE,\n483:                 enum_eligibility=EnumEligibility.INELIGIBLE,\n484:                 confidence=PolicyConfidence.HIGH,\n485:             ),\n486:         },\n487:         wrapper_policies_by_name={\n488:             \"FlexibleDatesType\": ChoiceWrapperPolicy(\n489:                 wrapper_name=\"FlexibleDatesType\",\n490:                 wrapper_policy_kind=WrapperPolicyKind.CHOICE_OBJECT_CANDIDATE,\n491:                 structural_limitation_flags=(\n492:                     StructuralLimitationFlag.CHOICE_NOT_ENFORCED,\n493:                     StructuralLimitationFlag.WRAPPER_ERGONOMICS,\n494:                 ),\n495:                 confidence=PolicyConfidence.HIGH,\n496:                 notes=(\n497:                     \"Flexible date wrapper represents meaningful date-granularity choice.\",\n498:                 ),\n499:             ),\n500:             \"OfficialIdType\": ChoiceWrapperPolicy(\n501:                 wrapper_name=\"OfficialIdType\",\n502:                 wrapper_policy_kind=WrapperPolicyKind.CHOICE_OBJECT_CANDIDATE,\n503:                 structural_limitation_flags=(\n504:                     StructuralLimitationFlag.CHOICE_NOT_ENFORCED,\n505:                     StructuralLimitationFlag.WRAPPER_ERGONOMICS,\n506:                 ),\n507:                 confidence=PolicyConfidence.HIGH,\n508:                 notes=(\n509:                     \"Official identifier wrapper represents mutually exclusive identifier alternatives.\",\n510:                 ),\n511:             ),\n512:             \"EntityTypeType\": ChoiceWrapperPolicy(\n513:                 wrapper_name=\"EntityTypeType\",\n514:                 wrapper_policy_kind=WrapperPolicyKind.CHOICE_OBJECT_CANDIDATE,\n515:                 structural_limitation_flags=(\n516:                     StructuralLimitationFlag.CHOICE_NOT_ENFORCED,\n517:                     StructuralLimitationFlag.WRAPPER_ERGONOMICS,\n518:                 ),\n519:                 confidence=PolicyConfidence.HIGH,\n520:                 notes=(\n521:                     \"Entity type wrapper carries semantic choice over entity classification.\",\n522:                 ),\n523:             ),\n524:             \"EntityNameType\": ChoiceWrapperPolicy(\n525:                 wrapper_name=\"EntityNameType\",\n526:                 wrapper_policy_kind=WrapperPolicyKind.CHOICE_OBJECT_CANDIDATE,\n527:                 structural_limitation_flags=(\n528:                     StructuralLimitationFlag.CHOICE_NOT_ENFORCED,\n529:                     StructuralLimitationFlag.WRAPPER_ERGONOMICS,\n530:                 ),\n531:                 confidence=PolicyConfidence.HIGH,\n532:                 notes=(\n533:                     \"Entity name wrapper carries semantic choice over entity-name variants.\",\n534:                 ),\n535:             ),\n536:         },\n537:         overrides=(),\n538:         validation_cases=(\n539:             ValidationCaseDefinition(\n540:                 case_id=\"simple_scalar_name\",\n541:                 role=\"simple scalar field\",\n542:                 code=\"000.010.000.020\",\n543:                 expected_base_kind=SemanticBaseKind.TEXT,\n544:                 expected_domain_shape_kind=DomainShapeKind.PLAIN_VALUE,\n545:                 expected_enum_eligibility=EnumEligibility.INELIGIBLE,\n546:                 expected_confidence=PolicyConfidence.HIGH,\n547:             ),\n548:             ValidationCaseDefinition(\n549:                 case_id=\"compact_closed_enum_sex\",\n550:                 role=\"compact closed enum-like table\",\n551:                 code=\"000.010.000.030\",\n552:                 reference_name=\"CVN_SEX_A\",\n553:                 expected_base_kind=SemanticBaseKind.CONTROLLED_REFERENCE,\n554:                 expected_domain_shape_kind=DomainShapeKind.STRICT_ENUM_CANDIDATE,\n555:                 expected_enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n556:                 expected_confidence=PolicyConfidence.REQUIRES_REVIEW,\n557:             ),\n558:             ValidationCaseDefinition(\n559:                 case_id=\"compact_open_entity_type\",\n560:                 role=\"compact open or review controlled table\",\n561:                 code=\"010.010.000.040\",\n562:                 reference_name=\"CVN_ENTITY_TYPE\",\n563:                 expected_base_kind=SemanticBaseKind.CONTROLLED_REFERENCE,\n564:                 expected_domain_shape_kind=DomainShapeKind.STRICT_ENUM_CANDIDATE,\n565:                 expected_enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n566:                 expected_confidence=PolicyConfidence.REQUIRES_REVIEW,\n567:             ),\n568:             ValidationCaseDefinition(\n569:                 case_id=\"subtype_backed_know\",\n570:                 role=\"subtype-backed controlled family\",\n571:                 code=\"050.030.010.030\",\n572:                 reference_name=\"CVN_KNOW_A\",\n573:                 expected_base_kind=SemanticBaseKind.CONTROLLED_REFERENCE,\n574:                 expected_domain_shape_kind=DomainShapeKind.SUBTYPE_BACKED_VALUE,\n575:                 expected_enum_eligibility=EnumEligibility.INELIGIBLE,\n576:                 expected_confidence=PolicyConfidence.MEDIUM,\n577:             ),\n578:             ValidationCaseDefinition(\n579:                 case_id=\"entity_side_package_registry\",\n580:                 role=\"side-package registry reference\",\n581:                 code=\"010.010.000.020\",\n582:                 reference_name=\"ENTITY@Entity.xsd\",\n583:                 expected_base_kind=SemanticBaseKind.CONTROLLED_REFERENCE,\n584:                 expected_domain_shape_kind=DomainShapeKind.REGISTRY_REFERENCE,\n585:                 expected_enum_eligibility=EnumEligibility.INELIGIBLE,\n586:                 expected_confidence=PolicyConfidence.HIGH,\n587:             ),\n588:             ValidationCaseDefinition(\n589:                 case_id=\"thesaurus_side_package_vocabulary\",\n590:                 role=\"side-package vocabulary reference\",\n591:                 code=\"010.010.000.260\",\n592:                 reference_name=\"THESAURUS@thesaurus.xsd\",\n593:                 expected_base_kind=SemanticBaseKind.CONTROLLED_REFERENCE,\n594:                 expected_domain_shape_kind=DomainShapeKind.VOCABULARY_REFERENCE,\n595:                 expected_enum_eligibility=EnumEligibility.INELIGIBLE,\n596:                 expected_confidence=PolicyConfidence.HIGH,\n597:             ),\n598:             ValidationCaseDefinition(\n599:                 case_id=\"unesco_hierarchical_thematic\",\n600:                 role=\"hierarchical thematic classification\",\n601:                 code=\"010.010.000.220\",\n602:                 reference_name=\"UNESCO_CODES\",\n603:                 expected_base_kind=SemanticBaseKind.CONTROLLED_REFERENCE,\n604:                 expected_domain_shape_kind=DomainShapeKind.HIERARCHICAL_CODE_REFERENCE,\n605:                 expected_enum_eligibility=EnumEligibility.INELIGIBLE,\n606:                 expected_confidence=PolicyConfidence.HIGH,\n607:             ),\n608:             ValidationCaseDefinition(\n609:                 case_id=\"agency_unresolved_manual_only\",\n610:                 role=\"unresolved manual-only reference\",\n611:                 code=\"060.010.000.030\",\n612:                 reference_name=\"CVN_AGENCY_C\",\n613:                 expected_base_kind=SemanticBaseKind.CONTROLLED_REFERENCE,\n614:                 expected_domain_shape_kind=DomainShapeKind.UNRESOLVED_REFERENCE,\n615:                 expected_enum_eligibility=EnumEligibility.INELIGIBLE,\n616:                 expected_confidence=PolicyConfidence.REQUIRES_REVIEW,\n617:             ),\n618:             ValidationCaseDefinition(\n619:                 case_id=\"intervention_under_traced\",\n620:                 role=\"under-traced reference table\",\n621:                 reference_name=\"CVN_INTERVENTION_A\",\n622:                 expected_domain_shape_kind=DomainShapeKind.UNDER_TRACED_REFERENCE,\n623:                 expected_enum_eligibility=EnumEligibility.INELIGIBLE,\n624:                 expected_confidence=PolicyConfidence.REQUIRES_REVIEW,\n625:             ),\n626:             ValidationCaseDefinition(\n627:                 case_id=\"prueba_under_traced\",\n628:                 role=\"under-traced reference table\",\n629:                 reference_name=\"CVN_PRUEBA\",\n630:                 expected_domain_shape_kind=DomainShapeKind.UNDER_TRACED_REFERENCE,\n631:                 expected_enum_eligibility=EnumEligibility.INELIGIBLE,\n632:                 expected_confidence=PolicyConfidence.REQUIRES_REVIEW,\n633:             ),\n634:             ValidationCaseDefinition(\n635:                 case_id=\"flexible_dates_choice_wrapper\",\n636:                 role=\"xs:choice date wrapper\",\n637:                 wrapper_name=\"FlexibleDatesType\",\n638:                 expected_confidence=PolicyConfidence.HIGH,\n639:             ),\n640:             ValidationCaseDefinition(\n641:                 case_id=\"official_id_choice_wrapper\",\n642:                 role=\"xs:choice identifier wrapper\",\n643:                 wrapper_name=\"OfficialIdType\",\n644:                 expected_confidence=PolicyConfidence.HIGH,\n645:             ),\n646:             ValidationCaseDefinition(\n647:                 case_id=\"entity_type_choice_wrapper\",\n648:                 role=\"xs:choice entity type wrapper\",\n649:                 wrapper_name=\"EntityTypeType\",\n650:                 expected_confidence=PolicyConfidence.HIGH,\n651:             ),\n652:             ValidationCaseDefinition(\n653:                 case_id=\"entity_name_choice_wrapper\",\n654:                 role=\"xs:choice entity name wrapper\",\n655:                 wrapper_name=\"EntityNameType\",\n656:                 expected_confidence=PolicyConfidence.HIGH,\n657:             ),\n658:         ),\n659:     )\n660: \n661: def normalize_ascii_text(value: str) -> str:\n662:     \"\"\"Normalize text to ASCII-compatible identifier input.\"\"\"\n663: \n664:     replacements = {\n665:         \"á\": \"a\",\n666:         \"é\": \"e\",\n667:         \"í\": \"i\",\n668:         \"ó\": \"o\",\n669:         \"ú\": \"u\",\n670:         \"ü\": \"u\",\n671:         \"ñ\": \"n\",\n672:         \"Á\": \"A\",\n673:         \"É\": \"E\",\n674:         \"Í\": \"I\",\n675:         \"Ó\": \"O\",\n676:         \"Ú\": \"U\",\n677:         \"Ü\": \"U\",\n678:         \"Ñ\": \"N\",\n679:     }\n680:     normalized_value = value\n681:     for source, replacement in replacements.items():\n682:         normalized_value = normalized_value.replace(source, replacement)\n683:     return normalized_value\n684: \n685: def build_snake_case_identifier(value: str) -> str:\n686:     \"\"\"Build a deterministic snake_case identifier from a label.\"\"\"\n687:     normalized_value = normalize_ascii_text(value)\n688:     identifier_parts: list[str] = []\n689:     current_part: list[str] = []\n690:     for character in normalized_value:\n691:         if character.isalnum():\n692:             current_part.append(character.lower())\n693:             continue\n694:         if current_part:\n695:             identifier_parts.append(\"\".join(current_part))\n696:             current_part = []\n697:     if current_part:\n698:         identifier_parts.append(\"\".join(current_part))\n699:     identifier = \"_\".join(identifier_parts)\n700:     if not identifier:\n701:         return \"unnamed\"\n702:     if identifier[0].isdigit():\n703:         return f\"field_{identifier}\"\n704:     return identifier\n705: \n706: def build_pascal_case_identifier(value: str) -> str:\n707:     \"\"\"Build a deterministic PascalCase identifier from a label.\"\"\"\n708:     snake_case_identifier = build_snake_case_identifier(value)\n709:     parts = tuple(\n710:         part\n711:         for part in snake_case_identifier.split(\"_\")\n712:         if part\n713:     )\n714:     if not parts:\n715:         return \"Unnamed\"\n716:     pascal_parts = tuple(\n717:         part.upper() if part in PRESERVED_ACRONYMS else part.capitalize()\n718:         for part in parts\n719:     )\n720:     return \"\".join(pascal_parts)\n721: \n722: \n723: \n724: def select_naming_source_label(entry: NormalizedCodeEntry) -> str:\n725:     \"\"\"Select the best available label for domain-facing naming.\"\"\"\n726:     manual_entry = entry.manual\n727:     if manual_entry is None:\n728:         return entry.code\n729:     if manual_entry.manual_name:\n730:         return manual_entry.manual_name\n731:     if manual_entry.manual_short_name:\n732:         return manual_entry.manual_short_name\n733:     return entry.code\n734: \n735: def build_naming_policy(entry: NormalizedCodeEntry) -> NamingPolicy:\n736:     \"\"\"Build the naming policy for one normalized entry.\"\"\"\n737:     source_label = select_naming_source_label(entry)\n738:     normalized_field_name = build_snake_case_identifier(source_label)\n739:     normalized_class_name = build_pascal_case_identifier(source_label)\n740:     return NamingPolicy(\n741:         normalized_field_name=normalized_field_name,\n742:         normalized_class_name=normalized_class_name,\n743:         naming_confidence=PolicyConfidence.MEDIUM,\n744:         source_label=source_label,\n745:         notes=(\n746:             \"Spanish-first naming source selected from normalized manual metadata.\",\n747:         ),\n748:     )\n749: \n750: \n751: def build_semantic_field_policy(\n752:     entry: NormalizedCodeEntry,\n753:     bundle: SemanticPolicyBundle,\n754: ) -> SemanticFieldPolicy:\n755:     \"\"\"Build the semantic policy decision for one normalized CVN entry.\"\"\"\n756: \n757:     manual_entry = entry.manual\n758:     reference_resolution = entry.reference_resolution\n759:     xml_paths = tuple(tree_path.xml_path for tree_path in entry.tree_paths)\n760:     manual_type = None\n761:     manual_reference_table = None\n762:     if manual_entry is not None:\n763:         manual_type = manual_entry.manual_type\n764:         manual_reference_table = manual_entry.manual_reference_table\n765:     base_kind = SemanticBaseKind.UNKNOWN\n766:     base_confidence = PolicyConfidence.REQUIRES_REVIEW\n767:     base_rule = \"base_type_unknown\"\n768:     base_type_policy = None\n769:     if manual_type is not None:\n770:         base_type_policy = bundle.base_type_policies_by_manual_type.get(manual_type)\n771:     if (\n772:         manual_type == \"Alphanumeric\"\n773:         and reference_resolution is not None\n774:         and reference_resolution.semantic_kind is not None\n775:     ):\n776:         base_kind = SemanticBaseKind.CONTROLLED_REFERENCE\n777:         base_confidence = PolicyConfidence.HIGH\n778:         base_rule = \"alphanumeric_with_controlled_reference\"\n779:     elif base_type_policy is not None:\n780:         base_kind = base_type_policy.base_kind\n781:         base_confidence = base_type_policy.confidence\n782:         base_rule = f\"manual_type:{manual_type}\"\n783:     elif manual_type is not None:\n784:         base_rule = f\"manual_type_unknown:{manual_type}\"\n785:     \n786:     domain_shape_kind = DomainShapeKind.PLAIN_VALUE\n787:     fallback_shape_kind = None\n788:     enum_eligibility = EnumEligibility.INELIGIBLE\n789:     policy_confidence = base_confidence\n790:     reference_rule = \"no_reference\"\n791:     reference_kind_policy = None\n792:     semantic_kind = None\n793:     if reference_resolution is not None:\n794:         semantic_kind = reference_resolution.semantic_kind\n795: \n796:     if semantic_kind is not None:\n797:         reference_kind_policy = bundle.reference_kind_policies.get(\n798:             semantic_kind\n799:         )\n800:     if reference_kind_policy is not None and semantic_kind is not None:\n801:         domain_shape_kind = reference_kind_policy.domain_shape_kind\n802:         fallback_shape_kind = reference_kind_policy.fallback_shape_kind\n803:         enum_eligibility = reference_kind_policy.enum_eligibility\n804:         policy_confidence = reference_kind_policy.confidence\n805:         reference_rule = f\"semantic_kind:{semantic_kind.value}\"\n806:     serialization_refinement = None\n807:     reference_serialization_pattern = None\n808:     if reference_resolution is not None:\n809:         reference_serialization_pattern = reference_resolution.serialization_pattern\n810: \n811:     if reference_serialization_pattern is not None:\n812:         serialization_refinement = bundle.serialization_pattern_refinements.get(\n813:             reference_serialization_pattern\n814:         )\n815:     if (\n816:         serialization_refinement is not None\n817:         and reference_serialization_pattern is not None\n818:     ):\n819:         domain_shape_kind = serialization_refinement.domain_shape_kind\n820:         fallback_shape_kind = serialization_refinement.fallback_shape_kind\n821:         enum_eligibility = serialization_refinement.enum_eligibility\n822:         policy_confidence = serialization_refinement.confidence\n823:         reference_rule = (\n824:             f\"serialization_pattern:{reference_serialization_pattern.value}\"\n825:         )\n826:     \n827:     reference_name = None\n828:     if reference_resolution is not None:\n829:         reference_name = reference_resolution.resolved_name\n830: \n831:     (\n832:         domain_shape_kind,\n833:         enum_eligibility,\n834:         policy_confidence,\n835:         enum_rule,\n836:     ) = apply_temporary_enum_review_policy(\n837:         reference_name=reference_name,\n838:         domain_shape_kind=domain_shape_kind,\n839:         enum_eligibility=enum_eligibility,\n840:         policy_confidence=policy_confidence,\n841:     )\n842: \n843:     presence_kind = PresenceKind.UNKNOWN\n844:     cardinality_kind = CardinalityKind.UNKNOWN\n845:     multiplicity_rule = \"multiplicity_unknown\"\n846:     if manual_entry is not None:\n847:         if manual_entry.manual_obligatory is True:\n848:             presence_kind = PresenceKind.REQUIRED\n849:         elif manual_entry.manual_obligatory is False:\n850:             presence_kind = PresenceKind.OPTIONAL\n851:         if manual_entry.manual_multiplicity is True:\n852:             cardinality_kind = CardinalityKind.REPEATED\n853:         elif manual_entry.manual_multiplicity is False:\n854:             cardinality_kind = CardinalityKind.SINGLE\n855:         multiplicity_rule = \"manual_presence_and_cardinality\"\n856:     \n857:     naming_policy = build_naming_policy(entry)\n858: \n859:     structural_limitation_flags: tuple[StructuralLimitationFlag, ...] = ()\n860:     \n861:     reference_source_family = None\n862:     reference_source_artifact = None\n863:     serialization_pattern = None\n864:     semantic_reference_kind = None\n865:     diagnostics: tuple[str, ...] = ()\n866:     if reference_resolution is not None:\n867:         reference_source_family = (\n868:             None\n869:             if reference_resolution.source_family is None\n870:             else reference_resolution.source_family.value\n871:         )\n872:         reference_source_artifact = reference_resolution.source_artifact\n873:         serialization_pattern = reference_resolution.serialization_pattern\n874:         semantic_reference_kind = reference_resolution.semantic_kind\n875:         if reference_resolution.diagnostic_message is not None:\n876:             diagnostics = (reference_resolution.diagnostic_message,)\n877:     applied_rules = (\n878:         base_rule,\n879:         reference_rule,\n880:         multiplicity_rule,\n881:         \"naming:spanish_first_label\",\n882:     )\n883:     if enum_rule is not None:\n884:         applied_rules = applied_rules + (enum_rule,)\n885:     decision_trace = SemanticDecisionTrace(\n886:         code=entry.code,\n887:         xml_paths=xml_paths,\n888:         manual_reference_table=manual_reference_table,\n889:         reference_source_family=reference_source_family,\n890:         reference_source_artifact=reference_source_artifact,\n891:         serialization_pattern=serialization_pattern,\n892:         semantic_reference_kind=semantic_reference_kind,\n893:         applied_rules=applied_rules,\n894:         diagnostics=diagnostics,\n895:     )\n896:     field_policy = SemanticFieldPolicy(\n897:         code=entry.code,\n898:         xml_paths=xml_paths,\n899:         base_kind=base_kind,\n900:         domain_shape_kind=domain_shape_kind,\n901:         fallback_shape_kind=fallback_shape_kind,\n902:         enum_eligibility=enum_eligibility,\n903:         presence_kind=presence_kind,\n904:         cardinality_kind=cardinality_kind,\n905:         policy_confidence=policy_confidence,\n906:         naming_policy=naming_policy,\n907:         structural_limitation_flags=structural_limitation_flags,\n908:         decision_trace=decision_trace,\n909:     )\n910:     override_selection = select_applicable_override(\n911:         entry=entry,\n912:         overrides=bundle.overrides,\n913:     )\n914:     return apply_override_to_field_policy(\n915:         field_policy=field_policy,\n916:         override_selection=override_selection,\n917:     )\n918: \n919: def override_matches_entry(\n920:     override: OverrideRule,\n921:     entry: NormalizedCodeEntry,\n922: ) -> bool:\n923:     \"\"\"Return whether an override targets the normalized entry.\"\"\"\n924:     if override.target_code is not None and override.target_code != entry.code:\n925:         return False\n926:     if override.target_xml_path is not None:\n927:         xml_paths = {tree_path.xml_path for tree_path in entry.tree_paths}\n928:         if override.target_xml_path not in xml_paths:\n929:             return False\n930:     reference_resolution = entry.reference_resolution\n931:     if override.target_semantic_reference_kind is not None:\n932:         if reference_resolution is None:\n933:             return False\n934:         if (\n935:             override.target_semantic_reference_kind\n936:             != reference_resolution.semantic_kind\n937:         ):\n938:             return False\n939:     if override.target_serialization_pattern is not None:\n940:         if reference_resolution is None:\n941:             return False\n942:         if (\n943:             override.target_serialization_pattern\n944:             != reference_resolution.serialization_pattern\n945:         ):\n946:             return False\n947:     return True\n948: def get_override_specificity(override: OverrideRule) -> int:\n949:     \"\"\"Return precedence rank for one override target.\"\"\"\n950:     if override.target_code is not None and override.target_xml_path is not None:\n951:         return 4\n952:     if override.target_code is not None:\n953:         return 3\n954:     if override.target_xml_path is not None:\n955:         return 2\n956:     if (\n957:         override.target_semantic_reference_kind is not None\n958:         or override.target_serialization_pattern is not None\n959:     ):\n960:         return 1\n961:     return 0\n962: \n963: def select_applicable_override(\n964:     entry: NormalizedCodeEntry,\n965:     overrides: tuple[OverrideRule, ...],\n966: ) -> OverrideSelection:\n967:     \"\"\"Select the highest-precedence override for a normalized entry.\"\"\"\n968:     matching_overrides = tuple(\n969:         override\n970:         for override in overrides\n971:         if override_matches_entry(override, entry)\n972:     )\n973:     if not matching_overrides:\n974:         return OverrideSelection(\n975:             selected_override=None,\n976:             conflict_detected=False,\n977:             matched_rule_ids=(),\n978:         )\n979:     ranked_overrides = tuple(\n980:         (get_override_specificity(override), override)\n981:         for override in matching_overrides\n982:     )\n983:     highest_rank = max(rank for rank, _override in ranked_overrides)\n984:     highest_rank_overrides = tuple(\n985:         override\n986:         for rank, override in ranked_overrides\n987:         if rank == highest_rank\n988:     )\n989:     if len(highest_rank_overrides) > 1:\n990:         return OverrideSelection(\n991:             selected_override=None,\n992:             conflict_detected=True,\n993:             matched_rule_ids=tuple(\n994:                 override.rule_id for override in highest_rank_overrides\n995:             ),\n996:         )\n997:     selected_override = next(iter(highest_rank_overrides), None)\n998:     if selected_override is None:\n999:         return OverrideSelection(\n1000:             selected_override=None,\n1001:             conflict_detected=False,\n1002:             matched_rule_ids=(),\n1003:         )\n1004:     return OverrideSelection(\n1005:         selected_override=selected_override,\n1006:         conflict_detected=False,\n1007:         matched_rule_ids=(selected_override.rule_id,),\n1008:     )\n1009: \n1010: def apply_override_to_field_policy(\n1011:     field_policy: SemanticFieldPolicy,\n1012:     override_selection: OverrideSelection,\n1013: ) -> SemanticFieldPolicy:\n1014:     \"\"\"Apply a selected override to semantic-policy outputs.\"\"\"\n1015:     if override_selection.conflict_detected:\n1016:         return SemanticFieldPolicy(\n1017:             code=field_policy.code,\n1018:             xml_paths=field_policy.xml_paths,\n1019:             base_kind=field_policy.base_kind,\n1020:             domain_shape_kind=field_policy.domain_shape_kind,\n1021:             fallback_shape_kind=field_policy.fallback_shape_kind,\n1022:             enum_eligibility=field_policy.enum_eligibility,\n1023:             presence_kind=field_policy.presence_kind,\n1024:             cardinality_kind=field_policy.cardinality_kind,\n1025:             policy_confidence=PolicyConfidence.REQUIRES_REVIEW,\n1026:             naming_policy=field_policy.naming_policy,\n1027:             structural_limitation_flags=field_policy.structural_limitation_flags,\n1028:             decision_trace=field_policy.decision_trace,\n1029:             notes=field_policy.notes\n1030:             + (\n1031:                 \"Override conflict detected for matching rule IDs: \"\n1032:                 + \", \".join(override_selection.matched_rule_ids),\n1033:             ),\n1034:         )\n1035:     override = override_selection.selected_override\n1036:     if override is None:\n1037:         return field_policy\n1038:     naming_policy = field_policy.naming_policy\n1039:     if override.normalized_name is not None:\n1040:         naming_policy = NamingPolicy(\n1041:             normalized_field_name=override.normalized_name,\n1042:             normalized_class_name=field_policy.naming_policy.normalized_class_name,\n1043:             naming_confidence=(\n1044:                 field_policy.naming_policy.naming_confidence\n1045:                 if override.policy_confidence is None\n1046:                 else override.policy_confidence\n1047:             ),\n1048:             source_label=field_policy.naming_policy.source_label,\n1049:             notes=field_policy.naming_policy.notes\n1050:             + (\n1051:                 f\"Naming overridden by rule '{override.rule_id}'.\",\n1052:             ),\n1053:         )\n1054:     return SemanticFieldPolicy(\n1055:         code=field_policy.code,\n1056:         xml_paths=field_policy.xml_paths,\n1057:         base_kind=field_policy.base_kind,\n1058:         domain_shape_kind=(\n1059:             field_policy.domain_shape_kind\n1060:             if override.domain_shape_kind is None\n1061:             else override.domain_shape_kind\n1062:         ),\n1063:         fallback_shape_kind=(\n1064:             field_policy.fallback_shape_kind\n1065:             if override.fallback_shape_kind is None\n1066:             else override.fallback_shape_kind\n1067:         ),\n1068:         enum_eligibility=(\n1069:             field_policy.enum_eligibility\n1070:             if override.enum_eligibility is None\n1071:             else override.enum_eligibility\n1072:         ),\n1073:         presence_kind=(\n1074:             field_policy.presence_kind\n1075:             if override.presence_kind is None\n1076:             else override.presence_kind\n1077:         ),\n1078:         cardinality_kind=(\n1079:             field_policy.cardinality_kind\n1080:             if override.cardinality_kind is None\n1081:             else override.cardinality_kind\n1082:         ),\n1083:         policy_confidence=(\n1084:             field_policy.policy_confidence\n1085:             if override.policy_confidence is None\n1086:             else override.policy_confidence\n1087:         ),\n1088:         naming_policy=naming_policy,\n1089:         structural_limitation_flags=(\n1090:             field_policy.structural_limitation_flags\n1091:             if not override.structural_limitation_flags\n1092:             else override.structural_limitation_flags\n1093:         ),\n1094:         decision_trace=field_policy.decision_trace,\n1095:         notes=field_policy.notes\n1096:         + (\n1097:             f\"Applied override rule '{override.rule_id}'.\",\n1098:             *override.notes,\n1099:         ),\n1100:     )\n\n(End of file - total 1100 lines)\n</content>",
+            "title": "src/cvn_codegen/semantic_policy.py",
             "metadata": {
               "preview": "from dataclasses import dataclass\nfrom enum import Enum\n\n\nfrom cvn_codegen.normalization_types import (\n    NormalizedCodeEntry,\n    SemanticReferenceKind,\n    SerializationPattern,\n)\n\nPRESERVED_ACRONYMS = frozenset(\n    {\n        \"cvn\",\n        \"unesco\",\n        \"orcid\",\n        \"doi\",\n        \"isbn\",\n        \"issn\",\n        \"h\",\n    }",
               "truncated": false,
@@ -1009,7 +1010,6 @@
                 "truncated": false
               }
             },
-            "title": "src/cvn_codegen/semantic_policy.py",
             "time": {
               "start": 1781201239088,
               "end": 1781201239219
@@ -1026,8 +1026,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_dBfO89HrtZCnZ5svW1hqooVa",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -1036,6 +1036,7 @@
               "limit": 2500
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/tests/test_auxiliary_source_loaders_unit.py</path>\n<type>file</type>\n<content>\n1: from pathlib import Path\n2: from cvn_codegen.auxiliary_sources.bundle import build_auxiliary_source_bundle\n3: from cvn_codegen.auxiliary_sources.entity_metadata import (\n4:     load_entity_catalog_metadata,\n5: )\n6: from cvn_codegen.auxiliary_sources.reference_tables_metadata import (\n7:     load_reference_tables_metadata,\n8: )\n9: from cvn_codegen.auxiliary_sources.subtypes_metadata import (\n10:     load_subtypes_metadata,\n11: )\n12: from cvn_codegen.auxiliary_sources.thesaurus_metadata import (\n13:     load_thesaurus_catalog_metadata,\n14: )\n15: \n16: REPO_ROOT = Path(__file__).resolve().parent.parent\n17: CANONICAL_XML_DIR = (\n18:     REPO_ROOT / \"docs\" / \"CvnXML_v1.4.3_2.1_17012025\" / \"XML\"\n19: )\n20: REFERENCE_TABLES_XML = CANONICAL_XML_DIR / \"ReferenceTables.xml\"\n21: SUBTYPES_XML = CANONICAL_XML_DIR / \"Subtype_Spa.xml\"\n22: ENTITY_XML = CANONICAL_XML_DIR / \"Entity.xml\"\n23: THESAURUS_XML = CANONICAL_XML_DIR / \"Thesaurus.xml\"\n24: def test_load_reference_tables_metadata_returns_known_table():\n25:     # Arrange / Act\n26:     metadata_by_name = load_reference_tables_metadata(REFERENCE_TABLES_XML)\n27:     # Assert\n28:     assert isinstance(metadata_by_name, dict)\n29:     assert \"CVN_SEX_A\" in metadata_by_name\n30:     assert metadata_by_name[\"CVN_SEX_A\"].table_name == \"CVN_SEX_A\"\n31: def test_load_subtypes_metadata_returns_expected_numeric_source_code_shape():\n32:     # Arrange / Act\n33:     metadata_by_source_code = load_subtypes_metadata(SUBTYPES_XML)\n34:     # Assert\n35:     assert isinstance(metadata_by_source_code, dict)\n36:     assert \"001\" in metadata_by_source_code\n37:     assert metadata_by_source_code[\"001\"].source_code == \"001\"\n38:     assert metadata_by_source_code[\"001\"].code_subtype1\n39: def test_load_entity_catalog_metadata_returns_registry_shape():\n40:     # Arrange / Act\n41:     metadata = load_entity_catalog_metadata(ENTITY_XML)\n42:     # Assert\n43:     assert metadata.source_artifact == \"Entity.xml\"\n44:     assert metadata.item_count > 0\n45:     assert metadata.is_registry is True\n46:     assert len(metadata.item_ids) > 0\n47: def test_load_thesaurus_catalog_metadata_returns_hierarchical_vocabulary():\n48:     # Arrange / Act\n49:     metadata = load_thesaurus_catalog_metadata(THESAURUS_XML)\n50:     # Assert\n51:     assert metadata.source_artifact == \"Thesaurus.xml\"\n52:     assert metadata.item_count > 0\n53:     assert metadata.has_hierarchy is True\n54:     assert metadata.is_vocabulary is True\n55: def test_build_auxiliary_source_bundle_loads_all_requested_sources():\n56:     # Arrange / Act\n57:     auxiliary_bundle = build_auxiliary_source_bundle(\n58:         reference_tables_path=REFERENCE_TABLES_XML,\n59:         subtypes_path=SUBTYPES_XML,\n60:         entity_path=ENTITY_XML,\n61:         thesaurus_path=THESAURUS_XML,\n62:     )\n63:     # Assert\n64:     assert \"CVN_SEX_A\" in auxiliary_bundle.reference_tables_by_name\n65:     assert \"001\" in auxiliary_bundle.subtypes_by_source_code\n66:     assert auxiliary_bundle.entity_catalog is not None\n67:     assert auxiliary_bundle.thesaurus_catalog is not None\n\n(End of file - total 67 lines)\n</content>",
+            "title": "tests/test_auxiliary_source_loaders_unit.py",
             "metadata": {
               "preview": "from pathlib import Path\nfrom cvn_codegen.auxiliary_sources.bundle import build_auxiliary_source_bundle\nfrom cvn_codegen.auxiliary_sources.entity_metadata import (\n    load_entity_catalog_metadata,\n)\nfrom cvn_codegen.auxiliary_sources.reference_tables_metadata import (\n    load_reference_tables_metadata,\n)\nfrom cvn_codegen.auxiliary_sources.subtypes_metadata import (\n    load_subtypes_metadata,\n)\nfrom cvn_codegen.auxiliary_sources.thesaurus_metadata import (\n    load_thesaurus_catalog_metadata,\n)\n\nREPO_ROOT = Path(__file__).resolve().parent.parent\nCANONICAL_XML_DIR = (\n    REPO_ROOT / \"docs\" / \"CvnXML_v1.4.3_2.1_17012025\" / \"XML\"\n)\nREFERENCE_TABLES_XML = CANONICAL_XML_DIR / \"ReferenceTables.xml\"",
               "truncated": false,
@@ -1050,7 +1051,6 @@
                 "truncated": false
               }
             },
-            "title": "tests/test_auxiliary_source_loaders_unit.py",
             "time": {
               "start": 1781201239103,
               "end": 1781201239184
@@ -1067,8 +1067,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_eeAUrtprB0aunbgE012alYW3",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -1077,6 +1077,7 @@
               "limit": 2500
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/tests/test_auxiliary_reference_resolution_unit.py</path>\n<type>file</type>\n<content>\n1: from pathlib import Path\n2: from cvn_codegen.auxiliary_sources.bundle import build_auxiliary_source_bundle\n3: from cvn_codegen.auxiliary_sources.reference_resolution import (\n4:     resolve_manual_reference,\n5: )\n6: from cvn_codegen.normalization_types import (\n7:     ReferenceResolutionStatus,\n8:     ReferenceSourceFamily,\n9:     SemanticReferenceKind,\n10:     SerializationPattern,\n11: )\n12: REPO_ROOT = Path(__file__).resolve().parent.parent\n13: CANONICAL_XML_DIR = (\n14:     REPO_ROOT / \"docs\" / \"CvnXML_v1.4.3_2.1_17012025\" / \"XML\"\n15: )\n16: REFERENCE_TABLES_XML = CANONICAL_XML_DIR / \"ReferenceTables.xml\"\n17: SUBTYPES_XML = CANONICAL_XML_DIR / \"Subtype_Spa.xml\"\n18: ENTITY_XML = CANONICAL_XML_DIR / \"Entity.xml\"\n19: THESAURUS_XML = CANONICAL_XML_DIR / \"Thesaurus.xml\"\n20: def build_test_auxiliary_bundle():\n21:     return build_auxiliary_source_bundle(\n22:         reference_tables_path=REFERENCE_TABLES_XML,\n23:         subtypes_path=SUBTYPES_XML,\n24:         entity_path=ENTITY_XML,\n25:         thesaurus_path=THESAURUS_XML,\n26:     )\n27: def test_resolve_manual_reference_returns_no_reference_for_none():\n28:     # Arrange\n29:     auxiliary_bundle = build_test_auxiliary_bundle()\n30:     # Act\n31:     resolution = resolve_manual_reference(\n32:         raw_reference=None,\n33:         auxiliary_bundle=auxiliary_bundle,\n34:     )\n35:     # Assert\n36:     assert resolution.status == ReferenceResolutionStatus.NO_REFERENCE\n37:     assert resolution.source_family is None\n38:     assert resolution.serialization_pattern is None\n39:     assert resolution.semantic_kind is None\n40: def test_resolve_manual_reference_returns_no_reference_for_whitespace():\n41:     # Arrange\n42:     auxiliary_bundle = build_test_auxiliary_bundle()\n43:     # Act\n44:     resolution = resolve_manual_reference(\n45:         raw_reference=\"   \",\n46:         auxiliary_bundle=auxiliary_bundle,\n47:     )\n48:     # Assert\n49:     assert resolution.status == ReferenceResolutionStatus.NO_REFERENCE\n50:     assert resolution.source_family is None\n51:     assert resolution.serialization_pattern is None\n52:     assert resolution.semantic_kind is None\n53: def test_resolve_manual_reference_resolves_reference_table_case():\n54:     # Arrange\n55:     auxiliary_bundle = build_test_auxiliary_bundle()\n56:     # Act\n57:     resolution = resolve_manual_reference(\n58:         raw_reference=\"CVN_SEX_A\",\n59:         auxiliary_bundle=auxiliary_bundle,\n60:     )\n61:     # Assert\n62:     assert resolution.status == ReferenceResolutionStatus.RESOLVED\n63:     assert resolution.source_family == ReferenceSourceFamily.REFERENCE_TABLE\n64:     assert resolution.source_artifact == \"ReferenceTables.xml\"\n65:     assert resolution.resolved_name == \"CVN_SEX_A\"\n66:     assert resolution.serialization_pattern is not None\n67:     assert resolution.semantic_kind is not None\n68: def test_resolve_manual_reference_resolves_entity_side_package_case():\n69:     # Arrange\n70:     auxiliary_bundle = build_test_auxiliary_bundle()\n71:     # Act\n72:     resolution = resolve_manual_reference(\n73:         raw_reference=\"ENTITY@Entity.xsd\",\n74:         auxiliary_bundle=auxiliary_bundle,\n75:     )\n76:     # Assert\n77:     assert resolution.status == ReferenceResolutionStatus.RESOLVED\n78:     assert resolution.source_family == ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY\n79:     assert resolution.source_artifact == \"Entity.xml\"\n80:     assert resolution.serialization_pattern == SerializationPattern.SIDE_PACKAGE_REGISTRY\n81:     assert resolution.semantic_kind == SemanticReferenceKind.SIDE_PACKAGE_REGISTRY\n82: def test_resolve_manual_reference_resolves_thesaurus_side_package_case():\n83:     # Arrange\n84:     auxiliary_bundle = build_test_auxiliary_bundle()\n85:     # Act\n86:     resolution = resolve_manual_reference(\n87:         raw_reference=\"THESAURUS@thesaurus.xsd\",\n88:         auxiliary_bundle=auxiliary_bundle,\n89:     )\n90:     # Assert\n91:     assert resolution.status == ReferenceResolutionStatus.RESOLVED\n92:     assert resolution.source_family == ReferenceSourceFamily.SIDE_PACKAGE_THESAURUS\n93:     assert resolution.source_artifact == \"Thesaurus.xml\"\n94:     assert resolution.serialization_pattern == SerializationPattern.SIDE_PACKAGE_THESAURUS\n95:     assert (\n96:         resolution.semantic_kind\n97:         == SemanticReferenceKind.SIDE_PACKAGE_THESAURUS_OR_VOCABULARY\n98:     )\n99: def test_resolve_manual_reference_classifies_unesco_codes_as_hierarchical():\n100:     # Arrange\n101:     auxiliary_bundle = build_test_auxiliary_bundle()\n102:     # Act\n103:     resolution = resolve_manual_reference(\n104:         raw_reference=\"UNESCO_CODES\",\n105:         auxiliary_bundle=auxiliary_bundle,\n106:     )\n107:     # Assert\n108:     assert resolution.status == ReferenceResolutionStatus.RESOLVED\n109:     assert resolution.resolved_name == \"UNESCO_CODES\"\n110:     assert (\n111:         resolution.serialization_pattern\n112:         == SerializationPattern.SUBJECT_DESCRIPTION\n113:     )\n114:     assert (\n115:         resolution.semantic_kind\n116:         == SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION\n117:     )\n118: def test_resolve_manual_reference_returns_unresolved_for_known_manual_only_case():\n119:     # Arrange\n120:     auxiliary_bundle = build_test_auxiliary_bundle()\n121:     # Act\n122:     resolution = resolve_manual_reference(\n123:         raw_reference=\"CVN_AGENCY_C\",\n124:         auxiliary_bundle=auxiliary_bundle,\n125:     )\n126:     # Assert\n127:     assert resolution.status == ReferenceResolutionStatus.UNRESOLVED\n128:     assert resolution.source_family == ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY\n129:     assert resolution.serialization_pattern == SerializationPattern.UNRESOLVED\n130:     assert (\n131:         resolution.semantic_kind\n132:         == SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE\n133:     )\n134:     assert resolution.diagnostic_message is not None\n135: def test_resolve_manual_reference_classifies_under_traced_known_table():\n136:     # Arrange\n137:     auxiliary_bundle = build_test_auxiliary_bundle()\n138:     # Act\n139:     resolution = resolve_manual_reference(\n140:         raw_reference=\"CVN_INTERVENTION_A\",\n141:         auxiliary_bundle=auxiliary_bundle,\n142:     )\n143:     # Assert\n144:     assert resolution.status == ReferenceResolutionStatus.RESOLVED\n145:     assert (\n146:         resolution.semantic_kind\n147:         == SemanticReferenceKind.UNDER_TRACED_REFERENCE_TABLE\n148:     )\n149:     assert resolution.diagnostic_message is not None\n150: \n151: def test_resolve_manual_reference_marks_subtype_catalog_available_for_subtype_backed_table():\n152:     # Arrange\n153:     auxiliary_bundle = build_test_auxiliary_bundle()\n154:     # Act\n155:     resolution = resolve_manual_reference(\n156:         raw_reference=\"CVN_KNOW_A\",\n157:         auxiliary_bundle=auxiliary_bundle,\n158:     )\n159:     # Assert\n160:     assert resolution.status == ReferenceResolutionStatus.RESOLVED\n161:     assert resolution.source_family == ReferenceSourceFamily.SUBTYPE_BACKED_TABLE\n162:     assert resolution.is_subtype_backed is True\n163:     assert resolution.subtype_metadata_present is True\n164:     assert resolution.serialization_pattern == SerializationPattern.SUBTYPE\n165:     assert (\n166:         resolution.semantic_kind\n167:         == SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY\n168:     )\n\n(End of file - total 168 lines)\n</content>",
+            "title": "tests/test_auxiliary_reference_resolution_unit.py",
             "metadata": {
               "preview": "from pathlib import Path\nfrom cvn_codegen.auxiliary_sources.bundle import build_auxiliary_source_bundle\nfrom cvn_codegen.auxiliary_sources.reference_resolution import (\n    resolve_manual_reference,\n)\nfrom cvn_codegen.normalization_types import (\n    ReferenceResolutionStatus,\n    ReferenceSourceFamily,\n    SemanticReferenceKind,\n    SerializationPattern,\n)\nREPO_ROOT = Path(__file__).resolve().parent.parent\nCANONICAL_XML_DIR = (\n    REPO_ROOT / \"docs\" / \"CvnXML_v1.4.3_2.1_17012025\" / \"XML\"\n)\nREFERENCE_TABLES_XML = CANONICAL_XML_DIR / \"ReferenceTables.xml\"\nSUBTYPES_XML = CANONICAL_XML_DIR / \"Subtype_Spa.xml\"\nENTITY_XML = CANONICAL_XML_DIR / \"Entity.xml\"\nTHESAURUS_XML = CANONICAL_XML_DIR / \"Thesaurus.xml\"\ndef build_test_auxiliary_bundle():",
               "truncated": false,
@@ -1091,7 +1092,6 @@
                 "truncated": false
               }
             },
-            "title": "tests/test_auxiliary_reference_resolution_unit.py",
             "time": {
               "start": 1781201239134,
               "end": 1781201239192
@@ -1108,8 +1108,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_vGsoOsGPpthhgbBbGQPND93j",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -1118,6 +1118,7 @@
               "limit": 3000
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/tests/test_semantic_policy_unit.py</path>\n<type>file</type>\n<content>\n1: from cvn_codegen.normalization_types import (\n2:     ManualCodeEntry,\n3:     NormalizedCodeEntry,\n4:     ReferenceResolution,\n5:     ReferenceResolutionStatus,\n6:     ReferenceResolutionTrace,\n7:     ReferenceSourceFamily,\n8:     SemanticReferenceKind,\n9:     SerializationPattern,\n10:     SourceTrace,\n11:     TreePathEntry,\n12: )\n13: from cvn_codegen.semantic_policy import (\n14:     CardinalityKind,\n15:     DomainShapeKind,\n16:     EnumEligibility,\n17:     OverrideRule,\n18:     PolicyConfidence,\n19:     PresenceKind,\n20:     SemanticBaseKind,\n21:     SemanticPolicyBundle,\n22:     StructuralLimitationFlag,\n23:     WrapperPolicyKind,\n24:     build_default_semantic_policy_bundle,\n25:     build_semantic_field_policy,\n26:     get_choice_wrapper_policy,\n27:     get_wrapper_auto_application_limitation,\n28:     select_applicable_override,\n29:     validate_wrapper_case,\n30: )\n31: \n32: \n33: def build_normalized_entry(\n34:     *,\n35:     code: str = \"000.000.000.000\",\n36:     manual_type: str | None = \"Alphanumeric\",\n37:     reference_resolution: ReferenceResolution | None = None,\n38:     manual_obligatory: bool | None = False,\n39:     manual_multiplicity: bool | None = False,\n40:     manual_name: str | None = \"Nombre de prueba\",\n41:     manual_short_name: str | None = \"Prueba\",\n42:     xml_path: str | None = None,\n43: ) -> NormalizedCodeEntry:\n44:     manual_entry = None\n45:     if manual_type is not None:\n46:         manual_entry = ManualCodeEntry(\n47:             code=code,\n48:             manual_name=manual_name,\n49:             manual_short_name=manual_short_name,\n50:             manual_type=manual_type,\n51:             manual_obligatory=manual_obligatory,\n52:             manual_multiplicity=manual_multiplicity,\n53:             manual_reference_table=None,\n54:         )\n55: \n56:     tree_paths: tuple[TreePathEntry, ...] = ()\n57:     source_files: tuple[str, ...] = (\"SpecificationManual.xml\",)\n58:     if xml_path is not None:\n59:         tree_paths = (\n60:             TreePathEntry(\n61:                 code=code,\n62:                 tree_cvn_item_code=None,\n63:                 tree_property_name=\"TestProperty\",\n64:                 tree_indicator_name=\"TestIndicator\",\n65:                 tree_value=None,\n66:                 xml_path=xml_path,\n67:                 trace=SourceTrace(\n68:                     source_file=\"CVNTreeModel.xml\",\n69:                     xml_path=xml_path,\n70:                     source_code=code,\n71:                 ),\n72:             ),\n73:         )\n74:         source_files = (\"CVNTreeModel.xml\", \"SpecificationManual.xml\")\n75: \n76:     return NormalizedCodeEntry(\n77:         code=code,\n78:         manual=manual_entry,\n79:         tree_paths=tree_paths,\n80:         source_files=source_files,\n81:         reference_resolution=reference_resolution,\n82:     )\n83: \n84: def build_reference_resolution(\n85:     *,\n86:     raw_reference: str = \"CVN_TEST\",\n87:     semantic_kind: SemanticReferenceKind = SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n88:     serialization_pattern: SerializationPattern = SerializationPattern.FILTER_VALUE,\n89:     source_family: ReferenceSourceFamily = ReferenceSourceFamily.REFERENCE_TABLE,\n90: ) -> ReferenceResolution:\n91:     return ReferenceResolution(\n92:         raw_reference=raw_reference,\n93:         status=ReferenceResolutionStatus.RESOLVED,\n94:         source_family=source_family,\n95:         source_artifact=\"ReferenceTables.xml\",\n96:         resolved_name=raw_reference,\n97:         serialization_pattern=serialization_pattern,\n98:         semantic_kind=semantic_kind,\n99:         is_subtype_backed=False,\n100:         subtype_metadata_present=None,\n101:         diagnostic_message=None,\n102:         trace=ReferenceResolutionTrace(\n103:             manual_reference=raw_reference,\n104:             resolved_from_artifact=\"ReferenceTables.xml\",\n105:             resolution_rule=\"test_reference_resolution\",\n106:         ),\n107:     )\n108: \n109: def test_build_default_semantic_policy_bundle_returns_expected_shape():\n110:     # Arrange / Act\n111:     bundle = build_default_semantic_policy_bundle()\n112: \n113:     # Assert\n114:     assert isinstance(bundle, SemanticPolicyBundle)\n115:     assert bundle.metadata.source_issue == \"#14\"\n116:     assert bundle.metadata.policy_name == \"default_cvn_semantic_policy\"\n117:     assert bundle.base_type_policies_by_manual_type\n118:     assert bundle.reference_kind_policies\n119:     assert bundle.serialization_pattern_refinements\n120:     assert bundle.wrapper_policies_by_name\n121:     assert bundle.validation_cases\n122: \n123: def test_build_semantic_field_policy_maps_alphanumeric_to_text():\n124:     # Arrange\n125:     bundle = build_default_semantic_policy_bundle()\n126:     entry = build_normalized_entry(manual_type=\"Alphanumeric\")\n127: \n128:     # Act\n129:     field_policy = build_semantic_field_policy(entry, bundle)\n130: \n131:     # Assert\n132:     assert field_policy.base_kind == SemanticBaseKind.TEXT\n133: \n134: \n135: def test_build_semantic_field_policy_maps_date_to_date_like():\n136:     # Arrange\n137:     bundle = build_default_semantic_policy_bundle()\n138:     entry = build_normalized_entry(manual_type=\"Date\")\n139: \n140:     # Act\n141:     field_policy = build_semantic_field_policy(entry, bundle)\n142: \n143:     # Assert\n144:     assert field_policy.base_kind == SemanticBaseKind.DATE_LIKE\n145: \n146: \n147: def test_build_semantic_field_policy_maps_double_to_decimal_number():\n148:     # Arrange\n149:     bundle = build_default_semantic_policy_bundle()\n150:     entry = build_normalized_entry(manual_type=\"Double\")\n151: \n152:     # Act\n153:     field_policy = build_semantic_field_policy(entry, bundle)\n154: \n155:     # Assert\n156:     assert field_policy.base_kind == SemanticBaseKind.DECIMAL_NUMBER\n157: \n158: \n159: def test_build_semantic_field_policy_maps_boolean_to_boolean():\n160:     # Arrange\n161:     bundle = build_default_semantic_policy_bundle()\n162:     entry = build_normalized_entry(manual_type=\"Boolean\")\n163: \n164:     # Act\n165:     field_policy = build_semantic_field_policy(entry, bundle)\n166: \n167:     # Assert\n168:     assert field_policy.base_kind == SemanticBaseKind.BOOLEAN\n169: \n170: \n171: def test_build_semantic_field_policy_maps_duration_to_duration_like():\n172:     # Arrange\n173:     bundle = build_default_semantic_policy_bundle()\n174:     entry = build_normalized_entry(manual_type=\"Duration\")\n175: \n176:     # Act\n177:     field_policy = build_semantic_field_policy(entry, bundle)\n178: \n179:     # Assert\n180:     assert field_policy.base_kind == SemanticBaseKind.DURATION_LIKE\n181: \n182: \n183: def test_build_semantic_field_policy_maps_unknown_manual_type_to_unknown():\n184:     # Arrange\n185:     bundle = build_default_semantic_policy_bundle()\n186:     entry = build_normalized_entry(manual_type=\"UnexpectedType\")\n187: \n188:     # Act\n189:     field_policy = build_semantic_field_policy(entry, bundle)\n190: \n191:     # Assert\n192:     assert field_policy.base_kind == SemanticBaseKind.UNKNOWN\n193: \n194: def test_build_semantic_field_policy_maps_controlled_reference_to_controlled_base_kind():\n195:     # Arrange\n196:     bundle = build_default_semantic_policy_bundle()\n197:     entry = build_normalized_entry(\n198:         manual_type=\"Alphanumeric\",\n199:         reference_resolution=build_reference_resolution(),\n200:     )\n201: \n202:     # Act\n203:     field_policy = build_semantic_field_policy(entry, bundle)\n204: \n205:     # Assert\n206:     assert field_policy.base_kind == SemanticBaseKind.CONTROLLED_REFERENCE\n207: \n208: \n209: def test_build_semantic_field_policy_maps_compact_enum_like_table():\n210:     # Arrange\n211:     bundle = build_default_semantic_policy_bundle()\n212:     entry = build_normalized_entry(\n213:         reference_resolution=build_reference_resolution(\n214:             raw_reference=\"CVN_GENERIC_ENUM\",\n215:             semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n216:             serialization_pattern=SerializationPattern.FILTER_VALUE,\n217:         ),\n218:     )\n219: \n220:     # Act\n221:     field_policy = build_semantic_field_policy(entry, bundle)\n222: \n223:     # Assert\n224:     assert field_policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE\n225:     assert field_policy.fallback_shape_kind == DomainShapeKind.OPEN_CODED_VALUE\n226:     assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED\n227:     assert field_policy.policy_confidence == PolicyConfidence.REQUIRES_REVIEW\n228: \n229: \n230: def test_build_semantic_field_policy_maps_scale_or_measure_table():\n231:     # Arrange\n232:     bundle = build_default_semantic_policy_bundle()\n233:     entry = build_normalized_entry(\n234:         reference_resolution=build_reference_resolution(\n235:             semantic_kind=SemanticReferenceKind.COMPACT_SCALE_OR_MEASURE,\n236:             serialization_pattern=SerializationPattern.QUALITY_MEASURE,\n237:         ),\n238:     )\n239: \n240:     # Act\n241:     field_policy = build_semantic_field_policy(entry, bundle)\n242: \n243:     # Assert\n244:     assert field_policy.domain_shape_kind == DomainShapeKind.MEASURE_OR_SCALE_VALUE\n245:     assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED\n246:     assert field_policy.policy_confidence == PolicyConfidence.MEDIUM\n247: \n248: \n249: def test_build_semantic_field_policy_maps_identifier_type_table():\n250:     # Arrange\n251:     bundle = build_default_semantic_policy_bundle()\n252:     entry = build_normalized_entry(\n253:         reference_resolution=build_reference_resolution(\n254:             semantic_kind=SemanticReferenceKind.IDENTIFIER_TYPE_TABLE,\n255:             serialization_pattern=SerializationPattern.EXTERNAL_PK_TYPE,\n256:         ),\n257:     )\n258: \n259:     # Act\n260:     field_policy = build_semantic_field_policy(entry, bundle)\n261: \n262:     # Assert\n263:     assert field_policy.domain_shape_kind == DomainShapeKind.IDENTIFIER_REFERENCE\n264:     assert field_policy.enum_eligibility == EnumEligibility.INELIGIBLE\n265: \n266: \n267: def test_build_semantic_field_policy_maps_scope_table():\n268:     # Arrange\n269:     bundle = build_default_semantic_policy_bundle()\n270:     entry = build_normalized_entry(\n271:         reference_resolution=build_reference_resolution(\n272:             semantic_kind=SemanticReferenceKind.SCOPE_TABLE,\n273:             serialization_pattern=SerializationPattern.SCOPE_TYPE,\n274:         ),\n275:     )\n276: \n277:     # Act\n278:     field_policy = build_semantic_field_policy(entry, bundle)\n279: \n280:     # Assert\n281:     assert field_policy.domain_shape_kind == DomainShapeKind.SCOPE_REFERENCE\n282:     assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED\n283: \n284: \n285: def test_build_semantic_field_policy_maps_subtype_backed_family():\n286:     # Arrange\n287:     bundle = build_default_semantic_policy_bundle()\n288:     entry = build_normalized_entry(\n289:         reference_resolution=build_reference_resolution(\n290:             semantic_kind=SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY,\n291:             serialization_pattern=SerializationPattern.SUBTYPE,\n292:             source_family=ReferenceSourceFamily.SUBTYPE_BACKED_TABLE,\n293:         ),\n294:     )\n295: \n296:     # Act\n297:     field_policy = build_semantic_field_policy(entry, bundle)\n298: \n299:     # Assert\n300:     assert field_policy.domain_shape_kind == DomainShapeKind.SUBTYPE_BACKED_VALUE\n301:     assert field_policy.enum_eligibility == EnumEligibility.INELIGIBLE\n302: \n303: \n304: def test_build_semantic_field_policy_maps_hierarchical_classification():\n305:     # Arrange\n306:     bundle = build_default_semantic_policy_bundle()\n307:     entry = build_normalized_entry(\n308:         reference_resolution=build_reference_resolution(\n309:             raw_reference=\"UNESCO_CODES\",\n310:             semantic_kind=SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION,\n311:             serialization_pattern=SerializationPattern.SUBJECT_DESCRIPTION,\n312:         ),\n313:     )\n314: \n315:     # Act\n316:     field_policy = build_semantic_field_policy(entry, bundle)\n317: \n318:     # Assert\n319:     assert field_policy.domain_shape_kind == DomainShapeKind.HIERARCHICAL_CODE_REFERENCE\n320:     assert field_policy.enum_eligibility == EnumEligibility.INELIGIBLE\n321: \n322: \n323: def test_build_semantic_field_policy_maps_side_package_registry():\n324:     # Arrange\n325:     bundle = build_default_semantic_policy_bundle()\n326:     entry = build_normalized_entry(\n327:         reference_resolution=build_reference_resolution(\n328:             raw_reference=\"ENTITY@Entity.xsd\",\n329:             semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,\n330:             serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,\n331:             source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,\n332:         ),\n333:     )\n334: \n335:     # Act\n336:     field_policy = build_semantic_field_policy(entry, bundle)\n337: \n338:     # Assert\n339:     assert field_policy.domain_shape_kind == DomainShapeKind.REGISTRY_REFERENCE\n340:     assert field_policy.enum_eligibility == EnumEligibility.INELIGIBLE\n341: \n342: \n343: def test_build_semantic_field_policy_maps_side_package_vocabulary():\n344:     # Arrange\n345:     bundle = build_default_semantic_policy_bundle()\n346:     entry = build_normalized_entry(\n347:         reference_resolution=build_reference_resolution(\n348:             raw_reference=\"THESAURUS@thesaurus.xsd\",\n349:             semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_THESAURUS_OR_VOCABULARY,\n350:             serialization_pattern=SerializationPattern.SIDE_PACKAGE_THESAURUS,\n351:             source_family=ReferenceSourceFamily.SIDE_PACKAGE_THESAURUS,\n352:         ),\n353:     )\n354: \n355:     # Act\n356:     field_policy = build_semantic_field_policy(entry, bundle)\n357: \n358:     # Assert\n359:     assert field_policy.domain_shape_kind == DomainShapeKind.VOCABULARY_REFERENCE\n360:     assert field_policy.enum_eligibility == EnumEligibility.INELIGIBLE\n361: \n362: \n363: def test_build_semantic_field_policy_maps_unresolved_reference():\n364:     # Arrange\n365:     bundle = build_default_semantic_policy_bundle()\n366:     entry = build_normalized_entry(\n367:         reference_resolution=build_reference_resolution(\n368:             raw_reference=\"CVN_AGENCY_C\",\n369:             semantic_kind=SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE,\n370:             serialization_pattern=SerializationPattern.UNRESOLVED,\n371:             source_family=ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY,\n372:         ),\n373:     )\n374: \n375:     # Act\n376:     field_policy = build_semantic_field_policy(entry, bundle)\n377: \n378:     # Assert\n379:     assert field_policy.domain_shape_kind == DomainShapeKind.UNRESOLVED_REFERENCE\n380:     assert field_policy.enum_eligibility == EnumEligibility.INELIGIBLE\n381: \n382: \n383: def test_build_semantic_field_policy_maps_under_traced_reference():\n384:     # Arrange\n385:     bundle = build_default_semantic_policy_bundle()\n386:     entry = build_normalized_entry(\n387:         reference_resolution=build_reference_resolution(\n388:             raw_reference=\"CVN_INTERVENTION_A\",\n389:             semantic_kind=SemanticReferenceKind.UNDER_TRACED_REFERENCE_TABLE,\n390:             serialization_pattern=SerializationPattern.FILTER_VALUE,\n391:         ),\n392:     )\n393: \n394:     # Act\n395:     field_policy = build_semantic_field_policy(entry, bundle)\n396: \n397:     # Assert\n398:     assert field_policy.domain_shape_kind == DomainShapeKind.UNDER_TRACED_REFERENCE\n399:     assert field_policy.enum_eligibility == EnumEligibility.INELIGIBLE\n400: \n401: def test_temporary_enum_review_policy_marks_cvn_sex_a_as_review_required():\n402:     # Arrange\n403:     bundle = build_default_semantic_policy_bundle()\n404:     entry = build_normalized_entry(\n405:         code=\"000.010.000.030\",\n406:         reference_resolution=build_reference_resolution(\n407:             raw_reference=\"CVN_SEX_A\",\n408:             semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n409:             serialization_pattern=SerializationPattern.FILTER_VALUE,\n410:         ),\n411:     )\n412: \n413:     # Act\n414:     field_policy = build_semantic_field_policy(entry, bundle)\n415: \n416:     # Assert\n417:     assert field_policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE\n418:     assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED\n419:     assert field_policy.policy_confidence == PolicyConfidence.REQUIRES_REVIEW\n420:     assert (\n421:         \"temporary_enum_review_required:CVN_SEX_A\"\n422:         in field_policy.decision_trace.applied_rules\n423:     )\n424: \n425: \n426: def test_temporary_enum_review_policy_marks_cvn_entity_type_as_review_required():\n427:     # Arrange\n428:     bundle = build_default_semantic_policy_bundle()\n429:     entry = build_normalized_entry(\n430:         code=\"010.010.000.040\",\n431:         reference_resolution=build_reference_resolution(\n432:             raw_reference=\"CVN_ENTITY_TYPE\",\n433:             semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n434:             serialization_pattern=SerializationPattern.FILTER_VALUE,\n435:         ),\n436:     )\n437: \n438:     # Act\n439:     field_policy = build_semantic_field_policy(entry, bundle)\n440: \n441:     # Assert\n442:     assert field_policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE\n443:     assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED\n444:     assert field_policy.policy_confidence == PolicyConfidence.REQUIRES_REVIEW\n445:     assert (\n446:         \"temporary_enum_review_required:CVN_ENTITY_TYPE\"\n447:         in field_policy.decision_trace.applied_rules\n448:     )\n449: \n450: \n451: def test_generic_compact_enum_like_table_remains_review_required_without_temp_rule():\n452:     # Arrange\n453:     bundle = build_default_semantic_policy_bundle()\n454:     entry = build_normalized_entry(\n455:         reference_resolution=build_reference_resolution(\n456:             raw_reference=\"CVN_GENERIC_TABLE\",\n457:             semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n458:             serialization_pattern=SerializationPattern.FILTER_VALUE,\n459:         ),\n460:     )\n461: \n462:     # Act\n463:     field_policy = build_semantic_field_policy(entry, bundle)\n464: \n465:     # Assert\n466:     assert field_policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE\n467:     assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED\n468:     assert (\n469:         \"temporary_enum_review_required:CVN_GENERIC_TABLE\"\n470:         not in field_policy.decision_trace.applied_rules\n471:     )\n472: \n473: def test_build_semantic_field_policy_maps_required_presence():\n474:     # Arrange\n475:     bundle = build_default_semantic_policy_bundle()\n476:     entry = build_normalized_entry(manual_obligatory=True)\n477: \n478:     # Act\n479:     field_policy = build_semantic_field_policy(entry, bundle)\n480: \n481:     # Assert\n482:     assert field_policy.presence_kind == PresenceKind.REQUIRED\n483: \n484: \n485: def test_build_semantic_field_policy_maps_optional_presence():\n486:     # Arrange\n487:     bundle = build_default_semantic_policy_bundle()\n488:     entry = build_normalized_entry(manual_obligatory=False)\n489: \n490:     # Act\n491:     field_policy = build_semantic_field_policy(entry, bundle)\n492: \n493:     # Assert\n494:     assert field_policy.presence_kind == PresenceKind.OPTIONAL\n495: \n496: \n497: def test_build_semantic_field_policy_maps_unknown_presence():\n498:     # Arrange\n499:     bundle = build_default_semantic_policy_bundle()\n500:     entry = build_normalized_entry(manual_obligatory=None)\n501: \n502:     # Act\n503:     field_policy = build_semantic_field_policy(entry, bundle)\n504: \n505:     # Assert\n506:     assert field_policy.presence_kind == PresenceKind.UNKNOWN\n507: \n508: \n509: def test_build_semantic_field_policy_maps_repeated_cardinality():\n510:     # Arrange\n511:     bundle = build_default_semantic_policy_bundle()\n512:     entry = build_normalized_entry(manual_multiplicity=True)\n513: \n514:     # Act\n515:     field_policy = build_semantic_field_policy(entry, bundle)\n516: \n517:     # Assert\n518:     assert field_policy.cardinality_kind == CardinalityKind.REPEATED\n519: \n520: \n521: def test_build_semantic_field_policy_maps_single_cardinality():\n522:     # Arrange\n523:     bundle = build_default_semantic_policy_bundle()\n524:     entry = build_normalized_entry(manual_multiplicity=False)\n525: \n526:     # Act\n527:     field_policy = build_semantic_field_policy(entry, bundle)\n528: \n529:     # Assert\n530:     assert field_policy.cardinality_kind == CardinalityKind.SINGLE\n531: \n532: \n533: def test_build_semantic_field_policy_maps_unknown_cardinality():\n534:     # Arrange\n535:     bundle = build_default_semantic_policy_bundle()\n536:     entry = build_normalized_entry(manual_multiplicity=None)\n537: \n538:     # Act\n539:     field_policy = build_semantic_field_policy(entry, bundle)\n540: \n541:     # Assert\n542:     assert field_policy.cardinality_kind == CardinalityKind.UNKNOWN\n543: \n544: def test_build_semantic_field_policy_uses_spanish_manual_name_for_field_name():\n545:     # Arrange\n546:     bundle = build_default_semantic_policy_bundle()\n547:     entry = build_normalized_entry(manual_name=\"Título del proyecto\")\n548: \n549:     # Act\n550:     field_policy = build_semantic_field_policy(entry, bundle)\n551: \n552:     # Assert\n553:     assert field_policy.naming_policy.normalized_field_name == \"titulo_del_proyecto\"\n554:     assert field_policy.naming_policy.source_label == \"Título del proyecto\"\n555: \n556: \n557: def test_build_semantic_field_policy_falls_back_to_short_name_for_naming():\n558:     # Arrange\n559:     bundle = build_default_semantic_policy_bundle()\n560:     entry = build_normalized_entry(\n561:         manual_name=None,\n562:         manual_short_name=\"Nombre corto\",\n563:     )\n564: \n565:     # Act\n566:     field_policy = build_semantic_field_policy(entry, bundle)\n567: \n568:     # Assert\n569:     assert field_policy.naming_policy.normalized_field_name == \"nombre_corto\"\n570:     assert field_policy.naming_policy.source_label == \"Nombre corto\"\n571: \n572: \n573: def test_build_semantic_field_policy_falls_back_to_code_for_missing_labels():\n574:     # Arrange\n575:     bundle = build_default_semantic_policy_bundle()\n576:     entry = build_normalized_entry(\n577:         code=\"000.010.000.020\",\n578:         manual_name=None,\n579:         manual_short_name=None,\n580:     )\n581: \n582:     # Act\n583:     field_policy = build_semantic_field_policy(entry, bundle)\n584: \n585:     # Assert\n586:     assert field_policy.naming_policy.normalized_field_name == \"field_000_010_000_020\"\n587:     assert field_policy.naming_policy.source_label == \"000.010.000.020\"\n588: \n589: \n590: def test_build_semantic_field_policy_preserves_acronyms_in_class_name():\n591:     # Arrange\n592:     bundle = build_default_semantic_policy_bundle()\n593:     entry = build_normalized_entry(manual_name=\"Código UNESCO\")\n594: \n595:     # Act\n596:     field_policy = build_semantic_field_policy(entry, bundle)\n597: \n598:     # Assert\n599:     assert field_policy.naming_policy.normalized_class_name == \"CodigoUNESCO\"\n600: \n601: def test_select_applicable_override_prefers_code_and_xml_path_over_code_only():\n602:     # Arrange\n603:     entry = build_normalized_entry(\n604:         code=\"000.010.000.030\",\n605:         xml_path=\"/CVNTreeModel/Node/Test\",\n606:     )\n607:     overrides = (\n608:         OverrideRule(\n609:             rule_id=\"code_only\",\n610:             target_code=\"000.010.000.030\",\n611:             enum_eligibility=EnumEligibility.INELIGIBLE,\n612:         ),\n613:         OverrideRule(\n614:             rule_id=\"code_and_path\",\n615:             target_code=\"000.010.000.030\",\n616:             target_xml_path=\"/CVNTreeModel/Node/Test\",\n617:             enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n618:         ),\n619:     )\n620: \n621:     # Act\n622:     selection = select_applicable_override(entry, overrides)\n623: \n624:     # Assert\n625:     assert selection.selected_override is not None\n626:     assert selection.selected_override.rule_id == \"code_and_path\"\n627:     assert selection.conflict_detected is False\n628: \n629: \n630: def test_select_applicable_override_prefers_code_over_xml_path_only():\n631:     # Arrange\n632:     entry = build_normalized_entry(\n633:         code=\"000.010.000.030\",\n634:         xml_path=\"/CVNTreeModel/Node/Test\",\n635:     )\n636:     overrides = (\n637:         OverrideRule(\n638:             rule_id=\"xml_path_only\",\n639:             target_xml_path=\"/CVNTreeModel/Node/Test\",\n640:             enum_eligibility=EnumEligibility.INELIGIBLE,\n641:         ),\n642:         OverrideRule(\n643:             rule_id=\"code_only\",\n644:             target_code=\"000.010.000.030\",\n645:             enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n646:         ),\n647:     )\n648: \n649:     # Act\n650:     selection = select_applicable_override(entry, overrides)\n651: \n652:     # Assert\n653:     assert selection.selected_override is not None\n654:     assert selection.selected_override.rule_id == \"code_only\"\n655:     assert selection.conflict_detected is False\n656: \n657: \n658: def test_select_applicable_override_detects_same_rank_conflict():\n659:     # Arrange\n660:     entry = build_normalized_entry(code=\"000.010.000.030\")\n661:     overrides = (\n662:         OverrideRule(\n663:             rule_id=\"code_override_a\",\n664:             target_code=\"000.010.000.030\",\n665:             enum_eligibility=EnumEligibility.INELIGIBLE,\n666:         ),\n667:         OverrideRule(\n668:             rule_id=\"code_override_b\",\n669:             target_code=\"000.010.000.030\",\n670:             enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n671:         ),\n672:     )\n673: \n674:     # Act\n675:     selection = select_applicable_override(entry, overrides)\n676: \n677:     # Assert\n678:     assert selection.selected_override is None\n679:     assert selection.conflict_detected is True\n680:     assert selection.matched_rule_ids == (\n681:         \"code_override_a\",\n682:         \"code_override_b\",\n683:     )\n684: \n685: \n686: def test_build_semantic_field_policy_applies_override_outputs():\n687:     # Arrange\n688:     bundle = build_default_semantic_policy_bundle()\n689:     bundle = SemanticPolicyBundle(\n690:         metadata=bundle.metadata,\n691:         base_type_policies_by_manual_type=bundle.base_type_policies_by_manual_type,\n692:         reference_kind_policies=bundle.reference_kind_policies,\n693:         serialization_pattern_refinements=bundle.serialization_pattern_refinements,\n694:         wrapper_policies_by_name=bundle.wrapper_policies_by_name,\n695:         overrides=(\n696:             OverrideRule(\n697:                 rule_id=\"force_open_value\",\n698:                 target_code=\"000.010.000.030\",\n699:                 domain_shape_kind=DomainShapeKind.OPEN_CODED_VALUE,\n700:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n701:                 presence_kind=PresenceKind.REQUIRED,\n702:                 cardinality_kind=CardinalityKind.REPEATED,\n703:                 normalized_name=\"nombre_forzado\",\n704:             ),\n705:         ),\n706:         validation_cases=bundle.validation_cases,\n707:     )\n708:     entry = build_normalized_entry(code=\"000.010.000.030\")\n709: \n710:     # Act\n711:     field_policy = build_semantic_field_policy(entry, bundle)\n712: \n713:     # Assert\n714:     assert field_policy.domain_shape_kind == DomainShapeKind.OPEN_CODED_VALUE\n715:     assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED\n716:     assert field_policy.presence_kind == PresenceKind.REQUIRED\n717:     assert field_policy.cardinality_kind == CardinalityKind.REPEATED\n718:     assert field_policy.naming_policy.normalized_field_name == \"nombre_forzado\"\n719:     assert \"Applied override rule 'force_open_value'.\" in field_policy.notes\n720: \n721: def test_get_choice_wrapper_policy_resolves_known_choice_wrappers():\n722:     # Arrange\n723:     bundle = build_default_semantic_policy_bundle()\n724:     wrapper_names = (\n725:         \"FlexibleDatesType\",\n726:         \"OfficialIdType\",\n727:         \"EntityTypeType\",\n728:         \"EntityNameType\",\n729:     )\n730: \n731:     for wrapper_name in wrapper_names:\n732:         # Act\n733:         wrapper_policy = get_choice_wrapper_policy(wrapper_name, bundle)\n734: \n735:         # Assert\n736:         assert wrapper_policy is not None\n737:         assert wrapper_policy.wrapper_policy_kind == (\n738:             WrapperPolicyKind.CHOICE_OBJECT_CANDIDATE\n739:         )\n740:         assert (\n741:             StructuralLimitationFlag.CHOICE_NOT_ENFORCED\n742:             in wrapper_policy.structural_limitation_flags\n743:         )\n744: \n745: \n746: def test_get_choice_wrapper_policy_returns_none_for_unknown_wrapper():\n747:     # Arrange\n748:     bundle = build_default_semantic_policy_bundle()\n749: \n750:     # Act\n751:     wrapper_policy = get_choice_wrapper_policy(\"UnknownWrapperType\", bundle)\n752: \n753:     # Assert\n754:     assert wrapper_policy is None\n755: \n756: \n757: def test_validate_wrapper_case_resolves_wrapper_validation_cases():\n758:     # Arrange\n759:     bundle = build_default_semantic_policy_bundle()\n760:     wrapper_cases = tuple(\n761:         validation_case\n762:         for validation_case in bundle.validation_cases\n763:         if validation_case.wrapper_name is not None\n764:     )\n765: \n766:     # Act / Assert\n767:     assert wrapper_cases\n768:     for validation_case in wrapper_cases:\n769:         wrapper_policy = validate_wrapper_case(validation_case, bundle)\n770:         assert wrapper_policy is not None\n771:         assert wrapper_policy.confidence == validation_case.expected_confidence\n772: \n773: \n774: def test_get_wrapper_auto_application_limitation_documents_current_limit():\n775:     # Act\n776:     limitation = get_wrapper_auto_application_limitation()\n777: \n778:     # Assert\n779:     assert \"NormalizedCodeEntry\" in limitation\n780:     assert \"does not expose structural wrapper type names\" in limitation\n781: \n782: def test_validation_inventory_has_required_case_ids():\n783:     # Arrange\n784:     bundle = build_default_semantic_policy_bundle()\n785:     case_ids = {validation_case.case_id for validation_case in bundle.validation_cases}\n786: \n787:     # Assert\n788:     assert \"simple_scalar_name\" in case_ids\n789:     assert \"compact_closed_enum_sex\" in case_ids\n790:     assert \"compact_open_entity_type\" in case_ids\n791:     assert \"subtype_backed_know\" in case_ids\n792:     assert \"entity_side_package_registry\" in case_ids\n793:     assert \"thesaurus_side_package_vocabulary\" in case_ids\n794:     assert \"unesco_hierarchical_thematic\" in case_ids\n795:     assert \"agency_unresolved_manual_only\" in case_ids\n796:     assert \"intervention_under_traced\" in case_ids\n797:     assert \"prueba_under_traced\" in case_ids\n798:     assert \"flexible_dates_choice_wrapper\" in case_ids\n799:     assert \"official_id_choice_wrapper\" in case_ids\n800:     assert \"entity_type_choice_wrapper\" in case_ids\n801:     assert \"entity_name_choice_wrapper\" in case_ids\n802: \n803: \n804: def test_validation_inventory_reference_cases_have_expected_outputs():\n805:     # Arrange\n806:     bundle = build_default_semantic_policy_bundle()\n807:     reference_cases = tuple(\n808:         validation_case\n809:         for validation_case in bundle.validation_cases\n810:         if validation_case.reference_name is not None\n811:     )\n812: \n813:     # Act / Assert\n814:     assert reference_cases\n815:     for validation_case in reference_cases:\n816:         assert validation_case.expected_domain_shape_kind is not None\n817:         assert validation_case.expected_enum_eligibility is not None\n818:         assert validation_case.expected_confidence is not None\n819: \n820: \n821: def test_validation_inventory_wrapper_cases_have_wrapper_names():\n822:     # Arrange\n823:     bundle = build_default_semantic_policy_bundle()\n824:     wrapper_cases = tuple(\n825:         validation_case\n826:         for validation_case in bundle.validation_cases\n827:         if validation_case.wrapper_name is not None\n828:     )\n829: \n830:     # Act / Assert\n831:     assert wrapper_cases\n832:     for validation_case in wrapper_cases:\n833:         assert validation_case.expected_confidence is not None\n834:         assert validate_wrapper_case(validation_case, bundle) is not None\n\n(End of file - total 834 lines)\n</content>",
+            "title": "tests/test_semantic_policy_unit.py",
             "metadata": {
               "preview": "from cvn_codegen.normalization_types import (\n    ManualCodeEntry,\n    NormalizedCodeEntry,\n    ReferenceResolution,\n    ReferenceResolutionStatus,\n    ReferenceResolutionTrace,\n    ReferenceSourceFamily,\n    SemanticReferenceKind,\n    SerializationPattern,\n    SourceTrace,\n    TreePathEntry,\n)\nfrom cvn_codegen.semantic_policy import (\n    CardinalityKind,\n    DomainShapeKind,\n    EnumEligibility,\n    OverrideRule,\n    PolicyConfidence,\n    PresenceKind,\n    SemanticBaseKind,",
               "truncated": false,
@@ -1132,7 +1133,6 @@
                 "truncated": false
               }
             },
-            "title": "tests/test_semantic_policy_unit.py",
             "time": {
               "start": 1781201239147,
               "end": 1781201239210
@@ -1148,20 +1148,20 @@
           "messageID": "msg_eb7ddd6d4002CRulXeL1PNDSGh"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 51635,
             "input": 20514,
             "output": 388,
             "reasoning": 13,
             "cache": {
-              "write": 0,
-              "read": 30720
+              "read": 30720,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7ddfd290018p6li6XIaWqOaJ",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7ddd6d4002CRulXeL1PNDSGh"
@@ -1170,11 +1170,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201239427,
+          "completed": 1781201248807
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -1186,24 +1191,19 @@
           "output": 329,
           "reasoning": 37,
           "cache": {
-            "write": 0,
-            "read": 50688
+            "read": 50688,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201239427,
-          "completed": 1781201248807
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7ddfd83002nSqB3lHSgSPFUz",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7de0323001DmF1aWq1yQ0eKh",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7ddfd83002nSqB3lHSgSPFUz"
@@ -1211,15 +1211,15 @@
         {
           "type": "reasoning",
           "text": "**Inspecting code structure**\n\nI’m considering inspecting the bundle.py normalization to see if the ReferenceResolution constructors need an update. It seems like I might also need to take a look at the generated binding names for NameDetail, and understanding the structure is key here. I'll read through the generated reference_tables to check if they’re relevant. There’s definitely a lot to untangle, but I'll work through it step by step!",
-          "time": {
-            "start": 1781201241537,
-            "end": 1781201248329
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_0405527c1a0cdb3e016a2af9599b2c8191899fcab972967618",
               "reasoningEncryptedContent": "gAAAAABqKvlg8G-CzVqByBQkdmXovBT2Zhd-DkINx-hQ216XDDlIKWMw6ll-MIR5LUIcHq5-fsNMUNEcxaP3f_rnNIRMV7ObUyISYE7VwwnlHzyw4PChTcrXXDbY3bkqVNQyMqA9YXDCi-5HKkpfkq_wgEq9eH-px3MV_4Arr6_LGZJgCXxp3VImlk0k-D5-ssxD7YkavVLMOSBMiV1IsppZLvoASLdijgTQI6FB-FZl3cHdDMkOpvw7Ql65XSCMutY3ip0mBH7tMxIpSGnatepdXzVss92WdSxkh-LJWRm-GQnW_MAHDk_UQdoIKpGjqsAEUjxSW4NzkWiMWciw5OJCR4vkeJe2FnszVu-X25d_M7Mmeq1_CAUjQ1ZWWYWMK-74uiwXjv4T2nBpesyfSqcmM6eTCG55xIpBPsx8M3qIVe-QK3u-pEHnyitDaeqjLWYlx2wAuhjQi9PjN0DRI0V8yrlCpTCbBHijsEBhf2sElJHbybPtTfski2WW47c_RKZas7i3g95NGBC9kzp4LTjwLCeT2PZlAL58l5HfB5jQIs3PU1kaNsGbjlMLvgnvhxa1q8L2YikwsVO6QtbfaK1GWcx1u3cNrdDeeDaprWwTJ69OEl5k67ZL6jRX2Ot34gxrMpfiFJjO0eKJ7gi9XqVe9tk3oH11o-BhXlMzSNzIUwtHE9vKjUbP52vjYjDIj-F07n3db22HIsS4vxPXt1YLtYPAAmOHE1mqTDimzgbeYftt25N1wRClu12EO2MsUDDLEvGvaCpsweZ6JJjJYv7AV_7K-xnjFIxyS_VNkWr7YPi-lZlx3TG68e-vVG0Gveus4nAD-zssbyyMdzN5-HoUkeSwWNnXSCOfb_jolpJKp-LkyKLfQSDMNKE9jTQjRWBISnSSxH4TRIO2mn-UaMAyQZVROyv7ra3tuOzfYoBjtHIP3KW8AVK1grqd1pqG5RQgN27u3y-pVQu4gkBovD5Kq1BE_gH7ngfieVcjmIMiQE1QLJiPvi4AAi9uqq99mX54wxV4F8AiBGA2svXcmvK-iyNxjSwvMbAljlZ_BC9nmEnM8datyhiH-on3IUL5DJlbUd0-Z2BAyzhwRtZ-WyFkw2Rux286-acLUA_W_-AMKsybtQSDF49Qki5RfvcXb3cIkVBxAUTRLFEcZKle9H9Z6yHtZTLoj12pOA7294e_n-AFJ1ZvNL3IbCydcQC0E5tSNdyeQeXP"
             }
+          },
+          "time": {
+            "start": 1781201241537,
+            "end": 1781201248329
           },
           "id": "prt_eb7de05c1001mI2voHp5gfblPz",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -1227,8 +1227,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_9QCBACzeCS01PzXoAwSDxPwf",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -1237,6 +1237,7 @@
               "limit": 1600
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/src/cvn_codegen/auxiliary_sources/bundle.py</path>\n<type>file</type>\n<content>\n1: from dataclasses import dataclass\n2: from pathlib import Path\n3: from cvn_codegen.auxiliary_sources.entity_metadata import (\n4:     EntityCatalogMetadata,\n5:     load_entity_catalog_metadata,\n6: )\n7: from cvn_codegen.auxiliary_sources.reference_tables_metadata import (\n8:     ReferenceTableMetadata,\n9:     load_reference_tables_metadata,\n10: )\n11: from cvn_codegen.auxiliary_sources.subtypes_metadata import (\n12:     SubtypeMetadata,\n13:     load_subtypes_metadata,\n14: )\n15: from cvn_codegen.auxiliary_sources.thesaurus_metadata import (\n16:     ThesaurusCatalogMetadata,\n17:     load_thesaurus_catalog_metadata,\n18: )\n19: \n20: @dataclass(frozen=True)\n21: class AuxiliarySourceBundle:\n22:     \"\"\"Aggregate normalization-grade metadata from auxiliary source families.\"\"\"\n23:     reference_tables_by_name: dict[str, ReferenceTableMetadata]\n24:     subtypes_by_source_code: dict[str, SubtypeMetadata]\n25:     entity_catalog: EntityCatalogMetadata | None\n26:     thesaurus_catalog: ThesaurusCatalogMetadata | None\n27:     under_traced_table_names: frozenset[str] = frozenset(\n28:         {\"CVN_INTERVENTION_A\", \"CVN_PRUEBA\"}\n29:     )\n30: def build_auxiliary_source_bundle(\n31:     reference_tables_path: Path,\n32:     subtypes_path: Path,\n33:     entity_path: Path | None = None,\n34:     thesaurus_path: Path | None = None,\n35: ) -> AuxiliarySourceBundle:\n36:     \"\"\"Build the auxiliary-source metadata bundle used by normalization.\n37:     Args:\n38:         reference_tables_path (Path): Path to the canonical\n39:             ``ReferenceTables.xml`` file.\n40:         subtypes_path (Path): Path to the canonical ``Subtype_Spa.xml`` file.\n41:         entity_path (Path | None): Path to the canonical ``Entity.xml`` file\n42:             when entity metadata should be loaded.\n43:         thesaurus_path (Path | None): Path to the canonical ``Thesaurus.xml``\n44:             file when thesaurus metadata should be loaded.\n45:     Returns:\n46:         AuxiliarySourceBundle: Aggregated auxiliary metadata bundle for the\n47:         normalization resolution layer.\n48:     \"\"\"\n49:     reference_tables_by_name = load_reference_tables_metadata(reference_tables_path)\n50:     subtypes_by_source_code = load_subtypes_metadata(subtypes_path)\n51:     entity_catalog = None\n52:     if entity_path is not None:\n53:         entity_catalog = load_entity_catalog_metadata(entity_path)\n54:     thesaurus_catalog = None\n55:     if thesaurus_path is not None:\n56:         thesaurus_catalog = load_thesaurus_catalog_metadata(thesaurus_path)\n57:     return AuxiliarySourceBundle(\n58:         reference_tables_by_name=reference_tables_by_name,\n59:         subtypes_by_source_code=subtypes_by_source_code,\n60:         entity_catalog=entity_catalog,\n61:         thesaurus_catalog=thesaurus_catalog,\n62:     )\n\n(End of file - total 62 lines)\n</content>",
+            "title": "src/cvn_codegen/auxiliary_sources/bundle.py",
             "metadata": {
               "preview": "from dataclasses import dataclass\nfrom pathlib import Path\nfrom cvn_codegen.auxiliary_sources.entity_metadata import (\n    EntityCatalogMetadata,\n    load_entity_catalog_metadata,\n)\nfrom cvn_codegen.auxiliary_sources.reference_tables_metadata import (\n    ReferenceTableMetadata,\n    load_reference_tables_metadata,\n)\nfrom cvn_codegen.auxiliary_sources.subtypes_metadata import (\n    SubtypeMetadata,\n    load_subtypes_metadata,\n)\nfrom cvn_codegen.auxiliary_sources.thesaurus_metadata import (\n    ThesaurusCatalogMetadata,\n    load_thesaurus_catalog_metadata,\n)\n\n@dataclass(frozen=True)",
               "truncated": false,
@@ -1251,7 +1252,6 @@
                 "truncated": false
               }
             },
-            "title": "src/cvn_codegen/auxiliary_sources/bundle.py",
             "time": {
               "start": 1781201248440,
               "end": 1781201248595
@@ -1268,8 +1268,8 @@
         },
         {
           "type": "tool",
-          "tool": "grep",
           "callID": "call_V0AhXpzeMGxCkv58OEb7Depo",
+          "tool": "grep",
           "state": {
             "status": "completed",
             "input": {
@@ -1278,11 +1278,11 @@
               "include": "*.py"
             },
             "output": "Found 6 matches\n/home/carlos/uni/tfg/TFG-open-cvn-schema/src/generated/reference_tables/reference_tables.py:\n  Line 18:     name_detail: list[NameType.NameDetail] = field(\n\n  Line 21:             \"name\": \"NameDetail\",\n\n  Line 28:     class NameDetail(BaseModel):\n\n  Line 75:     antecesor_code: None | str = field(\n\n  Line 98:     delegate: None | str = field(\n\n  Line 108: class ReferenceTables(BaseModel):\n",
+            "title": "class ReferenceTables|class NameDetail|NameDetail|antecesor_code|delegate",
             "metadata": {
               "matches": 6,
               "truncated": false
             },
-            "title": "class ReferenceTables|class NameDetail|NameDetail|antecesor_code|delegate",
             "time": {
               "start": 1781201248463,
               "end": 1781201248547
@@ -1299,8 +1299,8 @@
         },
         {
           "type": "tool",
-          "tool": "grep",
           "callID": "call_I2YMSrTRanleNrZbAQKv1krZ",
+          "tool": "grep",
           "state": {
             "status": "completed",
             "input": {
@@ -1309,11 +1309,11 @@
               "include": "*.py"
             },
             "output": "Found 17 matches\n/home/carlos/uni/tfg/TFG-open-cvn-schema/src/cvn_codegen/semantic_policy.py:\n  Line 23: TEMPORARY_REVIEW_REQUIRED_REFERENCES = frozenset(\n\n  Line 25:         \"CVN_SEX_A\",\n\n  Line 26:         \"CVN_ENTITY_TYPE\",\n\n  Line 106:     REVIEW_REQUIRED = \"review_required\"\n\n  Line 257: def apply_temporary_enum_review_policy(\n\n  Line 265:     if reference_name not in TEMPORARY_REVIEW_REQUIRED_REFERENCES:\n\n  Line 270:         EnumEligibility.REVIEW_REQUIRED,\n\n  Line 353:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n\n  Line 363:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n\n  Line 377:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n\n  Line 431:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n\n  Line 445:                 enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n\n  Line 552:                 reference_name=\"CVN_SEX_A\",\n\n  Line 555:                 expected_enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n\n  Line 562:                 reference_name=\"CVN_ENTITY_TYPE\",\n\n  Line 565:                 expected_enum_eligibility=EnumEligibility.REVIEW_REQUIRED,\n\n  Line 836:     ) = apply_temporary_enum_review_policy(\n",
+            "title": "TEMPORARY_REVIEW_REQUIRED_REFERENCES|apply_temporary_enum_review_policy|REVIEW_REQUIRED|CVN_SEX_A|CVN_ENTITY_TYPE",
             "metadata": {
               "matches": 17,
               "truncated": false
             },
-            "title": "TEMPORARY_REVIEW_REQUIRED_REFERENCES|apply_temporary_enum_review_policy|REVIEW_REQUIRED|CVN_SEX_A|CVN_ENTITY_TYPE",
             "time": {
               "start": 1781201248480,
               "end": 1781201248592
@@ -1330,8 +1330,8 @@
         },
         {
           "type": "tool",
-          "tool": "grep",
           "callID": "call_XpbXdk0m31dtmVoKLT52TlDJ",
+          "tool": "grep",
           "state": {
             "status": "completed",
             "input": {
@@ -1340,11 +1340,11 @@
               "include": "*.py"
             },
             "output": "Found 9 matches\n/home/carlos/uni/tfg/TFG-open-cvn-schema/tests/test_normalization_report_unit.py:\n  Line 137:             reference_resolution=ReferenceResolution(\n\n  Line 177:             reference_resolution=ReferenceResolution(\n\n  Line 242:             reference_resolution=ReferenceResolution(\n\n\n/home/carlos/uni/tfg/TFG-open-cvn-schema/tests/test_semantic_policy_unit.py:\n  Line 91:     return ReferenceResolution(\n\n\n/home/carlos/uni/tfg/TFG-open-cvn-schema/src/cvn_codegen/auxiliary_sources/reference_resolution.py:\n  Line 232:         return ReferenceResolution(\n\n  Line 263:         return ReferenceResolution(\n\n  Line 302:         return ReferenceResolution(\n\n  Line 373:         return ReferenceResolution(\n\n  Line 410:     return ReferenceResolution(\n",
+            "title": "ReferenceResolution\\(",
             "metadata": {
               "matches": 9,
               "truncated": false
             },
-            "title": "ReferenceResolution\\(",
             "time": {
               "start": 1781201248497,
               "end": 1781201248588
@@ -1361,8 +1361,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_ePbeOXRgg4LQ0AlutC6aVnjz",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -1371,6 +1371,7 @@
               "limit": 1800
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/pipeline/known_limitations.md</path>\n<type>file</type>\n<content>\n1: # Known Limitations\n2: \n3: ## Purpose\n4: \n5: This document records known limitations of the current pipeline so later issues\n6: do not need to rediscover them.\n7: \n8: ## Structural Binding Limitations\n9: \n10: ### `xs:choice` Is Not Enforced As Mutual Exclusivity\n11: \n12: - Affected areas include:\n13:   - `FlexibleDatesType`\n14:   - `OfficialIdType`\n15:   - `EntityTypeType`\n16:   - `EntityNameType`\n17: - Impact:\n18:   - generated Pydantic models may accept states that are invalid with respect to\n19:     the source XSD\n20: - Expected follow-up:\n21:   - issue `#14` defines the semantic policy\n22:   - issue `#15` should restore domain-facing semantics\n23: \n24: ### `minOccurs` Is Not Enforced For Generated Lists\n25: \n26: - Generated list fields with `default_factory=list` do not enforce the minimum\n27:   cardinality implied by the XSD\n28: - Impact:\n29:   - empty lists may be accepted in object construction even when the XSD\n30:     expects at least one element\n31: - Expected follow-up:\n32:   - issue `#14` records semantic cardinality policy\n33:   - issue `#15` should decide concrete generated validation behavior\n34: \n35: ### Some Attributes Are Typed As `object`\n36: \n37: - Seen in parts of `specification_manual` and `tree_model`\n38: - Impact:\n39:   - validation is weaker than the XSD suggests\n40:   - ergonomics are worse for downstream code\n41: - Expected follow-up:\n42:   - issue `#14` defines semantic treatment outside generated bindings\n43:   - issue `#15` should avoid leaking weak structural types into domain models\n44: \n45: ### XML Helper Types Are Less Ergonomic Than Primitives\n46: \n47: - Wrappers such as `CVN_duration`, `CVN_gYear`, and `CVN_gYearMonth` map to XML\n48:   helper types such as `XmlDuration` and `XmlPeriod`\n49: - Impact:\n50:   - structural fidelity is preserved, but programmatic usage is more delicate\n51: - Expected follow-up:\n52:   - issue `#14` defines semantic base-kind policy\n53:   - issue `#15` should map these cases into usable domain-facing shapes\n54: \n55: ## Generation Process Limitations\n56: \n57: ### `tree_model` Needs A Target-Specific xsdata Override\n58: \n59: - Default structural generation hit circular dependency problems\n60: - Current workaround:\n61:   - `--unnest-classes`\n62: - Impact:\n63:   - generation is reproducible, but not uniform across all three targets\n64: - Expected follow-up:\n65:   - keep documented through issue `#17`\n66: \n67: ## Canonical Source Package Inconsistencies\n68: \n69: ### `CVNTreeModel.xml` Diverges From `CVNTreeModel_v1.0.xsd`\n70: \n71: - Confirmed discrepancy:\n72:   - the XML includes `<Type>` inside `Indicator`\n73:   - the XSD only declares `Value` and `Child` inside `Indicator`\n74: - Confirmed scope of the discrepancy:\n75:   - the canonical XML contains `438` `Indicator` nodes with\n76:     `mo:name=\"Type\"`, which is compatible with the documented tree-model\n77:     structure\n78:   - only `2` real child elements named `<Type>` were found in the canonical XML\n79:   - those `2` unexpected child elements appear under:\n80:     - `Indicator mo:name=\"Type\" mo:code=\"060.030.070.220\"`\n81:     - `Indicator mo:name=\"Type\" mo:code=\"060.030.070.230\"`\n82:   - both unexpected child elements contain the value:\n83:     `CVN_QualityTypeType@AuxTable.xsd`\n84: - Comparison with the tree-model documentation:\n85:   - `TreeModel_v1.0 20090331 v1.0.pdf` defines `Indicator` children as only\n86:     `Value` and `Child`\n87:   - the document does not describe `<Type>` as an allowed child element of\n88:     `Indicator`\n89:   - this makes the two `<Type>` elements a source inconsistency, not a\n90:     documented feature of the tree model\n91: - Practical consequence:\n92:   - the generated `tree_model` binding is correct with respect to the XSD, but\n93:     cannot fully parse the canonical XML file\n94: - Normalization consequence:\n95:   - issue `#13` should treat `xml_path` as a structural path built from\n96:     `CVNTreeModel`, `Node`, `CVNItem`, `Property`, and `Indicator`\n97:   - the unexpected `<Type>` child elements should be recorded as explicit\n98:     mismatches or special-case findings, not folded into the standard structural\n99:     path model\n100: - Parse status:\n101:   - `SpecificationManual.xml`: parse OK\n102:   - `CVNTreeModel.xml`: parse blocked by XML/XSD mismatch\n103: - Expected follow-up:\n104:   - issue `#13` must treat the tree-model XML as a source of truth for\n105:     normalization even when the XSD does not describe it completely\n106: \n107: ### Auxiliary Catalog Families Preserve Historical Packaging Drift\n108: \n109: - affected families:\n110:   - `Entity`\n111:   - `ReferenceTables/Subtypes`\n112:   - `Thesaurus`\n113: - confirmed issues:\n114:   - XML `schemaLocation` values assume colocated XSD files, while the preserved\n115:     repository package stores XML and XSD in separate directories\n116:   - several `Leeme*.txt` files mention filenames that do not exactly match the\n117:     preserved repository filenames, such as `Subtypes.xml` instead of\n118:     `Subtype_Spa.xml`, or lowercase thesaurus filenames that differ from the\n119:     actual files\n120:   - side families duplicate ISO helper schemas instead of using one fully shared\n121:     physical artifact\n122:   - `Subtypes` materials preserve version drift between PDF, XSD, and XML files\n123: - impact:\n124:   - package exploration and automated file resolution cannot rely on filenames or\n125:     relative schema locations alone\n126:   - tooling must resolve these families through repository-aware path mapping and\n127:     documented semantic relationships\n128: - expected follow-up:\n129:   - issue `#14` defines semantic policy for side-package references\n130:   - issue `#15` should decide which of these auxiliary artifacts become domain\n131:     sources versus support registries\n132: \n133: ### Some Annex-I Table References Remain Unresolved From The Package Alone\n134: \n135: - confirmed example:\n136:   - `CVN_AGENCY_C` appears referenced from the manual material but does not map\n137:     cleanly to a matching table in `ReferenceTables.xml`\n138: - impact:\n139:   - not every table name from the manual can yet be promoted to a strict\n140:     machine-resolved enum or closed catalog using the source package alone\n141: - expected follow-up:\n142:   - issue `#14` defines open versus closed treatment for unresolved tables\n143:   - issue `#15` should preserve such cases as explicit external or manual-only\n144:     references unless stronger evidence is introduced\n145: \n146: ### `Subtype_Spa.xml` Does Not Provide A Direct Table-Family Bridge\n147: \n148: - confirmed behavior:\n149:   - `Subtype_Spa.xml` can be parsed and used to prove subtype catalog\n150:     availability\n151:   - the preserved XML is keyed by numeric subtype item codes such as `001`,\n152:     `002`, and not by reference-table family names such as `CVN_KNOW_A`\n153: - impact:\n154:   - the current normalization layer can classify tables as subtype-backed and\n155:     record that subtype catalog data is available, but it does not yet verify a\n156:     strict per-table-family bridge directly from `Subtype_Spa.xml`\n157: - expected follow-up:\n158:   - issue `#14` treats subtype-backed families as enum-ineligible until stronger\n159:     bridge evidence exists\n160:   - later maintenance work may add a stricter bridge only if reliable evidence\n161:     is introduced from the preserved source package\n162: \n163: ### Strict Enum Eligibility Needs Dynamic Reference-Table Evidence\n164: \n165: - confirmed behavior:\n166:   - issue `#14` can classify compact enum-like references by semantic kind and\n167:     serialization pattern\n168:   - the current normalization-to-semantic handoff does not yet expose per-table\n169:     enum evidence such as item count, code stability, label quality, hierarchy,\n170:     delegate/open behavior, or `OTHERS` handling\n171:   - representative compact tables such as `CVN_SEX_A` and `CVN_ENTITY_TYPE` are\n172:     therefore marked as strict-enum candidates with `REVIEW_REQUIRED` eligibility\n173:     rather than final enum decisions\n174: - impact:\n175:   - issue `#15` must not generate strict enums solely from compact enum-like\n176:     semantic kind\n177:   - strict enum generation must wait for explicit eligibility evidence or a\n178:     deliberate override\n179: - expected follow-up:\n180:   - hotfix `#7` should add dynamic `ReferenceTables.xml` enum evidence to the\n181:     normalization-to-semantic handoff\n182:   - issue `#15` should honor `EnumEligibility.REVIEW_REQUIRED` as non-final for\n183:     strict enum emission\n184: \n185: ## Documentation Rule\n186: \n187: Whenever a new limitation is discovered, add it here and reference the issue\n188: expected to address it.\n\n(End of file - total 188 lines)\n</content>",
+            "title": "docs/pipeline/known_limitations.md",
             "metadata": {
               "preview": "# Known Limitations\n\n## Purpose\n\nThis document records known limitations of the current pipeline so later issues\ndo not need to rediscover them.\n\n## Structural Binding Limitations\n\n### `xs:choice` Is Not Enforced As Mutual Exclusivity\n\n- Affected areas include:\n  - `FlexibleDatesType`\n  - `OfficialIdType`\n  - `EntityTypeType`\n  - `EntityNameType`\n- Impact:\n  - generated Pydantic models may accept states that are invalid with respect to\n    the source XSD\n- Expected follow-up:",
               "truncated": false,
@@ -1385,7 +1386,6 @@
                 "truncated": false
               }
             },
-            "title": "docs/pipeline/known_limitations.md",
             "time": {
               "start": 1781201248512,
               "end": 1781201248558
@@ -1402,8 +1402,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_83fsBUViFElGB1Leu9d6MHFC",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -1412,6 +1412,7 @@
               "limit": 1800
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/cvn_generation_roadmap.md</path>\n<type>file</type>\n<content>\n1: # CVN Generation Roadmap\n2: \n3: ## Purpose\n4: \n5: This roadmap is the persistent implementation guide for the CVN XML/XSD to\n6: Pydantic pipeline.\n7: \n8: ## Epic Scope\n9: \n10: Epic reference: issue `#8`\n11: \n12: Goal:\n13: \n14: - establish a reproducible workflow that starts from the official CVN package,\n15:   generates structural bindings, normalizes semantic metadata, and eventually\n16:   emits domain-oriented Pydantic models\n17: \n18: ## Roadmap Rules\n19: \n20: - follow issue order unless a user explicitly requests otherwise\n21: - keep generated and hand-maintained code separated\n22: - document implementation deviations from the original plan\n23: - prefer reproducible artifacts over implicit knowledge\n24: \n25: ## Issue Status Overview\n26: \n27: | Issue | Title | Status | Notes |\n28: | --- | --- | --- | --- |\n29: | `#11` | Project infrastructure for code generation | Completed | Baseline repository layout and config established |\n30: | `#12` | Generate structural Pydantic bindings from CVN XSDs | Completed with documented limitations | Tree model XML/XSD mismatch remains documented |\n31: | `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Completed | Core normalization and auxiliary-reference resolution enrichment implemented; baseline overlap counts preserved |\n32: | `#14` | Define semantic mapping rules and override policy | Completed | Semantic policy bundle, resolver, overrides, naming, wrapper policies, validation inventory, and tests implemented |\n33: | `#15` | Implement the domain Pydantic model generator | Next | Depends on completed `#14` semantic policy and consumes enriched normalized metadata rather than rediscovering sources |\n34: | `#16` | Add automated tests for the generation pipeline | Pending | Must cover both core pipeline and auxiliary enrichment path |\n35: | `#17` | Document and automate the complete workflow | Pending | Must document corrected full workflow including auxiliary stages |\n36: | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |\n37: \n38: Corrective planning after hotfixes `#4`, `#5`, and `#6`:\n39: \n40: - hotfix `#4` structural-scope correction for issues `#11` and `#12` is now\n41:   applied, including structural generation for the canonical auxiliary schema\n42:   families (`reference_tables`, `subtypes`, `entity`, `thesaurus`)\n43: - hotfix `#5` additive auxiliary-reference resolution layer is now implemented\n44:   in issue `#13`, including normalization-grade loading of `ReferenceTables`,\n45:   `Subtypes`, `Entity`, and `Thesaurus` artifacts\n46: - issue `#14` has been completed with those corrective documents in scope rather\n47:   than using the older reduced pipeline assumption\n48: - pending issue documents for `#15` to `#17` must therefore be read as consumers\n49:   of already-implemented upstream structural and normalization layers, not as\n50:   discovery plans for those layers\n51: \n52: ## Original Integration Checkpoints\n53: \n54: 1. structural bindings reproducible from the canonical XSD package\n55: 2. manual and tree-model metadata cross-indexable by CVN code\n56: 3. normalized metadata includes deterministic auxiliary-reference resolution and\n57:    classification\n58: 4. mapping rules for typing, naming, controlled-reference treatment,\n59:    multiplicity, and overrides\n60: 5. domain models regenerable from semantic policy and enriched normalized\n61:    metadata\n62: 6. documented and tested end-to-end workflow\n63: \n64: ## Issue Summaries\n65: \n66: ### Issue `#11`\n67: \n68: - Goal:\n69:   establish the infrastructure baseline for reproducible structural generation\n70: - Core scope:\n71:   - define the `src/` repository layout\n72:   - separate generated code, manual pipeline logic, and future domain models\n73:   - define the structural generation dependency baseline\n74:   - version the shared xsdata configuration\n75:   - fix the policy that the structural layer is an interoperability layer, not\n76:     the final domain model\n77: - Expected outputs:\n78:   - `src/generated/`\n79:   - `src/cvn_codegen/`\n80:   - `src/models/cvn/`\n81:   - `config/.xsdata.xml`\n82:   - reproducible code generation baseline\n83: \n84: Authoritative record:\n85: \n86: - `docs/roadmap/issues/issue-11-project-infrastructure.md`\n87: \n88: ### Issue `#12`\n89: \n90: - Goal:\n91:   generate structural Pydantic bindings that mirror the official CVN XML\n92:   schemas\n93: - Required scope:\n94:   - generate from `CVN.xsd`\n95:   - generate from `SpecificationManual.xsd`\n96:   - generate from `CVNTreeModel_v1.0.xsd`\n97:   - generate from `ReferenceTables.xsd`\n98:   - generate from `Subtypes.xsd`\n99:   - generate from `Entity_v1.4.xsd`\n100:   - generate from `Thesaurus.xsd`\n101:   - verify include/import resolution\n102:   - verify module importability\n103:   - test real parsing flows where possible\n104:   - record structural limitations detected during generation\n105: - Implemented outcome:\n106:   - standardized xsdata runner added\n107:   - structural bindings generated for core and canonical auxiliary concerns\n108:   - runner tests added\n109:   - `SpecificationManual.xml` parse verified\n110:   - `CVNTreeModel.xml` mismatch documented\n111: \n112: Authoritative record:\n113: \n114: - `docs/roadmap/issues/issue-12-structural-bindings.md`\n115: \n116: ## Documented Maintenance Hotfixes\n117: \n118: ### Hotfix `#1`\n119: \n120: - Goal:\n121:   replace operational `print` usage in the xsdata runner with `logging` and\n122:   document the repository convention for logging and string interpolation\n123: - Scope:\n124:   - define a module logger in `src/cvn_codegen/xsdata_runner.py`\n125:   - replace runner progress and error `print` calls with the appropriate\n126:     logging level\n127:   - document that `print` is reserved for direct console interaction\n128:   - document f-strings as the project standard for interpolated strings\n129: \n130: Authoritative record:\n131: \n132: - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`\n133: \n134: ### Hotfix `#2`\n135: \n136: - Goal:\n137:   introduce `PROJECT_GUIDE.md` as the human repository entry point and align\n138:   the documentation maintenance protocol with that change\n139: - Scope:\n140:   - create a human-oriented entry point equivalent in practical guidance to\n141:     `AGENTS.md`\n142:   - stop routing human readers through `AGENTS.md` from top-level docs\n143:   - distinguish human and agent reading orders in the persistent context docs\n144:   - require updating `PROJECT_GUIDE.md` when human-facing repository guidance\n145:     changes\n146: \n147: Authoritative record:\n148: \n149: - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`\n150: \n151: ### Hotfix `#3`\n152: \n153: - Goal:\n154:   document the canonical source package beyond the core structural subset and\n155:   preserve the auxiliary-family and Annex-I coverage analysis needed by later\n156:   issues\n157: \n158: Authoritative record:\n159: \n160: - `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`\n161: \n162: ### Hotfix `#4`\n163: \n164: - Goal:\n165:   correct the structural scope of issues `#11` and `#12` so the repository\n166:   infrastructure and structural generation plan cover the auxiliary source\n167:   package families\n168: \n169: Authoritative record:\n170: \n171: - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`\n172: \n173: ### Hotfix `#5`\n174: \n175: - Goal:\n176:   correct issue `#13` so normalization grows from plain manual/tree alignment\n177:   into an additive resolution layer over auxiliary reference sources\n178: - Implemented outcome:\n179:   - normalization contract enriched with typed auxiliary-reference metadata\n180:   - normalization orchestration extended with optional auxiliary-source inputs\n181:   - deterministic resolution now covers direct tables, subtype-backed families,\n182:     side-package registries, side-package thesauri, hierarchical thematic\n183:     references, unresolved cases, and under-traced documented tables\n184: \n185: Authoritative record:\n186: \n187: - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`\n188: \n189: ### Hotfix `#6`\n190: \n191: - Goal:\n192:   realign the roadmap for issues `#8`, `#14`, `#15`, `#16`, and `#17` around\n193:   the auxiliary catalog integration now known to be required\n194: \n195: Authoritative record:\n196: \n197: - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`\n198: \n199: ### Hotfix `#7`\n200: \n201: - Goal:\n202:   replace hardcoded semantic enum decisions with dynamic\n203:   `ReferenceTables.xml` evidence carried through the normalization-to-semantic\n204:   handoff\n205: \n206: Authoritative record:\n207: \n208: - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n209: \n210: ## Future Work Focus\n211: \n212: ### Issue `#13`\n213: \n214: - Goal:\n215:   build a normalized metadata layer consumable by the future domain-model\n216:   generator\n217: - Required scope:\n218:   - parse both metadata XML sources\n219:   - build indexes keyed by CVN `code`\n220:   - extract technical XML paths from the tree model\n221:   - compare overlap and detect mismatches\n222:   - expose reusable normalized structures with source traceability\n223: \n224: ### Issue `#14`\n225: \n226: - Goal:\n227:   define deterministic mapping rules from normalized CVN metadata to domain\n228:   models\n229: - Required scope:\n230:   - consume enriched `reference_resolution` metadata from issue `#13`\n231:   - type mapping rules\n232:   - semantic policy per normalized reference kind\n233:   - naming rules\n234:   - `choice` and wrapper treatment\n235:   - explicit override mechanism\n236:   - semantic treatment for auxiliary reference families and serialization\n237:     patterns described by hotfixes `#5` and `#6`\n238:   - avoid re-deriving source-family or subtype-backed detection already handled\n239:     by normalization\n240: - Implemented outcome:\n241:   - typed semantic policy families, enum categories, override precedence,\n242:     Spanish-first naming, temporary review-required enum eligibility, wrapper\n243:     treatment, and representative validation cases are implemented and tested\n244:   - hotfix `#7` remains the follow-up for dynamic strict enum eligibility over\n245:     compact `ReferenceTables.xml` evidence\n246: \n247: ### Issue `#15`\n248: \n249: - Goal:\n250:   implement the domain model generator over normalized metadata and semantic\n251:   rules\n252: - Required scope:\n253:   - traverse `CVNItem`, `Property`, and `Indicator`\n254:   - emit first representative domain models\n255:   - factor reusable shared domain components where appropriate\n256:   - keep output deterministic and traceable\n257:   - generate distinct domain representations for enums, open coded values,\n258:     subtype-backed tables, registries, thesauri, hierarchical references,\n259:     unresolved references, and under-traced references\n260:   - consume semantic policy and normalized reference classifications rather than\n261:     re-discovering auxiliary-source meaning in generator code\n262:   - preserve `SemanticDecisionTrace` in generated artifacts or metadata so CVN\n263:     source traceability survives the domain-generation step\n264: \n265: ### Issue `#16`\n266: \n267: - Goal:\n268:   add reproducible automated tests for the structural and semantic pipeline\n269: - Required scope:\n270:   - fixtures from canonical XML files\n271:   - parsing tests\n272:   - normalization tests\n273:   - auxiliary-resolution tests\n274:   - semantic mapping tests\n275:   - generator output tests per semantic class\n276:   - import tests\n277:   - end-to-end pipeline coverage\n278:   - regression coverage for auxiliary structural targets and reference-resolution\n279:     behavior\n280: \n281: ### Issue `#17`\n282: \n283: - Goal:\n284:   document and automate the full regeneration workflow\n285: - Required scope:\n286:   - architecture documentation\n287:   - step-by-step generation workflow\n288:   - limitation documentation\n289:   - obvious regeneration entry point\n290:   - final repository documentation updates\n291:   - explicit documentation of auxiliary structural generation and\n292:     auxiliary-reference resolution stages\n293:   - explicit source-of-truth order for controlled-reference resolution and\n294:     fallback behavior\n295: \n296: ### Issue `#25`\n297: \n298: - Goal:\n299:   add a GitHub Actions pull-request test workflow for `main` and `development`\n300: - Required scope:\n301:   - run on pull requests targeting `main` and `development`\n302:   - use the documented Python and `uv` environment\n303:   - execute all automated tests under `tests/`\n304:   - expose a stable status check for branch protection\n305: \n306: Authoritative record:\n307: \n308: - `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`\n309: \n310: ## Required Companion Documents\n311: \n312: - architecture: `docs/pipeline/cvn_pydantic_generation_pipeline.md`\n313: - limitations: `docs/pipeline/known_limitations.md`\n314: - current state: `docs/context/current_status.md`\n\n(End of file - total 314 lines)\n</content>",
+            "title": "docs/roadmap/cvn_generation_roadmap.md",
             "metadata": {
               "preview": "# CVN Generation Roadmap\n\n## Purpose\n\nThis roadmap is the persistent implementation guide for the CVN XML/XSD to\nPydantic pipeline.\n\n## Epic Scope\n\nEpic reference: issue `#8`\n\nGoal:\n\n- establish a reproducible workflow that starts from the official CVN package,\n  generates structural bindings, normalizes semantic metadata, and eventually\n  emits domain-oriented Pydantic models\n\n## Roadmap Rules\n\n- follow issue order unless a user explicitly requests otherwise",
               "truncated": false,
@@ -1426,7 +1427,6 @@
                 "truncated": false
               }
             },
-            "title": "docs/roadmap/cvn_generation_roadmap.md",
             "time": {
               "start": 1781201248523,
               "end": 1781201248565
@@ -1442,20 +1442,20 @@
           "messageID": "msg_eb7ddfd83002nSqB3lHSgSPFUz"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 81588,
             "input": 30534,
             "output": 329,
             "reasoning": 37,
             "cache": {
-              "write": 0,
-              "read": 50688
+              "read": 50688,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7de21a50010R6RWowFvAp8O8",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7ddfd83002nSqB3lHSgSPFUz"
@@ -1464,11 +1464,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201248815,
+          "completed": 1781201253015
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -1480,24 +1485,19 @@
           "output": 95,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 80896
+            "read": 80896,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201248815,
-          "completed": 1781201253015
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7de222f002LcB2hhj5TXBwbr",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7de2815001Cgj5662oZgUBYr",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7de222f002LcB2hhj5TXBwbr"
@@ -1521,8 +1521,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_hg2AbNgQyuOqk8Q3vkknJcgS",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -1531,6 +1531,7 @@
               "limit": 180
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/src/generated/reference_tables/reference_tables.py</path>\n<type>file</type>\n<content>\n1: from __future__ import annotations\n2: \n3: from pydantic import BaseModel, ConfigDict\n4: from xsdata_pydantic.fields import field\n5: \n6: from generated.reference_tables.isoutilities import Iso639\n7: \n8: __NAMESPACE__ = \"http://cv.normalizado.org/referenceTables\"\n9: \n10: \n11: class TableTtype(BaseModel):\n12:     pass\n13:     model_config = ConfigDict(defer_build=True)\n14: \n15: \n16: class NameType(BaseModel):\n17:     model_config = ConfigDict(defer_build=True)\n18:     name_detail: list[NameType.NameDetail] = field(\n19:         default_factory=list,\n20:         metadata={\n21:             \"name\": \"NameDetail\",\n22:             \"type\": \"Element\",\n23:             \"namespace\": \"\",\n24:             \"min_occurs\": 1,\n25:         },\n26:     )\n27: \n28:     class NameDetail(BaseModel):\n29:         model_config = ConfigDict(defer_build=True)\n30:         name: str = field(\n31:             metadata={\n32:                 \"name\": \"Name\",\n33:                 \"type\": \"Element\",\n34:                 \"namespace\": \"\",\n35:             }\n36:         )\n37:         short_name: None | str = field(\n38:             default=None,\n39:             metadata={\n40:                 \"name\": \"ShortName\",\n41:                 \"type\": \"Element\",\n42:                 \"namespace\": \"\",\n43:             },\n44:         )\n45:         lang: Iso639 = field(\n46:             metadata={\n47:                 \"type\": \"Attribute\",\n48:             }\n49:         )\n50: \n51: \n52: class ItemType(BaseModel):\n53:     model_config = ConfigDict(defer_build=True)\n54:     code: str = field(\n55:         metadata={\n56:             \"name\": \"Code\",\n57:             \"type\": \"Element\",\n58:             \"namespace\": \"\",\n59:         }\n60:     )\n61:     order: int = field(\n62:         metadata={\n63:             \"name\": \"Order\",\n64:             \"type\": \"Element\",\n65:             \"namespace\": \"\",\n66:         }\n67:     )\n68:     name: NameType = field(\n69:         metadata={\n70:             \"name\": \"Name\",\n71:             \"type\": \"Element\",\n72:             \"namespace\": \"\",\n73:         }\n74:     )\n75:     antecesor_code: None | str = field(\n76:         default=None,\n77:         metadata={\n78:             \"name\": \"AntecesorCode\",\n79:             \"type\": \"Element\",\n80:             \"namespace\": \"\",\n81:         },\n82:     )\n83:     link: bool = field(\n84:         metadata={\n85:             \"name\": \"Link\",\n86:             \"type\": \"Element\",\n87:             \"namespace\": \"\",\n88:         }\n89:     )\n90:     item_note: None | NameType = field(\n91:         default=None,\n92:         metadata={\n93:             \"name\": \"ItemNote\",\n94:             \"type\": \"Element\",\n95:             \"namespace\": \"\",\n96:         },\n97:     )\n98:     delegate: None | str = field(\n99:         default=None,\n100:         metadata={\n101:             \"name\": \"Delegate\",\n102:             \"type\": \"Element\",\n103:             \"namespace\": \"\",\n104:         },\n105:     )\n106: \n107: \n108: class ReferenceTables(BaseModel):\n109:     class Meta:\n110:         namespace = \"http://cv.normalizado.org/referenceTables\"\n111: \n112:     model_config = ConfigDict(defer_build=True)\n113:     table: list[ReferenceTables.Table] = field(\n114:         default_factory=list,\n115:         metadata={\n116:             \"name\": \"Table\",\n117:             \"type\": \"Element\",\n118:             \"namespace\": \"\",\n119:             \"min_occurs\": 1,\n120:         },\n121:     )\n122: \n123:     class Table(TableTtype):\n124:         model_config = ConfigDict(defer_build=True)\n125:         item: list[ItemType] = field(\n126:             default_factory=list,\n127:             metadata={\n128:                 \"name\": \"Item\",\n129:                 \"type\": \"Element\",\n130:                 \"namespace\": \"\",\n131:                 \"min_occurs\": 1,\n132:             },\n133:         )\n134:         name: object = field(\n135:             metadata={\n136:                 \"type\": \"Attribute\",\n137:             }\n138:         )\n139:         version: object = field(\n140:             metadata={\n141:                 \"type\": \"Attribute\",\n142:             }\n143:         )\n144:         antecesor_table: None | object = field(\n145:             default=None,\n146:             metadata={\n147:                 \"name\": \"antecesorTable\",\n148:                 \"type\": \"Attribute\",\n149:             },\n150:         )\n151:         source: None | object = field(\n152:             default=None,\n153:             metadata={\n154:                 \"type\": \"Attribute\",\n155:             },\n156:         )\n157:         xmldata_type: None | object = field(\n158:             default=None,\n159:             metadata={\n160:                 \"name\": \"XMLDataType\",\n161:                 \"type\": \"Attribute\",\n162:             },\n163:         )\n164:         xmlproperty: None | object = field(\n165:             default=None,\n166:             metadata={\n167:                 \"name\": \"XMLProperty\",\n168:                 \"type\": \"Attribute\",\n169:             },\n170:         )\n171:         xmlindicator: None | object = field(\n172:             default=None,\n173:             metadata={\n174:                 \"name\": \"XMLIndicator\",\n175:                 \"type\": \"Attribute\",\n176:             },\n177:         )\n\n(End of file - total 177 lines)\n</content>",
+            "title": "src/generated/reference_tables/reference_tables.py",
             "metadata": {
               "preview": "from __future__ import annotations\n\nfrom pydantic import BaseModel, ConfigDict\nfrom xsdata_pydantic.fields import field\n\nfrom generated.reference_tables.isoutilities import Iso639\n\n__NAMESPACE__ = \"http://cv.normalizado.org/referenceTables\"\n\n\nclass TableTtype(BaseModel):\n    pass\n    model_config = ConfigDict(defer_build=True)\n\n\nclass NameType(BaseModel):\n    model_config = ConfigDict(defer_build=True)\n    name_detail: list[NameType.NameDetail] = field(\n        default_factory=list,\n        metadata={",
               "truncated": false,
@@ -1545,7 +1546,6 @@
                 "truncated": false
               }
             },
-            "title": "src/generated/reference_tables/reference_tables.py",
             "time": {
               "start": 1781201252843,
               "end": 1781201252865
@@ -1561,20 +1561,20 @@
           "messageID": "msg_eb7de222f002LcB2hhj5TXBwbr"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 88614,
             "input": 7623,
             "output": 95,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 80896
+              "read": 80896,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7de324f001VfU3errvPx8093",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7de222f002LcB2hhj5TXBwbr"
@@ -1583,11 +1583,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201253024,
+          "completed": 1781201305277
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -1599,24 +1604,19 @@
           "output": 380,
           "reasoning": 1082,
           "cache": {
-            "write": 0,
-            "read": 88064
+            "read": 88064,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201253024,
-          "completed": 1781201305277
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7de32a0002GLBikUEkBOKYdd",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7de384d001Ur1gFMG0zHHPwc",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7de32a0002GLBikUEkBOKYdd"
@@ -1624,15 +1624,15 @@
         {
           "type": "reasoning",
           "text": "**Considering XML inspection**\n\nI need to figure out if I should use bash to inspect XML content for table counts and labels. That might be useful! I can plan to run snippets and potentially use the `read` command. Reference tables are massive, so maybe I can use `grep` to search for table names. I wonder if `grep` will be enough to get the information I need. It's all still coming together in my mind!",
-          "time": {
-            "start": 1781201254785,
-            "end": 1781201257086
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_097fca6b3343818e016a2af966cf30819191214870fefc2db0",
               "reasoningEncryptedContent": "gAAAAABqKvlpa1J3yxl-_Vp6FzoBb0-Tb3J9LPGaY3YcrtGCf-QQ2tUjDf2aGAyJ4zSwtTYSAIOjkCEJCFKYbNOLSv7VtqfAjwkZEDQsRTQ0wRJwBzRTbWdaknGTNDr_5893ARmg6Yo-toyKSykR7VVrGh9nanjjD1ghwGYPRkVPLog2octJEvx4vsgbAJF7KE2uFC0PU-Lv7oFpzurAE6LwTyR95mSaqOyL-AYlOu2IIH4AWSwB3SaZJGlkr-BzpVfcrquaJWaN6eA2cUy4U55DpizCsHfxPnzj1q84pzrTsmfYTdzMMA3puCH_Y3np4j4t_9jOAFnR6qODmKnXno5ImtJEssKVTPWtb4hYlYawIf0IzZJoD8VzLsHDCIkKUXdXAtOtrihA4ZlTxLiNL9VXOvTqebR81AgvBTH26cyX6Yn0O1yxrF469G0gdub9Qo2yoWVOVtqrHZdWrzSESwjTai-HUicvv7u3PgzXMeNdlKBSspOfx_wWx5ZvKidbvyb18EMENG2-yQhTasn7xo9Z1g_l4xxOaRFmU4I163UQzxWL0qT3gsb7pZS2BVxo2C5eaqBdIjFW-gzTIaleTCrm0r97wYoSqGb0MfxUxA3SlYG0YOhyyJqunNlE6rw_OOhnFdEACFbGnRNBt4vTjMnrYc8PEhr4ZcZWFcpP6yhLSIK7GX_qzwDEAF8t8aoFFYMskIZa5LYRnba3zW9uqeaTtjkkkU59nV0ZcXKfR7_hFuVNXZReGuW7b5AB8Xip3DNidVmiB_59Gmn4ZoqA4kGluygTUcgIL1czcAnqwz_3AysWb8CmbJcs9OmZ6TpMHrtTBpKjnC2j0Sfcv96Rc7LxFdQLn2rnaUs2Lq3L31aZZk75onx6ZMjZntH60ZlqRMR33mKlWycZUC8de9PdPSyAIonuWWH3WZrYVzLXugLHTpuiPJb68YcGckk_Y37YOtrh-hYzzw5EeY2x24mx6v1q1zydQZPxoxWPioVmHj_AxkieTsUSd1DN0n1EYpRdnPwlqwP_Ft_96q8YAAF8KuscyTnzhZyaOaZdPESI5YVZXSpmI3IPnc4VjGACIKuPKb4YE-J-S9oCqyBMAi8dN8SRS2c_nSpY0VtU95V2VwzYi5-tF1s4wqz2vAHFGAT4t_Z7LYNe15sjGbBU7Gyz-eeD9QWKtxAO2F1qMWiaRCVJ5Q7hz5R7U_pBuv6tah0EymKf3s3QeJZ_"
             }
+          },
+          "time": {
+            "start": 1781201254785,
+            "end": 1781201257086
           },
           "id": "prt_eb7de3981001LwjQxcx165s4ej",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -1658,15 +1658,15 @@
         {
           "type": "reasoning",
           "text": "**Evaluating current source methods**\n\nI’m thinking it might be helpful to know if the current source gives the expected results. Using bash could work since it doesn’t involve writing. Instead of using `cat`, I might run a Python script to parse and print out metadata details. Though, I need to confirm that the code has enough evidence. I can use Python alongside a generated parser to check specific table items without file operations.",
-          "time": {
-            "start": 1781201257191,
-            "end": 1781201276503
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_097fca6b3343818e016a2af96935688191a79831b832d3a1eb",
               "reasoningEncryptedContent": "gAAAAABqKvl8fQJ5-X3a6Mg6yppopDNDcjxFC0i5ovhiPp3yBthUHVWhQ9Qfi_4m95ggYKqSAGSpOSEb2ScsdJqE4dc3DrcSPr2KcLcog2tyX-4CY-q9qJkQyygDRMl1FIzxVxdCqiLSlxwEGXn4KavY8yaHL8d6qXYwZ6-aMSdiZQZRUxKrovzumsB_iDHd3vm9VG_VESf2TSG7780vYOMy_CsF7G04L6Toi-xWsGKPhXdG9uYoZJRegADujutwN-0mwfRKXyvaycxHgnuF-emUSCV2hHDUeflWqz1cEv9CCgpFcD0IEMKxSMVaf3oOKaFYBfef8o4iZQvPGEtyVOm49doUNvYbNCaJJ0r1XJu6ypeZCvlkb2BMplyXRQgSqcejh6ro4aIFZS3MbRJq5yPVPFjQb7DZxtd6rWkc7L8b69mcjAiOIkrhrzaQxPOPxYAKqoqmyqEfDGjHiurPhFQnZIFDlXjpSnoCgyu14mIHHIEqftT_lW44iaYwYjRcQ3tmMfr8c7PM9OzqNSe-cHUtSM5dazXsV0yEcA_8o_XN5NtEEwOu4nW-eHrsBsEqSLqfixiRV2dMiztD1attq8nQG-nWOjuKadd1q5eY_XTnTKB0fYpx7ipiXtRvi2GA7bacdVm-kgrIi5KTEJN9zva5aPFnxN4gSBsA7PzsABsTHnzf9VKdblTlX7YKqwEEkc1Q6gEIbLoiKN7RA8RkhoYpDu5rYY-ozpZWpEcBEPzoqt9CxWLKNW5pQQ-ecKgSad0vOx7IzCHfwm-GQ4SNj87ZRhCIWDb1boF0cbNoOr6aFGbMWAzvCJiFQ98aXdNlB61yJsJzcSO7ZdxSllGsGPOExH_SWTBpXTYIGfTxwPgnsTPh7-_S4lrXkr0KSMaK0XZI1Vpi2zHSYhZMicMg2eed27-U7QSF24Fr-rGaG2W06Up_YLkVRDpnbscJcVif_Cb5Mldy-2SbZVYZTtXy64jSiYvtPI2g_JkE68ijd8vv1Gi8cpqJFiMEVwEhVxFpGUV_4r3YeixB8XOcxXkklRYGlsjKl0rjSFPaWtfPs9adNaloR80TuqAiVAwHgQJm8iiG8LomXmx8i4p8-juhUzOMrF0D8uWHiZZwDsxuSguRtvm-kAS0rYQTxRwOEndZkqTeIXGyL09v_IHCOyCWNA4tk-5jZzoRDrW9jtMVeNGjQqRz72ieT_xYMPzY6jrYyCugmYnKQUNOX_c2SdN5oFvnDt9mEGxcBTPZgm5lBxep06mLNLtiP7meVRzPu1zw17ZzumO5jM557hrRqoKfuPyOrZEatUUjhBt_3DRIgRIj0RkSqTslfmGLFSuY3fl_oNp6SU7gF8hRj1Emzl4Nb0VsgM7uTxVrt0ITbMmMhHZ1uccB-DlBHqC44Vr8nVqh1DKWzl-ywMNPr3Ph2u2ya14kvEa0V0Jvskjz7z3REHzf0zBt3Sax0gLCAmBy5g5sNSzxNYv-HqQT_3V4IIPm1m4CvNK9hhSc7m9_wb_QWCstIdtduejVe54PftaA5yi3o7625nvYJxwenk6li4Th4haM3O6eG6j2NTJheK_ZivR7kbJlqxyD0sGD209WVQncxFvUvg2r4F_xoSLypfq4BIloja8OmxMhenF5VBiQTVUJiSSI2_F11tlbe4le9R1ZUxhz5Mi75qe_19MBxPDVcOn4R-IYTC8-Nd-R_vW_VRLPPMZRk44bsClVg9K54Qiz76dHdMTyYwrguQ1YSfElHfcv1SXs4zSpQ86KMohdLiEgMpyG14YylhlPsHGA4pTVi4valMvZFrGytddKJmnsoPHHLHt3LoVtNTh1X5tM0yfVOFvjOJodIxWbcjhaTlzVhA3oorki83Vvj5YAMoaR1-G8aGBhQHTbl4DMRU-KvIcTsg5JSHeFrFff71E57p0Gzl5v5TM7p-F4UItZOh9jJCCvv_haBoWTZa0xmVwAtV57dfgHrac0XPJkNoLgookJ1R5c4c1KZxrmX9Qqg5gMw4FKpbtP47A272yrMDOXtVNuf5P9Wsc8YAGJGrr3T6YNRO71yOJ1YKxD5EcdpEDvlQs_0q2_7fMLlzss_86Pp2Z0accbNjKx2vcgxgdosryIb6vKgm3qYXebsDbf0gLZda4Y-CDiBk7tUIFJ6NebbXEiWtWljaMywq9VLcu37HCY2XGQ5QtQkMJiUv5wC3uZcTVQGZmihqvHVgQMfE8p4QmkPRliCHY2BVEh-Tpu0HebJP0VGb3sukaQqgLixrCqycanAEH5DSHL-7pKO2FVF9iWxJ4eZhGsLKYuUU2OX31lxlzdmiR-QI61ay71FGXbq2IcMX_2Ry1m5tV-pdQwULB37D7VPnmSni6NX15alcoJ3aeQziwWJ8DBkmXsyIuunH65RQUdVbJkDcl5dy1KLeYBbiw01yMvyb4kvNdbXFv-Iw0ivflmBXbJ1fIiPaftAtNloivSvPatn0wRc2Cq8Fh7hUdoLVBiSOcHt2tHnMq_O9Fy0LKkmL4f_sbYAgZKMDowIrtp8iwDoeS1vQxGYD6kZe8LIakxxeZP3aExgw6qC37wL6r5w2M4t8a18Tp3N_6HmSx3RLA6s6IEFOyD9wWRO9wNdtJCV4-N0kRPv-7Jfd4WmQD8pvXCDSQPgoin1qrjOO5e3XbgALK8BRKNjzY8Ehb8BlGvDDtxUANNaL6kgnG2B2YoMabEMveka64DgXXdBbkXK69pNhowMzT8m6qznFPw1EugXDKPp2zJQHVk9AXMtlEPuc487__ASsL3s5BSVN7bxrgEst3Ag14LnlqGNbBQ2ue_qr7D7OGo30tUOW_8lA43fbDnjXYIKLgDomkokgTKaU1unJbtGpjPs2u32-q2zJ4M-VIW107qqhbkFRr_3Y2oUKXBnkGXj5gKYodXr1Cg19ZysUIhks7lFSTRR96fP3bomVOTHu8zjXxI4opfE1XZYYpe58duDKniLmG4nnEzEuimLfFDoDmTZ0o_bV8uHzjzEutN4k3oQvZ6Gs8kxK95BHEpIhTxM7xPw_piBmFt-Hk2udICTFDRfMcosGcWPCKYBXPAUA30WkVut_j3rgrzzEhlcFe1-GxuqBYAmQVDGsoEuYhX9hGjRkAnaWYmuuobmqdeUdCKYsolNXzEu8r8E7cUZN4o2phQNvAKCx02mDexuBdxGvkDmXfHVxEuL7-UW1ULOqlA_fsT0MD_ZfOEP_j3kAu9oQXDiCUwmOvfgP48stMMOVf22Sy89pgd34GL_TEKgkX_mmjsuyg9le30uMbzm4DoCxzPdtwSKwtyW-AGrjCYx-qQ53pJuY1VIvLr7a1s-n-MPBq7vij0io65hbanm-aViO33OpCzAh2iBSakYHP46rasvqxHaaqUEBus8ipJuN-cT6LXjSMiroOnBxaiL0biPI9nw4AjEI764Qu76u5tg4i1F06Rdb5_SyUXL4BDdrhunHQomftBnlPOQYA5AADF3kFsFcqBufPojtlWSS8L2mefmR6chc-BsJPcsuAVLJw2ww82N7InANit0FjZLJzaiw8y3UXyraf5QUUpDc3P9Z1vbTnzPWVEkJnQckdFGfcbZHXLFXdm5HMalK2lWcXHuFCLe6tjmm_FE6Jtx7K4HEUT2s--ItXqe2uxwhSIFzfR7XclDDvF8GRbax83_WNolXSUGGeRr07xAsuyHeV2hWScOuGDrJlJCWk9TuZVV6baI1SQ3ihnad0Ucqp9Uir9cVi4Nz5vCBuB5mRuEmrQAnZoXj0HVKLz0S2n6n-mHHwMEBY4xwPerCy6YUz6RaOubmhkBM7FUPk7boZ7VjoHB1_y6iIMB8K0d-sUgVLRg3Yg-XTH7Rv5-GtuncpU6dzAbKCetWEBJGBxggSKOL4a3Iwipl4MBsPPWLVip1A58_ImbeRcNtp_uU-PJQ3vp7nF1RXYkuclM7iIwN6UIfM7sN8t1Y1vOuXQByfq9_FqBBDzl3mQgmESdhR7mr_k2vVHAVUGm2NI1NsrgzTM-sKSexckUk1EUFt56ld5rvmJ5KCutBFvHUiA6-rZRbNvUL40okGlM6z8e08FzrQMa-FkSg_K9msdKTFzFumXCokO2MdTaNiR0ELoAV0wXFW8erpj2XwDIlPydFZJ4vfrD95PW6PkiEoJVhk_5SHO-2dyvNVtiM2g7IGnfKnb6UA0S9gE0Xxo4_wGR0lDhzoWSylAwOD1ybSPujfx3JbpQRnmDkqCUAW2CYEaoTPkEUrQNLj_hZzVOgn6X_TuWgpiMzzltgJYjsI7D_MgLwYBT13v34o1FDMs_V8KQFO2bMuQGPrTQKBfaPgrkcnVAmKW10d-bvun4UUIqsuf-XmpM-FAyDcwSN1cv-J7ZdXqsXD9Ve2cbbx18mQbuy0cnoXzMvcya1kqv2wzdjTVB7AlqRUenXym_-TYvLHCFU3fgmJaoRzG3xyDzJ-lBkxb_oZU5UDvWJn5myHk4XoqcIZR47Fa_oZGVphmUGrRT9bm3y1Cst_PiatnEafqGLQpKCBXDrySK9v2zb05bZKbctlok9YDsz9ubNCjpf46CGkLqHgf6J4vA4kpDgraC_Bzrjqurv4rA4CCdfk7Op4_VOOnE9HuolK4TyS_0_CaLzGDjpW7zgpZ6pdROyy53yckMMFkBa5dr-1GSF9WFHCIN5t8gJtugCbi79nYucOEeKpOUUOrWFjSu2Pws78SDIyONoTpTWOs7p140BlClSPmPRRt4-tMuI_ltJUCjDHZPeUKJdPDXGhgBeDLxx2FJe69UlutKA-BUHlX3yb77tGyQf2p6LpH3mfZ9EWGlPtxjjiGW2NNe4ucYhbXbfrX7Z0cx8fzO19NkVVchxs-N-_qRIxYMtj1x_riNlbvRJ-bY2dkNzqL8BRiq1zPxZlpdMRTjysDPt5nR23jUXOjwhZ9F75ccZ5y5Bw7VttZj7vAnMdYVZ1v4qhO3v2YrAEedZxZ8wjWMHagSRJ1BLBPjmntZpWKL4lS0sT_aJ6AwqlbcSr1_84u-NRhU-n_-7zZz3W29iamshcLksjK3jMvGawRjv11KNSkAe2gJQNf8WfRs8hzNgwf7xPA-ibUiZNKA0kCADi1KniFQU1bJg9qtHhfG-Ay3g9CPKLJ4cDc_logDCyrt_0avYfV8LcOm8qYHRs079Mcw_Mg8etIC7ABuma83IvSOMd3AVHNHG3S3ShfaiNV8CSkUxJevxnzbCw-_F-qQa9p5jrfTtbEaL62LntvmujW2Zl4amyJxXXc9jjxOnxwVPwKZX2JXavX7yRl5YHmR5AtvrGPvPNx8pHUzSxjW8dTsQUZxTfflw4jJnxlM24mkGC4N0lAOM7hwm0n3l3A7lzTa6h4cAZPXfCYn6WBoEpUu5qFEBmK2AV08tTMzv2uipOOUJfZu9nOyBZWpmHxqTsY8NpP-NT5U8sxGdHZXrPv0OtEaXStkPpVpxlREnYnBnKUwwU0Yf-s-XvXruHiNqWn_F-EQuEGcqCqpU9-4zAeFoVXOEOgabvd9SZofh0edvyyRfIalvBZuZVdkBsXDtVv3onWYi7dDemwJRpUFmfINx-3K_T9-gsEX4THNBh3UBMS5NbNCtoN3YhM1f-tu3jdAMls5Wtt0LsmGkDFyGj6qU_7DHWT3WDXjuMj3oT59y5TGbCbnNbxOz64SthEN8LPDE6RZt57J5EsiMXYB_IFfNmUgI77Sifwt_Ebla8y0vKgmaMyEMdYqpOBf9noI-VdCLyj2IvajhcCw5szk0W0MCT_366jvT7h_WV4EjTl6fSKBc6Py1mDrPxObvl00lgFPv5ih2rJ-Utjpv6UxruIMVCiAlwcglmia22ma2bH08bPKZZMb79CFQZ8-R92k3zxeDaRsO5U5qlRLl-r_FdTuCPIpfLrxG06PYcpv2cM0GUev3f9KZt3mRJAPeQMt46jlM9J8YL8Zcx1MKyBAoOl2YWkBMczgrtPu0JtOu68qE0VSYJhfMwKbfck8XP_dGNoeV2qyKO33Vth0iTB_m_uoligjtGEgm9a3xcFM5QnYkFgUBgSP6NlHHnAACJXejWIfy5m2zNSgTOiavCVRT6AHpxNqima-nQDwBLHiDy1PxOLwJPuit_VI_bW3R7uzYMHgipZfzdvNzNGJsjL1NZNj4rf5D_9a4OPzwEburTp1q1IRWo6ZrmUtoVqflKv62ZaBntRhscGk4k5F3zhbB5njXPebqHAlG0Zioog_qUsFrQehpSqJsdUXJps4h09QZ9Xgkk6BRi5Z7E_IN451QxIMjrBjOty6z8RR8tl2Xz_ecXwkHKRqHSVBHmCdVkE37TIHBM2ilX5IXOjOz_VhzWtZ0cnhblNk88qyxiKKKpFw2KeDHsx7TaE_VgQ86NegILzzf2xFqd8rst-OoUBGahSXVo8-HxlkWyyYMULbjxGuZq7iHXyXyWcqt-AD6D_c965fx3boLqM7lQIoywLzJoAHqeu-H6nczoRW6cJSiS9fxRg3nfzNCeTcsP9hu42QfyPGzsAUmG-NHlT0extZR4NgFdSv8Ei9OJzoXgpTqXzwb6zFkP421E7E_AU9gdj6icJqNn3ou9Lf-MyMVyB3ozUhq3AA5ybh84x1BzosedtpeSUvO-SW42_y-GYLzWpgcy5FjmER9jYgJTfxdZIy5ICxsqNAk2N1UgTF_IYxzbLmps1xO0q7Y-2zT8Daybt1q4WYZ8WeV-tGGgw8yuCMX027DYxlBNtZYqDHTMHhls9zN6m5iijKvOfVIn6rOtWVfnoeI67bQqU6J0XJgh6w-HCsh6jz3qACCumwaabEietDzcBOnZMWl95vqvzpXSo7Ra8WWCFCA_7ih6G_Of8i4AgDy-gSxUEuSKDMpgl6iRO55Bit1dEHV2VCLdNO_hcU2QO-AIVRy0xB-RAGocBhvBgOfXkj1MjEnAwoTLTNp1EbdmhgdALfCiUmqRTEL6VmL6sUMmGADEmDy3ypw_3WgHMS9zI-kq739FOLq932qkludzGGSt7oFMWypSuE9a28j0X-gX96EAyqWLYnA5_20qtpRAKLRHL4uPVEyWeFT06UoJcJ_sQ9GTuiCiYoM-1J4JXoOclzoJC2dOjQ6zsDsdpgwne34ZHWkmdB8pD7XYcT9TzOmgqT-VPy1-ToDvzEITGorqVDT2N2txUEtwpCiT08g_kdgrgoXsQdzFxefwMJbpHZU39hpFzDydjDjwV6bB8VeqM43w5XMbbUHe9CmmHZy0kdYIcAxZi-e5Gk5j0ZPz-UwfQwNE3elOoPSjgCpPewVZd2BtTIgjfU2lrhAOCFwCS4FNIwx_LPvo2dWGFlLoJcaDk66FaeQ6GQZ-3XkrkHAA5fUp5-Qn8OIoxx9rkAqV9hZ6wdIlUhMfPFXVYkfcM8-hLhW8r0B-6JIZirGlt4CCoLma76Eoayj0zmt6SDsebMLDWoRLsxK6Bcve2oXfb1oYtvPj6AtIw9GcDi1uNRVaNtW46TH0BkBnoH3UKc63MkcE6SWGkt3USK_7-Ma6RvavV-779gjsbh4tJpamjxT-uQpb-QX6G83aKn161RcMb6KK83tz86m-pxBSy13fOTpwma3FzBn104tHSXAjFweNKWLuYB6gjzeXNmflED-TYa5xv9goRTJeJSDAMrzbKka8iKxpYRGpH5D7rjOSRxJ-xKc009I_mtGgL2Kcog68O-MEfv8kPGTX2qvK2ZOf8CLw6IWF20HPGLS2v68XPDGD365vK8CAL3TnfMssGTTyOb8MkQDxPJmRn5OE5Ajk-oEsb_JUd_p6WhqiJpkY3ZWJLkxNO24tC39sUPjZ5qQjQYG9zgJRJFSa0Abd-XY7xuOVb7a3_1I2Xi5F9C24l5WDDaCUtB3wOGmx5VD_ir4siK8tGzr-yfnlSuyobwusAbKJQ1il8bojVZTy-WI2jyvh-sI3U_BbZq8Ud1kjkdReihaik7xTiy8NizOkxUjMfrpsLdrs5nVpUraP7Cy1i_5KsAppimKj-U19JH_9dQf8Vx4sfmB9c6AM3wgpAk3OxmmzJRBb5shVnf_j0GZUuYX0g4IrRJUoru-JZk2tcdNNm_Ayr8uaYPx8aHznMXJdCdCNa_ReLclbLyXMSwbOho-Y3t7nCI7nDMZbIrEzknqs="
             }
+          },
+          "time": {
+            "start": 1781201257191,
+            "end": 1781201276503
           },
           "id": "prt_eb7de42e7001MZF124tHJZykJF",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -1691,8 +1691,8 @@
         },
         {
           "type": "tool",
-          "tool": "bash",
           "callID": "call_AVYHBk5Ae7imIikCVOy5UYXW",
+          "tool": "bash",
           "state": {
             "status": "completed",
             "input": {
@@ -1702,13 +1702,13 @@
               "description": "Inspects key reference table facts"
             },
             "output": "   Building tfg-open-cvn-schema @ file:///home/carlos/uni/tfg/TFG-open-cvn-schema\n      Built tfg-open-cvn-schema @ file:///home/carlos/uni/tfg/TFG-open-cvn-schema\nUninstalled 1 package in 0.78ms\nInstalled 1 package in 2ms\nCVN_SEX_A items= 2 xml= CVN_GenderType@AuxTable.xsd Identification PersonalIdentification\nhier= False delegate= False\n[('000', [('Iso639.ENG', 'Male'), ('Iso639.CAT', 'Home '), ('Iso639.FRA', 'Homme '), ('Iso639.GLG', 'Home '), ('Iso639.EUS', 'Gizonezkoa '), ('Iso639.SPA', 'Hombre')]), ('010', [('Iso639.ENG', 'Female'), ('Iso639.CAT', 'Dona'), ('Iso639.FRA', 'Femme'), ('Iso639.GLG', 'Muller'), ('Iso639.EUS', 'Emakumezkoa'), ('Iso639.SPA', 'Mujer')])]\nCVN_ENTITY_TYPE items= 17 xml= CVN_EntityTypeType@AuxTable.xsd Entity Type\nhier= False delegate= True\n[('010', [('Iso639.ENG', 'University Research Institute'), ('Iso639.CAT', 'Institut universitari d’investigació'), ('Iso639.FRA', 'Institut de Recherche universitaire'), ('Iso639.GLG', 'Instituto Universitario de Investigación'), ('Iso639.EUS', 'Unibertsitateko Ikerketa Institutua'), ('Iso639.SPA', 'Instituto  Universitario de Investigación')]), ('060', [('Iso639.ENG', 'Public Research Body'), ('Iso639.CAT', 'Organisme públic d’investigació'), ('Iso639.FRA', 'Organisme public de recherche'), ('Iso639.GLG', 'Organismo Público de Investigación'), ('Iso639.EUS', 'Ikerketa Erakunde Publikoa'), ('Iso639.SPA', 'Organismo Público de Investigación')]), ('110', [('Iso639.ENG', 'Technological Centre'), ('Iso639.CAT', 'Centre tecnològic'), ('Iso639.FRA', 'Centre technologique'), ('Iso639.GLG', 'Centro Tecnolóxico'), ('Iso639.EUS', 'Zentro teknologikoa'), ('Iso639.SPA', 'Centro Tecnológico')]), ('OTHERS', [('Iso639.ENG', 'Body, others'), ('Iso639.CAT', 'Organisme, altres'), ('Iso639.FRA', 'Organisme, autres'), ('Iso639.GLG', 'Organismo, Outros'), ('Iso639.EUS', 'Erakundea, Beste batzuk'), ('Iso639.SPA', 'Organismo, Otros')]), ('000', [('Iso639.ENG', 'University'), ('Iso639.CAT', 'Universitat'), ('Iso639.FRA', 'Université'), ('Iso639.GLG', 'Universidade'), ('Iso639.EUS', 'Unibertsitatea'), ('Iso639.SPA', 'Universidad')]), ('050', [('Iso639.ENG', 'State agency'), ('Iso639.CAT', 'Agència estatal'), ('Iso639.FRA', \"Agence d'État\"), ('Iso639.GLG', 'Axencia Estatal'), ('Iso639.EUS', 'Estatu Agentzia'), ('Iso639.SPA', 'Agencia Estatal')]), ('100', [('Iso639.ENG', 'Healthcare Institutions'), ('Iso639.CAT', 'Institucions sanitàries'), ('Iso639.FRA', 'Institutions sanitaires'), ('Iso639.GLG', 'Institucións Sanitarias'), ('Iso639.EUS', 'Osasun instituzioak'), ('Iso639.SPA', 'Instituciones Sanitarias')]), ('150', [('Iso639.ENG', 'Innovation and Technology Centres'), ('Iso639.CAT', 'Centres d’innovació i tecnologia'), ('Iso639.FRA', \"Centres d'innovation et de technologie\"), ('Iso639.GLG', 'Centros de Innovación e Tecnoloxía'), ('Iso639.EUS', 'Berrikuntza eta teknologia zentroak'), ('Iso639.SPA', 'Centros de Innovación y Tecnología')]), ('040', [('Iso639.ENG', 'Foundation'), ('Iso639.CAT', 'Fundació'), ('Iso639.FRA', 'Fondation'), ('Iso639.GLG', 'Fundación'), ('Iso639.EUS', 'Fundazioa'), ('Iso639.SPA', 'Fundación')]), ('020', [('Iso639.ENG', 'University Centres and Structures and Associated Bodies'), ('Iso639.CAT', 'Centres i estructures universitaris i assimilats'), ('Iso639.FRA', 'Centres et structures universitaires et assimilés '), ('Iso639.GLG', 'Centros e Estruturas Universitarios e Asimilados'), ('Iso639.EUS', 'Unibertsitateko Zentro eta Egiturak eta Antzekoak'), ('Iso639.SPA', 'Centros y Estructuras Universitarios y Asimilados')])]\nCVN_KNOW_A items= 6 xml= Subtype@Subtypes.xsd Subtype None\nhier= False delegate= False\n[('177', [('Iso639.ENG', 'Plant varieties'), ('Iso639.CAT', 'Varietats vegetals'), ('Iso639.FRA', 'Variétés végétales'), ('Iso639.GLG', 'Variedades vexetais'), ('Iso639.EUS', 'Landare-barietateak'), ('Iso639.SPA', 'Variedades vegetales')]), ('141', [('Iso639.ENG', 'Patent of invention'), ('Iso639.CAT', 'Patent d’invenció'), ('Iso639.FRA', \"Brevet d'invention\"), ('Iso639.GLG', 'Patente de invención'), ('Iso639.EUS', 'Asmakizun patentea'), ('Iso639.SPA', 'Patente de invención')]), ('126', [('Iso639.ENG', 'Utility model'), ('Iso639.CAT', 'Model d’utilitat'), ('Iso639.FRA', \"Modèle d'utilité\"), ('Iso639.GLG', 'Modelo de utilidade'), ('Iso639.EUS', 'Modelo erabilgarria'), ('Iso639.SPA', 'Modelo de utilidad')]), ('109', [('Iso639.ENG', 'Industrial designs'), ('Iso639.CAT', 'Dissenys industrials'), ('Iso639.FRA', 'Créations industrielles'), ('Iso639.GLG', 'Deseños industriais'), ('Iso639.EUS', 'Industria diseinuak'), ('Iso639.SPA', 'Diseños industriales')]), ('OTHERS', [('Iso639.ENG', 'Others'), ('Iso639.CAT', 'Altres'), ('Iso639.FRA', 'Autres'), ('Iso639.GLG', 'Outros'), ('Iso639.EUS', 'Beste batzuk'), ('Iso639.SPA', 'Otros')]), ('122', [('Iso639.ENG', 'Brands'), ('Iso639.CAT', 'Marques'), ('Iso639.FRA', 'Marques'), ('Iso639.GLG', 'Marcas'), ('Iso639.EUS', 'Markak'), ('Iso639.SPA', 'Marcas')])]\nUNESCO_CODES items= 2513 xml= UNESCO_CODES@ReferenceTables.xsd Subject Description\nhier= True delegate= False\n[('110100', [('Iso639.ENG', 'Application of logic'), ('Iso639.CAT', 'Aplicacions de la lògica'), ('Iso639.FRA', 'Application de la Logique'), ('Iso639.GLG', 'Aplicacións da lóxica'), ('Iso639.EUS', 'Logikaren erabilerak'), ('Iso639.SPA', 'Aplicaciones de la lógica')]), ('110204', [('Iso639.ENG', 'Formalizad languages'), ('Iso639.CAT', 'Llenguatges formalitzats '), ('Iso639.FRA', 'Langages formalisés'), ('Iso639.GLG', 'Linguaxes formalizadas  '), ('Iso639.EUS', 'Mintzaira formalizatuak '), ('Iso639.SPA', 'Lenguajes formalizados')]), ('110209', [('Iso639.ENG', 'Modal logia'), ('Iso639.CAT', 'Lògica modal '), ('Iso639.FRA', 'Logique modale'), ('Iso639.GLG', 'Lóxica modal'), ('Iso639.EUS', 'Logika modala'), ('Iso639.SPA', 'Lógica modal')]), ('110214', [('Iso639.ENG', 'Simbolic logic'), ('Iso639.CAT', 'Lògica simbòlica '), ('Iso639.FRA', 'Logique symbolique'), ('Iso639.GLG', 'Lóxica simbólica'), ('Iso639.EUS', 'Logika sinbolikoa'), ('Iso639.SPA', 'Lógica simbólica')]), ('110401', [('Iso639.ENG', 'Inductiva'), ('Iso639.CAT', 'Inducció '), ('Iso639.FRA', 'Induction'), ('Iso639.GLG', 'Inducción'), ('Iso639.EUS', 'Indukzioa'), ('Iso639.SPA', 'Inducción')]), ('110501', [('Iso639.ENG', 'Científica method'), ('Iso639.CAT', 'Mètode científic \\r\\nMètode científic'), ('Iso639.FRA', 'Démarche scientifique'), ('Iso639.GLG', 'Método científico'), ('Iso639.EUS', 'Metodo zientifikoa'), ('Iso639.SPA', 'Método científico')]), ('120101', [('Iso639.ENG', 'Algebraic geometry'), ('Iso639.CAT', 'Geometria algebraica '), ('Iso639.FRA', 'Géométrie algébrique'), ('Iso639.GLG', 'Xeometría alxébrica  '), ('Iso639.EUS', 'Geometria aljebraikoa'), ('Iso639.SPA', 'Geometría algebraica')]), ('120106', [('Iso639.ENG', 'Groups, generalizations'), ('Iso639.CAT', 'Grups, generalitats '), ('Iso639.FRA', 'Groupes, généralisations'), ('Iso639.GLG', 'Grupos, xeneralidades  '), ('Iso639.EUS', 'Taldeak, orokortasunak'), ('Iso639.SPA', 'Grupos, generalidades')]), ('120111', [('Iso639.ENG', 'Matriz theory'), ('Iso639.CAT', 'Teoria de matrius '), ('Iso639.FRA', 'Calcul matriciel'), ('Iso639.GLG', 'Teoría de matrices'), ('Iso639.EUS', 'Matrizeen teoria'), ('Iso639.SPA', 'Teoría de matrices')]), ('120200', [('Iso639.ENG', 'Analysis and functional analysis'), ('Iso639.CAT', 'Anàlisi i anàlisi funcional'), ('Iso639.FRA', 'Analyse et analyse fonctionnelle'), ('Iso639.GLG', 'Análise e análise funcional'), ('Iso639.EUS', 'Analisi eta analisi funtzionala'), ('Iso639.SPA', 'Análisis y análisis funcional')])]\n",
+            "title": "Inspects key reference table facts",
             "metadata": {
               "output": "   Building tfg-open-cvn-schema @ file:///home/carlos/uni/tfg/TFG-open-cvn-schema\n      Built tfg-open-cvn-schema @ file:///home/carlos/uni/tfg/TFG-open-cvn-schema\nUninstalled 1 package in 0.78ms\nInstalled 1 package in 2ms\nCVN_SEX_A items= 2 xml= CVN_GenderType@AuxTable.xsd Identification PersonalIdentification\nhier= False delegate= False\n[('000', [('Iso639.ENG', 'Male'), ('Iso639.CAT', 'Home '), ('Iso639.FRA', 'Homme '), ('Iso639.GLG', 'Home '), ('Iso639.EUS', 'Gizonezkoa '), ('Iso639.SPA', 'Hombre')]), ('010', [('Iso639.ENG', 'Female'), ('Iso639.CAT', 'Dona'), ('Iso639.FRA', 'Femme'), ('Iso639.GLG', 'Muller'), ('Iso639.EUS', 'Emakumezkoa'), ('Iso639.SPA', 'Mujer')])]\nCVN_ENTITY_TYPE items= 17 xml= CVN_EntityTypeType@AuxTable.xsd Entity Type\nhier= False delegate= True\n[('010', [('Iso639.ENG', 'University Research Institute'), ('Iso639.CAT', 'Institut universitari d’investigació'), ('Iso639.FRA', 'Institut de Recherche universitaire'), ('Iso639.GLG', 'Instituto Universitario de Investigación'), ('Iso639.EUS', 'Unibertsitateko Ikerketa Institutua'), ('Iso639.SPA', 'Instituto  Universitario de Investigación')]), ('060', [('Iso639.ENG', 'Public Research Body'), ('Iso639.CAT', 'Organisme públic d’investigació'), ('Iso639.FRA', 'Organisme public de recherche'), ('Iso639.GLG', 'Organismo Público de Investigación'), ('Iso639.EUS', 'Ikerketa Erakunde Publikoa'), ('Iso639.SPA', 'Organismo Público de Investigación')]), ('110', [('Iso639.ENG', 'Technological Centre'), ('Iso639.CAT', 'Centre tecnològic'), ('Iso639.FRA', 'Centre technologique'), ('Iso639.GLG', 'Centro Tecnolóxico'), ('Iso639.EUS', 'Zentro teknologikoa'), ('Iso639.SPA', 'Centro Tecnológico')]), ('OTHERS', [('Iso639.ENG', 'Body, others'), ('Iso639.CAT', 'Organisme, altres'), ('Iso639.FRA', 'Organisme, autres'), ('Iso639.GLG', 'Organismo, Outros'), ('Iso639.EUS', 'Erakundea, Beste batzuk'), ('Iso639.SPA', 'Organismo, Otros')]), ('000', [('Iso639.ENG', 'University'), ('Iso639.CAT', 'Universitat'), ('Iso639.FRA', 'Université'), ('Iso639.GLG', 'Universidade'), ('Iso639.EUS', 'Unibertsitatea'), ('Iso639.SPA', 'Universidad')]), ('050', [('Iso639.ENG', 'State agency'), ('Iso639.CAT', 'Agència estatal'), ('Iso639.FRA', \"Agence d'État\"), ('Iso639.GLG', 'Axencia Estatal'), ('Iso639.EUS', 'Estatu Agentzia'), ('Iso639.SPA', 'Agencia Estatal')]), ('100', [('Iso639.ENG', 'Healthcare Institutions'), ('Iso639.CAT', 'Institucions sanitàries'), ('Iso639.FRA', 'Institutions sanitaires'), ('Iso639.GLG', 'Institucións Sanitarias'), ('Iso639.EUS', 'Osasun instituzioak'), ('Iso639.SPA', 'Instituciones Sanitarias')]), ('150', [('Iso639.ENG', 'Innovation and Technology Centres'), ('Iso639.CAT', 'Centres d’innovació i tecnologia'), ('Iso639.FRA', \"Centres d'innovation et de technologie\"), ('Iso639.GLG', 'Centros de Innovación e Tecnoloxía'), ('Iso639.EUS', 'Berrikuntza eta teknologia zentroak'), ('Iso639.SPA', 'Centros de Innovación y Tecnología')]), ('040', [('Iso639.ENG', 'Foundation'), ('Iso639.CAT', 'Fundació'), ('Iso639.FRA', 'Fondation'), ('Iso639.GLG', 'Fundación'), ('Iso639.EUS', 'Fundazioa'), ('Iso639.SPA', 'Fundación')]), ('020', [('Iso639.ENG', 'University Centres and Structures and Associated Bodies'), ('Iso639.CAT', 'Centres i estructures universitaris i assimilats'), ('Iso639.FRA', 'Centres et structures universitaires et assimilés '), ('Iso639.GLG', 'Centros e Estruturas Universitarios e Asimilados'), ('Iso639.EUS', 'Unibertsitateko Zentro eta Egiturak eta Antzekoak'), ('Iso639.SPA', 'Centros y Estructuras Universitarios y Asimilados')])]\nCVN_KNOW_A items= 6 xml= Subtype@Subtypes.xsd Subtype None\nhier= False delegate= False\n[('177', [('Iso639.ENG', 'Plant varieties'), ('Iso639.CAT', 'Varietats vegetals'), ('Iso639.FRA', 'Variétés végétales'), ('Iso639.GLG', 'Variedades vexetais'), ('Iso639.EUS', 'Landare-barietateak'), ('Iso639.SPA', 'Variedades vegetales')]), ('141', [('Iso639.ENG', 'Patent of invention'), ('Iso639.CAT', 'Patent d’invenció'), ('Iso639.FRA', \"Brevet d'invention\"), ('Iso639.GLG', 'Patente de invención'), ('Iso639.EUS', 'Asmakizun patentea'), ('Iso639.SPA', 'Patente de invención')]), ('126', [('Iso639.ENG', 'Utility model'), ('Iso639.CAT', 'Model d’utilitat'), ('Iso639.FRA', \"Modèle d'utilité\"), ('Iso639.GLG', 'Modelo de utilidade'), ('Iso639.EUS', 'Modelo erabilgarria'), ('Iso639.SPA', 'Modelo de utilidad')]), ('109', [('Iso639.ENG', 'Industrial designs'), ('Iso639.CAT', 'Dissenys industrials'), ('Iso639.FRA', 'Créations industrielles'), ('Iso639.GLG', 'Deseños industriais'), ('Iso639.EUS', 'Industria diseinuak'), ('Iso639.SPA', 'Diseños industriales')]), ('OTHERS', [('Iso639.ENG', 'Others'), ('Iso639.CAT', 'Altres'), ('Iso639.FRA', 'Autres'), ('Iso639.GLG', 'Outros'), ('Iso639.EUS', 'Beste batzuk'), ('Iso639.SPA', 'Otros')]), ('122', [('Iso639.ENG', 'Brands'), ('Iso639.CAT', 'Marques'), ('Iso639.FRA', 'Marques'), ('Iso639.GLG', 'Marcas'), ('Iso639.EUS', 'Markak'), ('Iso639.SPA', 'Marcas')])]\nUNESCO_CODES items= 2513 xml= UNESCO_CODES@ReferenceTables.xsd Subject Description\nhier= True delegate= False\n[('110100', [('Iso639.ENG', 'Application of logic'), ('Iso639.CAT', 'Aplicacions de la lògica'), ('Iso639.FRA', 'Application de la Logique'), ('Iso639.GLG', 'Aplicacións da lóxica'), ('Iso639.EUS', 'Logikaren erabilerak'), ('Iso639.SPA', 'Aplicaciones de la lógica')]), ('110204', [('Iso639.ENG', 'Formalizad languages'), ('Iso639.CAT', 'Llenguatges formalitzats '), ('Iso639.FRA', 'Langages formalisés'), ('Iso639.GLG', 'Linguaxes formalizadas  '), ('Iso639.EUS', 'Mintzaira formalizatuak '), ('Iso639.SPA', 'Lenguajes formalizados')]), ('110209', [('Iso639.ENG', 'Modal logia'), ('Iso639.CAT', 'Lògica modal '), ('Iso639.FRA', 'Logique modale'), ('Iso639.GLG', 'Lóxica modal'), ('Iso639.EUS', 'Logika modala'), ('Iso639.SPA', 'Lógica modal')]), ('110214', [('Iso639.ENG', 'Simbolic logic'), ('Iso639.CAT', 'Lògica simbòlica '), ('Iso639.FRA', 'Logique symbolique'), ('Iso639.GLG', 'Lóxica simbólica'), ('Iso639.EUS', 'Logika sinbolikoa'), ('Iso639.SPA', 'Lógica simbólica')]), ('110401', [('Iso639.ENG', 'Inductiva'), ('Iso639.CAT', 'Inducció '), ('Iso639.FRA', 'Induction'), ('Iso639.GLG', 'Inducción'), ('Iso639.EUS', 'Indukzioa'), ('Iso639.SPA', 'Inducción')]), ('110501', [('Iso639.ENG', 'Científica method'), ('Iso639.CAT', 'Mètode científic \\r\\nMètode científic'), ('Iso639.FRA', 'Démarche scientifique'), ('Iso639.GLG', 'Método científico'), ('Iso639.EUS', 'Metodo zientifikoa'), ('Iso639.SPA', 'Método científico')]), ('120101', [('Iso639.ENG', 'Algebraic geometry'), ('Iso639.CAT', 'Geometria algebraica '), ('Iso639.FRA', 'Géométrie algébrique'), ('Iso639.GLG', 'Xeometría alxébrica  '), ('Iso639.EUS', 'Geometria aljebraikoa'), ('Iso639.SPA', 'Geometría algebraica')]), ('120106', [('Iso639.ENG', 'Groups, generalizations'), ('Iso639.CAT', 'Grups, generalitats '), ('Iso639.FRA', 'Groupes, généralisations'), ('Iso639.GLG', 'Grupos, xeneralidades  '), ('Iso639.EUS', 'Taldeak, orokortasunak'), ('Iso639.SPA', 'Grupos, generalidades')]), ('120111', [('Iso639.ENG', 'Matriz theory'), ('Iso639.CAT', 'Teoria de matrius '), ('Iso639.FRA', 'Calcul matriciel'), ('Iso639.GLG', 'Teoría de matrices'), ('Iso639.EUS', 'Matrizeen teoria'), ('Iso639.SPA', 'Teoría de matrices')]), ('120200', [('Iso639.ENG', 'Analysis and functional analysis'), ('Iso639.CAT', 'Anàlisi i anàlisi funcional'), ('Iso639.FRA', 'Analyse et analyse fonctionnelle'), ('Iso639.GLG', 'Análise e análise funcional'), ('Iso639.EUS', 'Analisi eta analisi funtzionala'), ('Iso639.SPA', 'Análisis y análisis funcional')])]\n",
               "exit": 0,
               "description": "Inspects key reference table facts",
               "truncated": false
             },
-            "title": "Inspects key reference table facts",
             "time": {
               "start": 1781201304646,
               "end": 1781201305007
@@ -1724,20 +1724,20 @@
           "messageID": "msg_eb7de32a0002GLBikUEkBOKYdd"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 91415,
             "input": 1889,
             "output": 380,
             "reasoning": 1082,
             "cache": {
-              "write": 0,
-              "read": 88064
+              "read": 88064,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7defe24001oOrh9WGeq8mnKt",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7de32a0002GLBikUEkBOKYdd"
@@ -1746,11 +1746,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201305291,
+          "completed": 1781201318871
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -1762,24 +1767,19 @@
           "output": 57,
           "reasoning": 512,
           "cache": {
-            "write": 0,
-            "read": 89600
+            "read": 89600,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201305291,
-          "completed": 1781201318871
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7defecb002QjmYYvOVZy9D0X",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7df03e7001MJdB7sgzyqlEib",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7defecb002QjmYYvOVZy9D0X"
@@ -1787,14 +1787,14 @@
         {
           "type": "reasoning",
           "text": "**Finalizing execution plan**\n\nI need to note whether the UV run is installed or uninstalled due to its editable install, and maybe clarify that it doesn’t write to the workspace. My final plan might mention “No guardado en fichero por plan mode read-only,” but I don’t think I need to ask for clarification. It should include aspects like “Nivel caveman full activo” and outline the tasks for TDD clearly, avoiding nested bullets. Including a Markdown table might help convey the details concisely!",
-          "time": {
-            "start": 1781201307311,
-            "end": 1781201315370
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_0c69606b6bb90e54016a2af99b41808191a5519c9590a2fa86"
             }
+          },
+          "time": {
+            "start": 1781201307311,
+            "end": 1781201315370
           },
           "id": "prt_eb7df06af001V0Msqk3MXbMMwA",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -1803,14 +1803,14 @@
         {
           "type": "reasoning",
           "text": "**Drafting plan contents**\n\nI need to mention that \"docs/superpowers plan not created due to plan mode read-only.\" The final document should be clear, using only a single-level bullet list for tasks with appropriate headings. I'll outline tasks with flat checkboxes using `- [ ]`, making sure to include all necessary sections like the goal, architecture, file map, execution tasks (0-14), verification, and acceptance criteria.\n\nIt seems like I should include \"Task 1: baseline + guardrails\" too, focusing on failing tests before code implementation.",
-          "time": {
-            "start": 1781201315377,
-            "end": 1781201317351
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_0c69606b6bb90e54016a2af99b41808191a5519c9590a2fa86"
             }
+          },
+          "time": {
+            "start": 1781201315377,
+            "end": 1781201317351
           },
           "id": "prt_eb7df263100193SrGsnpdApGnx",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -1819,15 +1819,15 @@
         {
           "type": "reasoning",
           "text": "**Outlining implementation tasks**\n\nI'm considering Task 6, which is to implement the semantic policy helper/update, followed by Task 7, focusing on integration validation with actual normalization. I might need to check if the normalization API exists and if I can use tests for `build_normalization_result`. While I can include this in the plan, I'm not sure if it's absolutely necessary. It could be helpful to use grep to find the exact commands related to `build_normalization_result`, but I'll weigh its importance for clarity.",
-          "time": {
-            "start": 1781201317355,
-            "end": 1781201318443
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_0c69606b6bb90e54016a2af99b41808191a5519c9590a2fa86",
               "reasoningEncryptedContent": "gAAAAABqKvmmIxGn96p_M4RJhpnbRNcA1hh2EwhOHiW8H8Ee9h6x8gzj9T8Hk6hSpx31xYC48tZffohkq_uX0QQrzT-fRlzflu6iN2Xh9GTGjZ2g72AH_9THYkv-6voIxCWBYOnB40GKFA2puqj61Q_u_ag2nbLA2EVh_lMfhKyc7pjfEQNxh0LD-RsLm8BXCZUJj2mUaI_kfEfSxfcSxoulmW55QIUQsyUPRC0Qdb34NDrpIIZvSNm1QRzXzM7JPmpqJ5eXKOaG4QoA3M6Y0B71xynVIGU8kUUdKXO5_iJ9INjCY6aZ3ohhYuwvrIfjQ7uSeaGpEdBDbaovnXvFeyia5CRj9TH44qV9R0zTF0RlSHGyubgGirLkuK0WwZqoYfNjP3pESdBYarH9rP3xbpJQBKoCGTLzAF8Xff_d8Yi8-C5eeOeCs5kC-jM6CHAABv_T52N3CNC43NYLnaUBHiPtQdDmb20wLSHsJJzKko564VCj7tTQ9X-fSI68eGk6xAoJgKnpZe8jgHl5D2ABYXJ9M3y6EzOMcOKmEi_uGwZShYsVEIgOHz8qkTBBSXFvmCndo-JVgsE9T7obP4fL8UrrmPoqFMSYxF_wa2M_8S92CEAPaubkYiPvbL-JDHMeN7_Vnh98674rfouygfiUlxCm0uaqj6hjMeB_lFGDMBCTiVCVyz4kvRIhyuqMcB8DHfaoFWM2ZMkmdsLnturJheY_kjdljk8KImGcEpbeHIHTL6LWEUdt-MKIIT2WmwL7cX7uhTjJvHIIFz39oonDL2LKoaNVVCXCdxDjvlIrJjZFTNxTusAfOnBGQy3wppQItMrQmAbgCWhmhld1HPgl9-_NS6DYwSxn38529TYk3fU7GTtIMRPAx_QsYqQgZRgPKrQcpytRrZY_HrxjbUe75GXcn8za8u82JmHpbJ47zLzXtDwbP9_E-i07Iznjrxlt0x3kDn3inRIiBHA1n6mvmNyH1ZOKw-_Jt0yiIlJqiNWeswWyTr6MwTKOMPWllmxRDoIoapFHG5PiEABzYEOQ94cQNfRFtyZUHDrH5pfIWpl1mx_-VX4g3LzJM3qcKYqNQZqtra2grnTNeDwKfAZZhNKWYx_BDmtUr45sqwIOawO6WlzTBcWMYTVIx_5QFvzK8qF8vpCl_C7dH2iWAr4DPaxS6Bt4TfqCcLinkq1GKEREjWZdNgvVk3PpC4uHA-IZBZWGnWPjN56ExVJIfViqnPgcN4P2KuxmunUxFwLzK5Ja1W9NSpZNHtNwBgbNBDSe3pB5Z1GiFokp-DhcBNnSthw5nVznyZD6D-t8rVmG7mPzjchhxZepRfDgH7qfqMFx9DKSy4XMpSsUbTGd-UgcEaNubRYH9aLvtn3MIyiCVpCyxJwD0M3DXfiDPElVjVxoOdkXZJMwDkEO172m_HiAoyHmECG9DgEcKTpwQ7LR-OuDSTnua11loCfKOwJMXli3XwZzxg7NcbY2ZCedAHgxU02M0M7h5wEcLMJRJIL9grKYVgBj-dd81lIxXSS3611hQjhrmcoTNN-ZNrnO4_ek2M6zVGfHzWqfF-fbclcqHHShwLmW0YrctwpdcUloSWf7FtM9CYViWNwetHLKygy19ffmfyQ7xptDwfxGeSuIDpc1rS4bZLk_U_e4oIiPCgIYGI1IOHUDA45c8hZpMc6bQ_W2T_MtkWYBxhuFamr0MTr9eOoXB6FB32TfwFL0m25UVPDqiz3bd1uvbpQUOEuXqgzYRon_FlGCI39ljCrjHUpGAjggsIXBvsrq-mhV4jNy2WE6pMzQZNVB56zf_KHvj7HjY_iFfzAskH7J0SsA02a-TfpFq08f6jZqh_AhN00V0AB74c49WfMuPfLdVG1gX62MMz5AmuIGlh8jLrKanmkO7DFiEqro1DvWERv5-ubi0s-q1_B7OoY9FiXGxAaDJEMRtXkhlaNstahl1ZOSIjAtOfipbrXx02o6wGAp5AkWhlIYeFUtLqYN4MV8QzmFHtGvH78RkRO7Q01uKdDfe0-ES55dhMiMRzQOTD6l2pnny1t2QWxzgz5H35dBGegfOVLToptXQD97U8zYXb-o3StAtolcVMZUpa0jO48uW8zIBhk75DqE706a9If55X22Gu1EsP_W_eo-sYhNqHEWfig88A1crlvl9-yKtm9SWA1eMjqT63XX2f0iL6oSVNEpEcHSEbmLM1lMZ3YNXSJ3ZW9R83GrvQ2fSYVBBPaubrAy-ElW6iE1y9ivtkEyNm82iep6Fsl-XbAGPi79gb-Ogui4wwsFuhtjStaT4wd7Y-OJMozGnXbjHoA6IPd_CpK6ofUZsdtelJ1tjXMc7YOKxma2KJMOaf75OqTNgj3XvpS8Cfpg_cKISzNR-RMiJevojKcsZgoD-nHN8qLl2a6xMzowPHrwuy-hGhOZjbDqN3YTNGTnrixXQaG13gn8rXhVgblRfvtqZ8P-YVAc4OK8CFqOQ2saXXDn0vXMKdoIgN6rHSJXJS0novvLYvmlMoJ1ihQglSXb11cz_UvTP0n-wQ9SQFUv8JmqqK4MGgfACBjWYmCPmYybEqYymZqOegKIi1FI3H3qo6dx9Mn5nfP7hPY4HjJTgGQW0Ax7vfM3PhNzdKi8t5BjfDBWXEUQd0bzyWIf_oqkbaB80u5ME52i2RhyyfNdDCbxiE8SP_c5aIiD5r2_0-wAnS-s-5Tb1pJx3VG26lYHy9MpcEt8ZniH5uM-G7TgN4KA2PD5QbQoOrLoheP-Fp5zUwjdLUAScUZOwzksNZfr8A9PBrhQRsytEqIVWX_BtRQiXHhx9txQ-KOMxpsMDeQgIJqrTjMU-JlYihbeXwZVO7EPUj3QrSn7eAGm9mbIKeC0yYMECq072gBA9I1R0eccb-3FhWWjL4v92GsQVYMDUJkfLPVjyxySct6a418dJ_VVfSquDAhHdqeDpH9kkOz0SjrKMak_jz-yMKaNglbg7d8VuFh_PpkUPsbCNRtO9cbsbFBzFu5ZCZiMX1poWyI0PXsDErNUBYWX6j4KbVRjYvW-zJwFANmwrcAKQe_njMjMnRGLdJF2Sly3YlMiZvp4s2Cbe9lB32-uxQkYuf8KO_M72E7re4x4Wf8QbbL-BZnI0RdtlzOwMlhXd3OzdP5-YmCXqHVurLngbe1R5HsfocdIxgm2A1EX3GofOPtV9t9uY07l1hr0p8nPWCX768VMtVNTHaJyyoak7w7RzGA_ahOZYjfiUYw5big8lqtzbQdauIuDCk54QNh5dL1gQFOtnJI6cfUgtIZTC2EUcqagvG1upDHOBRsJFKZqwf3GFoOjk8NGxYItX93VbYJrfHVWeBEM6Wg0wy8fMA1h_GfJSNLluu-4BIjkG74WA2uurp4Y0DmOTLD2ydmSBOZJ2dlaHb589iirCfAtrymk-WOx5_gHNJWch-As6Ozp0XkRPD_HF4p69lcZ4fHTklhJaJZkvngDxhCwQPnK72a9hq3ODGtxAAssrEnYX4Q0AeeCa1vX-KT6lOZCvZ-UkzAX-v01RMiGdiD-H95SoK1LP8ZuLM98PRCgOv6v0tJ3yKZTffQUjhCLRMs4lFg4QuRFRSA-18v2_q9Kpvz19dgmOKmeI375nwTYlIh9aBzkO95i6xM38Jczl7BxVamkBKi0DZ8IKfZRBt4IkiHtrAk_49ckb8lghczNNUHZpXVZJRt3g417fHrzDehGjTvTOm7pyuWqchRgQT0HeYkoY0riwmBOY2Hy1LGcQmgS1Rqd6OG2LiRtQfHOQMLUK4oBgwMqRKeOSgUuydZeaRBGYE7ixKvHSyAJl8JhoFsy8FFqsbJ5JHlCweawrk94ZpN3GnLnU3TRCugpWGsmKnCYM4VSWXC7bkTKDgd1x9CRzwAB99Q47KZdjTXygaXOxkYsh4d7Yv0kIT8XwyAB0lufS6GdZ14HxByCAKxByeH07ad22SmPTeEXqt2I82jx72wHGIa10MQPJ972Tfiw3bX4zCTacW8fdXkA81dBcr7VScpofyTAxqZjK1hPRD6Fh3GATXtaL5r00wjJBrKRoyQJMA_zx2955Po-tAvCy0lg6_Y04LwC6_Uhx-_QP4W8XPlSZt-jXAeehy23"
             }
+          },
+          "time": {
+            "start": 1781201317355,
+            "end": 1781201318443
           },
           "id": "prt_eb7df2deb001wSHWqVmTmNn2Va",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -1835,8 +1835,8 @@
         },
         {
           "type": "tool",
-          "tool": "grep",
           "callID": "call_PYbHmdUCys5Qi2CpOMg9tgQz",
+          "tool": "grep",
           "state": {
             "status": "completed",
             "input": {
@@ -1845,11 +1845,11 @@
               "include": "*.py"
             },
             "output": "Found 1 matches\n/home/carlos/uni/tfg/TFG-open-cvn-schema/src/cvn_codegen/normalization.py:\n  Line 152: def build_normalization_result(\n",
+            "title": "def build_normalization_result|build_normalization_result\\(",
             "metadata": {
               "matches": 1,
               "truncated": false
             },
-            "title": "def build_normalization_result|build_normalization_result\\(",
             "time": {
               "start": 1781201318643,
               "end": 1781201318687
@@ -1865,20 +1865,20 @@
           "messageID": "msg_eb7defecb002QjmYYvOVZy9D0X"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 94425,
             "input": 4256,
             "output": 57,
             "reasoning": 512,
             "cache": {
-              "write": 0,
-              "read": 89600
+              "read": 89600,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7df337e001u22pQoqc8eOonN",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7defecb002QjmYYvOVZy9D0X"
@@ -1887,11 +1887,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201318879,
+          "completed": 1781201323651
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -1903,24 +1908,19 @@
           "output": 122,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 93696
+            "read": 93696,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201318879,
-          "completed": 1781201323651
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7df33df00250J36cjSiYGvSE",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7df381c001Lf93k4rCeOCpBr",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7df33df00250J36cjSiYGvSE"
@@ -1944,8 +1944,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_s3WqUPOXRkzMqV7IlgT9ICVM",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -1954,6 +1954,7 @@
               "limit": 130
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/src/cvn_codegen/normalization.py</path>\n<type>file</type>\n<content>\n130:         tree_entries_by_code (dict[str, tuple[TreePathEntry, ...]]): Tree-model\n131:             entries grouped by CVN code.\n132: \n133:     Returns:\n134:         dict[str, NormalizedCodeEntry]: Normalized entries indexed by CVN code.\n135:     \"\"\"\n136: \n137:     all_codes = collect_all_code(manual_entries_by_code, tree_entries_by_code)\n138: \n139:     normalized_entries_by_code: dict[str, NormalizedCodeEntry] = {}\n140: \n141:     for code in all_codes:\n142:         normalized_entry = build_normalized_code(\n143:             code,\n144:             manual_entries_by_code,\n145:             tree_entries_by_code,\n146:             auxiliary_bundle=auxiliary_bundle,\n147:         )\n148:         normalized_entries_by_code[code] = normalized_entry\n149:     \n150:     return normalized_entries_by_code\n151: \n152: def build_normalization_result(\n153:     specification_manual_path: Path,\n154:     tree_model_path: Path,\n155:     *,\n156:     reference_tables_path: Path | None = None,\n157:     subtypes_path: Path | None = None,\n158:     entity_path: Path | None = None,\n159:     thesaurus_path: Path | None = None,\n160: ) -> NormalizationResult:\n161: \n162:     \"\"\"Run the normalization orchestration for the canonical metadata sources.\n163: \n164:     Args:\n165:         specification_manual_path (Path): Path to the canonical\n166:             ``SpecificationManual.xml`` file.\n167:         tree_model_path (Path): Path to the canonical ``CVNTreeModel.xml``\n168:             file.\n169: \n170:     Returns:\n171:         NormalizationResult: Aggregated normalization result containing:\n172:             - normalized entries by code\n173:             - tree entries by XML path\n174:             - codes present only in the manual\n175:             - codes present only in the tree model\n176:             - mismatch collection\n177:     \"\"\"\n178:     \n179:     specification_manual = load_specification_manual(specification_manual_path)\n180: \n181:     manual_entries_by_code = extract_manual_entries(specification_manual)\n182: \n183:     tree_entries = load_and_extract_tree_entries(tree_model_path)\n184: \n185:     tree_entries_by_code = index_tree_entries_by_code(tree_entries)\n186: \n187:     tree_entries_by_xml_path = index_tree_entries_by_xml_path(tree_entries)\n188: \n189:     auxiliary_bundle: AuxiliarySourceBundle | None = None\n190:     if reference_tables_path is not None and subtypes_path is not None:\n191:         auxiliary_bundle = build_auxiliary_source_bundle(\n192:             reference_tables_path=reference_tables_path,\n193:             subtypes_path=subtypes_path,\n194:             entity_path=entity_path,\n195:             thesaurus_path=thesaurus_path,\n196:         )\n197: \n198:     normalized_entries_by_code = build_normalized_code_index(\n199:         manual_entries_by_code,\n200:         tree_entries_by_code,\n201:         auxiliary_bundle=auxiliary_bundle,\n202:     )\n203: \n204:     manual_codes = set(manual_entries_by_code)\n205:     tree_codes = set(tree_entries_by_code)\n206: \n207:     manual_only_codes = tuple(sorted(manual_codes - tree_codes))\n208:     tree_only_codes = tuple(sorted(tree_codes - manual_codes))\n209: \n210:     mismatches = collect_normalization_mismatches(\n211:             manual_only_codes=manual_only_codes,\n212:             tree_only_codes=tree_only_codes,\n213:             normalized_entries_by_code=normalized_entries_by_code,\n214:             auxiliary_bundle=auxiliary_bundle,\n215:         )\n216:     \n217:     return NormalizationResult(\n218:         by_code=normalized_entries_by_code,\n219:         by_xml_path=tree_entries_by_xml_path,\n220:         manual_only_codes=manual_only_codes,\n221:         tree_only_codes=tree_only_codes,\n222:         mismatches=mismatches,\n223:     )\n\n(End of file - total 223 lines)\n</content>",
+            "title": "src/cvn_codegen/normalization.py",
             "metadata": {
               "preview": "        tree_entries_by_code (dict[str, tuple[TreePathEntry, ...]]): Tree-model\n            entries grouped by CVN code.\n\n    Returns:\n        dict[str, NormalizedCodeEntry]: Normalized entries indexed by CVN code.\n    \"\"\"\n\n    all_codes = collect_all_code(manual_entries_by_code, tree_entries_by_code)\n\n    normalized_entries_by_code: dict[str, NormalizedCodeEntry] = {}\n\n    for code in all_codes:\n        normalized_entry = build_normalized_code(\n            code,\n            manual_entries_by_code,\n            tree_entries_by_code,\n            auxiliary_bundle=auxiliary_bundle,\n        )\n        normalized_entries_by_code[code] = normalized_entry\n    ",
               "truncated": false,
@@ -1968,7 +1969,6 @@
                 "truncated": false
               }
             },
-            "title": "src/cvn_codegen/normalization.py",
             "time": {
               "start": 1781201323308,
               "end": 1781201323333
@@ -1984,20 +1984,20 @@
           "messageID": "msg_eb7df33df00250J36cjSiYGvSE"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 94597,
             "input": 779,
             "output": 122,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 93696
+              "read": 93696,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7df45b50014MdHLz2UgvWlIL",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7df33df00250J36cjSiYGvSE"
@@ -2006,11 +2006,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
         "role": "assistant",
+        "time": {
+          "created": 1781201323658,
+          "completed": 1781201385210
+        },
+        "parentID": "msg_eb7dd767c001yomNGDebtz9O5s",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -2022,24 +2027,19 @@
           "output": 2737,
           "reasoning": 516,
           "cache": {
-            "write": 0,
-            "read": 94208
+            "read": 94208,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201323658,
-          "completed": 1781201385210
-        },
+        "variant": "high",
         "finish": "stop",
         "id": "msg_eb7df468a002bCF2VUCFsg2FHg",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7df4ab2001kOU1x2Ypsq25za",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7df468a002bCF2VUCFsg2FHg"
@@ -2047,15 +2047,15 @@
         {
           "type": "reasoning",
           "text": "",
-          "time": {
-            "start": 1781201326386,
-            "end": 1781201335779
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_03f8a296f2bb31d0016a2af9ae6f288191a0545bf50179be91",
               "reasoningEncryptedContent": "gAAAAABqKvm3_MFvI4bB0BsOcO7i5a9uCF5VZ2AnXBHb9gBdj78C_jc8JbfBujBuyL8SNQTHGa11wsFIGEprVKcYaal4i48hFXc-E3-qAwcrlvW6MSDQTPwWq1x--JYcIH68zatqo_1yDJvpT3nyBerT1vn_tMjsk4pI5JBsMm8w4lvAEal5UG7Y0h0rMz8qb_2h8LmG-MkJgNhrQ8a2hUN_WVlSM2iPiSJDSDk-8AyRG5Of6X8SpqbGosQy036EowCls7c611marITrW4FTNoDgHF1ZlTrx9sZXKcq4H3kHZQ6bHqW7NWCP0XRE1nVeWQczKZE2L6UVUJjJI3xkgP-1OJnqjquGaSxmymuDBJg9OCtxlW40PpnZwrzkkKy2gpGqepiqKRHPaUqxNHBGIUfO24GztZdtniyb4C8PQVfzEq6WbpQBGVfLvg717fUIF5VFXfnzrdmsAgpQjwshee3gxEiFVZew0M2K49RhuamHQv8Qlze-NP20y_TLy_XluYY2ZDG9-hzbm0-FSUCMY0wfPqZIGoi4X_SLKgGl2tzn4lLnEYvVxpKRc5f-YGhTqKbfoiXKeDdE062RbXTm8vQJMY0-78eFp1mnAd2LLmZRkkwyldkA_H1z_b7zLiB0gHzr39m9pHIZc_E1j_cWTRRQ2RVpUtyMZZLmWE6kdP6V56g19Gec2v_qN1B-1jZ8BgvIWAm7DP9fIDeW3TaLL4_g0bkrcGNnYclaKBfOFhh8C0wvmNjEPNsch7UTuDbhmE9Cy9dfMrFIua29OiEpQQQLZMQ2enjLTUvhFstVglx-nK_Rc3eT_sCv1oYB0CpNGGE3HaIDfuCNBe6QJk3jDGNGDiTzWDfc8aFEPCfXwxp7MyJFwjHrLlJj90uhhFuVTKp9XnbtGovDI9uZAZKt7r2ZysOm8BxgWzcoi3SUph8KF0VxbtmPyoTisM9Qo7KP6jcBSvP4S4CEeRIVBh2x2CIJbMHHSV6g4Eb0972Cab1eB_FY3ap0qclKU9bFqmQxXKWRo32etLMe0KiDu-S9oQJ_KQpdhf2ClGOdGVTdfu5kqHXwTge9BgruKIyk7uGaIGvnO5E-bJH6EbSL1UZdi-HGs3exYKlbaZBWYCaEKNa08VMrVh6XwN1syCHIclCq3A2Yhw9l4G78DtRqDDQBHR_qJtZg5JbsViiKhCeft-uu2ArQaSb4pO3umc0mFpZtOIwxFmVtewGR5YYwZSfvu2uZXt277EVlhdboR24bGzODZQtrVw4GzJ1zBd3O2hDUX_dtRMcCLgNsuOnDGiCgvJd1QcEJkbRxbmAvbDv4m4iDC6NW7rx-zZ2CpuLPSZoLrPQ_B_-enXWHNByMYq_GD19Rgxskx0GPuUEZ-e1QlALpaAgI2Ww9aCnZ1Wzo_rUzV1_PZ7RYOAPJSh8EEKCJJ5Cm4cTEn_uq3DaRZf59iXvFHYQthrhfiuBgCjx4cta_WoZXYI0QWLRBwEkWNeG_yoXeTOOKg4TrW2PZPpiSp-xLUfL9owdo6diLwr1ZWNdMGNuRIXntkcsMcemPv-ucMVHHDO3Zb9IdkBe0lCLl6REE_1mTdevy_HO5vV9emJN9ziIZeyT0CYHyQDsRMLpb0Rs8MATzzPaaA_-ghhkfbpHhxFbvhQoCahOaAo5-XNiHy07tVxCO3oJqCe2fNhVuZSasdrFonf6rtY5COMPW5E2b3QJHUnqBBV27HTXRq4tY4VQOBsJ1-suLl32t-YfDv1IplmxOzyvr3K-P2rcuG6Ca9QkiwLSewRFUW0k6pS0wvdz6A9sVXqMQbs4D-gDGebgHMEBj3QYj4beTj928wLH0QYDGdOEOua2RJzeFfyk0yQuKnpc8VMqiQwN-F_3QmzeqkOoUSk16-eRRvoKps8lUSjpBLLPjMcdh7Czkgljf3JYjp8__AkdAPP7wtokKMEXpVnBNmV-2g1jOksqRWRVSUUz7AItJjzlnYNvK2NkX8fnYqA8xKOLIRmH-3YUK7NLBmprm50yLTwW8ztxKBgBBRGbKEvVEfnBuqLl1ksqpx5g7oNn772kEfO-cyGnx2j9oilKC9JAYwoAEnvEDw7dH56Atgvnj80JgMdnvVwRKDW-ODm7xC2poYPsGGkvcenfD2TNy4u-WsheLTEWQ86rEC3gdsmV2v5BKO3RN2OpyyEGK2c7GnLS7_kawpm9ck2w5LuTYMiBWefi6fNZqa87jRcM_wrlStTZP430mT8vn_yVT3hIYY9jfuX_adI9YS7cUiIK3sAVo02YEO3zhFzC7elpEvGTd0mewRstHVfJeY4LqwVFVgLOkA0IRifdpl3YK2caVi_ITD9m7E2vS1GI_LM4MF7Hwg1XwaygD4jiVPu_9Y70KO-I-RxK-vdCnWg9KvtGd3GAhJKguth1ffyYsCudVIEnXf3Zh8lLj6pDqRjju-GwbDDyhm2BdNFogxBE0BLSBR5sdYIv-8KtS1FDTsKlf1ENMDhJzuM4xlEyOso03Zl3q0uVjKAsL9zIXKoC4LXeQCCKcBRZZwCX4qIq6tHU_mw2F6iUj9NXuPSBrENI_47ngBn1cVZUB4qv0OOlWE5_2a0HESd7kQwnerXjGAE3l9xzhfNDCjqtj-tfLyQe1Yq4Bf1A0hkJDsxMyQFpItFCBTDEiOlJT5ELisfc74VxRIBr5YwbqOjQgIZ1qzUhJXb82PgX2qh5vsNi4-013nw8m4Zk-SgT3taXpqbkWS91gFjenfppc6DGlM86ksyBFPykVtD8cHc93CB_dxZ_XhFz2TrEpHVzfJTFT0AzD7VctWSws3IkfEDvrx2ckTmIqRFPwU202qb5c-acWfqGLzEzOLBOkDD9qdWgeH2TsoiHvUcotps0P7XwQpb-kauZ3T-Is1wbDacLxb66iYxp2Sce04GtQ4u27K9OtuceALaEoLqaQLKoPbG5E3T0YoUaccduUBjpQ7ZrS_L14PnaGSXodByMY_o_v4GJs1ra_PKC3sObbaX531p96qzCMGF9EEpf6neNSrM4YTlMJS4Ebhv2ws8CzuO8Fg6OZDitXanDuZGhcSXZioGFjN21KOzF_8o7YojdsQ-bk_NCD5bfy-Kzx9YxOk_g7o-zHtpR2TcYzpdMYXzHtw4rL8PIuA8qOEpfU-L9FhEX2TQyMriEBIX0qzI8jlR2SixV3OAFO11O-ehDZ2E5Kf8KSQGVW0RPu6b5ssIq_Jw8ubVGZ9-6G9B6_WQlW4wxlhHa1YaXOwZ1DMWg_9bp9GevH3i-W3kEPZ62Ewra9Qma9HoydSHsfNNzCn310uLPtHBaaTj6gI3nkcO1GND_c-NTi52V3CIaOtxelOBNs9vvnFUxFL4em_OoBGhFAgFuOwN-o_BlvgN_Pilql5e2eBdcNIAxNioIi_I4SfLf2zq12Mds8HT-eEXtvzhCCK3vYGFOzfvP8pB0xX0tryD2R9fA0F_yigGrg9Q900vnMBYNVamnWYT0qDda63mH1xWP-T47qoal8JOEsWG-SlDuv0RAlY4-5d8AJyhlViuuOWXqcganRGf-b6jt94gz4wA2VP4wdJXv5g1zZaWj9VI-ZKwJ3lVBdfd8M3lu386hLPmAjEymTfIUP9RiZyAW0gPqDzj2EDM38Iee3xEEljdyS8pFWMS42GQVNOAPsSwYOzsNXjx_rYi4iikmuD935_XmZDfK99daBaEOsMi1vW4ulpqqszfQKNzdkmC3Cc2wX6H42-NO3RZNCZx4rdCNK1c8C4C5RM0BSRcQgMxZL9bCWEqi3npPB9yTwppeKC46gdK0YH_hMvjE9chNgEIUyFP_Y4atU3VurLCatO1TrVDEVzlKKtqMHU-AS2NzQ9zhaCiwE8YDeEFPFeggZCl31HwiRFdot4veXvdWObrUVCGofh1JsSPwh8WhoRqDrAvfLR8565uCinRXG01aTzajtep5a4dEX_ZpOzMtzjIxqa1-W7H0uaYdbIaW2EFJNfiuy9UkVd6RplQIcqqIc_ZDBwgsPgX8f1RMCrAxVwdDO7nbonLEI5Ba8vVYjhQPtfe-mf9LPIoqTmmOd_EhFtJAKe2pxFrueOLUP0-0LUbXTrwI="
             }
+          },
+          "time": {
+            "start": 1781201326386,
+            "end": 1781201335779
           },
           "id": "prt_eb7df5132001SPKC6yZqnN9mms",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -2079,20 +2079,20 @@
           "messageID": "msg_eb7df468a002bCF2VUCFsg2FHg"
         },
         {
+          "type": "step-finish",
           "reason": "stop",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 98777,
             "input": 1316,
             "output": 2737,
             "reasoning": 516,
             "cache": {
-              "write": 0,
-              "read": 94208
+              "read": 94208,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7e036cb001aO7qaTXac2Xebf",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7df468a002bCF2VUCFsg2FHg"
@@ -2105,14 +2105,14 @@
         "time": {
           "created": 1781201979007
         },
+        "summary": {
+          "diffs": []
+        },
         "agent": "plan",
         "model": {
           "providerID": "openai",
           "modelID": "gpt-5.5",
           "variant": "high"
-        },
-        "summary": {
-          "diffs": []
         },
         "id": "msg_eb7e9467f001xEVbaMeH57ygl5",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
@@ -2127,16 +2127,16 @@
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "Called the Read tool with the following input: {\"filePath\":\"/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md\"}",
+          "synthetic": true,
           "id": "prt_eb7e946bd002z3pCzvHOtQlPC8",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7e9467f001xEVbaMeH57ygl5"
         },
         {
           "type": "text",
-          "synthetic": true,
           "text": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md</path>\n<type>file</type>\n<content>\n1: # Hotfix 7 - Dynamic Reference Table Enum Eligibility Evaluation\n2: \n3: ## Summary\n4: \n5: Hotfix `#7` records the corrective work required because issue `#14` currently\n6: has enough normalized metadata to classify manual references by semantic family,\n7: but it still does not have enough machine-readable evidence to evaluate strict\n8: enum eligibility dynamically across all `ReferenceTables.xml` tables.\n9: \n10: The current semantic policy work can safely say that a reference is a compact\n11: enum-like controlled table, but it cannot yet decide, in a generic and\n12: evidence-backed way, whether that table should be treated as:\n13: \n14: - a strict closed enum candidate\n15: - a review-required compact controlled set\n16: - an open-coded value that should not be emitted as a strict enum\n17: \n18: This gap led to an undesirable implementation temptation: temporary\n19: table-specific hardcoding for cases such as `CVN_SEX_A` or `CVN_ENTITY_TYPE`.\n20: \n21: That shortcut must not become the long-term policy. The repository needs a\n22: dynamic evaluation path over all relevant `ReferenceTables.xml` tables so future\n23: semantic and generation work can scale without accumulating ad hoc exceptions.\n24: \n25: This hotfix defines exactly how to add that evidence path while keeping the\n26: architectural rule that issue `#14` consumes normalized typed metadata instead\n27: of reopening raw auxiliary-source inspection on every semantic decision.\n28: \n29: ## Motivation\n30: \n31: The repository already contains two important partial layers:\n32: \n33: 1. issue `#13` resolves `manual_reference_table` to typed auxiliary-source\n34:    metadata and exposes `reference_resolution`\n35: 2. issue `#14` maps `SemanticReferenceKind` and `SerializationPattern` to\n36:    domain-shape candidates\n37: \n38: What is still missing is a third layer between them:\n39: \n40: - machine-readable enum-eligibility evidence extracted from\n41:   `ReferenceTables.xml`\n42: \n43: Without that layer, issue `#14` cannot answer these questions generically for\n44: all compact enum-like tables:\n45: \n46: - does table have hierarchy?\n47: - does table use delegate-based open behavior?\n48: - does table include obvious \"other\" catch-all items?\n49: - are codes and preferred labels stable enough for enum emission?\n50: - is table small enough to be a practical strict enum candidate?\n51: \n52: If this hotfix is not applied:\n53: \n54: - issue `#14` will remain conservative but semantically incomplete\n55: - issue `#15` will either overuse `REVIEW_REQUIRED` or drift into hardcoded\n56:   table-name logic\n57: - future contributors will not know where strict enum eligibility is meant to be\n58:   evaluated\n59: \n60: ## Scope Of This Hotfix\n61: \n62: This hotfix is both a planning correction and an implementation contract.\n63: \n64: It does not require full domain-model generation. It does require extending the\n65: normalization-to-semantic handoff so issue `#14` can evaluate enum eligibility\n66: dynamically and reproducibly for every relevant table materialized in\n67: `ReferenceTables.xml`.\n68: \n69: This hotfix includes:\n70: \n71: - extension of normalization-grade `ReferenceTables.xml` metadata\n72: - additive enum-evidence fields in typed normalization contracts\n73: - deterministic dynamic enum-eligibility evaluation rules\n74: - replacement of table-specific hardcoding with evidence-backed policy\n75: - tests and validation cases for reviewed representative tables\n76: \n77: This hotfix does not include:\n78: \n79: - changes to `src/generated/`\n80: - semantic-policy decisions for side-package registries or thesauri beyond their\n81:   already defined ineligibility\n82: - domain-model generation output in issue `#15`\n83: - fuzzy or LLM-based interpretation of table meaning\n84: \n85: ## Issues Affected\n86: \n87: - issue `#13`\n88: - issue `#14`\n89: - issue `#15` as downstream consumer\n90: - issue `#16` for test coverage\n91: - issue `#17` for workflow documentation\n92: \n93: ## Core Problem Statement\n94: \n95: ### What Exists Today\n96: \n97: The current `ReferenceTableMetadata` extracted in\n98: `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py` already carries:\n99: \n100: - `table_name`\n101: - `version`\n102: - `ancestor_table`\n103: - `source`\n104: - `xml_data_type`\n105: - `xml_property`\n106: - `xml_indicator`\n107: - `item_count`\n108: - `has_hierarchy`\n109: - `has_delegate`\n110: \n111: That is enough for semantic-kind classification, but not enough for strict enum\n112: eligibility.\n113: \n114: The current `ReferenceResolution` in `src/cvn_codegen/normalization_types.py`\n115: does not expose table-level evidence such as:\n116: \n117: - normalized item codes\n118: - preferred labels\n119: - duplicate-code detection\n120: - duplicate-label detection\n121: - presence of obvious \"other\" / catch-all entries\n122: - explicit open-world signals for enum emission\n123: \n124: ### What Must Be True After This Hotfix\n125: \n126: After this hotfix is implemented, issue `#14` must be able to evaluate enum\n127: eligibility for all resolved `REFERENCE_TABLE` compact enum-like tables without\n128: hardcoding specific table names in semantic policy logic.\n129: \n130: The only acceptable table-specific exceptions after this hotfix are:\n131: \n132: - explicit review overrides stored as versioned `OverrideRule` data\n133: - not hidden `if table_name == ...` branches inside semantic-policy code\n134: \n135: ## Required Changes To Issue `#13`\n136: \n137: Issue `#13` remains the correct stage for extracting and normalizing the\n138: evidence needed by issue `#14`.\n139: \n140: Issue `#14` must not scan `ReferenceTables.xml` ad hoc for every semantic\n141: decision. It should consume typed evidence already attached to normalized\n142: entries.\n143: \n144: ### Contract Extension Required\n145: \n146: `src/cvn_codegen/normalization_types.py` must be extended with an additive typed\n147: record that carries enum-eligibility evidence for reference tables.\n148: \n149: The preferred exact name is:\n150: \n151: - `ReferenceTableEnumEvidence`\n152: \n153: The preferred exact attachment point is:\n154: \n155: - `ReferenceResolution.reference_table_enum_evidence`\n156: \n157: This field must be:\n158: \n159: - `None` for non-`ReferenceTables.xml` sources\n160: - populated for resolved direct `REFERENCE_TABLE` and\n161:   `SUBTYPE_BACKED_TABLE` cases\n162: \n163: ### New Type Required\n164: \n165: Issue `#13` should add this typed structure or a field-equivalent contract with\n166: the same information:\n167: \n168: ```python\n169: @dataclass(frozen=True)\n170: class ReferenceTableEnumEvidence:\n171:     table_name: str\n172:     item_count: int\n173:     has_hierarchy: bool\n174:     has_delegate: bool\n175:     has_other_like_entry: bool\n176:     has_duplicate_codes: bool\n177:     has_duplicate_preferred_labels: bool\n178:     has_blank_code: bool\n179:     has_blank_preferred_label: bool\n180:     normalized_codes: tuple[str, ...]\n181:     preferred_labels: tuple[str, ...]\n182:     normalized_preferred_labels: tuple[str, ...]\n183:     open_world_signals: tuple[str, ...]\n184: ```\n185: \n186: The exact field names may differ only if all of the above facts remain present\n187: and testable.\n188: \n189: ### `ReferenceTableMetadata` Extension Required\n190: \n191: `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py` must be\n192: extended so `ReferenceTableMetadata` itself exposes enough raw normalized facts\n193: to build `ReferenceTableEnumEvidence` deterministically.\n194: \n195: At minimum, add these fields to `ReferenceTableMetadata`:\n196: \n197: - `item_codes: tuple[str, ...]`\n198: - `preferred_labels: tuple[str, ...]`\n199: - `normalized_codes: tuple[str, ...]`\n200: - `normalized_preferred_labels: tuple[str, ...]`\n201: - `has_blank_code: bool`\n202: - `has_blank_preferred_label: bool`\n203: - `has_duplicate_codes: bool`\n204: - `has_duplicate_preferred_labels: bool`\n205: - `has_other_like_entry: bool`\n206: - `open_world_signals: tuple[str, ...]`\n207: \n208: ### Preferred Label Extraction Rule\n209: \n210: When building table metadata from `ReferenceTables.xml`, each item must select a\n211: preferred label deterministically from the available multilingual `NameDetail`\n212: values.\n213: \n214: Use this order:\n215: \n216: 1. Spanish label if present\n217: 2. English label if Spanish is missing\n218: 3. first available label otherwise\n219: \n220: The implementation must not leave preferred-label selection implicit.\n221: \n222: ### Normalization Rules For Evidence\n223: \n224: When computing dynamic enum evidence, normalize codes and labels with explicit,\n225: repository-local deterministic rules.\n226: \n227: Minimum normalization required:\n228: \n229: 1. strip leading and trailing whitespace\n230: 2. collapse repeated internal whitespace to single spaces\n231: 3. convert labels to ASCII-compatible uppercase for signal detection\n232: 4. preserve original preferred labels separately from normalized labels\n233: 5. preserve original item codes separately from normalized codes\n234: \n235: ### Open-World Signal Detection Rules\n236: \n237: The implementation must compute `has_other_like_entry` and\n238: `open_world_signals` deterministically.\n239: \n240: Use these minimum signals:\n241: \n242: #### Label-Based Other-Like Tokens\n243: \n244: After normalization to uppercase ASCII, treat these exact tokens as open-world\n245: signals when used as a full label or clear standalone term:\n246: \n247: - `OTRO`\n248: - `OTRA`\n249: - `OTROS`\n250: - `OTRAS`\n251: - `OTHER`\n252: - `OTHERS`\n253: - `RESTO`\n254: - `NO CONSTA`\n255: - `SIN ESPECIFICAR`\n256: \n257: #### Structural Open Signals\n258: \n259: Also record open-world signals for:\n260: \n261: - any table with `has_delegate=True`\n262: - any item with blank preferred label\n263: - any item with blank code\n264: \n265: The implementation should store the actual matched reasons in\n266: `open_world_signals`, for example:\n267: \n268: - `label_token:OTHERS`\n269: - `delegate_present`\n270: - `blank_preferred_label`\n271: \n272: ### Duplicate Detection Rules\n273: \n274: `has_duplicate_codes` must be `True` when normalized item codes repeat.\n275: \n276: `has_duplicate_preferred_labels` must be `True` when normalized preferred labels\n277: repeat after empty labels are excluded.\n278: \n279: These duplicate flags do not automatically make the table ineligible, but they\n280: must block automatic `ELIGIBLE` and downgrade the table to review-required.\n281: \n282: ### Wiring Required In Reference Resolution\n283: \n284: `src/cvn_codegen/auxiliary_sources/reference_resolution.py` must attach\n285: `ReferenceTableEnumEvidence` whenever a manual reference resolves to\n286: `ReferenceTables.xml`.\n287: \n288: That means `resolve_manual_reference(...)` must:\n289: \n290: 1. keep current source-family and semantic-kind behavior unchanged\n291: 2. build enum evidence from `ReferenceTableMetadata`\n292: 3. attach that evidence to `ReferenceResolution`\n293: 4. preserve `None` for non-reference-table source families\n294: \n295: ## Required Changes To Issue `#14`\n296: \n297: Issue `#14` must stop using hardcoded reference-name logic for strict enum\n298: eligibility.\n299: \n300: ### Current Undesired State\n301: \n302: The current semantic-policy direction risks either:\n303: \n304: - hardcoding reviewed cases such as `CVN_SEX_A`\n305: - or leaving every compact enum-like table as permanently\n306:   `REVIEW_REQUIRED`\n307: \n308: Neither is sufficient.\n309: \n310: ### Correct Enum Eligibility Evaluation Function\n311: \n312: `src/cvn_codegen/semantic_policy.py` must add one deterministic helper with\n313: equivalent behavior to:\n314: \n315: ```python\n316: def evaluate_reference_table_enum_eligibility(\n317:     evidence: ReferenceTableEnumEvidence | None,\n318:     source_family: ReferenceSourceFamily | None,\n319:     semantic_kind: SemanticReferenceKind | None,\n320:     is_subtype_backed: bool,\n321: ) -> tuple[EnumEligibility, PolicyConfidence, tuple[str, ...]]:\n322:     ...\n323: ```\n324: \n325: The helper must return:\n326: \n327: - final `EnumEligibility`\n328: - final `PolicyConfidence`\n329: - machine-readable rule reasons or blockers\n330: \n331: ### Exact Eligibility Rules Required\n332: \n333: The function must evaluate rules in this order.\n334: \n335: #### Immediate Ineligibility\n336: \n337: Return `INELIGIBLE` when any of these are true:\n338: \n339: 1. `source_family` is not `REFERENCE_TABLE`\n340: 2. `semantic_kind` is not `COMPACT_ENUM_LIKE_TABLE`\n341: 3. `is_subtype_backed` is `True`\n342: 4. `evidence is None`\n343: 5. `evidence.has_hierarchy` is `True`\n344: 6. `evidence.has_delegate` is `True`\n345: \n346: These cases are not review candidates for strict enum emission. They are not\n347: closed compact tables.\n348: \n349: #### Review Required\n350: \n351: Return `REVIEW_REQUIRED` when immediate ineligibility does not apply, but any of\n352: these are true:\n353: \n354: 1. `evidence.has_other_like_entry` is `True`\n355: 2. `evidence.has_blank_code` is `True`\n356: 3. `evidence.has_blank_preferred_label` is `True`\n357: 4. `evidence.has_duplicate_codes` is `True`\n358: 5. `evidence.has_duplicate_preferred_labels` is `True`\n359: 6. `evidence.item_count == 0`\n360: 7. `evidence.item_count > 64`\n361: \n362: The `64` threshold must be versioned as a named repository constant, for\n363: example:\n364: \n365: - `MAX_STRICT_ENUM_ITEM_COUNT = 64`\n366: \n367: This threshold is not a semantic truth of CVN. It is a repository policy limit\n368: for practical strict-enum generation.\n369: \n370: #### Eligible\n371: \n372: Return `ELIGIBLE` only when all of these are true:\n373: \n374: 1. source family is direct `REFERENCE_TABLE`\n375: 2. semantic kind is `COMPACT_ENUM_LIKE_TABLE`\n376: 3. not subtype-backed\n377: 4. no hierarchy\n378: 5. no delegate\n379: 6. no other-like/open-world label\n380: 7. no blank codes\n381: 8. no blank preferred labels\n382: 9. no duplicate codes\n383: 10. no duplicate preferred labels\n384: 11. `1 <= item_count <= MAX_STRICT_ENUM_ITEM_COUNT`\n385: \n386: ### Domain Shape Interaction Required\n387: \n388: Dynamic enum evaluation must not silently flatten semantic kinds.\n389: \n390: Use these exact outputs:\n391: \n392: 1. if enum eligibility is `ELIGIBLE`:\n393:    - keep `domain_shape_kind=STRICT_ENUM_CANDIDATE`\n394:    - set `policy_confidence=HIGH`\n395: 2. if enum eligibility is `REVIEW_REQUIRED`:\n396:    - keep `domain_shape_kind=STRICT_ENUM_CANDIDATE`\n397:    - keep fallback `OPEN_CODED_VALUE`\n398:    - set `policy_confidence=REQUIRES_REVIEW`\n399: 3. if enum eligibility is `INELIGIBLE` because the table is not a compact direct\n400:    enum candidate:\n401:    - let the reference-kind matrix already drive non-enum shapes\n402: \n403: Important correction:\n404: \n405: This hotfix does **not** require issue `#14` to convert every reviewed compact\n406: table into `OPEN_CODED_VALUE` immediately. It only requires dynamic eligibility\n407: evaluation instead of hardcoding.\n408: \n409: That means `CVN_ENTITY_TYPE` should no longer be hardcoded in semantic policy.\n410: It should land in `REVIEW_REQUIRED` unless machine-readable open-world evidence\n411: forces a stronger result.\n412: \n413: ### Validation Expectation Correction Required\n414: \n415: Issue `#14` validation cases must stop treating reviewed examples as hardcoded\n416: special cases.\n417: \n418: Update expectations as follows:\n419: \n420: 1. `CVN_SEX_A`\n421:    - expected `EnumEligibility.ELIGIBLE`\n422:    - expected confidence `HIGH`\n423:    - result must come from dynamic evidence, not `if table_name == \"CVN_SEX_A\"`\n424: 2. `CVN_ENTITY_TYPE`\n425:    - expected `EnumEligibility.REVIEW_REQUIRED`\n426:    - expected confidence `REQUIRES_REVIEW`\n427:    - result must come from dynamic evidence, not hardcoded table-name override\n428: \n429: ## Required Changes To Tests\n430: \n431: ### Extend Auxiliary Loader Tests\n432: \n433: `tests/test_auxiliary_source_loaders_unit.py` must add assertions proving that\n434: `ReferenceTableMetadata` now exposes enum-evidence fields.\n435: \n436: Minimum new checks:\n437: \n438: 1. `CVN_SEX_A` has non-empty `item_codes`\n439: 2. `CVN_SEX_A` has non-empty `preferred_labels`\n440: 3. `CVN_SEX_A` reports `has_hierarchy is False`\n441: 4. `CVN_SEX_A` reports `has_delegate is False`\n442: \n443: ### Extend Resolution Tests\n444: \n445: `tests/test_auxiliary_reference_resolution_unit.py` must add checks that:\n446: \n447: 1. resolved reference-table cases attach non-`None`\n448:    `reference_table_enum_evidence`\n449: 2. side-package and unresolved cases attach `None`\n450: 3. subtype-backed cases still attach evidence but remain semantically ineligible\n451: \n452: ### Add Semantic Policy Tests\n453: \n454: When issue `#16` or the issue `#14` test phase adds semantic-policy tests, the\n455: minimum required dynamic enum checks are:\n456: \n457: 1. `CVN_SEX_A` becomes `ELIGIBLE` dynamically\n458: 2. `CVN_ENTITY_TYPE` becomes `REVIEW_REQUIRED` dynamically\n459: 3. subtype-backed `CVN_KNOW_A` remains `INELIGIBLE`\n460: 4. hierarchical `UNESCO_CODES` remains `INELIGIBLE`\n461: 5. side-package registry references remain `INELIGIBLE`\n462: 6. unresolved references remain `INELIGIBLE`\n463: \n464: ## Files Expected To Change When Applying This Hotfix\n465: \n466: Minimum code files:\n467: \n468: - `src/cvn_codegen/normalization_types.py`\n469: - `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`\n470: - `src/cvn_codegen/auxiliary_sources/reference_resolution.py`\n471: - `src/cvn_codegen/semantic_policy.py`\n472: - `tests/test_auxiliary_source_loaders_unit.py`\n473: - `tests/test_auxiliary_reference_resolution_unit.py`\n474: - future semantic-policy tests under `tests/`\n475: \n476: Minimum documentation files:\n477: \n478: - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n479: - `docs/context/current_status.md`\n480: - `docs/pipeline/known_limitations.md` if a new limitation appears\n481: - `docs/roadmap/cvn_generation_roadmap.md` if issue state changes\n482: \n483: ## Verification Strategy When Implemented\n484: \n485: The implementation session that applies this hotfix must verify all of these:\n486: \n487: 1. `ReferenceTableMetadata` exposes dynamic enum-evidence fields\n488: 2. `ReferenceResolution` carries evidence for direct reference-table resolutions\n489: 3. issue `#14` no longer uses table-name hardcoding for enum eligibility\n490: 4. `CVN_SEX_A` passes dynamically as eligible\n491: 5. `CVN_ENTITY_TYPE` lands dynamically in review-required\n492: 6. subtype-backed, hierarchical, side-package, unresolved, and under-traced\n493:    families remain non-eligible\n494: \n495: Minimum commands:\n496: \n497: ```bash\n498: uv run pytest tests/test_auxiliary_source_loaders_unit.py -v\n499: uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v\n500: uv run pytest tests/test_semantic_policy_unit.py -v\n501: uv run pytest -n auto tests\n502: ```\n503: \n504: ## Impact On Future Issues\n505: \n506: - removes pressure to hardcode reviewed table names in issue `#14`\n507: - gives issue `#15` a scalable strict-enum decision input\n508: - gives issue `#16` a concrete dynamic-evaluation test target\n509: - lets issue `#17` document a reproducible policy instead of a manually curated\n510:   exception list\n511: \n512: ## Status\n513: \n514: - Status: documented as required corrective work\n515: - Implementation state: pending\n\n(End of file - total 515 lines)\n</content>",
+          "synthetic": true,
           "id": "prt_eb7e946bd003Tnc2FGXzGkCHta",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7e9467f001xEVbaMeH57ygl5"
@@ -2163,11 +2163,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7e9467f001xEVbaMeH57ygl5",
         "role": "assistant",
+        "time": {
+          "created": 1781201979154,
+          "completed": 1781202001187
+        },
+        "parentID": "msg_eb7e9467f001xEVbaMeH57ygl5",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -2179,24 +2184,19 @@
           "output": 113,
           "reasoning": 501,
           "cache": {
-            "write": 0,
-            "read": 0
+            "read": 0,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781201979154,
-          "completed": 1781202001187
-        },
+        "variant": "high",
         "finish": "stop",
         "id": "msg_eb7e94712002t1Zy2c2OnXTjoD",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7e96c76001QC2hYuWe1hvEVI",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7e94712002t1Zy2c2OnXTjoD"
@@ -2204,15 +2204,15 @@
         {
           "type": "reasoning",
           "text": "",
-          "time": {
-            "start": 1781201989694,
-            "end": 1781201998808
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_057c8ce86bdb43f5016a2afc458ed4819185bd75c6f2dc8e26",
               "reasoningEncryptedContent": "gAAAAABqKvxOOvG3veFLyDhXZ6U0GKan9eo55NcQvUjB-BHmkpMxGbIRG1WO4NiKSeK-JOKODwxqDdaf-doy1ZFKi6SS_uA1Ax-O07CCO1qsHwZoGi3_Tgp37ewF9CjvCNqljylvVH9xUavC4UNA9rvpxBcMTokvWHt8qrxpSY57_cDeJp7AQ-75CKlbk6rYDWTtzeNRNlr1rJL3AMohp5F93YPHY8b4tIisH3nxMrBQXu6oM10zHhnV8veg5fHMPHGoFiqqmNplikkvuU7g_4kxPoP3h_cGWjPSwGUx8zaxdAKG_ZYHZyk5v-NyCyVM-bRv7b5c7izmVa7LmdVdYxeEmcmGzKstiOpaT_ej4fXhLPShaPq8zDG4C7CrmWeh9uooBbpEZ7xewf1w1KQ12Eq9SP6n3Eq5qAWR4MTdMw43CtKhw3w6ZkNpZOcFLxylrXBcs-v0if6GufO0eG1dddBJHoWKYOEJsZ6DHirC3LKgBZWZkYPydJL-hls_NBdo4-cZImD2HtGoOn3JWx80xxitumY7fzbrxAW-wVVMcEWUTwrjWaoWIqprqzhr3wOZ73VRetlXVHRcjgDdJcj4UGcAdSAmUqHey7EQx6MlkBM4xoden4zT2plFWxCcu2iY89a9LKqbzibnyFTL_Ntnc3AyydNPLI1kB4a4HljJLXywcljiPiH5QFP2OgNWuiAcJ13BCv3TGkvCSOGJ9FPAI6yjJHUeMqvcrNu7V7Xx9t8szSpQyjZks281Q59XtBOk0SL_aO-2M2BSY62g_ihSm4kOC6flcD2VMg90ckqABQCZ6IavtiDNsrxYHMvQcpAD9-lQVCbSiA871dNLeBQKJX8A2z-VDOPnKEZub35ADwOfH1Mw3e49YZKEOOWz1aEP7btfm7mVE5J4Z_dTGAM5bRO9NosPSe1HI9Gv9f6_Tl-JZzKGmhqRk4r1BLnsfOPBuH9Are_KEwTkHOLAAuoFHGKPtJmwLht6YnQU5_mA8EQwI0JiAfilS14co6fRqNcE2Ms-mT-4fj2g-x4i6Xj_ZhKidzV8b5oP1DuVyE_J1p1JQtT8A4bbqbS87Jc-oWxdrNjfaVl6v9r7_A96yhNOwSbysCgPdneOaps5O6Ca5ze0yvoHN9D3gkPfGzyXWvYrnzqpoKLleXtvvUj50TYzWvmVRTjkDPWkMuf28G6X6fszZjyobHfJBl6p1GRDLNqpg1GkbnqfaSY5mSNp2uBwIWdKz1WNqnjhwrYv9kTaclWnh1TEpLRHAnkUbpDBv8aoyEJEtZot2tGg1TV7Jq8WIMX5bvfCnf3XUHiL0OLfzaXRo5eby5JBLIjDct31sEt4nj7nYJbV80_8YrnDM_JfnWqzjuXk7nIdCvQI48t89KwG4Koc6t_mBJO4vJYI0qVY9zcJ2d5Z5VvBcntaNuT6ug1Ivtr2zg1uc4I6dAM44HF2Fp6LWLpHPnEGSEst6XeVitvY3EWqoHznbYpNq8EvQNFMDk35LYRkQL4tBnc9saW3w4IaBBbBenXJaw9PCe7RME_Hr4KeyZDfKSU_bnV8gOcOdisN83GVmgTfsNeW-QOa1pcwlfHbz_EQeBnNbkYrECF6visfZVmWGJoj2yyP24HNCAFLe2PHJMeNtaRDyUAJPvOkF96VHFXEC7-0sOa-fPBnWNm8itVfbZZ-7tDqEYoGaHKdyMO3UjgAfkYgaqzv12qpddzimu__kT2Fm4b3D0vBtv_KPUbvzHQDFEBM9SajoGuHcCuhUl8vf-slC3YSQDT8khzp6bVHNpjxKX0WapmAtM6tEQQIbFcD5YP3pGtVh1EjKmEKGUEHvLGESovdreSoW5vJPshYmT9exD4WkW54XN81U_LSEjE3kNx79NbKXFjnmnOUUSwYyKD3Mh858ppLu_D4nXZoNlQeJgQVgKTK5hEW8xMJLswO-a8dry5eeo0INpqZ_0lzRBrDbTtc_s-InOo0Uq5JIv90BnTRAifaiyFPtEByno4K_sinNBNfyhlmJCSy-mZjAUQNg4dZicWvvmg4f-gNP2uL0w_FpFa1pDuvXhEcQ4OBDDEpml6D3mJ3uQBJIpaSYH7VX6mRDbs82HfrviGSAxwQZrkyR06VPjEWgH93tUCj53-xj-k1ENsP0RbUNBQqfYaogrFnZCXDv9fzDk7tOpDpR2WrJZJUcML9utcUzdpDfqe7Z009eVo52OB0kBN2fjHqz4XtqA8TrrFCZp00U1WLoQQjPCM_ugCHQQiZTf2g9VvhJBR6HE30-91KPyPF39C_FPZKcH5FVcoQv3rQSwGbzuYhnTvjQVUCWH_g2TiME_QEfQOKv0Zy8ZuUQfO15KdR0cg2Mqp_UVb6z5KmVPa3s5VxDA0GPORq7M0ub5gsdtP_xpJztit1v6j41NmFpUcy3Z0WF5n2E0uKv39ggBsk0cmbTwkEbP_G_YA1GcrxXXCghlv9-gp7rzxuhiNPTyrxJqXebcQPAYlfvuoS5q8Yc1bFjusT7hvUr-iVnxrQeLp7s8mjS1XTJ6Mv0cWigZwiBfRCXgVEVGSHDi8tKWaNx6efhubIu5JP4F7J71dvF65ii7DAArSYdWGZwRoFPqnUTZZJatAXJFbwyLzFot2OE5vffT2vmd7eBUqAitnGjcj6cqIN-OppweaPwSiNJywGxpdEx2PeCeloV08K89mszRUhGzUhErugKXbF1P533FSSRJjLbN0Sp05rSaq0GP2yGsfAbAvCz2hoKi6eVUxGr_uL33C4YAeawvUk8Ch6aM6SAWezv4Ozk94nPHxRXI1uV4voR3HB2IbJpErx2ziVgDbG2koLqcrrvodfbdBzfqDrrcd_nmCJoeiGXTlIt3fq1IjbkHp-QNfO6e9_xqCXj41a_BJdgIIlL9u35-eJ8yHEelTcG--peWH3eMzdI0oJ5kTweAuykFK_MfjrW9bUvnt7ahsJflQvNZQXXrPrfL6FHTKgEh2WnTQz2fIKEqU9mb2XtEfB3d_TPMw9CiNVXEnXo1TRwdb_TazjrKFqhNfX5TenQ10mqpQVHufO3PaQdzg9qjk_UI1l7frSnl7M7CUAA1xhfmkzr1I8UZkyxhjXlqlZQwsbzpcl-B_Y0Ob_ew0bExvAi4Z7-kc29BVDiaCeWQ9krZ2Wcw4MrO-3hT9VEkO5xcG4a1kjOC4SvRVDAojjJBnb0VK3C1s7XU3lInCoUYHhhI60wQCJgPAMAFSzLCE1DuxnXG_vLqL9qs_N84LwGLgN7ZTTGW2KL7g-8N-e4mDI0a3seYQhdmgyvIYG99S1vLu_ujrBBWDnlBPRIOvCFrchC7wEHM1x4TcGsSGthJBmKtipBflsUFa52hhDtBLYRU-XRPVyiTKfTOFEiJX31Cz9p65zdJLS7MBo27Gtci5QWNh5carY3KVAO2C7QtoAigdnCP9idC_mKsinwz8EIlszro_R_qQPKBqMtOvfHzR48JFSKAfapz78qIcYyCkvvZNznSj91tkp3NOAJF59DzAtj7TuLgC2CieW3zUT4F7r3ggII742-WHEZ0jIYw_Yn4QiW3FqYsabWfDwweKi37H50nnMqHjiKPrXFPAPBTvlzSZofWO29C-aKtrDkj6nnzB2ffa4QuV970KkO8JhJ2SUcbJKYu6F-8EXRrXOBRisM1bsU81uRICkrO1Z7Gzu0MROaJ5_AeMPV1u7Ixh4Db-slEuVdW1p6ypIqVncpP9qZPm12Q9ScBIHA4bpBAJ-YIiFwW0rIy3hRa95HfsMIEFB2Ay-2oRwWGJr23OT-NswISFvfn-rgky6DygA_SyZ3TYKC0Agn0n6JGtTdtHAyNR77SZXNpR-h8Bi3eyxF1o01xvTnn31IxVo4ZHx0qNW4pzl3TbLIEJQ7lEOSgUgYBGHSus4C_b44UayIyJ2OtJZSl6Lqm0WvGWj40g5Lm8Z2damp37-7f-hwfUCne-xlFHtkKy7o4BE-N1fBp3njCuTVO08BoYIhmqjnmtlI1y_i_M2qSM3n-595nRhAteln8Lgn-BewntCuUDEFzrRBC8t69Qkrfm0ASDrOBAEdrLqEZ4Os7Lj8hQ1ABm7nMHOn5A0s3yoASAe7Y1qCjySNHgaCvHKOGnzJtiVYghX1UAPmdtd70XZ33TCKLwERJd2jSeu9tO2jeE="
             }
+          },
+          "time": {
+            "start": 1781201989694,
+            "end": 1781201998808
           },
           "id": "prt_eb7e9703e001MGyXeCdfeLe8zk",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -2236,20 +2236,20 @@
           "messageID": "msg_eb7e94712002t1Zy2c2OnXTjoD"
         },
         {
+          "type": "step-finish",
           "reason": "stop",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 100507,
             "input": 99893,
             "output": 113,
             "reasoning": 501,
             "cache": {
-              "write": 0,
-              "read": 0
+              "read": 0,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7e99c9500167uyV0FX2J086v",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7e94712002t1Zy2c2OnXTjoD"
@@ -2262,12 +2262,6 @@
         "time": {
           "created": 1781202471843
         },
-        "agent": "build",
-        "model": {
-          "providerID": "openai",
-          "modelID": "gpt-5.5",
-          "variant": "high"
-        },
         "summary": {
           "diffs": [
             {
@@ -2278,6 +2272,12 @@
               "status": "modified"
             }
           ]
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
         },
         "id": "msg_eb7f0cba3001gusg1kervpZFwT",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
@@ -2294,11 +2294,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
         "role": "assistant",
+        "time": {
+          "created": 1781202471895,
+          "completed": 1781202480272
+        },
+        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "build",
         "agent": "build",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -2310,24 +2315,19 @@
           "output": 114,
           "reasoning": 156,
           "cache": {
-            "write": 0,
-            "read": 4096
+            "read": 4096,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781202471895,
-          "completed": 1781202480272
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7f0cbd7002NkY6TvEl88OyTh",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7f0d2db001jeIJSSEDQcMoD2",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f0cbd7002NkY6TvEl88OyTh"
@@ -2335,15 +2335,15 @@
         {
           "type": "reasoning",
           "text": "",
-          "time": {
-            "start": 1781202474795,
-            "end": 1781202477868
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_02545f82e4634aa5016a2afe2ac4388191ad75357ea6cee344",
               "reasoningEncryptedContent": "gAAAAABqKv4tAe3oRgM5ahc92wwrKs-Z12R-ny2lkDplsCFmTxtix3Y6bI7R5JPE5dZqGYFR0XFcrbRydn0Ouz63pyoLiLn2Gofg5Na4na0cUbDLoCxi0_v8HmVg2Emq13uUUJSRClSloNZlHeDw5-ezgNuMDe1WiumCQS3SGxeq7olZDu7qhVDb2LFME8eoUuPbLQkyuziypglOODE68WlledoOJznnXwMpye3afgosWBoNsFfFGj2JhV-KR6tDqK9QUoaMMvpZXc9htVqQR4A4iPMQ7ug__IFu2QTsjgd6FFq1kbDytwzrk8LiWNHp8fz5avGoxOHyFfpx8lt6T7pf0_CUAHuQxOO5szBvvSGlA1c5TOxKev_x8zNSlWq9fZ0kBl-A2bgntAnM_AXy4QvxoSfYGEaxoiqZXWPaKQAJ2D-F8Euw5AY_WK-OECcb370J6gaR7v347S7fSKOrSye1s5Lka3608XLSx0nQlWMUY2Bs7JZQJScBtqwJjNASGkx7ZHVaX1sIxNhgR0aWSTxMboak_sYbkoeWmP0xiBEwxAGfkFB0MOjiNJEOnJgcqTVJj6D-p_9bgNGJ0_7RLXTi6ABs7r9WP1FQUDbqcDERIAo0YNdt_t0Fb8s7Tj9_-2Rfqwlk8n-hhId9qZpeAeyNhr2XcvyOHHAUn52c37oJnXDyyxO7o-2GBDUgevJjezBZ1sY7mUyW2HZ2s1-JFmm2RrInpv4EnmsZMLavT9R4g0h2HmaiyeEnxg_ctFQhq3uRU1uvAhsVp4zPMUJk8DQSMUw0uhyHC1QDAXvNz6MAZYJhQWsQcHDWcemvmYyMM8fu3OqXgZIK-s5gHjaRqqnNBnQuQ2EM_31W3y9QXx3xVRUoj3pbQ2Lsvq3CS-GkXCRF9AhhVEb7V2n5ELkYIM8iGzASOqeyCgOo8Ay70OXcNUfhqrE4ZLJ1vjwgx85ACSQg5TwWxR4kwuU9R9rRrdZPPL0pSTCsSJ3PmmsKoAQVS2iC5Tk_6rtzrEI8fD3LKLExCQLZ-s1vk1znGmVdqIvbTJAER7OIE9jepv5zUmLQzw13exfXyteoj-l2mD6WsZ3JYOnUrWhqMWJcYOYi-N0OomwKtGLxMWxd6bVbBkCcK-Al4VS-X4Ck6ALGObtOF9forLXvYWBKX_a9itUEg3ecHyX-mtbEnJhxn9iAeUWWRidqsnDFrNLFnzFjG312azW7OBw5KXjXgtfDQyVVRu4kgNxxaYKX-IP1q5hB7W53yMT6PMePkdEyAPboUL0pm3s4sUe7j4BHRDgcXenzVFKPmQy_M6gYyej8dpWwHvOMbX_oh7AfPGkg4QYL5f19BUYZ5aC-es11VxX9TI09zfQHO13ppVuLjEvvvQDz8lZ7XRPLFe2EkRLgXiyYG8YBUYo5FiED7sn5qsNGlrjyVRqLwOohG6BvOOnJWOXYabVvUIRknrr31IyW5P0Q3lBSx52E1BIUeqa3YoLshgqR6gJ12qoV3PnGOb_FXaXf83Vu-wU5exWYT5LrwOX0QzZI6PlRFrC6AnjqGDzD_jdJGwUI2g7h3bPV3UG9Fq6m0hX8OxJaA-Mvrof8SfGlOfXQBQqrApycTMAMpWj2rAZv95PGtOF2DPaA0w0YRg8d2g6HHoU1Ho5GriJOAUrwTpNB4GfrP0Y-vOPh9pFFtFPTSmZdsGniTvQyQXusSpmr7KW6jOcOJowJ6OqoZOhCBcKlunFsVj-roOKu0AR3e1RrOYlCi1I486JjRzx8_fM0SBEx5IRw4qCdiOdRYqXjAO5cCkCuuhW-jR5ROkwbo8tm5taKZtH4DHTcjoZ8a2BA9BsETiktSGqrTM4_-6UQjrahOAnZP6pAtOky3Vsl81qC5AOyj_MjrNRWuXgbK7Fxtn2ySIioLmP4db2YtBZ0hcXNLGitjlrQ9p1jVKOFvBIBSvuXZEYQ_kd3uA=="
             }
+          },
+          "time": {
+            "start": 1781202474795,
+            "end": 1781202477868
           },
           "id": "prt_eb7f0d72b001ZyIA3sHeUZ6Gop",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -2368,8 +2368,8 @@
         },
         {
           "type": "tool",
-          "tool": "todowrite",
           "callID": "call_b99geEtrpE6ZBf1PcZeZDB9i",
+          "tool": "todowrite",
           "state": {
             "status": "completed",
             "input": {
@@ -2387,6 +2387,7 @@
               ]
             },
             "output": "[\n  {\n    \"content\": \"Insertar plan aceptado en hotfix 7\",\n    \"status\": \"in_progress\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Verificar documento actualizado\",\n    \"status\": \"pending\",\n    \"priority\": \"medium\"\n  }\n]",
+            "title": "2 todos",
             "metadata": {
               "todos": [
                 {
@@ -2402,7 +2403,6 @@
               ],
               "truncated": false
             },
-            "title": "2 todos",
             "time": {
               "start": 1781202479925,
               "end": 1781202479940
@@ -2418,20 +2418,20 @@
           "messageID": "msg_eb7f0cbd7002NkY6TvEl88OyTh"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 100067,
             "input": 95701,
             "output": 114,
             "reasoning": 156,
             "cache": {
-              "write": 0,
-              "read": 4096
+              "read": 4096,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7f0ebc3001B3q3pJx03aGncE",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f0cbd7002NkY6TvEl88OyTh"
@@ -2440,11 +2440,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
         "role": "assistant",
+        "time": {
+          "created": 1781202480290,
+          "completed": 1781202588757
+        },
+        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "build",
         "agent": "build",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -2456,38 +2461,34 @@
           "output": 5839,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 99328
+            "read": 99328,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781202480290,
-          "completed": 1781202588757
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7f0eca2002rXrZwhTaERI3js",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "type": "step-start",
+          "snapshot": "5159f4ef1159b79131f99e2ddeb044e492e3cb40",
           "id": "prt_eb7f0f25c001MpYfmO5C7qrLtp",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f0eca2002rXrZwhTaERI3js"
         },
         {
           "type": "tool",
-          "tool": "apply_patch",
           "callID": "call_LdeKgY0eX8LBwxbS6vPiMiGV",
+          "tool": "apply_patch",
           "state": {
             "status": "completed",
             "input": {
               "patchText": "*** Begin Patch\n*** Update File: /home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md\n@@\n ## Files Expected To Change When Applying This Hotfix\n@@\n - `docs/pipeline/known_limitations.md` if a new limitation appears\n - `docs/roadmap/cvn_generation_roadmap.md` if issue state changes\n+\n+## Accepted Execution Protocol\n+\n+The user accepted this execution plan before implementation starts.\n+\n+At every execution step, the implementer must report:\n+\n+1. current task number and task name\n+2. current subtask number and subtask name, when a subtask is being executed\n+3. short initial summary of what the task or subtask will do\n+4. short final result for the task or subtask\n+5. whether the user must modify any file manually\n+6. next step to follow\n+\n+File-modification rule:\n+\n+- documentation changes may be performed when explicitly requested\n+- code changes should be left for the user unless the user explicitly authorizes\n+  the agent to edit code\n+- generated code under `src/generated/` must not be edited manually\n+\n+## Accepted Execution Plan\n+\n+### Task `1 / 15` - Add Loader Metadata Tests\n+\n+- Task summary:\n+  - add failing tests proving `ReferenceTableMetadata` exposes dynamic enum\n+    evidence derived from `ReferenceTables.xml`\n+- Files involved:\n+  - `tests/test_auxiliary_source_loaders_unit.py`\n+- Subtask `1.1 / 15`:\n+  - assert `CVN_SEX_A` has non-empty `item_codes`, non-empty\n+    `preferred_labels`, normalized codes `(\"000\", \"010\")`, no hierarchy, no\n+    delegate, no blank codes, no blank preferred labels, no duplicate codes, and\n+    no duplicate preferred labels\n+- Subtask `1.2 / 15`:\n+  - assert `CVN_ENTITY_TYPE` reports `has_delegate is True`,\n+    `has_other_like_entry is True`, and `open_world_signals` includes\n+    `delegate_present` plus at least one label-token signal\n+- Subtask `1.3 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n+- Expected result before implementation:\n+  - tests fail because the enum-evidence fields do not exist yet\n+- User manual modifications needed:\n+  - code test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - extend `ReferenceTableMetadata`\n+\n+### Task `2 / 15` - Extend `ReferenceTableMetadata`\n+\n+- Task summary:\n+  - enrich reference-table metadata with deterministic codes, labels, duplicate\n+    flags, blank flags, other-like detection, and open-world signals\n+- Files involved:\n+  - `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`\n+- Subtask `2.1 / 15`:\n+  - add these dataclass fields:\n+    `item_codes`, `preferred_labels`, `normalized_codes`,\n+    `normalized_preferred_labels`, `has_blank_code`,\n+    `has_blank_preferred_label`, `has_duplicate_codes`,\n+    `has_duplicate_preferred_labels`, `has_other_like_entry`, and\n+    `open_world_signals`\n+- Subtask `2.2 / 15`:\n+  - add repository-local helpers to strip whitespace, collapse repeated internal\n+    whitespace, normalize item codes, and normalize labels to ASCII-compatible\n+    uppercase\n+- Subtask `2.3 / 15`:\n+  - add deterministic preferred-label selection: Spanish label first, English\n+    label second, first available label otherwise\n+- Subtask `2.4 / 15`:\n+  - detect label tokens `OTRO`, `OTRA`, `OTROS`, `OTRAS`, `OTHER`, `OTHERS`,\n+    `RESTO`, `NO CONSTA`, and `SIN ESPECIFICAR` as open-world signals when they\n+    appear as full labels or clear standalone terms\n+- Subtask `2.5 / 15`:\n+  - add structural open-world signals `delegate_present`, `blank_code`, and\n+    `blank_preferred_label`\n+- Subtask `2.6 / 15`:\n+  - compute duplicate-code flags from normalized codes and duplicate-label flags\n+    from normalized non-empty preferred labels\n+- Subtask `2.7 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n+- Expected result after implementation:\n+  - loader tests pass\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - extend reference-resolution tests\n+\n+### Task `3 / 15` - Add Reference-Resolution Evidence Tests\n+\n+- Task summary:\n+  - add failing tests proving `ReferenceResolution` carries enum evidence only\n+    for `ReferenceTables.xml` resolutions\n+- Files involved:\n+  - `tests/test_auxiliary_reference_resolution_unit.py`\n+- Subtask `3.1 / 15`:\n+  - assert `NO_REFERENCE`, side-package registry, side-package thesaurus, and\n+    unresolved references attach `reference_table_enum_evidence is None`\n+- Subtask `3.2 / 15`:\n+  - assert direct table `CVN_SEX_A` attaches non-`None` evidence with\n+    `table_name == \"CVN_SEX_A\"` and `item_count == 2`\n+- Subtask `3.3 / 15`:\n+  - assert subtype-backed table `CVN_KNOW_A` attaches non-`None` evidence while\n+    keeping `source_family == ReferenceSourceFamily.SUBTYPE_BACKED_TABLE`\n+- Subtask `3.4 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n+- Expected result before implementation:\n+  - tests fail because `ReferenceResolution.reference_table_enum_evidence` does\n+    not exist yet\n+- User manual modifications needed:\n+  - code test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - add the typed enum-evidence contract\n+\n+### Task `4 / 15` - Add `ReferenceTableEnumEvidence` Contract\n+\n+- Task summary:\n+  - extend the normalization contract with an additive typed evidence record\n+- Files involved:\n+  - `src/cvn_codegen/normalization_types.py`\n+- Subtask `4.1 / 15`:\n+  - add frozen dataclass `ReferenceTableEnumEvidence` with fields:\n+    `table_name`, `item_count`, `has_hierarchy`, `has_delegate`,\n+    `has_other_like_entry`, `has_duplicate_codes`,\n+    `has_duplicate_preferred_labels`, `has_blank_code`,\n+    `has_blank_preferred_label`, `normalized_codes`, `preferred_labels`,\n+    `normalized_preferred_labels`, and `open_world_signals`\n+- Subtask `4.2 / 15`:\n+  - add `reference_table_enum_evidence: ReferenceTableEnumEvidence | None = None`\n+    at the end of `ReferenceResolution` to preserve existing constructors\n+- Subtask `4.3 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_reference_resolution_unit.py tests/test_semantic_policy_unit.py -v`\n+- Expected result after this task:\n+  - constructor compatibility remains stable; resolution tests may still fail\n+    until evidence wiring is implemented\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - attach evidence during reference resolution\n+\n+### Task `5 / 15` - Attach Evidence In Reference Resolution\n+\n+- Task summary:\n+  - populate `ReferenceResolution.reference_table_enum_evidence` from\n+    `ReferenceTableMetadata` for all resolved `ReferenceTables.xml` cases\n+- Files involved:\n+  - `src/cvn_codegen/auxiliary_sources/reference_resolution.py`\n+- Subtask `5.1 / 15`:\n+  - add helper `build_reference_table_enum_evidence(table_metadata)` that copies\n+    the normalized facts from `ReferenceTableMetadata` into\n+    `ReferenceTableEnumEvidence`\n+- Subtask `5.2 / 15`:\n+  - attach evidence in the `table_metadata is not None` branch of\n+    `resolve_manual_reference(...)`\n+- Subtask `5.3 / 15`:\n+  - preserve `None` evidence in `NO_REFERENCE`, `ENTITY@Entity.xsd`,\n+    `THESAURUS@thesaurus.xsd`, and unresolved branches\n+- Subtask `5.4 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n+- Expected result after implementation:\n+  - reference-resolution evidence tests pass\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - add semantic-policy eligibility tests\n+\n+### Task `6 / 15` - Add Direct Semantic Eligibility Tests\n+\n+- Task summary:\n+  - add failing semantic-policy tests for dynamic enum eligibility independent of\n+    table-name hardcoding\n+- Files involved:\n+  - `tests/test_semantic_policy_unit.py`\n+- Subtask `6.1 / 15`:\n+  - import `ReferenceTableEnumEvidence`,\n+    `evaluate_reference_table_enum_eligibility`, and\n+    `MAX_STRICT_ENUM_ITEM_COUNT`\n+- Subtask `6.2 / 15`:\n+  - test closed compact evidence equivalent to `CVN_SEX_A` returns\n+    `EnumEligibility.ELIGIBLE` and `PolicyConfidence.HIGH`\n+- Subtask `6.3 / 15`:\n+  - test evidence with other-like/open-world signal but no immediate blocker\n+    returns `EnumEligibility.REVIEW_REQUIRED` and\n+    `PolicyConfidence.REQUIRES_REVIEW`\n+- Subtask `6.4 / 15`:\n+  - test subtype-backed `CVN_KNOW_A` context returns `EnumEligibility.INELIGIBLE`\n+- Subtask `6.5 / 15`:\n+  - test hierarchical `UNESCO_CODES` evidence returns\n+    `EnumEligibility.INELIGIBLE`\n+- Subtask `6.6 / 15`:\n+  - test side-package, unresolved, and `evidence is None` contexts return\n+    `EnumEligibility.INELIGIBLE`\n+- Subtask `6.7 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n+- Expected result before implementation:\n+  - tests fail because the helper and constant do not exist yet\n+- User manual modifications needed:\n+  - code test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - implement the dynamic eligibility helper\n+\n+### Task `7 / 15` - Implement Dynamic Eligibility Helper\n+\n+- Task summary:\n+  - implement deterministic enum eligibility evaluation from typed evidence\n+- Files involved:\n+  - `src/cvn_codegen/semantic_policy.py`\n+- Subtask `7.1 / 15`:\n+  - import `ReferenceSourceFamily` and `ReferenceTableEnumEvidence`\n+- Subtask `7.2 / 15`:\n+  - add `MAX_STRICT_ENUM_ITEM_COUNT = 64`\n+- Subtask `7.3 / 15`:\n+  - add `evaluate_reference_table_enum_eligibility(...)` with the accepted\n+    signature and return type\n+- Subtask `7.4 / 15`:\n+  - implement immediate ineligibility reasons:\n+    `source_family_not_reference_table`,\n+    `semantic_kind_not_compact_enum_like_table`, `subtype_backed`,\n+    `missing_enum_evidence`, `hierarchy_present`, and `delegate_present`\n+- Subtask `7.5 / 15`:\n+  - implement review-required reasons: `other_like_entry`, `blank_code`,\n+    `blank_preferred_label`, `duplicate_codes`, `duplicate_preferred_labels`,\n+    `empty_table`, and `item_count_above_limit`\n+- Subtask `7.6 / 15`:\n+  - implement eligible result with reason `strict_enum_eligible`\n+- Subtask `7.7 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n+- Expected result after implementation:\n+  - direct semantic eligibility helper tests pass\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - replace temporary semantic-policy bridge\n+\n+### Task `8 / 15` - Replace Temporary Enum Policy\n+\n+- Task summary:\n+  - remove temporary table-name-based review logic and use dynamic evidence in\n+    field-policy resolution\n+- Files involved:\n+  - `src/cvn_codegen/semantic_policy.py`\n+- Subtask `8.1 / 15`:\n+  - remove `TEMPORARY_REVIEW_REQUIRED_REFERENCES`\n+- Subtask `8.2 / 15`:\n+  - remove `apply_temporary_enum_review_policy(...)`\n+- Subtask `8.3 / 15`:\n+  - call `evaluate_reference_table_enum_eligibility(...)` from\n+    `build_semantic_field_policy(...)` using\n+    `reference_resolution.reference_table_enum_evidence`,\n+    `reference_resolution.source_family`, `reference_resolution.semantic_kind`,\n+    and `reference_resolution.is_subtype_backed`\n+- Subtask `8.4 / 15`:\n+  - if eligibility is `ELIGIBLE`, keep `STRICT_ENUM_CANDIDATE` and set\n+    confidence `HIGH`\n+- Subtask `8.5 / 15`:\n+  - if eligibility is `REVIEW_REQUIRED`, keep `STRICT_ENUM_CANDIDATE`, keep\n+    fallback `OPEN_CODED_VALUE`, and set confidence `REQUIRES_REVIEW`\n+- Subtask `8.6 / 15`:\n+  - if eligibility is `INELIGIBLE` for non-compact or non-direct references,\n+    preserve matrix-driven non-enum shapes\n+- Subtask `8.7 / 15`:\n+  - append helper reasons to `SemanticDecisionTrace.applied_rules` with an\n+    `enum_evidence:` prefix\n+- Subtask `8.8 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n+- Expected result after implementation:\n+  - semantic policy no longer depends on temporary table-name constants\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - update semantic-policy tests and validation inventory\n+\n+### Task `9 / 15` - Update Semantic Policy Tests And Inventory\n+\n+- Task summary:\n+  - replace temporary-policy expectations with dynamic evidence expectations\n+- Files involved:\n+  - `tests/test_semantic_policy_unit.py`\n+  - `src/cvn_codegen/semantic_policy.py`\n+- Subtask `9.1 / 15`:\n+  - replace `test_temporary_enum_review_policy_marks_cvn_sex_a_as_review_required`\n+    with a dynamic-evidence test expecting `CVN_SEX_A` to be `ELIGIBLE` with\n+    `HIGH` confidence\n+- Subtask `9.2 / 15`:\n+  - replace `test_temporary_enum_review_policy_marks_cvn_entity_type_as_review_required`\n+    with a dynamic-evidence test that proves the result comes from evidence, not\n+    table-name hardcoding\n+- Subtask `9.3 / 15`:\n+  - update generic compact enum-like test without evidence to expect the helper's\n+    `INELIGIBLE` result for missing evidence\n+- Subtask `9.4 / 15`:\n+  - update validation inventory so `compact_closed_enum_sex` expects\n+    `EnumEligibility.ELIGIBLE` and `PolicyConfidence.HIGH`\n+- Subtask `9.5 / 15`:\n+  - update `compact_open_entity_type` according to the resolved policy decision\n+    for delegate-backed open behavior\n+- Subtask `9.6 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n+- Expected result after implementation:\n+  - semantic-policy tests pass with dynamic evidence\n+- User manual modifications needed:\n+  - code and test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - resolve the `CVN_ENTITY_TYPE` delegate-policy contradiction explicitly\n+\n+### Task `10 / 15` - Resolve `CVN_ENTITY_TYPE` Policy Contradiction\n+\n+- Task summary:\n+  - make the execution record explicit about the known tension between the exact\n+    immediate-ineligibility rule and the older validation expectation for\n+    `CVN_ENTITY_TYPE`\n+- Files involved:\n+  - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n+  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md` during closure\n+- Subtask `10.1 / 15`:\n+  - record observed canonical evidence: `CVN_ENTITY_TYPE` has `17` items,\n+    `has_delegate is True`, and contains code/label evidence for `OTHERS`\n+- Subtask `10.2 / 15`:\n+  - choose and document the final policy before code is considered complete\n+- Subtask `10.3 / 15`:\n+  - recommended decision: respect the exact immediate-ineligibility rule, so\n+    `CVN_ENTITY_TYPE` is `INELIGIBLE` due to `delegate_present`; record this as\n+    an implementation adjustment to the older `REVIEW_REQUIRED` expectation\n+- Subtask `10.4 / 15`:\n+  - if the user instead requires the older expectation, move `has_delegate` from\n+    immediate ineligibility to review-required before implementation proceeds\n+- User manual modifications needed:\n+  - none expected if documentation changes are authorized; code policy changes\n+    still require explicit code-edit approval\n+- Next step:\n+  - add integration tests with real source data\n+\n+### Task `11 / 15` - Add Real-Source Integration Tests\n+\n+- Task summary:\n+  - validate dynamic enum decisions using the canonical auxiliary bundle and real\n+    `ReferenceTables.xml` records\n+- Files involved:\n+  - `tests/test_semantic_policy_unit.py`\n+  - possibly `tests/test_auxiliary_reference_resolution_unit.py`\n+- Subtask `11.1 / 15`:\n+  - use `build_auxiliary_source_bundle(...)` and `resolve_manual_reference(...)`\n+    to obtain real resolution for `CVN_SEX_A`\n+- Subtask `11.2 / 15`:\n+  - assert `CVN_SEX_A` real evidence reaches `EnumEligibility.ELIGIBLE`\n+- Subtask `11.3 / 15`:\n+  - assert `CVN_ENTITY_TYPE` real evidence exposes `delegate_present` and\n+    other-like/open-world signals\n+- Subtask `11.4 / 15`:\n+  - assert `CVN_KNOW_A` real subtype-backed resolution remains enum-ineligible\n+- Subtask `11.5 / 15`:\n+  - assert `UNESCO_CODES` real hierarchical resolution remains enum-ineligible\n+- Subtask `11.6 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`\n+- Expected result after implementation:\n+  - representative real-source dynamic cases pass\n+- User manual modifications needed:\n+  - code test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - run targeted regression tests\n+\n+### Task `12 / 15` - Run Targeted Regression Tests\n+\n+- Task summary:\n+  - prove loader, resolution, semantic policy, and normalization-report behavior\n+    remain stable\n+- Commands:\n+  - `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n+  - `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n+  - `uv run pytest tests/test_semantic_policy_unit.py -v`\n+  - `uv run pytest -n auto tests/test_normalization_report_unit.py tests/test_normalization_unit.py -v`\n+- Subtask `12.1 / 15`:\n+  - run auxiliary loader tests\n+- Subtask `12.2 / 15`:\n+  - run auxiliary reference-resolution tests\n+- Subtask `12.3 / 15`:\n+  - run semantic-policy tests\n+- Subtask `12.4 / 15`:\n+  - run normalization regression tests\n+- Subtask `12.5 / 15`:\n+  - document exact failures if any command fails\n+- User manual modifications needed:\n+  - none unless tests expose code or doc fixes required\n+- Next step:\n+  - update closure documentation\n+\n+### Task `13 / 15` - Update Closure Documentation\n+\n+- Task summary:\n+  - close the hotfix documentation and align downstream project docs\n+- Files involved:\n+  - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n+  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n+  - `docs/context/current_status.md`\n+  - `docs/pipeline/known_limitations.md`\n+  - `docs/roadmap/cvn_generation_roadmap.md`\n+- Subtask `13.1 / 15`:\n+  - update this hotfix record with implementation performed, verification\n+    commands, findings, and status\n+- Subtask `13.2 / 15`:\n+  - update issue `#14` to remove temporary review-required policy language and\n+    describe dynamic enum evidence\n+- Subtask `13.3 / 15`:\n+  - update `docs/context/current_status.md` to mark hotfix `#7` implemented\n+- Subtask `13.4 / 15`:\n+  - update `docs/pipeline/known_limitations.md` by removing or refining the\n+    limitation that dynamic strict enum evidence is missing\n+- Subtask `13.5 / 15`:\n+  - update `docs/roadmap/cvn_generation_roadmap.md` if the hotfix state changes\n+    issue or roadmap wording\n+- User manual modifications needed:\n+  - none expected for documentation changes when explicitly requested\n+- Next step:\n+  - run full verification\n+\n+### Task `14 / 15` - Run Full Verification\n+\n+- Task summary:\n+  - verify the full repository after the hotfix implementation and documentation\n+    updates\n+- Commands:\n+  - `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n+  - `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n+  - `uv run pytest tests/test_semantic_policy_unit.py -v`\n+  - `uv run pytest -n auto tests`\n+- Subtask `14.1 / 15`:\n+  - run auxiliary loader tests\n+- Subtask `14.2 / 15`:\n+  - run auxiliary reference-resolution tests\n+- Subtask `14.3 / 15`:\n+  - run semantic-policy tests\n+- Subtask `14.4 / 15`:\n+  - run the full repository test suite\n+- Subtask `14.5 / 15`:\n+  - record exact command results in the hotfix and issue documentation\n+- User manual modifications needed:\n+  - none unless verification fails and code changes are still reserved for the\n+    user\n+- Next step:\n+  - validate final acceptance checklist\n+\n+### Task `15 / 15` - Validate Acceptance Checklist\n+\n+- Task summary:\n+  - confirm the hotfix objective is complete and safe for issue `#15` to consume\n+- Acceptance checks:\n+  - `ReferenceTableMetadata` exposes dynamic enum-evidence fields\n+  - `ReferenceResolution.reference_table_enum_evidence` exists\n+  - direct `ReferenceTables.xml` and subtype-backed table resolutions attach\n+    evidence\n+  - non-reference-table families attach `None`\n+  - `semantic_policy.py` no longer contains `TEMPORARY_REVIEW_REQUIRED_REFERENCES`\n+  - `semantic_policy.py` no longer contains table-name branches for\n+    `CVN_SEX_A` or `CVN_ENTITY_TYPE`\n+  - `CVN_SEX_A` becomes enum-eligible through evidence\n+  - `CVN_KNOW_A`, `UNESCO_CODES`, side-package references, unresolved\n+    references, and under-traced references remain enum-ineligible\n+  - `CVN_ENTITY_TYPE` is decided by evidence-backed rules, not hardcoding\n+  - documentation records any implementation adjustment from the original plan\n+- User manual modifications needed:\n+  - none expected after all prior tasks are complete\n+- Next step:\n+  - start issue `#15` only after acceptance and verification are complete\n \n ## Verification Strategy When Implemented\n*** End Patch"
             },
             "output": "Success. Updated the following files:\nM docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
+            "title": "Success. Updated the following files:\nM docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
             "metadata": {
               "diff": "Index: /home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md\n===================================================================\n--- /home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md\n+++ /home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md\n@@ -479,8 +479,481 @@\n - `docs/context/current_status.md`\n - `docs/pipeline/known_limitations.md` if a new limitation appears\n - `docs/roadmap/cvn_generation_roadmap.md` if issue state changes\n \n+## Accepted Execution Protocol\n+\n+The user accepted this execution plan before implementation starts.\n+\n+At every execution step, the implementer must report:\n+\n+1. current task number and task name\n+2. current subtask number and subtask name, when a subtask is being executed\n+3. short initial summary of what the task or subtask will do\n+4. short final result for the task or subtask\n+5. whether the user must modify any file manually\n+6. next step to follow\n+\n+File-modification rule:\n+\n+- documentation changes may be performed when explicitly requested\n+- code changes should be left for the user unless the user explicitly authorizes\n+  the agent to edit code\n+- generated code under `src/generated/` must not be edited manually\n+\n+## Accepted Execution Plan\n+\n+### Task `1 / 15` - Add Loader Metadata Tests\n+\n+- Task summary:\n+  - add failing tests proving `ReferenceTableMetadata` exposes dynamic enum\n+    evidence derived from `ReferenceTables.xml`\n+- Files involved:\n+  - `tests/test_auxiliary_source_loaders_unit.py`\n+- Subtask `1.1 / 15`:\n+  - assert `CVN_SEX_A` has non-empty `item_codes`, non-empty\n+    `preferred_labels`, normalized codes `(\"000\", \"010\")`, no hierarchy, no\n+    delegate, no blank codes, no blank preferred labels, no duplicate codes, and\n+    no duplicate preferred labels\n+- Subtask `1.2 / 15`:\n+  - assert `CVN_ENTITY_TYPE` reports `has_delegate is True`,\n+    `has_other_like_entry is True`, and `open_world_signals` includes\n+    `delegate_present` plus at least one label-token signal\n+- Subtask `1.3 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n+- Expected result before implementation:\n+  - tests fail because the enum-evidence fields do not exist yet\n+- User manual modifications needed:\n+  - code test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - extend `ReferenceTableMetadata`\n+\n+### Task `2 / 15` - Extend `ReferenceTableMetadata`\n+\n+- Task summary:\n+  - enrich reference-table metadata with deterministic codes, labels, duplicate\n+    flags, blank flags, other-like detection, and open-world signals\n+- Files involved:\n+  - `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`\n+- Subtask `2.1 / 15`:\n+  - add these dataclass fields:\n+    `item_codes`, `preferred_labels`, `normalized_codes`,\n+    `normalized_preferred_labels`, `has_blank_code`,\n+    `has_blank_preferred_label`, `has_duplicate_codes`,\n+    `has_duplicate_preferred_labels`, `has_other_like_entry`, and\n+    `open_world_signals`\n+- Subtask `2.2 / 15`:\n+  - add repository-local helpers to strip whitespace, collapse repeated internal\n+    whitespace, normalize item codes, and normalize labels to ASCII-compatible\n+    uppercase\n+- Subtask `2.3 / 15`:\n+  - add deterministic preferred-label selection: Spanish label first, English\n+    label second, first available label otherwise\n+- Subtask `2.4 / 15`:\n+  - detect label tokens `OTRO`, `OTRA`, `OTROS`, `OTRAS`, `OTHER`, `OTHERS`,\n+    `RESTO`, `NO CONSTA`, and `SIN ESPECIFICAR` as open-world signals when they\n+    appear as full labels or clear standalone terms\n+- Subtask `2.5 / 15`:\n+  - add structural open-world signals `delegate_present`, `blank_code`, and\n+    `blank_preferred_label`\n+- Subtask `2.6 / 15`:\n+  - compute duplicate-code flags from normalized codes and duplicate-label flags\n+    from normalized non-empty preferred labels\n+- Subtask `2.7 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n+- Expected result after implementation:\n+  - loader tests pass\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - extend reference-resolution tests\n+\n+### Task `3 / 15` - Add Reference-Resolution Evidence Tests\n+\n+- Task summary:\n+  - add failing tests proving `ReferenceResolution` carries enum evidence only\n+    for `ReferenceTables.xml` resolutions\n+- Files involved:\n+  - `tests/test_auxiliary_reference_resolution_unit.py`\n+- Subtask `3.1 / 15`:\n+  - assert `NO_REFERENCE`, side-package registry, side-package thesaurus, and\n+    unresolved references attach `reference_table_enum_evidence is None`\n+- Subtask `3.2 / 15`:\n+  - assert direct table `CVN_SEX_A` attaches non-`None` evidence with\n+    `table_name == \"CVN_SEX_A\"` and `item_count == 2`\n+- Subtask `3.3 / 15`:\n+  - assert subtype-backed table `CVN_KNOW_A` attaches non-`None` evidence while\n+    keeping `source_family == ReferenceSourceFamily.SUBTYPE_BACKED_TABLE`\n+- Subtask `3.4 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n+- Expected result before implementation:\n+  - tests fail because `ReferenceResolution.reference_table_enum_evidence` does\n+    not exist yet\n+- User manual modifications needed:\n+  - code test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - add the typed enum-evidence contract\n+\n+### Task `4 / 15` - Add `ReferenceTableEnumEvidence` Contract\n+\n+- Task summary:\n+  - extend the normalization contract with an additive typed evidence record\n+- Files involved:\n+  - `src/cvn_codegen/normalization_types.py`\n+- Subtask `4.1 / 15`:\n+  - add frozen dataclass `ReferenceTableEnumEvidence` with fields:\n+    `table_name`, `item_count`, `has_hierarchy`, `has_delegate`,\n+    `has_other_like_entry`, `has_duplicate_codes`,\n+    `has_duplicate_preferred_labels`, `has_blank_code`,\n+    `has_blank_preferred_label`, `normalized_codes`, `preferred_labels`,\n+    `normalized_preferred_labels`, and `open_world_signals`\n+- Subtask `4.2 / 15`:\n+  - add `reference_table_enum_evidence: ReferenceTableEnumEvidence | None = None`\n+    at the end of `ReferenceResolution` to preserve existing constructors\n+- Subtask `4.3 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_reference_resolution_unit.py tests/test_semantic_policy_unit.py -v`\n+- Expected result after this task:\n+  - constructor compatibility remains stable; resolution tests may still fail\n+    until evidence wiring is implemented\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - attach evidence during reference resolution\n+\n+### Task `5 / 15` - Attach Evidence In Reference Resolution\n+\n+- Task summary:\n+  - populate `ReferenceResolution.reference_table_enum_evidence` from\n+    `ReferenceTableMetadata` for all resolved `ReferenceTables.xml` cases\n+- Files involved:\n+  - `src/cvn_codegen/auxiliary_sources/reference_resolution.py`\n+- Subtask `5.1 / 15`:\n+  - add helper `build_reference_table_enum_evidence(table_metadata)` that copies\n+    the normalized facts from `ReferenceTableMetadata` into\n+    `ReferenceTableEnumEvidence`\n+- Subtask `5.2 / 15`:\n+  - attach evidence in the `table_metadata is not None` branch of\n+    `resolve_manual_reference(...)`\n+- Subtask `5.3 / 15`:\n+  - preserve `None` evidence in `NO_REFERENCE`, `ENTITY@Entity.xsd`,\n+    `THESAURUS@thesaurus.xsd`, and unresolved branches\n+- Subtask `5.4 / 15`:\n+  - run `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n+- Expected result after implementation:\n+  - reference-resolution evidence tests pass\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - add semantic-policy eligibility tests\n+\n+### Task `6 / 15` - Add Direct Semantic Eligibility Tests\n+\n+- Task summary:\n+  - add failing semantic-policy tests for dynamic enum eligibility independent of\n+    table-name hardcoding\n+- Files involved:\n+  - `tests/test_semantic_policy_unit.py`\n+- Subtask `6.1 / 15`:\n+  - import `ReferenceTableEnumEvidence`,\n+    `evaluate_reference_table_enum_eligibility`, and\n+    `MAX_STRICT_ENUM_ITEM_COUNT`\n+- Subtask `6.2 / 15`:\n+  - test closed compact evidence equivalent to `CVN_SEX_A` returns\n+    `EnumEligibility.ELIGIBLE` and `PolicyConfidence.HIGH`\n+- Subtask `6.3 / 15`:\n+  - test evidence with other-like/open-world signal but no immediate blocker\n+    returns `EnumEligibility.REVIEW_REQUIRED` and\n+    `PolicyConfidence.REQUIRES_REVIEW`\n+- Subtask `6.4 / 15`:\n+  - test subtype-backed `CVN_KNOW_A` context returns `EnumEligibility.INELIGIBLE`\n+- Subtask `6.5 / 15`:\n+  - test hierarchical `UNESCO_CODES` evidence returns\n+    `EnumEligibility.INELIGIBLE`\n+- Subtask `6.6 / 15`:\n+  - test side-package, unresolved, and `evidence is None` contexts return\n+    `EnumEligibility.INELIGIBLE`\n+- Subtask `6.7 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n+- Expected result before implementation:\n+  - tests fail because the helper and constant do not exist yet\n+- User manual modifications needed:\n+  - code test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - implement the dynamic eligibility helper\n+\n+### Task `7 / 15` - Implement Dynamic Eligibility Helper\n+\n+- Task summary:\n+  - implement deterministic enum eligibility evaluation from typed evidence\n+- Files involved:\n+  - `src/cvn_codegen/semantic_policy.py`\n+- Subtask `7.1 / 15`:\n+  - import `ReferenceSourceFamily` and `ReferenceTableEnumEvidence`\n+- Subtask `7.2 / 15`:\n+  - add `MAX_STRICT_ENUM_ITEM_COUNT = 64`\n+- Subtask `7.3 / 15`:\n+  - add `evaluate_reference_table_enum_eligibility(...)` with the accepted\n+    signature and return type\n+- Subtask `7.4 / 15`:\n+  - implement immediate ineligibility reasons:\n+    `source_family_not_reference_table`,\n+    `semantic_kind_not_compact_enum_like_table`, `subtype_backed`,\n+    `missing_enum_evidence`, `hierarchy_present`, and `delegate_present`\n+- Subtask `7.5 / 15`:\n+  - implement review-required reasons: `other_like_entry`, `blank_code`,\n+    `blank_preferred_label`, `duplicate_codes`, `duplicate_preferred_labels`,\n+    `empty_table`, and `item_count_above_limit`\n+- Subtask `7.6 / 15`:\n+  - implement eligible result with reason `strict_enum_eligible`\n+- Subtask `7.7 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n+- Expected result after implementation:\n+  - direct semantic eligibility helper tests pass\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - replace temporary semantic-policy bridge\n+\n+### Task `8 / 15` - Replace Temporary Enum Policy\n+\n+- Task summary:\n+  - remove temporary table-name-based review logic and use dynamic evidence in\n+    field-policy resolution\n+- Files involved:\n+  - `src/cvn_codegen/semantic_policy.py`\n+- Subtask `8.1 / 15`:\n+  - remove `TEMPORARY_REVIEW_REQUIRED_REFERENCES`\n+- Subtask `8.2 / 15`:\n+  - remove `apply_temporary_enum_review_policy(...)`\n+- Subtask `8.3 / 15`:\n+  - call `evaluate_reference_table_enum_eligibility(...)` from\n+    `build_semantic_field_policy(...)` using\n+    `reference_resolution.reference_table_enum_evidence`,\n+    `reference_resolution.source_family`, `reference_resolution.semantic_kind`,\n+    and `reference_resolution.is_subtype_backed`\n+- Subtask `8.4 / 15`:\n+  - if eligibility is `ELIGIBLE`, keep `STRICT_ENUM_CANDIDATE` and set\n+    confidence `HIGH`\n+- Subtask `8.5 / 15`:\n+  - if eligibility is `REVIEW_REQUIRED`, keep `STRICT_ENUM_CANDIDATE`, keep\n+    fallback `OPEN_CODED_VALUE`, and set confidence `REQUIRES_REVIEW`\n+- Subtask `8.6 / 15`:\n+  - if eligibility is `INELIGIBLE` for non-compact or non-direct references,\n+    preserve matrix-driven non-enum shapes\n+- Subtask `8.7 / 15`:\n+  - append helper reasons to `SemanticDecisionTrace.applied_rules` with an\n+    `enum_evidence:` prefix\n+- Subtask `8.8 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n+- Expected result after implementation:\n+  - semantic policy no longer depends on temporary table-name constants\n+- User manual modifications needed:\n+  - code changes should be made by the user unless explicit code-edit approval is\n+    given\n+- Next step:\n+  - update semantic-policy tests and validation inventory\n+\n+### Task `9 / 15` - Update Semantic Policy Tests And Inventory\n+\n+- Task summary:\n+  - replace temporary-policy expectations with dynamic evidence expectations\n+- Files involved:\n+  - `tests/test_semantic_policy_unit.py`\n+  - `src/cvn_codegen/semantic_policy.py`\n+- Subtask `9.1 / 15`:\n+  - replace `test_temporary_enum_review_policy_marks_cvn_sex_a_as_review_required`\n+    with a dynamic-evidence test expecting `CVN_SEX_A` to be `ELIGIBLE` with\n+    `HIGH` confidence\n+- Subtask `9.2 / 15`:\n+  - replace `test_temporary_enum_review_policy_marks_cvn_entity_type_as_review_required`\n+    with a dynamic-evidence test that proves the result comes from evidence, not\n+    table-name hardcoding\n+- Subtask `9.3 / 15`:\n+  - update generic compact enum-like test without evidence to expect the helper's\n+    `INELIGIBLE` result for missing evidence\n+- Subtask `9.4 / 15`:\n+  - update validation inventory so `compact_closed_enum_sex` expects\n+    `EnumEligibility.ELIGIBLE` and `PolicyConfidence.HIGH`\n+- Subtask `9.5 / 15`:\n+  - update `compact_open_entity_type` according to the resolved policy decision\n+    for delegate-backed open behavior\n+- Subtask `9.6 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n+- Expected result after implementation:\n+  - semantic-policy tests pass with dynamic evidence\n+- User manual modifications needed:\n+  - code and test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - resolve the `CVN_ENTITY_TYPE` delegate-policy contradiction explicitly\n+\n+### Task `10 / 15` - Resolve `CVN_ENTITY_TYPE` Policy Contradiction\n+\n+- Task summary:\n+  - make the execution record explicit about the known tension between the exact\n+    immediate-ineligibility rule and the older validation expectation for\n+    `CVN_ENTITY_TYPE`\n+- Files involved:\n+  - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n+  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md` during closure\n+- Subtask `10.1 / 15`:\n+  - record observed canonical evidence: `CVN_ENTITY_TYPE` has `17` items,\n+    `has_delegate is True`, and contains code/label evidence for `OTHERS`\n+- Subtask `10.2 / 15`:\n+  - choose and document the final policy before code is considered complete\n+- Subtask `10.3 / 15`:\n+  - recommended decision: respect the exact immediate-ineligibility rule, so\n+    `CVN_ENTITY_TYPE` is `INELIGIBLE` due to `delegate_present`; record this as\n+    an implementation adjustment to the older `REVIEW_REQUIRED` expectation\n+- Subtask `10.4 / 15`:\n+  - if the user instead requires the older expectation, move `has_delegate` from\n+    immediate ineligibility to review-required before implementation proceeds\n+- User manual modifications needed:\n+  - none expected if documentation changes are authorized; code policy changes\n+    still require explicit code-edit approval\n+- Next step:\n+  - add integration tests with real source data\n+\n+### Task `11 / 15` - Add Real-Source Integration Tests\n+\n+- Task summary:\n+  - validate dynamic enum decisions using the canonical auxiliary bundle and real\n+    `ReferenceTables.xml` records\n+- Files involved:\n+  - `tests/test_semantic_policy_unit.py`\n+  - possibly `tests/test_auxiliary_reference_resolution_unit.py`\n+- Subtask `11.1 / 15`:\n+  - use `build_auxiliary_source_bundle(...)` and `resolve_manual_reference(...)`\n+    to obtain real resolution for `CVN_SEX_A`\n+- Subtask `11.2 / 15`:\n+  - assert `CVN_SEX_A` real evidence reaches `EnumEligibility.ELIGIBLE`\n+- Subtask `11.3 / 15`:\n+  - assert `CVN_ENTITY_TYPE` real evidence exposes `delegate_present` and\n+    other-like/open-world signals\n+- Subtask `11.4 / 15`:\n+  - assert `CVN_KNOW_A` real subtype-backed resolution remains enum-ineligible\n+- Subtask `11.5 / 15`:\n+  - assert `UNESCO_CODES` real hierarchical resolution remains enum-ineligible\n+- Subtask `11.6 / 15`:\n+  - run `uv run pytest tests/test_semantic_policy_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`\n+- Expected result after implementation:\n+  - representative real-source dynamic cases pass\n+- User manual modifications needed:\n+  - code test changes should be made by the user unless explicit code-edit\n+    approval is given\n+- Next step:\n+  - run targeted regression tests\n+\n+### Task `12 / 15` - Run Targeted Regression Tests\n+\n+- Task summary:\n+  - prove loader, resolution, semantic policy, and normalization-report behavior\n+    remain stable\n+- Commands:\n+  - `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n+  - `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n+  - `uv run pytest tests/test_semantic_policy_unit.py -v`\n+  - `uv run pytest -n auto tests/test_normalization_report_unit.py tests/test_normalization_unit.py -v`\n+- Subtask `12.1 / 15`:\n+  - run auxiliary loader tests\n+- Subtask `12.2 / 15`:\n+  - run auxiliary reference-resolution tests\n+- Subtask `12.3 / 15`:\n+  - run semantic-policy tests\n+- Subtask `12.4 / 15`:\n+  - run normalization regression tests\n+- Subtask `12.5 / 15`:\n+  - document exact failures if any command fails\n+- User manual modifications needed:\n+  - none unless tests expose code or doc fixes required\n+- Next step:\n+  - update closure documentation\n+\n+### Task `13 / 15` - Update Closure Documentation\n+\n+- Task summary:\n+  - close the hotfix documentation and align downstream project docs\n+- Files involved:\n+  - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n+  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n+  - `docs/context/current_status.md`\n+  - `docs/pipeline/known_limitations.md`\n+  - `docs/roadmap/cvn_generation_roadmap.md`\n+- Subtask `13.1 / 15`:\n+  - update this hotfix record with implementation performed, verification\n+    commands, findings, and status\n+- Subtask `13.2 / 15`:\n+  - update issue `#14` to remove temporary review-required policy language and\n+    describe dynamic enum evidence\n+- Subtask `13.3 / 15`:\n+  - update `docs/context/current_status.md` to mark hotfix `#7` implemented\n+- Subtask `13.4 / 15`:\n+  - update `docs/pipeline/known_limitations.md` by removing or refining the\n+    limitation that dynamic strict enum evidence is missing\n+- Subtask `13.5 / 15`:\n+  - update `docs/roadmap/cvn_generation_roadmap.md` if the hotfix state changes\n+    issue or roadmap wording\n+- User manual modifications needed:\n+  - none expected for documentation changes when explicitly requested\n+- Next step:\n+  - run full verification\n+\n+### Task `14 / 15` - Run Full Verification\n+\n+- Task summary:\n+  - verify the full repository after the hotfix implementation and documentation\n+    updates\n+- Commands:\n+  - `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n+  - `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n+  - `uv run pytest tests/test_semantic_policy_unit.py -v`\n+  - `uv run pytest -n auto tests`\n+- Subtask `14.1 / 15`:\n+  - run auxiliary loader tests\n+- Subtask `14.2 / 15`:\n+  - run auxiliary reference-resolution tests\n+- Subtask `14.3 / 15`:\n+  - run semantic-policy tests\n+- Subtask `14.4 / 15`:\n+  - run the full repository test suite\n+- Subtask `14.5 / 15`:\n+  - record exact command results in the hotfix and issue documentation\n+- User manual modifications needed:\n+  - none unless verification fails and code changes are still reserved for the\n+    user\n+- Next step:\n+  - validate final acceptance checklist\n+\n+### Task `15 / 15` - Validate Acceptance Checklist\n+\n+- Task summary:\n+  - confirm the hotfix objective is complete and safe for issue `#15` to consume\n+- Acceptance checks:\n+  - `ReferenceTableMetadata` exposes dynamic enum-evidence fields\n+  - `ReferenceResolution.reference_table_enum_evidence` exists\n+  - direct `ReferenceTables.xml` and subtype-backed table resolutions attach\n+    evidence\n+  - non-reference-table families attach `None`\n+  - `semantic_policy.py` no longer contains `TEMPORARY_REVIEW_REQUIRED_REFERENCES`\n+  - `semantic_policy.py` no longer contains table-name branches for\n+    `CVN_SEX_A` or `CVN_ENTITY_TYPE`\n+  - `CVN_SEX_A` becomes enum-eligible through evidence\n+  - `CVN_KNOW_A`, `UNESCO_CODES`, side-package references, unresolved\n+    references, and under-traced references remain enum-ineligible\n+  - `CVN_ENTITY_TYPE` is decided by evidence-backed rules, not hardcoding\n+  - documentation records any implementation adjustment from the original plan\n+- User manual modifications needed:\n+  - none expected after all prior tasks are complete\n+- Next step:\n+  - start issue `#15` only after acceptance and verification are complete\n+\n ## Verification Strategy When Implemented\n \n The implementation session that applies this hotfix must verify all of these:\n \n\n",
               "files": [
@@ -2503,7 +2504,6 @@
               "diagnostics": {},
               "truncated": false
             },
-            "title": "Success. Updated the following files:\nM docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
             "time": {
               "start": 1781202588122,
               "end": 1781202588305
@@ -2519,20 +2519,20 @@
           "messageID": "msg_eb7f0eca2002rXrZwhTaERI3js"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 105984,
             "input": 817,
             "output": 5839,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 99328
+              "read": 99328,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7f2940b001IMh90EpS4IfyU2",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f0eca2002rXrZwhTaERI3js"
@@ -2551,11 +2551,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
         "role": "assistant",
+        "time": {
+          "created": 1781202588792,
+          "completed": 1781202593843
+        },
+        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "build",
         "agent": "build",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -2567,24 +2572,19 @@
           "output": 112,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 99840
+            "read": 99840,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781202588792,
-          "completed": 1781202593843
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7f29478001VsnrHULsaVCgqb",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "type": "step-start",
+          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "id": "prt_eb7f29b26001Wq5r8CMmgWWVp4",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f29478001VsnrHULsaVCgqb"
@@ -2608,8 +2608,8 @@
         },
         {
           "type": "tool",
-          "tool": "todowrite",
           "callID": "call_lBoo7cLamZboLt9CBd6PGeLm",
+          "tool": "todowrite",
           "state": {
             "status": "completed",
             "input": {
@@ -2627,6 +2627,7 @@
               ]
             },
             "output": "[\n  {\n    \"content\": \"Insertar plan aceptado en hotfix 7\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Verificar documento actualizado\",\n    \"status\": \"in_progress\",\n    \"priority\": \"medium\"\n  }\n]",
+            "title": "1 todos",
             "metadata": {
               "todos": [
                 {
@@ -2642,7 +2643,6 @@
               ],
               "truncated": false
             },
-            "title": "1 todos",
             "time": {
               "start": 1781202593414,
               "end": 1781202593425
@@ -2658,20 +2658,20 @@
           "messageID": "msg_eb7f29478001VsnrHULsaVCgqb"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 106140,
             "input": 6188,
             "output": 112,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 99840
+              "read": 99840,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7f2a77b001Y6bTRnbHOFU069",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f29478001VsnrHULsaVCgqb"
@@ -2680,11 +2680,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
         "role": "assistant",
+        "time": {
+          "created": 1781202593860,
+          "completed": 1781202599970
+        },
+        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "build",
         "agent": "build",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -2696,32 +2701,27 @@
           "output": 65,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 105472
+            "read": 105472,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781202593860,
-          "completed": 1781202599970
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7f2a844002NVkNdruUSgXfVv",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "type": "step-start",
+          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "id": "prt_eb7f2adeb001pP57TUW5K9vEm8",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f2a844002NVkNdruUSgXfVv"
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_o8kHpHWO4Pdi48M7sRQbQ5rB",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -2730,6 +2730,7 @@
               "limit": 420
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md</path>\n<type>file</type>\n<content>\n464: ## Files Expected To Change When Applying This Hotfix\n465: \n466: Minimum code files:\n467: \n468: - `src/cvn_codegen/normalization_types.py`\n469: - `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`\n470: - `src/cvn_codegen/auxiliary_sources/reference_resolution.py`\n471: - `src/cvn_codegen/semantic_policy.py`\n472: - `tests/test_auxiliary_source_loaders_unit.py`\n473: - `tests/test_auxiliary_reference_resolution_unit.py`\n474: - future semantic-policy tests under `tests/`\n475: \n476: Minimum documentation files:\n477: \n478: - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n479: - `docs/context/current_status.md`\n480: - `docs/pipeline/known_limitations.md` if a new limitation appears\n481: - `docs/roadmap/cvn_generation_roadmap.md` if issue state changes\n482: \n483: ## Accepted Execution Protocol\n484: \n485: The user accepted this execution plan before implementation starts.\n486: \n487: At every execution step, the implementer must report:\n488: \n489: 1. current task number and task name\n490: 2. current subtask number and subtask name, when a subtask is being executed\n491: 3. short initial summary of what the task or subtask will do\n492: 4. short final result for the task or subtask\n493: 5. whether the user must modify any file manually\n494: 6. next step to follow\n495: \n496: File-modification rule:\n497: \n498: - documentation changes may be performed when explicitly requested\n499: - code changes should be left for the user unless the user explicitly authorizes\n500:   the agent to edit code\n501: - generated code under `src/generated/` must not be edited manually\n502: \n503: ## Accepted Execution Plan\n504: \n505: ### Task `1 / 15` - Add Loader Metadata Tests\n506: \n507: - Task summary:\n508:   - add failing tests proving `ReferenceTableMetadata` exposes dynamic enum\n509:     evidence derived from `ReferenceTables.xml`\n510: - Files involved:\n511:   - `tests/test_auxiliary_source_loaders_unit.py`\n512: - Subtask `1.1 / 15`:\n513:   - assert `CVN_SEX_A` has non-empty `item_codes`, non-empty\n514:     `preferred_labels`, normalized codes `(\"000\", \"010\")`, no hierarchy, no\n515:     delegate, no blank codes, no blank preferred labels, no duplicate codes, and\n516:     no duplicate preferred labels\n517: - Subtask `1.2 / 15`:\n518:   - assert `CVN_ENTITY_TYPE` reports `has_delegate is True`,\n519:     `has_other_like_entry is True`, and `open_world_signals` includes\n520:     `delegate_present` plus at least one label-token signal\n521: - Subtask `1.3 / 15`:\n522:   - run `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n523: - Expected result before implementation:\n524:   - tests fail because the enum-evidence fields do not exist yet\n525: - User manual modifications needed:\n526:   - code test changes should be made by the user unless explicit code-edit\n527:     approval is given\n528: - Next step:\n529:   - extend `ReferenceTableMetadata`\n530: \n531: ### Task `2 / 15` - Extend `ReferenceTableMetadata`\n532: \n533: - Task summary:\n534:   - enrich reference-table metadata with deterministic codes, labels, duplicate\n535:     flags, blank flags, other-like detection, and open-world signals\n536: - Files involved:\n537:   - `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`\n538: - Subtask `2.1 / 15`:\n539:   - add these dataclass fields:\n540:     `item_codes`, `preferred_labels`, `normalized_codes`,\n541:     `normalized_preferred_labels`, `has_blank_code`,\n542:     `has_blank_preferred_label`, `has_duplicate_codes`,\n543:     `has_duplicate_preferred_labels`, `has_other_like_entry`, and\n544:     `open_world_signals`\n545: - Subtask `2.2 / 15`:\n546:   - add repository-local helpers to strip whitespace, collapse repeated internal\n547:     whitespace, normalize item codes, and normalize labels to ASCII-compatible\n548:     uppercase\n549: - Subtask `2.3 / 15`:\n550:   - add deterministic preferred-label selection: Spanish label first, English\n551:     label second, first available label otherwise\n552: - Subtask `2.4 / 15`:\n553:   - detect label tokens `OTRO`, `OTRA`, `OTROS`, `OTRAS`, `OTHER`, `OTHERS`,\n554:     `RESTO`, `NO CONSTA`, and `SIN ESPECIFICAR` as open-world signals when they\n555:     appear as full labels or clear standalone terms\n556: - Subtask `2.5 / 15`:\n557:   - add structural open-world signals `delegate_present`, `blank_code`, and\n558:     `blank_preferred_label`\n559: - Subtask `2.6 / 15`:\n560:   - compute duplicate-code flags from normalized codes and duplicate-label flags\n561:     from normalized non-empty preferred labels\n562: - Subtask `2.7 / 15`:\n563:   - run `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n564: - Expected result after implementation:\n565:   - loader tests pass\n566: - User manual modifications needed:\n567:   - code changes should be made by the user unless explicit code-edit approval is\n568:     given\n569: - Next step:\n570:   - extend reference-resolution tests\n571: \n572: ### Task `3 / 15` - Add Reference-Resolution Evidence Tests\n573: \n574: - Task summary:\n575:   - add failing tests proving `ReferenceResolution` carries enum evidence only\n576:     for `ReferenceTables.xml` resolutions\n577: - Files involved:\n578:   - `tests/test_auxiliary_reference_resolution_unit.py`\n579: - Subtask `3.1 / 15`:\n580:   - assert `NO_REFERENCE`, side-package registry, side-package thesaurus, and\n581:     unresolved references attach `reference_table_enum_evidence is None`\n582: - Subtask `3.2 / 15`:\n583:   - assert direct table `CVN_SEX_A` attaches non-`None` evidence with\n584:     `table_name == \"CVN_SEX_A\"` and `item_count == 2`\n585: - Subtask `3.3 / 15`:\n586:   - assert subtype-backed table `CVN_KNOW_A` attaches non-`None` evidence while\n587:     keeping `source_family == ReferenceSourceFamily.SUBTYPE_BACKED_TABLE`\n588: - Subtask `3.4 / 15`:\n589:   - run `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n590: - Expected result before implementation:\n591:   - tests fail because `ReferenceResolution.reference_table_enum_evidence` does\n592:     not exist yet\n593: - User manual modifications needed:\n594:   - code test changes should be made by the user unless explicit code-edit\n595:     approval is given\n596: - Next step:\n597:   - add the typed enum-evidence contract\n598: \n599: ### Task `4 / 15` - Add `ReferenceTableEnumEvidence` Contract\n600: \n601: - Task summary:\n602:   - extend the normalization contract with an additive typed evidence record\n603: - Files involved:\n604:   - `src/cvn_codegen/normalization_types.py`\n605: - Subtask `4.1 / 15`:\n606:   - add frozen dataclass `ReferenceTableEnumEvidence` with fields:\n607:     `table_name`, `item_count`, `has_hierarchy`, `has_delegate`,\n608:     `has_other_like_entry`, `has_duplicate_codes`,\n609:     `has_duplicate_preferred_labels`, `has_blank_code`,\n610:     `has_blank_preferred_label`, `normalized_codes`, `preferred_labels`,\n611:     `normalized_preferred_labels`, and `open_world_signals`\n612: - Subtask `4.2 / 15`:\n613:   - add `reference_table_enum_evidence: ReferenceTableEnumEvidence | None = None`\n614:     at the end of `ReferenceResolution` to preserve existing constructors\n615: - Subtask `4.3 / 15`:\n616:   - run `uv run pytest tests/test_auxiliary_reference_resolution_unit.py tests/test_semantic_policy_unit.py -v`\n617: - Expected result after this task:\n618:   - constructor compatibility remains stable; resolution tests may still fail\n619:     until evidence wiring is implemented\n620: - User manual modifications needed:\n621:   - code changes should be made by the user unless explicit code-edit approval is\n622:     given\n623: - Next step:\n624:   - attach evidence during reference resolution\n625: \n626: ### Task `5 / 15` - Attach Evidence In Reference Resolution\n627: \n628: - Task summary:\n629:   - populate `ReferenceResolution.reference_table_enum_evidence` from\n630:     `ReferenceTableMetadata` for all resolved `ReferenceTables.xml` cases\n631: - Files involved:\n632:   - `src/cvn_codegen/auxiliary_sources/reference_resolution.py`\n633: - Subtask `5.1 / 15`:\n634:   - add helper `build_reference_table_enum_evidence(table_metadata)` that copies\n635:     the normalized facts from `ReferenceTableMetadata` into\n636:     `ReferenceTableEnumEvidence`\n637: - Subtask `5.2 / 15`:\n638:   - attach evidence in the `table_metadata is not None` branch of\n639:     `resolve_manual_reference(...)`\n640: - Subtask `5.3 / 15`:\n641:   - preserve `None` evidence in `NO_REFERENCE`, `ENTITY@Entity.xsd`,\n642:     `THESAURUS@thesaurus.xsd`, and unresolved branches\n643: - Subtask `5.4 / 15`:\n644:   - run `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n645: - Expected result after implementation:\n646:   - reference-resolution evidence tests pass\n647: - User manual modifications needed:\n648:   - code changes should be made by the user unless explicit code-edit approval is\n649:     given\n650: - Next step:\n651:   - add semantic-policy eligibility tests\n652: \n653: ### Task `6 / 15` - Add Direct Semantic Eligibility Tests\n654: \n655: - Task summary:\n656:   - add failing semantic-policy tests for dynamic enum eligibility independent of\n657:     table-name hardcoding\n658: - Files involved:\n659:   - `tests/test_semantic_policy_unit.py`\n660: - Subtask `6.1 / 15`:\n661:   - import `ReferenceTableEnumEvidence`,\n662:     `evaluate_reference_table_enum_eligibility`, and\n663:     `MAX_STRICT_ENUM_ITEM_COUNT`\n664: - Subtask `6.2 / 15`:\n665:   - test closed compact evidence equivalent to `CVN_SEX_A` returns\n666:     `EnumEligibility.ELIGIBLE` and `PolicyConfidence.HIGH`\n667: - Subtask `6.3 / 15`:\n668:   - test evidence with other-like/open-world signal but no immediate blocker\n669:     returns `EnumEligibility.REVIEW_REQUIRED` and\n670:     `PolicyConfidence.REQUIRES_REVIEW`\n671: - Subtask `6.4 / 15`:\n672:   - test subtype-backed `CVN_KNOW_A` context returns `EnumEligibility.INELIGIBLE`\n673: - Subtask `6.5 / 15`:\n674:   - test hierarchical `UNESCO_CODES` evidence returns\n675:     `EnumEligibility.INELIGIBLE`\n676: - Subtask `6.6 / 15`:\n677:   - test side-package, unresolved, and `evidence is None` contexts return\n678:     `EnumEligibility.INELIGIBLE`\n679: - Subtask `6.7 / 15`:\n680:   - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n681: - Expected result before implementation:\n682:   - tests fail because the helper and constant do not exist yet\n683: - User manual modifications needed:\n684:   - code test changes should be made by the user unless explicit code-edit\n685:     approval is given\n686: - Next step:\n687:   - implement the dynamic eligibility helper\n688: \n689: ### Task `7 / 15` - Implement Dynamic Eligibility Helper\n690: \n691: - Task summary:\n692:   - implement deterministic enum eligibility evaluation from typed evidence\n693: - Files involved:\n694:   - `src/cvn_codegen/semantic_policy.py`\n695: - Subtask `7.1 / 15`:\n696:   - import `ReferenceSourceFamily` and `ReferenceTableEnumEvidence`\n697: - Subtask `7.2 / 15`:\n698:   - add `MAX_STRICT_ENUM_ITEM_COUNT = 64`\n699: - Subtask `7.3 / 15`:\n700:   - add `evaluate_reference_table_enum_eligibility(...)` with the accepted\n701:     signature and return type\n702: - Subtask `7.4 / 15`:\n703:   - implement immediate ineligibility reasons:\n704:     `source_family_not_reference_table`,\n705:     `semantic_kind_not_compact_enum_like_table`, `subtype_backed`,\n706:     `missing_enum_evidence`, `hierarchy_present`, and `delegate_present`\n707: - Subtask `7.5 / 15`:\n708:   - implement review-required reasons: `other_like_entry`, `blank_code`,\n709:     `blank_preferred_label`, `duplicate_codes`, `duplicate_preferred_labels`,\n710:     `empty_table`, and `item_count_above_limit`\n711: - Subtask `7.6 / 15`:\n712:   - implement eligible result with reason `strict_enum_eligible`\n713: - Subtask `7.7 / 15`:\n714:   - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n715: - Expected result after implementation:\n716:   - direct semantic eligibility helper tests pass\n717: - User manual modifications needed:\n718:   - code changes should be made by the user unless explicit code-edit approval is\n719:     given\n720: - Next step:\n721:   - replace temporary semantic-policy bridge\n722: \n723: ### Task `8 / 15` - Replace Temporary Enum Policy\n724: \n725: - Task summary:\n726:   - remove temporary table-name-based review logic and use dynamic evidence in\n727:     field-policy resolution\n728: - Files involved:\n729:   - `src/cvn_codegen/semantic_policy.py`\n730: - Subtask `8.1 / 15`:\n731:   - remove `TEMPORARY_REVIEW_REQUIRED_REFERENCES`\n732: - Subtask `8.2 / 15`:\n733:   - remove `apply_temporary_enum_review_policy(...)`\n734: - Subtask `8.3 / 15`:\n735:   - call `evaluate_reference_table_enum_eligibility(...)` from\n736:     `build_semantic_field_policy(...)` using\n737:     `reference_resolution.reference_table_enum_evidence`,\n738:     `reference_resolution.source_family`, `reference_resolution.semantic_kind`,\n739:     and `reference_resolution.is_subtype_backed`\n740: - Subtask `8.4 / 15`:\n741:   - if eligibility is `ELIGIBLE`, keep `STRICT_ENUM_CANDIDATE` and set\n742:     confidence `HIGH`\n743: - Subtask `8.5 / 15`:\n744:   - if eligibility is `REVIEW_REQUIRED`, keep `STRICT_ENUM_CANDIDATE`, keep\n745:     fallback `OPEN_CODED_VALUE`, and set confidence `REQUIRES_REVIEW`\n746: - Subtask `8.6 / 15`:\n747:   - if eligibility is `INELIGIBLE` for non-compact or non-direct references,\n748:     preserve matrix-driven non-enum shapes\n749: - Subtask `8.7 / 15`:\n750:   - append helper reasons to `SemanticDecisionTrace.applied_rules` with an\n751:     `enum_evidence:` prefix\n752: - Subtask `8.8 / 15`:\n753:   - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n754: - Expected result after implementation:\n755:   - semantic policy no longer depends on temporary table-name constants\n756: - User manual modifications needed:\n757:   - code changes should be made by the user unless explicit code-edit approval is\n758:     given\n759: - Next step:\n760:   - update semantic-policy tests and validation inventory\n761: \n762: ### Task `9 / 15` - Update Semantic Policy Tests And Inventory\n763: \n764: - Task summary:\n765:   - replace temporary-policy expectations with dynamic evidence expectations\n766: - Files involved:\n767:   - `tests/test_semantic_policy_unit.py`\n768:   - `src/cvn_codegen/semantic_policy.py`\n769: - Subtask `9.1 / 15`:\n770:   - replace `test_temporary_enum_review_policy_marks_cvn_sex_a_as_review_required`\n771:     with a dynamic-evidence test expecting `CVN_SEX_A` to be `ELIGIBLE` with\n772:     `HIGH` confidence\n773: - Subtask `9.2 / 15`:\n774:   - replace `test_temporary_enum_review_policy_marks_cvn_entity_type_as_review_required`\n775:     with a dynamic-evidence test that proves the result comes from evidence, not\n776:     table-name hardcoding\n777: - Subtask `9.3 / 15`:\n778:   - update generic compact enum-like test without evidence to expect the helper's\n779:     `INELIGIBLE` result for missing evidence\n780: - Subtask `9.4 / 15`:\n781:   - update validation inventory so `compact_closed_enum_sex` expects\n782:     `EnumEligibility.ELIGIBLE` and `PolicyConfidence.HIGH`\n783: - Subtask `9.5 / 15`:\n784:   - update `compact_open_entity_type` according to the resolved policy decision\n785:     for delegate-backed open behavior\n786: - Subtask `9.6 / 15`:\n787:   - run `uv run pytest tests/test_semantic_policy_unit.py -v`\n788: - Expected result after implementation:\n789:   - semantic-policy tests pass with dynamic evidence\n790: - User manual modifications needed:\n791:   - code and test changes should be made by the user unless explicit code-edit\n792:     approval is given\n793: - Next step:\n794:   - resolve the `CVN_ENTITY_TYPE` delegate-policy contradiction explicitly\n795: \n796: ### Task `10 / 15` - Resolve `CVN_ENTITY_TYPE` Policy Contradiction\n797: \n798: - Task summary:\n799:   - make the execution record explicit about the known tension between the exact\n800:     immediate-ineligibility rule and the older validation expectation for\n801:     `CVN_ENTITY_TYPE`\n802: - Files involved:\n803:   - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n804:   - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md` during closure\n805: - Subtask `10.1 / 15`:\n806:   - record observed canonical evidence: `CVN_ENTITY_TYPE` has `17` items,\n807:     `has_delegate is True`, and contains code/label evidence for `OTHERS`\n808: - Subtask `10.2 / 15`:\n809:   - choose and document the final policy before code is considered complete\n810: - Subtask `10.3 / 15`:\n811:   - recommended decision: respect the exact immediate-ineligibility rule, so\n812:     `CVN_ENTITY_TYPE` is `INELIGIBLE` due to `delegate_present`; record this as\n813:     an implementation adjustment to the older `REVIEW_REQUIRED` expectation\n814: - Subtask `10.4 / 15`:\n815:   - if the user instead requires the older expectation, move `has_delegate` from\n816:     immediate ineligibility to review-required before implementation proceeds\n817: - User manual modifications needed:\n818:   - none expected if documentation changes are authorized; code policy changes\n819:     still require explicit code-edit approval\n820: - Next step:\n821:   - add integration tests with real source data\n822: \n823: ### Task `11 / 15` - Add Real-Source Integration Tests\n824: \n825: - Task summary:\n826:   - validate dynamic enum decisions using the canonical auxiliary bundle and real\n827:     `ReferenceTables.xml` records\n828: - Files involved:\n829:   - `tests/test_semantic_policy_unit.py`\n830:   - possibly `tests/test_auxiliary_reference_resolution_unit.py`\n831: - Subtask `11.1 / 15`:\n832:   - use `build_auxiliary_source_bundle(...)` and `resolve_manual_reference(...)`\n833:     to obtain real resolution for `CVN_SEX_A`\n834: - Subtask `11.2 / 15`:\n835:   - assert `CVN_SEX_A` real evidence reaches `EnumEligibility.ELIGIBLE`\n836: - Subtask `11.3 / 15`:\n837:   - assert `CVN_ENTITY_TYPE` real evidence exposes `delegate_present` and\n838:     other-like/open-world signals\n839: - Subtask `11.4 / 15`:\n840:   - assert `CVN_KNOW_A` real subtype-backed resolution remains enum-ineligible\n841: - Subtask `11.5 / 15`:\n842:   - assert `UNESCO_CODES` real hierarchical resolution remains enum-ineligible\n843: - Subtask `11.6 / 15`:\n844:   - run `uv run pytest tests/test_semantic_policy_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`\n845: - Expected result after implementation:\n846:   - representative real-source dynamic cases pass\n847: - User manual modifications needed:\n848:   - code test changes should be made by the user unless explicit code-edit\n849:     approval is given\n850: - Next step:\n851:   - run targeted regression tests\n852: \n853: ### Task `12 / 15` - Run Targeted Regression Tests\n854: \n855: - Task summary:\n856:   - prove loader, resolution, semantic policy, and normalization-report behavior\n857:     remain stable\n858: - Commands:\n859:   - `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n860:   - `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n861:   - `uv run pytest tests/test_semantic_policy_unit.py -v`\n862:   - `uv run pytest -n auto tests/test_normalization_report_unit.py tests/test_normalization_unit.py -v`\n863: - Subtask `12.1 / 15`:\n864:   - run auxiliary loader tests\n865: - Subtask `12.2 / 15`:\n866:   - run auxiliary reference-resolution tests\n867: - Subtask `12.3 / 15`:\n868:   - run semantic-policy tests\n869: - Subtask `12.4 / 15`:\n870:   - run normalization regression tests\n871: - Subtask `12.5 / 15`:\n872:   - document exact failures if any command fails\n873: - User manual modifications needed:\n874:   - none unless tests expose code or doc fixes required\n875: - Next step:\n876:   - update closure documentation\n877: \n878: ### Task `13 / 15` - Update Closure Documentation\n879: \n880: - Task summary:\n881:   - close the hotfix documentation and align downstream project docs\n882: - Files involved:\n883:   - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`\n\n(Showing lines 464-883 of 988. Use offset=884 to continue.)\n</content>",
+            "title": "docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
             "metadata": {
               "preview": "## Files Expected To Change When Applying This Hotfix\n\nMinimum code files:\n\n- `src/cvn_codegen/normalization_types.py`\n- `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`\n- `src/cvn_codegen/auxiliary_sources/reference_resolution.py`\n- `src/cvn_codegen/semantic_policy.py`\n- `tests/test_auxiliary_source_loaders_unit.py`\n- `tests/test_auxiliary_reference_resolution_unit.py`\n- future semantic-policy tests under `tests/`\n\nMinimum documentation files:\n\n- `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n- `docs/context/current_status.md`\n- `docs/pipeline/known_limitations.md` if a new limitation appears\n- `docs/roadmap/cvn_generation_roadmap.md` if issue state changes\n\n## Accepted Execution Protocol",
               "truncated": true,
@@ -2744,7 +2745,6 @@
                 "truncated": true
               }
             },
-            "title": "docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
             "time": {
               "start": 1781202599509,
               "end": 1781202599582
@@ -2760,20 +2760,20 @@
           "messageID": "msg_eb7f2a844002NVkNdruUSgXfVv"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 106283,
             "input": 746,
             "output": 65,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 105472
+              "read": 105472,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7f2bf68001L1F1HgM6lo5Rkh",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f2a844002NVkNdruUSgXfVv"
@@ -2782,11 +2782,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
         "role": "assistant",
+        "time": {
+          "created": 1781202599985,
+          "completed": 1781202606293
+        },
+        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "build",
         "agent": "build",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -2798,24 +2803,19 @@
           "output": 117,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 105984
+            "read": 105984,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781202599985,
-          "completed": 1781202606293
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7f2c0310027kAedkdV8xPEnO",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "type": "step-start",
+          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "id": "prt_eb7f2c80b001eXYxT6vggC7fZw",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f2c0310027kAedkdV8xPEnO"
@@ -2839,8 +2839,8 @@
         },
         {
           "type": "tool",
-          "tool": "read",
           "callID": "call_KYFSvjgwlogBWB15E1hcWMPK",
+          "tool": "read",
           "state": {
             "status": "completed",
             "input": {
@@ -2849,6 +2849,7 @@
               "limit": 120
             },
             "output": "<path>/home/carlos/uni/tfg/TFG-open-cvn-schema/docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md</path>\n<type>file</type>\n<content>\n884:   - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n885:   - `docs/context/current_status.md`\n886:   - `docs/pipeline/known_limitations.md`\n887:   - `docs/roadmap/cvn_generation_roadmap.md`\n888: - Subtask `13.1 / 15`:\n889:   - update this hotfix record with implementation performed, verification\n890:     commands, findings, and status\n891: - Subtask `13.2 / 15`:\n892:   - update issue `#14` to remove temporary review-required policy language and\n893:     describe dynamic enum evidence\n894: - Subtask `13.3 / 15`:\n895:   - update `docs/context/current_status.md` to mark hotfix `#7` implemented\n896: - Subtask `13.4 / 15`:\n897:   - update `docs/pipeline/known_limitations.md` by removing or refining the\n898:     limitation that dynamic strict enum evidence is missing\n899: - Subtask `13.5 / 15`:\n900:   - update `docs/roadmap/cvn_generation_roadmap.md` if the hotfix state changes\n901:     issue or roadmap wording\n902: - User manual modifications needed:\n903:   - none expected for documentation changes when explicitly requested\n904: - Next step:\n905:   - run full verification\n906: \n907: ### Task `14 / 15` - Run Full Verification\n908: \n909: - Task summary:\n910:   - verify the full repository after the hotfix implementation and documentation\n911:     updates\n912: - Commands:\n913:   - `uv run pytest tests/test_auxiliary_source_loaders_unit.py -v`\n914:   - `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v`\n915:   - `uv run pytest tests/test_semantic_policy_unit.py -v`\n916:   - `uv run pytest -n auto tests`\n917: - Subtask `14.1 / 15`:\n918:   - run auxiliary loader tests\n919: - Subtask `14.2 / 15`:\n920:   - run auxiliary reference-resolution tests\n921: - Subtask `14.3 / 15`:\n922:   - run semantic-policy tests\n923: - Subtask `14.4 / 15`:\n924:   - run the full repository test suite\n925: - Subtask `14.5 / 15`:\n926:   - record exact command results in the hotfix and issue documentation\n927: - User manual modifications needed:\n928:   - none unless verification fails and code changes are still reserved for the\n929:     user\n930: - Next step:\n931:   - validate final acceptance checklist\n932: \n933: ### Task `15 / 15` - Validate Acceptance Checklist\n934: \n935: - Task summary:\n936:   - confirm the hotfix objective is complete and safe for issue `#15` to consume\n937: - Acceptance checks:\n938:   - `ReferenceTableMetadata` exposes dynamic enum-evidence fields\n939:   - `ReferenceResolution.reference_table_enum_evidence` exists\n940:   - direct `ReferenceTables.xml` and subtype-backed table resolutions attach\n941:     evidence\n942:   - non-reference-table families attach `None`\n943:   - `semantic_policy.py` no longer contains `TEMPORARY_REVIEW_REQUIRED_REFERENCES`\n944:   - `semantic_policy.py` no longer contains table-name branches for\n945:     `CVN_SEX_A` or `CVN_ENTITY_TYPE`\n946:   - `CVN_SEX_A` becomes enum-eligible through evidence\n947:   - `CVN_KNOW_A`, `UNESCO_CODES`, side-package references, unresolved\n948:     references, and under-traced references remain enum-ineligible\n949:   - `CVN_ENTITY_TYPE` is decided by evidence-backed rules, not hardcoding\n950:   - documentation records any implementation adjustment from the original plan\n951: - User manual modifications needed:\n952:   - none expected after all prior tasks are complete\n953: - Next step:\n954:   - start issue `#15` only after acceptance and verification are complete\n955: \n956: ## Verification Strategy When Implemented\n957: \n958: The implementation session that applies this hotfix must verify all of these:\n959: \n960: 1. `ReferenceTableMetadata` exposes dynamic enum-evidence fields\n961: 2. `ReferenceResolution` carries evidence for direct reference-table resolutions\n962: 3. issue `#14` no longer uses table-name hardcoding for enum eligibility\n963: 4. `CVN_SEX_A` passes dynamically as eligible\n964: 5. `CVN_ENTITY_TYPE` lands dynamically in review-required\n965: 6. subtype-backed, hierarchical, side-package, unresolved, and under-traced\n966:    families remain non-eligible\n967: \n968: Minimum commands:\n969: \n970: ```bash\n971: uv run pytest tests/test_auxiliary_source_loaders_unit.py -v\n972: uv run pytest tests/test_auxiliary_reference_resolution_unit.py -v\n973: uv run pytest tests/test_semantic_policy_unit.py -v\n974: uv run pytest -n auto tests\n975: ```\n976: \n977: ## Impact On Future Issues\n978: \n979: - removes pressure to hardcode reviewed table names in issue `#14`\n980: - gives issue `#15` a scalable strict-enum decision input\n981: - gives issue `#16` a concrete dynamic-evaluation test target\n982: - lets issue `#17` document a reproducible policy instead of a manually curated\n983:   exception list\n984: \n985: ## Status\n986: \n987: - Status: documented as required corrective work\n988: - Implementation state: pending\n\n(End of file - total 988 lines)\n</content>",
+            "title": "docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
             "metadata": {
               "preview": "  - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`\n  - `docs/context/current_status.md`\n  - `docs/pipeline/known_limitations.md`\n  - `docs/roadmap/cvn_generation_roadmap.md`\n- Subtask `13.1 / 15`:\n  - update this hotfix record with implementation performed, verification\n    commands, findings, and status\n- Subtask `13.2 / 15`:\n  - update issue `#14` to remove temporary review-required policy language and\n    describe dynamic enum evidence\n- Subtask `13.3 / 15`:\n  - update `docs/context/current_status.md` to mark hotfix `#7` implemented\n- Subtask `13.4 / 15`:\n  - update `docs/pipeline/known_limitations.md` by removing or refining the\n    limitation that dynamic strict enum evidence is missing\n- Subtask `13.5 / 15`:\n  - update `docs/roadmap/cvn_generation_roadmap.md` if the hotfix state changes\n    issue or roadmap wording\n- User manual modifications needed:\n  - none expected for documentation changes when explicitly requested",
               "truncated": false,
@@ -2863,7 +2864,6 @@
                 "truncated": false
               }
             },
-            "title": "docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md",
             "time": {
               "start": 1781202605775,
               "end": 1781202605863
@@ -2879,20 +2879,20 @@
           "messageID": "msg_eb7f2c0310027kAedkdV8xPEnO"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 111851,
             "input": 5750,
             "output": 117,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 105984
+              "read": 105984,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7f2d85a00127TjJPg2w2e5NB",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f2c0310027kAedkdV8xPEnO"
@@ -2901,11 +2901,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
         "role": "assistant",
+        "time": {
+          "created": 1781202606310,
+          "completed": 1781202612002
+        },
+        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "build",
         "agent": "build",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -2917,32 +2922,27 @@
           "output": 56,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 111616
+            "read": 111616,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781202606310,
-          "completed": 1781202612002
-        },
+        "variant": "high",
         "finish": "tool-calls",
         "id": "msg_eb7f2d8e6002ucG3oJZygksUxy",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "type": "step-start",
+          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "id": "prt_eb7f2e0ee00120VbGrOiVHIHaG",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f2d8e6002ucG3oJZygksUxy"
         },
         {
           "type": "tool",
-          "tool": "todowrite",
           "callID": "call_Hm68BpI4cj9w34LjaCgGzGZH",
+          "tool": "todowrite",
           "state": {
             "status": "completed",
             "input": {
@@ -2960,6 +2960,7 @@
               ]
             },
             "output": "[\n  {\n    \"content\": \"Insertar plan aceptado en hotfix 7\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Verificar documento actualizado\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  }\n]",
+            "title": "0 todos",
             "metadata": {
               "todos": [
                 {
@@ -2975,7 +2976,6 @@
               ],
               "truncated": false
             },
-            "title": "0 todos",
             "time": {
               "start": 1781202611421,
               "end": 1781202611433
@@ -2991,20 +2991,20 @@
           "messageID": "msg_eb7f2d8e6002ucG3oJZygksUxy"
         },
         {
+          "type": "step-finish",
           "reason": "tool-calls",
           "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 113248,
             "input": 1576,
             "output": 56,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 111616
+              "read": 111616,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7f2eea3001ku2QI2Byjm2NSO",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f2d8e6002ucG3oJZygksUxy"
@@ -3013,11 +3013,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
         "role": "assistant",
+        "time": {
+          "created": 1781202612021,
+          "completed": 1781202616785
+        },
+        "parentID": "msg_eb7f0cba3001gusg1kervpZFwT",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "build",
         "agent": "build",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -3029,24 +3034,19 @@
           "output": 116,
           "reasoning": 0,
           "cache": {
-            "write": 0,
-            "read": 112640
+            "read": 112640,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781202612021,
-          "completed": 1781202616785
-        },
+        "variant": "high",
         "finish": "stop",
         "id": "msg_eb7f2ef350020XbRu34itQCdl7",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "type": "step-start",
+          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "id": "prt_eb7f2f58b001ur7apbiclRxUK6",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f2ef350020XbRu34itQCdl7"
@@ -3069,20 +3069,20 @@
           "messageID": "msg_eb7f2ef350020XbRu34itQCdl7"
         },
         {
+          "type": "step-finish",
           "reason": "stop",
           "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 113441,
             "input": 685,
             "output": 116,
             "reasoning": 0,
             "cache": {
-              "write": 0,
-              "read": 112640
+              "read": 112640,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb7f30106001tW4E934XpXnGBY",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb7f2ef350020XbRu34itQCdl7"
@@ -3095,14 +3095,14 @@
         "time": {
           "created": 1781203879334
         },
+        "summary": {
+          "diffs": []
+        },
         "agent": "plan",
         "model": {
           "providerID": "openai",
           "modelID": "gpt-5.5",
           "variant": "high"
-        },
-        "summary": {
-          "diffs": []
         },
         "id": "msg_eb80645a6001o0NR2u7R0q6Xz6",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
@@ -3119,11 +3119,16 @@
     },
     {
       "info": {
-        "parentID": "msg_eb80645a6001o0NR2u7R0q6Xz6",
         "role": "assistant",
+        "time": {
+          "created": 1781203879383,
+          "completed": 1781203899903
+        },
+        "parentID": "msg_eb80645a6001o0NR2u7R0q6Xz6",
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
         "mode": "plan",
         "agent": "plan",
-        "variant": "high",
         "path": {
           "cwd": "/home/carlos/uni/tfg/TFG-open-cvn-schema",
           "root": "/home/carlos/uni/tfg/TFG-open-cvn-schema"
@@ -3135,24 +3140,19 @@
           "output": 410,
           "reasoning": 516,
           "cache": {
-            "write": 0,
-            "read": 99328
+            "read": 99328,
+            "write": 0
           }
         },
-        "modelID": "gpt-5.5",
-        "providerID": "openai",
-        "time": {
-          "created": 1781203879383,
-          "completed": 1781203899903
-        },
+        "variant": "high",
         "finish": "stop",
         "id": "msg_eb80645d7002PQOLpTOo7lGGUz",
         "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
       },
       "parts": [
         {
-          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "type": "step-start",
+          "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
           "id": "prt_eb8064c6c001swyJIB1cl9Pj9B",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb80645d7002PQOLpTOo7lGGUz"
@@ -3160,15 +3160,15 @@
         {
           "type": "reasoning",
           "text": "",
-          "time": {
-            "start": 1781203882334,
-            "end": 1781203892121
-          },
           "metadata": {
             "openai": {
               "itemId": "rs_08b9b2861dc5b745016a2b03aa4e948191861db60f13e4e3d9",
               "reasoningEncryptedContent": "gAAAAABqKwO01i9LuDvkgzh2qmD3CRs6aNYA8jkunp5DhFEetCCNE1h5siWJUS2c8CFqRqE4TrF6gOumbcUXM3IJNieOTgtGv5XoFI1PTcp6lVY4HKjI8n_rc9ih1HtwbicX99dxbr6ExPdEJ19bArgXBh7sAZzgpOQaukd8aIkzc8-2ZLFs8n79WK51Azt-4ErK1LEOCf5O0BTCS95eaYxZhJPPzK1K5QKpo2m_ZP0dRm1zQuzOznu5sjIhn3PwD9_ZCmSg77x5hPXmFNKzcBzn-L95QmFZ_lw6fvJMyExD1EZPYjeoBk1WXMo5PkLE5QNC-0peZZrvWG-dESye5FsnMXzwfEqp1BklrgbQWmDmbA9AY3NA-T7RCNzEOjOH1CzXA57PFwsTS4TlLIXN01JCeSYbKb9U74JamtZ2mIdPmV16gZRGfVBiPhfo5b0mBDgL-6PCLj9hGyf72b2hdp-xC2dCJUxyKjn-H5L-Jh9dCJ68axO4JgC3jXS9sSstFF2BQVLt7D0lNswpsmEMPGlTxZSWWuRUw_D2nCGQ0gbGsRGFbX_QaMZmY49emKhPX57wXE3IgZ9PUDHccq36lUpS92xqarkCt1STJMX9aoNfxDO3n40Tq0QtGO7DN6O14M3lV0wPqEG2LLLeIqalmzDYeG1pk-9o2Z7-zO5ZtjG8-craRddGMGjKGA1VL7cExufDGc7gpiwrFjEEwjh-31sOcKwGMfxBve2EqQnjY7DoOWj_cByGCK0rBJH0ObaN-M1l0QfahMDeMtU6XrG4JZeRaPS0KjxYKvMEEwITU12aBws7H8YSoE3BcbqOwwXzqoVHQs_EBcayRPr2n6KbtYei_ikymggX6bpksuVRvQhGhKovPH359HY5JpvHkClFKpVT3Z6N3EcND7r7AibgihZOt6evBGoPrf3jG75ejfLulHOA-eCSLeR88FsBcxUkaZF8e7PoqEQVjM2mEhVm1Ybr7RcjSE1JvBHC4McZ9fIyMbMoe0uSIwbE83je9z7ZajKa1-_N-T5BitMlksBaYrFNEPIkfrC4hDCQnnjvPGXHowJBYT1_atbAJWbUsteg6mR5ZCrB4XoJ14-LWw406oodYxHuPNjYV3TNChh8j9HCMcEEkhu9WJWLbUQWvzf1JPCk1y2JJWEkns02xD0mcDigppjgDz1h0Rj4nu3l2Ldb5a4wTSaDq18GnKYx7DKf2zZJqsJ5JxLSQLXEAq7U1F0ArJ-bl5r3Da3VuaGnlgPTT-VfEJCKG_zYg17J3W3KpirNgQU7I2eqy4vWHJwfVL9HXjoSfAImG3-G7avu0VYDXREIr3DVJGrXkn5azgJPqrOQG2Oj1jBrf_TUxxngWTY-TDNhxaY-wPd5j1jvxRMMawi5k-IqmWIz4bifFpxSce_G7-8JanE3TWuzrS4-Qx2NohNJopa4BRfWIhgXTE7DCJu1JJIPvWtNyAW3o9x1rbMF0prRHCuWBCTd6GOQL6o4LN-NwDtuzyVmAqACVzn7Qnq5G0tdVkzZmCOXtoCv56uJfCM6jAXgHxyUzI6uhviZ5tnsa9L11OsZfFZ4UnXTpV1XRl6CZJYXrjyhRsTOy83Ih6mmV7flRoNKvjp2oBXiejMoTDrVo7OMw64NADyEjP5Di3DE4LptLQfK0fzp4tsNidVOMwIFLZi-8fIEQHH4-snlkdtLT4HFi7o821CFTJ7iqRMa-fu81PtIhE4ALQBs8kzcK3GTero2tAilNdV5Gtlf-GZQEOSnpak08sXYLixERlpdCtxrDZAw9ugmKnAckpotbLEILJ4k7amNqxfxDfw40JZiEBdBDIklx09f7XzOXcOwBQhjLQiTPnehC7-NWl_XagF9yWab8dQ7MbLm_XmxHK2s75KQBZkVSFwr1Hqb26O5ZUiOYcqh8c-ZZDmT9NGCjvSy2M3x9evrwHrvST9iXfpmt8ST_EB2vR-pPoqvSeflpKYtH2Gtcrep-_AwW2nvgyXlEye1yKlSagip3X_KyYWdxOSiNXmFWZlSkEAAuJbjY9xFgwnwEwwH-4Ip4-IyWQU2bsUnaoYhNqJpghq610-qC5ZaiCw_ny4GpuRlVgenMW2z_6-2BfxtPAUBnvazGmWgC-6t-V07DylAaTLR2xOkuG5gBe4DnBsAjPv9pW8pLEJo6BDyN3LEQftk72VtuX3DB2fW7UFWgiACO83yi7nevDZboPy4sgFVWDnqLszjas2u-UUWVGoW8RdQw2ifWyCHhj0IR0e7WqxGv3GNpppsc7tCVwnSN_O6Nnz-_AYOCJpIyfKrkfR1e77r8Ism4hb3hMQmmqvlawJK89119uAURSTCdQjpOpTE6tN1jIgmzMyZeG96gXDpnpjoP6xkmR63cOsjhW6NyrBaBxVspR6-uRQTVdMliLiCT-fgVKzJf450Fr8IwQwy6OCHqLzbxuGBN1-zRSqC__3lCspW1q78nzYBi8czcwSsm3mn9n7sYnKvT2ZMkH1x6tatxrpEb9YWuTwUcxSAihQH9kPvMthN2toIrL5Ljr4b6Qvu6x_9PulZ-69ckHN0dAznoZHF20bEC_YovsszbKz9Lr1Hap1bvQWpDDAibURSGOVNvnzS5dYgYQ0YtHtfoHUUy2YYvcnkryEyd4_MRRNAeh59skCm4boQe0XM63Xiq-GCR0NK3oKJoZPSiwQOpTn7VJXLGnNkFrlhzDAcmfMS6eI-fnCydrO2dKUdpuArWcdTqwSc31cOykzjhIekBsyJm5KjoKeFSzgpKY1mdJqEc7QxNtJ_i0R6m_1mVusY-fvtNinVa_y0CQxDgMP2z1-Gc6_QdD9FrN0Tab1Kwb7SYBcUZqCHyv90ef1ZDZnAz0G35wiECk47WmrmtOWjTSwFyBwjpjCPLIhaZdMqZC7XimZosmVH4_at-lzfcFWOFnqS21dnvGkO4kh_NTcl8_sjGAatEi8xCpMapIlXdjSdVUCnmotekflcuXs60AmqDawqoAS48mdUFzzt-EXpErzo7TYDjhbzvRCPRK6GstPDmdQMvK9AGxBmePTQMAgPk0WWlO0lOCHlGAqeF5P0sG2TRfjMp2EP6MNhaJfQVFg3UxupLvtEpyGjjZH6mz8Yz8MUqteubY1etSHeoQbBk_QNlXR9ui44fTJspIAm5PIE2ccddmRiWKWB9B9K5uFq0IkyGACVO8vpo5YSn8HXmj2PeTS6ZfQR2CQk9iQyopzDrpptP3Q38vTEJcMsnrdZjjQ5v-8ogpaKRhZriZN4Ks5ey5yAXLVI1vHqgySLjGdOQ_LL-cFHwfszG01AJSApUSKgfQVMUNfUlwv2pRjgt-YUzOd31juP7QENi9nTTpryceBkm_CCksxx4msdK2DUJADn6cgeNtBm8UT-QIwovgyJl3T8zbI1T6b-kt80UNWkWETOanjWf7FpgaFeadwK_92NRn1QVzG76YsuJiXeIEGql3zzt0-HYunsRByRVuGz6GY0206saBtKcg9xqWyXA5JWo16BaVllviq44lq2d05inv0ljehZQRKTOvqyBsK-yjt4qL8bPzHgXCeWkaBaLVJt-moVL4xEF9WsvIG5msizskl6B8co7S2KZx3kZ3Wn2p5P0TTDHKn7uHN3P_WsUjj00kmnfJ2bbCEunk7HTO6gv-1wZcMFVNj-RvSxB4cnZa4u5zGZp5h8ccshep9x1Jzvh5wgb0PAdICsYskoIBrJzzDu_pDHGWYaAbTqJlmBcnRwxc_Pxc5xvNejfxTh67cbKOJboaXUGKA8FXerTIW-_z3IwDSknUjTP62bmDrFAjCgiZRMcCa1i1V_9WqmmJ6YNHVllBFaZakzt99Qd5NNBOeS8mONBjjHfV91mxPdfNssOTFr4T2l-JgwaPdOXeXLqBnuFvV5pCFQmEB9a0LOyZtp6m6x9ebWhc2CJNk6Ho_5YC1G-NkdaepMlLQM6har8U5eyDY-hRgOC1mDU7X6fjn5HcUfUQDT3JXNyaIqeKBznY1o6Vj1XO48hnJOmOHoBb-ImUPupHwP3gYci_Emo9H1twwu_Ht9bvIkeTTIh6TNPj7hu1x_4chU-fsUwfCKcMPRr__kh24xZxXXecnFKYIidZQY"
             }
+          },
+          "time": {
+            "start": 1781203882334,
+            "end": 1781203892121
           },
           "id": "prt_eb806515e001Iq1dQ9nXX2YKu6",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
@@ -3192,23 +3192,1606 @@
           "messageID": "msg_eb80645d7002PQOLpTOo7lGGUz"
         },
         {
+          "type": "step-finish",
           "reason": "stop",
           "snapshot": "3189b249d915a1f12751d718fb396e8f94d91f32",
-          "type": "step-finish",
+          "cost": 0,
           "tokens": {
             "total": 114436,
             "input": 14182,
             "output": 410,
             "reasoning": 516,
             "cache": {
-              "write": 0,
-              "read": 99328
+              "read": 99328,
+              "write": 0
             }
           },
-          "cost": 0,
           "id": "prt_eb8069495001KYYLj3dNQGKuQb",
           "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
           "messageID": "msg_eb80645d7002PQOLpTOo7lGGUz"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781348389985
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec0a35440001m3NaO7Mfz3Umnm",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "salen estos errores; [Image 1] tambien debes de darme el comando para ejecutar la manera rapida de testing ",
+          "id": "prt_ec0a35440002RnVxQKgjgx9d1W",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0a35440001m3NaO7Mfz3Umnm"
+        },
+        {
+          "type": "file",
+          "mime": "image/png",
+          "filename": "clipboard",
+          "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABGsAAAJoCAYAAADRbWwJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAP+lSURBVHhe7P39j2bXdd+J5of8CfdicF+gRpOi1Gy32CQvm3KLBLr5IqpaXbYRMEFyUWkZHHkgRYYcybQtIUZXXV6LmQF5zQsSwzRVSUQrGUmQqxkluE3lTtrpy+IMPRBcRieDmAIyECIkVIJpDKA0bMeIMcC+WOecdZ61v3vtffY59VTXeaq/DXxQ/eyXtddee59Te32f8zz1Fz70oQ8FQgghhBBCCCGEEDIP/gIWEEIIIYQQQgghhJDDg2INIYQQQgghhBBCyIygWEMIITPgnnvuCQ8//HA4d+5cWFtbC+vr6+Hnfu7nIqRM6qSNtJU+aIcQQgghhBCy+lCsIYSQQ+bRRx91xZkhpI/0RXuEEEIIIYSQ1YZiDSGEHBIf+chHwtNPP52IMGMRG2IL7RNCCCGEEEJWk0MVa/5Pv/xfhv/ita+F/8P/99sN/8dvvd6UYTtCCDlqiLgiH2lC4WUqYouCDSGEEEIIIUeDQxVrRJyRn1awEf4vT59P2pKWzat7Ye/GdthoXm+E7Rt7YffKRlffvt67upn0I2PB2B4czZqu8JrFe5LUsownahCxieMQQgghhBBCVo9DE2tEkBFh5r/Y/NVIqBH+z3/tLyXtSQvFmjsFxvbgoFhz9yHfM4NCy7Lgd9gQQgghhBCy+hyKWCNCTfMRqM1f7ZGnbJYj1myGnb29sLOF5VO5c0n7eObs26pz52K76mINsnFll+JNAfkLTlO+TLgWsc2/EkUIIYQQQshq44s1n3wpfO+96+F3nn8qrYt4KvzaN6+H9/7xS+GppM4Hn6LxELFGBB35eNT477ChWEOWwZ2LLcWa5fLss8+GV155JZw/v7+PUy7LDiJ/chsFlph/Fv5tCCH8u3/mlzf//iT8y7+H/RbIGDguIYQQQgghZHXwxZoPnQjP/tbvhneKgk0n1Lzzu+Frz55w6lO8jzx5iFAjgo19jbZctnbC3t5ehBVtmqS4r9sN25cKfSV5vrQddsFeTfIej2N9aAUAFJJsctv8H3xry3bCZpLYo6CAr7Vvxv9mzjthU+d+42rYcQWKSgHMi2Ff331Ey41L1zdJ8GHcZj12w/aWrksbE6nDedqxsW5wHsbfOBYDc3DGysXS+umJNfm9qn5t9r60PqBvsL89amKuewSuheS6avxHHzIfj9J1vATts/s641uGZYksy7KDnDt3LhFXlL//P/9JCOHfhn8pPyOx5u+Hf/knIfzb693r6yLb/NvwzxwbgoyB4xJCCCGEEEJWh4xYI5QEm/FCjVAj1uiTNLat/B9t5fETuiQhbpLQLqHtk0djYzBxzHBpO+wkgojaHhZr5HXkK/g2Tqyx81BbmIg7wgYm2Jqw2zKkGMNOoHB86X2tEQ5UMIB2rbBh/VuMncwHY5DFieXQHIbi3dlwxTTTr7hXe0EkFmOwz8aVnSWKNXHMrXjoj+3sIUsv/MB+MXFwbVTsw+eeey688cYbPS+88EJTLk+avPTSS0m5IKLM66+/3teJjZyd559/vi979dVXJwk5NX8BqhFtrFjz9/5l+JM/+Zfh7/dtQLwBZAwclxBCCCGEELI6FMQaQQWbd8K3flMFm6fC3/qH74wWagT8q0+5jzhJuW0n/bBNHkesaZJDTPJMMl5MAjFpH4v1p06swScP7NjjxBoE6iMRwPqbCgF5mx2FGCbz88prhINE/PBEIuyf1qG44BPHqmoOCXU2UnEO42jtdGJN5P/QumeoiXl2jyzaYDxz8+zx1rEfS+eerl3VPnSeiFGhRoQW+1oEGft/qZM+0t+z472eItbUfF9NItbIkzTwsah/9u9C+JP/+e8nfQUZA8clhBBCCCGErA4DYo1gBZu/NlmoEbynZVCY8dj3kzX6dIBDlAC7H1uZkAj3Tw4sGCXW2CcuvKdIRok13RMLyZwxOY7HWNhIk2affAyzSbYVJmqEA0+YcfvZ9umaN4wUa6rm0JCPd85GtKaVezWx0/dL1zOLGztPrEGbyxBrnD0F5dP2oS+q4MeZRJyRp2VQyBmyI0/TqJgzlSliDb7WMoo1hBBCCCGEHE0qxBpBBZv3Jgs1gv65bkG+k8Z+L02JpYg1peQR+saCQyY5ztAkrs7HO8aKNX3yvQ+xRgWfxXjQ3k3EIV7y/0Fhw5LGMCdS3BmxxplfFePFmqF452wkYk1uPo5NpBf5aubtjjUfsWbqPkSRBT/SpIhII2KN/YgUfjwKRR77kSl9Gmcskz4GNfLJGn4MihBCCCGEkNWmUqwRToRnv7gV/uZEoUYRgUbEF/wS4RzyJ73RRhlHrMEkcIA42SwnxzHO2I5Yg7aaZDdKbvUpgrR9vViDdVifS8S1XRsvGQ/FpRpsDHPJe/IxKPQFPy7jraNX1uOtRy2O8FWcw3C803VetIk/BpWbT2rTp3LeNTH32hyQWJP2m7YPUWSR1y+++GLVX0gSsUYFG7RjkTJ5ymaKYFP6gmHFFWtGfGcNv2CYEEIIIYSQ1WaEWLN8UKwREUeRj0dV/xWoCC+Z7RJiSCA3ry6e6rCJICaNmIzmScdun7RZJJrtkw8m+U2eoIHkvamPPxpSJ9Zg28VTF8NiTdt298p22MnUJxRj2D1tY2OIokDXBucSPamSSfLbGFs/F1/0m9aJbxVfvpvEdngOg/Hu2tv90T8JA2ua3auJX13ZVRT7asSNipi7e6Qs1qR9YJwuDlEbJzbC6H3oiCyljzpJm69+9av9a2mTE2v0i4etzSlizfCf7nbEGhRnEvEmpkaYIoQQQgghhMyXWYk1KtjIz2lCTYcKIFHCukhElVi0MHX4VECfXKbJZIJp246PiTP4cXUzEjY8ccGWjRFreoGh9739c881Yk0uec4yFEPwxQpQvg2ph9hlxBpBRbFF3PN1U4W34TkMxFuA/SF1idiBe8QRVBKxBtoPCzUdQzF398iAWGP9afaBJ9bYP8GOczSM3YcdIrjYjzXpkzD2Y1D2C4bxo1GeHfsRKMETf2q45557Br+3JhVrur8IFfRf/s92i20ZA8clhBBCCCGErA6HKtbY77BphJrurz7JR5/+rw+dTtqTO0hBGCFkX4zZW2ParhCPPvpoIrIsC7GN4xFCCCGEEEJWi0MVawT5uJOIM/Y7anJ/0nsWwJMR/tMPqw9+FExInlDpwScvVoOjNp8UfBLIUPV00QExQoDx9uFR4emnn06Elv0iNnEcQgghhBBCyOpx6GINmSP40S1Clki1WHO09+FHPvKRqr8MVYvYEps4DiGEEEIIIWT1oFhDIvRpk6P0lBCZGRVizd2yD0VcWcYTNmKDQg0hhBBCCCFHB4o1hBByyMj3zAx96bCH9OF31BBCCCGEEHL0oFhDCCEzQP6Ck/wlqnPnzjUfafLEGymTOmkjbflXnwghhBBCCDmaUKwhhBBCCCGEEEIImRF/4S9s/atQ4q/9tb+WlBFCCCGEEEIIIYSQA+Ivnv1MKCFiDZYRQgghhBBCCCGEkIOBYg0hhBBCCCGEEELIjKBYQwghhBBCCCGEEDIjKNYQQgghhBBCCCGEzIiVF2s+vPlPwj/6Fz8J/+GP/zz82X/68/DT//Un4X9655+ES38lbUsIIYQQQgghhBAyd1ZYrPnt8Mof/sfwZyGEP/tffxJu/PPfD9/+p78fvv37Pw7/4T+FEP7zfww3/rvfdvoRQgghhBBCCCGEzJcVFWueD7/+h3/aCDLf377s1F8Ol//wP4YQ/jTc+G+fd+oJSfnGj0MIf/xH4deb198JN/44hJ/+4XeSdvOi9TP8+B2n7ojx6h+Fn8o1/apTd8A0e0P+9fvjDnCI8z1Qrv2kC+YRnFsFzV4auF5r2qwaR3FOwmf+H1fCzj//QfMT68g8eejSb4Zvvv0/hCtv/V7zmmtI7ma4/wmZN6sp1mz/L+HPBoWY58Pf/ld/vu/kqk/SzL8fXkvbkdVn1mJNk7j/JHzj7GcaoXLhF8WaKchatzF8J/ywiyu2URpheJ/3kUkscb71tPupucfJ+Gbe3r1wdFwOZU5LpplD4d/AtVgjWtS0sTR7NAzdr2SvT1izJTF2TuPJ790Sf/vNfxKu/Y83IySRl4Qe23rMNdERIWLMPOaGCioHMYc5izXik/jy9C//10nd3BBfNYaHxd985R+Gf7y7N2rt7DUv/5eyZc5F1k7WEO8rQs5XKZM69WcM2vcg72ESG2u/FCuZg62XNarpRwjxWUmx5pV/HUL419fDh526iL/5Tvjh/x7Cze84dUN0B/Lk8HvtJ2nZoTMzYeGwaN6xx8S7TVDGC2zLi+lSkv2sWIMsz+/ZscREf4xYc/BJZoYlzreefMKbxqETCsfsbfcaXWXG31/SOKbUtLG095g/LQsU+kRTqU3C+PnlGDenKfex/N4tIYmFTWzGigQ1ic6dRpKjuSf8mtCKr1gn6BxyscV1s33GzntZa6h7Z0rCLagfpbjMiWUKHPvB2wslvPZ3Yi6lMVQMGbt3PHFP5iXltdfB0P6X8q3tt/rXeu2ir1bQ8eaJIs4y+PB/+wfh5g//IPw6v6eUHGFWUKz5B+HGT0P4N/+09FSN8nz49r8L4ac/+AdOXYnlHVDvDFMOtkcQNxGcupbLiynFmiWxRPGCYk2OfMLrxsHsy9SWg3uNrjLj7y9uHCe0sfRiTdaXbl1//JOR96Lx88sxbk5T7mP5vVvCS9yGkhfLmLZ3CkmIMJGaG0Nijc4hl+B667bqYo3O15vbHMmtzZ1maC8hXnwPei6lPSZ+f/u///2GMXvHm8cUSr7lwLHttZeL5bLFmg+//Afh3/znEML/HsKf/bs/CF+kYEOOKCso1pgDWVKXskjK0roc1ck1Pg4f9VkcNptDqtemT8a6x9O7f6m/3TvY5l8/f/TB7a/E47hJU/99Et2/aE7Y3yaSUAfxi2IQHf5xbqXkFMdf+I/2mzqci46rcb+msWvtxMnEYv30IwbtPxszfy8u9g/OLY5LbDe1U4dJagb2QhwjG2e18U7kb+tPHPMxPuL8okQN18a53uL+ul6wP3DOkAzivhjjP85d/i3iiXWeX+keS8co2HLEmuJ8MBY2phjv6qQZxsZ+ifiSvw+g7/m68t7M3vusb9X31kzsvTpnj/piBtqM176PY7QmzjpDrPF6smPqPecb8hPXSFBRTcaEeWTt4p4xddhnMK4/fiedE66f+oXl1j7WuWsyDkw6BE3+/p9/73tu8m2TQy/Rse8wCzaJ1ERGbGq9JzDYjw7gxxpkLPuxB5sAiR1J+tAfxb57jx/XwDGk7nP/9Teacm8sxc7Fa4Pj/4Pv/49Re8HGyM5BkP9rfFQQsX3l9Zv/n92oTGOqSaQ8GaBt//JXX43WtWauXlzt3HBNBLtv7J7wPgqj8xJ/c2MJpX2B62nHwTrc87k9i/G2NnXuagNjYMfI2fcSeO+awj2Gwgz6UsK75kv9dQ/JTzs/9KFEzr6ute49vNfkGCNQ4drj/vPiPYQXQyU3V2+tp6JCzU//9fXwc79+Pdz8Ywo25OiygmJN92TNP/9vnDrkvwn/6N+PfbKm/h29b/w4Tdwx2Zd/i0N1e4BND57GTnNAdhIG55C78LHO51//w5+kCUEiHkCi9OP4AG3HWNhLExZrOxG/rv2kb4sHePTRgnXof5o4+r71cfcEJWf9UsFDxxgSa/zXblnnE9oaBtceX7dgnON9pnNdrP0iGcMyjK9PHCfhnfDDbvx0n6Xt07E0+TP9EjEjvgaTGJt9N4Ykds61oIltIiQMJZOOrX6f4/xe/aPww2RMrcd9jtcu3FO8hH6AJA54P0t8qLtGE7sDe7MhmRPcf2vuraXY18ylIW03dJ9q9zre9+JrAmOS7GW4XyzqxR+IVWevmSeINUN2vfkl+yfTJ45rdz8x/Wp+f6b3sVKfaXhJh01evHr7LjImOvLTfmRAEzyb4ErCpEmZJsM2iZE620fa/L/+u7ebnzge9pfx0F8dEwURTPaknfbVxNtL+K2v8n+NhfXHS9SHxldszNUeJrFD62LLZGzrM9qsmWtOQLGJKdr12qhPmDCj79hHGNoXUmfHln0o5V6s7VpjLKWdtkU/1CbW4RjWt5J9L4HHPY79da52PtimhNcW52nRPWT7iA3cazlwPordL7m9kwP3Sw5vX+h8NH45/3IM+ZqLpbfWU4iEGi2nYEOOMCso1nwmXP4Xfx7Cv/+DxUWa49f/IPyb8Ofhf9p26rL4CXgN8cHXP0hGbZJD7qKfHlKTw7RnJ3OwHSRKnLxD+QJMHiyNL1hnkql834l+K5j44esGZ15u3NFPf/1ie/5ewTXD160NP6FKxxsCY4ivdb4YF9vO6eMkXG4sPZJE2pKzYcszbcBun4DaNmYPTItnCtrB1255Zo8hOVsLG7k4CiZOpbbudTGeXmTo/8U2h+4DzWv0pXJvot2htffjH+/zUuyr5tKQ2asWmHMzbnJPL/k2fL+w95g0NtK/Gz8Sa4btVs2v8ndWKd5pP++elJIbawyYuNUk6VKnicpQooNJrE2StY1NvLA9Ysf2+nsJkTem187OxUuIcazc3LHcGz83Ty8RxDXKlXkJrJShMIJj1MzV2weCTUzRrtq2Twbl2mGCi3PJxSvX3zK01rm+np8W2w/XPNcOGfKtJu4CxquEt3fQnsXbQ0PrYfHmKNgxh2KNyLg4B4/cvGrXzkP6lWKdGzMXhzG4Qo1CwYYcUVZSrPmLX/sX4T+EPw8/vPbbaV3Pb4dv/PjPQ/jf/kX4r5K6EnWHRCVJYAYOm6lYg4fl9NCONhqiJMcfy6N/h7P/Z5MbTJpin3IH9iQG/b9ubl3ilLw7LnRPJGDilyPrf28L7TjJhht3TCZyMU0TSYwLJhD4ehEP518hmfFBP/G1jXH6z84jTfBwbl6ZA7x7H1HYZ/1ez7WJ1q1L4t1/ccLu7rsRePvCjYGdd2aPxRRs5Ww4e0f799dhsocWsUr3cz1eEm/HGrwPSDu8Riftzdq1x/gPX7uj5mLigHZK96mcaGHLozbOmvf/HLEGr59IeEr2aObfoFjTrb/5N/Q7y5t3EueB35/lPtOQBMJ+vMI+9aJIgqFlmDx6iY4m/9amJnVeIoMCCCb3iiZ06K+g/b2EyBtTXqMNQZNSb16CLc8ljOpnac65ZNcb1yvzEm4vYffKMDH27GM5rrti54Z2dXyMsWL3FMYCy2r2BcbS+ohj41rjk0XoP8ZQ7dp11XFwrUv2vf1q46590XccpxQfxNs7OBeLt4dwfXLk2qEP3t4p4fmElPaFvXZz+x/RuWDskFwsvbUew4c3fz/8MCfUKCrY/Pj3wyUKNuSIsJpizdnPhJ+79pPCn+9+vj2g/uefhG/8OtYN4x0qE/Sga9rVvDOYHqrx8B/3yx184wO5P1ZMd7i2B9vknWgnQTb20wN7S9ZHpE/McM42ucn5MOC/99r0m59Yg35OBf3E1wPiSa6PFze3zKE0XmHu/T7KtYnWzY+9S2Hf1eDtC3fcJBEeGq9gy7HRJqnWprcerc3mX3IPWyTY6b4eJrkvOv4N2sVrtLRXGry9ORA3wY3/8LWrVM2lAddg+D6VxNEpj9rkrgcD3mOkf+uTzBPEsoyo44PzW9yrF2XxGuVil85p5O/PwT7TwKTJwyY28n9MEm2iI3U2KcVkzUtkbOJVSjpLyZfiJUTemPK6lBjivLxyGxfbBv30xse4KNIOk3IvOffWzUtgvTJMjGvmKv2nijXoJyLtca6KTain7ouhtVakv4yZE1WkzsbSW1f1BdcrZ9/brzbupXljn5p2grd3vLko3h7K7V+k1BfXWsH2Hrk9ayntC7sva2xJHX6cKkcult5aj+Gy/HGNklCjiGDz0z8NN0Z9qoKQ+bKyYo0IMn+n+RPe33fqvh9uyp/s/l1PyKmgOVzjQT/GOyQOHjaxzWBCgTYzdjJjRWCSlJSlh3JLLsEQcj76lHwt+DDov/M6Z9ONO84x46cjGGCbxo6JRxofx6fJoA/4Gn32cPq4PnplDsXxcjZMeZeUJW3guiztyRRvjnXgOPjaLS/GINMHiWx4cfPKOtxroSXdj3V4vtq9XmUX/RqMk79uni8Rrt1UVMjZqJpLA6wBzs8p88eN7cRtCuvckfgr85fXMrYdKxLHhu2mbbz1cOKaxK5to74k/iZl6TjDfabhJW6I1P39f/JOk7BIsmGTH0zoMYHDMi+RsQkdtke8/hYvIfL6DM07l8DZfrk2WO6N783TK7Pj2iTW899LjL0yFFXQXzumjuH5pnZ0bmi3ZBtteEmwjKXChje+xYux4sUqR8kf9KE0phd3z77n25h5D43n4Y05di61fpXsWjAuQ+Dey5Eb35YP7VEp9z4mmCM3pndvIoQMs8JizWfCh5tDcO7fT8I39vEIXHMI9A6y137SHiDxUK7v+hUOm71dbVORUOhhOTpwO8msnwAYkrE6u2YO7ZxtG/ySUjw82y9CxbkuvoTS+1LItq2xb3xKYl7pf9oGxyu1wxh2yYWTqCRCTCIYld9Z78eCMvxi0jrS+aV7IfW7bafjpzb8tfDKfNL5VXzBsPHP7d8E1vTrYh35Y76EN7/vUn9LJPH09jsISbk9luDY8r9gOPW/jdFC4Eq/fLibP3yx8tQEN4lDQ7sujV/OXOy6NyTXwpS9Obz2fvzBluNv7T0tKrN+JOOm9yldt3Qt84IO1ke+umsqc/3T8FP7VI0QiTXDdpOYOb7p78pyXOELhnEfdH0S30p7x+kzBS9x85B2r333v2/a2qTNJjpewiXJibxbXkpwMRmU/vbpA7GrX9Yqba099UG/1FjKcT7emJqAWV9lfBnH1lu/vD5i17bxkkhvfC9WGAcLJsdeWy/p9Nrh2GPmamMrdfgECc5Vx8I1kTjLWJ7P2NcKG7l94fmrXwbs1dm1Vl9wTGtf+9g1sHO1e1Cwcc/Z135WCNAx7Dxxj9m56eva6zjXFtfN4u0hjIVHTRsF46KvS33VPs5F/i9z0f2Fay82bXxLe1CQvrnYeORiOdYOIaRlpcWav/iCfHfNn4Yb37gSLr2w4G/LwfB/+xfhErYfix4Go3/pobv5p382delijaAHfv2HfWJfccxo7P6f/mlrPKjH37UQ2cJ42EMy1hkfozhFNheCiP4rCQE1/i/GMuVG1NPENo07Jge6DvGfs04TA5jDj9/JJE5pf4xLmgjX4OwXdy+kscY6b89NFWsEnF8iGNh/ztzj/j8J3/DWLRFsM9cn7uURJEmjkOz3eB/m9pgL2srdH6DdD6+Z9UAbmf3f/Ev2cB1uHFB8S/zw1gtiNXpvWlv2HybyGH/HFvpbeU9bkF4TQ/cpjWOyv41dL9a4nxPBBNcVhJlcWclu36f7184z/n2k98hSXKUO51T+/enfxwb7TMBL3Dy8pEfLbaKj7fQjDZJU5hJcxUsGVQhQMNnKfWwC/cmN6fnqJXDiv22D81f7OV9L49t56J9J99pZO7pWmsxKX7t+6ovGxIstJsa1c9Xk2Nbj3GxMMfH2YmTnhPMVpJ31v7QvcD2tXaxDMcSz6fltxQM7d7Rvfc7Zt3O0/XTNcA9bG7hPcB1KyHgYc7QvaIy8PVQjxHjXYg5vT9Z+rMvzvbQvcC5Dfnr2FW/+ubXQ6wXLCSFlVlus6Q7f/+F/sDeY7s91e4d7QgghhJCRDCU0cwGTvqmsynwJqRFOLJ5YMzdkLkdN2KBYQ8g0Vlys6f6M9x//OPyjf/r74dsN/0vzl6LG/bluQsgYknfj+3/41AQhhKw+q5DgKd6TAGOhWENWhbHX5tj2h4H4WCs+rQoUawiZxsqLNX/xuavh+//+T8Of/ac/7/jT8G9+/2p4BNsRQgghhIxk7Dv3c0CSov0kpBRryCqA379Sg/3Y1X6fQCPD2I87UqwhZDyrL9YQQgghhBwA+n0Nd1tSR7GGEEIIOXwo1hBCCCGEHEH+0f/vD5IvBSXkqHDvX/rVZM8TQshRgmINIYQQQgghhBBCyIygWEMIIYQQQgghhBAyIyjWEEIIIYQQQgghhMwIijWEEEIIIYQQQgghM4JiDSGEEEIIIYQQQsiMoFhDCCGEEEIIIYQQMiMo1hBCCCGEEEIIIYTMCIo1hBBCCCGEEEIIITOCYg0hhBBCCCGEEELIjKBYQwghhBBCCCGEEDIjKNbMmu+EG38cQvjxO+3rV/8o/DT8abjxKrabGdd+EsIq+LkMmrn+JHwDyw+Sw47vquxDQgghhBBCCFlRKNbsm05Q+eM/Cr+e1O2XmYs1Ihp08/7Gj0P44TVTPic/D5KliTXtWjcxlHUu7afDju/c9iEhhBBCCCGEHDEo1uyXRrD402zy+ut/+KepkDM1wV9aktwKAz/9w+84dSPIiTXI1PmuAkub2wix5rBZ2j4khBBCCCGEEOJBsWafiEghoof87J+AMVCs2cd8V4GlzY1iDSGEEEIIIYSQFoo1++Kd8ENNWpsE1ibt3UeY7L8//qPwAxF1on9dH036m5/6sSoQVfokGWxHIpHxyfjai0mNjfifFW2adv2/1E4VRsCI7ck/GyPx1fyzAoXO9Zr118YKyqpI18QKTI2wZv854ls8H12v2Ae0E4tY6MOEGOOYuKZZoWdgbzSvF3sumqu3Nr0dXUfYy+BXIuZF6whj4Bz7uMZlKpYufIr31L4FSUIIIYQQQgg5BCjW7IP4qRn/aZXqJ2s0cY0EAk+skX9Ootz3G5eQ59uoT6mtQXB++Lqh9dsm8M34GiudK8S3+YdljqiSgnFq/dLxW2HCEdvM2kX+Cf16LPol6921icYxPvz6H/5kn/HFOH4n3Pjx/sUa+bew2Y6RioamfbJv4lih0NK+jn2J18CZV8av/mkkWIvJ+5cQQgghhBBCDhmKNZNJBY8kUc+UueKFm1j6Yo3/hIJNctGOn5BHYk3yZFCmXQ04P3ytcUGRxYoAydMbmRg5tj3cdfDGzZXn2oyK/cR4InbMnF8uQ/7Ja0d8wfj1Y6aCVoO3TpH4gkKM18Y8NdOP+ZPwQ6dsEQe0uaR4E0IIIYQQQsgdhmLNVLwk2SlzRQJPYPDKMNl07Kfl9Ql5lMTq0xDOv9HJLs4FXycfJ7L/CuKIY8ctc4gSf0Rs4Bo1tHFqBIBcm0Q4yfzT2PdxHvY5C8y5jyWKXwkT9wbu425tfuoJNYK7JvgUDNYvfNGxozHFpvho1iES/Lz9kpkLIYQQQgghhMwdijUTyYsN+DGXFRJr0M+p4Fzw9ZB4Inhzdey4ZQ7F8bJznyLWDPsitB8Dkn917SPcOXdPucD+i5m4N3Afd6LUT/84/Q6ZBte/8WKN3QNSvngqR8rM2kDbhT1/LoQQQgghhBAydyjWTCL3MY7Md3Ngku8ls14ZJptuQopjeL7hR1ucJDZjexI4F3yd+Ozg+ePYccsciuN5Y2F5M07aJl5vL/YlxrbvKM25VOeOV7E3MH4goiTjuT6M/xjUQiyT8oW9VriJy/w19OdCCCGEEEIIIXOHYs0U3GRUgYTTa+slll47TDa7JxqidvqUg0lImwTaCBP9UxzmiYv4aYrFWChofOPH6FMFOBdvvo7fTexKH2tBu7kyl3ZdojnXfMEwiBhRfJz1SO1I/PVLhPHLf1GcqMTO+dU/Cj/EJ6QK8RjeG77AkRNrept2TNeHeK7tuPH6om++f6YsWQuKNYQQQgghhJCjAcWa0WASnxInnV17SC7bBNckuW6C64k1+OesvWS0EyZMfSLO9EKD7W98TepG4Mwlma9gfGj/mWTbS74du25Zljgu2G/hY/svnTvER9bTGR/toBBi/40WagQQa+IYDsViaG/4AkdJrLHzaubjxATFmt6m/eddU938ojh5Ql/i08IvnAshhBBCCCGEzB2KNYQQQgghhBBCCCEzgmINOSLgUzPmn/fEBiGEEEIIIYQQMlMo1hBCCCGEEEIIIYTMCIo1hBBCCCGEEEIIITOCYg0hhBBCCCGEEELIjKBYQwghhBBCCCGEEDIj/sJf2PpXoYSINVhGCCGEEEIIIYQQQg6ID33oQ6GEiDVYRgghhBBCCCGEEEIOBoo1hBBCCCGEEEIIITOCYg0hhBBCCCGEEELIjKBYQwghhBBCCCGEEDIjKNYQQgghhBBCCCGEzIgVF2uOhS+dOB3e/cS58MGn1sIt4clz4eajp8PL9x5z2hNCCCGEEEIIIYTMm5UVazbuPxPeX1sPty88E370iTPhrdMPhO8ID54JN594Jty+uB5unTsTXjue9iWEEEIIIYQQQgiZKysp1lx+6Hy4tX4h/OiRk+Hzx9J64ew9J8P1Jy6E22vnw7WPpPWEIJtX98Leje2w0bzeCNs39sLulY2k3d1GE5c9G5vDpfHn6mZSjtS2a1nSem/thL29nbCJ5fvl0nbYlTXY2ws7W079gbCkmMyOdl7Nnq7eH0eIZi/thu1LTt2YNqvGUZzThz4UHn744fDSSy+F559/Pqkj8+W+878YTv/K98O9Zy42r39m47UGbEfI3cALL7zQgOWEkBUUazZOPR5uXVwLN08dT+pSjoevn30m3F57PLw58QmbPlE13LlkidxJZi3WNIlGKwJsXNm9Y37JWHMRaZRaEaa2XcuS1rtWrBm1npth51DuO0uKyUhk3doxZd4mlkaw2s/9eNy+mCfe76UFA4JEjWhR0yai3aNDe7+5n0xYs6Uwek4TkOu/u1/KGtXM8/z58+HVV18Nb7zxRsRzzz2XtPWYq1gjIoSIESJKYN2qIOLJA1/4Xjh+8tGkbr/MVazRdTvx87+Z1M0N8VXWR2N4GBz78P3hY5/95qi1s9e8/JTXzz77bPN/+YntpyD3A7ynKCqKyFivv/56VKf+oL0hxCaOU3sP0/4lsQZ9lf/nYiX+v/LKK3293iOH+hEyV1ZLrDl2MvxgbT188Mh94SzWZbknXHtiPdw6e3JEn0VikCQqWztp2aFzOEnV7HAT5amJ7vJiuhTBY1RyvzzmmNjW+lTbrmVJ6+3uQYcx63knkkyXJcVkJGWxBuLQxHvM9X04czpIRt9fvDgiNW0iZK12w+6N0losnmjKt0kZPb8cY+dUey1jn4lijU1s5P+1yc4cxRpNYOee8It/4qf4i3UqBAie4CQCDtbtZ97LEmvEn/0ITI1A9bnvZuMyJ+Yg1gjeXijhXfPLFms8cAz5KaLGFHHG2hQBBO8/MjcsKzEk1nz1q1+N/BTbKCxZQccTZVDEWQ5PhV977Vvh9eefcuoIWQ4rJdZ8/qEnw+1nfja8rB99uu/h8MHFp8J1+JjT5UeeCreffjj8hpZ95Ey4tf5kuHZPatNnaoJ/WBy9BGQS7uF66louL6ZLSTbGJPdLZJzgcWeo9am2XcuS1tvdgw5j1nNskrk0lhSTkYwSa6L2qa2Uw5nTQTL6/pKJ4+g2Ee19dvdGwZdGyNgJO0VBJ2X0/HKMnVPttYx9liDWCEPJizJHsaZJoj/33cmCwZ2iJNZInQgXuTZegr7qYk0zp899t7dRKz4cFnMRa4TcPvHwrnkUUg4CvKfI+Ch4jMGbx1TQtyFwbHsfzMVy+WLNU+Fv/N23w3vvvhfee+/tsP0FCjbkYFghseZYeOtc+1SNLfvao0+F20awaYSa5rX9a1D3hGtProf3H6z7C1HVh8Pu6Zv+8fOozyIpiB5Zt236w6M+Qt6SJhKLdySV/hCIPrj9lXgc9yDavVPt+pv0twdfqIP44WP7i0Mszq10mMbxF/6j/aYO56Ljaty3NHatnTi5X6yfPrqPY2obPJAv9g/OLY5LbDe1U0e9n7tXNtN3tnH/9PPHWJt9le2Ti+2U8RXw4+pmtQiTtsM5eTEqxbGluG6Y4OH8au4rhbGs7aQOYqLz12sjf1/I2XKEjYH54HU47TrP4CbbqY84l+xeK9XZWOqa6v3EzDmer/Wt4v6f8deOjXXePcL7fYX90jUUX2FNvOvYxroUo14Ub5+w8da2FdXae0A8j9zvDtwztq50LbfEMdB7UuF31tDvk0ydtyZjwKRDkaRDko9f/uVfdhMqrX/66acTsca+wyxIvSQzWqfjyU9tg2KP/egAfqxBffbsCyp06GtNqj/66S83H7GxYoK0ffDLv9djBQIVMKRM6+1HhxQVTnJtcPyPfeEfh4/90reicW2iraKLjKsChrVn/VFO/PzfamzHZb/Z2zr57G81P3WOKKoMzdX6ZOduRQLpb8e39vXjTVrnCUNiW23hGirqhx3H+oTraW1Y/7w1sv7Z9cB4q01PrMEYqG85+976qh3rO+4xFGY8X3J413xOYLB1Q9dsCc++2MNrdwx6D6rpjx/LQmFmv2KNxZur9lmeWNMJNe98L7z0mY+Fz7z0vfAOBRtyQKyQWPPR8O6n1sPNU1i+EGxuPuYJNS0vf3wt3Pr4R5PylPTwn2PzaprsYbIfH+a6dx+TpNfYaRIC50CZHKStj3U+b1zZiQ7RzaEzEQ8g4bja1SdjWnt6UPdtJ8nE1k7fFhNq9NGCdeh/kig3pL71cfcSTWf97Jzbg7qO0bbBwzrOF1+7ZZ1PaGuYej/jtfUSMtzDGJOKPm5sp44P14tNwCaINeX9UxPHinWL9iDuPXM9jSGJU+pX778jJAztqdTWZtjJiDWle14Sm4nXeRYnDu1+GLE+zpxSu7APVaSBPYdziu/dFff/Yuxr5tKStDM23H79753C7xmMCb7GGJm93viD12fTX+aJ90y8RvC69OaX7h+3D8YV5jxkw/19cmk77Ni9k/y+Hk8u6dDkxau37yJ7T9bYjwxovSZCKuRYAUhs248N6Jj4Lrzg+SPtNGnzRAVNlDHBxacRtJ321cTbJs3Sxyb62sc+zaLJPSbqQ+Pb/p6QYtvUPlmjZShOeGOU5urFVdugsIFP1qCQoLbsWOg79hF0zrafjGfXy44tP0Wk0jrsp3PDWIov0k9+oh/WJtZ5sRBK9mvEGuyv9XYsr00O7xrKCQxaN3TNDuGJISigWPtDePedHDKuta19rdDj+VdChSvP31wslyfWWKHmRFd2goINOTBWSKw5FW6ufzJcvw/LhWPhzccuhtvrF8PNU6lQI1x+5JPh9mOnkvIUPEzWEx8q8TDrtMFDtOmnB3rvoJqWOwlIDcXEMiZJTAz5w3l7iM33nei3godpfN3gzMuNO/rpr19sz98ruGb4urWRHvDzcSpR7ye2kfGS2EMM0afBPm5sp42fxs33Kcdgu2iuvo9xHCvWLYlF2n40aAdfZ9olyadHzlbD8PVp1ygf72E7VfQiw4LYZsX6OL4M7UM3Ie/FBzuWte3vp/T+n/rbUjMXx6YLzNm9Rst7dzBG9jpxYiM+2rjo2EO/O/o2xfkVfCnYTcDfH/jaJTPWCLzETRIgm4jJa5vISLl+10RN0mTfAdfELyf+YHvPFiZVNjnykl8VS2wi67UTbJKMCbGAogKKAJ4db3wBk3uvr+AJIF5yjr7ZMvQRbQ7NVf8/NAe0q7atT147FD68ueBYFuyf1MHH4qz9Ul/0M7Fr+uG65dpZavah+Ih20aYXrxzeNZ8TGLRu6JotUStSoKhSQsdHkRnJzQvLx4g1Go/c3NG2UhuHMp5Qo1CwIQfDCok183uyRmgOzzaBGBBQhg/rcT/3kNz3jRNNtx3QvuNofbaH89zBND5gI0kMerq59UkWzlUPxMaPAbL+97bQjnOYduOOiVAupmlChnHB5AJfe0lnDyYug9T7Gbdpy5LxIaZeTNL2po8b22nj5/a+l7B6eO3y+8fzEcpr1s0Tu2z9FDCmMoabvMb70Zt/QtbWwh7GJLneo/uZlOH6j7/OXbwk3o5Vsz7JnIb3Ia5pQz+flPw1B/eCUuyr5uLY7NEnSdCvNI7xmPaerW0qYgT32fjatcKTs0cTm8KwWJO9lnO/y5x5Z20I3rr3dmJ/8XfAGDRxK73DbcUZeW0Fk1zSJvXWphVrMJFBG9IX7eXsKioueckvJrZahh8bwo+55JJvLc8JGIKUqbDgjS944oMnwtSWeQm7V6b+oVgzZa44B7Sr/TDGgm2HdrwyT/RRbLy9OhxbUXti2669Yv3HsXFddU/hU0wl+95+1fZ2H6LfAo5Tio9liliDdXjNliiJr5YxNmvbyhy9sVHsqRVrZDy535REIi9ewv7Fmo+FX/o7OaFGWQg2r3/2Y049IeNZIbHmzn1nTVWSowc20y4+VFYc1p3DI/bLJazxgdQfK6Y7vNtDb/JOqnMwNfZzB9Ksj0if4OCc7aE558OA/95r029+Yg36OZV6P+M2vu+IF5NiHze208bP7auq6zNpN7R/PB+hvGbd3D3Y2mj2d4XfCRjTbJIfx7QqTllbC3txkl+65xmbk6/zAhgHnGPN+uCcKvahu6bFuHnjtIwTa4bm4tg0MV7MyVvHdG2i8qhNRYzwPiv97Twz95DcNW7B+Q1ey7nYRXMasOG97sUlGzvn98tIvMQNsYmN/P/FF1/sEw5MmvRdZ5v44JM1mMigjSGxJlcneMkvJtV92cCXEE8VMISpYo2UYVKu2LarJtZgP4vOBeeraN+SGDEk1uTqLFaYwVhYH9WH3LqqOIRiimff268CijW5eWOfmnbeNe9dl6U6vGZz1LYb21aoEViWKdbUPvnjxUvYt1jz2Fb41vWSUKO0gs31b2+N+yvEhGRYIbHmDv41qOaQ5hxmDekBEssqDuvuoTnu542TlvtjRTgHz7isfOgsJX45H31KvhZ8GPTfeZ2z6cYd55jx00lisE1jB5MnJ9lw5zka34dqPzNrmmuDrxPc2E4bH+NobZX6ufa9vRGV+T56CV5x3bxxaupKYEzxdabdUHy9PjHD9yKvzOsbUxFHD8/Xpkxt1dhN/RqMk7duni8D4wjD93+lZi6OTXdcKMuMW/JtMEaOv9JnZ0vGtmO1vmi7/P5ZkLTx1iMRa5zY2d/rQza8184c/bJxeImbh9RLsiKJhog1mvxgguW9iz5WrPFseLawTvCSXy+p9sQOxBMwsJ/XBsu98QUUOnLCiiDj2eQf/cj198rU3pBYY8fI2ZE+JbEmZ7vki6Jjal+MlyUX46E6j5w/gvWhZDcXL7RfWseaeWMfbzzEu+a967JUh9dsDq9vDs+vEtJu6HtzcuNj+ZBYI3Wl+07JtrJvsYaQQ2KlxJoPHTsZfrDWPl1Tr1beF64/vR5unT05oo/37mTH1k576MWDXHdALB+aywfiFuzXvQNoD8rOYXTwMJ2M1dk1c2jnDAfrmi8Yduoa+50/3peStm3xC1cLB98K/9M2OF6pHcawEwUif7oyFGKSA/7AO7Y6FpThF17WUeOnEwOh8zWKN3yBZrKvhvq4sZ04vrOv9Los7vWOyPfEL9w/NXGsWDdIGtMvI4UEsYbEd8+PztcxwlrWVuYLhtF/uOct5Tov4cRBsNdgOhe8rpy9OLQPcd7GDgoNixg44+D93/XX3jexDudSsGnWXa+ZWKzx7p3YxsR6KEbemkqfG7thN9qDbVz6djiu2kruOehr6Vr2Yqdtun4VNtI26Zq240zYy4baBEnaSbJy+fLlKEHDpE3s2HefJTGRhGqMWKM+2eRJ7Apqz/og7eVLjeX/mrTa5DeXVEsyjEm5/MUmbSf19kkKr4+09b5gGL+E2BsfRYFcOwGTcXxt/bPCSK4djl0zV6mzr/UJEiskeHPQdrgmEmvP55yfKmzYtlKvdtFf+alf5Cs+ouAhddLG+oJjWvtCSaxRe/J/G/eSffXb+iZ97NM33h7TudnXYtP6msO75r3rslSH12yOkrhqv4hcwCdXck/FoH3vY0nyWn1Du+q7vb+UxJqxIosXryl2CJkLqyXWyMHz1OPh1vqFcPPU8aQu5Xh487G1cHvt8fDmcayroD/UWvBA2HFjO2wOvsM5RawR9CCpYJ/YVxwzGtvOAw/BSRtP5Ijn3CcqWGd8jOIU2VwkyErp0Fvj/2IsU64Citp3445Jjq7D4s9NJ3P25nB1M0meojaYVNmYVSTWKTV+enuqw8QmiVsSk4o+bmynj4/7Smy4Pjlgu/L+qYmjsWt9ziWWyTUBc6vFjWnqB8YX518CbbXXYbpupXse2ph6nWfJxAEFbfQjjkE6p4bSPnTuM9ZWac44TnpvSP21scE6bz1Tm/HvC93TvS8ax+ZPWXu+Z2JdipEn1nQxGCxLrhNc4/T+Wb6WW+LY7YRNmNM4G/413f6pcpzjOLzELQcmPYKXtEk7+101X/nKV0aJNdYv73t0VLDB76vRvpj8Y1JtUZFCsf3Ujm1jk2xr337/DbbJja8JvQoeP3Pp9URQsOTEEiuEWF+k/RixZmiu1l+NlffUh9rI+Wrr1N+cyKAihPqvr9EOjo1xQd81PlJXWj/0uyRM4dg19r05ST9vD1sb+BEr9KWEd83jNaXo03Q116xHSQSx9wm9V1hhRuqH7Aue73ifwrHQbslPz37OZ22P8RIo1pBVZeXEGuHyQ+cbweZHj5wMn9ePRAFn7zkZrj9xIdxeOx+uwcekCDk6+EkhIYSQo0UpoZkTKERMBRNmQuaKJ5rl8MSauSECiP1urKMAxRqyqqykWCNs3H8mvL+2Hm5fvBA+OHc2XH/wgfCd0w+Etx45G95/8kK4vb4ebp07E16b8kQNISvDXSzWJO/IL7gr40EIObKsQoKn5J4mGQvFGrIKjPkIlLAK17L4KMIwPrWyylCsIavKyoo1LcfCl06cDu9+4lz44FNr4Zbw5Llw89HT4eV76/7yEyGrzV0s1hBCyF1C6bsn5sjQx2tqoFhD5o4Kk2P2qf2IIX5ciCwf/ciYxBs/sknIKrDiYg0hdzsUawgh5Kii39dwNyZ1FGsIIYTc7VCsIYQQQgghS+eja1+MvvSVkKPEyb+8+ItQhBByEFCsIYQQQgghhBBCCJkRFGsIIYQQQgghhBBCZgTFGkIIIYQQQgghhJAZQbGGEEIIIYQQQgghZEZQrCGEEEIIIYQQQgiZERRrCCGEEEIIIYQQQmYExRpCCCGEEEIIIYSQGUGxhhBCCCGEEEIIIWRGUKwhhBBCCCGEEEIImREUawghhBBCCCGEEEJmBMWaWbMRtm/shb2rm+3rS9thd283bF/CdncZTRz2wt7eXtjZcurvOO067V7ZcOqmtOtYynqPHLMK2JeHwObVwx2fEEIIIYQQQg4SijX7pktcb2yHjaRuv8xcrNna6ectyfOdEU42w85sRBqlVhCpbdexlPUeMWb1elKsIYQQQgghhJCDhGLNfmkS3N1sUr1xZTcVcqTP3k7YRFtDLCV5F0Yk8CWqk/slsrQYLJPaeNa261jKXEeMeRjrORGKNYQQQgghhJCjDMWafSJJoyTCueSRYs2SWVoMlkltPGvbdSxlriPGPIz1nEjueiOEEEIIIYSQowDFmn0hH8npkukmsbYCTPdRke67VRpubIevS5Jpy7SPCjjNT/1YFSTaffIOtqOk1fhkfO2TW/N9L4pN5Jt2fV1qp4pejGo/suSN089lS/1ZxK4RuEw/FQ2wvKZP5I+N7YTxY9/tvDYrBZFUOMGx3BgV17slv27pmG08yvbKpDbj8Z2YdTTzxfFQlNL1gjhbmyjWaBxbnxb+RX6haOpco4sx0jnqR/DSNWr3jvoUr+kEUZYQQgghhBBy10OxZh/ET814yR226fCerNEEOkpkPbEGk/FOEOn7DYg1nl23jfqU2hqkFwPMHDvfk7lAbJJ4de36JBoT+5o+Xmz3Nb4jHGAS74Jx3ww7jk84Vnm9h9bN20NgD8WTQWKbScy2dpYg1sRr0wogi/0UzTnZpwsRZuEHCi1pHHGPevNy/TJPI8X7oPMD50sIIYQQQgghA1CsmQwm3k5ylynLizUojHiJtvPUQmRvolhjnhDIjl+LOxeIhTuXCt8xsa/p4/kzcfxEGGmojdNQuwnrPbhuYNPbe6OJbfox8akXa3Ad4i+W7sfsBJQ4Rr5IYvefe11iOcRWxty9upOW2TigzaXEmxBCCCGEEHK3QbFmKphgZsrcpNBL4LwyTLQd+2n5sOCQ2O3Hjz8SouTFhQzuXDyRwYtfOn5DTqyp6eP5g3aqbLVxS8QTL54uXrv4o2LCqPUeXDccsxMypqxrj7cvxabjK1Av1uD+ccSa5ou969cDn4LB+oUvVvhU+2JTfLR7IL7WXNHKnQshhBBCCCGElKFYMxH9yIOLSdhWSqxBP6fizqVWrHH6WbBfTR/PH7RTZWu5Yk370R5rb8J6D65bzreFSJTWDZGx2QtHjs8dByHWJH5k/Bsv1pjrRsrtUzn6VI+JPcUaQgghhBBCyLKgWDOJOHG0tAn4Ijm7E2JNPIbnW/c0RUmsydiehDsXSGbd8TzfgaRfRR/Pn8ROjS2MY9zPTf6d/m07Zw2wzPXR+6hO2iZrE3D35yAlm6W6zHjN+kwQa1RESWLv+2DHdv3wyjtBZvPKbrwuWIb72/ZP5kIIIYQQQgghZSjWTKGYgEHC77X1EmyvHSadXWIatXOSVfzuDH2CwyaSaWLZCRGQwG5eRZ8q0CcsMOm1cfFi0D+xFI+5cWUHnqSJ+w328WLr2Km3FQs6+pQVigMp8XriGug6jVvvoXWDPQRf/puIE1XgPGy8fKGkp/N/4YM+4TNRrDE2MSbogydqRtdA4lvGP/NUUrIPKNYQQgghhBBClgDFmtHknq5YEIslXXsQLzTB7xM5N6nzxBr756ZzIsEimdT6JJHshYA0ydV+vu0KdC4q2jiJbU4sERax6Uj8TvsV+3ixzdgZtNXbs/PyxYEUbIfrBH8CvHq9S+uWijXR3EYLNalNjFfqX0wvHjbon+jeh1jT99H5YJzNuNF84/jHgsyC+Ho2ZeBj4lPvF86FEEIIIYQQQspQrCHLhwkqIYQQQgghhBAyGYo1ZPncxWINPmUSPUHitCeEEEIIIYQQQhCKNWT53MViDSGEEEIIIYQQsl8o1pDlQ7GGEEIIIYQQQgiZDMUaQgghhBBCCCGEkBlBsYYQQgghhBBCCCFkRlCsIYQQQgghhBBCCJkRFGsIIYQQQgghhBBCZgTFGkIIIYQQQgghhJAZQbGGEEIIIYQQQgghZEZQrCGEEEIIIYQQQgiZERRrCCGEEEIIIYQQQmbEios1x8KXTpwO737iXPjgU2vhlvDkuXDz0dPh5XuPOe0JIYQQQgghhBBC5s3KijUb958J76+th9sXngk/+sSZ8NbpB8J3hAfPhJtPPBNuX1wPt86dCa8dT/sSQgghhBBCCCGEzJWVFGsuP3Q+3Fq/EH70yMnw+WNpvXD2npPh+hMXwu218+HaR9J6QpDNq3th78Z22Gheb4TtG3th98pG0o7sk0vbYXdvN2xf6l5v7YQ9+3rpHPZaHt74zZ7es/v6DoDre1Ro9qnE8wjOrYJmL13dTMojmhjthE0sX2Gq5r2CPPvss+HVV19tfmIdmSfHPnx/+Nhnvxl+ZuO15vW9Zy6GB77wveYntiXkqMN7GLlbWDmxZuPU4+HWxbVw89TxpC7lePj62WfC7bXHw5sTn7Dpkx3Dzlbajqw+sxZrmgS4TYI2ruzOx68pYDJPsaYeiVW3R2W/lu5Fsk/uqEij4PreEdoYN/GQ8c28vXv46LgcypyWTRujJBY9ZZGlSrQYK9Y0cR1ej3YNDyf+VfPeF/m9W0ISlNdffz288cYbPfK6NnGZa6Jz4ud/sxEgjp98NKlbBVRQEeT/WL8f5izWiE+rsm7iq8bwsLjv/C+G07/y/VFrZ6/5l156KTz88MPhhRdeaMC2Uzh//nxzT7D3lNK9RcYt1Q/h3cN0XtjWo+Ye9txzz0X2pb3ME9sJzz//fBRLL97Yh5A7wWqJNcdOhh+srYcPHrkvnMW6LPeEa0+sh1tnT47oszhEJgnW1k5adugsMRlcZdxEYTPsTBLYlhfTpSTNR1msOXCWt5bTWOL4I8Sag08yM9zx9RXyCW8ah060GHNNuveW1SaNS5mq9mPj1O2V3Rul/dLew8eJNVPv+ylV8zaMv9/n924JL1GRZKM2afL6HzZzEh9yqGAiohLWCZKEyxxy85B+KORon7FCx7LiNTSnIdQPQeaC9XNjDmKN4O2FEt41u0yxJgeOIaKFiBf7GVf6onCi4lNOTEG8eFjE3le+8pVIZBH7KLxY0cmbkwg+2Ge/nPjM18LvfONr4TMn0jpCkJUSaz7/0JPh9jM/G17Wjz7d93D44OJT4Tp8zOnyI0+F208/HH5Dyz5yJtxafzJcuye16bO8g96dYYnJ4CrjJgpT13J5MR1/eHegWLMPlreW01ji+BRrMuQTXjcO5npKbTm495bVxo1Lgar2Y+PUizV528398+pO2Bm1p6be91Oq5m0Yf7/P790SXqKiSZSINtge8fofNpK8ziGJLjEkbIj/Og9vLl6Cvupijc7Xm9scya3NnUbWe4zA5V2zKKQsG29MfAJlLNJ/GeKH59sQ2EeEGBWNcrFctlhz4tmvhd99573w3rvvhXd2vhaepWBDBlghseZYeOtc+1SNLfvao0+F20awaYSa5rX9a1D3hGtProf3H6z7C1HVhy19hNt9tH6RoEWP4ds2fVKj7xy2pEld+vh6fwhFH9z+SjyOe6juv5fB8Tfpbw/PUAfxi2IQHaJxbqUDOY6/8B/tN3U4Fx1X476lsWvtxIfyxfo1+8EZMzpkGz8X+wfnFscltpvaqaNin5l2+fHUzmbfTuo1JtZ2u79ie7jncG5RPSbzNsFz1gzng7aTuME1oXNCH3Og/ShRQ/+SONeOP/V6qQGvEzv2wD7IXBvpGN443Zri+g7OB33CvWHqRiTN0djYzxEVYh8XPqDvdq1yfey42qZfA7xnW9+qfydkYu/VeXvUjQvadOIj7aM1gfu1E1e8nvL7zdtreo8V32CsXBxxz5gx0ZfBuOr6JWtk2vTxxX1s68qxnQImHYomHF7iYcUcr799h1mQJEXrNKmRn/ajC7aNtst9rEHGsn2tfyoY2MRVk2rhwS//Xi8maJIrZYIVCKzwIGgbTwyx9QIm8Dj+yb/6281HV2wfK3A0fn3uu4140ggpn/tuP6b6Zfs2H2m69HpUpn6qgPPRT3+5b3v85JlIVFGx5sOP/ZXItp2H9cmbm5SX5qRzF7yP7dh1y40lSD3OXdcM19OOg3UoBln/BN0/GG9rE8UajIEdA/3Wfp6w6IlnuMdQmEFfSuSuWbzOldprtgTa149KjbFhGdNf71e5e5IXjyFKfXCuyjLFGhVqrn/z18JTT/5a+J3rFGzIMCsk1nw0vPup9XDzFJYvBJubj3lCTcvLH18Ltz7+0aQ8ZZH8pnUxm1fTxB2TfXtQ1ANbemg3dpqDpnPwdg6LmIAN+bxxZSdNJpIk2I69EbavdvXJmNZe66M9hFvbifi1tdO3xYMw+mjBOvTfSxQ83/q4ewmys352zm3ipWNoIoF+xvPF125Z5xPaGqZin43YQ5h8aaLZ2zaJUFwGe9YZq2+Pyby7bn7dYNzwtZnD0PWxaGt9WcwlvT6c9lXjp3uy9noZA15bVfsgc20kYD97feL6XtoOOzb2sF/Qz6wd3FeVoP30+nDa4J529uhQn+TaEZI5we8NjX/pd0Ip9gN7q/fD8X/o/qrzifvANTHpem37i/3kGhV7TX8Qa4bi6MQh2T/oi7MvenHH9Cv/3nfmXBHbKXhJhxVj7DvGXh/sLz+/+MUv9m01wdN6FWFs0iLj2DHwY1j2Ywg4nvqqyRGKG4Im4jbB9Z5GkHaaYNskHUUHK9jga+1nE3Vv/NJTKPbJklw77+kT78kaFQlsIo82VWTwxA3tlxNQrEiAdr026hMKNug79hHEru0n45189reanzoHO7YIVFI+tNYYS2mnbdEPtYl1OAb6ZsUXaSt1OiecJ7ZH/3Sudj7YpgReQ0JOYBBqrtkS3njy/1deeSURgGqe5hO8+5KHijp2bjK2jKljef4NUXqqJxfLZYk1kVCj5RRsSAUrJNacCjfXPxmu34flwrHw5mMXw+31i+HmqVSoES4/8slw+7FTSXmKn4DXEB/S0kNc0iY5LC766YHRO/il5XViTUJ0sPYOtwvwYG9pfME6OIQn9Q0T/VYwgcLXDc683Lijn/76xfb8vYJrhq9bG3HSn45fi++nHTMdP22Ts5P65LUbWkeox0TLXTdvnYbjlvrrjJ8D/Ypw9pFTXjP+9OtlHGinah8kMfdB2xHFOArpNeSuTW5fjKQXGXJPNTT+4jjgF/pS0cdLyLOChNpy4+/YzcR+aG/Z8pKdBpizNx/0Lf2dMjCu9a0XZuK2bSxiW4NxzF6vFue6TOY3HCfsh69dcD9NwEtUJNHQREjFEPtOtP34gtffgu+Ao3iDbbA9IuNiQmcTN0lgMWm1ibmWDSXJKjxgG5uUY1Lt2cmNnxM2vHIvEffKUPDQMhRGcAwv+Ud7U8WaJhYgnnntUBTBuaAYgmB/y9Ba5/p6flpsP1xzC87FMuRbTdyHxkC8azYnMAhD1yy2R7yPO3kCkIooNTZrhY+cqGLLvXiUUN9zfuZiWetzCVeoUSjYkAFWSKyZ35M1QpIIDAgoaWKEh9n0YI42GqJkwR/LoxnfS1zc5CP2KXfwTWLQ082tS0D617Z/c2h1EqgMWf97W2jHObS7ccdDeS6mttyPCx7W8fUiHg6FpMDH99OOuZ89lCYqXjuvrI27nVtfj/F31621GY09GDd/PXz/HJxkMR4bfWxZxLdu/H1dLyPAtavaB7g2Lrl5Wntgw1m7vn/2HtDtgcqnonLEcej2pd1X/fgp/bi4Ryv6YPztfFJK8R++50RzTWwLaNPzr3x/9don5Y7wlPqSEWtwbtE1Z8Waijh6931TbvvY9fL2mTfvJM6l+70td32dhiZIuY8cCTbZQvHGS3Q8m1aswXfEbeInfeUdd+8dcx3b2lWGxBpMiOW1/ViJosJGLlG35d5Ytk3u6Qy0Y8u9pN8rGyPWYBmO7dnH8hrRAO3q+BhjRdt5QgyWNb6A6KNgvJGhtRbwySL0H2Oodu266ji5tbZzVobEGvUNfcdxSvFBvGs2JzAIQ9cstrfk2nkCkCA+4P3Hw/PJwxN3BXuf8eKRQ+x5fmMbL5b7FWtOrG2Fb+WEGkUFm29vhQsUbAiwQmLNnfvOGu9wlqAHUdMuPqT5CeLhiTXdIdUeIpODde7wOJwglMfu6BMcnLM9yOZ8GPDfe236zU+sQT+n4vt5mGKNruUiLtAH4++sWxKzxF8Pfz2S8XPcQbFm0BehcL3UgGuXHdfODdfGJTdPa29ho01srU3nmizeAxYJtuv/ABgH9K+47gru0Yo+ybhDcRPQN9OvvMcWY9bGKPZv+P6azscpr/6d0oHzlf6dLdkPi7mkYk0uBov2cZuh+1IudtH8Gn9Lv/fT1zWxnUJNooKJzYsvvhi9G277YzKDyZqXZI0VazDxs3gCCibVWoaJs8UTHrDcG8u2mSLW5IQFTM5XSaxBPxFpj3NVtG9JjMB4I0Nrragw44k26qONZWldcb0EFaCkTv2pEWty8076VLQT8JoVcgKDMHTNYvuhvoLng5B7EgbJ9UeWJdbovafGt1ws9yvW/NJrb4e3S0KNIoLN22+H1z/r1JG7mhUSa+7gX4NqDlJ4YI5JD2RY5ieIY8Uab5y03B8rwjscRmXp4daSO6gLOR99Sr4WfBj033mds+nGHeeY8TPq67dp7FQc3t15jsb3wY6Zjp+2ydlJ191rlyaT+XqMobNuWN8zFLd2nHSftv1wbgnZcRc20rFted34ufXw8eJZB65dbtzhe1IK2o6IbHhx88qG63L+D+H5Gl2jNXOu3qMV4+bilrUb74GSjTExyoosSpVYA+s14ndKQzJfmau8lr7WH3m9aOf7YsGxvevIiWsSu/ia9uKLZfga45gtG0lNoiJI8iHJhiQ+Nvmx/b0EDsu85M22wfZILhFSPHHAS6o9scPiCQ9CkkgPiBy58T37+DSJRdpZocDz3xNmvDIcG/21Y+oYnm9qpyTW5GyjDYyzIGOpcOKNb/FirHixylHyB30ojenFXbH+eL6NmXfNeIh3zZeuq6FrFttbcnZz/XPtERVPhtrmxJ8xH4OqHUvJzWG/Yg0h+2WlxJoPHTsZfrDWPl1zFuuy3BeuP70ebp09OaJPd+DyDppbO+3hDg9b+o7bQPI7nBhhv/bQGR1Mu7Gsb4OH12Sszq6ZQztnODjXfMGwU9fY7/zxvpCxT+zVvvEpiXml/2kbHK/UDmPYHdKdA39yME8Eo+F3UZuxoAy/hLIOZ364z6r2kG8n3VdeOyfpQZGg+mNQsbCBDMati39ybRRslu1XfMFwstYD40++XlJ/S+A6VO0DXJsczhz8LwZO/dd49AJX7h4AX6ycJMGVpHFYjNPfh+C6bvvhdZ2uS6mPO66zPyRe/Rcwu/GHGA7GHveL/8XMkX/JuOn9NdnH3vXiCTyl6zUZt13n3Rv2qRr1B+8ZhThizHC+2fsSxhW+YBj3QdcnvQdgm3JspzCUqCiSaMgTNYJta/trUmPFHElaxnwMSl5L/9wXDEsb/L4Iaadfauw9YeAl1dIOv5BW+ugXv9onJDRR1jKbXItdmySjgJEb3ysvJdyYtHttPWHEa4eChMbCtvPiI77auUsdPkGCc/JiJkicZSzPZ+yrPsjPKV8w7NXZtVZfcExrX/vkxBoZQ8ZT+zbu8n8rtliBRn3Teh3DzhP3mJ2bZ1PLcnjXfE5gEGquWY+hNnKdW7vSzl733nfdePZRAJH/Sz+p1zbWjti3343jxcMi5bmn/TxysaRYQw6b1RJr5PB06vFwa/1CuHnqeFKXcjy8+dhauL32eHjzONZVoAexCDyIdtzYDptRMpEeFoXxYo2ghzsF+8S+4pjR2HYeeKhM2oAtjIc9oGKd8TGKU2RzIYgorlDj+ub7vxgLEwhj3407HuZ1HRZ/yjqZszeHq5tOUmnamHKMS5LYVeHtFy+xHdpDvh1McPx2WBaPlfzpaoy/WcckJk7ckzYYN7Pews4W+lcG7SeCQWns2vEnXS/jSNdOGNgHuDYlcA65+xq0a/8MsxFrcvcAiGN67dXhxwHFt9SPKO7OvWaoT27cZF7FxH4xTnH/VN6LLejf0P1V28f7E2LixAn3cxQTd74gzOTKSnGE+nZPDdyXen9sm40kTtF8kt/7Qnq/H4rtFIYSFcVLerz+mgjpd8mIiGITttrETxI1+500VgBSwQa/r0bqMKEWUEBQNFHWj9ygECDJryTrKtrYj+VYO2LbfnQHn8qoGf/+v7SViDyIFUvUP/RJfbFCASb6KIKoYCICgI0HzkNja+txbnZO2t/6irbtnHC+grSz/qtAhHZwbIwL1qEY4tn0/M7tK7RvfZY+1gbO185J9y4KWOgj7hNchxJ4zQoqqlpUOKm9ZhFvHMRe5yjQDn3kUfF8t/cL9dUbRxjyE+83Frwfqj9eOcUactisnFgjXH7ofCPY/OiRk+Hz+pEo4Ow9J8P1Jy6E22vnwzX4mBQhhBBCyFGnJjmbC2MS1xwoaBAyVzyBssSQODEH5H4jwkbt0yyrAMUactispFgjbNx/Jry/th5uX7wQPjh3Nlx/8IHwndMPhLceORvef/JCuL2+Hm6dOxNem/JEDSHkSJI8GdOD7+QTQsjq4727Plf0SRH7ZMJYKNaQVWHMR6CEVRBrxLfLly8n5asMxRpy2KysWNNyLHzpxOnw7ifOhQ8+tRZuCU+eCzcfPR1evrfuLz8RQgghhBw1vO+imTv48ZmxUKwhq4A8TWM/0lWD/agixYODh/Emc2HFxRpCCCGEEGLR75TwvoPhKEOxhhBCyFGCYg0hhBBCCJkNH/v870ZfzErIUeLe/9szyZ4nhBAPijWEEEIIIYQQQgghM4JiDSGEEEIIIYQQQsiMoFhDCCGEEEIIIYQQMiMo1hBCCCGEEEIIIYTMCIo1hBBCCCGEEEIIITOCYg0hhBBCCCGEEELIjKBYQwghhBBCCCGEEDIjKNYQQgghhBBCCCGEzAiKNYQQQgghhBBCCCEzgmLNrNkI2zf2wt7Vzfb1pe2wu7cbti9hO7JfNq+aOOvrG9thw2m7FA57LQ9j/K2dsHenx7QcxpwJIYQQQgghZAIUa/ZNJ6gcSGI/c7FGku9u3iJu7Gw5bVYEijVTafdos/ZisxQzijWEEEIIIYQQUgXFmv3SCBa72SRw48pumvQ3SetO2ERbQywt2WwT7N0rG07dCI6wWHPgLG0tJ7K08UeINYfN0uZMCCGEEEIIIQcLxZp9Ikm+iB65ZJ9izWqQW78DY2lrOZGljU+xhhBCCCGEEEKWDcWafbEZdjT5axJBK8B0H2HaM9zYDl8XUcCWaR8VcJqf+hEcEFX6ZBNsRyKD8cn42osRjY3YByvaNO36utROFToXGCsVc8TXwnjFmGxGMWhtx/ZwvHhucT2KNfZ1I7hBzBqwfW4eiY3dsL01RjhI95L1PfHPEZ1qxkc7cfzQh1rfDShS4l7MCj1GEDLlsRC6uFaitbA2E7FG9wtcg/vZtzjHPq5xmYq8C59im/sWUgkhhBBCCCErDcWafZBLFvNtOpyEri3DRNsTazBR7pK8vt+AWOPZddvs4ztGInGlLUsS1m4ukQ9dvz45LsTE+rUQGbAsHm8nGWvRHueOry24pklbsJ340if7NbHF9W3ta4xaYcIRCUuxd8bHOen6ROMYHzau7FT4DkT7vvVhIYRshO2r+xdrYnGlHSMVO037ZN0GYje4b515ZfxqXvfXtBlj6nVHCCGEEEIIOTJQrJlMKngkCW+mLC/WYILmizWYtKZJMNrBZDv1PX0yKNOuBncucRKLyb8Slbt2PJ8gKXfGSyn7g6970KfBuGX8SJ7y8HH3z5CNqLxm/KE948V8Anaf5nx3GSHWwJpFbfoxU0Fr4R/6VN4nii3vn5rpx9wJO07ZIg44tyXFmxBCCCGEELKyUKyZipdsOmVusp0Va0pJv28/LR9KvB27/fj2ox37+EiGOxeb9PrJd99X4+XacXx3BQmnrEuM7dxySTi+tjZHxc0Vc3DN8kSJP2JjFWHiWzO+E5eeSDiTMsdWLbCe7VNBXpwRf794Yg3GyhNrdj2hRnD32/h9G40p5TI/rNc5u/vAnwshhBBCCCHk7oFizUT6RNPDJJ8rJdagn1Nx5zI+6fXtOL57woz3REQUF6d+QKzxygbjViOWYJ3hzok1ThuH9mNBE0WbwnridRPj75dpYs1e2L2BHwvrcP2bsG9NbGX92vZ6XYINdx/4cyGEEEIIIYTcPVCsmYQnDrTgd1zcCbEmHsPzrUuIS2JNxvYk3LmUxRElKnftOL67c7ZlQ/WpP/ja96Uibp1AkOyVxl6hX4e7fyLbjo1EiBka34tPibHtO3IxHKpz17xbo9FizUJEScZzfSjvk8gXuL52tqTvwl4r3MRl/hr6cyGEEEIIIYTcPVCsmYKb1CmQyHptvQTNa4dJW5d4R+30aQGT2MVJrHkaoiRGqKADwsDmVfSpAncuEBfH70TAcO14iawnHtiytE+brOeT8Oh1TvAw/pTilgoDrW81Yk3fFoSjyO/INgpzXpt0/LSN7Bv9EmH88l8v3hXY9XS/8BnXegGKoG376WKN1CVzdn2YsG8z11xfZveKdy/IzIUQQgghhBBy90CxZjRpMox47/hjkqZiQZ8cuomiJ9bon13W/l5Sp8n4oh7FiIXwY/sbX5O6EbhzcRJ840MUi6IdL5F1bGMZjNU+4VAj1qQx6YEnKUpxW6x3N083Sc8RryfGJLadjp228cdHO6X5jRZqBBBrimufAD5c3Zz4MSg754XNZj7ufnP2Vo3vnsDnCT2JTwu/cC6EEEIIIYSQuweKNYQQQgghhBBCCCEzgmINIYcKPjUTPz2StieEEEIIIYQQctShWEMIIYQQQgghhBAyIyjWEEIIIYQQQgghhMwIijWEEEIIIYQQQgghM4JiDSGEEEIIIYQQQsiMoFhDCCGEEEIIIYQQMiMo1hBCCCGEEEIIIYTMCIo1hBBCCCGEEEIIITOCYg0hhBBCCCGEEELIjKBYQwghhBBCCCGEEDIjKNYQQgghhBBCCCGEzIgVF2uOhS+dOB3e/cS58MGn1sIt4clz4eajp8PL9x5z2hNCCCGEEEIIIYTMm5UVazbuPxPeX1sPty88E370iTPhrdMPhO8ID54JN594Jty+uB5unTsTXjue9iWEEEIIIYQQQgiZKysp1lx+6Hy4tX4h/OiRk+Hzx9J64ew9J8P1Jy6E22vnw7WPpPWEEEIIIYQQQgghc2TlxJqNU4+HWxfXws1Tx5O6lOPh62efCbfXHg9v8gkbMsDm1b2wd2M7bDSvN8L2jb2we2UjaTcvDsnPS9thd283bF9y6noOwLetnbC3txM2sfywOGB/mj25Z/flHaBqbVeQZq0knkdwbhU0e+nqZlIeccD7+TComvcK8uyzz4ZXX321+Yl1ZJ4c+/D94WOf/Wb4mY3Xmtf3nrkYHvjC95qf2JaQow7vYYTUsVpizbGT4Qdr6+GDR+4LZ7Euyz3h2hPr4dbZkyP6LOiTJcPOVtqOrD6zFmuaBLpNojau7Bq/DsnPqoT+AHybWzI51h9p3+0x2W+le4ms8x0VaZSqtV027V5p4iHjm3l79+DRcTmUOS2bNkZJLHrK+7BKtBi5n5s9ujd0jW+GnSlrtiSq5r0v8nu3hCQor7/+enjjjTd65HVt4jLXROfEz/9mI0AcP/loUrcKqKAiyP+xfj/MWawRn1Zl3cRXjeFhcd/5Xwynf+X7o9bOXvMvvfRSePjhh8MLL7zQgG2ncP78+eaeYO8p3r1FxpXxtU76SF+0N4R3D9N5YVuPmnuYxMbaL8Xq+eefj+q9eGOfqZz4zNfC73zja+EzJ9I6QpbNSok1n3/oyXD7mZ8NL+tHn+57OHxw8alwHT7mdPmRp8Ltpx8Ov6FlHzkTbq0/Ga7dk9rM0hzunUPo1k5adugcQFK8iriJRpsolJJin+XFdClJN8WaFneND5Gx/owQaw4+ycxQtbbLJp/wpnHoRIsx19TYdVoB0riUqWo/Mk7tvW23LFDoE02lNglT79spVfM2jL9f5/duCS9RkWSjVrDx+h82cxIfcqhgIqIS1gmShMsccvOQfijkaJ+xQsey4jU0pyHUD0HmgvVzYw5ijeDthRLeNbtMsSaHHUOFGjum/H+smCF9UORR8alW+PHigfVf/OIX+9cqRsl90razgo4Xy+eee270/EqcePZr4XffeS+89+574Z2dr4VnKdiQA2aFxJpj4a1z7VM1tuxrjz4VbhvBphFqmtf2r0HdE649uR7ef7D2L0Qt76B4ZziApHgVcRONqWu5vJiOP/w7UKxpcdf4EBnrD8WaDPmE142DuR5SWw5j12kFcONSoKr9yDj1Yk32Htut69XFvk/beEy9b6dUzdsw/n6d37slvERFEylMRjy8/oeNJK9zSKJLDAkb4r/Ow5uLl6Cvulij8/XmNkdya3OnkfUeI3B51+xBizU4pggXKLKoCCJ12N9D7k/LED/QtxpwbDufXCyXKdaoUHP9m78Wnnry18LvXKdgQw6eFRJrPhre/dR6uHkKyxeCzc3HPKGm5eWPr4VbH/9oUu5RfVjrnr7xH81fJKrRY/y2TZ8UdY+Jd6TJbfdOsmnTH2LRB7e/Eo/jHsr1XVDP36S/TeigDuKHH2VYHMJxbqUkEcdf+I/2mzqci46rcd/S2LV24kP9Yv30UX8cMzqkGz8X+wfnFscltpvaqaNinzlj4R7B+A360u9dmKPzBIQdq+hHzfWAyaTu/5rr1VkPO0/0zUvw4jjpHouvI7QzGMsE3Oc2BuU55PZ2OoY3TnftOWJNeX+gT6YvXoNOTIdwk20n7rGPCx/Qd7tXcn3suNqmXwO851rfavZwQyb2Xl1mb6dxQZtOfKR9tCZwv3XiWtrPeq/blJ+4RoKKakakjOucOOKeMWOiL4Nx1fVL1si06f3CfWzryrGdQi5R0YTDSzysmOP1t+8wCzb50qRGftqPLmCCJq9zH2uQsWxf658KBjZx1aRaePDLv9eLCZrkSplgBQIrPAjaxhNDbL2ACTyOf/Kv/nbz0RXbxwocjV+f+24jnjRCyue+24+pftm+zUeaLr0elamfKuB89NNf7tseP3kmElVUrPnwY38lsm3nYX3y5iblpTnp3AXvYzt23XJjCVKPc9c1w/W042AdikHWP0H3D8bb2kSxBmNgx8jZ94RFTzzDPYbCDPpSInfN4nWu1F6zJdB+TriQNjUi8RhhBz9uhb578RgCxRoLzlXJzXkskVCj5RRsyB1ghcSaU+Hm+ifD9fuwXDgW3nzsYri9fjHcPJUKNcLlRz4Zbj92KilPSRPMHJtX08Qdk3170NQDX3roN3aag6pzcHcOm5jADfm8cWUnTUYS8cCOvRG2r3b1yZjWXuujPcRb24n4tbXTt8WDNPpowTr030s0PN9yCX7sy2L97JzbxE3HaNtgMo7zxdduWecT2hqmYp/Ja2f/RAlQZn2y9Hu3tFdxX5b9qLoeojXGeZZA35x96AhxSWLvrJntl8QS5zgCvDbcOeB1mdnbCdjPXl9NnYn5pe2wkwhmIIZ41zDawfWvBO176560Ke6buj7tnvDuHXCPtPd9Z0+g3WLsnftVsu8y/g/dH3U+cR+450Ochvbzol78BuGnG7OZJ4o1Q3F04pDsn+TaSvdFL+6YfuXf286cK2I7BS9RsWKM9w647YP95af9yIAmeFqvIoxNWmQcOwZ+DEvafeUrX2l+4njqqyZHKG4ImijbBNd7GkHaaYJtk3QUHaxgg6+1n5eo27FKT6HYJ0ty7bynT7wna1TcsIk82lSRwRM3tF9OQLEiAdr12qhPKNig79hHELu2n4x38tnfan7qHOzYIlBJ+dBaYyylnbZFP9Qm1uEY1reS/RqxBvvrXO18sE0JvIaEnMAg1FyzJbzxvPsKXsslvP4eKupYm+KH3F9UFPL8K2Hvj1gn5GK5DLHGFWoUCjbkgFkhseZOPVnjJ+A1xIe89BCYtEkOm4t+euD0Do5pOSbFlTiJb27emBhYGl+wzhzG830n+q1gAoavG5x5uXFHP/31i+35ewXXDF+3NvzEJh1vCN/PdMy0j8Z90riZGMZrMLS+UO/ahDa9fUe4KFCMR5I4OuW5Nsk1lLaZFF+nX24Ow/eUFLQdkZtrT3oNuGvsXo/j6UWGHrDZ+Ivj5PZNfR8vIe/FB9vP2nbj79jNxH7oXmrLS3YaYM7efNC3sfvZ7r00NtK/swViTdrWGxvjiNT9rhyKE/bD1y64nybgJSqSaGgipImJfSfafoGm19+C74CjeINtsD3ivfNuEzdJYDFptYm5lg0lySo8YBublGNS7dnJjZ8TNrxyLxH3ylDw0DIURnAML/lHe1PFmiYWIJ557VAUwbmgGIJgf8vQWuf6en5abD9c81w7ZMi3mrgLGK8S3jWbExiEoWsW2yP2foH9bbm0wyflctQKH7knYGy5F48S9v6IdVrvzaHW5xwn1rbCt3JCjaKCzbe3wgUKNmTJrJBYc6e+s6aQfDgkicSAgJImVngYTg/2aKMhSjb8sTya8b3Ex01eYp9yB+ckBj020TWvbf/m0OskYBmy/ve20I5z6Hfjjof6XExtuR8XPOzj60U8HApJhY/vZzKmihuGvk9pfXJkYhiXe74N+YE2vWRSvtB0XKyy15HadJMzs765Nk6inqzppHXF/ViYg7123Rgi/r6N7YENZ259/+w13I4TrfEE4jg4Il0/fkq8b/Bekba3fTD+dj4ppfgP3zOiuSa2BbTp+Ve+P3rtk/KR+zn9fbYYLxKeouunIo7efduU2z5Dvyu9eSdxLt2vbbnr6zT0XebcR44Em2yheOMlOp5NK9ZgomMTP+n7yiuvuImQjm3tKkNiDSbE8tp+rERRYSOXqNtybyzbJvd0Btqx5V7S75WNEWuwDMf27GN5jWiAdnV8jLGi7TwhBssaX0D0UTDeyNBaC/hkEfqPMVS7dl11HFzrkv0hsUb7ou84Tik+iHfN5gQGYeiaxfaWUjut02tY7zMoxnp4Pnnk7Nn7jBcPD/UX749ILpb7FWt+6bW3w9sloUYRwebtt8Prn3XqCNkHKyTW3Lm/BuUd7hL0IGvaxYc8L1H1Drd4CI/75Q6g8cHYHyumO+TaQ2hyMM8dPocTjPLYHX2ChHO2B+GcDwP+e69Nv/mJNejnVHw/7Zga24Wffp/S+iRkYhiXx+MM+uHahDZWrHESqhzFPZoTYuz65tpUX0PjwftQdg52XDeGiL9vY3sLG21ia20611TxGl4k2K7/A2Ac0L/s2ljw3lDRJxl3KG4C+mb6le4ZdszaGMX+Dd8f0/k45SP3M97bxFY7N5lnbo3KMWhJ99jQ/SMXu2h+g7+309c1sZ1CTaKCic2LL77YJxzYX5IU+y48JmtekjVWrPESP8UTUDCp1jIUSiye8IDl3li2zRSxJicsYHK+SmIN+olIe5yron1LYgTGGxlaa0WFmZyoInU2lqV1xfXK2a8Ra3LzTvpUtBPwmhVyAoMwdM1i+6G+OWqub8Wbg8eyxBqpsx+dKpGL5X7FGkIOm5USaz507GT4wVr7dM1ZrMtyX7j+9Hq4dfZkfZ8uISwlPOmBDsv8hHisWOONk5b7Y0V4h8uoLD0cW3IHfSHno0/J14IPg/47r3M23bjjHDN+FsSIyE7F4d+d52h8HxZjevVeWU2dIRPD/L707EKZaxPa9Gvcltfuu3QNDO64UJ65J7QJZN01NBa85nJzGL6npKDtiMiGNyevbLgu5/8Qnq/RNVYzZ7w3VPTJjpuLW9ZuvIdLNsbEKCuyKFViDazXiN8JQuKvzF9eix07ViTW5Hyx4NjD9w+879o2Olbir1OGrzGO2bKR1CQqgiQfkmxIsmITFtvfS+CwzEvebBtsj+QSIcUTB7yk2hM7LJ7wICSJ9IDIkRvfs49Pk1iknRUKPP89YcYrw7HRXzumjuH5pnZKYk3ONtrAOAsylgob3vgWL8aKF6scJX/Qh9KYXtw9+55vY+Y9NJ6Hd82XrquhaxbbW0p2EW+cHCrsDNlexsegVKgZmquSmzPFGrLqrJZYIwepU4+HW+sXws1Tx5O6lOPhzcfWwu21x8Obx7GuTJuEOQfVrZ32cIiHNX3Hzk1UwW4xycB+3bt69mDbjWV9Gzz8JmPpu92LObRztm0qv2DYqWvsd/54X+jYJ/Bq3/iUxLzS/7QNjldqhzHsDvlOwpAc7BPBaPhd2GYsKMMvsazDmR/sM9wburcXSU5ufXAsg+73JP62r5NMFfzw1yUn1izqMPnyca6jmi8Yxv2AiSnEILUzdV3TeLlzwHuBG0OHZK3welYb6X5o56hjFq5h+KLqJAmuJI3DYpz+PoJrg/s6uQaH+7jjdtd3dI+yX8Dsxh9iOBh7vP78L2aO/EvGTe+Pum7pWubjlNTDfk7XVOYqT75BDECsGYwjxgznm71/YFy7p720H+4DvYYT37BNObZTGEpUFEk05Ikawba1/TWBsmKOJC1jPgYlr6V/7guGpY21pz7olxp7Txh4SbW0wy+klT7ypbDyf/uEhCbKWmaTa7Frk2QUMHLje+WlhBuTdq+tJ4x47VAw0FjYdl58xFc7d6nDJ0hwTl7MBImzjOX5jH2tsGGfSpH6mi8Y9ursWqsvOKa1r31yYo2MIeOpfRv3nH3tJ76pTR3DzhP3mJ2bvvZEnxzeNZ8TGISaa9aj1EauZftF5CiI1Dxlo/ZRAJH/y1ykXtvYueFYXjws3nfulMjFkmINWXVWTqwRLj90vhFsfvTIyfB5/UgUcPaek+H6ExfC7bXz4Rp8TKqaPhmz4EG2Q/986dLFGkEPhwr2iX3FMaOx7TzwUJq0AVsYDzdxTX2M4uQk87bOFWpc33z/F2NhAmLsu3HHZEDXYTP2MUk2YQ5XNzMJTNof45IkhlV4+wWTqHj/6Jy0D/qBtlw0hv2fiPb6om9lP/x1ARvJmqtN7OeB11Fu73hzWfjSt5H4Jv6kdqatK+5HBecA83ZjmAGv2dx9CdrtbFlRtXANm+susj8SPw56P4hFJTtetH7OOg31yY2bzKuY2C/GWca91IL+Dd0ftX28PyEmTpxK+zm91znCTKksF0eob/fUwP1DgNhJHcap/HtbSO/XQ7GdwlCionhJj9dfEyH9HgpJyGzCVpv46ZeN2u+z0DoVbPD7aqQOE2oBBQRFE2X9yA0KAZL8SqKtoo39WI61I7btR3fwqYya8e//S1uJyINYsUT9Q5/UF03ua8UaaSMCgI0HzkNja+txbnZO2t/6irbtnHC+grSz/qtAhHZwbIwL1qEY4tn0/M7tK7Rvfc7Zt3O0/XTNrBiDNnCf4DqUwGtWUFHVooJp7TWLeOMoKsbgWLZv7uOQiOe7vV+or6Wxcn7m7Cve/CnWkKPKSoo1wsb9Z8L7a+vh9sUL4YNzZ8P1Bx8I3zn9QHjrkbPh/ScvhNvr6+HWuTPhtZFP1BBCCCGEzIGa5GwujElcc6CgQchc8QTKEkPixByQ+4wneKwyFGvIqrOyYk3LsfClE6fDu584Fz741Fq4JTx5Ltx89HR4+d6av/xECPHBJzgM3tMGh86q+UsIIcN4767PFX1SxD6ZMBaKNWRVGPMRKGEVxBp5MmYVhOExUKwhq86KizWEEEIIIUcP77to5g5+fGYsFGvIKmC/jBjrctiPKlI8OHgYb3JUoFhDCCGEEDIj9LtjjtpHEoagWEMIIYQsoFhDCCGEEEKWxgN/463oi1kJOUrc8/BTyZ4nhJCDgGINIYQQQgghhBBCyIygWEMIIYQQQgghhBAyIyjWEEIIIYQQQgghhMwIijWEEEIIIYQQQgghM4JiDSGEEEIIIYQQQsiMoFhDCCGEEEIIIYQQMiMo1hBCCCGEEEIIIYTMCIo1hBBCCCGEEEIIITOCYg0hhBBCCCGEEELIjKBYM2s2wvaNvbB3dbN9fWk77O7thu1L2G5mbO2Evb2dsInlB03NuAcQw82rZo1mwIH508R3ubEbxQGsHSGEEEIIIYTMEYo1+6YTVG5sh42kbr/MXKyR5L2btwgEO1umfEg0OQhqxj2AGB6YODKRcf60e6xZO4lNaR9TrCGEEEIIIYSQOwLFmv3SCBa72SRy48puKuTUiAoeS0tW2wR998qGUzcCijUN48SRg2ecPyPEmsPmANaOEEIIIYQQQuYIxZp9IomxiB65BJlizR2kZtylxXBBbu0Pi3H+UKwhhBBCCCGEkLlBsWZfbIYdTR6bRNIKBd1HmPYMN7bD1yWRtmXaR4WG5qd+rApElT5ZBdtRYm58Mr72CXxjI/bBijZNu74utVOFzgXG6sUcdyyoRz9rRIRerJEY+PPzEv6SHxq3RnTr28SCEIoj2rZODIt9jWNeqsu0ubqZ+CMsdV31dfUaGUHIlMdC5mKvR75am8na6dzhGhrYd0nMrE2cY7+e6Zo369v7VNhzhBBCCCGEEDISijX7IJds5tt0OAlhW4ZJtifWYLLdJYl9vwGxxrPrtlGfUluDRIJTW5YkvJe2w44dPxqrndMiyd4I21dzQoAzriMopIJXjR8LkWMRK/geIYzbmJihb02cdoz4B2vUzW8RlzZOcf9OVMr5N9ZHS7Rvx6xRvVhTnF+0duk61O67clydeWX86p9Gwj03Nb6EEEIIIYQQ0kGxZjKp4OEJM15ZXqzBBM8XazDpTZNotIMJe+p7axt88trV4M4Fk2AEE2DsX4E7LqzBoO3YzyZuA+vXxzYRU8okIkpFnS139xb2Xfq6drYG42gZIdbAnP2169ri3N31d9ZzIK79UzP9mDthxylbxAHnNjG+hBBCCCGEENJBsWYqXrLqlLkJdVasGUiqHftp+USxRp9KcBiddLpzccSa/qmEBVFSnTxpNIA7boXIMOQH+uCJNc2XTGPSXsIXMAbrZOxuP0WigiHy+QDXtX6N/Pl4Yg365Ik1u55QI7jrb/ed70fft7MZjSnlKsTZ+kgMw+vNnwshhBBCCCGE1EKxZiJ9ouphkteVEmvQz6m4c3GecIj8dMQcfdqiShDIjVsWa4b8GCvW1CfoBeGgVDdFrDnQda1ZI38+08SavbB7I/0Ombx/48Uau0cklm17va7AhntN+nMhhBBCCCGEkFoo1kzCExZa8Dsy7oRYE4/h+dYl1CWxJmN7Eu5crF+ej15ZyZ5Dpl0kXiTCFo45UayRNiomVCbpru2BOlveikQoxMBaH/i6VtR5+y3x32+TijULESUZz/WhYj2TchVkpG+8zljmx9efCyGEEEIIIYTUQrFmCm5SqIAA4LX1EjyvHSZ9nRgQtXMEAkziWwEpTlLTpLVL8iH537yKPlXgziV9wiHxWevdL/1Few5NO5hDV+Y/CTHghxun1J+ojbMeWZy2w18wbPaN0yZd6wNa15FrhCJmulbpWvT9HLFG6hLBxvUBrkcnZklc3TiaMhtL71rOzIUQQgghhBBCaqFYMxp8SiXFe2IAkzwVBfrk0k00PbFmN2xvqWjTkiaFbYJq6xPRoRd+bH/ja1I3AncuftKs47RPLCzEmvg7ZNBWBh1XhYDetmmDyXXJDxRicJzuddImESIK4FwTIWAgDtDGXeuDWNca3yLAB/1z6PsQa6zNZr1q9l1vZ8D3ro3XL/Ix8WnhF86FEEIIIYQQQmqhWEMIIYQQQgghhBAyIyjWkNUheSJin0+KHDSr5i8hhBBCCCGEkFlAsYYQQgghhBBCCCFkRlCsIYQQQgghhBBCCJkRFGsIIYQQQgghhBBCZgTFGkIIIYQQQgghhJAZQbGGEEIIIYQQQgghZEZQrCGEEEIIIYQQQgiZERRrCCGEEEIIIYQQQmYExRpCCCGEEEIIIYSQGUGxhhBCCCGEEEIIIWRGUKwhhBBCCCGEEEIImRErLtYcC186cTq8+4lz4YNPrYVbwpPnws1HT4eX7z3mtCeEEEIIIYQQQgiZNysr1mzcfya8v7Yebl94JvzoE2fCW6cfCN8RHjwTbj7xTLh9cT3cOncmvHY87UsIIYQQQgghhBAyV1ZSrLn80Plwa/1C+NEjJ8Pnj6X1wtl7TobrT1wIt9fOh2sfSesJIYQQQgghhBBC5sjKiTUbpx4Pty6uhZunjid1KcfD188+E26vPR7e5BM2ZIDNq3th78Z22Gheb4TtG3th98pG0m5eHJKfl7bD7t5u2L7k1PUcgG9bO2FvbydsYvmh0851b28v7F3ddOrvNPWxb/Z9tc/1dkuMGxM5nFjvz+f50sxLYtnf++4iDus+dthUzXs1eeGFFxqwnMyX+87/Yjj9K98P95652L9+4AvfC8dPPpq0JeSo89xzz4VXX301nD9/PqkjdyerJdYcOxl+sLYePnjkvnAW67LcE649sR5unT05os+C/iBr2NlK25HVZ9ZiTXO4bkWKjSu7xq9D8rPqsH8Avs1UrJlfIl8f+3G+19stEY/Z2mzuq7KvBkSDcf4uj0MZV/Z7Fw8Zf/G7ZzPswO8lYey6yL1k5UWa5p6QxqIqJgd0H9NzQ/Gs0Ix9CHtKqJr3Psn+ziojQssbb7wRMUZ8maNYI6KDiA8nfv43k7pVQQSUB7/8e81PrNsvcxVrxB/xaxXWTffYQaxPLcc+fH/42Ge/GX5m47WkroS95kWoEJFCxAr5P7bdD88//3w/zuuvvx6effbZqF7HnXLfsXj3sDFzGRJrHn744fDSSy9F9mVu2E4QG6+88ko0V4w39pnOU+HXXvtWeP35p5w6sh9WSqz5/ENPhtvP/Gx4WT/6dN/D4YOLT4Xr8DGny488FW4//XD4DS37yJlwa/3JcO2e1GaW7iCVHDC2dtKyQ2f8YfJI4ibybVJTPDS7LC+mS0mIsgff5fk5iqrD/gH45q7xYXMA89w39T6NEyHq7ZaYLtYsZ/wpjIvTkhgQa6L7Wu53VoFDmdNBUnVfGtt+/J6TuO7e2C3Gtvm9MFasWdb9r2reFme/DZH9nVUGxRZNoGoTJ+w/ByR5HZvA3mlKAokm4Q987rvuPHJCgYgc0k/6Y58SJV/GkPOrFpmrzHnKHO40+53rspjiB16zByHWiJhhBRB8rWOq6IGvaxBBREQg7CPzwLISQ2KN1NvY6LheWU6YUsFneTF+KvyNv/t2eO/d98J7770dtr9AwWaZrJBYcyy8da59qsaWfe3Rp8JtI9g0Qk3z2v41qHvCtSfXw/sP1v6FqAkHk0Nl/GHySOIeZKeu5fJiSrFmib65a3zYHMA89029T+MS9nq7JSjWVDJGrNF7zQgfD2VOB0nVfWls+/F7ronrjd2CbVm/3bBzddx6Le3+VzVvi7/fimR/Z5XBxE0YSl6G+h8mTfL6ue/2T43MlZJAIr7LHLQNziWXoK+yWKPrpr5MsXEn2c9cl83YdcdrdtlijQoTVjDBMaRO2khbbTPmvoP29sOYcRUbQztfEWnE1sGKNZ1Q8873wkuf+Vj4zEvfC+9QsFkqKyTWfDS8+6n1cPMUli8Em5uPeUJNy8sfXwu3Pv7RpNyjOrnu3snsH7mO+iwOePpIdNKmPzDFj7Snh5rWln20uz80oQ9ufwUfnXcOffhIeTQn7G8Pe1AH8YtiEB36cG6lAySOv/Af7Td1OBcdV+O+pbFr7XgJpMSyfwcUxoySTOPnYv/g3OK4xHZTO3VU7DNnLNwjGL9BX/q9C3OMEo80ySn6UXM9YLKi+3/oeh3l72bfRuOAfpeuv8E+dh66R81+GTU+xqGPWWsD19kjSdhxTpn7Wv66MHb7+vi6TsasAf2yccBrHfeDG29nDCfW6mfiM/qDNtEn03f09ZbgJ8+DPvZ1eC81eyXbJ3/vlDqMm/VN/RraM0nMxt4v++scy3yb4+4L9lqq+H13dbP56V6DnQi36YhruesG90zp9x/GJo6drp9zTXo2cE0K9yV3riPBxE3QhONXf/VX3cTDJjfY377DLNiEzCY10sdrY9vlPtZg++K72JI828RVn1I5+exvNT/tR4skyZXXik28F0LJp5uf2gY/oqP2c3Ya4eUL3wsf/fSXm4/4yP9P/eLXo/YolMgY+kSN/LRjim3btxnvqf8q8UFjoE8ZCeo/ijM1c7U+4dzkp+tXFwcVNtA3a8uumzeW9cOOYduNqbNrhGuIHxHzbHpijcYYx8jZzwmL3pNh1rb1T7DrYPvkwGu2JHzUXrO5Pt4YXr2QEzo8PLEnh4xp7yXYb79ijSU3h+WJNVaoOdGVnaBgs2RWSKw5FW6ufzJcvw/LhWPhzccuhtvrF8PNU6lQI1x+5JPh9mOnkvIU72Dms3k1Tdwx2Y8PTu0BLz0UGzvNwcgRQZIDs/WxzueNKzvp4Sw5DNuxN8L21a4+GdPaSxMHa3shXnT1Wzt9W0wu0EcL1qH/SSLfkPqWS/BjXxbrZ+fcHmh1jLaNezDGuHriSZI0pLaGqdhn8trZP9GBO7M+Wfq9W9qruC/LflRdD9Ea4zwLjPA3buPEB/1O5lnRRxMgJykcPT6+NolXTWzwGqy9r+Wvi9QmrmNSX00m1m7iiftoeMykn9mz6HMxTr0IkNpJ1rPmektw7mt4rSQ+4Fqmcxrsk7l3JnOCPZnux9SXdB0Xv3+G7Of9r1knvOb8+0J0H/OuN+NfH9fGPv5OWvzeaOZVWg9cU+933KXtsGOvc+jTxhX2NM55wIY358H7+US8pEOTl1/4hV9wkyrbB/t/9atf7ZMeTVC03oowmrTgxx/0tbUpbbU9jiflVrBBcUMTZUxw8WkE/b4UTbA1SbeiBn6niibsNrHGNvoaBQoUTBQUAbx22EbBOQma5Nu2aLNmrp6AgiKB55dXJnY8Qc3GzBMfpJ/1UX6KCDdUh3HBtUZxRIQ1aYN+WJs4LxxDyofsNzYqxBp8LXbtfkZfhsBrqEasKV2zHnhd2o9B5cbLlSM5scdD2qCgK3O34sxYsabk58GKNZ5Qo1CwWSYrJNbcqSdrFgeptK5MfKBMD6NJG/dwEx8Mk0OqZyc5TFbiJL65eSeHSAMeOBvMoTnfd6LfCh5c8XWDMy837uinv36xPX+v4Jrh69ZGnFCk49fi+5mOmfbRuE8aNxPDeA2G1hfqXZvQprePCdUArm3f39hmzVrhPCv6JMnQ9PH99UOf8vj9F3j3mrS9uS4KCeq+9pxjx72+vXI33oCT6FuGfI7i5N6L6uzUoQm3AWzKOMn6g1/oy2Af9zqq3KN4P6r+/TNsv2dgDYXh38HoW7znhn7fyeuFb87vCGnbjR/ZqrhucP18bCwzcR2ME/bD1x54bU4DEzd9MkYTIUku7DvRkqjYL9DE/oh9BxzFG69N6R1zGVPGtkmVTdw06bdJq5bZZLcmScaEWLFJOSboXhsUBhQUTHLlXiLuleG4WobCiDdG7VyniDU1/fA1ijdem5I9y9Bae2MpGKfErpkrCipKyf6Qb/L/Zm6f+27kA9rE10PgNVsSH2quWeyjiD19msWKIbnxcuVIrfCRs4flY8QaHTs394MTaz4Wfunv5IQaZSHYvP7Zjzn1pJYVEmvu1HfWjDtwNIcye2AeEFDSgyIemNKkBm00RAc7fyyP9l0267M9hOcOgc6B05DEoKebW3cgdpOl5vBp/Bgg639vC+04h0w37nj4z8XUlvtxQaEEXy/i4YBJwCC+n8mYTnLX9ymtT45MDONyz7chP9Cml6zshl1XMCjg2sZyx9+qtYJ+NX3cvTplfH8PurYyeElvck0P3Nei8v6aTrH3NRyzDi/WGMeW6N7pxhuQNigogD30eShOds49U663BE+MsvtgMX5KTqyp6ONdR4N7FMexPlf8/qmwH7dN45pdp0z70n0hsdWzsBPNF/aV3ZeRWFNx3WT3sROjZi/k4urNO2ejqXd+j5py19eJSBJmPyKAHzlCcQbFG0z8PJso1uA74jbxk75Yr9jkDxkSazDxF3HCfmQFP+aSS9RtubT1EmSbYOeEhJx9L+nHMhQKlJxYg/ZwbHzttasRXTy/pA/GGD/K4/mNZWIT21g/c3W1a41PFgm6d6QO1xnnquN4olfOfo1Yo309rE+5veiB1yyKF5aaaxb7eGOoCCxj5MbLlSM5nxBP3FXsfaZWrNE54P0O2xyIWPPYVvjW9ZJQo7SCzfVvb036i8ykZYXEmjv316DcgyWiBxvTznsHGg8uhyfWdIcqm4zUHpazCWFL1kekP4zinK0Ik/NhwH/vtek3P7EG/ZyK76cdU2OLiRz2Ka1PQiaGpSRn0A/XJrSxYk0hsU5wbWO5E5eqtfLmMdDH3atTxvf3oGsrQ7TvJ97XovIB0SMZcxT1sT5QsWYwTsoimU1iNuZ6S0jva946pfsixrvnFft411FhDfxxOmp//5TqEPRvaJ2wvWsn3nM1v+/SuKotWbfFXBKxJtk/gLOPW/HIzsHsjVzsYN5FG+7rivv5RDCp8rCJjfzfJhy2v5fMeE/WYJI1RqwpJYhjxBp8WgGpETByCfJUsaYkLNR87AUFDmEOYo0XI0X74HwVtVUSZEp1NWutiJ8yJsbC+qhz8eYqqLjiiTZov7FRIdbk5oZ9SnG24DVfEklqrlnskxNJtM/TTz/t2swJHR44B4+cH9p/jFijQrEXI0tuDvsWa8gdZaXEmg8dOxl+sNY+XVOv0N0Xrj+9Hm6dPVnfp0sIkwOcwTuYe4dlPLgMHxTjft44abk/VoRzyIvL0sOYxT1sd+R89Cn5WvBh0H/ndc6mG3ecY8bPwiE+smPikcbH8Wkyvg+LMb16r6ymzpCJYX5fenahzLUJbfo1bsur951ru+SvtqlZK+xX0cfdq2inxlYXh+TabPsNriPs+3SvYpnnI8Q3E+vcmOPA8XPxgXI33sCA3+PiFJOvw/nU4s07XvOaGGMbfJ3gxsjzpTxOQ/Xvn1IdAP55cR/+HYz94jXybCLJfGWu3Rcs27VubGm7jC8RyT72YmPKGptYj2ecARvua2/femXjqU16XnzxxfDpT3+6SThsUmP7ewncWLHGs2H98BIhpVasySXalpyAYRNpTxzBchQ0SvZz9tTfIaHA678fsWZortJvSETy+pV8UXTddPxcHIfqPJ9KlNrbuZTaeXvOs+/ZGDNv7OON54HX/LLFmpz4gaIs3neGxFhsi99Fg+TmheU5f8eMpeTuURRrVovVEmvkcHPq8XBr/UK4eep4UpdyPLz52Fq4vfZ4ePM41pVpDlHJAaY95DSHETw0dYei3AEvsls8KGK/9pAUHfycA1hyOESSsTq7+C5f1KbyC4adusZ+54/3BY9tW2Pf+JTEvNL/tA2OV2qHMeySYOeAag/qbcxQMBp4Aqh/JzMuwy9QrsOZH+wz3Bu6txdJXW59cCyD7vck/rZvbGvID39dwJ8olul6ZJngrzK8Vmm/wT7OnvDs1Nty7gfJNekTrQv6lbmvla8LfK3jLOziXqgnjVF63+rsD1yDHmmsM18wjPYwTvClwfH1OOF6S8jcK20S7uwL8dN+kWyyDkN93GvUi1u8R5Nx+rEWfdJ1XPx+GLLfg/4NrdOU+0JSL8RftpvOV9ZLngjEOdjvvxm+bpL5oW/m2tc1TGOnvzvVzrCNbJvS/XwiXtKESKIhYs1XvvKVpK3tj0mPPmkzRqzRRMqOI3YF7Y8Jnf1SY3zCIJfISjsUCfSLX+X/kkDLUxBWaNAyTa412bZiiPS331GTS7axPOenYoWCXFtP+KgVa4bmivPSuVuxxvNL+9ky6Wu/GBj9y/mJa4Z2ausEXWvxWdrpvK2AomifklgjNtS+jUPJvvpm4y59JO4aE7Vl2+B4aHMIvOZRvLDUXLO5PnYMvReoHX2tY6IP8tp+/NJDbHlPu8hrHUd+otAiflnf8b6FSHucfw6KNUeDlRNrhMsPnW8Emx89cjJ8Xj8SBZy952S4/sSFcHvtfLgGH5Oqpj/IWSDh0HL9M5xLF2sEPVwp2Cf2FceMxrbzwINs0gZsYTzsoRLrjI9RnJxDsK1Lko+sb77/i7FMuQooat+NOx4+dR0Wf0Y5mbM3B/3ztFE708aUY1ySZKYKb7/APoP9g3/WGf1AWy4aw/5P+Hp90beyH/66gI1kzTHxyDDJ3wUYo3it/H7FPsk88nYGbfX2FvU7W3lbCCZddfe1kdcFxBrHrMefF963EttuvH0w1lHSWxsnWI/SdY9zqSMj1mjcc35490s3Vpk+7jVqbNl+GCt3nPrfPyX7PY5/xXWael8o/L7rxwT/YmEmV1a+bnrbTV0XO/BlZyvdG3HsdsImxqnCRvJ7dOh+PhFM3HJ4SY/XX/5vv6tGBJ4xYo281sRN7dhESm3g99WoLXySwxMQFEmI7UdurGigQoEk9d7HchRNlLUeP/6Coow3vtSfWPti0teCYomKKdYnnasVXjwxBEWQ2rmqkKA+az/rs+eX+o4xwjkhGlu7drhmtu+YOhRDvH52LoLdVyiQoH31uWTf2rH9cM08GyiI4TqUwGsWrzd7/eY+soTXLDJ0nQoq2Gi9FTLk/yX7ORt4vxBU1FHwflcSa7x5KN79kGLN0WAlxRph4/4z4f219XD74oXwwbmz4fqDD4TvnH4gvPXI2fD+kxfC7fX1cOvcmfDayCdqCCFHEExOCCGErCxDydlcGJu45kBBg5C5ggLlECjWzBG536C4s8pQrFktVlasaTkWvnTidHj3E+fCB59aC7eEJ8+Fm4+eDi/fW/OXnwghPvg0l8F7R/vQGfD3LhZr8GmFBXdnPAghq03uiZi5gk8mTIFiDVkF8AmfGlZBrLl8+XLydMoqQ7FmtVhxsYYQQiq4i8UaQgg5SpQ+JjBHvI/PjIViDZk7+vGoscKk/agixYODh/FePSjWEEKOPhRrCCFkpdHvsvC+m+GoQ7GGEELuTijWEEIIIYQQcoDc+/FfiL6UlZCjhDxVg3ueELJ/KNYQQgghhBBCCCGEzAiKNYQQQgghhBBCCCEzgmINIYQQQgghhBBCyIygWEMIIYQQQgghhBAyIyjWEEIIIYQQQgghhMwIijWEEEIIIYQQQgghM4JiDSGEEEIIIYQQQsiMoFhDCCGEEEIIIYQQMiMo1hBCCCGEEEIIIYTMCIo1s2YjbN/YC3tXN9vXl7bD7t5u2L6E7WbG1k7Y29sJm1h+0NSMewAx3Lxq1mhONHPdC3t7e2Fny6m/09TGvradUrPug7TX2u6VDaeuBFyjh8FS5k8IIYQQQgiZExRr9k2XrN3YDhtJ3X6ZuVgjSWI3bxEsekHgsJLHmnEPIIbzFGs2w85cRBqlNva17ZSadR8ExJrGh9bmxpXdgohDsYYQQgghhBCyfCjW7JdGsNjNJpeS6CVCztTkamwSm2XqUwQAxZqGWYo1BzDPfVPrU207pWbdB5kq1syApcyfEEIIIYQQMico1uwTSdQlkcsl7BRr7iA14y4thgtya3+oHMA8902tT7XtlJp1H4RiDSGEEEIIIWQ+UKzZF/JRky6pNMldW9d9PKL7zpCGG9vh65LY2zLtowlX81M/VuUlkDIe2I6EAuOT8bUXFBobsQ82EW3a9XWpnSp0LjAWfiQnHgvq0U8UvDz6pLX9CJA3P08IKPmhcWtEt75NnBijWKNtBxP8Gn/dfeH5vZhT7Gvsb66PnYe2afzQeG3petTZSv1QG2m7BGeNcE5ujEpxbIjr4z01VcBM+5X2U4QROxfl8PG1mmsJxRpta4TUoT0sYIztnsY97n/8y9x7avwmhBBCCCGEZKFYsw/ip2bSpC1t04HJVV+GyY8n1kjSYxPZLgHt+w2INZ5dt436lNoaxBEW2kQwTih3koRbx8LvW9kI21cxqXXQcZ3ENRW8avxYJN6LWKVJahS3MTGr8dfdFxVrhfOs6KNzdUUz2MNDtpL17oWSitgkvm+GHTtW51MsaAzEMdlT3RwGrt9h4n7J9b61kxcoxG+8N6CfNddSdD9p+3vi0eAejtara6PjRmPYe1HGjxq/CSGEEEIIIVko1kwmTe6SRC1TliQ+fRkmsr5YkyR/SbKGdjC5Tn1vbWMi5bSrwZ1LmizHmPokWa/EHRfWYNB27Gec0NtxFrHqY9slqPk5AjX+em1q1grnWdHHnau35wZtZdYafcox2A7m6sUI4tj8HwSveJyJe92LIY6To1qswbl5bWQ9ULhtcdfV7uFcvKPy+L7SxnPHKSuJlpl9QQghhBBCCEmgWDMVL8FxysaJNaUE2Leflk8UazqhwWN0AuvOxUnUOiHAjhWJJE7iWcQdtyIxHfIDffDEmuZLpkcmojX+em1q1grnWdHHnSvaqbHlijkZWx5uO30yJ/XbjRGU9/spQcdxrokqvGvU2i0g/uG9Aa8Td25em92wm3wsqcVdV9xjiR9CO7d2nFSUknL52ZbZtpV+E0IIIYQQQrJQrJlIPvmLE6OVEmvQz6m4c3GeWIn89BK51k+MaRZ3XCiHGA75MZjoglgzKtmv8ddrU7NWuFcq+rhzRTs1tpYs1rQfn7F7w3uyxhnPlC9EBWc8z2Y1mX7N2Li3ADeOnhCDc/PadGJNYi+zrrjHnH4owCzuZTI+9MU1r/GbEEIIIYQQkoVizSTySQd+L8OdEGviMTzfOtGjJNZkbE/CnYv1y/PRKyvZc8i0i5LVRNjCMSeKNdKme6oiSdxz1PjrtalZK2yDrx3cuXr9vLKkD8Z1ISpk+7n2nb2KZV6MYD7udRjhjVNDqV+pLuM3xs5rg/u2b9Nd5zBPd12t3dx6YrkKMtK3t9cJN1FZpd+EEEIIIYSQLBRrpuAmIkoukTJtMAnKtcNkr0vkonaOQNA+6bFI2PTJBJtMpQlcLtFDnypw52Ljkiax7RMuXb37pb9oz6FpB3Poyvr1GBACIj/cOKX+pGJQIUFP7Az46869Yq2SPTbcx51rYmeErcjvdv3HizWpX7qfY7FmII7uutgvLk73Qh1xv/h6GbLZxmRR38V1cP1L95h0bTB+aR9vvTo73j0iElwWZdE8a/wmhBBCCCGEZKFYMxoviYmJxZJFMpMkUFZ4cZMbSPY0ie3/jLKTJDVoYryoTxK2Xvjxk8W87QrcuUCiZsZvkz9TD3WprQw6ribvvW3TBsWHkh9jEt3kqYJUzEio8deNpTCwVjjPij7JPLJ2hm319uwaZm0BSTvcz5vxdVETx96u9SkVs3AOw6BYU45JQuSz+FMSYpShNrEw5q5r0qfOd3xycFFWIz5TrCGEEEIIIaQWijWEHBZuQksIIYQQQggh5G6HYg1ZHZInI8pPARw6Q/7exWINPsWx4O6MByGEEEIIIYRYKNYQcljcxWINIYQQQgghhJA8FGsIOSwo1hBCCCGEEEIIcaBYQwghhBBCCCGEEDIjKNYQQgghhBBCCCGEzAiKNYQQQgghhBBCCCEzgmINIYQQQgghhBBCyIygWEMIIYQQQgghhBAyIyjWEEIIIYQQQgghhMwIijWEEEIIIYQQQgghM4JiDSGEEEIIIYQQQsiMWHGx5lj40onT4d1PnAsffGot3BKePBduPno6vHzvMac9IYQQQgghhBBCyLxZWbFm4/4z4f219XD7wjPhR584E946/UD4jvDgmXDziWfC7Yvr4da5M+G142lfQgghhBBCCCGEkLmykmLN5YfOh1vrF8KPHjkZPn8srRfO3nMyXH/iQri9dj5c+0haTwiyeXUv7N3YDhvN642wfWMv7F7ZSNrNi3n52cTw6mZSvj9gjpe2w+7eXtjZwnZHmK2dsLe3Ezax/KDpYr13h+N9MPvosGn3scTy6M2tgmYv7YbtS05dz7zuZ0uhat6ryQsvvNCA5WS+3Hf+F8PpX/l+uPfMxeb1z2y81oDtCLkb4D2MrAIrJ9ZsnHo83Lq4Fm6eOp7UpRwPXz/7TLi99nh4c+ITNk3S0CUryp1MWsidY9ZiTXPgb5P1jSu7xq95+XkwSTbFmuWJNW0sm9hJHPv97rEZdg4pzgezjwaQGHfxkPH7eRvBaj+/Bw5lTsum2YdpLJTifahKtBh7P2v36NC1IffMKWu2FKrmvU9ye3cASVLeeOONiDGJyxwTHREhRIwQUQLrVgXx/cEv/96BzGGuYo2u24mf/82kbm6Irw984Xt9DA+DYx++P3zss98cvXb2mn/uuefCs88+G1599dXmJ7bdD3YcsX/+/PmkjSDjvvLKK9n6Ibx7mMwL2+UYuoeJf6+//npvW/6fi5XMQeZi6zHe2IeQGlZLrDl2MvxgbT188Mh94SzWZbknXHtiPdw6e3JEn8UBPTk0bu2kZYfO2APuEcVNaKcmnMuLaZMoFJPiCijWHNAcD9L2EnH39hRGiDV3IsnMcDD7aIBcwuvFoRMt6u8rK7LPxuDFpURV+7Fxkvv7btjVPZ3UL2yOW68l3beFqnkbplzrub07ACYqkmxIYlVKXkr9DxtNYOee8ItgIsn+8ZOPJnU6hwc+9103EZc+0tcKOfuZ97LEmtKcahAfZM4yD5kP1s+JOYg1grcXhsBr9iDEGrH/0ksvhYcffth9LYhwUSPm5FAR5fnnn4/KxS6WlcB4IF/96lcj38Q2+msFHU/MkXnL/Jcr1jwVfu21b4XXn3/KqSNHjZUSaz7/0JPh9jM/G17Wjz7d93D44OJT4Tp8zOnyI0+F208/HH5Dyz5yJtxafzJcuye16TM1wT8sxh5wjyjuIXfqWi4vpks59FOsOaA5HqTtJeLu7SlQrMmSS3gzcZA29ftmRfbZGDJxyVLVfmyc2vv77o3CPbZZ152wUxR0UpZy3xaq5m2Ycq3n9u4AXqIiCQUmIzm8/odJk0R/7ruTBYM7RUnY0DloGxQEvAR91cWaZk5mzmPEh8NgLmKNIGs+RuDCa3bZYo0KvlaYwDFsmzH3m9IYU8F4DIFjqxAjIg7OU1m+WPNU+Bt/9+3w3rvvhffeeztsf4GCzVFnhcSaY+Gtc+1TNbbsa48+FW4bwaYRaprX9q9B3ROuPbke3n+w7i9EVR/Suqdv+sfAoz6LQ2f0USrbpj/E6aPcuUfJF+8MKnEiUfsoejyOeyDEx9yjOWF/ewCFOohfFINIPMG5lQ61OP7Cf7Tf1OFcdFyN+5bGrrUTJ4iL9dNH6HHMKPE1fi72D84tjktsN7VTR8U+c8bCPYLxq/MF1uPqJsSwfdcb1zNq018DEKsoUYcEzk1+cG8s6rNzH7h24pjgeCXyvqT73Y91PLbu5fh6LfqHc6u5nxkwZtHYeF1517ruBWevFcfp1j3eRxXzQZ/gOl7UjVlHOzb2c0QF9DHa49aHwv3bzlnXXOdm5lxae41d/r7Vkou9V+ftUS8u2C+Nz8hrvaH0u0XFeP9eI0g8dq9sOvfqnF3cM7YOr+2huOrvGWeNjB31C8ut/WJsJ+IlKppw/Oqv/qqbeNjkCvvjRwbsu+k2qZE+XhvbLvexBtsX38WWxNUKD5pUf/TTX24+YmPFBGkrHzVSrECwEEo+3fzUNiiGqHCi9fbjRbnxT/3i16NxUeCwc5Cfdkz9eJTlxM//rcZ2XPabvYBz8tnfan7qHFFUUbHG2sZ5YFzt3OSn1OXmpB9v0jq0o/NSwcEbS9D52HHsmuF6WhtYZ/uhf1b4wHirTU+swRjoGDn7KlCh4IPiGe4xFGY8X0p416x3nQu116wFxYyhMaaINeJPyQeLfYLH8x3jMYQ3PyU3z+WKNZ1Q8873wkuf+Vj4zEvfC+9QsDnyrJBY89Hw7qfWw81TWL4QbG4+5gk1LS9/fC3c+vhHk/IU77Dos3k1Tdy9JGFxQOzeBUySRUyEHBHESVwWPtb5vHFlJz0wJuIBJJZXu/pkTGtPD8y+7UT82tqJD6dRkhD7aME69N9/RzL1rY97JslsXy/WL03gdYy2DSYyOF987ZZ1PqGtYSr2mbx29o+2T3wx65MHxzDJxGixpktqsnt+QKwZ2puFuSe2PR+F5LrMMOTL4LXs7GvnPlH2D/e8uY7HgHF27xF4TSwSzqE9hP3sWuH8ivfaxM+8HbyHVJHY1zgYn5I2/u8DX7zI9FGRxq6zMyfcmxp//P0QxzMf++R+kFwzOf8HrrUp13qyl/H6WNQ3fkOs2jFlnnivHrLrxMHZP24fjCvO+dJ22LH7AO8tud9jpdhOxEtUNHn6hV/4hT5Ry/XB/vYjA5qgaL0VYTRp0cRHx/A+hqXvvnvjSbkKNprMe4k4Jrj4NIK2076apHuig4on+Nr2w0Qdx0fBRMGnZrx22EbwnqzRMhRe0KaKDChu2H6egIIiAdr12qhP1hb6jn0EnbPtJ+NpDKTcji0/RaSS/5fWGmMpbaSf/EQ/rE2swzHUt5L9GrEG+2u9HctrUwKvoZzAINRcsx74USEZD0USZaxYYwUkrEOkDQq64gv6hvfAEiV/c7FcnlhjhZoTXdkJCjZ3ASsk1pwKN9c/Ga7fh+XCsfDmYxfD7fWL4eapVKgRLj/yyXD7sVNJeQoe6uqJD3fpATlp4x644sOqd2BMy/GAW0l0KEwPr5YkQTDkD8ntATTfd6LfCh5q8XWDMy837uinv36xPX+v4Jrh69ZGmvjn41TC9zMdM+2jcZ8ybs5+bKtinpm1iNcS9gkkieP8xz2Hr22CV+rnU/IlF7P0npDGLIrHkH85G2NJ7DjXklOOCaxLYjumFEchipl73Qt1azZILzIsQJviL5YV93BNH0zie19wrs71jPFP9k8u9hXXbORL2naBd906+6cQp6HfLdHec2Ij/Vtb8b162G7+eo2o+R06GCfol93PlnQ/TQETFX0yRhMhSS5skiUJiv0CTeyP2HfAUbzx2pTeMZcx8YtIbeLmJb82Mdcyr51gk2RpjyKHYJNyfALCs+ONr/ZR2PDKvUTcK0PBw5ahjzgGJv+evalijfSxPnnt0A6OreOjjzk/LENrXeqLfpbGzO0FbGcZ8k3+XxN3L14l8JrNCQxCzTWLfWyb3NMslpL44VErfOSegMFyjEcJvD8iuVjW+lzGE2oUCjZHnRUSa+b3ZI3QHGLtQX5AQBlOzNKDN9poiA6m/lgezfhR4lFKAGOfkkNoRxKDnm5ufbKDc9WDqfFjgKz/vS204xyg3bhjQpKLqS3344KHfHztJX89mEAM4vuZjNm/w7sAkyh3fTLk9uU0sSZtE5fDHJ06XIOYwtzRttDvyRRvzgvKvuRiFl17MraXICZJfOqb9a+/JkfvJ/TLrE3hHmHn5ib2SG6exh7aSO4zcK9112fk/cXFS+KjPbsYPyV3j67o493Patce44/7Jxf7Mfcm3B8NhWvNbY/l6e+/xI8GbZ8KhYsY2/tPfG0O2/XuoaY86jPwO9SbtxPnYbGmENuJSJJiPyKAHzlCcQbFGy/RQZso1mCiYxM/6Yv1ioyNviolsQaTZfk/fmwIP+aSS9S1/J4HzzcJMoow2kaFBW/8kn0v6ceysWINJvE4Ntr3xq0RDdCujo8xxieWPCEGy2RsnIdi4411NWstP/HJIsH6j2Pj3HUcT+DL2ff2q7ZH3xAcpxQfBK/ZnMAg1FyzNX3sE3DYfqpYgz4hnrir2PsMxiOHik8lwSUXy/2LNR8Lv/R3ckKNshBsXv/sx5x6ssqskFhz576zxj3sInrYMu3iwx0ezp023iHOOayijcX4uUTAozvo2cOnPRTmDprG/ugkFOkTDZyzPQDnfBjw33tt+s1PrEE/p+L7acfU2C789PuU1gfJrXkcw8MXa4bnjq8HktkiZV9yMYv2Q27s2mQ7ovWnWdOh+5kHrk1h3x6oWDN4r1UWySzGefj+UgDjgP4NrLttg/uu2Me7nw3ETXDjX7t/CmucAHEZvNacOKblcZ/sNdMD93expXOTeWbWaNiut8cGfgflYgfzboUiG4fhJ2sGYzuRmkQFExubcNj++q6ztWeTulySNUasySWIgpf8YlLdlw18CTEKD1h+EGJNSViwyfmqiTVejBSdC85X0b4lMWJIrBlaa8EKMzhP66P6gHNXxBdcr5x9b78KKNbk5o19atoJeM3nBAah5prFPrnrFMe17ceINSVblmWKNVJf42MulvsWax7bCt+6XhJqlFawuf7trXF//ZjMnhUSa+7gX4NqDkvOodKQHuSwzD9MjRVrvHHScn+sCOcAGJc5oobBTQA6cj76lHwt+DDov/M6Z9ONO84x42chsYjsmHik8XF8mozvw2JMr94rq6lbgHO0fWOxBucJbTJrUdzfXvLj7k1vLliGr1P7Y8j7gnPKlGfuPW2yZpPCtE0W97qoIBnHW8+0vBSDvO0Ya8OLm1c2XJfzfwDP16ZszJzTfTbYx1s3zxfAtZuICjkbI2I0eC8sX7dK6VrPr6WS+ivz39kSO3as1q62G7brtPHWI4mrE7vomk79TcqScSpiO5GaREUSjxdffDF8+tOfbhIOm7DY/l4CN1as8WxYP7xESPGSXy+p9sQOBIUHBRNpTOyx3Bs/Zx+fJlHUX03GPf89YcYr88b25oFjeL5JnRUl0G7OdskXRX3Xvt74Si7GAs5jiJw/gvWhNGYu7mjf823MvLGPN54HXvOl66rmmsU+uTocV5ki1pSe1FHw40658pxfitR58/HIxXLfYg2561kpseZDx06GH6y1T9fUq4b3hetPr4dbZ0+O6KPJER6q2oNUc0DCA1V3UMsdOiO72sY9vGK/7t08e/h2DoXuAd2SjNXZNXNo5wwH3JovGHbqGvudP96Xg7Zt8YtPvYNsvf9pGxyv1A5j2Pbz3s1MhJhEMCq8+2rHgjL88so6nPnBPsO9oXtb++TXB8cyOGuudu1YKOokbfS6SdbR2h5I+pL2i1gOzb33Mbp20nVu21UIHgVf6q5lZ+wkRk4b65/7BaYVviMYZ/ceka5xGk+f9BrIfDEw+q/x0DHhC7EXe3/E/aWEE4d+HPWru+4j29E6ONfVUB+ct7GTXXuMXTQWtCnFvubeBHHBcZNrLdnH3vXiXet4P7Jftuusqcz1xm7Yda7pvt2g3TRmOF/vd1AaO22TF7XaPuibc42VYjuRoURFkERDxJqvfOUrSVvbH5MufdJmjFijiZQdR+wK2h8TJ/1SY+9JjlxSLckwJuXyF5us8CBPQdhEWcvUvrQVscImyShg5MbH8qGE2ybtubYojOTaoSAhfexTI1pm2+hcde4qNAzNFWOm7STWns85P3U821bq1S76Kz/1y4CxTtC1tr7gmNa+UBJrZCy1b+Nesq++2T0mfezTN94es3PT1yj6lMBrPicwCDXXLPbRa9j2kes39xEivG9oWc6+IvY9m/Jax5afKOqg+ILxsODHQIfIxZJiDdkvqyXWyCHl1OPh1vqFcPPU8aQu5Xh487G1cHvt8fDmcayroD9cWvBg1nFjO2xG78SlhzJhvFgj6IFPwT6xrzhmNLadBx5GkzZgC+PhJpSpj1GcnIO5rSslUjX+L8Yy5SqgqH037ngg1nVo/+SrO2dvDvonc6N2pg0mtTZmmGBV4e0X2Gewf3RO2gf9QFtZYM2lHyYV6djQRtei/zPqng9eAgfrh/uvcu7Yt7Q3p8Yl3gsV1zKOLf2TvV7wD8dPEv5KvDgn1yGuN15HZXDv6fWPNor3WnN99/Fq+qUxKt1fsmTikIhv6IezXskeKvVJ1jy2ZftZuxi7nK1c7L26xJ6QxGXgWptyrff9rD/pmPG6tjYGy4p2F32aum5Pjfsd1LXBOMG47Z8dz8VfbQ/EdiKlRMXiJT1ef/m//a4aEXjGiDXyWpM9tWMTObWB31ejtjD5x6TaoiKFgkKA9JNE2/tYjrVvP7qEokDN+FJ/Yu2LyUdnvHF0fBVBPPFIhZcxYo2Sm4egQoLWqx3rs52T9re+2jqcE6IihPqvr9EOjo1x8epQDPFsot9WVMF1Rfvqc8m+Nyfp5+1hawP3CfoyBF6zKqri90BJm9prFsFr2BNVFE+skbFxTA/Pd7Sloo6dl7WB8Riyr3jzp1hDDoqVE2uEyw+dbwSbHz1yMnxePxIFnL3nZLj+xIVwe+18uAYfkyKEzARMZAghhMyKoeRsLqAQMZVl2SHkoLFP/GCdR0mcmANyj5En+VDwWGUo1pD9spJijbBx/5nw/tp6uH3xQvjg3Nlw/cEHwndOPxDeeuRseP/JC+H2+nq4de5MeG3KEzWE3PXgEyAG7132qayaWJO8G2/f7d7fu9yEEDI3cu+uz5Hc0yRjoVhDVoGxH4ES5i7WyFMx+lQP1q0qFGvIfllZsablWPjSidPh3U+cCx98ai3cEp48F24+ejq8fG/dX34ihBwiqybWEELIXYT3MYU5M/Txmhoo1pC5g19GXIv9qCLFg4OH8SbLYMXFGkLISkOxhhBCZod+74T3XTVHHYo1hBBC5gLFGkIIIYQQcmS474nnoi99JeQocfL//v9O9jwh5GhCsYYQQgghhBBCCCFkRlCsIYQQQgghhBBCCJkRFGsIIYQQQgghhBBCZgTFGkIIIYQQQgghhJAZQbGGEEIIIYQQQgghZEZQrCGEEEIIIYQQQgiZERRrCCGEEEIIIYQQQmYExRpCCCGEEEIIIYSQGUGxhhBCCCGEEEIIIWRGUKwhhBBCCCGEEEIImREUa2bNRti+sRf2rm62ry9th9293bB9CdvNjK2dsLe3Ezax/FBoY7h7ZcOp2we4Fs2cV2BtlsYBxbUIXA+HwObVwx2fEEIIIYQQcndAsWbfdAnkje2wkdTtl5mLNSJQdPOWJHZny5RTrDniLDGuuX2UQLGGEEIIIYQQcndAsWa/NInmblZE2biymwo5U8UMFAgms6REO5dkT53fgbCkuSJLWwuHWcUvxxLjmttHM4RiDSGEEEIIIeROQLFmn0jyJglrLomjWHPYLGmuyNLWwmFW8cuxxLjm9tEMyV3nhBBCCCGEELJMKNbsi82wowl7k7zbBLv7yMae4cZ2+Loke7ZM+2iC3vzUj1VBQtwLBGA7Sh6NT8bXPslsbMQ+2IS7adfXpXaq0LnAWJiEx2NBPfqJglcO6Ld7ZTOOoREGFv0kZp7Y1JZ7cUrEGk9g0bV05pCbO5bHNmN/0nkUKPiS2PXWfSiunh30D30YLXqkAhHGC/dYz5h1L+xbFGsaMbbfGwv/Ir+ScRf90likc1Q/0/3X7g31KbY5d7GPEEIIIYQQUoJizT6In5rxkixs01FK7KME1hNrJBGzyXSXIPf9BsQaz67bRn1KbQ0SCU5tWZtImjlf2g47dvxoLEiixd+racKb0MUnSa5toludtEPC29lOhTPbZ9G+na+NnZlDce6pLddHnVsyl5QhX6J59eObsWriOuQfxkva71OsSa6trZ0liDXlfRtdI7huRqBd+JEKLW3sHGG3G9ebl+tX9zpdi87e6PgSQgghhBBC5gLFmsmkgkeSZGXK3GQ8SfycMZykObU3Uawx79Rnx6/FnUuazMeY+iSxryMRmxpgDtVJezp+tJboY7IGpbki3vjxWjRj49zQB5eyL37M4nK/jSOcYBvrnzOn8cRj+n5lmLzucZt+TBS0GnyRpLhvFFsO16KMuXt1Jy2zccC5LSXehBBCCCGEkMOCYs1UvKTLKRsn1mBy5Yk1A4neVLFG3713mCbW4Fwc0aATn+xYUVKcPGlUop1TKkpMFWvQfyjHtUjqnP6Wwty98ft4JKRrnY6T8yUXMxunXBtHOEl8s/51QsaU/ZQZcxHDgRgIk9fdEWuaLxQfjokS3QNcPxZ9W5t2TCmX+WH9Ys6uaOXOhRBCCCGEELIqUKyZSD45jROnlRJr0M+puHNxkt7IT0fMMQl+kowm1IkK/jxrknZPkJkm1gzO3RnfPkkxiqIvuZhNE2vq/GvnOk20cfat0MQLYwpMXndn33ZiTeJHxr/xYo25XmX9uvb900tgg2INIYQQQgghRw+KNZPwhIUW/I6LOyHWxGN4vnWiR0msydiehDsX65fno1dWsofgHGO7kViDtronNMpJOyTFGK+oT2Eubt2waODuoyq88Ra4iX5UXhfXsf6Nbd/i7NuqOj+mdevuiDUqoiSCje/D6I9BqS83tsPmld34+sey3Bq6cyGEEEIIIYSsChRrplBMhIYT7yQxy7XD5K9LEKN2TtLYvvu/SIRbASlO6NIEr0vKIYHevIo+VeDOxcYlTWr1SaWm3v0CXrTn0LSLhQm1uxgLxBudd7JmEAu0jWsIPrYxt2usX+o7MHfPdl+GQkDdl/TmfcnYbeaCcxuIq2fH+gdf/rsMsSbem2lcY2rXHfdZRqyRumTOvg841zZ2qe/x9diOG6+bljlrgfvAnQshhBBCCCFkVaBYMxovsYqJxZJFUpgmbCZpc5MrT6zZDdtbKtqgEKEskjqtTxK6XvhJk03t59uuwJ0LiFhm/Db5NPVQl9oqoEJLb9dJoKM2kgxnBLbElhkHBRVnzr1IhrEszb3rm+wPp1+cyJfJ+uLadeKdxMKJa2IH42PqRgs1Aoo1dqyKvVq77lG/glhjbTbzcWLiiDW9nQHfUXRd9It9THzq/cK5EEIIIYQQQlYFijWEIEx0CSGEEEIIIYQcIhRryOqQPLlRfjJhMism1uBTM/HTI2l7QgghhBBCCCHzhmINIciKiTWEEEIIIYQQQo4WFGsIQSjWEEIIIYQQQgg5RCjWEEIIIYQQQgghhMwIijWEEEIIIYQQQgghM4JiDSGEEEIIIYQQQsiMoFhDCCGEEEIIIYQQMiMo1hBCCCGEEEIIIYTMCIo1hBBCCCGEEEIIITOCYg0hhBBCCCGEEELIjKBYQwghhBBCCCGEEDIjVlysORa+dOJ0ePcT58IHn1oLt4Qnz4Wbj54OL997zGlPCCGEEEIIIYQQMm9WVqzZuP9MeH9tPdy+8Ez40SfOhLdOPxC+Izx4Jtx84plw++J6uHXuTHjteNqXEEIIIYQQQgghZK6spFhz+aHz4db6hfCjR06Gzx9L64Wz95wM15+4EG6vnQ/XPpLWE4JsXt0Leze2w0bzeiNs39gLu1c2knbzYl5+NjG8upmU7w+Y46XtsLu3F3a2sN1dQDf3vbnMv/FnN2xfcuoiRu7TarslRo45gmafyzr094s7wFJiMkPmtqfvMFX3zK2dsLe3EzaxfIWpmvcK8uyzz4ZXX321+Yl1ZJ4c+/D94WOf/Wb4mY3Xmtf3nrkYHvjC95qf2JaQo87DDz8cXnrppfD8888ndeRwWDmxZuPU4+HWxbVw89TxpC7lePj62WfC7bXHw5sTn7DpD+WGu/FAeTcwa7GmSWjaw/rGlV3j17z8PJgDOMWals2wM7d5VwsII/dptd0SI8aUZLi79mUPl2Is198dFWmUpcRkLG0Mm3jI+GbeTRzgd+N4QWGGe3o0bYzSWNTFpOqeOVasUQFsYJ+255s7vadaqua9T2SM9vqXfVYXPxFZXn/99fDGG2/0yOta8WWuYs2Jn//NRoA4fvLRpG4VUEFFkP9j/X6Ys1gjPq3KuskeO4j1GcN9538xnP6V749aO3vNi0ghYoUIFfp/bD8VvLegGPLcc89F9x25j5w/fz6xMwSOY+eFbT1qxJoxvoqdF154oX/txRv7kJjVEmuOnQw/WFsPHzxyXziLdVnuCdeeWA+3zp4c0Wdx2EkO+ls7admhMyIpOcq4B9qpycDyYrqU5I5izQHN8SBtL5lDSdYHqPZpZJyr7ZYYMeYIseZg9ngFS4nJWAbEGrivtck/3oMLHMqcDpax+6Oqvfu7rUAX190bpdi2vxvHiTVTf5+mVM3b4O23IaaKNSi2SLJRK9h4/Q+bOYkPOVQwkYQf6wRJwmUOuXl4QoH2GSt0LCteQ3MaQv0QZC5YPze8NTgMxvrhXbPLFmtUoBCRw3st43zlK1+JxhOBY6wP0geFE+kv5TkxBRkSa2p9lTIVc6xYo8jcsc9+OfGZr4Xf+cbXwmdOpHWrzEqJNZ9/6Mlw+5mfDS/rR5/uezh8cPGpcB0+5nT5kafC7acfDr+hZR85E26tPxmu3ZPa9FnegeTOMCIpOcq4B9qpa7m8mE45ZCZQrDmgOR6k7SUzx8S22qeRca62W2LEmBRrMowTa9r77QgfD2VOB8vY/VHV3v3dVqAXa/K2m/W7ujNuvSb/Pk2pmrfB329lliXWDCUvQ/0PG0le9amRuTIkbIj/Og9vLl6Cvupijc7Xm9scmYufst5jBC7vml22WOPZEwHDEzEUz68S3hhTGHO/U9BXEWJUNMrNc9lizYlnvxZ+9533wnvvvhfe2flaePYICTYrJNYcC2+da5+qsWVfe/SpcNsINo1Q07y2fw3qnnDtyfXw/oN1fyGq+lDQHIjM485Rn0Wi0L7b6LTpD6r6DldLmly0tuyj1f1hCX1w+yvxOO7hrzkUZvxN+ttDHtS577g6/idzKx0ccfyF/2i/qcO56Lga9y2NXWsnPjwu1i9+3N/GzCQyxs/F/sG5xXHBjxGgnToq9pkzFu4RjF+dL7AeVzchhn7iFrXprwGIVXSIh6TbTfBwbyzqs3MfuHbimOB4GfqkqnBNZ/af56uuA5bX9OnnoOuifkwYX4nr1UZNbFLhBMdyY1TcFy35dUrHnLbPFdxj1nZ6rce21ZfNvl1+bBynm5Oz78vzQZ9MX7w3OnEdwv09Oehj/rrM388de7inm7rC76Dq37WZ2Ht1OHfwLykzfb1rNF4TuKYcsQbjF619dI07v+f7313OPRrvizoX3DOlc0gSm6HfFSUbuI9tHa6XN9dxYNKhaMLhJR42ufH623eYBX03XdCkRn7ajy7YNtou97EGfZfeexdbBQObuKqI8dFPfzk8+OXf6xNsTXKlzJZbO5KQC9rGE0PEvtajHUEFF0HqT/7V324+umL7WIGj8etz323Ek0ZI+dx3+zHVLxzvZy69HpWpnyrEyNxlTPn/PQ+ej0QVbfPhx/5KZNuKRNYnO3edl5SX5mRjKKCwYNctN5ZQijWup/14ENbhGqFdnTvG29pEsQZjYOty9j1h0RPP0Db2yYl6Ht41WxI+aq9Zi2fPu5dYPL9yiCiiPmEdover3D1pGWKNJTfPZYo1KtRc/+avhaee/LXwO9ePlmCzQmLNR8O7n1oPN09h+UKwufmYJ9S0vPzxtXDr4x9NylPSA36Ozatp4o7JfnSg6Q4WabJo7DQHIueA6BxqMFEY8nnjyk566E3EA0h2rnb1yZjWXutjcgDtbCeH+q2dvi0e2NBHC9ah/96B1vOtj7snKDnrlyZ7OoYeeNHPeL742i3rfEJbw1TsM3nt7B9tn/hi1icPjmGSh9Fijfhf2vOwvzEhHNqbhbkntj0fheS6zNAnNGYfon+Z/ZesA/qK867oo0lizf4fstWur72+NFGqiEsS54F1qdoXQ+sUj5nMr2qfpyRjOn4la95fpwOxSvqZvYzrf2k77Nh9C3sU/czawbWoJIln8jsw9QF9TH0Z7uPuaec+H/1+6PdT4XdtKfZD9g2J/zXrBPsn+V0Mv9uS2LvXT9tf7OP9rbHX9Id7dLIeuKZpHNo5lM5CNb8rhmw4c47WR234azIGL+mwyYt9x9jrg/3l5xe/+MW+rSZ4Wq8ijE1aZBw7Bn4MS9rpxxBwPPVVkyMUNwRNlBPxAZ5GkHpNsG2SbkUHaWMFG6nD7wzBNirS2LGsGKRlihUBcu1QKBC8J2s0ybdt0aa28cQNjVlOQLEiAdrN+arjeYKajRmKDxhrsXfy2d9qfqpNO7YIVFI+tNYojkh7sev5oTbVH7WBY6BvOfs1Yg2+1jjbfhjjEngNCZ64otRcs4iKKSqAyFj2Y1AeJR8Q777koX5Y8UR9Ud+miDUlXw9arImEGi0/YoLNCok1p8LN9U+G6/dhuXAsvPnYxXB7/WK4eSoVaoTLj3wy3H7sVFKe4ifgNcSHifSwkbTBA5bpl00wPDtJIlRJdAD0D2FKcgA1NL5gHRwWk/qGiX4rKM7g6wZnXm7c0U9//WJ7/l7BNcPXVSJGNb6f6ZhpH437lHFz9mNbFfPMrEW8lrBPIKEY5z/uOXyt9nEfOe08MAHsGL7ua2MFSfZAHzd5mTS+cx25PuUYip+3xs54dl8MrtP+97kH2sldC949emh8tB0xGOv03uTG271PjqdPuHvAt8H1ceZU0cfb00O/g/z95NhFG7X2TXnJTkt8LXnzQd/S39UD41rfemEmbtuOH9uS8mTPJGNjHFPs3s9dH0Nxwn742mUJe9tL3CTR0ERIExmbZEmiosmI19+C74CjeINtsD0i42JSZRM3SZYxaZUyFFSGkmQvIRZsUo4JutdGXlthQNvkhA2v3EvEvTIUPARPGMExvDZob6pYU9PPe41zwZgi2N8ytNY4luLNB+3mBB9Lzr7aKPkmr6UefUCb+LqEd82WxIehaxbbYxvvaRZEBaFSG2yf89eSm5ctHyvWDPl6kGKNK9QoR0iwWSGxZn5P1gjNgcMeWAcElDRpw0NXeoBEGw3RodYfyyM9YJcSn9in3AEtiQEe3ruDcnKYF5rDlfFjgKz/vS204xwu3bjj4TEX0zQZxLjgoRJfL+LhUDi8+vh+JmN2cbBjxQlTZn0y5PZlHMORSYW1FZWXEjx/DWIKc0fbQr8nU7w5R7h70BMZvMQ2Ha8hF6uKPm5ChHZqbOXuD54tFyfOpXXJ2bXlg+vk7Rupd+yOAGOauxbimHnzRwb2shcTZ936/tl7aztOFO8JuGKUvecMro8zp4o+GP++zOnTrzWOY3y2eyUX+0H72Na95uK+kViD7bE8uX+gHx3uvQLmFu1Le49e7IuUYbEmiVG3F3LXhzfvnA2pS3+nmXLX12nou8y5jxwJVpxB8cZL/DybVqzBd8Rt4id9X3nlFfcdcx3b2lWGxBpMZCUBth9LwY+55BJ1W94k1fAUj7WvfT0hIWcfE/Vc2RixBvvi2F4bLK8RXdCu2sCPR+FHeTwhBstKsdZxS0IOju2ttZTheohNKce4CrgGOk5urT37Q2KN7YtYn0rxQbxrNidqCEPXLLb3+ui164kYUoZi0BBoP4cn7gr2PjNGrKnx9aDEmhNrW+FbOaFGUcHm21vhwgoLNisk1ty576zxDhEJemAy7bzDKx5SDk+s6RKj5DC9HLGmPHZHfxDHOdsDV86HAf+916bf/MQa9HMqvp92TI3twk+/T2l9kNyaxzE8fLFmeO74uouDkxRU4e5B71rzkm6nnwX7VfRx72Vop8ZWrt6z5RLHeXBdcnZt+eA6OWsrjNjnHhjT3LUQxyzjS0R5L2NM2sTWzsG51xXvrQuxrOyXT3Jfw/EH1yedU00fjL+WFeeA4zQM38ur7UNb3B+ldcL2rp3k/oFrCeB8pX9nS9ZtMZdUrMnFYNHe+32aPwvlYpf+Hsjb8F5XnQkm4CVuiE1s5P8vvvhin3Bgf0xmMKnzkqyxYk0uQRTGiDWYOFs84QHLSwnyVLEmJyygCIBCgeDN0xNicGyvDZbvR6zJxUiR9jhXRedYslMj1mCcPVQgknGxvfpo4+utgRVXcM09+7ViTW5uUZ9MfBC8ZoVlijW56xTH1Xa5cUugrRzLEmvG+HpQYs0vvfZ2eLsk1Cgi2Lz9dnj9s07dirBCYs0d/GtQzS98PNjFpAcHLPMP52PFGm+ctNwfK8I7xERlziHMkDtQCjkffUq+FnwY9N95nbPpxh3nmPEz6uu3aexUHDLdeY7G92ExplfvldXULcA52r6xWIPzhDaZtSjuby9pdfemNxcsw9ep/VG4e9BLTNC+Fysg6Tfcx41NYqfCVpdMJfUV98oWG2cn5ljm+lhz/8yNOaauDMY0vb698rrx0HZENF9vvbyy4bqc/0N4/ZqykiiJYBt87eDFyPOlOE5DvCae3Wr7htiOF/casQb6jfhd3ZDMV+Yqr6WvvT/J65p7qW0fj+3FxpbV/K4YsuG9du+1XtlIxiQ9kmxIQmOTGtvfS+CwbCjxw/ZILhFSasUaL9G2eMKDkAgYzkdzsLxWrMF+Fmk3JBR48/SEGBzba4NjeL6pnZJY4/WzeH0U6aNPvwzZ8WKseLEqkWuPPuTaCd5aePY9G3be8ro0t5rxEO+aX6ZYk6uz45aetKmhtn9uXmM+BlU7lpK7R+1XrLmbWCmx5kPHToYfrLVP15zFuiz3hetPr4dbZ0+O6KOHTudAtLXTHu7wUNAlM0OH8+FkA/u1h6PoAOUkToOHrGSszq6ZQztnOODVfMGwU9fY7/zxvjiwT9rUvvEpiXml/2kbHK/UDmPYHSYjf7oyPEAmgtHwu33NWFCGX5ZYhzM/77CMyWX0sYLc+uBYBmfN1a4dCw/qSRu9bpJ1tLYHEvmk/SKWQ3PvfYyunXSd23YVSUB2/c0+Qv97+wN7wuk31Cedm2+n2laS6OFTAznKiXGyLiP2RX6dcMwJ+9wBfa+7R1eOl8wR77Ma69Reuz46ZuHeCl+snCTBlfj9ujVpYjG0Pjgn07/QJ42/Hzf7OygdZzEW7rl87Av2I1/T3yP5dVq8Ttvg7xWIQeFa9eYr67V7wz5V083BtsN7VWdr8QXJ6XzQt/7ajc45GFf4PTBkI9tm4EwwAS9x85BEQ56oEWxbLwGzSY8kLWM+BiWvpX/uC4alDX5fhLTTLzX2njDwEllph19IK/X6xa8qIshTEJqca5lNrqU/fh+OJNa2TS7ZxnLPT+ubFQq8tp7o4pWhQKKxsPa8+OC8pA6fIME5aRn6ql/U6/mX8xNjLfU1XzDs1dm1llhaEUgFlOMnz/T2tU9OrJExZDy1YdcnZ9/6rfU6hp2n1Nl9KOB4nuiTw7vmc6KGUHPNImLP9sEnU2Ts3BN01oYneijqA/ot/5d+Uq9trB0Z237ZsXffstT4aqFYs39WS6yRX/KnHg+31i+Em6eOJ3Upx8Obj62F22uPhzePY10FfcJgwQNTx43tsBkdXp1DDR5wk8NGrp8eQhTsE/uKY0Zj23ng4SdpA7YwHvYghXXGxyhOXrJl6lyhxvXN938xFh50jX037rlD9uJP7SZz9uZwddNJYkwbU45xSRKQKrz9golUvH90TtoH/UBbWWDNpV+aSOHY0EbXov8z0p4PXlIF64f7r3Lu2Le0N6vionvS7DkBk5/E/w5ci1QASPuV+qTrkbczZCut3wmbBVsxuE8H1qVqXyzsWp9xDfe9zwE3poP3aJx/gdxexlhDu/bPMBuxJndvhb2Z3tPqSO9zsf2cH+m158cq18ePfxqPaA0K46T+ZGKDdYm9jH/FdVq0T64ta7f4u64jGRP9A2EmV4b7w/VF5+L4kpyF0hgkvwdqbDi/R2vOBGPxEjcPL+nx+msipN8lIyKKTepqEz9JnOx30thESgUb/L4aqcOEWvCEDUETZf3IDQoBkvxKsq6ijf1YjrWjooXiiRVYhuPf/5e2GtteO2tHx7diEgpD9uM6nhiCIoi20T/vrfOw4oagsbX1ODc7JxR6vBihAISIDbt2GGs7Bq6ntYt1nhiC/WyMlSHRRdtZn3P2rR3bT/erXTO0gfsZ16EEXrMCXm+KXGu11yyCNq1QgdewRe4xKqCU7CsqCFvs/UJ91Tr8zpkhsWbIV2xPsWb/rJxYI1x+6Hwj2PzokZPh8/qRKODsPSfD9ScuhNtr58M1+JgUIWQmuEnFCrOEZIEQQsi8qUnO5sKYxDUHChqEzBVPoCzhiTVzQ+43ImzUPs2yClCsqWclxRph4/4z4f219XD74oXwwbmz4fqDD4TvnH4gvPXI2fD+kxfC7fX1cOvcmfDalCdqCLnrwScFDN672lNZNbEmeXc9frf4bhZrknf67TveTntCCFlVvHfX54r3NMlYKNaQVWHMR6CEVRBrxLfLly8n5asMxZp6VlasaTkWvnTidHj3E+fCB59aC7eEJ8+Fm4+eDi/fW/eXnwghh8iqiTVD3MViDSGE3A0MfUxgjuDHZ8ZCsYasAvI0jf1IVw32o4oUDw4exns8Ky7WEEJWGoo1hBBCVgT93gnvOxiOMhRrCCHkcKBYQwghhBBCyBHn1C/9w+iLWQk5Stz78Z9L9jwhqw7FGkIIIYQQQgghhJAZQbGGEEIIIYQQQgghZEZQrCGEEEIIIYQQQgiZERRrCCGEEEIIIYQQQmYExRpCCCGEEEIIIYSQGUGxhhBCCCGEEEIIIWRGUKwhhBBCCCGEEEIImREUawghhBBCCCGEEEJmBMUaQgghhBBCCCGEkBlBsYYQQgghhBBCCCFkRlCsmTUbYfvGXti7utm+vrQddvd2w/YlbDcztnbC3t5O2MTyQ6GN4e6VDaduH+BaNHNegbU5CJq5781n/rX7D9dwiFq7JcaOWcOh770DusYIIYQQQgi5i6FYs286QeXGdthI6vbLzMUaSRK7eW9e3Qs7W6Z8v0nt0jigRBLX4tAT5kMC4zAHavffWN9r7ZYYMaZcU+2+3Qw7pXEPfe8d0DVGCCGEEELIXQzFmv3SCBa72QRs48puKuRMTfpGJHpllpRcUaxZwlo4zCp+A8zR11qfxq5hrd0SI8asFmsOnQO6xgghhBBCCLmLoVizTzShkp/9EzAGijWHzZLmiixtLRxmFb8B5uhrrU9j17DWbokRY1KsIYQQQggh5O6FYs2+kCSqS7yaJMwmVN1HmJrv8ui4sR2+LqKOLdM+mgg2P/VjVZAE9Yke2I5EIuOT8bUXkxobsQ82yWra9XWpnSp0LjBWL+a4Y0E9+omCVw7ot3tlM46hEZgW/SRmntjUlntxSpJuL5HXtXTmkJs7lsc2Y3/Sefj0ax/5A2vr7r/ymImv2To7lu7pdl36uWfHL9ny6tVGhbiBa5jYgj1Zsy96u8aOvT6TMfE+kc5vEJwvjp/dJ+3YeF3GAvPiHhTFJrKZijXatrHdz3kgbrjXBq6vxk8oWwhcNX4TQgghhBAyXyjW7INcUpNv0+EkHn0iHQkvnliDCV2X4PT9BsQaz67bRn1KbQ3iJNxJYnVpO+zY8aOxQDwRf69WJFldfGzyqYnaeLFG+qUJcCqc2T6L9u18ISnXORTnntpyfdS5JXNJ6ZNVs7aJf+7+qxjT8bW8j1ScgH3ljj9ky/Gnv0Ywfg64hlXrMnJf6Hwz3zuF89u4sjPxelOfcM1K1069WNMLL2aMxf0jvp9413qyJhhbjGPfRsd15pXxq32dr8f7HiGEEEIIIXOEYs1kUsHDE2a8Mi/BTZIXbwxHjEjtTRRrGtuY4DrtanDngskWYuqThLcOTHxbYA7iG64H+ub6D2uJPiZrUJor4o0fr0UzNs4NfciQCBoNTlzAVtWY6OvgPgLxQnHGH7SFvkS2sJ9Drn+Pty5pe7svFk92mDbWn2jMidcXkrU/xAixBtbLayPzSETA3iccJ567f+3G5VFsu72x45S1617jNyGEEEIIIfOFYs1UvKTIKXOTAy+Z9MowmXPsp+UTxZpmfPsRhAWjk0l3Lo6A0SVxdiyt954GKeMnnslcq8Ua9H8gKU7qnP6Wwty98ft4JKRrjdQkwpPHxH6D+8jZe56dGlvuWmZseeAa9mXxWKV1ics7gcDxt7xvTP0UwK/6a8e/ZnJCzGCbG45QI+CcE7u+Hw1mjaMxpVzmh/WlexzaIIQQQgghZMZQrJlIPpHFjzU4yYGX9HllmHC4SQ+W70OsQT+n4s4lFkTa+Fk/HTHHJr8TE89kru4876xYMzh3Z3z3iY1K9iPWDI6J/dz4Wpy959mpsZWr92x5wBpOWZe4PLcH82Mq7RMpE0Ub16+aa8f31xViiqJHN1bzV/FSe/6cx4s11o6sVdte73doo8ZvQgghhBBC5gvFmkl4wkJLm3QtEic3OfCSK68MEw436cExPN+6ZKok1mRsT8Kdi/XL89ErK9lDcI6x3UisQVvd0xRDSXkkbmC8oj6Fubh1w6KAu48q8cWaJY2J/TAuCc7e8+zU2Gr6pPV4DWZJRM7x6yLY+Pqxzo2JeD5UkPFrsC6zFs0cJog1TZtmPJiDO+fYbi5unsi8syVxWsypFW7iMrTv+00IIYQQQsh8oVgzhWICVJHgecmL1w4Tjk5USJPjOCmJky3zrr1JhtLkqBM7IJHZvIo+VeDOxcYlTaTapxq6eveLXtGeg5Moqt3FWCDe6LyTNfO+SNe0wTUEH9uY2zXWL3odmLtnuy/D5HMz7DgJLpLGQMtMTL0Y14yZ9BvaR+n8fTv1tqJ67xrJEcU59StZl5p9ga+7cfr9jGNGX/67BLFm5LWTCFvJHNO49P1ybTAG3n7GPt5ea+zE/bx7WV8W7ZMavwkhhBBCCJkvFGtG0yWIhSTZe2cakwlNBPtEyU2qvIRmN2xvaUKaJuEtbdJn6xNxpk9qfeEib7sCdy6QiJrx28TO1ENdaquAJpu9XSdpi9pIMpgR2BJbZhxMQJ0590kkxrI0965vsj+cfpjI5tC1X9gEuxn/q8Z0+5X2kbMeWTtDtpx6ucaytgBcw6F1qdkXfTvrM65hLBAVbdVg55us11AcwIerm2UhpmOoTSSqYJwzfap879qk1yL66NhP/CaEEEIIIWS+UKwhBKlN9leERKgjhBBCCCGEEDJrKNaQ1SF5530BvoO+L1ZMrMEneBa0TzPcvWJN/IRZxF0ZD0IIIYQQQsiqQLGGEGTFxJoh7l6xhhBCCCGEEEJWE4o1hCAUawghhBBCCCGEHCIUawghhBBCCCGEEEJmBMUaQgghhBBCCCGEkBlBsYYQQgghhBBCCCFkRlCsIYQQQgghhBBCCJkRFGsIIYQQQgghhBBCZgTFGkIIIYQQQgghhJAZQbGGEEIIIYQQQgghZEZQrCGEEEIIIYQQQgiZESsu1hwLXzpxOrz7iXPhg0+thVvCk+fCzUdPh5fvPea0J4QQQgghhBBCCJk3KyvWbNx/Jry/th5uX3gm/OgTZ8Jbpx8I3xEePBNuPvFMuH1xPdw6dya8djztSwghhBBCCCGEEDJXVlKsufzQ+XBr/UL40SMnw+ePpfXC2XtOhutPXAi3186Hax9J6wlBNq/uhb0b22Gjeb0Rtm/shd0rG0m7ebEqfi5o4nx1Myk/OCBGl7bD7t5e2Nnq6pvXu2H7Eva7u2nWac9eE3eArZ2wt7cTNrF81WnmJfG8O/dZzTVf02bVOIpzEp577rnw6quvhvPnzyd1ZJ7ce+ZiOP0r3w/3nf/F/vUDX/he8xPbEnLUefbZZ5t7mPzEOkLmxsqJNRunHg+3Lq6Fm6eOJ3Upx8PXzz4Tbq89Ht6c+IRNn7AY+iSPHClmLdY0gkKbxG5c2TV+zczPCu58AkOxRpC4tzHYDDsDgojssTsq0iiHIdZkry3//j86Lkdhf3XXTBILZeB6rrnma9pYmj26N3Tvk70+Yc2WxNg5jae9tzX3Mlmjynk+//zz4Y033oh46aWXwsMPP5y09ZirWPMzG6+Fj332m+HYh+9P6lYBFVRO/PxvJnX7Za5ijayVrNmqrJvsMQHL7yRT9rm95uX/UvbCCy80YNv9IOLH66+/noyVq586PtoZew+rEWvEN2u/5KvM09bLPbKmHyE1rJZYc+xk+MHaevjgkfvCWazLck+49sR6uHX25Ig+i8NpchDc2knLDp3VS9gPBDfRaw/r4wW25cV0KYlvNqFcnp8HgTf3g09gkIEYzTyZ9mI4hTFizZ1fow73Gj5gsteWF4d2L41aj8OY04Ey/p6axjGlpo2lvS52ywKFPtFUapMwfn45xs1p4D7lMl2ssYmN/JTXtcnOHMUaESFEfDh+8tGkbi6Ib+KjCiaIJOEPfO67biKuogYKOVPnvSyxJudXLer/Mny5E8xBrJkSc7zmhWWLNSqgyP2h5rXcP+Q+goLOEOIz3n9kXlJee08aEmuk/Itf/GL/OuerFXS8WKKIs39OhM+8+Dvhd178TDiR1JGjykqJNZ9/6Mlw+5mfDS/rR5/uezh8cPGpcB0+5nT5kafC7acfDr+hZR85E26tPxmu3ZPa9FneYe3OMOWQdwRxk6Kpa7m8mC4l2c4mlMvz8yDw5j4ugVkGAzGiWJNw59eow72GD5jstZWJg2mf2PI4jDkdKOPvqW4cJ7Sx9GJN1pdOyLi6M/L6GT+/HOPmNHCfclmOWCMMJS+WOYo1kkCPSV4Pg5JY09R97ru9eIFtcgn6qos1um5zEEFqmIufY9fdu+aXLdYMjeGNN/Ze4o0xhTH3OwXHtr57c9M+Xvk0ToRnf+t3wzvvvRfee++d8Lu/9SwFm7uEFRJrjoW3zrVP1diyrz36VLhtBJtGqGle278GdU+49uR6eP/Bur8QVZ0c4aPhUZ/Fwas5sHlt+iSxe1S7Iz2sde/mmjbxRzjiurS/Eo/jJhD9dys4/ib9bYILdV6CbuoXB2GcWylpxvEX/qP9pg7nouNq3Lc0dq2d+GC9WD993B7HjA7Kxs/F/sG5xXGJ7aZ26qjYZ85YuEcwfnW+pPPLr+vCJ41zPq6eT/G+UBvaBufj+dm3QXEGX/f7zPiE11l1AlY3Dz8WwzHs5/+7O77gNFoowGvMxhbrYLzMdZWOUbjPJP7imGAT18XuexxjxJopbrI95KPxAa+rRV2+z2K/bvbrn73fW9/UL2iTXssYU7wWMvahf2wXbcbr1McxWhP/WrBjla4dvc9uyk/PTxXVZMyB+2E/F9wzpg77pPcciIFen8a3rA2Me6mu5mwyACYdgr5z/Mu//MtNHb6DrPWSoGCCpXX6DjMmX5rIiM1cG/Ur97EDrNN35wUVOqzwoEm18OCXf68XE1QwkTLBPsWiAsaHH/srTbm28ZJzsaf12EYFjJPP/lZv5+RffjFqL1hBRv6vvqh4oXX6ESbbV9vYMk3eNZH/6Ke/3JSL3Q9/4i9H4kzNXK1PWmYFp5xf2tb6J+1QGLLr1vjzue+64oOMZcewPpXq0D9cR4yfrgf2szZRrMHxbZ1nX/cGinESN4w17jHbpyT8eXjXfE5gsHVD1+yYMdSe7SP2XnnllSrRxN6DsA7Be5I80WPHWIZYY8nFcnlijQo118PvPP9UeOr53wnXKdjcNayQWPPR8O6n1sPNU1i+EGxuPuYJNS0vf3wt3Pr4R5PyFEjsCmxeTRN3TPbtYU8Pc+khzNhpDotO4mgPo12/hY91Pm9c2UkPx4l4YMfeCNtXu/pkTGsvPbxb24n4tbXTt00Ps7GPFqxD/9MkyvetjzscemNfFutn59wmD3EyjckQzhdfu2WdT2hrmIp9Jq+d/RMlIZn1yVOzLx3bJgHD/Wtt4b7A60JtDPu5sF8n1qS+JO29Nhlq51GKRSmGKI7hPSAZv5Kkn7O2mtgmQsJAMlm8z8A1XL7m8drG+xXcR5cRB+/aKtz7mrLkvjTUR6/pjBiW24cqNOC9xxEd3fv4kP2C/+V1WuzXZF/jtTDiHrC4LsQfiFXXv5kniDXJ9ZTce9P5Jfsn0ye590VzHrKRu4ZL54xpeEmHTV68eivQoFgjHxewSY8kJ7a/vJaESRM1/diVTWLk/ygAffWrX3X9xY9TeKKCJspDCa60076apFthQftgEm6fatAEXO3oaxQovPFtfxU6vKdesI2iwowVOVRAQMEHxZqhuXpxxTnk/PJEDYyHFShyduS17SftRASTn6U6nK/aV59QHBH/BG9+ahPnhWNIX2lbsq9+4B7A9vha12so7jnwGhJyAoPWDV2ziAok2gevU288bFMC7zs51KYVhqSvFXnHijU6fxSbFG9uwnLEmlio0XIKNncPKyTWnAo31z8Zrt+H5cKx8OZjF8Pt9Yvh5qlUqBEuP/LJcPuxU0l5ip+A1xAfAv1DVdQmOawt+umBLTlYenYyh7xBoiTCO6AuSA7OhsYXrDMH/3zfiX4rmATh6wZnXm7c0U9//WJ7/l7BNcPXrQ0/uUjHG8L3Mx0z7aNxnzJuzj6W42sBE7kGu3bN+uA6Oj6jjSywzzAp7V93sXT8Tfaou9eAqfNIBIsRMazYZzXgnsDXbnnmuopxrkfLUFyTfZKZ35CdSpr5RU88xDaH7n3Na289i338a3pwH4KY0RLHO7eOVfYzNl2gn7tfvWsh2ks4bv53Y+q7+Gji0o/tXxNxXCrmV/AlbxfB33/42ic31hgwcdMkS5MK791uqdNEZShpwnoUb7BNKXHyfFGb6q8+ZWLrrQijZV47m3BjQqxYQQQTdM8OCgMKCgFeX3ntJeJeGfpmy1AYwTFq5ir/xxjiHDy/mrHgKRlsh68FFChwLEupTpDYl2KFYpKCcUJsPy/2XjtLjVjTzA2eFPNs4usSeM0LOYFB67A9Xtce+ESLFWFQMFEBBNvlkDbok0duXra8dM/xkH6luefG3L9Y4ws1CgWbu4MVEmvm92SNkBzm+0OUbycVa/DgmB5g0UZDdJj1x/JoxveSD/dwHPuUO7wmMejp5tYlcWkioYf6NAnKkfW/t4V2nIO3G3c8WOdiasv9uOBhGl8v4uGQPdjn8P1MxuziYMfq+5TWJ0PdvvT8wDh3JEmnExvjs2sjC8QI1797vesINX3i7PiS7jVg6jy85L4mhpiIJuJNPd61gPu8wY6BcfUo3mfSuQula76/9ySxWKybu08r8ZJ4O9bgvU/aecJF0t728a7pin3oxK5GXK6279pcMLhOyRrF5VGbimsn/V0K14y1FbVLbTYMijX5e2jufpjOO2/DX3djx/abeF0rkkDYjxTZd9AVK86gYOIlbWgTxRpMWKyNUhKm75Kjv8KQWOOV2Y+VKCps5BJ1W+4JGIJNwj0hQsgJDChSeGU5m55g4JXh3PC1186bK87B80vqMMaKtvPGx7LmdeajUaU69QnHFjQu0h+fLFJ0n+D+0Tott+PguuTs14g12hd9R5+8fZ9jiliDdd51X6r3nsZRwUbQJ2o8MdYD7XvomJ74Y+8ztWKNik8YO8SLl7A/seZEuLD5raxQo6hg863NCxRsjigrJNbcue+sSQ9YDnroM+3ipMo/eKUHTExu4n65Q+B4saY7JNpDnj3cF5Oo0iG/4CPSH8Bxzvagn/NhwH/vtek3P7EG/ZyK76cdU2O78NPvU1ofJLvmXtJUIzSgWDOQjLg2ssB8cf27a3n3BnxkxPTFNa5i6jwmizXxusj/J/md2C/EIEmEB/bO0N6P5l5xzTcYoSGJySI5dvfrAEmcYY7Z68DiiDXlPt71WViDzDgt48Qavw7Be+rwOiVxdMqjNhXXDl4Xi/0uc8mIlkP7rwHnN3wPza2pndOQjfR1zTljGl7ihtjERv6PCZcmTV4yg0mVl8iMEWskmSslaF7SmhNrMKm2oFjglXsChjBVrNEyTMqVkigieMKMV4Zzw9deO2+uOAfPL68fkhPOrCBREmRKdTlBxEOFpZyoggKJt6/sGnrrY+3nfEOxJjc37IO+5PCuee+6LNXhdW3JiSRDokjN9V1rS8j5IYwVa1QoRiHbw4uXsD+x5pfC62+/XRRqFBFs3n779fBLTh1ZfVZIrLmDfw2qOWiWkw7vwHQQYo03TlrujxXhHeSdxCh3WM8dtoWcjz4lXws+DPrvvM7ZdOOOc8z4GfX12zR2TDzS+Dg+Tcb3YTGmV++V1dR59svl+Fpw95Jdu8z6WFwbWWBOaN+8buzCHho3lgHHcXBt70OsacZs2soew2uhHrSPr93yivkO7n07d+969soq6rwY1uDN217fVXYr1jPGvwY9X0rjtMTxLtko1cXAGnrjQplvu+BbxV5K4qh7X8a2Y8nrvt3A/nPbeOuRijXpmrZtWl+GbaSvnTlmysbiJW6I1L344otNwiLJhk1+UGjBBA7LvETGtiklTioGecmX4iWtXlKNT6sgOQEjSaSdNrbcEzAEFDoET1gR1AY+xYE2vf5eGfqNrxU715ydoe9OydlWvDjY8XXMUrtSneCtfw5vDgrGoGQ3t7+s/dxYYlP7Ds3N9sn5gnjXvHddlurwurbkrtPStZ0bJ4f3pI5HzqYtH/JLhRqcT47cmPsTawhpWSmx5kPHToYfrLVP15zFuiz3hetPr4dbZ0+O6NMdiLxD3dZOe5jCA6q+A9YfotKDV29X27gHUuzXvWtpD5/dWNY3/zBsSMbq7GISEbXBL+zEg6T9Ykqc6+LLFL0vSGzbGvvGpyTmlf6nbXC8UjuMYXfQdg7tiRhhfWj2Rfld5n4sKMMv6azDmR/sM9wburcXiUZufXAsS92+zM4d92rULo1z228o+csBc8L1h9fJ2nRrioLfzmCMJs4DY4avc/36MXfD9hVIWEeS2Peu8cavfBxzFO8zdq6JPbjmcQ1sX/iS7KkJbhKHhtaPJhZeXMy9rwHXb7BP5hoc2oc4jtq1fZyx+/vOkP2izcI69ddUPC5eZ+79t3DtpGva7n15Qi7ag5FYk47b2rL33jT+uA/wHurHNf6C4UEbTptkTbtxMC5j8RI3D2l3+fLlpm1OjMGkR5O2MWKNtrGv5ad+wTDWCfZLjb0nObxEVoUGmyhLYqxfCqv1Njn3+ohd26ZWWPHKPT+VGqHAE0awn9euZq4qGuhr9d8+8eP5pe1wTSTOYtPzT0GhQsa2T72IvZovGJb+6Ke0k7+QZX2x/oo920ZAX+1cpc7at2JNzr62szbVVxsv3GOC+GXninuphHfNe9dlqQ6vWUTGsPUqrtinWf76X//rg+1LAoneX3Au8n/xV+9J+ESM2LR/EQrvW8hYkcWL1xQ7hHisllgjB5xTj4db6xfCzVPHk7qU4+HNx9bC7bXHw5vHsa4CPRhFpAdQTc6bPyG6dLFG0MOvgn1iX3HMaGw7DzwIJm3AFsbDHhixLkl+PZsLQURxhRrXN9//xViY7Br7btzxoKzrsPjzucmcvTnon2FOkoi0P8YlTQpr8PYLJjLx/tE5aR/0A23lqdiXztyThERI1jLdG8Wkpsg4scaO3e9Hs4daMCnOMWEepViUYtiRiiHjce0n1zjEIIljnux9BuZevOZL/uB6JddtHW4cMMaJH45Y4MYq18e/phe2SnPGfekI4Di2jU3JfsFmcZ1MHON7jXPvjmJdvnbS+2wqzOTK8J6XrDH+zhi4hzZAXKUuntM4G+79OTlnTMNL3Dy8pEfApE3q7XfViJCCQgwmLGhD29nvpLFJG9ZZeyhECCgg2Lb2+0Bssq92JCm2bbyEWGzbj+7YNqVEWhPzts/fip5SQVAssb6j4CNlmtyjwKB9Uaypmav1V321YkrOLyvsWNta7q2NnY8VLqQf2tG2pTrru4Cii9cP9wfGEcUaawPFFs++gLGRtlKP4hbasDFDUWsI75rHa0q/R0au+9prFrH3AsGOqfcTr07raz8S5flu71M4Fvo9JNZ49hVPTPLiJVCsIctg5cQa4fJD5xvB5kePnAyf149EAWfvORmuP3Eh3F47H67Bx6QIIeSo4iaxhBAykqGEZi6UxJExoKBByFzxBLkSnlgzN0QEOWrCBsUasgxWUqwRNu4/E95fWw+3L14IH5w7G64/+ED4zukHwluPnA3vP3kh3F5fD7fOnQmvTXmihpC7HnxqpvAu9AxI3inv8Z4MWB6HNW6ewlMZhBAyglVI8JSxyasHxRqyCkwRJ1fhWhYfvadWVhmKNWQZrKxY03IsfOnE6f9/e/fTYsd1Jn78nYyQM44dRbFsYzmj2CBZcWw5boYBL9vOEBJwMsFDMgmTwKAWYSYbGwIJCCW9MTNDCPm1zGThzEaDSBu8CDRo5112XmmnV3B+nKr71H3Oc55z6tS9t7vrqr+LD3ZXnTr/6lR1PU/XvQqffO1q+Pz1G+FhdP1qePDipfDBF9r+5ScAeGy4H4UBgGnkuyG2KXiyH5+ZimQNtsEq61x/PMl+rBGbF++bMt8ka7CuLU/WAACWb0K1fWcMAJTI9zWctaCOZA0AYG5I1gAAAGDrnXviyeRLWYHHzbkvfiVb9wAeXyRrAAAAAAAAZoRkDQAAAAAAwIyQrAEAAAAAAJgRkjUAAAAAAAAzQrIGAAAAAABgRkjWAAAAAAAAzAjJGgAAAAAAgBkhWQMAAAAAADAjJGsAAAAAAABmhGTNrO2G/ftH4ejuXv/zO/vh8Ogw7L9jy83MrYNwdHQQ9uz22ern+fDOrrPvmNhz2c3Z8ue9u+q8o5+P+/th19l3Iuz5AgAAAIBjRLJmbYuEyrEEkjNP1sQEw2LcMZg+uKW2k6yps+fyTCZr+nnv1k2cj8o1RLIGAAAAwFlCsmZdXcLisBjI7d45zIPMVZMZGwsYN5Sc2MpkzV44OFJ97WxoPqYYOZfzTtZsar7akzWnbuR8AQAAAMAmkaxZUwyqY9BaCq5J1swNyZr1bWq+SNYAAAAAgIdkzVpi4L8I4LpgTicoFh9hOlLu74ffxiBcb5NjJMHR/Vc+8mGC4iFgNHUnQb3qk+rrEPx3daR90EF3V27Yl9fTRMZi2koTJLYts9/2szmQ75Mx7hhkbrM2l/Oc9Clr09Sd7Jc69oZzY8ebsMG/SXDZZE2X9NvYuWoZR2Eu7HkZ+uSM///5STs3gTnCzkfWj2J9I9fDUFcsk85Lkoyy52uYQ3P9jqz5bA3qfjtJzv68p9skQdzUbwAAAABbiWTNGtKg03/bwA1MnaBsCOKSxIuXrIkBmRM0Dsc1BKe2XreM9Cmva1SScOq3ZUHnO/vhQLeftGXfftkN+3dLwbiymJ9kXIu+LOuydS/qzxIsfbllXflx3XyZ8988Xzb4ryVrnPOw+rlqHUdtLrz1440/b8s/dlw6XltvbX00XA/DdaXWp53P5HwtxprNf33N9z8753Eo44yrcC66n1v6DQAAAGArkaxZWR50eokZb5sNzJfbbJDlJ2v8v9brgM/WY4PdvO993fYtCKdcC3csNhC1bBBqjx+XJTDc7V4/nODbnLvu/23dYwF8jR1jKVmTJZvWO1erjmM8MVk5Tm9z+z4uT660ro+G68G9rrxrL9azGKd7Tdt29Frz1l2+fXhrZmjzIBw427r5a+k3AAAAgK1EsmZVXsDobJuWrLFBbClgrPWlITi19Q7tq49nrPOxCncsTrC6CDZ1Wzpo7bbZxEJRP6Y8GF70ZzgHTj+8+TDnbuhPJk1y2DqK7Ln0kjXdF1fbvq53rlYdR2uyxh5nkzNZ8qaRTcS1r4+G68Gei45/7R16iZpobM1XklQ6QZPMc6xTEnZe0rCl3wAAAAC2EsmaFZWD3jSA3Kpkje3nqtyx5G8QLBME+f7e4i2GpqD8+JM1dr/Xfr2MYs9lJVmT1bnGuVp1HCsna5LzEv8/X5stbLJG111fHw3Xgz0Xqu702jsKh/fz75DpjK35xmSN7kvcvnwrJ24za7yl3wAAAAC2EsmalXgBf68Lau2bBDaw9gI7b5sNvNzgzLbh9W0R1NaSNYW6V+KORffL66O3rVZfzg/o7XavHWc+zLy65zHh11Fk59tL1sQ+S5JgQ+dq1XGsnqxRb4jEflfbLiud2051fZTP9/RkzTKJkrXn9mFszXvbJSETt6frwW5r6jcAAACArUSyZhVuYCZM8OWV9YIsr5wNvBaBe1LOCeb7tzKWQXGfQHI+RpIEv4sA1gTTe3dtnxq4Y9HzkgeUfQC82O9++bCtz+HMRX+snuu8bX+bSVB4dccx1RJgNXYNlJI1bttrnKusrmh8HDbJU1o/9rih/qODsH/nsLB/nJ2PKetj9Hqw56LjXXvLMlnCxu1Dei/o203bsX1z+6e36bIt/QYAAACwlUjWTGb+Ku9IA7BFeRNoSXJiCPDcYK8QMN6SpE0vD8z6IFHvz4LrIfHjJAGqdTdwx2KSWKr9Pkmj9pt9eV0VLcd2/ZN24zY/wLUJirzusSRQhQ20a8maYX9hXU09VyuMozYXfVn/OJElNyayyZrRc5wYuR7suegUrj0zT8MaalnzOukivPvIYnzJWziLbcn8Zn1y+g0AAABgK5GsAXDssuQTAAAAAKCIZA22R/ZGRfq2RFb+VKVvc4y+TbExp9VuTf6GCQAAAACgjGQNgGOVfYQKAAAAAFBFsgbA8RjehLLf5QIAAAAAqCFZAwAAAAAAMCMkawAAAAAAAGaEZA0AAAAAAMCMkKwBAAAAAACYEZI1AAAAAAAAM0KyBgAAAAAAYEZI1gAAAAAAAMwIyRoAAAAAAIAZ2fJkzbnww6cvhU++djV8/vqN8DC6fjU8ePFS+OAL55zyAAAAAAAA87a1yZrdL10On93YCY/eeC389WuXw0eXngm/j569HB688lp49OZOeHj1cvj1+fxYAAAAAACAudrKZM3N566FhztvhL++cCF871y+P7ryxIVw75U3wqMb18LHX8z3AwAAAAAAzNHWJWt2L74cHr55Izy4eD7blzsffnvltfDoxsvhQ96wwYi9u0fh6P5+2O1+3g3794/C4Z3drBxm7NZBODo6CHt2u/bOfjg8Ogz77zj7WnXtrFnHCro1encv2762bjxHJzymx/Ua68fVzedxnKu5O6lrcG5axr2Fnn/++fD++++HH//4x9k+zNeXd38dvvKd/wzn/vZLnfj/T//9v2XlgMcd9zBsu+1K1py7EP5yYyd8/sKT4YrdV/RE+PiVnfDwyoUJxyx1wVEXxCwd3MrLYfvNOlnTBTd9ILB753A+/ZqbloBpE4Hi3JM1U9bLJuZjJadzjcU57NvcCwdqrcR5svf60bXkaD5HM+b93lsaWSvHcg3GczV+PuQcnsrv6JZxryu2sfgdFc9RyzivXbsWfvWrX4Xf/OY3iW9/+9tZWc9cA50vXH4zXPrn/w1PXvvHbN+2iAmVZ/7pf8L5Cy9m+9Y112RNPF/P/uj/tuK8xTUWz0/8r913UlZZ5/qaj/+NP7/11lvd/8f/2vKrinXdvn17uKf8/Oc/z8rE+8wq9x3Nu4fJuGxZz9R7mLSnx2P7EMctcyn12+0bcf0n4fZ/3w4/ue7sw5mxVcma7z13PTx67e/CB/LRpyefD5+/+fVwz3zM6eYLXw+PXn0+/Kts++Ll8HDnevj4ibzOou5h0gkkbh3k207d6QQ9s+M+LPcP+S0PtanNzWkXQAxJoBVNCb7PMncNGJMDxfloTgRMWS8tc3YsNneNTVFN1pjrtE9aTJmb0xnTcfLmpaplPU2+BuO5OgyH92v38uUbTeUy1gbPV8u41ykvx6yYrNFBkgRQLYHT1EDnJMwp+VAT+ycJE7tPEgGRF4jHbTaRE/+/VL5mk/NVG9MY6ccz7/6hSybZ/XMzh2RN5K2FGu+a33SyRhI10oa0qe8TcZ9OXtifW8T6vGNu3ryZbSuZeg+L5WzyKbb19ttvJ2Vsv+Ic/PKXv2zu16jr3w/7f/o0fPrJp+HTP+2H75OwObO2KFlzLnx0tX+rRm/7jxe/Hh6phE2XqOl+1v8a1BPh4+s74bNnW/+FqFUD/NOywQfObeY+/K56Ljc3p5ODHc+U4Pssc9eAMTlQnA+SNeubkqyRJEH7WjmdMR0nf14qWtbT5Guwv48f3q/0pUtkHISDakLH2uD5ahn3OuXlmA0ka6IYiHh/CbemBjonoQui3/1Dc/B6WmqJjbgvJixKZbwAfduTNXLeZGynnQQZM5dkzdTz513zm07WePeP2J688VK6b3jHlej67L4pSn3xxPmJCZdYvtZPb443mqxZJGr+/Mf3w7ee+1Z4/49/JmFzhm1Rsuap8MnrO+HBRbt9mbB58JKXqOl98NUb4eFXn8q2e5ofThdv3wyvhyfHLB8Ck1fKdZnhgVVe8e7lD47qOxAWhoc02wf3eJG24z4odg+Qhf5mx+uHbbPP/Qu10/9sbLUHeNv+sv+2/m6fHYu0K/N+S+aurycNhJfnL/14hJ6zvox9YF6uHzu2dF7sxy5sPVPYutKAvmUsfj1JnyS4MGtutN9eYNbVlW7r2lb9tn3xx7SX/jXdCYDSeuS819aZ7afTh1XaaZq/8hqPsmRNqX+Nsuumsj6b5t9pI7/GpWweKNs27b3M9rd4H2y5fxvufd9Zu7aPxT6ofcVjIlkXci6HPtTuqQ2/X1S5UtvpfPrXhDcvdjzJeRqujcrvNWdes/lL1psk3cvJsz4J16/H6jUlY7HtJX2sX4fSXrI/uyeU67DruLavfF218YKKKAYuMSD5wQ9+4AZEsv/VV1/NAh35y7PQ+yQolEDLK6P75X2swO6L7ceAS46VRIf8LEH1U9/8UfeREZ3kiOXix26iuE8H3nFfJB/N8cpEkiQplZHkQ2w/7v/Kd/6rI+X7bcsEhwTf8biu7nf/kPVLHxvrfvrGe8m2KB4vdV1469+7/8p2GZtuL85bpOuVedJ90mOX5Mz5C5eH+r0x6XqlD7oeKSN9kkSVLVOba+ljqZ3auZaPE3l9t/MtddpkjW1ft1GqP9Zlk1te0s0eb988mpIk8675WrKm9ZrVYiLD7tfJilJ7cl/R17NnSoJF6tX3JJ1oaa1LysV5GEsqeXO8sWSNTtQ8vdj2NAmbs2yLkjUXw4Odb4R7T9rt0bnw4Utvhkc7b4YHF/NETXTzhW+ERy9dzLbn8gCiZO9uHrjbYD992Fr8dVDqHh4WVT1ZELt44NMProvjln1s6/PunYPkIbd7KMyCM932bti/mz7YpoGV1CcP0n7d2cP+rYOhrA0+bR81u8/23wugvb4N8+4llJzzp8fcP0hLG2PJGv9nd9uiT7auFmmfokXfh/pbxtLQpyyYlDVj59zK16cEJKU1bPtWHpOXBDJjcgMoP+BLZAHlXjgoJGua2mmYv7E1nqzRWv+mcK6blec/49y/huvfrgvTf7P+svU51GOvcXXfmiCrP7unO2XsNZKNqeEYWRducmLZv3QtNPx+qc69vd95v3sK/R85T8sEolo/9veHXbv252zul/PR9ceu8+742J69J7fNo/3d2XQdOud0yrXsXXexngPdl8I5mcILKiIJRrz9OrixgU4s/7Of/WwoGwMT/XEI+VkngOzHH6SMDp7ee++9brvXn9hPCfC8pIIEujaY1QmLKB6jA2wJ0nWZGBR7QbhOLEhyR/ogP7cG2JLc0Qkle6wtE3lBvsyHTU54yZrYRz2OuF/a8OY1smOwP3vbZM50Xbbv3vi8uY4JsLhdjrfnU+qzc6jPtW079jMmt+J/bd91nTZZY9uwffPqj9vsfNnyth05F3Y8dr5KvGuolDyRfWPXrOUlM/S9oPRWTGm7VeuvFfuh65R7ltwz7D2sRI/JG58ta5NOG0nWeIkaQcLmzNqiZM1JvVljH/bapQ+19mHTKWMfctVx8vCYPyg79RQeOEclD4v5Q62WPdgr5Yfn/iGzfOyK/Rb2Ydf+3HHG5c677ad//tL6/LViz5n9ua8jfwAvz1NFFuR421vG0tAnN3Bw5teRrpG+rYO7+bau7nXG1LKmS/Vb7nry9jW2s8r8mT7k56PQvylsPbbf7vbC/Bv52tfGrv90f/H6KPV3oj5x1idAerbOhmskG1PDMc66GLunluZfz3d17ofkht5u+57XmdXjHeeMJ6vHnLM4H7bd4jXm9D3W3R+f3pNb5zFr29J9Ka03ex1Zdr/92TVyf2jgBW4xaNGBWPxZByZxeww64rFjgY7db5M3XplaIGT7InVK4Oa9ieIlB7oA2HxUSoJgSQbEYNgG0l4Zm0ix23ViQJexiQDvWDneBuLeNhvkR15gb9soldH1SRldd2THYH/2zodtP7Lj8cZij6n1Qxs71zYZotXa1MfZdVEqZ/e1JGti+7ZeO1+1Nizvmq8lP1quWSuW1d97JeVlWykpU9pu6XuQ3WfLeePS28fGEtk3frx7lH57x6tr7WTNc98Nt0uJGjEkbG6H7z7n7MdjaYuSNSf1nTWND28L3UO3fsAfSaDUHli99t2H2OFYedDz2/LkAYl+AC09OKYPwFY2BzbY6er2gh95YFX9GFHs/1CXrcd52HXnfSzoEnq7Py82uLE/L+fDYQOLMXHMbiCl+9YwlpY+tc6vxwY7sc96zelxrDMm207W3/L5z/VtxDnYSDuN81db494adfs3he3XOvNvFO9fqr50fz8fevzD/sp9ZLgHTb1+lPQ6Xczt5OvWjKnlGDv/LfdU244zhurcD/fdnD0mu391KufJGU+2Pbk2lus4J/Wk10k6Np0QS+/Jq87jMG6vL6Xrwxl3sY5C+Y6zZkbvrxUSuOmPCNhgyQZGOmHiBTpenTpZY4Mn700dHRhqsV1dr5Dkkpcc8ALZGOzqj7ZorYmYUgJD6pcg3AbWwksw2EC9tM2r0ytXSiJ4yRpbRm8vjdWOwf4siTI7x/ZNI2+uvT7a9nVZ23/Req5tnyLpv5dss+tK2rHnpVb/WLJGxm37bdvx1n3JKskau8+77i1J2Mj1GX+WZEUpKVPabnl98sT67Bsukb7PjI3F65OXrNEkcaPneN1kzZW934V7H1USNSImbD66F363dyXfh8fSFiVrTu5fgyr+BVeTBypVznvYtw+Bp5esWTxc64fM7OHZeXBU9ZceGIt9tIYAwY5ZP9SW+jDSf+9nddz8kjW2nysqBQ5NgbXa3tKn1vl1LcvF+bDzl6yhdcbUsqYL579sGZi6AWlrO6PzN77G/XuT078pbL/WmX+jfm9I65B7wHItFdoo3kf68t2+bI7GZdepXdul85wwfW45xs7/6Lw57SxMSta45zhn52X0PDnjybY7yZr6PcQ5F9KnWK+5b0u56hyo8mmZkeuwNHfJuEfq8H4ekkt6XbfeX8u8wM2ygc0vfvGLIeCwgY4NUux+L8iamqwpBVWRF7TaoDrygmTLSyDo7bUEwqrJmrjNBuVCl/XqnGuyxr7VYtUSOpIkKbUvxpI1dp49OjFiz7skYuxH4Oy6iuQc2vPj1e/1zUvWlMadHDOzZI0Vj5ekr1dnZN9gKfHG4Fk3WSP7bHLYJontcZFN6KybrAFKtipZ8zfnLoS/3Ojfrrli9xU9Ge69uhMeXrnQfkz3EGUDgZR9gM23eQ+B05M1Xjv5dr+thPNg6D1clh4K/SCxV+qjr9bXSh9G++/8XKrTnXc7xkI/nSDDlunqscFNLQhcR2EsLf1MyzT0qXV+C/rAKX4B6LK/feIm3bbWmLKA0Olbw/XtSc7jKu2MzZ+332zb3HVYbmOt+TfqfdJ1ePV52xr22fE08vraJyba7pE926+GY5z+en2pt5MfV62jdI4d479rzDZnPFGydk37tXXdy+cxHnNwK7atx9H3RcpV50CVT8bj9V9vs9f1QrJWxurwfnbG6G+bZkrQEwOPGGjEZI0EP16iRQc9dpsXpNkyNsjRxoI5L2j1gmpvm+Ula2xCxCtjt3uJlcgmNkpJE6lDJwq8Om3fanW2JGv0HJXKxDpqyRqvT5Y9Rsix0mZprmt1RC3nWvPmNrJzUKu3Nm5dv9dWrE9/bK82bn1MqS+Wd81712Vtn71mW+jr2uuDlGmtM5at3Qsir+92+7pjKbFlSNbguGxXsiY+EF18OTzceSM8uHg+25c7Hz586UZ4dOPl8OF5u6+uf/ByHpJuHfQPdvZBaxGw1R9qzcOj+8Bsj1v8hU4/yDrB4ejDbtbWol41hn7M5sG35QuGnX1d/Yv+eF/EPARoyReBVh5MG/qfl7Ht1crZOeyP8/6CnCVisgfwkb+oDn9BtQFa+cuVa/K6Fv2cOJa8HtMnZxzVc2YV5yZvN++LPyZ7fdk+5vXIusnPf0Z9GWtUTNa0tjM2f9m6zNd4skZr/ZvC6Vc+nsb5zzj3r8IXDNt7mNyDl/vz/nT73C9ltfM8zp+/dNz5vNjrNp+X0WO8/o7cU712+nr1GMbn3o43nWOvzvHzVLvOh/Vq17rdvyizPK/OfSYec/8wHCa/9/pxpe3YeUq/INmOJ+tbdh06cye//6XMaB1emfyc9mun8f5aUAqarFguBjQ3b96sJmNsgBK3T/kYlJQpfcGwty/2Tb7U2HsTwQtkpZwN8OMXv0rgHAPk+BaETlDEbTq4lsBal2lJrHjbvX6KlkSBLVPaFnnJmjhWmTdvfmIdur+xbMsbP3bOIvny3VL/hE7CeHNtv8RXJzViXyJvLJGc63h8rEcfJ/3V68H2VZ+DuE++NDju08maWv1STur0zoXMs13TpTplW4l3zXvXZW2fvWatWPbtt98efo7lYh36o0R2m/24UemtGNsHW28U71PS33g/0mXkOLlPjY3FY+9z8f6j+xD7vumPQQElW5esiW4+d61L2Pz1hQvhe/KRKOPKExfCvVfeCI9uXAsfm49JNRsewDQboC3c3w97o3+BXCVZE8mDnrDHpH21bSZt63E4QUJaxktypGPOH1bzPibzlNS5eOhV+2oPpS39X7altg8JgVJQrI7NgqHlP02cjdkbw929LLhJytigR89ZEnRMY+tK10DrWPJ6bKBn59sNoor6su7adsZu++KPyax1p49pPfJPZ+fnP6PWTTZfq7TjHGPnb2yNJ2u01r8p3H7Z8di5Lsy/y96/0qB3WUdaTtar7C/2J7v35GNpkV+3CyaRYPuRrl07poZjCvOfj6se2Ef5GEpzv6zDndMJddrzNIzHrE+biMmuQbuek7569xmTmCltq86j/7tz7DrM5i7OjykzXofz+8r0tf+nyu0Yp/ECtxIb9EQ20JH65GMCP/3pT7NETEvgJ0kZqUcHbXaf/SiCfRPBS2xEOjAWNjEjZL8XEEsSoVSmFEjr9uN/v/zO7SyhoNlkifTLS6BIcG8TDMJL1uh/3tsmYWx/o3i8faPFjkm26zmUY6W/3vfBCJlbSVTYudZtSOLDOw+275FOupTOn+23nkebrLH1l/ps14I+ZzJWSfR4Zbw67Hmo8a55e02JeM23XrOara+UdJFkbmTvLa1v2eg6dL91mfiz3q/rHRuLxyZrbB/sPSkiWYPjspXJmmj3S5fDZzd2wqM33wifX70S7j37TPj9pWfCRy9cCZ9dfyM82tkJD69eDr+e+EYN8PjxAzscMy8gBYCZsgHKXJWSI1PZpA8wR6WEXImXrJmbmEDR3431OCBZg+Oytcma3rnww6cvhU++djV8/vqN8DC6fjU8ePFS+OALLf/yE3AWnESyxv4FX3HempmL7I0H/Zdwp/wU+RsJADBP2xDgianBawnJGmyDqcnJbbiWYx9jYth7G2dbkazBcdnyZA2AcSeRrDnb9u76H+lY5+MLAHBS4mv+pY8yzJH9+MwqSNZg7lZZ5/qjivajR9g8+ZhV6eNRwLpI1gCPPZI1x81+1xOJGgDbQL574iwGdSRrAABzR7IGAAAAW+fpf9hLvpgVeJw89c1/ydY8gLOFZA0AAAAAAMCMkKwBAAAAAACYEZI1AAAAAAAAM0KyBgAAAAAAYEZI1gAAAAAAAMwIyRoAAAAAAIAZIVkDAAAAAAAwIyRrAAAAAAAAZoRkDQAAAAAAwIyQrJm13bB//ygc3d3rf35nPxweHYb9d2w5zNneXXUOS24dhKOjg7Bnt0/QtXN/P+w6+45Pv0YP7+w6+1bUrfOjcHDL2XcijmFMAAAAADAByZq1LRIqxxIkzzxZExMMi3HHRMHpBdfzRrJmoXW9kKwBAAAAcMaRrFlXF4AeFpMou3cO8wB61cB8Y8maDQWjrcH3GXdSyZrTMWEtbc16mTAmAAAAADgGJGvWFIPOGNSVAnKSNSitjcSqa+LUTVhLW7NeJowJAAAAAI4ByZq17IUDSZ50iRQdbC8+wnSk3N8Pv42Bu94mx0iw3v1XPs5igsYhWWPqThIBqk+qr0PCYPERE90HHZR25YZ9eT3tYj8qdTWNpVfu03J+kjI2OeZxkiNdYs1sk2Scbk/PXZJwkDHdkjnu6/KSNemY5Ly3JWvSY5d9WKUdOaYfuyqn27RrJpnfPLFR6l+zLClp5728Lrtx2DVk6hsfc3lM3ViG+tI1nid3bL/VXGRjlDWZbluOZ421DgAAAGDrkKxZQ/rWTB7g5WUWvMBckjRJoOkla2ywuggYh+NGkjVevW4ZP3hssuhnUv9ifGmwOjaWsT4tg+FlQqCvw44t15dbHleuq/8571s2ThmTOd92DN3PuswwF+PJmmw93TooJmta2pHAP0tIJfXkiYzSWqr1r1khuSL7d+8cFNdkc7KmOmZnTPrcOPOYXytj6yW/Bkv90uW99Tm+1gEAAABsG5I1K8uDrSxQLWwrJ2tsYsRP1mTBb1Lfismarm6bLHDKNbDBtbu9ZSyjfbJBds+dc0fsTzq3B+HA2RbbL9WZbC+MKR93fn7cNeEozW22r7GdLKHjlLFqScpa/5olfZ+2BpuTNdUxL9vsEzVmHt3z7CR4bBtme9rX/ro9uJtvSxKTK651AAAAANuFZM2qvGDY2eYGU14w7G2zgapTf759xWSNvNnjaA2Udd02YTG0kSQ28n4m20f75IyjNOeOpFxsK86P6qMOppPETtZfnVzKx5TMvZ4DzT3/jkWiIEsgrNiOm1xx+iJvfQwKyZpa/5rZeRzWwfj8NCdrbBkvWXPfSdQ49fXypNXoetFtxu1xTu3+0jwvtK51AAAAANuFZM2KsuBVU4GgG0w5wbC7zQZobpBot6+RrLH9XMmGkzXVPjnjKM25R7UV52f5cae4LR1HU/BdGNMqSZRRQwKjkIRobGc0cSHJl+Ka9s+B179mhXns33KpJ202mazp/5U3Zy27/VshWaM+Zhf7rROQcVtahz/PzWsdAAAAwFYhWbMS+30nS31AuQwm3WDKC8y9bTZAc4NE24bXt0XwWUvWFOpehRsM2+2F9pKxFMosOeOwdVRJYBznLE1g2G2lOlv6myVRnDJ23bTJEwRT23HPlVqL3ribkjWj+yoK89jz1veS1187F2NjTvq9SDol7bn9S8fq9sPZ3idk9sL+/WV9feIm3WbrL9UHAAAA4PFAsmYVbmJFmGDSK+sFe145G6DJWw663GKbDuK6YFQFcH2AngaoecAqbxOkgV/65bKNnD7ZgLltLGN9Wj+A9eZm2JbUUf7C2OFce+c1m2tnTN5cFHhf9usmaxrbydeBWYt2XUodhWRNrX/NknncDft38/NQStZk50TO26rJmmHf2Hm2Y21YL6ru5DzJtmQ92Pp7U9Y6AAAAgO1BsmayRRBsgz0lTZYsypuArCujAzIbFKtj02SN/qehezaAWwaoy/1ZgDoE7k5ypFp3I1V/HnhOGUutTxsIYL0AOksaiXRedQJgeZwN4r3kgBlT7Kt7/nPLdWPnYrV28mPytZi0eX8/7FXerKn1r5lN1pjzX0zULAzJts5B2DPnZXzM+bpKknruec6PGV0vqox7nHMu7XxOWusAAAAAtgbJGpwON+DFsWtMCgEAAAAATg/JGpyOk0jWZG/3rPnGx4mwb2Mo9m2QFbhvlQAAAAAAZoVkDU7HSSRrzrT4sZn0DZr+ozzMOQAAAADMHckanA6SNcfOfn8MiRoAAAAA2A4kawAAAAAAAGaEZA0AAAAAAMCMkKwBAAAAAACYEZI1AAAAAAAAM0KyBgAAAAAAYEZI1gAAAAAAAMwIyRoAAAAAAIAZIVkDAAAAAAAwI1uerDkXfvj0pfDJ166Gz1+/ER5G16+GBy9eCh984ZxTHgAAAAAAYN62Nlmz+6XL4bMbO+HRG6+Fv37tcvjo0jPh99Gzl8ODV14Lj97cCQ+vXg6/Pp8fCwAAAAAAMFdbmay5+dy18HDnjfDXFy6E753L90dXnrgQ7r3yRnh041r4+Iv5fgAAAAAAgDnaumTN7sWXw8M3b4QHF89n+3Lnw2+vvBYe3Xg5fMgbNhixd/coHN3fD7vdz7th//5ROLyzm5XDjN06CEdHB2HPbtfe2Q+HR4dh/x1nX6uunTXrWEG3Ru/uZdvX1o3n6ITH9LheY/24uvk8jnM1dyd1Dc5Ny7i30PPPPx/ef//98OMf/zjbh/n68u6vw1e+85/h3N9+qRP//+m//7esHPC44x6GbbddyZpzF8JfbuyEz194Mlyx+4qeCB+/shMeXrkw4ZilLjjqgpilg1t5OWy/WSdruuCmDwR27xzOp19z0xIwbSJQnHuyZsp62cR8rOR0rrE4h32be+FArZU4T/ZeP7qWHM3naMa833tLI2vlWK7BeK7Gz4ecw1P5Hd0y7nXFNha/o+I5ahnntWvXwq9+9avwm9/8JvHtb387K+uZa6Dzhctvhkv//L/hyWv/mO3bFjGh8sw//U84f+HFbN+65pqsiefr2R/931act7jG4vmJ/7X7Tsoq61xf8/G/8ee33nqr+//4X1t+VbGu27dvD/eUn//858n+eI/R95x4H4n3E1vPGO8eJuOyZT0t97CxvkoduozUp/fF+djkHP/N9Z+E2/99O/zkurMPZ8ZWJWu+99z18Oi1vwsfyEefnnw+fP7m18M98zGnmy98PTx69fnwr7Lti5fDw53r4eMn8jqLuodJJ5C4dZBvO3WnE/TMjvuw3D/ktzzUpjY3p10AMSSBVjQl+D7L3DVgTA4U56M5ETBlvbTM2bHY3DU2RTVZY67TPmkxZW5OZ0zHyZuXqpb1NPkajOfqMBzer93Ll280lctYGzxfLeNep7wcs2KyRsl0YycAABp4SURBVCdnJDBpSdi0BDonbU7Jh5rYP0mY2H2SCIi8QDxus4mc+P+l8jWbnK/amMZIP5559w9dMsnun5s5JGsiby3UeNf8ppM1kqiRNqRNfZ949913h4SK3EdsEmRMrM9LgNy8eTPbVtJyDxvraxynnU89/ige/8tf/rK5X6Oufz/s/+nT8Oknn4ZP/7Qfvk/C5szaomTNufDR1f6tGr3tP178enikEjZdoqb7Wf9rUE+Ej6/vhM+ebf0XolYN8E/LBh84t5n78LvqudzcnE4OdjxTgu+zzF0DxuRAcT5I1qxvSrJGkgTta+V0xnSc/HmpaFlPk6/B/j5+eL/Sly6RcRAOqgkda4Pnq2Xc65SXYzaQrIniX8HtX8I9LYHOSeuC6Hf/0By8npZaYiPuiwmLUhkvQN/2ZI2cNxnbaSdBxswlWTP1/HnX/KaTNd79I7ZXe+NlbL81tXzJKvewlrbtHGw0WbNI1Pz5j++Hbz33rfD+H/9MwuYM26JkzVPhk9d3woOLdvsyYfPgJS9R0/vgqzfCw68+lW33ND+cLt6+GV4PT45ZPgQmr5TrMsMDq7zi3csfHNV3ICwMD2m2D+7xIm3HfVDsHiAL/c2O1w/bZp/7F2qn/9nYag/wtv1l/2393T47FmlX5v2WzF1fTxoIL89f+vEIPWd9GfvAvFw/dmzpvNiPXdh6prB1pQF9y1j8epI+SXBh1txov73ArKsr3da1rfpt++KPaS/9a7oTAKX1yHmvrTPbT6cPq7TTNH/lNR5lyZpS/xpl101lfTbNv9NGfo1L2TxQtm3ae5ntb/E+2HL/Ntz7vrN2bR+LfVD7isdEsi7kXA59qN1TG36/qHKlttP59K8Jb17seJLzNFwbld9rzrxm85esN0m6l5NnfRKuX4/Va0rGYttL+li/DqW9ZH92TyjXYddxbV/5umrjBW5RDFxiAPODH/zADUpk/6uvvpoFOvH/vY8DRBIUSrDjldH9kv36r+d2n/1rvCQ65GcJqp/65o+6j4zoJEcsFz92E8V9OvCO+yL5aI5XJpIkSamMJB9i+3H/V77zXx0p329bJjgk+I7HdXW/+4esX/rYWPfTN95LtkXxeKnrwlv/3v1XtsvYdHtx3iJdr8yT7pMeuyRnzl+4PNTvjUnXK33Q9UgZ6ZMkqmyZ2lxLH0vt1M61fJzI67udb6nTJmts+7qNUv2xLpvc8pJu9nj75tGUJJl3zdeSNa3XrBaTFHb/WLKiJQEipiZY7D1JJ1Gm1hW19PXYkjU6UfP0YtvTJGzOsi1K1lwMD3a+Ee49abdH58KHL70ZHu28GR5czBM10c0XvhEevXQx257LA4iSvbt54G6D/fRha/HXQal7eFhU9WRB7OKBTz+4Lo5b9rGtz7t3DpKH3O6hMAvOdNu7Yf9u+mCbBlZSnzxI+3VnD/u3DoayNvi0fdTsPtt/L4D2+jbMu5dQcs6fHnP/IC1tjCVr/J/dbYs+2bpapH2KFn0f6m8ZS0OfsmBS1oydcytfnxKQlNaw7Vt5TF4SyIzJDaD8gC+RBZR74aCQrGlqp2H+xtZ4skZr/ZvCuW5Wnv+Mc/8arn+7Lkz/zfrL1udQj73G1X1rgqz+7J7ulLHXSDamhmNkXbjJiWX/0rXQ8PulOvf2fuf97in0f+Q8LROIav3Y3x927dqfs7lfzkfXH7vOu+Nje/ae3DaP9ndn03XonNMp17J33cV6DnRfCudkCi9wiyTQ8Pbr4MYGOrH8z372s6Gs/TiA/KwDnbhPJ2OkjA6e3nvvvW6715/YT0nYeEkFCXRtMKsTFlE8RgfYEqTrMjEo9oJwnViQ5I70QX5uDbAluaMTSvZYWybygnyZD5uc8JI1sY96HHG/tOHNa2THYH/2tsmc6bps373xeXMdE2Bxuxxvz6fUZ+dQn2vbduxnTG7F/9q+6zptssa2Yfvm1R+32fmy5W07ci7seOx8lXjX0FiyZuyatWyiQtdj7zWR9Kk1YVLrrxX7oftuP8Zk72FjWvrqzfFGkjVeokaQsDmztihZc1Jv1tiHvXbpQ6192HTK2IdcdZw8POYPyk49hQfOUcnDYv5Qq2UP9kr54bl/yCwfu2K/hX3YtT93nHG582776Z+/tD5/rdhzZn/u68gfwMvzVJEFOd72lrE09MkNHJz5daRrpG/r4G6+rat7nTG1rOlS/Za7nrx9je2sMn+mD/n5KPRvCluP7be7vTD/Rr72tbHrP91fvD5K/Z2oT5z1CZCerbPhGsnG1HCMsy7G7qml+dfzXZ37Ibmht9u+53Vm9XjHOePJ6jHnLM6Hbbd4jTl9j3X3x6f35NZ5zNq2dF9K681eR5bdb392jdwfGnhBRQxCdCAWf9aBV9weg4547FigY/d7AZst4wV6wvZF6pTAzXsTxUsOdAGw+aiUBMGSDIjBsA2kvTI2kWK368SALmMTAd6xcrwNxL1tNsiPvMDetlEqo+uTMrruyI7B/uydD9t+ZMfjjcUeU+uHNnaubTJEq7Wpj7ProlTO7mtJ1sT2bb12vmptWN41X0t+tFyzViyrv/dKype21RI/Hn0PsvtsOW9cevvYWKIpfbXJINm+drLmue+G26VEjRgSNrfDd59z9uOxtEXJmpP6zprGh7eF7qFbP+CPJFBqD6xe++5D7HCsPOj5bXnygEQ/gJYeHNMHYCubAxvsdHV7wY88sKp+jCj2f6jL1uM87LrzPhZ0Cb3dnxcb3Nifl/PhsIHFmDhmN5DSfWsYS0ufWufXY4Od2Ge95vQ41hmTbSfrb/n85/o24hxspJ3G+autcW+Nuv2bwvZrnfk3ivcvVV+6v58PPf5hf+U+MtyDpl4/SnqdLuZ28nVrxtRyjJ3/lnuqbccZQ3Xuh/tuzh6T3b86lfPkjCfbnlwby3Wck3rS6yQdm06IpffkVedxGLfXl9L14Yy7WEehfMdZM6P31woJ3PRHBPRfoSMbGOmEiRfoeHXqZI0NnnQd8v/eX9+j2K6uV0gA5SUHvEA2Brv6oy1aayKmlMCQ+iUIt4G18BIMNlAvbfPq9MqVkghessaW0dtLY7VjsD9LoszOsX3TyJtrr4+2fV3W9l+0nmvbp0j67yXb7LqSdux5qdU/lqyRcdt+23a8dV+ySrLG7vOue0sSNnJ9xp9LyQqpz957Srw+eWKbNmkS6ftMy1i8Y72+xv7EsdqEcrRusubK3u/CvY8qiRoREzYf3Qu/27uS78NjaYuSNSf3r0EV/4KryQOVKuc97NuHwNNL1iwervVDZvbw7Dw4qvpLD4zFPlpDgGDHrB9qS30Y6b/3szpufska288VlQKHpsBabW/pU+v8upbl4nzY+UvW0DpjalnThfNftgxM3YC0tZ3R+Rtf4/69yenfFLZf68y/Ub83pHXIPWC5lgptFO8jffluXzZH47Lr1K7t0nlOmD63HGPnf3TenHYWJiVr3HOcs/Myep6c8WTbnWRN/R7inAvpU6zX3LelXHUOVPm0zMh1WJq7ZNwjdXg/D8klva5b769lXuBm2cDmF7/4xRBw2EAn/tf76/kmkzW1oMoLWm1QHXlBsuUlEPT2WgJh1WRN3GaDcqHLenXONVlj32qxagkdSZKU2hdjyRo7zx6dGLHnXRIx9iNwdl1Fcg7t+fHq9/rmJWtK406OmVmyxorH196G8fpV0lr2OJI1kde+JKdKfVo3WQOUbFWy5m/OXQh/udG/XXPF7it6Mtx7dSc8vHKh/ZjuIcoGAin7AJtv8x4CpydrvHby7X5bCefB0Hu4LD0U+kFir9RHX62vlT6M9t/5uVSnO+92jIV+OkGGLdPVY4ObWhC4jsJYWvqZlmnoU+v8FvSBU/wC0GV/+8RNum2tMWUBodO3huvbk5zHVdoZmz9vv9m2ueuw3MZa82/U+6Tr8OrztjXss+Np5PW1T0y03SN7tl8Nxzj99fpSbyc/rlpH6Rw7xn/XmG3OeKJk7Zr2a+u6l89jPObgVmxbj6Pvi5SrzoEqn4zH67/eZq/rhWStjNXh/eyM0d82jRd0eOL+mCiJgUZM1kjw4yVadNBjt7UEfmMfg/KCL+EFrV5Q7W2zvGSNTYh4Zex2L7ES2cRGKWkidehEgVen7VutzpZkjZ6jUplYRy1Z4/XJsscIOVbaLM11rY6o5Vxr3txGdg5q9dbGrev32or16Y/t1catjyn1xfKuee+6rO2z12yL2nUdef2qiXXV7gWR13e7fZWx2L7G/459PIpkDY7LdiVr4gPRxZfDw503woOL57N9ufPhw5duhEc3Xg4fnrf76voHL+ch6dZB/2BnH7QWAVv9odY8PLoPzPa4xV/o9IOsExyOPuxmbS3qVWPox2wefFu+YNjZ19W/6I/3RcxDgJZ8EWjlwbSh/3kZ216tnJ3D/jjvL8hZIiZ7AB/5i+rwF1QboJW/XLkmr2vRz4ljyesxfXLGUT1nVnFu8nbzvvhjsteX7WNej6yb/Pxn1JexRsVkTWs7Y/OXrct8jSdrtNa/KZx+5eNpnP+Mc/8qfMGwvYfJPXi5P+9Pt8/9UlY7z+P8+UvHnc+LvW7zeRk9xuvvyD3Va6evV49hfO7teNM59uocP0+163xYr3at2/2LMsvz6txn4jH3D8Nh8nuvH1fajp2n9AuS7XiyvmXXoTN38vtfyozW4ZXJz2m/dhrvrwU26CiJ5WJAc/PmzWoyxgZk8qbNlGRN3Ff6gmFvX+ybfKmx9yaCF8hKORvgxy9+lcA5BsjxLQidoIjbdHAtgbUu05JY8bZ7/RQtiQJbprQt8pI1cawyb978xDp0f2PZljd+7JxF8uW7pf4JnYTx5tp+ia9OasS+RN5YIjnX8fhYjz5O+qvXg+2rPgdxn3xpcNynkzW1+qWc1OmdC5lnu6ZLdcq2Eu+a967L2j57zVqx7Ntvvz38HMvFOuStGn3Ninjf0GVKb8UI6YM+RsT7lPTX1ivH1T7KqbX0deyNP6mHZA2Ow9Yla6Kbz13rEjZ/feFC+J58JMq48sSFcO+VN8KjG9fCx+ZjUs2GBzDNBmgL9/fD3uhfIFdJ1kTyoCfsMWlfbZtJ23ocTpCQlvGSHOmY84fVvI/JPCV1Lh561b7aQ2lL/5dtqe1DQqAUFKtjs2Bo+U8TZ2P2xnB3LwtukjI26NFzlgQd09i60jXQOpa8Hhvo2fl2g6iivqy7tp2x2774YzJr3eljWo/809n5+c+odZPN1yrtOMfY+Rtb48karfVvCrdfdjx2rgvz77L3rzToXdaRlpP1KvuL/cnuPflYWuTX7YJJJNh+pGvXjqnhmML85+OqB/ZRPobS3C/rcOd0Qp32PA3jMevTJmKya9Cu56Sv3n3GJGZK26rz6P/uHLsOs7mL82PKjNfh/L4yfe3/qXI7xmm8wK3EBiiRDXSkPvmuip/+9KdZIqYl8JOkjNSjgza7z/5F276J4CU2Ih0YC5uYEbLfC4gliVAqUwqkdfvxv19+53aWUNBsskT65SVQJLi3CQbhJWv0P+9tkzC2v1E83r7RYsck2/UcyrHSX+/7YITMrSQq7FzrNiTx4Z0H2/dIJ11K58/2W8+jTdbY+kt9tmtBnzMZqyR6vDJeHfY81HjXvL2mhLxN13LNarY+m3SR43VbtkxLAiSShLDtty4Tf9b7db1jYxnrq7df6HsTyRocl61M1kS7X7ocPruxEx69+Ub4/OqVcO/ZZ8LvLz0TPnrhSvjs+hvh0c5OeHj1cvj1xDdqgMePH9jhmHkBKQDMlH1rZq5KyZGpbNIHmKNSQq7ES9bMTUyA6O/GehyQrMFx2dpkTe9c+OHTl8InX7saPn/9RngYXb8aHrx4KXzwhZZ/+Qk4C04iWWP/gq84b83MRfbGg/5LuFN+ivyNBACYp20I8MTU4LWEZA22wdTk5DZcy7GPMTFc+gjUNiJZg+Oy5ckaAONOIllztu3d9T/Ssc7HFwDgpMSPCNiPKcyZ/fjMKkjWYO5WWef6o4r2Y43YPP0xKfuRTWATSNYAjz2SNcfNftcTiRoA20C+e+IsBnUkawAAc0eyBgAAAFvn6X/YS76YFXicPPXNf8nWPICzhWQNAAAAAADAjJCsAQAAAAAAmBGSNQAAAAAAADNCsgYAAAAAAGBGSNYAAAAAAADMCMkaAAAAAACAGSFZAwAAAAAAMCMkawAAAAAAAGaEZA0AAAAAAMCMkKyZtd2wf/8oHN3d639+Zz8cHh2G/XdsOczZ3l11DktuHYSjo4OwZ7dP0LVzfz/sOvuOT79GD+/sOvtW1K3zo3Bwy9l3Io5hTAAAAAAwAcmatS0SKscSJM88WRMTDItxx0TB6QXX80ayZqF1vZCsAQAAAHDGkaxZVxeAHhaTKLt3DvMAetXAfGPJmg0Fo63B9xl3Usma0zFhLW3NepkwJgAAAAA4BiRr1hSDzhjUlQJykjUorY3Eqmvi1E1YS1uzXiaMCQAAAACOAcmateyFA0medIkUHWwvPsJ0pNzfD7+NgbveJsdIsN79Vz7OYoLGIVlj6k4SAapPqq9DwmDxERPdBx2UduWGfXk97WI/KnU1jaVX7tNyfpIyNjnmcZIjXWLNbJNknG5Pz12ScJAx3ZI57uvykjXpmOS8tyVr0mOXfVilHTmmH7sqp9u0ayaZ3zyxUepfsywpaee9vC67cdg1ZOobH3N5TN1YhvrSNZ4nd2y/1VxkY5Q1mW5bjmeNtQ4AAABg65CsWUP61kwe4OVlFrzAXJI0SaDpJWtssLoIGIfjRpI1Xr1uGT94bLLoZ1L/YnxpsDo2lrE+LYPhZUKgr8OOLdeXWx5Xrqv/Oe9bNk4Zkznfdgzdz7rMMBfjyZpsPd06KCZrWtqRwD9LSCX15ImM0lqq9a9ZIbki+3fvHBTXZHOypjpmZ0z63DjzmF8rY+slvwZL/dLlvfU5vtYBAAAAbBuSNSvLg60sUC1sKydrbGLET9ZkwW9S34rJmq5umyxwyjWwwbW7vWUso32yQXbPnXNH7E86twfhwNkW2y/VmWwvjCkfd35+3DXhKM1ttq+xnSyh45SxaknKWv+aJX2ftgabkzXVMS/b7BM1Zh7d8+wkeGwbZnva1/66Pbibb0sSkyuudQAAAADbhWTNqrxg2NnmBlNeMOxts4GqU3++fcVkjbzZ42gNlHXdNmExtJEkNvJ+JttH++SMozTnjqRcbCvOj+qjDqaTxE7WX51cyseUzL2eA809/45FoiBLIKzYjptccfoib30MCsmaWv+a2Xkc1sH4/DQna2wZL1lz30nUOPX18qTV6HrRbcbtcU7t/tI8L7SudQAAAADbhWTNirLgVVOBoBtMOcGwu80GaG6QaLevkayx/VzJhpM11T454yjNuUe1Fedn+XGnuC0dR1PwXRjTKkmUUUMCo5CEaGxnNHEhyZfimvbPgde/ZoV57N9yqSdtNpms6f+VN2ctu/1bIVmjPmYX+60TkHFbWoc/z81rHQAAAMBWIVmzEvt9J0t9QLkMJt1gygvMvW02QHODRNuG17dF8FlL1hTqXoUbDNvthfaSsRTKLDnjsHVUSWAc5yxNYNhtpTpb+pslUZwydt20yRMEU9txz5Vai964m5I1o/sqCvPY89b3ktdfOxdjY076vUg6Je25/UvH6vbD2d4nZPbC/v1lfX3iJt1m6y/VBwAAAODxQLJmFW5iRZhg0ivrBXteORugyVsOutximw7iumBUBXB9gJ4GqHnAKm8TpIFf+uWyjZw+2YC5bSxjfVo/gPXmZtiW1FH+wtjhXHvnNZtrZ0zeXBR4X/brJmsa28nXgVmLdl1KHYVkTa1/zZJ53A37d/PzUErWZOdEztuqyZph39h5tmNtWC+q7uQ8ybZkPdj6e1PWOgAAAIDtQbJmskUQbIM9JU2WLMqbgKwrowMyGxSrY9Nkjf6noXs2gFsGqMv9WYA6BO5OcqRadyNVfx54ThlLrU8bCGC9ADpLGol0XnUCYHmcDeK95IAZU+yre/5zy3Vj52K1dvJj8rWYtHl/P+xV3qyp9a+ZTdaY819M1CwMybbOQdgz52V8zPm6SpJ67nnOjxldL6qMe5xzLu18TlrrAAAAALYGyRqcDjfgxbFrTAoBAAAAAE4PyRqcjpNI1mRv96z5xseJsG9jKPZtkBW4b5UAAAAAAGaFZA1Ox0kka860+LGZ9A2a/qM8zDkAAAAAzB3JGpwOkjXHzn5/DIkaAAAAANgOJGsAAAAAAABmhGQNAAAAAADAjJCsAQAAAAAAmJHRZA0AAAAAAABODskaAAAAAACAGSFZAwAAAAAAMCMkawAAAAAAAGaEZA0AAAAAAMCMkKwBAAAAAACYEZI1AAAAAAAAM0KyBgAAAAAAYEZI1gAAAAAAAMwIyRoAAAAAAIAZIVkDAAAAAAAwIyRrAAAAAAAAZoRkDQAAAAAAwIyQrAEAAAAAAJgRkjUAAAAAAAAzQrIGAAAAAABgRkjWAAAAAAAAzAjJGgAAAAAAgBkhWQMAAAAAADAjJGsAAAAAAABmhGQNAAAAAADAjJCsAQAAAAAAmBGSNQAAAAAAADNCsgYAAAAAAGBGSNYAAAAAAADMCMkaAAAAAACAGSFZAwAAAAAAMCMkawAAAAAAAGaEZA0AAAAAAMCMkKwBAAAAAACYEZI1AAAAAAAAM0KyBgAAAAAAYEZI1gAAAAAAAMwIyRoAAAAAAIAZIVkDAAAAAAAwIyRrAAAAAAAAZoRkDQAAAAAAwIyQrAEAAAAAAJgRkjUAAAAAAAAzQrIGAAAAAABgRkjWAAAAAAAAzAjJGgAAAAAAgBkhWQMAAAAAADAjJGsAAAAAAABmhGQNAAAAAADAjJCsAQAAAAAAmBGSNQAAAAAAADNCsgYAAAAAAGBGSNYAAAAAAADMCMkaAAAAAACAGSFZAwAAAAAAMCMkawAAAAAAAGaEZA0AAAAAAMCMkKwBAAAAAACYEZI1AAAAAAAAM0KyBgAAAAAAYEZI1gAAAAAAAMwIyRoAAAAAAIAZIVkDAAAAAAAwIyRrAAAAAAAAZoRkDQAAAAAAwIyQrAEAAAAAAJiR/w/cAAZiGm2c3QAAAABJRU5ErkJggg==",
+          "source": {
+            "text": {
+              "value": "[Image 1]",
+              "start": 21,
+              "end": 30
+            },
+            "type": "file",
+            "path": "clipboard"
+          },
+          "id": "prt_ec0a35440003DM5HhkZWudTqg1",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0a35440001m3NaO7Mfz3Umnm"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec0a35440001m3NaO7Mfz3Umnm",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 118040,
+          "input": 117686,
+          "output": 177,
+          "reasoning": 177,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781348390219,
+          "completed": 1781348404396
+        },
+        "finish": "stop",
+        "id": "msg_ec0a3554b00226MeCmt13D2nbN",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "0bb6d2d68d8aa6fb10f076fe98c2d67fa788adfe",
+          "type": "step-start",
+          "id": "prt_ec0a3651f0013uZd75H2fECPq5",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0a3554b00226MeCmt13D2nbN"
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "time": {
+            "start": 1781348396558,
+            "end": 1781348400086
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_07a40426854f1b43016a2d382c965481919482bfcfd5fcd9b1",
+              "reasoningEncryptedContent": "gAAAAABqLTgwL9BGncafztgIQgE34GZ71lG7nWoM7Ctr7LghkaidaKBJMxP8DGBCC5QUlLGVNWMXRkMr-PDVYXvOrZL8E4l9LXoZM0xfACzJ5ntWmFY_Xwr6VCVFXCtEDqJk10PhA1Mne1FWWZ5arbnuZiDVFw6plA7vO2CqPcCjOLnc6ox2b-akXnr6hcezNEhfSBYXEv91sS8_TjcmXKt2c7iW055n49QfDXuZR7YCek5Hqtjb35_wFgkoRN8ZPTreQmDhh382Pnw3Z85Dsy6cS53ABQWeRLXpzgetaVaNHBPDDJZ8bHkc6FZ07KmULKVHePYVg7zZ-l5b5ljNqkYOdyjhu_2J4NvwD9VlLVKxN_LplV_CP6zFvAE_mcrwNQFQxoOigFakR5yxDK_DFBN_um7L_2d7xZ6sngAD5RGiVNiJrL6vsLWuONRWfub2ja08zJ5TTDmdeDmr9ccOoDjZi5zbCXDRoyQDZawksZ21d3DeSiRzwZEDv5P0YmCCPh443Hn5BKqVqXUKRRJ_vIwEKpEXIBIksA3RTftETh6B2uMa6LACOJyHVVm-2qW31fSqYCT3nk43lJiDNEVkV1cz3-64q_8uXfN4z3uM2fNrrGu88jEqsk90dJnYCWUS3kHFUfwJ8Ai4sXomnXturc9oEptcVteHA64TGSoFx4VDfSrbmt2hFXMNWqR6EInMd1Z7sD1rbMh1J3kErYVpfOaHJHmZKV8yrkgygAXgAOKqaFWGTCG7ysgKdkVDYyJEgZyPmzVf54F56NQVz6QE17ABb8O6OT_XAbsF74dGTcOLWmeTfzrK8mA4cN6JaIl-EvaDfxl2k092dRKEYtj-CnEkIZxmvvgb2IqQ6Pz7I6ef5rlvC7KTn9aS7WU0ohsTOIFz698ssXhUGjd9furU0lljW-R_Z10GOzC7sNzmCaSuIqcF2sl_NWVnlDYzzPSA_MOPiGyLhv3RSPuzM8Iq8aQiugmiAQ55KBHQ1B2G51TCtdrw-Rp79jh_eydvLG4CWFPnS5_wqz1kDMo9GuQ3xmQ67BO_wfGeZVO1kVSX0Lb5KhHp5C-V3XG7ug1z5xRsHr3pmgs8mYa_gGo-MKNG-1KHtFyM2-HywrQcsOx6Shi4mIkbniUpGhNWJ69fIV14X-mk6Cy4R15OCbUme7UY8x5hIcqIqIAL5kOwHnlhMBKPcc49oXo1l63dh-g5QyDtjjDx9PUAD0CEZytHj3_X_BHk_nYnfbOQjAQntFo_MbNWxuJAJmNbQKOSmdrS3yj927oi0HbFRussp2OtMW5DNcyPGIKAi31mFcKQQ-04xdnmHEKtgf5W_QelGbGA6rD3g2NlOukTBVV448bymywRlQfUHLNHIxo2uYetq2RDn6t7MIemYt7AlMLMO94ydzuDos0PqVwC57JQ3dRMJ340aWM37BkfTMXnF69TeMzQBALdf-DR9nbcsKI1bwjhCWMxU8ZXoL0trajqyatQo9gLck_v8QIerM0udVEjYF5TCH3qlYpcN8aXr7wuzek9-kO_upRRmwfyf1IaoCqnaWAn4H5mCzByYCUFtkLMOPM60vHx3U2GEp_mJUJID37KHPJr1hRDCsvDpKetbOVLQKoGT7SVEjR6ZRJwg5cWOrtq9pUClD_5NS57cOLWTkA68lAxkT_IifiqU0u7ZtCE2A3mzIOl1ouNb03WUx_PAXrPY9U6qEQrc34gbpekRKD-PcHsolk9dDaMAy1mnFQc5tYigtop2RcBBkpStQCXXnvE1lJCIkS-LivvarIr8fFeGaGbTqiuh1JZcVfrOCeGMUmRtrU1mcAc6k1MzgaRVef1x0KCTKnk1mIeYgTRLGvgSNEGaj1dibzDi3VhFaZ320Qji8ck6K6vUKcZMKWp9KLOhbQqhWYaFnZFGIzSThZiUFeOvrG4rKy9G3OHGahJ9gI7rAteGk47jtcMm_l06pqKQi7bjYAiTdGnghQ="
+            }
+          },
+          "id": "prt_ec0a36e0e0013JjhISvDw332lR",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0a3554b00226MeCmt13D2nbN"
+        },
+        {
+          "type": "text",
+          "text": "Task `1 / 15` - Add Loader Metadata Tests.\n\nSubtask `1.3 / 15` - Run fast failing test.\n\nResumen: errores Pylance esperados. Tests ya apuntan a campos futuros; Task 2 los crea.\n\nComando rápido:\n\n```bash\nuv run pytest tests/test_auxiliary_source_loaders_unit.py -q -x\n```\n\nComando detallado del plan:\n\n```bash\nuv run pytest tests/test_auxiliary_source_loaders_unit.py -v\n```\n\nResultado esperado ahora: FAIL por `AttributeError` / campos inexistentes: `item_codes`, `preferred_labels`, `normalized_codes`, etc.\n\nFicheros que debes modificar tú: ninguno en Task 1 si tests ya añadidos.\n\nSiguiente paso: Task `2 / 15` - Extend `ReferenceTableMetadata`.",
+          "time": {
+            "start": 1781348400093,
+            "end": 1781348403011
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_07a40426854f1b43016a2d383021bc8191826a1b8d03fbfed7",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec0a37bdd001qRt980yAGhr5mS",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0a3554b00226MeCmt13D2nbN"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "0bb6d2d68d8aa6fb10f076fe98c2d67fa788adfe",
+          "type": "step-finish",
+          "tokens": {
+            "total": 118040,
+            "input": 117686,
+            "output": 177,
+            "reasoning": 177,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec0a38a130019kWVIU62SMNolL",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0a3554b00226MeCmt13D2nbN"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781348970208
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec0ac2ecc001csznoWqwthvG7P",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "this is the result: uv run pytest tests/test_auxiliary_source_loaders_unit.py -q -x\n      Built tfg-open-cvn-schema @ file:///mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema\nUninstalled 1 package in 137ms\n░░░░░░░░░░░░░░░░░░░░ [0/1] Installing wheels...                                                    warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.\n         If the cache and target directories are on different filesystems, hardlinking may not be supported.\n         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning. ",
+          "id": "prt_ec0ac2ecc002NQw06UGzdMs5s4",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0ac2ecc001csznoWqwthvG7P"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec0ac2ecc001csznoWqwthvG7P",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 119965,
+          "input": 1805,
+          "output": 1420,
+          "reasoning": 516,
+          "cache": {
+            "write": 0,
+            "read": 116224
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781348970377,
+          "completed": 1781349010672
+        },
+        "finish": "stop",
+        "id": "msg_ec0ac2f89001ImP1wmWKsLOws6",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "0bb6d2d68d8aa6fb10f076fe98c2d67fa788adfe",
+          "type": "step-start",
+          "id": "prt_ec0ac397a001Zxso80R4tmiOBr",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0ac2f89001ImP1wmWKsLOws6"
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "time": {
+            "start": 1781348974572,
+            "end": 1781348987435
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0bf297fba922cd55016a2d3a6ea6e08191abde050885dab41e",
+              "reasoningEncryptedContent": "gAAAAABqLTp7QNlnOTbHCN4EzEtsEtpeJZlNrkNvsVPbXVGc5CE_KB55WFbvW5GVYIpTsgJJyDuvDmmGmZ-3k-wz2PmX7-kXzQkfdAlfMpYScUQ_AKd5gkt4dHXojetwbZZT0KGnGXP--2DGFWAITJcrOPZUBUOr1fPBcQ_nbkGlI5mKSWqWMfbQ6IDM9lrJQpuWSj547ZF0jTW0S9U4EVEnNgsLcPJdDxFlpp7h6APohLEdH8i936Or3aLltjYmLCdV7Ukje1qqUboZqoZ4oWJIFu6Gx_xfTkhdbW2vC7UOonU2auYPn9QZvBMSRiaJAGDsDCgTF9TgBoLcAuXS4LZBIS637cwhw7gIiD5q9naNcby0lnz7AyNae2X8hTU7U3eisnil8RvQUsw4N5lr5B1Y8rp4fMUhTMrtZPHf5p7mDYNg7iEJEiAkh1oMJkjTtKR4Mn1_9jsafUAsbe546b8-Tpp0oPPgVMXKpz7R2g_A2h3UQT9robF5DGJfQ0u9Fu9kRXhpgvNIZt5GEK6sUuo4ApYoVr7WTilacUPqfsHpKTd7NrL3Q_emnr61E5ToZ7EsRH5UD3vDlzlyNYhWQ1MgbZaZxD0FMt6zswbF9XRptT1mYMDGiruLewxg4CPItuEvkyeQ4MZljcw5RK91I0C-OWGq_7ZL7yjI6QmjJVlV7ce5Cxic_Cs2CyKqJ3ghcS3eTHsa3rT-8itq7oGUSG9jMZG-S2zIgLgS6SSL_BmdY1IW2oie7HeIYwM5sAGWy1yR3GTrdyrW_0HjoKl87jJFed-tBfcWB07vnjGxtn13xzOIwGwlbLmRcZqnf0KtT53g_Qkr6_oxEKhBNqC5VrJx3b0AWG04x-Ecf7Rms0OwIAx--TlPgMZ93l2oR_Cy9EPU1s0juOKTa2voiewp1TU42W1cR2jpevhQGJ7Qib9uU8o4RdG485voJ-HrZLtI_zJxSCQ_b1_1QjLjv5z6txMDE54PRINcPDlpHwPfX4_4NSuzvoeJSewhfF8viWPMVtKS_Vm-AlOJW0zTmOGs9sxghRi8PU-e08kAnSaRniB6GWw2UtuV8oA4H9HJt2nvizvTzd762YjsLkG4a_9HpL_ubxCgeSpiYbdvwbRaCFR0Ff_X1dE8uFLH27VQAcgR9P7T3ezUQwQwhaSNh5_vH1o6bf5ffUOXXs2xzbSbWPU_hxf5p_KY5K5xqR9YuDK8JyZEDea5gK1dlkOOsNfWH7uP9x1mQCqapZEknYvNFIkNXCnktVgNeAY741RH2T7wl-uTVVjIA_tEjhkVY8yhsPOtJyZ4u2fuYY7s8ub9cUY4NJbw2jZGvywnkKfPqnH2QJ4mfe3GHSHt11VGA1Ca8fp8w6_B24tg1lUPzsAPdT0cc-KrMDjpKP7tijt8EMvxoLQRjKpqejCINTFrJFvoK4XlN2TWrihpr0dnj3S93tf3rAyUsu0HiHm1jxIj2ur1EIvlJcCdKOQdHPCQBCppTKHNrGUac5mH6D55HHEZ-eyy3Yg7C64sUb6RY8Nxdbd9U8C74dvJIj6owSc1JioTqFKLjR9LwiduUkVKT8ablaa8pelZ1Eg1vZiH48smqsdEnOGC5NWgETzlPJUwmT49TTZW0r77n8uxHU4Gri756aje7-lorh6bNGhQ32M7iOOAIM21FdHkdEkUASghl9S3gcbdcb_8kiqTsOjaPxyRdC76HWN5hAzEpiAWXLX7BgL9DhbPg4UCndu58-__G-ohOwF_tz0CAJNKKFpj4mfDJFuXr1oV06jf1aXTJ2AbdVm0pE1loxQkGAfWJR9zcYWo9GZ3GbP8WljhXlQtJwUal212EBIB0Ymlfsv_UO8C9SxIOg-H2YyKrlLXckgfZ5xMvHkmo9QXgmEXocOKJe32RhBjEHXgOlqWjlbY0jRPKcUK8s4CGkHhvu3_MuMW8P9WbCQTE5XRKkSnK1fYleeprLKksaSw3uBG6mOhldmW1ptEe4kRQ_7lLH_7qh4aJ51sUZPRpNQmzOHlvf_0nakM97VGFdv_MOBUUkB8xvBu4As41GdFXdGmwspvCYtcXWlaRHaX-YabdPwbx79iUJ4ClYBOGcxOEwHexHvBMuJok9u83tLN3U_R-fLtHEqHrDjGzkOp5yAQA2upOSKTER5oZrcxF2FkAqVBax8nvUTqwSlXbi8rnCIS9drlOfeGAm4fpZIAY-hXJ3KY9pKbmibjuE5Yq0a5EJgD5r58JCtmiVIb_IpGYfra0xaSLOgwHfbI1Tw7wsETPtZXeFSWYpPAH0lNPS6zWNT8YlAy5ToFbxn6oZiWg1uIsYLQpyk1wy2fc9sQjVnVN2RhPhJlyDWNyL0XLBXzSnVRp5MKdRu8-GL7-bXp8HwE5HULkli5aILUGlTYxNyfdkRwZ2Ycsx9bqzODYRcKzf-gMW2xMYGNZoC5mjLEj0HNYaHwxwUaMB9LVkTntQhuF5OjoQX86FgqftnOY7JgOo1TxMz3noijwpe022PAjc0AbTlELP-kxHe9mqyLVXtRmrqDPGdGw13ytxIIGOgrbpuPEvxmI6-cTD-eMEF6NIp8gjmsFGxsFciagZHt_p7tYKM-YrFpExWz_nwSXR6dGh2Nl0tBY8CloOC3FPLVO_tsWjUNx8ZFvlXYQL774S3FG9SUPSxUId-KVouDA9KA9BmUF05xS4VVhgQsliDuJPBBe0s5kx6B2MdgyHE1ZzFRCj7t1b-7AHJPmXCrSPV7Na6fMzv5m46ZVz5393bJUACYhko5VbX8hPuEmAhDTtHNo6fg1CyQtiWX3H9_rFV6avD_di1wNToRZq1qy3taLwQNVReukfTXAXgYto8filL9Dr6XaMWFW1IpLYCs4tN2VyAgxC0_6PSsGxN7yhlKKKO1Ov2S00nw3BZRW-YWdePF-GfZUUs9ASwx3jFeONMxLMnsqxdL3IpTzkMce8KlA-z8QwPwEUF18RGJAL9gZ3IzMAmh4BGyLMm9G8ffLvGMTV5BeoHmImdw6aIgtkkZTmGK4yDTZ1FUflmKFN8wz9i8O8OgkvVsohb69ColGsp4nLFAe-UvIWj_8FN5OW01E6JGnHItcBflEYrta_UtEUwgpy6yxXrC_Fqa50GjHpy9pdmwSwciGL3pFU32VagiLU4a2SA6V2d4a9U2oBYQIt9pvfSkla4py3TV_6dAVlvtzJbu6OwIjJN3q3DeAUK38w9d-dt2t37EHPHYYwPcnNGyz9ITPOovsUrILgB-rxKI4PbHXRyF0nyu69VSP7wbzMRMk4zV2J7jzFXiPEoAgSeRAkvkYGhxGZAt1p9FiYu53PiPrQqVBtAIK5p5awgkIH59JcOwtxBcJrZnwWol4i56JKis8zxOuJlu9chX9KOq-oUNmknlVq5m_wbz-BcGm9YrBYYhSO9lnKoIOO1khzPbdyVI3_7cObYEcvM81Pvz5XOHpI5xr65z3EocMcjyoFCjBepJ4rsyOhN5P3qNt0-QsHpNHqPZGsa3n22IOlYUxuVM7FkokRwDVvd-8BFZ2muf-10HyAW39SObwNE5TEwnVVwYfdrCCN7cx3WdkPZDblLpx7dyMqVo1CVMa9Dpxqd2JKUICVWuq2x6t9r76Xu7iRaFDLEfGLn5Rqvmpt6bVxKtkRPAlrIsfF0ZMltpg8O4q3NkOHj5bW5hDYfanaekEW6j4T1eaPVRCCr9-Oy2ngexOTKqD6oZsP-wTwuv2XvHARDMfz5v9nCEVyKGQROw6gyAeykF7FBRwbn7rlDmy6CFRPlklcdtNP5JNTyl1GdttA5nWPCkgY7blRHkRoxvlViLronyjPTBNia3fDi9wmRpW4SgpUbVrXw1DbgH5YC1kwFO_2-swrvgBd0yOfQtswfXleam7PhVn-YbGBPdpk6qPfIqal-J1HksFT-I-LnzhwS9-c-pg2Qh-N07tOKv9aAeK_q3FOjmQumI5AEPco9n5R9JmxLT9fu0rMDwYUfI-4I6pOhbqdg0F_r6pPFpro5_G03x28gqh4j-YQZXZlHavXA9X2zSfPnZ21BvknblKwLVXa4swLnArAUOmNZkN8gSkL4Jouh_B8C3B6L967lgDRpZ8Ra9p42jPnApDZ43Y2CU"
+            }
+          },
+          "id": "prt_ec0ac3fec001BD0l8AeSwXoyc0",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0ac2f89001ImP1wmWKsLOws6"
+        },
+        {
+          "type": "text",
+          "text": "Task `1 / 15` - Add Loader Metadata Tests.\n\nSubtask `1.3 / 15` - Run fast failing test.\n\nResumen: output pegado no muestra fallo pytest; muestra warning de `uv` por hardlink. Warning no importa.\n\nComando rápido sin warning:\n\n```bash\nuv run --link-mode=copy pytest tests/test_auxiliary_source_loaders_unit.py -q -x\n```\n\nResultado esperado: FAIL por atributo inexistente. Si comando queda colgado o output sigue, pega final.\n\nTask `2 / 15` - Extend `ReferenceTableMetadata`.\n\nSubtask `2.1-2.6 / 15`.\n\nResumen: ahora debes crear campos + helpers en `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`.\n\nModifica imports:\n\n```python\nimport re\nimport unicodedata\nfrom dataclasses import dataclass\nfrom pathlib import Path\n```\n\nAñade constantes + helpers antes de `ReferenceTableMetadata`:\n\n```python\nOTHER_LIKE_LABEL_TOKENS = frozenset(\n    {\n        \"OTRO\",\n        \"OTRA\",\n        \"OTROS\",\n        \"OTRAS\",\n        \"OTHER\",\n        \"OTHERS\",\n        \"RESTO\",\n        \"NO CONSTA\",\n        \"SIN ESPECIFICAR\",\n    }\n)\n\n\ndef _collapse_whitespace(value: str) -> str:\n    return \" \".join(value.strip().split())\n\n\ndef _normalize_code(value: str) -> str:\n    return _collapse_whitespace(value)\n\n\ndef _normalize_label_for_signal_detection(value: str) -> str:\n    collapsed = _collapse_whitespace(value)\n    ascii_value = unicodedata.normalize(\"NFKD\", collapsed)\n    ascii_value = ascii_value.encode(\"ascii\", \"ignore\").decode(\"ascii\")\n    return ascii_value.upper()\n\n\ndef _get_language_name(language: object) -> str:\n    language_name = getattr(language, \"name\", None)\n    if language_name is not None:\n        return str(language_name).upper()\n    return str(language).rsplit(\".\", maxsplit=1)[-1].upper()\n\n\ndef _select_preferred_label(item: object) -> str:\n    name_details = tuple(item.name.name_detail)\n    if not name_details:\n        return \"\"\n\n    labels_by_language = {\n        _get_language_name(name_detail.lang): str(name_detail.name)\n        for name_detail in name_details\n    }\n\n    for language in (\"SPA\", \"ENG\"):\n        label = labels_by_language.get(language)\n        if label is not None:\n            return _collapse_whitespace(label)\n\n    return _collapse_whitespace(str(name_details[0].name))\n\n\ndef _has_standalone_token(label: str, token: str) -> bool:\n    pattern = rf\"(^|[^A-Z0-9]){re.escape(token)}([^A-Z0-9]|$)\"\n    return re.search(pattern, label) is not None\n\n\ndef _collect_open_world_signals(\n    *,\n    normalized_preferred_labels: tuple[str, ...],\n    has_delegate: bool,\n    has_blank_code: bool,\n    has_blank_preferred_label: bool,\n) -> tuple[str, ...]:\n    signals: list[str] = []\n\n    for label in normalized_preferred_labels:\n        for token in OTHER_LIKE_LABEL_TOKENS:\n            if _has_standalone_token(label, token):\n                signals.append(f\"label_token:{token}\")\n\n    if has_delegate:\n        signals.append(\"delegate_present\")\n    if has_blank_code:\n        signals.append(\"blank_code\")\n    if has_blank_preferred_label:\n        signals.append(\"blank_preferred_label\")\n\n    return tuple(dict.fromkeys(signals))\n\n\ndef _has_duplicates(values: tuple[str, ...]) -> bool:\n    return len(values) != len(set(values))\n```\n\nExtiende dataclass:\n\n```python\n@dataclass(frozen=True)\nclass ReferenceTableMetadata:\n    \"\"\"Store normalization-grade metadata for one reference table.\"\"\"\n    table_name: str\n    version: str | None\n    ancestor_table: str | None\n    source: str | None\n    xml_data_type: str | None\n    xml_property: str | None\n    xml_indicator: str | None\n    item_count: int\n    has_hierarchy: bool\n    has_delegate: bool\n    item_codes: tuple[str, ...]\n    preferred_labels: tuple[str, ...]\n    normalized_codes: tuple[str, ...]\n    normalized_preferred_labels: tuple[str, ...]\n    has_blank_code: bool\n    has_blank_preferred_label: bool\n    has_duplicate_codes: bool\n    has_duplicate_preferred_labels: bool\n    has_other_like_entry: bool\n    open_world_signals: tuple[str, ...]\n```\n\nEn `build_reference_table_metadata(...)`, antes del `return`, añade:\n\n```python\n    item_codes = tuple(str(item.code) for item in table.item)\n    preferred_labels = tuple(_select_preferred_label(item) for item in table.item)\n    normalized_codes = tuple(_normalize_code(code) for code in item_codes)\n    normalized_preferred_labels = tuple(\n        _normalize_label_for_signal_detection(label)\n        for label in preferred_labels\n    )\n    has_blank_code = any(not code for code in normalized_codes)\n    has_blank_preferred_label = any(\n        not label for label in normalized_preferred_labels\n    )\n    non_empty_normalized_labels = tuple(\n        label for label in normalized_preferred_labels if label\n    )\n    has_duplicate_codes = _has_duplicates(normalized_codes)\n    has_duplicate_preferred_labels = _has_duplicates(non_empty_normalized_labels)\n    open_world_signals = _collect_open_world_signals(\n        normalized_preferred_labels=normalized_preferred_labels,\n        has_delegate=has_delegate,\n        has_blank_code=has_blank_code,\n        has_blank_preferred_label=has_blank_preferred_label,\n    )\n```\n\nY en constructor `ReferenceTableMetadata(...)`, añade:\n\n```python\n        item_codes=item_codes,\n        preferred_labels=preferred_labels,\n        normalized_codes=normalized_codes,\n        normalized_preferred_labels=normalized_preferred_labels,\n        has_blank_code=has_blank_code,\n        has_blank_preferred_label=has_blank_preferred_label,\n        has_duplicate_codes=has_duplicate_codes,\n        has_duplicate_preferred_labels=has_duplicate_preferred_labels,\n        has_other_like_entry=any(\n            signal.startswith(\"label_token:\")\n            for signal in open_world_signals\n        ),\n        open_world_signals=open_world_signals,\n```\n\nComando rápido:\n\n```bash\nuv run --link-mode=copy pytest tests/test_auxiliary_source_loaders_unit.py -q -x\n```\n\nResultado esperado: loader tests pass.\n\nFicheros que debes modificar tú: `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`.\n\nSiguiente paso: pega resultado. Then Task `3 / 15` - Add Reference-Resolution Evidence Tests.",
+          "time": {
+            "start": 1781348987467,
+            "end": 1781349009598
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_0bf297fba922cd55016a2d3a7b53188191a11d97ad0ad6dcdd",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec0ac724b0015JyKWGhlEUt2jB",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0ac2f89001ImP1wmWKsLOws6"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "0bb6d2d68d8aa6fb10f076fe98c2d67fa788adfe",
+          "type": "step-finish",
+          "tokens": {
+            "total": 119965,
+            "input": 1805,
+            "output": 1420,
+            "reasoning": 516,
+            "cache": {
+              "write": 0,
+              "read": 116224
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec0accad8001On6SIoYy5qZd8a",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0ac2f89001ImP1wmWKsLOws6"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781349741025
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec0b7f1c80015kmN4uuIxWeQvk",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "ahora este es el error: [Image 1] ",
+          "id": "prt_ec0b7f1c9001cYBD8swiuisBpb",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0b7f1c80015kmN4uuIxWeQvk"
+        },
+        {
+          "type": "file",
+          "mime": "image/png",
+          "filename": "clipboard",
+          "url": "data:image/png;base64,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AAAAAFADwhUAAAAA1IBwBQAAAAA1IFwBAAAAQA0IVwAAAABQA8IVAAAAANSAcAUAAAAANSBcAQAAAEANCFcAAAAAUAPCFQAAAADUgHAFAAAAADUgXAEAAABADQhXAAAAAFADwhUAAAAA1IBwBQAAAAA1IFwBAAAAQA0IVwAAAABQA8IVAAAAANSAcAUAAAAANSBcAQAAAEANCFcAAAAAUAPCFQAAAADUgHAFAAAAADUgXAEAAABADQhXAAAAAFADwhUAAAAA1IBwBQAAAAA1IFwBAAAAQA0IVwAAAABQA8IVAAAAANSAcAUAAAAANSBcAQAAAEANCFcAAAAAUAPCFQAAAADUgHAFAAAAADUgXAEAAABADQhXAAAAAFADwhUAAAAA1IBwBQAAAAA1IFwBAAAAQA0IVwAAAABQA8IVAAAAANSAcAUAAAAANSBcAQAAAEANCFcAAAAAUAPCFQAAAADUgHAFAAAAADUgXAEAAABADQhXAAAAAFADwhUAAAAA1IBwBQAAAAA1IFwBAAAAQA0IVwAAAABQA8IVAAAAANSAcAUAAAAANSBcAQAAAEANCFcAAAAAUAPCFQAAAADUgHAFAAAAADUgXAEAAABADQhXAAAAAFADwhUAAAAA1IBwBQAAAAA1IFwBAAAAQA0IVwAAAABQA8IVAAAAANSAcAUAAAAANSBcAQAAAEANCFcAAAAAUAPCFQAAAADUgHAFAAAAADUgXAEAAABADQhXAAAAAFCD/x+QJil6aZZnZgAAAABJRU5ErkJggg==",
+          "source": {
+            "text": {
+              "value": "[Image 1]",
+              "start": 24,
+              "end": 33
+            },
+            "type": "file",
+            "path": "clipboard"
+          },
+          "id": "prt_ec0b7f1c9002Vf3kObEGPOW7Iv",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0b7f1c80015kmN4uuIxWeQvk"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec0b7f1c80015kmN4uuIxWeQvk",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 120367,
+          "input": 3664,
+          "output": 301,
+          "reasoning": 178,
+          "cache": {
+            "write": 0,
+            "read": 116224
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781349741101,
+          "completed": 1781349754871
+        },
+        "finish": "stop",
+        "id": "msg_ec0b7f22d002nEpDq43zFRpPkv",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "1ddd9b46746fc1fff5d452b3c2f8b09a6013e861",
+          "type": "step-start",
+          "id": "prt_ec0b7fafa001I86A6LncYGpsPT",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0b7f22d002nEpDq43zFRpPkv"
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "time": {
+            "start": 1781349744369,
+            "end": 1781349747754
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0f7bda5e32ba9c3d016a2d3d70700481918472ac355fd8bac1",
+              "reasoningEncryptedContent": "gAAAAABqLT1z01MGO8uIZHTSgucHRAIZ0ykFkq8eX3cCL9iURlzobeXWKxXZ4W0BdcgNAdmnaGzJQKYepMnQ3nk8tEnIpkj9zLd_jshv9E0rTtWI3J7O2XA9GH-PMnK7pQ7iOwcJvw-0r1UU0nYq8WltofQtyq6Kq55r9RbFMJA-ne7r6HBE3MwrtRd2-5q6wgRAdtF4KRVc4FCviEWUpee8rGfeM6i_mioL6QSKJCFGSCruLIG5TYGemfynFc-25ZUBq2Vp-cS8jDLLm_NFAKbObkdSWhSf8PD638319TRU6CEqPuy1OHQTyLIdttU1XSSuShi9_xgSGKWmeUmpIKDdEI15whA6GqaNwdYWqS_dFRhcl0P-eQkC_miUIgrBo4fXdDmvJggCrMKxChaISUmHKaFYRP_45yLy_n1V7jSWOlHcKxi19UOwCYpnuZs50bsR8UmdWAsKoSu6juyOvno9VlJOtdQGCz7BcuuZKdEOHDZV5iqFQIemm0dWD8nh6JcBGkL8YV3HwbAeVYmc1WEA0VGGWKyRHEo9_gTyYujCwYD8fZ4_-mmJ78vasivM3QInTDCCht0mBsv5VCOJq0LN1JcDil70hku82_GtZb6J6ibFrgr2z-Jy3-8-2w2ZMpUabfCcbLvwT--MlBWalznmCS3Hh_7Dw2B54eA8RzeSjvuq0e0u2DcETOwU97c370OKlCD1xnQ8B3a-AHkq4Atahgb3tyFi774zEyI-TevkcJTM7h89AalDB-8f8dwUMSjubp4sTjCyCimIltgA6TvdLVuVzYHW7MkICe5OoVwwPRZgIyumSi6ETT1OKwbELSt4hK6Lmt8pj5ZKYHCW3s2KiS6WQL1cmFFaFNUnxwqokoFA_0iZwkouyV7jSf2pWCVuqWFx-3CMi1QcBwL5bPi7mWoxehJ9waUDx9gwcEq4sNbAx3MCk6N-_FzoqtBHbVEGyZau5bChlqyR-fqmax9Q26iiQmZfNkkQg7un-Z1niL2mrrINHK08bhowsgfNdvqm9L9HuZ0TmJzMJn7DrWubDVCHLeMZlA59yt6uvwjnJOHO9wEDCrG0Go5nRhpFf5LBBLk8g5yx6mQl7Pn0M_mx5FzKo19mAO7HZHdcyjIhJTbLV5iozdAXlUqBEb5NU5RHK2aAKsmSnFewJy7diBqxkss3MkxYbQ7LJhU9iQU1VgGnoAc_uQEDpKWYBU_OmkaNfK7h-FG-quGxqqvl9zeThfW2ovkzAT7ak2Jxz493wTObqfHRW8X5JDCd5VvwfK6HFLPcTu6qtdM07c_O6vIWkLR6trDTx5pMnHifGILVcV55yxZftel3-6cfMliCw89DmLprfTt5euYzE6WJScVliQ0g5y0b0zwp-nkPB6VATptZ_tjyqrKLyKxgJFOEsy0RDWesZyW5L4mXQXrIyipDlkO4DbmgWlG-HA2g2cJLU5im-EWUPCnlUN-j9aXCsmihm8wsWIkYBWQpJE8KHWTlUvnjZHvqN7Fax0lmnbHNu_whX3Ew_ymGdsq0YFJlRBUsLGwagHi4c7L7dvbJvq67mrvGmN6EJF0_cAQdmcibY1YGQ5OJg7ixoTKRfP_3HeKrKqLTGkv8G3R0ILhp6l0iMgSuu1_y7nd1rsPNE7NageRQHS7GhuKNk0NMMSE7O57EuJp-_st_iCDtXJwzhp4gfhrQFRVUHfgV827C4EH2Twl7pMA3ubvpPHw5WlT-IO_vyfNpIN88DFkn8z0veAyy0x0nZC-tj3lUodfRX6sB9jIb-9IvNnZK5-z5Y_AY_ohMrKGvOPS8-zWdQ7rNFaEQIXIrM4yHdikbXUOHhPqRE1XDx2IbyWykNA60ENMFKSQQbpusgQURqRcIyuZugkwDtuM3hT37A0oYQ3E2l_4Jy_z5RFAolvTE2DvTkqV7p8e170vAkGqsS1qwqRTxV_5uLChJclPpQqdJmtPTw3iUDToOZUQRFO35hrXf28hbs-8HwDe5kMJWF0g19TPTsQVxtYqXG5DdwGWY19ChAN5RaOoxatYti90="
+            }
+          },
+          "id": "prt_ec0b7fef10011g3j642xYvRy9g",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0b7f22d002nEpDq43zFRpPkv"
+        },
+        {
+          "type": "text",
+          "text": "Task `2 / 15` - Extend `ReferenceTableMetadata`.\n\nSubtask `2.3 / 15` - Preferred label helper.\n\nResumen: Pylance error por `item: object`. `object` no tiene atributo `name`. Tipar helper con binding generado.\n\nCambia import:\n\n```python\nfrom generated.reference_tables.reference_tables import ItemType, ReferenceTables\n```\n\nCambia firma:\n\n```python\ndef _select_preferred_label(item: ItemType) -> str:\n```\n\nQueda:\n\n```python\ndef _select_preferred_label(item: ItemType) -> str:\n    name_details = tuple(item.name.name_detail)\n    if not name_details:\n        return \"\"\n\n    labels_by_language = {\n        _get_language_name(name_detail.lang): str(name_detail.name)\n        for name_detail in name_details\n    }\n\n    for language in (\"SPA\", \"ENG\"):\n        label = labels_by_language.get(language)\n        if label is not None:\n            return _collapse_whitespace(label)\n\n    return _collapse_whitespace(str(name_details[0].name))\n```\n\nComando rápido:\n\n```bash\nuv run --link-mode=copy pytest tests/test_auxiliary_source_loaders_unit.py -q -x\n```\n\nResultado esperado: si Task 2 completo, loader tests pass.\n\nFicheros que debes modificar tú: `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`.\n\nSiguiente paso: pega resultado pytest.",
+          "time": {
+            "start": 1781349747757,
+            "end": 1781349753285
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_0f7bda5e32ba9c3d016a2d3d73d85481918ddab004ca4ac4fe",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec0b80c2d001ODSyp55MlOs0zB",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0b7f22d002nEpDq43zFRpPkv"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "1ddd9b46746fc1fff5d452b3c2f8b09a6013e861",
+          "type": "step-finish",
+          "tokens": {
+            "total": 120367,
+            "input": 3664,
+            "output": 301,
+            "reasoning": 178,
+            "cache": {
+              "write": 0,
+              "read": 116224
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec0b824e0001mFrnsIl1JCOoNV",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0b7f22d002nEpDq43zFRpPkv"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781350212113
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec0bf21fe0017TGjjSuLxGJztG",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "this is the result: v run pytest tests/test_auxiliary_source_loaders_unit.py -v\n======================================= test session starts =======================================\nplatform linux -- Python 3.14.3, pytest-9.0.2, pluggy-1.6.0 -- /mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema/.venv/bin/python3\ncachedir: .pytest_cache\nrootdir: /mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema\nconfigfile: pyproject.toml\ncollected 7 items                                                                                 \n\ntests/test_auxiliary_source_loaders_unit.py::test_load_reference_tables_metadata_returns_known_table PASSED [ 14%]\ntests/test_auxiliary_source_loaders_unit.py::test_load_subtypes_metadata_returns_expected_numeric_source_code_shape PASSED [ 28%]\ntests/test_auxiliary_source_loaders_unit.py::test_load_entity_catalog_metadata_returns_registry_shape PASSED [ 42%]\ntests/test_auxiliary_source_loaders_unit.py::test_load_thesaurus_catalog_metadata_returns_hierarchical_vocabulary PASSED [ 57%]\ntests/test_auxiliary_source_loaders_unit.py::test_build_auxiliary_source_bundle_loads_all_requested_sources PASSED [ 71%]\ntests/test_auxiliary_source_loaders_unit.py::test_reference_table_metadata_exposes_enum_evidence_for_cvn_sex_a FAILED [ 85%]\ntests/test_auxiliary_source_loaders_unit.py::test_reference_table_metadata_detects_open_world_signals_for_cvn_entity_type FAILED [100%]\n\n============================================ FAILURES =============================================\n________________ test_reference_table_metadata_exposes_enum_evidence_for_cvn_sex_a ________________\n\n    def test_reference_table_metadata_exposes_enum_evidence_for_cvn_sex_a():\n        # Arrange / Act\n        metadata_by_name = load_reference_tables_metadata(REFERENCE_TABLES_XML)\n        metadata = metadata_by_name[\"CVN_SEX_A\"]\n        # Assert\n>       assert metadata.item_codes\n               ^^^^^^^^^^^^^^^^^^^\nE       AttributeError: 'ReferenceTableMetadata' object has no attribute 'item_codes'. Did you mean: 'item_count'?\n\ntests/test_auxiliary_source_loaders_unit.py:74: AttributeError\n__________ test_reference_table_metadata_detects_open_world_signals_for_cvn_entity_type ___________\n\n    def test_reference_table_metadata_detects_open_world_signals_for_cvn_entity_type():\n        # Arrange / Act\n        metadata_by_name = load_reference_tables_metadata(REFERENCE_TABLES_XML)\n        metadata = metadata_by_name[\"CVN_ENTITY_TYPE\"]\n        # Assert\n        assert metadata.has_delegate is True\n>       assert metadata.has_other_like_entry is True\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AttributeError: 'ReferenceTableMetadata' object has no attribute 'has_other_like_entry'\n\ntests/test_auxiliary_source_loaders_unit.py:89: AttributeError\n===================================== short test summary info =====================================\nFAILED tests/test_auxiliary_source_loaders_unit.py::test_reference_table_metadata_exposes_enum_evidence_for_cvn_sex_a - AttributeError: 'ReferenceTableMetadata' object has no attribute 'item_codes'. Did you mean: '...\nFAILED tests/test_auxiliary_source_loaders_unit.py::test_reference_table_metadata_detects_open_world_signals_for_cvn_entity_type - AttributeError: 'ReferenceTableMetadata' object has no attribute 'has_other_like_entry'\n============================= 2 failed, 5 passed in 108.66s (0:01:48) =============================",
+          "id": "prt_ec0bf21ff001zGWurdMW63MMyO",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0bf21fe0017TGjjSuLxGJztG"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec0bf21fe0017TGjjSuLxGJztG",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 121602,
+          "input": 1617,
+          "output": 416,
+          "reasoning": 273,
+          "cache": {
+            "write": 0,
+            "read": 119296
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781350212180,
+          "completed": 1781350230501
+        },
+        "finish": "stop",
+        "id": "msg_ec0bf2254002OVjNdV5xs32l2B",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "bbf30e4a63d8c1d2b995fc84552c9ffbfa1449a5",
+          "type": "step-start",
+          "id": "prt_ec0bf2a3b001zI64xm4Vaipa7L",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0bf2254002OVjNdV5xs32l2B"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Evaluating Pylance issue**\n\nIt seems the Pylance issue might have been caused by a helper that ran tests, but there are no fields because they didn't add the dataclass fields or constructor. They might not have saved the changes? I should make a concise plan and use commands fast with --link-mode=copy and -q -x. I need to be careful in Plan Mode to only suggest edits without making any actual edits. Everything feels good now — I think I'm ready for the final steps!",
+          "time": {
+            "start": 1781350216578,
+            "end": 1781350224456
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0d190863a1e6087e016a2d3f48b43881918922d5d53a41caee",
+              "reasoningEncryptedContent": "gAAAAABqLT9QdQCESaWhF_d3Pu8_7RAceI7HExvDL7EFbDQN6dCNVKRHfm2GyZQeuO55suNIMWmtcUxKO_ea_cXRVNaM5bwH_OfceFIO7jFKzaqn_mc0lPk_TFWQuZxbXVFgRUbDl9XsW9SLPyhZWu6YLuTUwDR-aLBgUURUPlunj3VLVi22XA4CwjwZYfwaUWvpKfz1x6YEElYoZlj5k64lOJ1sa0ASaSupyTrYvELT4pd25--awHmN_6pe9gyFc-yqWpUSZPt7wA9ZZxKXeOqPcWXI8ABAF9X4IiUnqBSF19akgRmbwmThynXVuIwyqYpZU6A9YRZXH_zzX8kmee08MnbmfMn7v_ciAmLaRdaaDP__VtzmJ3yXRJdUifNLbSZDbfY6FdyJS_J6-mvss68LNl3EqHPU2oRmh56mTsu9jNDtQnaUkFGVRgakWeTUGxqMB5qaRqVnq0aVoy6OetpOcpQY5nSFmpvsrzvIe9EJMw_-hxU4w65FBatGe-pZIDk-_keQuHGsx80ikcgW9fAr8itcjYrlfrtL2LKrShmo230GGKnh-eseoH-WdHGlfNc19ECO8FxXUkDZx2Rq6v7XL6DIT7y77K8iedeHk6IamHNlESiurEAL8GaH89wj1BW7jh8tWxeU5IYBC0OsX9xqAs48ii-G684REl0wIGd-dhJ698DjVYcHppeIRw3TIKux7IYfJsB-gqWe6mrkyuHapNVNubsEByhBu4s_22xgDF9qTy7dKVYf6PS9OACFXMkF6d7uzSZ1Zwn0yP5QX4RfmpOARzn8w1eRWwNBTGcMBNzdBB__OBtt2cbUskjq9Prncj3qwEywiEJ4Y1v7Dx_9FTm2QisA9NB6SWLwuOLOrtt-RI7zSN7PqmA5FSA0N4FltorA_AcFCrig__P7XhljfXIZBnIlOr957VffKxBny_Ik-VuAmWBbt91qR1zTAaZibD-flaFG5aQB-pCtJKJ4a6V0WAcGKkDNEsiHrJLZgFbj_eLXSjJZZi3F444Bn8eOTht01viVeR28CEs1ey6NoLxcWiRrzp_WTime8rZcfPrvNtn5FpGyjpwLkNXMnOGT2WpKabzsQ8g27VGYrQuA2A5v_unt7bY6jJkt9Jhvpqy7JZr7Ce9kJ4y45L25sYCMrdtq5Kt7z3qKsA9wEhy1O10KwPS8W9gMQ1YQIP54Y6Kyv2ERg7geQ77p-zIuJB9HnL41L5xfkUeafTxi_4S4-fLeD5aOz67vHEGIIcCpKN8xAY1j7GuaISNTbcJc0ruDypoyw47eCSh2kf9nrIwMf2K1p7W5btON3TQB0itLqd0yfxjLC6X7s3di6VkmtyIhC_b7QE7R95TSf6-qtCavhPg8CYwi1SxoeVkL2SLGlSmiRC9H7nzrA-5Y0Y_YnCAl-_cmy3hkccUJJngn2UniAdwQledNcgKYVWHUs1XsHWFckumy1q0YCrjDRsu2uPQE1eUsvvifACUMOmDngQDqh8YSrle4iHT6YC8a6ZyuDhlDpW7o2-Yu_GL-OR7YFWMGxLkicddJdYyKGBxhDC4KIeVetYjim8zOkvWnnAo_5xlzfHZkBd0QbmecAPDP1FFuE6DOwWZ9mwLd_65gkoJ95-covquGrjJH3Ki_NAdXZuEhu58UBO8r8eeWy4rbGbD-TrQ5tIyVyAvlaRCuBYp7cYxfQaK1GU15UCKtqnyYIpyOcr19-lPZHKD-uXyrK_IPtHEo5SIuKPcmN3vDd7lOphkied3I0nHsbn290lng2DzDLdy7Bsnl7OsCeG9RpMPBd6aWRwhk5wENztS470nav-5wbVQUJX07ucMHR8PRpkc2N7d_G8P62XhmAtUkVDKnBuiWFMUVKFHBEjdhJyxV1tZgdCb8y6FHekAGNwEHbaxZlaSwvvOGXpujBDlul7PlUjDvcOJyImks9NV3LF71A6vcN8CEL8ZTL98w5-vPE2TPP7Dye43da_GZBPNlgKutZb4_UgTddLNT1-qmtqER1uOwey5j5zBYqxv6VUel29MbP8FP8yg_4I26bC7h8mOl8jeIvTGowb_ybVvuubQ-RVkCbS1M8euQd5bmcNY7PcPd6pIBzdMQoB2Mx0XkD6_SmOaPPRSEaY4hj1K5w3Wet8kfYIk9uId9qLjd7xEgSNkPly84XmLvyqwMblrAIYkciS8QuifVvfFH8C7Is9xg4PepV46XwWAMT-ZFMR4IKWlzDDfJS9GJZ6RlZKeH900X2e7-rDdfQEvqwNJ5AY4TMWhQBwZVB5Or-YweKeN0tDhkdQ_zGNZvzxyKcY-79V7aZTVKz7sPnZ7m_DcdCCuNwnoM0jUiTNvg-E-kGlTD0WRGu3dqDL-200uY1ZFXWkcvJsY5quRn0e2vpJeY92eoef9anjppDp1BMRwUVOFCIVHmyB_CdGTA6N9E5amiALYH0B43VZvQZqTypAAv9Gd7ElQd2MBJ716d1gwrlsKR8kZ40eri61EahLyjTl1KAYUGnLH6XHGGrKbqGDFFo4CWWxOwfi2-mjMPjstidWlmdfNRJVSyqzjbENhC4OO6YTSI-vrYCrBX2R2R_BunH_adatYBS4s19o8MYBUpeYVGGdydCV4VSww="
+            }
+          },
+          "id": "prt_ec0bf3382001KXCFpxor06152X",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0bf2254002OVjNdV5xs32l2B"
+        },
+        {
+          "type": "text",
+          "text": "Task `1 / 15` - Add Loader Metadata Tests.\n\nSubtask `1.3 / 15` result: correct FAIL. Tests prove missing enum-evidence fields.\n\nTask `2 / 15` - Extend `ReferenceTableMetadata`.\n\nSubtask `2.1 / 15` status: incomplete. Runtime dataclass still lacks `item_codes` and `has_other_like_entry`.\n\nFix: ensure dataclass includes fields:\n\n```python\n    item_codes: tuple[str, ...]\n    preferred_labels: tuple[str, ...]\n    normalized_codes: tuple[str, ...]\n    normalized_preferred_labels: tuple[str, ...]\n    has_blank_code: bool\n    has_blank_preferred_label: bool\n    has_duplicate_codes: bool\n    has_duplicate_preferred_labels: bool\n    has_other_like_entry: bool\n    open_world_signals: tuple[str, ...]\n```\n\nSubtask `2.6 / 15` status: also incomplete. Ensure constructor return passes same fields:\n\n```python\n        item_codes=item_codes,\n        preferred_labels=preferred_labels,\n        normalized_codes=normalized_codes,\n        normalized_preferred_labels=normalized_preferred_labels,\n        has_blank_code=has_blank_code,\n        has_blank_preferred_label=has_blank_preferred_label,\n        has_duplicate_codes=has_duplicate_codes,\n        has_duplicate_preferred_labels=has_duplicate_preferred_labels,\n        has_other_like_entry=any(\n            signal.startswith(\"label_token:\")\n            for signal in open_world_signals\n        ),\n        open_world_signals=open_world_signals,\n```\n\nFast test:\n\n```bash\nuv run --link-mode=copy pytest tests/test_auxiliary_source_loaders_unit.py -q -x\n```\n\nExpected next result: loader tests pass, or constructor error if fields added in one place but not other.\n\nFicheros que debes modificar tú: `src/cvn_codegen/auxiliary_sources/reference_tables_metadata.py`.\n\nSiguiente paso: aplica campos + constructor, ejecuta comando rápido, pega resultado.",
+          "time": {
+            "start": 1781350224458,
+            "end": 1781350229132
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_0d190863a1e6087e016a2d3f509da081918d612e9afd91fa65",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec0bf524a001qBJIyhyKSjzGh2",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0bf2254002OVjNdV5xs32l2B"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "bbf30e4a63d8c1d2b995fc84552c9ffbfa1449a5",
+          "type": "step-finish",
+          "tokens": {
+            "total": 121602,
+            "input": 1617,
+            "output": 416,
+            "reasoning": 273,
+            "cache": {
+              "write": 0,
+              "read": 119296
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec0bf6758001uqB8ft89Si8Mvh",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0bf2254002OVjNdV5xs32l2B"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781350580755
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec0c4c201001wLYFqLx81lqfzo",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "los test corren bine, pasamos al siguiente paso",
+          "id": "prt_ec0c4c20100241NK6hX1kvMors",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c4c201001wLYFqLx81lqfzo"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec0c4c201001wLYFqLx81lqfzo",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 121924,
+          "input": 1024,
+          "output": 335,
+          "reasoning": 245,
+          "cache": {
+            "write": 0,
+            "read": 120320
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781350580800,
+          "completed": 1781350595634
+        },
+        "finish": "stop",
+        "id": "msg_ec0c4c240002V1FgtfifH52Z8C",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "37fc55942624ba5a41f8870053cc60811851a6fc",
+          "type": "step-start",
+          "id": "prt_ec0c4ca0f001XEIANz3pj7OhVo",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c4c240002V1FgtfifH52Z8C"
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "time": {
+            "start": 1781350583749,
+            "end": 1781350588443
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0960fc32296d42a7016a2d40b7c978819196e0a83e6bd21102",
+              "reasoningEncryptedContent": "gAAAAABqLUC8B5iXJIHfwgOgyVnloruDrsRUl_M25UlzSh9UK12XWUxk2vi5ct-EKBmP-u1MWKMOB15h4YpW_EFd1SwkxmXtko_w_Cl1A9zHSd5LgoCKOQZD_WC8XvYFkbjhy4sSLZHCQfebwUGSgOWUb8dCz8kL4oMFbsbagy_v_1i7itMSxKS2B9GO7sop-GAlpLnpy3jD61mEhmWIWdxF5QNotyLCsJl7IVznSOzHffTWA93tUIjTLbmjuZX3Uz7QbUD9wnLzaLjFhOQQICvmuAkR3Ls25LmQTnR3By95U1cQkKZoQAHPbuVqw7zFPLX0F210Afw9Y9kccpcXiG55cnSruwOmMYKIDPiw4oKxrT1tkAHbJ_jZE59VhsReRTYknmBOCxM-ipI5mXA8okS5aeMC-e5OfPfkMKAn5-ALq9-3eVP8Vwc--KqkbvlM8CC8yqKipUuW73EpjMEr7bYE5s_yAgiQRDDQFoNTucWRKmvo0lUJAw5h3gA2y9ALCZVmCH2XbOElFz6txxkxeUgivltN19JLQ6c9Oqb-P5E8YoKDA_AiKGl4ydUE4SFvlwgDQ2vYWUwqtB6im4qjmyndvc0lcMW9yluzq8WsxX0SXuUL1hNfACC9jc8J3ASVB6tGgzmAzi4eGDlAOjOw_97VtVr1H7LwLXeyPtiijFLJ4hDYHKhWQ0K0sS-O6s-z_UM7U0MI1TIhl25zfNbnFjK1mwrfWwpxLQCQch3-UeAUrWVEXDiENh9m8dxP-HwunIc1NJSUnDitfqDB4aOqhQuXc0DY7oeh4rUY9qnVYUA60mdPGWKUtvqDv0lY9NIKDIVtKNeYyBWSFJsanKsOolDec6CQo69lUaRo_WjbNSrIenejnsMD9YDgQjkoPCbQWNF_f4mPb2zONy0_InD1GnsdutR29InDw7Ag8X0G1QD_DBj5FXc5fND0BKAE4ndLKVTpirZJcIzcwzGPwwurpyXAZyiDaJWQcndrRjVLs7PYHp1hA06-IXjeTJs6RMIXC5uLtg9sZFmzgmdLy_nrrBbeHh6dlNsTUGG8wm6eH0lYIMEIkbwwRh0M_S9YBsa4Fef3w9S5M-LwQW6oKo5KCMXTLIYYt97QvXN5a3CtrgZgiFOGlV6kxP3XxPq-2bgxdz44OF-HqQJfMnMWaT0BsPUmxpsfnQJHD5JeeunRFPk5eo1CaDzQg2Eioa1YmB7st3AyhCpEdCHNudD0IW0ctMz192KqVIoZWDVWugGBzzfpkMmu48ykWnr8TOhnt1MmRIw7UVD9KYi9xtFCycEO-d5JH-7hJ-KtzJIOD7VmoLXZbMmWlx-iclPks4vqWVNLZjuQZOEoz9M82koaAMnKOeDvhoys1yDMdMsB1_xnb-zHx2TdxZPOBPs0_fGmuzoWwRamQfghmDbFgK4xmax713rR5eA0CtxoNIsqwg9VQBNmaoNFfCc_saUXljnes3kNUD5fQ684vsf5fG-B93oVtyioCgOZfbtvuHEmMCSMXgPrTyOYx9cooZWUBjYY1JZMdr5FbZb4hZo5s3SN0K2vsZSSaSyznfN4kEGc7EB5QR6Rd1JgFqRfkXQE24VDHkbFSKG5DR_ET72mZgIDUTBMX02vmicdrXOxHFD_7bjZ_j7x2JGUILTbqGD5VNC8SPekxotRRhjoA5nrIsf8DXk2qswDchZ4yNaqIu_qhOIAY3bvMZGsXYXfKAU3a-yjrc33ZsnvMsmN7fLmHk-PsTtlrzOBBBLm03H82QPeOKCaqMU356w32d3I4J2sTnvP1YusDLgwkTrFQLpX_d-ZtbODMGbVZwMuubOHw3SgbxM0rEpkGit1WfkV899rifScP68_qA5qbGF6Sp6RX-prNH8L9e6AoBgfGyI58p6Xp2268HyvIp4Wy15vDHVqUVvNaIOpH336y4Na5OQA6JI1Awh5yDRsYH-3oJ10hyjorz0YBoKMInpNqaKAlWYPg_NvL0LLenzI1fZ5xXcfy3vQbJvXMbE3UUVo3fqyD4n_XYLZUWPR6XszFFlcgmLxRBlQTXcNpWEmAEwCuWwOULEY_fafJ7oWzMoNyuyEqycg5vhUN76z03zxpx075TVW-qoQo-a3UB7DaVbC1DOTGPtyTrkx4nnIFmiAOuVUcyaSHxtJr06baKCxuaPpjOBigag2LIM0h7bhaYXENREzM8HRCBdDiXCF5eIdt98YlLyMg9t5SINu71_zbnX4moYnVwkb18mKX67m8493S6N-21Hfvxz9TE7NVCK2SmUoIB0vGjqyMGEzoWY66dbq89pdSY8cWhUgbfPrnehVndOq_nZWT0Ae0mz1GdDBic0Ba1eIv3n1B-52FAgfq_-wtE4hrswYciewDQ69Po60TciyIAC92JL0_OuwAWx6nOns-4YNHxwD27UZKqa1__lvyhO2iMfWfbaPZnnkm3dE8e0Ipd8oCc7wKAElHxqDZm5sgAOAHTrrTrttOyL9L3kbM3U="
+            }
+          },
+          "id": "prt_ec0c4cdc5001hqgVeSZG6dWl8n",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c4c240002V1FgtfifH52Z8C"
+        },
+        {
+          "type": "text",
+          "text": "Task `2 / 15` - Extend `ReferenceTableMetadata`.\n\nResultado: completada. Loader tests pasan.\n\nTask `3 / 15` - Add Reference-Resolution Evidence Tests.\n\nSubtask `3.1-3.4 / 15`.\n\nResumen: añadir tests fallidos para `ReferenceResolution.reference_table_enum_evidence`.\n\nModifica `tests/test_auxiliary_reference_resolution_unit.py`.\n\nEn tests `NO_REFERENCE`, añade:\n\n```python\nassert resolution.reference_table_enum_evidence is None\n```\n\nEn side-package registry/thesaurus y unresolved, añade mismo assert.\n\nEn `test_resolve_manual_reference_resolves_reference_table_case`, añade:\n\n```python\nassert resolution.reference_table_enum_evidence is not None\nassert resolution.reference_table_enum_evidence.table_name == \"CVN_SEX_A\"\nassert resolution.reference_table_enum_evidence.item_count == 2\n```\n\nEn `test_resolve_manual_reference_marks_subtype_catalog_available_for_subtype_backed_table`, añade:\n\n```python\nassert resolution.reference_table_enum_evidence is not None\nassert resolution.reference_table_enum_evidence.table_name == \"CVN_KNOW_A\"\n```\n\nFast test:\n\n```bash\nuv run --link-mode=copy pytest tests/test_auxiliary_reference_resolution_unit.py -q -x\n```\n\nResultado esperado: FAIL por `AttributeError: 'ReferenceResolution' object has no attribute 'reference_table_enum_evidence'`.\n\nFicheros que debes modificar tú: `tests/test_auxiliary_reference_resolution_unit.py`.\n\nSiguiente paso: pega resultado. Then Task `4 / 15` - Add `ReferenceTableEnumEvidence` Contract.",
+          "time": {
+            "start": 1781350588453,
+            "end": 1781350594302
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_0960fc32296d42a7016a2d40bc8dc08191a86ac6c5e695f5b7",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec0c4e0250012dzf4kBORw2GEe",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c4c240002V1FgtfifH52Z8C"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "37fc55942624ba5a41f8870053cc60811851a6fc",
+          "type": "step-finish",
+          "tokens": {
+            "total": 121924,
+            "input": 1024,
+            "output": 335,
+            "reasoning": 245,
+            "cache": {
+              "write": 0,
+              "read": 120320
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec0c4f9ab0018CVkCJpJ76azDm",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c4c240002V1FgtfifH52Z8C"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781350764281
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec0c78eea0015Q0d6lKBkvYrKm",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "dime exactamente que test hay que modificar y como hacerlo",
+          "id": "prt_ec0c78eea00219cfQ3QvDtDhRg",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c78eea0015Q0d6lKBkvYrKm"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec0c78eea0015Q0d6lKBkvYrKm",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 122859,
+          "input": 1374,
+          "output": 649,
+          "reasoning": 516,
+          "cache": {
+            "write": 0,
+            "read": 120320
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781350764323,
+          "completed": 1781350789696
+        },
+        "finish": "stop",
+        "id": "msg_ec0c78f23002E2bzMOyBxRIGCC",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "37fc55942624ba5a41f8870053cc60811851a6fc",
+          "type": "step-start",
+          "id": "prt_ec0c7961f001LqCDojRwGpMIYu",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c78f23002E2bzMOyBxRIGCC"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Planning for CVN_SEX_A**\n\nI see the task plan for CVN_SEX_A mentions some unresolved cases, and the user wants exact details. I think it’s best to include UNESCO and under_traced as they seem relevant. To cover all bases, I want to modify existing tests to ensure nothing is missed — that sounds more robust. It looks like I won’t need new imports since the field exists for the future. I should also add instructional lines under Assert blocks, and maybe provide snippets for functions.",
+          "time": {
+            "start": 1781350767089,
+            "end": 1781350784106
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0e48c1ceef64b99d016a2d416f30748191a5757b5f122eb951",
+              "reasoningEncryptedContent": "gAAAAABqLUGAHZUAerKO1g-STjUPAB3TOOCt4dwf_Sxy33OFM9GX9KJ8oP83mFGATQBow2fsg-pEs2rWLSLMe8wT8KBi0Ni6rSbvc-9oxZOZiPQGnyVoki5wdbcn17Dj55ZU7BtkalMYpTjgaa7GKdIc_yFWXaVgDELsIkjBRPWDwSICcNyzfpU6s95ma0B_i2PIXjgTE3oSuF6deyA2x3eWR9MNIQpLhEV61JtnloOCMrlOWcTS7HRczv8xFERXlmxtVMn_FfooNhUHEK9nTOnmswXlepsP9LNomsgFmLaK8l9NGt1joeB3QcTQXD-LSQc8hBIpjpseBpK1NfrIQhzaKseI-NYKML_SXxlA4o7bdARmvg5FwMM92Sx-2_JH87ujVLaHeunJ1PKwZNkylEJ88cf_bYmjDQj9wu5GIiYzd5R-rDRGgu4aqj3tQiqWNRBUPg3vdEoMDaUX25zWoUL9mj4TbO36-phNwG-Bfmd9C_GIzw4lKUw6hrc-aqGUo2O_eiDSsPH7-FgXP3lbcvxo1CepmQq0BUd53_4gva4Em1WVVsdeVTinstEjbvLOF2CbADUz7l2jZMddlgjOOIlWYTX_2saD1Pk732O9o8BUiEw3vIgQf0sD_iPlAV21T6HQKnC1IfFfao9ID1PBGKv-XinKwqElSE1TFk-PjzjkQLagbgF8vNmklp92Tqm2ql3_JbNGAdFXPtXr6Heku8A-6s7M6KBdhdZKxbpo8TJF1PTi4Ra65ihQm3kXgbfoiBNWSuB-HpkuxllBwaWxuoHPuZlpf7CU6tVZvspXoRkRs2MA8x0J_khFbdHLTnCVBYFg1CDBg_-y7liPHTL-NhvVZKwigRTMgjEGmedZs1UM3-qvu7_HxFqdPbNd6k-8--AGwCAzOj8dje7_O8Mu4bMG5Hfo2yteD41v7jsbjqRjbvnvl412PrJW9Mh5ViYpwsIeE-Hst33ZUNrpjnSybH2Y0-qIFRvBf7akxb5MxmZz73ZCesNwziCUA0lpV9AMw_U2rry7F9KMHF4goXgTxU5VJ_oSm_dSzCe29ebQdSkMhKHLn5WXhC_5ET_294jyHhFkDix0lWYoRbstk9NtJmo4AbR9dKU_FJ-EOn5lUAtyqjAKiw6n21ah99WehnHgYtNuwneJYrNsJkpvGGtqbJwUhZLaBDtah1-4optx2u75pCrqchsegYjIu9qwGm6HkCIUW2Wy4WyDjdK4X54KcOK5JEK6V2fNIcBSKym-vrU8jafJgecnUdCboP2y_7oe-fmPoPEwCgG4g4Q_MCDy3z-WYhArWorhxvoVstdF_Zt7MS-pGP3fZI7eqZD3R4HTqyWy5neUqBLEgT7RO-CeV8f8V3gqOzD9ODXQoBO9H1UBPzyJ5ghRccWcmZruJllYPvcAM3DZoUYOYkVZWpUoHksZwgIm1QSMFOeafjs3Y3KSCK44GJwNu7MVd55lH7j-mPUqqyNKCLEOheLygiGNJGRxNo87eMZum5evManoglM4cPID6OMNPwikOD0EuL__WSY4HQQBGL5CieZqC1K_iVbekQ-IrMiQ_CIa99WRkdnMlDuOjuQbswMVtMM6NbrqrJptsSvdw9HErkn4NnUmEauvINC2ChrHS2NdtD9YVWtegH8Qtlnt1oi9mnU_GNzaLqoJb7E3tXzYw1zgm0mkI-8MGRJ3O8KGzDltPN08UYlEAK90sWQbgtTs6cztEwJEPDlco_d4QXvet8VG5zhNa7F2xGSKnaWGNYBGVg3B2NHp5ZcMMmZayvwf9FBPJus9LmH3RsKXnKXDZJnnpjteOunR-fCvuaZc_W7Wxn8YhWqycwV-hnj_24WdpGg4OXy90zHpoKIQS_sNf9L8nj2n9RElvf3_HycNkH6LsSKewnbVx3-nv-vAvAyP8hkriB8JR4W0yGOGC_b3fpWM0QBwHrG-gJFWDbfwT_YFMwyYjBPk540RM2IObhERmGpgMXasRpGrFaCJ7z5odJSWFRSyMngR_3ssmb3G4FUjxksH0QbzL5GJ5Sv_MVrY6-MnQ7Oyhfd9Z-XdPhj3E2b3kZO42hze6DpxIWwspIVbTGY4G1J8pdbM9wg73ecgipmSdoxl008l6IaDTf4tT_PQBiS5oYfDazDPkUjY_bEowfyFkc-Xs_GMV0rvT2_ojGfIvmqxIZwtgIPyVPf1VHmgWHm0Y9iXfKK6DG2XjrJfRBfVjMXbmBksLV-LZ9ovVDOIUVQjw6M-D-ZmTZXFOXxoe69UZAXH5wMac9agVVHMnrAbfBcQUe59abNN-ZWPimoxhB12iAhbIXYeyLbVcONe22q8QH2GrTBRCQfAdWnbik1ntQ_P_Eis2CzyXECvLnKiVLSfu4rsMWbJ5V260p09g3T0c8n7V-wwxGzyI_kLFyCGYNd6TCCEi3A_CWCXOxeCBHTv3jNW5Dq54boIkDO0Y2WganbIEHgC4ICGGitNlysyWyJdt2bteqTI3-NX1yl5woEVblrguAtY4OL3j8x5PrX5OYk1NWLCYMSdi8G09szGltrUlKvYWpTozo97bxld52f7LrW5zV_shSLB2PwFxj140gW8LWZiOzYwM5kWC2AvJnFByAJfnrcLJMOBAfqf8veHAxFdULAFVFOZ2K8RO2PNP2mW8Gph0i3qyPADElVQB1awbU9fX1cqaFWUdoxHIozrPFF_J3xF33xs1eoiOvhD8Vr50Me5UlbbjjYokoRP0idA40bZO6VMy-DfEbpdESXQGKWJi09nPoDZ4veZluPoCt21QCo5KwjSn1bpQk6Ec7l7yubc8qQp0H6lVS9pOzDbCI6LGFQ0OIyccOSmGjV72F_3ZbMPbatj8G26H-FFwAqq0dFfAky1OyAUwQf6rM53lSeBukg0YRrjoHwQu-bgfejSS4QHGG31G_DslgrKV9rJ9njBgGc6tQp4_6NOBDyvglwrK03w8GPRImQyU_w0V89i5CGVoq8-bFvnIB6jtHbJsksjySlT98IwL3tZNvplgG5EBm6gROX1EOGIkA9c1EUBpI2QwUQUSBJP9yexiMkvy0nQ3c16A7lS6eCCpIEUYcgtG8EUJygwHHUxwMke8p0zDOSKCLt7VdUrmghhw_YqCKIM2TGM82EsTl4lDnB5bUz57x19tqJwLDwthaCTii9zBkCHXwML2a7ViTWvEaXcXcdollGuz-w6Vju_oExHxbSPDzHLmMM9xs3u3bleyQhDKOSyMCpZ1EEzix6LrdLXyVVV3x2QBqJ6r3B6KVfelmjzwgZM4mCuxGTk6qJO9H4NRb5szbbKMpg1KbGwlMrurXU4bqQ-jczV29uXladWirzcocoV2Ud8UHdWoLjxS9CobH6ji4mdoKl5jZy9ZSq94ks9-e-nVksZoRRugN0DzlGzefCjzf0tZ0-F1hBYEwrQ4_bQJZTznA4b7JRgh_Y4qmlINL-S08-DDp3s7qzZTdR19q9lpKtXhMdwaJY4O4tpiMVAjdyOlL7SvWeq7bmzoBAT5unHcWdKoG4f3wz8RHTfheiHaxFKg5pPf-CTuCwmEBN54r4pQp-yUzcm4dLA8DN7u4njnCZeDcZmHNFMHbH05t34EEkKL7AH37aaornVYKYxvoHKs1I1NiSa6_E8fatXyhTs8GybWgDjAYVfl_T8_pET5RP9tvLaCQlJ9EZPGBNsEDxMlAxQzwvP-8mLg3xNYg3SWl4Zz8p7cWiFE2oXD1yRw37Kvx8YfyUKeneQLI8UC77BdOVWK5jHrYC2xglX9hVFaD9W2eyhMW5v4v6zuqqwnK0II6XtypB3LGwPk2mOy92wnMOx_OoMphbQL2UFWNa__wK-evvVrghFg3vjGylMUXVSDrNEcAeskPUzgVn5SEjmEjBuB9kNPZTR3Oj3IJw7bTwq8VoUa47tRZUTWAuA0iTjiXRpmsLs_TWgxyUXZw_5L6RdyiccO7j75zbKrVCfAnOlDQKkLlZRDzC5KeHOS0Xv8OiargeWd9YoH7mUw9ubcpZXDlIq06kEq9MO81g1qLoRaA3FzIrvzlJ4WWW2dRlFHyF1evr7WMopw93RwNis19wZyZePHVJorBsiG3IKOgEsw4KB9NweDaR24ecjZgEUD3kLkfkEdncKwRa8eOPPLGX8v-bBut8ihbFgqdPOCXeTe-XjOodl4oRSEJ1D7t7UEhE3vb26j-b6wJ_M4TW42dVtKU6ZD96FGUXeD3SnxtNehhiVMwY4KkQFskCsMKphzlIXAsUlfAoi9WvoAxTRaw=="
+            }
+          },
+          "id": "prt_ec0c799f1001WcS8de6wBKu141",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c78f23002E2bzMOyBxRIGCC"
+        },
+        {
+          "type": "text",
+          "text": "Task `3 / 15` - Add Reference-Resolution Evidence Tests.\n\nSubtask `3.1-3.4 / 15`.\n\nResumen: modificar solo `tests/test_auxiliary_reference_resolution_unit.py`. Añadir asserts sobre `reference_table_enum_evidence`.\n\n**1. `test_resolve_manual_reference_returns_no_reference_for_none`**\nAñade al final del bloque Assert:\n\n```python\nassert resolution.reference_table_enum_evidence is None\n```\n\n**2. `test_resolve_manual_reference_returns_no_reference_for_whitespace`**\nAñade al final del bloque Assert:\n\n```python\nassert resolution.reference_table_enum_evidence is None\n```\n\n**3. `test_resolve_manual_reference_resolves_reference_table_case`**\nAñade al final del bloque Assert:\n\n```python\nassert resolution.reference_table_enum_evidence is not None\nassert resolution.reference_table_enum_evidence.table_name == \"CVN_SEX_A\"\nassert resolution.reference_table_enum_evidence.item_count == 2\n```\n\n**4. `test_resolve_manual_reference_resolves_entity_side_package_case`**\nAñade al final del bloque Assert:\n\n```python\nassert resolution.reference_table_enum_evidence is None\n```\n\n**5. `test_resolve_manual_reference_resolves_thesaurus_side_package_case`**\nAñade al final del bloque Assert:\n\n```python\nassert resolution.reference_table_enum_evidence is None\n```\n\n**6. `test_resolve_manual_reference_classifies_unesco_codes_as_hierarchical`**\nComo `UNESCO_CODES` viene de `ReferenceTables.xml`, añade:\n\n```python\nassert resolution.reference_table_enum_evidence is not None\nassert resolution.reference_table_enum_evidence.table_name == \"UNESCO_CODES\"\nassert resolution.reference_table_enum_evidence.has_hierarchy is True\n```\n\n**7. `test_resolve_manual_reference_returns_unresolved_for_known_manual_only_case`**\nAñade al final del bloque Assert:\n\n```python\nassert resolution.reference_table_enum_evidence is None\n```\n\n**8. `test_resolve_manual_reference_classifies_under_traced_known_table`**\nComo `CVN_INTERVENTION_A` existe en `ReferenceTables.xml`, añade:\n\n```python\nassert resolution.reference_table_enum_evidence is not None\nassert resolution.reference_table_enum_evidence.table_name == \"CVN_INTERVENTION_A\"\n```\n\n**9. `test_resolve_manual_reference_marks_subtype_catalog_available_for_subtype_backed_table`**\nAñade al final del bloque Assert:\n\n```python\nassert resolution.reference_table_enum_evidence is not None\nassert resolution.reference_table_enum_evidence.table_name == \"CVN_KNOW_A\"\n```\n\nFast test:\n\n```bash\nuv run --link-mode=copy pytest tests/test_auxiliary_reference_resolution_unit.py -q -x\n```\n\nResultado esperado: FAIL por atributo inexistente:\n\n```text\nAttributeError: 'ReferenceResolution' object has no attribute 'reference_table_enum_evidence'\n```\n\nFicheros que debes modificar tú: `tests/test_auxiliary_reference_resolution_unit.py`.\n\nSiguiente paso: pega resultado. Then Task `4 / 15` - Add `ReferenceTableEnumEvidence` Contract.",
+          "time": {
+            "start": 1781350784110,
+            "end": 1781350788339
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_0e48c1ceef64b99d016a2d41802b688191a56ec3981a907c29",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec0c7dc6e001xjEeuY0uSd7gPX",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c78f23002E2bzMOyBxRIGCC"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "37fc55942624ba5a41f8870053cc60811851a6fc",
+          "type": "step-finish",
+          "tokens": {
+            "total": 122859,
+            "input": 1374,
+            "output": 649,
+            "reasoning": 516,
+            "cache": {
+              "write": 0,
+              "read": 120320
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec0c7efa2001Swo6eNXWYNOx80",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0c78f23002E2bzMOyBxRIGCC"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781352582932
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec0e34efb001gE0F3qfULJOD6t",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "test fail, next step",
+          "id": "prt_ec0e34efb002K50xWFVgSg9qBh",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0e34efb001gE0F3qfULJOD6t"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec0e34efb001gE0F3qfULJOD6t",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 123080,
+          "input": 2032,
+          "output": 653,
+          "reasoning": 75,
+          "cache": {
+            "write": 0,
+            "read": 120320
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781352582949,
+          "completed": 1781352600464
+        },
+        "finish": "stop",
+        "id": "msg_ec0e34f250024gg0KPUc4IbFqX",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "988280a2588c9bec48c0104820b5a6d43ca5742e",
+          "type": "step-start",
+          "id": "prt_ec0e35659001xI7PR7fWTp39wE",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0e34f250024gg0KPUc4IbFqX"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Planning modification instructions**\n\nI need to focus on responding in caveman full mode, sticking strictly to the plan without making any edits myself. The user has indicated a failed test, so I want to provide clear instructions for modifying the normalization_types.py file. I’ll make sure to include details about conducting fast tests too. The aim is to be concise yet thorough in the instructions, ensuring the user has everything they need to proceed with their coding tasks!",
+          "time": {
+            "start": 1781352585755,
+            "end": 1781352588659
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_044e8827a2b08b1f016a2d4889eac88191a24fb743a80414ae",
+              "reasoningEncryptedContent": "gAAAAABqLUiMXGlQnJKh5b0emmoNxIbTpyk-4O0a3N-ISg--DSp6y9nKjrlYKaXB0QMWO6uPm_EKkOy3_4T8gr3kGncj_CF5ZfHDSMDiuPaFJnA7Kga5Qb7GGA6078UamppIi2HHlk8imAv1BoZTlUPFtC11u_gPKvTlGPI5ouyYcYRdJVKHivOikUp8WD_NVy1jK2NLAqvsaQCkor8t8Sa8JqaWpg953ZU-jQwrAsGC2IH7MAPjHZkDf_mzI68bbtIX-t34s5wP8GVzFlAxOwV7gO8HywJM0COZKcUQDuhrbunoV_Wu2obZPdGTJLK1d8RwMh1vfQeqHZerno5BrpXeAvjtYYYInzhk6onl9Be07X6qAk0yZLxo7-iTkMCPb26t1mqw-LvUfokW9e19QEk4LMvBg4TNxREWF2iqDZ75Qo1gsIF9oV4rdzA2LEYobYX51B1BqLXNDQTdh6tlE676OxWP_yojbofDFgzjzvrRYjQZcQZl02H-9aZ6tIffOyCthRTn7ZLBrwzp6QZ2uXbMhzKyIfRPMlRCYNxrRy2wcw6xaTquPYHJtCc3SiclJVGdlJ9fCMtQGiZFbWlqNtWRcUPJTNTZOAzBQIqkQGloR3FvRHcK6G1OWjy5SuE5kAIH3C4rudlQtqf5F2GKpkaYHsevq1JHtASi5r2KGin0mhjutmFaVswVf6fg60ZR453L0pUa-wcIhPLBsMEJ7HfynEzqbY8tZ5i0O8Aeoi3TGDx8SPmUN7gbhpfHllnoLmnhT4ghszSxUFrLF8ST7mQTvmmDVjh24pc3Okuhw9KNRXE3huRm4jTzuDgQyoaOawFYfCbxTaqh-dBhzAPIsMunVF5tRarCGjeQk30nwlNwfCb07khtcQtEqhikcyhwASX3MMOqwMhPZzGw5S3EDHoj1Caq1gedbub3sBR8O0gNyM8U2PgAaOmXhqjJA_5qXvDUA4msIoGWdNU-EwDcor0SrBlqj0KLcWfsADDj-hA82UnyFfp5wD_SBzuuD1YbXDNTdk0joDjdKM7fYW0psqZRy5wwDeIubfIuTmIEJB7cEHPWysJ7nWeQtOYV1oAqPCGrKZvAZsZZ4KAvrNNSKoh22kHmTg0eVStttVQTSytAY-OtIfG1VGO0uOv-0UfBghepQWnLXbr1DnoMIda-l8Dt_x4p5FGxwG_UNyYwLDfqWD5cCTRZXFXS0d7Bqt1zRZUJKklpXjA1gtPfhk-5GJEqB7xt6DedBa1d_pL1Fp0-bmih3Fz4zTjhkbC5sp5OBODjsze2rcKTn8tEyRcpJojOdn5YZj40BobuvTO9q6wpglqmp6Lqi7XHIPAFcevRmjbwdNjWL067X8wWucRyfOTaNPSbWhpbHC5UK5qB_9PxjSetKL-yxHM="
+            }
+          },
+          "id": "prt_ec0e35a1b001karNhimbh6fzKK",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0e34f250024gg0KPUc4IbFqX"
+        },
+        {
+          "type": "text",
+          "text": "Task `3 / 15` - Add Reference-Resolution Evidence Tests.\n\nResultado: completada. Tests fallan como esperado.\n\nTask `4 / 15` - Add `ReferenceTableEnumEvidence` Contract.\n\nSubtask `4.1-4.3 / 15`.\n\nResumen: añadir contrato tipado en `src/cvn_codegen/normalization_types.py`. Esto quita `AttributeError` y mantiene constructores existentes.\n\n**1. Añade dataclass antes de `ReferenceResolution`**\n\nBusca:\n\n```python\n@dataclass(frozen=True)\nclass ReferenceResolutionTrace:\n```\n\nDespués de esa clase, antes de `ReferenceResolution`, añade:\n\n```python\n@dataclass(frozen=True)\nclass ReferenceTableEnumEvidence:\n    \"\"\"Store enum-eligibility evidence extracted from ReferenceTables.xml.\"\"\"\n\n    table_name: str\n    item_count: int\n    has_hierarchy: bool\n    has_delegate: bool\n    has_other_like_entry: bool\n    has_duplicate_codes: bool\n    has_duplicate_preferred_labels: bool\n    has_blank_code: bool\n    has_blank_preferred_label: bool\n    normalized_codes: tuple[str, ...]\n    preferred_labels: tuple[str, ...]\n    normalized_preferred_labels: tuple[str, ...]\n    open_world_signals: tuple[str, ...]\n```\n\n**2. Extiende `ReferenceResolution`**\n\nBusca clase:\n\n```python\n@dataclass(frozen=True)\nclass ReferenceResolution:\n```\n\nAl final de sus campos, después de:\n\n```python\n    trace: ReferenceResolutionTrace\n```\n\nañade:\n\n```python\n    reference_table_enum_evidence: ReferenceTableEnumEvidence | None = None\n```\n\nQueda:\n\n```python\n@dataclass(frozen=True)\nclass ReferenceResolution:\n    \"\"\"Represent resolved auxiliary-reference metadata for one manual reference.\"\"\"\n    raw_reference: str | None\n    status: ReferenceResolutionStatus\n    source_family: ReferenceSourceFamily | None\n    source_artifact: str | None\n    resolved_name: str | None\n    serialization_pattern: SerializationPattern | None\n    semantic_kind: SemanticReferenceKind | None\n    is_subtype_backed: bool\n    subtype_metadata_present: bool | None\n    diagnostic_message: str | None\n    trace: ReferenceResolutionTrace\n    reference_table_enum_evidence: ReferenceTableEnumEvidence | None = None\n```\n\n**3. Ejecuta fast tests**\n\n```bash\nuv run --link-mode=copy pytest tests/test_auxiliary_reference_resolution_unit.py -q -x\n```\n\nResultado esperado ahora: todavía FAIL, pero distinto. Ya no debería ser “attribute missing”; debería fallar porque `reference_table_enum_evidence is None` en casos `ReferenceTables.xml`.\n\n**4. Ejecuta compatibilidad rápida semantic policy**\n\n```bash\nuv run --link-mode=copy pytest tests/test_semantic_policy_unit.py -q -x\n```\n\nResultado esperado: pass o fallo no relacionado. Campo default evita romper constructores.\n\nFicheros que debes modificar tú: `src/cvn_codegen/normalization_types.py`.\n\nSiguiente paso: pega resultado. Then Task `5 / 15` - Attach Evidence In Reference Resolution.",
+          "time": {
+            "start": 1781352588664,
+            "end": 1781352599172
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_044e8827a2b08b1f016a2d488cd798819194e2f23b3928bfb5",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec0e365780012nUYBcyonVLR2i",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0e34f250024gg0KPUc4IbFqX"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "988280a2588c9bec48c0104820b5a6d43ca5742e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 123080,
+            "input": 2032,
+            "output": 653,
+            "reasoning": 75,
+            "cache": {
+              "write": 0,
+              "read": 120320
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec0e39115001RdsfW0KwHgz2WI",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0e34f250024gg0KPUc4IbFqX"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781353472704
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec0f0e2a9001Qmg7UxwyKD2DkL",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "test fail like this: uv run --link-mode=copy pytest tests/test_auxiliary_reference_resolution_unit.py -q -x\n ..F\n============================================ FAILURES =============================================\n___________________ test_resolve_manual_reference_resolves_reference_table_case ___________________\n\n    def test_resolve_manual_reference_resolves_reference_table_case():\n        # Arrange\n        auxiliary_bundle = build_test_auxiliary_bundle()\n        # Act\n        resolution = resolve_manual_reference(\n            raw_reference=\"CVN_SEX_A\",\n            auxiliary_bundle=auxiliary_bundle,\n        )\n        # Assert\n        assert resolution.status == ReferenceResolutionStatus.RESOLVED\n        assert resolution.source_family == ReferenceSourceFamily.REFERENCE_TABLE\n        assert resolution.source_artifact == \"ReferenceTables.xml\"\n        assert resolution.resolved_name == \"CVN_SEX_A\"\n        assert resolution.serialization_pattern is not None\n        assert resolution.semantic_kind is not None\n        resolution.reference_table_enum_evidence is not None\n>       assert resolution.reference_table_enum_evidence.table_name == \"CVN_SEX_A\"\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AttributeError: 'NoneType' object has no attribute 'table_name'\n\ntests/test_auxiliary_reference_resolution_unit.py:73: AttributeError\n===================================== short test summary info =====================================\nFAILED tests/test_auxiliary_reference_resolution_unit.py::test_resolve_manual_reference_resolves_reference_table_case - AttributeError: 'NoneType' object has no attribute 'table_name'\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 2 passed in 104.73s (0:01:44) ",
+          "id": "prt_ec0f0e2aa001ID7fmXcwZIDAlh",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0f0e2a9001Qmg7UxwyKD2DkL"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec0f0e2a9001Qmg7UxwyKD2DkL",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 124095,
+          "input": 3016,
+          "output": 759,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 120320
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781353472799,
+          "completed": 1781353511805
+        },
+        "finish": "stop",
+        "id": "msg_ec0f0e31f002qwkDzA2WaU25ib",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "da1241ef75debf8ae363cc7620cf9cd31b919cd6",
+          "type": "step-start",
+          "id": "prt_ec0f0f270001dl2BEbW4IzHR93",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0f0e31f002qwkDzA2WaU25ib"
+        },
+        {
+          "type": "text",
+          "text": "Task `4 / 15` - Add `ReferenceTableEnumEvidence` Contract.\n\nResultado: completada. Nuevo fallo correcto: campo existe, pero resolución aún no adjunta evidencia.\n\nNota: en test falta `assert` en esta línea:\n\n```python\nresolution.reference_table_enum_evidence is not None\n```\n\nCámbiala a:\n\n```python\nassert resolution.reference_table_enum_evidence is not None\n```\n\nTask `5 / 15` - Attach Evidence In Reference Resolution.\n\nSubtask `5.1-5.4 / 15`.\n\nResumen: crear evidence desde `ReferenceTableMetadata` y adjuntarla en resoluciones `ReferenceTables.xml`.\n\n**1. Modifica imports en `reference_resolution.py`**\n\nBusca import desde `normalization_types` y añade `ReferenceTableEnumEvidence`:\n\n```python\nfrom cvn_codegen.normalization_types import (\n    ReferenceResolution,\n    ReferenceResolutionStatus,\n    ReferenceResolutionTrace,\n    ReferenceSourceFamily,\n    ReferenceTableEnumEvidence,\n    SemanticReferenceKind,\n    SerializationPattern,\n)\n```\n\n**2. Añade helper antes de `resolve_manual_reference(...)`**\n\n```python\ndef build_reference_table_enum_evidence(\n    table_metadata: ReferenceTableMetadata,\n) -> ReferenceTableEnumEvidence:\n    \"\"\"Build enum-eligibility evidence from reference-table metadata.\"\"\"\n\n    return ReferenceTableEnumEvidence(\n        table_name=table_metadata.table_name,\n        item_count=table_metadata.item_count,\n        has_hierarchy=table_metadata.has_hierarchy,\n        has_delegate=table_metadata.has_delegate,\n        has_other_like_entry=table_metadata.has_other_like_entry,\n        has_duplicate_codes=table_metadata.has_duplicate_codes,\n        has_duplicate_preferred_labels=table_metadata.has_duplicate_preferred_labels,\n        has_blank_code=table_metadata.has_blank_code,\n        has_blank_preferred_label=table_metadata.has_blank_preferred_label,\n        normalized_codes=table_metadata.normalized_codes,\n        preferred_labels=table_metadata.preferred_labels,\n        normalized_preferred_labels=table_metadata.normalized_preferred_labels,\n        open_world_signals=table_metadata.open_world_signals,\n    )\n```\n\n**3. Adjunta evidencia en rama `table_metadata is not None`**\n\nDentro de:\n\n```python\nif table_metadata is not None:\n```\n\ndespués de calcular `semantic_kind`, añade:\n\n```python\n        reference_table_enum_evidence = build_reference_table_enum_evidence(\n            table_metadata=table_metadata,\n        )\n```\n\nEn el `return ReferenceResolution(...)` de esa misma rama, añade parámetro:\n\n```python\n            reference_table_enum_evidence=reference_table_enum_evidence,\n```\n\nDebe quedar cerca del final:\n\n```python\n            trace=_build_resolution_trace(\n                manual_reference=raw_reference,\n                resolved_from_artifact=\"ReferenceTables.xml\",\n                resolution_rule=\"reference_tables_exact_match\",\n                supporting_metadata=supporting_metadata,\n                manual_code=manual_code,\n            ),\n            reference_table_enum_evidence=reference_table_enum_evidence,\n        )\n```\n\nNo añadas nada en ramas `NO_REFERENCE`, `ENTITY@Entity.xsd`, `THESAURUS@thesaurus.xsd`, unresolved. Default `None` basta.\n\n**4. Fast test**\n\n```bash\nuv run --link-mode=copy pytest tests/test_auxiliary_reference_resolution_unit.py -q -x\n```\n\nExpected: pass, or next failing assertion if otro test needs `assert`.\n\nFicheros que debes modificar tú: `tests/test_auxiliary_reference_resolution_unit.py` para añadir `assert` faltante, y `src/cvn_codegen/auxiliary_sources/reference_resolution.py`.\n\nSiguiente paso: pega resultado. Then Task `6 / 15` - Add Direct Semantic Eligibility Tests.",
+          "time": {
+            "start": 1781353477753,
+            "end": 1781353510531
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_020ba0eeabe585dd016a2d4c05dc4c81919cabc715851d0b0d",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec0f0f678001sfe6dFDKbOQdKn",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0f0e31f002qwkDzA2WaU25ib"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "da1241ef75debf8ae363cc7620cf9cd31b919cd6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 124095,
+            "input": 3016,
+            "output": 759,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 120320
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec0f1790c001ym0b61HqOZbW0L",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0f0e31f002qwkDzA2WaU25ib"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781354326189
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec0fde891001NxeDiUj5ao5Ed3",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "all test pass continue",
+          "id": "prt_ec0fde891002Bg7QmgHt9Xqxoe",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0fde891001NxeDiUj5ao5Ed3"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec0fde891001NxeDiUj5ao5Ed3",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 125654,
+          "input": 3785,
+          "output": 1549,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 120320
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781354326252,
+          "completed": 1781354358673
+        },
+        "finish": "stop",
+        "id": "msg_ec0fde8ec002jKaZFo1bS9mKUh",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "40bb2267552775d17e8a875a898c057b82918a49",
+          "type": "step-start",
+          "id": "prt_ec0fdf08b001LhwrnDlybt9hUC",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0fde8ec002jKaZFo1bS9mKUh"
+        },
+        {
+          "type": "text",
+          "text": "Task `5 / 15` - Attach Evidence In Reference Resolution.\n\nResultado: completada. Evidence wiring tests pasan.\n\nTask `6 / 15` - Add Direct Semantic Eligibility Tests.\n\nSubtask `6.1-6.7 / 15`.\n\nResumen: añadir tests fallidos para helper nuevo `evaluate_reference_table_enum_eligibility(...)`. Solo tests; no implementación todavía.\n\nModifica `tests/test_semantic_policy_unit.py`.\n\n**1. Añade imports desde `normalization_types`**\n\nEn bloque existente:\n\n```python\nfrom cvn_codegen.normalization_types import (\n```\n\nañade:\n\n```python\n    ReferenceTableEnumEvidence,\n```\n\n**2. Añade imports desde `semantic_policy`**\n\nEn bloque:\n\n```python\nfrom cvn_codegen.semantic_policy import (\n```\n\nañade:\n\n```python\n    MAX_STRICT_ENUM_ITEM_COUNT,\n    evaluate_reference_table_enum_eligibility,\n```\n\n**3. Añade helper de test después de `build_reference_resolution(...)`**\n\n```python\ndef build_reference_table_enum_evidence(\n    *,\n    table_name: str = \"CVN_TEST\",\n    item_count: int = 2,\n    has_hierarchy: bool = False,\n    has_delegate: bool = False,\n    has_other_like_entry: bool = False,\n    has_duplicate_codes: bool = False,\n    has_duplicate_preferred_labels: bool = False,\n    has_blank_code: bool = False,\n    has_blank_preferred_label: bool = False,\n) -> ReferenceTableEnumEvidence:\n    return ReferenceTableEnumEvidence(\n        table_name=table_name,\n        item_count=item_count,\n        has_hierarchy=has_hierarchy,\n        has_delegate=has_delegate,\n        has_other_like_entry=has_other_like_entry,\n        has_duplicate_codes=has_duplicate_codes,\n        has_duplicate_preferred_labels=has_duplicate_preferred_labels,\n        has_blank_code=has_blank_code,\n        has_blank_preferred_label=has_blank_preferred_label,\n        normalized_codes=(\"000\", \"010\"),\n        preferred_labels=(\"Uno\", \"Dos\"),\n        normalized_preferred_labels=(\"UNO\", \"DOS\"),\n        open_world_signals=(),\n    )\n```\n\n**4. Añade tests**\n\n```python\ndef test_evaluate_reference_table_enum_eligibility_marks_closed_compact_table_eligible():\n    # Arrange\n    evidence = build_reference_table_enum_evidence(\n        table_name=\"CVN_SEX_A\",\n        item_count=2,\n    )\n\n    # Act\n    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(\n        evidence=evidence,\n        source_family=ReferenceSourceFamily.REFERENCE_TABLE,\n        semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n        is_subtype_backed=False,\n    )\n\n    # Assert\n    assert eligibility == EnumEligibility.ELIGIBLE\n    assert confidence == PolicyConfidence.HIGH\n    assert reasons == (\"strict_enum_eligible\",)\n\n\ndef test_evaluate_reference_table_enum_eligibility_requires_review_for_other_like_entry():\n    # Arrange\n    evidence = build_reference_table_enum_evidence(\n        has_other_like_entry=True,\n    )\n\n    # Act\n    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(\n        evidence=evidence,\n        source_family=ReferenceSourceFamily.REFERENCE_TABLE,\n        semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n        is_subtype_backed=False,\n    )\n\n    # Assert\n    assert eligibility == EnumEligibility.REVIEW_REQUIRED\n    assert confidence == PolicyConfidence.REQUIRES_REVIEW\n    assert \"other_like_entry\" in reasons\n\n\ndef test_evaluate_reference_table_enum_eligibility_rejects_subtype_backed_table():\n    # Arrange\n    evidence = build_reference_table_enum_evidence(table_name=\"CVN_KNOW_A\")\n\n    # Act\n    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(\n        evidence=evidence,\n        source_family=ReferenceSourceFamily.SUBTYPE_BACKED_TABLE,\n        semantic_kind=SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY,\n        is_subtype_backed=True,\n    )\n\n    # Assert\n    assert eligibility == EnumEligibility.INELIGIBLE\n    assert confidence == PolicyConfidence.HIGH\n    assert \"source_family_not_reference_table\" in reasons\n    assert \"semantic_kind_not_compact_enum_like_table\" in reasons\n    assert \"subtype_backed\" in reasons\n\n\ndef test_evaluate_reference_table_enum_eligibility_rejects_hierarchical_table():\n    # Arrange\n    evidence = build_reference_table_enum_evidence(\n        table_name=\"UNESCO_CODES\",\n        item_count=2513,\n        has_hierarchy=True,\n    )\n\n    # Act\n    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(\n        evidence=evidence,\n        source_family=ReferenceSourceFamily.REFERENCE_TABLE,\n        semantic_kind=SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION,\n        is_subtype_backed=False,\n    )\n\n    # Assert\n    assert eligibility == EnumEligibility.INELIGIBLE\n    assert confidence == PolicyConfidence.HIGH\n    assert \"semantic_kind_not_compact_enum_like_table\" in reasons\n    assert \"hierarchy_present\" in reasons\n\n\ndef test_evaluate_reference_table_enum_eligibility_rejects_side_package_registry():\n    # Act\n    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(\n        evidence=None,\n        source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,\n        semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,\n        is_subtype_backed=False,\n    )\n\n    # Assert\n    assert eligibility == EnumEligibility.INELIGIBLE\n    assert confidence == PolicyConfidence.HIGH\n    assert \"source_family_not_reference_table\" in reasons\n    assert \"missing_enum_evidence\" in reasons\n\n\ndef test_evaluate_reference_table_enum_eligibility_rejects_unresolved_reference():\n    # Act\n    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(\n        evidence=None,\n        source_family=ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY,\n        semantic_kind=SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE,\n        is_subtype_backed=False,\n    )\n\n    # Assert\n    assert eligibility == EnumEligibility.INELIGIBLE\n    assert confidence == PolicyConfidence.HIGH\n    assert \"source_family_not_reference_table\" in reasons\n    assert \"missing_enum_evidence\" in reasons\n\n\ndef test_evaluate_reference_table_enum_eligibility_rejects_missing_evidence():\n    # Act\n    eligibility, confidence, reasons = evaluate_reference_table_enum_eligibility(\n        evidence=None,\n        source_family=ReferenceSourceFamily.REFERENCE_TABLE,\n        semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n        is_subtype_backed=False,\n    )\n\n    # Assert\n    assert eligibility == EnumEligibility.INELIGIBLE\n    assert confidence == PolicyConfidence.HIGH\n    assert \"missing_enum_evidence\" in reasons\n\n\ndef test_max_strict_enum_item_count_is_repository_policy_constant():\n    # Assert\n    assert MAX_STRICT_ENUM_ITEM_COUNT == 64\n```\n\nFast test:\n\n```bash\nuv run --link-mode=copy pytest tests/test_semantic_policy_unit.py -q -x\n```\n\nResultado esperado: FAIL importando `MAX_STRICT_ENUM_ITEM_COUNT` o `evaluate_reference_table_enum_eligibility`.\n\nFicheros que debes modificar tú: `tests/test_semantic_policy_unit.py`.\n\nSiguiente paso: pega resultado. Then Task `7 / 15` - Implement Dynamic Eligibility Helper.",
+          "time": {
+            "start": 1781354329256,
+            "end": 1781354357346
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_022fd4aa8ca99562016a2d4f59674c81919e9e5b107e64c811",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec0fdf4a8001AVr2vvtS4m8VK4",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0fde8ec002jKaZFo1bS9mKUh"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "40bb2267552775d17e8a875a898c057b82918a49",
+          "type": "step-finish",
+          "tokens": {
+            "total": 125654,
+            "input": 3785,
+            "output": 1549,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 120320
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec0fe64f3001zN4dO3TI0jtJCX",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec0fde8ec002jKaZFo1bS9mKUh"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781355019687
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec1087d8b001yGKZklj0wLuMb8",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "uv run --link-mode=copy pytest tests/test_semantic_policy_unit.py -q -x\n\n============================================= ERRORS ==============================================\n_______________________ ERROR collecting tests/test_semantic_policy_unit.py _______________________\nImportError while importing test module '/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema/tests/test_semantic_policy_unit.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/home/carlos/.local/share/uv/python/cpython-3.14.3-linux-x86_64-gnu/lib/python3.14/importlib/__init__.py:88: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/test_semantic_policy_unit.py:14: in <module>\n    from cvn_codegen.semantic_policy import (\nE   ImportError: cannot import name 'MAX_STRICT_ENUM_ITEM_COUNT' from 'cvn_codegen.semantic_policy' (/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema/src/cvn_codegen/semantic_policy.py)\n===================================== short test summary info =====================================\nERROR tests/test_semantic_policy_unit.py\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 error in 2.92s ",
+          "id": "prt_ec1087d8c001Wv283e0tjdefkW",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec1087d8b001yGKZklj0wLuMb8"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec1087d8b001yGKZklj0wLuMb8",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 126787,
+          "input": 2552,
+          "output": 843,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 123392
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781355019808,
+          "completed": 1781355052620
+        },
+        "finish": "stop",
+        "id": "msg_ec1087e20001qu698estrncc60",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "6666893d79f551264baab74bd0d36f10c937b7dc",
+          "type": "step-start",
+          "id": "prt_ec108a8ab001HQWYLjafA2UCoa",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec1087e20001qu698estrncc60"
+        },
+        {
+          "type": "text",
+          "text": "Task `6 / 15` - Add Direct Semantic Eligibility Tests.\n\nSubtask `6.7 / 15` result: correct FAIL. Missing helper/constant in `semantic_policy.py`.\n\nTask `7 / 15` - Implement Dynamic Eligibility Helper.\n\nSubtask `7.1-7.7 / 15`.\n\nResumen: añadir constant + helper en `src/cvn_codegen/semantic_policy.py`. Tú editas código; yo doy patch exacto.\n\n**1. Actualiza imports**\n\nBusca:\n\n```python\nfrom cvn_codegen.normalization_types import (\n    NormalizedCodeEntry,\n    SemanticReferenceKind,\n    SerializationPattern,\n)\n```\n\nCambia a:\n\n```python\nfrom cvn_codegen.normalization_types import (\n    NormalizedCodeEntry,\n    ReferenceSourceFamily,\n    ReferenceTableEnumEvidence,\n    SemanticReferenceKind,\n    SerializationPattern,\n)\n```\n\n**2. Añade constant cerca de `PRESERVED_ACRONYMS`**\n\nAntes de `PRESERVED_ACRONYMS`, añade:\n\n```python\nMAX_STRICT_ENUM_ITEM_COUNT = 64\n```\n\n**3. Añade helper después de `SemanticPolicyBundle`**\n\n```python\ndef evaluate_reference_table_enum_eligibility(\n    evidence: ReferenceTableEnumEvidence | None,\n    source_family: ReferenceSourceFamily | None,\n    semantic_kind: SemanticReferenceKind | None,\n    is_subtype_backed: bool,\n) -> tuple[EnumEligibility, PolicyConfidence, tuple[str, ...]]:\n    \"\"\"Evaluate strict enum eligibility from normalized reference-table evidence.\"\"\"\n\n    ineligible_reasons: list[str] = []\n\n    if source_family != ReferenceSourceFamily.REFERENCE_TABLE:\n        ineligible_reasons.append(\"source_family_not_reference_table\")\n    if semantic_kind != SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE:\n        ineligible_reasons.append(\"semantic_kind_not_compact_enum_like_table\")\n    if is_subtype_backed:\n        ineligible_reasons.append(\"subtype_backed\")\n    if evidence is None:\n        ineligible_reasons.append(\"missing_enum_evidence\")\n    if evidence is not None and evidence.has_hierarchy:\n        ineligible_reasons.append(\"hierarchy_present\")\n    if evidence is not None and evidence.has_delegate:\n        ineligible_reasons.append(\"delegate_present\")\n\n    if ineligible_reasons:\n        return (\n            EnumEligibility.INELIGIBLE,\n            PolicyConfidence.HIGH,\n            tuple(ineligible_reasons),\n        )\n\n    if evidence is None:\n        return (\n            EnumEligibility.INELIGIBLE,\n            PolicyConfidence.HIGH,\n            (\"missing_enum_evidence\",),\n        )\n\n    review_reasons: list[str] = []\n\n    if evidence.has_other_like_entry:\n        review_reasons.append(\"other_like_entry\")\n    if evidence.has_blank_code:\n        review_reasons.append(\"blank_code\")\n    if evidence.has_blank_preferred_label:\n        review_reasons.append(\"blank_preferred_label\")\n    if evidence.has_duplicate_codes:\n        review_reasons.append(\"duplicate_codes\")\n    if evidence.has_duplicate_preferred_labels:\n        review_reasons.append(\"duplicate_preferred_labels\")\n    if evidence.item_count == 0:\n        review_reasons.append(\"empty_table\")\n    if evidence.item_count > MAX_STRICT_ENUM_ITEM_COUNT:\n        review_reasons.append(\"item_count_above_limit\")\n\n    if review_reasons:\n        return (\n            EnumEligibility.REVIEW_REQUIRED,\n            PolicyConfidence.REQUIRES_REVIEW,\n            tuple(review_reasons),\n        )\n\n    return (\n        EnumEligibility.ELIGIBLE,\n        PolicyConfidence.HIGH,\n        (\"strict_enum_eligible\",),\n    )\n```\n\n**4. Ejecuta fast test**\n\n```bash\nuv run --link-mode=copy pytest tests/test_semantic_policy_unit.py -q -x\n```\n\nExpected: direct helper tests pass, then puede fallar en tests existentes por política temporal aún no reemplazada. Si solo falla más adelante, pega output.\n\nFicheros que debes modificar tú: `src/cvn_codegen/semantic_policy.py`.\n\nSiguiente paso: pega resultado. Then Task `8 / 15` - Replace Temporary Enum Policy.",
+          "time": {
+            "start": 1781355031851,
+            "end": 1781355051326
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_09c3c8c09bcad8ea016a2d5217da648191a6e01bedc5470f97",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec108ad2b0014Tfqi56zb9BwaY",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec1087e20001qu698estrncc60"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "6666893d79f551264baab74bd0d36f10c937b7dc",
+          "type": "step-finish",
+          "tokens": {
+            "total": 126787,
+            "input": 2552,
+            "output": 843,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 123392
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec108fbd9001tSJb41V1EcNXBU",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec1087e20001qu698estrncc60"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781432144775
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec5a1536e0013e40GaVC10BivW",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "continue",
+          "id": "prt_ec5a1536e0021ekxZLnWSDXiT7",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a1536e0013e40GaVC10BivW"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec5a1536e0013e40GaVC10BivW",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 128187,
+          "input": 126794,
+          "output": 877,
+          "reasoning": 516,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781432144822,
+          "completed": 1781432175955
+        },
+        "finish": "stop",
+        "id": "msg_ec5a153b6002xcbm44h0Tab7XJ",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "87a11b698a0e600cca0c978a8d6150260c70739f",
+          "type": "step-start",
+          "id": "prt_ec5a15e52001bTWeJB1kwVi01I",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a153b6002xcbm44h0Tab7XJ"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Evaluating code modifications**\n\nI’m considering a potential code modification in `build_semantic_field_policy`. Right now, after assigning `reference_name`, I should call `apply_temporary_enum_review_policy`, which returns `domain_shape_kind`, `enum_eligibility`, `policy_confidence`, and `enum_rule`. This change could help clarify or improve the process, but I need to think about how it integrates with everything else in the code. It’s essential to ensure that it flows smoothly and effectively.",
+          "time": {
+            "start": 1781432149367,
+            "end": 1781432159879
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0d104ee0c5da66cf016a2e7f55607c81918b7d10727092cac3",
+              "reasoningEncryptedContent": "gAAAAABqLn9fLy7iytl65f97ppBST48YfAbYcsThMbfzWXe-jOZMHJFbwKSTdZ0uNJBRYUY7bfXvc1sIw0LOIgv9LJRemtg11Y5nCFBcthrghL8wCTsELALYglrXpAkEgxMkCHk3b_mzQn_XD93THyQFqZTe9vuAmcuYqeE5AJwe7frX-08F6eYUUnq8LKv4S0KZTnBzmO60eQyXskOspUcVcwHn8nzG_CekmrRIbna_4abraHSVCPGzdGAkFr7mUB9g8J4t6l9KywKshiDtK4O227TpUpNks4Q6MG68hYYmxnjNaqNr6EnozEJAFVprcD3pDi2lwcL5LslFWOIHI0p12JPGHoJOVNnefw-62CXuq6qnIWiDDurUkYyl12qqFDnV7S3Ah2pqmTj5O9vCko0bOZAUp-oB5ieDlvnq-RYjJVCaeQWq1oDulNuF6cmrx_GvJHBoCqXMEvBMaL51V8ybrnHwVv2XJSF4u3v6JJmebIw0A_H8v2wfJnw0tXykqd79txWgnd6-Qc8vtopJZz6oNEeuZDotQz4I8_ZhIowf-L7aRpkWsKpNVlDMKDEP4eAp58J-TAp_L7MVCG65LPfHlSjwwMxf58BkAOnUDhaiO7EtnVB1ccFh0J3jKKCOV2kFJw1XVWU_AaFT2v3BPnMo7es_gnxTOlVpkH3qFqX2C6JWiujEoPyVjsHB-a3crjvJyM8ipI_jGwK-FbTSHbcLwpgas3JH8XCLfXKWA9wE-wFL54ro7poPJQ5pV1p2dxduiqp-nqayPPNy4CupHHwpfTUkY78-oukRXx4xbvWFEeKuFzwk06Ed1gsTwnIOiCACsIihUbYf4pycvCN5CFrBRKpdJ31ZzNCvLgBqHajSUU53PrSGRYXbpGAqCY0q37I1Neuf0snsUzbOCp84I0SArXFeJoqv1Uk56uLJXTym2bn_Vefr_H824krOhDtSmpEtAeLisTrvSs-ngnBuVtOuZjxVK5HGCRHCQqnj6ZQnRjpyMNRMP4cRS9N9WHcxBJCXBZVAkbvLfAZwB6S2xMYXIVhKmn4nY6W9xs37c4zVmiURhIwsYtuyE-pPHsBqjpPJ7LOHLwc2Knyi-fG_kCM9uTb-QB6_sJONhq8OSSY7I_9Dsr8eH89pEEgLn3vuONoCRTXaeDdr7mUC2Go0ILfjwH6JLvx4a5YSEPQc5xZGPVKMP4bBFsdSe8T7U3WZ9uqEc4x7rs22oHrFekRJFi3m0uKiC7WeR2C93IOIjTUWSbdhtIlbOasSCa3Qn62GPkEgv77pacbJR-ck9vo7j61GVY7wiaS3UhPVh-1MFk-4rLXP33NJ-PVFn2PTPo8IP5xr6MYHU1MqEgm1RRNCS0QJoAFjoO1j1c3g5Z6mzzlJnqVpd5kyqQJPCTS6GNsmyQy9_7zqkuR2j0OQo4v-qiNWYfp8egfYDMVthTRYWtfceISxSV6LxBMBbgj5Z_eRIdctcsXjCUeV6qscv4o8PPbnW6KKaIKNdEJTj4E0m3UgGxXvw58rDSGyuvLPRkZ8n8nUsPiHVidR61RwgK8f9LV1ZZHligJ7LrS3zjh4Cb0NE53tQXzWdzEeCHWWUDL_H8-mdRGVHIaALJJ5uemaRTJSPAufzc2o68ZVr8REli_vOy7IPKAzpZmHDoYXlpY8_MRYkeKCgE2eUyxa9DVZWZEBtf930_P0CXRXIo0wlOwrV4m7RL9OxDxVwm_1_op1xgk6qu-uWFkodukqzfTkIE2ShXZuws9cwLNpFkrrafUCDxi25W-7_WIPEy7B-a7xKJilHR47FHir-lLy9iN8RwkSDT0sAiaBu0sg9V1-qB6iVA408WzVwAmDHRj9LnP9YFFHvYL44UYmaq-TPjudvx8OzsqYiqUtROuouyOsYBSTnUyPfq8CT0EE4ajqQIuP8HmTbFZ388eMFkZpjbDFPrvVdahM_bjPcsLa4lD2pIY1k4ZrRpdk68ic_8bB-52_qbjbA-s6L-kYUM5r26JihNtXS3g4Lwg97IrfPta7MoIb5-rMRE1odeoMX7Mb_0zE-j7ZHxGWFtPzS1lDDtegtlbhE-nOpVdALeKYSebm6jqjxC1kjxwtR8PbGQG9ehs_X7ox3rkWu6oemHGMmONP9SEJPqxLStEgQoN_HfnjsLNcGNlvymxGZAeSv6pA6v5EfH_mPOYBRgNNmBolSD4OC9VQChTpFYoqX2260KY1l4kUC8XkTw51xzmjX3StK1P7wXY085jua9R-eTmdF3inmYaScsa3i_uGOEmiQg5IMZi9o-HIv_HbrdqWqKvHiKWk1ytTflXHKV3NRSV_ZBZdPY-ejvZh7Il1vrwg0tB_Wjhw2GWxpV0jVcUYZsdiayKe0sS4FiDYvOxqYsYr1pBgPK76Xs5WWxsrkjWdv06Hu-fjip1JMYyENFZfPS7yqfpfYfiBsqlf2LcRujq6_mRJFEFi_FOhR1rpff4bu5X-PgSMeWgJj_6WWVqa8Lu_na1fPx4nJ_Na4cDtq2OkELxUJPk9XhdKuyqx0JBiQbFXGY0uCDt11PGquZtoPKunsUFGl3z1ktlkdvk2XloqfL5oKpNWWlgYcaCSDSocjIYuKWOzTqlk18jh-SnRUmeqFwYeZqfxZ55FUF2Istmqz64ziUg_q0kvtF78H_vATP7Vd_sFnjR9zr4CIdNQkJVT3OYidSTqEEIzqmx8ruxjJlHnLpIjBg4GtVskHuofIJMenZeAxLlMBlnHB19rJA_X1EGmx-HM28etox_VP531E8nHYcWLWv8lf8UGKLZOWHzpqzyS8JUeONX2JvTMSH1l4E-wzYlWR5io4ceEFa01jTaSvWV6cGJBsqxy29BSSvaJrmIRcC96s0zXHyZIHGCrf4wF_mRuhCJ-B_YfJuQF23nty0xZK26Kyd5bS3jWhuwqMyveavIVe172tFT00qsbcJviPniGjv2uoH_7lr-_mrhD7CX_WfmBy0wR1cp1qRtAJ_6n0qlNr_LGS3EcU1wSDACp5ZW7jNHUd28zFQt_YMgR-h0E-knkeT_ocgu6RDcJphgBbj8juXEtkZo8R8MK7o4nGi-38HSlAjnf98XSem8qU4XFTEwY5R7mwudBOIYjF6614mG5EhzRokP5nAnS0ztdmF7NJkCljcQOk-1SWrQl93nKqL_LafaL2b66BOaCtBb8b6eFv-YVQf6OkgQ9AnhoAWfOAfGxQeNQCxo8_ObDBzSiiCWM9eDPwqLDzVCy3rSJq8fiFK-Oy6LL0HbEnVIzU9rAWwwnFogNpT8KCTHuH1Pf9WiEAu9Rq1kE8WKQS_xqb_89e7UUBCRewuUuHaaqYGG6d81p0JGspYKiNVdi95VSVV3WACaN9H52Ghia_TtlQmgvh2TvrxYmzG2pmLB8ZztPdJaCAcmvIV79b62bw6iaxs4QRedw7g-6xfyHqRZjHha0BWUhUK8ox04nCS1YYAqrQ2XCbSD8vGwBKDZTYdBbKaPHtLlIMwEidI7xkPQqe4FaXuUJHXuyVqFLSn2dWY9wmLdnh9XAnuNB3ZFGq2Zh_ripEp4wAW0RAmaTTERdwzS42WgBQGfPv_4H3yUQ28qrw2LfDNCyPLSD1UvEhrxJgRExCac6x8BJ-OFeyldfcuWgx1MwHUYiKAmOAmXSYmmnW2nxAEqKtXUroniSk8q6pOqkkJuumxRIECkXQIbWtk-r_BT8STErFV3xhNCJoiMoPamcPLB1Eio1pA7tjA8G93r9s-PPXZy5SB3g0eZ02am-XF_53k_d7feORO043rn6oPE_5LUd8a86BGNCTyOEfX9cRVbglxYfiUB0W6WZsB4s5ZwXR1F7ro-oI7CjRGoBgRqh13rL1qjk7hZJ9ZMLJSZ8lk0FhK9Dvxms4APuG0a2W4PByJcSwysG-_RCwG5if2tOl1uidKVxHqaduc4_lStPAfxMrQJkjN2CpDpCFxP2fGpslf9pTCHy_Sq5BAFLkCNdF9S-5sZFt0e-JykYoGGjVX6MKThje8JEghoRDo81nQldAPvJtavgZevoDQzr1ExVQKiv-Xz_IVxrM2Z69VTBZuyMRKsKqR5U8cHdaMDuEFMY5uPA9LfRxcsfc8IrcsShOruA6K_BvdTh_ERf94xlS4Nm6sgX0Gd8pPDVASzSgeQD5mqnMRwpKEVisEhdYCF5FU1WWLi7wDklp66-aFGRSz2ZQAt8xZC5lVz7AP5KvGPbr1d1U8lTOUrHR6kVZfHNFJWHvud_jLWeJ6LRLaKurVXa83b0XkXpVXYOLklq1k8lOPdnJvfLCm2t0oYYP90kdEKbHEt52cQaFXlbkKGl0e-tzQfk91QGVY0V2iylvjnMxgNhtCYmG4zkHGygDDSE4i93RJCU2qq4rSYmdFaxlEdGPxMBMlwkMW_asUdKLNT67dPZVvaDOxQo4yZlSRYcOfcO"
+            }
+          },
+          "id": "prt_ec5a16577001U1M2MYw6Y3vNmw",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a153b6002xcbm44h0Tab7XJ"
+        },
+        {
+          "type": "text",
+          "text": "Task `7 / 15` - Implement Dynamic Eligibility Helper.\n\nResultado asumido: completada si tests pasan hasta política temporal. Si no, pega fallo antes de seguir.\n\nTask `8 / 15` - Replace Temporary Enum Policy.\n\nSubtask `8.1-8.8 / 15`.\n\nResumen: quitar política temporal `TEMPORARY_REVIEW_REQUIRED_REFERENCES` y usar `evaluate_reference_table_enum_eligibility(...)` dentro de `build_semantic_field_policy(...)`.\n\n**1. Borra constant temporal**\n\nElimina:\n\n```python\nTEMPORARY_REVIEW_REQUIRED_REFERENCES = frozenset(\n    {\n        \"CVN_SEX_A\",\n        \"CVN_ENTITY_TYPE\",\n    }\n)\n```\n\n**2. Borra helper temporal**\n\nElimina función completa:\n\n```python\ndef apply_temporary_enum_review_policy(\n    reference_name: str | None,\n    domain_shape_kind: DomainShapeKind,\n    enum_eligibility: EnumEligibility,\n    policy_confidence: PolicyConfidence,\n) -> tuple[DomainShapeKind, EnumEligibility, PolicyConfidence, str | None]:\n    \"\"\"Apply temporary review-required enum policy until hotfix #7 is implemented.\"\"\"\n\n    if reference_name not in TEMPORARY_REVIEW_REQUIRED_REFERENCES:\n        return domain_shape_kind, enum_eligibility, policy_confidence, None\n\n    return (\n        domain_shape_kind,\n        EnumEligibility.REVIEW_REQUIRED,\n        PolicyConfidence.REQUIRES_REVIEW,\n        f\"temporary_enum_review_required:{reference_name}\",\n    )\n```\n\n**3. En `build_semantic_field_policy(...)`, borra bloque temporal**\n\nBorra desde:\n\n```python\n    reference_name = None\n    if reference_resolution is not None:\n        reference_name = reference_resolution.resolved_name\n\n    (\n        domain_shape_kind,\n        enum_eligibility,\n        policy_confidence,\n        enum_rule,\n    ) = apply_temporary_enum_review_policy(\n        reference_name=reference_name,\n        domain_shape_kind=domain_shape_kind,\n        enum_eligibility=enum_eligibility,\n        policy_confidence=policy_confidence,\n    )\n```\n\n**4. Sustituye por evaluación dinámica**\n\nPega en mismo sitio:\n\n```python\n    enum_rule_reasons: tuple[str, ...] = ()\n    if reference_resolution is not None:\n        (\n            evaluated_enum_eligibility,\n            evaluated_enum_confidence,\n            enum_rule_reasons,\n        ) = evaluate_reference_table_enum_eligibility(\n            evidence=reference_resolution.reference_table_enum_evidence,\n            source_family=reference_resolution.source_family,\n            semantic_kind=reference_resolution.semantic_kind,\n            is_subtype_backed=reference_resolution.is_subtype_backed,\n        )\n\n        if evaluated_enum_eligibility == EnumEligibility.ELIGIBLE:\n            enum_eligibility = evaluated_enum_eligibility\n            policy_confidence = evaluated_enum_confidence\n        elif evaluated_enum_eligibility == EnumEligibility.REVIEW_REQUIRED:\n            enum_eligibility = evaluated_enum_eligibility\n            policy_confidence = evaluated_enum_confidence\n            if domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE:\n                fallback_shape_kind = DomainShapeKind.OPEN_CODED_VALUE\n        elif domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE:\n            enum_eligibility = evaluated_enum_eligibility\n            policy_confidence = evaluated_enum_confidence\n```\n\n**5. Actualiza `applied_rules`**\n\nBusca:\n\n```python\n    if enum_rule is not None:\n        applied_rules = applied_rules + (enum_rule,)\n```\n\nSustituye por:\n\n```python\n    applied_rules = applied_rules + tuple(\n        f\"enum_evidence:{reason}\"\n        for reason in enum_rule_reasons\n    )\n```\n\n**6. Fast test**\n\n```bash\nuv run --link-mode=copy pytest tests/test_semantic_policy_unit.py -q -x\n```\n\nResultado esperado: puede fallar en tests antiguos `test_temporary_enum_review_policy_*` o generic compact enum; eso es Task `9`.\n\nFicheros que debes modificar tú: `src/cvn_codegen/semantic_policy.py`.\n\nSiguiente paso: pega fallo. Then Task `9 / 15` - Update Semantic Policy Tests And Inventory.",
+          "time": {
+            "start": 1781432159883,
+            "end": 1781432174593
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_0d104ee0c5da66cf016a2e7f5fe5b881918b91f707231d313b",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec5a18e8b001pzChZvLYZpw02s",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a153b6002xcbm44h0Tab7XJ"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "87a11b698a0e600cca0c978a8d6150260c70739f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 128187,
+            "input": 126794,
+            "output": 877,
+            "reasoning": 516,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec5a1cac1001u2Zqgn0StUkYE2",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a153b6002xcbm44h0Tab7XJ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781432357372
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec5a491e30010Sbsfh3MmpIiAw",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "results for the test: uv run --link-mode=copy pytest tests/test_semantic_policy_unit.py -q -x\n........F\n============================================ FAILURES =============================================\n__________________ test_build_semantic_field_policy_maps_compact_enum_like_table __________________\n\n    def test_build_semantic_field_policy_maps_compact_enum_like_table():\n        # Arrange\n        bundle = build_default_semantic_policy_bundle()\n        entry = build_normalized_entry(\n            reference_resolution=build_reference_resolution(\n                raw_reference=\"CVN_GENERIC_ENUM\",\n                semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n                serialization_pattern=SerializationPattern.FILTER_VALUE,\n            ),\n        )\n    \n        # Act\n        field_policy = build_semantic_field_policy(entry, bundle)\n    \n        # Assert\n        assert field_policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE\n        assert field_policy.fallback_shape_kind == DomainShapeKind.OPEN_CODED_VALUE\n>       assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED\nE       AssertionError: assert <EnumEligibil... 'ineligible'> == <EnumEligibil...iew_required'>\nE         \nE         - review_required\nE         + ineligible\n\ntests/test_semantic_policy_unit.py:257: AssertionError\n===================================== short test summary info =====================================\nFAILED tests/test_semantic_policy_unit.py::test_build_semantic_field_policy_maps_compact_enum_like_table - AssertionError: assert <EnumEligibil... 'ineligible'> == <EnumEligibil...iew_required'>\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 8 passed in 2.56s ",
+          "id": "prt_ec5a491e3002UEUMza0670zCeF",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a491e30010Sbsfh3MmpIiAw"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec5a491e30010Sbsfh3MmpIiAw",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 128788,
+          "input": 116234,
+          "output": 262,
+          "reasoning": 516,
+          "cache": {
+            "write": 0,
+            "read": 11776
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781432357404,
+          "completed": 1781432376473
+        },
+        "finish": "stop",
+        "id": "msg_ec5a4921c002DdMhu2cpXXAgU5",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "ce3a3245ed73f32467b44211c891759950404951",
+          "type": "step-start",
+          "id": "prt_ec5a498b40019M06AWF20fOEGC",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a4921c002DdMhu2cpXXAgU5"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Updating test modifications**\n\nI need to mention \"Ficheros que debes modificar tú\" as part of our process. It looks like I should state that tests passed eight times, which is good. For the failing test, the expected value needs to be changed to INELIGIBLE, along with the confidence level. The existing test references a helper without enough evidence, so we need to update that to include evidence. I also want to add an assertion for confidence. Also, we may face likely failures with temporary rules next.",
+          "time": {
+            "start": 1781432361042,
+            "end": 1781432371657
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0e8fe514aade0b4a016a2e8029144481919ab2bc3a7fb8eb93"
+            }
+          },
+          "id": "prt_ec5a4a052001KMcyeTlSzJd2SB",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a4921c002DdMhu2cpXXAgU5"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Reviewing reference resolution**\n\nI need to check the `build_reference_resolution` in the tests since the default signature doesn't include the `is_subtype`. It looks like we could add an `enum_evidence` parameter and possibly a `source_artifact`. I should also include the `reference_table_enum_evidence` parameter in the `ReferenceResolution`. For the dynamic field test `CVN_SEX_A`, I’ll ensure to pass evidence from `build_reference_table_enum_evidence(table_name=\"CVN_SEX_A\", item_count=2)`, expecting it to be eligible with high confidence and the applied rules to include `enum_evidence:strict_enum_eligible`. However, I see a potential conflict with Task 10 regarding `CVN_ENTITY_TYPE`.",
+          "time": {
+            "start": 1781432371659,
+            "end": 1781432373996
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0e8fe514aade0b4a016a2e8029144481919ab2bc3a7fb8eb93",
+              "reasoningEncryptedContent": "gAAAAABqLoA2xFckbMFGfx7wzLKIK4C2jGMk12ee-ApDPxhRGQnRpoDJK6hDZmRuO-2E84R34U6lnJP8Y9KyZg68pxs8rubH_Emd9cphhHDnJTg_oozrxVPww_KvvwVRLSNiwgWKPVpRoep20_NxwO0dR7VKM909jup7JiVAONUJEYkq2c9yJlreStzOH9bF9R8S6M1XX869UzIEkPhTv3V7ovc6JD6CvT0XDZdE-JtsieQEwSVFZO2d6IlfYd0gZX1rmu2DjFiijs2u-t09uePXf6VJ0U7ceXN85JWkuWrBRmYBnCLDNcs6Qr0WpyirCUFN0dQUouVdlEIDZgKDDooluP2YNbbVKVsOkA_3Cuj0jfpvOs2CTw7AzWEcZbs0TB8LqQ-SfUm0mkwf0UrcqDEr422EwLd_htod-Su8wJD-gGsjtl_w0VOc45zOr9fULt59Fpw_tytfQamcCmD7Fh9Zyg89tUM5hODJ0Bdqp5zRU0egmq8E2MckJSnCXJ4JlkddsLJi-sUzJMPPaT11eOiWhq909BaGfDIxM2LdLOrm_bwWu7wdm_I-npd3Wcqiv5paNUKtckKsbqG5jKWtAIlkC9kulumRBEXcGsAW5sNRQJ48-ixRMp7CAkSwNzTEPjrq-jsoi5ulUWNQ-4wejpzyeEanCYOqdTL_N84-j2H4NBF4oyj8-PiO6VNlPiG32FbsYa1ZwhzTB9ZrBvizHsX_kyr-0qZXcKueo-tNdRaj9qBjZbuci9TBKHMS3weNSBvMyQW_CNyD8LJZbxaYz1waFy99JWa48bvdFssSNS6isgnar7oI0ekTEvw6MOvzKakpDfEYuFMdui3GCon80J-4PTSUNSKH0dp9ltvuV_MfPfwSuuFGe5Kz1eWy0EM83SWy_Gsh8FsIozX0t-B4EK3shDqES4sBYxDWd1v5i3NGZTM-j7ZyJMmtO7xMiuDRuGsIj_aGwXYFLg2QhG9h-3p_x7EgOUfmA8IUQQwZbdvDsqT6N2dN0qR_iPLJ1IjL5WwHGtytaOJ1Pvv7IKl_NcsW1yr3SWSjQ3bmKA_mrQqerZ3B0IWBsKKupk7B1_Y1PVT0yAv38VvA7ccxKyPyLqEZQlXR70mtjrVAMF8ddB6Gjj_2H3y-h1PLxpbN-zVNjOACs85ojJD0n3rNyX_AlA5t7SFRgPWLhKyNhDb_7M3-RjRthbX8Nlocq1B9aIk4Q2WQ9dV_oTM6XphsoF_tPtk1jssoSCuWxXBq2zYFKi14RTvq6HLodT1jifeqPBYrad_N-n6tgVdaq3HUAelBPoDHLLivnNgWDSIIBpIuMvUGJQdHyUtJQpqNEI71AZkxMS4GKQVDEMEBG5F59nrnSv4dFeZa7E6-umIhp1PmBHjLQhnQ0UmIuuPOqVP4ex6po4Jstbp0QF_JIRGFok4blsOJ67Cgy9X72RWDfqUbuaJA2h_QF7XD5daXVYE_PHGy6gEO9rCIEnf5na9-h7q9v8XHzzZQfDy4rTTQ4o-R0tIeYkj53_uCX_KM9VoWLmxfCiiDqpdSoGUm0QsJpapQhFeM-RszGHWlhygn7AC7AhJNBkIPDnhukVtfrrpuJGKTG91pGDhW-_HZsfL2vKBJ7zqEwYjV30IHtMphW3br8LT1Q0s4JNnBUaOpRDVb5zxELx0AaN0JjeRbRqljO0jDFH8xN_0YBqcg86IncuHxzvyrVKDOWbHTcPJetdC_ito_vnhgSz8ckK-Uc0F2Dg6xaKvZunsGZGyhwNrVGbWKw7M6ZsPjYsMfXCCE_2mkjEw0vO_LPKWLggDYXjGd-wB14tKi2CjoSSjHoY3o57h0u5hYRl_NG959D6yEEycvrOJ_O7q3u0UfkWOzI-PZorwrfUfTy2-abC6hkhBnT-NnGC41Tt4KxQhvJQi2rp-9DgFLpz3ErTgXM5pTZCWWoRTdk52NyqSqtILKx-EMNZkha8JWr9JgT50Gcn_CqxuBn1Tp6Cqa_bG3hrp8wRncm0xpl9xcoRNnBOOvKmOGdoE8XOlN2cVyVA4UAPZ82s0l0-t_i7HikgGtnydM64bWqrqVlD3wb9VLfeTQ1pfEKguvGi7HeQRX78i9w4mwoHeYBSr1hjYusxw9A7cfLRvIdas-0V-2_UJCBzsCe9KNk3pWpRc7F2IMKeG2u6kd-AdW-AIy2MIFSkYFAsh6zfQTcOyM-jGBqrEUEYvpstv8W5IAkDSFQImjk6Ckvrq4-Gs-fiaczQY6kGwfaXFNK41_j6X7kzigl6ecq586AK-WFvblftiJJs-YqKlJJJ9l31pTrUTO7pEKxpGk-4vjWBu87PDlv1UnVassf1JBhgYaktRs7QjvPJwVmRZM0JEvr9Ei79Ibbl37n1UG-mUBu-TgZqyvkSFslX-DcZDmAGVr8dMWzCSTN4KMJlPU2BAMKqX8xtz-6dGgx8VXbLT03PSPPXkX2kd5zxd4kmMMIlkoE4OgpeUgezphwt8Mo24JV-qc_e-S_UrnwWpivg6_PBCMWmtGGvs7sq2hhZbrrDh9K4TQVCexFUqb7Ntct2Sw-zT1Qxksw6rQPUq7OUu5WJfoYypDlsKG8lXQsE07t_yA6LNwFM-zIAkLguR0taK3cSWZ0xEi2jIRCFSpZxNEh36THnhCp0FqxbnBPMWrlEGUeD1PYmPi3u8VafDFtXBpFLX0J5TyYVFp8iQ2ReF7ucV6TjHjzURaF5lwmCRGfVPPGfsHbisHI9msKlGAHoWMuJTJM7banyeyer2eibXOOXRuXfkd6BhLlw2Oz3RadLh_G35dk66dDdIvNkhmVe3rYe9mvqPQbvYLpliX2QqATPEfpT5mz5Wo_Rp8OaYzAM9bnvq4MdVx5YRmeSEfcAx-0MW4kYH1WyHFJI7G1-ZeA1Syk9aD4GXsV8ZIaOZGEcBccpyPE_j51ca50nPFOXd2OOjzE09L8q-ZJJjPR2v5tKDwrnp3CFJwqDlp1XkFctcscA8rGyaW64-dSIXlqF8v1fRX4PR-9P0ewT3K29LxbZy9GskNH92t2UnALfRKUyQ6FxijhOtN5GSG6F_VX1OV7muBlLyaCgW7joNmRO_gE_111qgl4Yc8QRl9AeWTRDP9bhS7aF8BcSHbJDf8-4nbz7L3pzrsJ3YItD3I9PVKoFviB3SOr_Xz8GJjcFmqxvMfnhtbEm6oWAxS8WjJrDy6gB7Ody4OrGl_JQtNGkiPO14ybpFeLaPqy0oQHPKpWJsWLHzeUKB6zPyu2OehooKVlfFmRHytzyZQ--sX3V_3CrEbaoyA_78BAn8UpMR0AsIh33NT7F7fxKANcUsAP2WqXDS7ZmmdCynylUSHdMlWOuA0CCDwXzL9rRhqOvUBVK6322PVsO3srW0vT2A3fmFm0MeEpn8OG15nm7FqR8wqkcguwYG40zeWjSgEPAEQekJUIkYHUOGoeHuOjs4xiPL5K3NDBsdkn5zPdCFA8QXuX6XKjeNdEXyi4xpRCJBOcfl8sh9LIPxD1BFgwj1BoXPKHsVxsIxFzjH1O1rOB6xNr8g50gvZBQ8Q22pl8JDtlNxy8d2qb-AnCBpsC61Eg448Joj2g2myQ1fxsD4qJPduMSiHp3TJnvxh6va_ylSPwb6K0lYJY6tBWf8m2lejLiWUL9PIClYvlEongvZI0wr1WQfNL7ku06ahL2lbSTMrlMs0f979D0wBlb-vaAMuh2DuPxLvzJnCHlCgTUu_TMlp_L36jnjWMFCI8hjcZFvMILDIX2ax5FiB52Zoe_7cyw16kKIpDcRU0ELeAi1Aq0EittqOhz_oZSa1q4oJ2kzhi_s1vNgVRnVmzsPsBQrNZ0KyrpsROoKUAJJi0A4V-J6DZQVlplC9YUaFgqAqpxlh7DFD-eOJpxRnp4cD4td5oW_1dhcj29B3UonizIPG_roQC1aoZG_aD_7cK6Yh6hww0ihM5SPH_YZtHFy7YSr3ez_kin7Kxaz2foQvLH6pfmo3AXSoR6CXQqQjlneBqm20dt9rEdD60VJT-q_nVvzND8JRg7Zr-ESpjiOkxKLw9pxC7WYEGbTc2lUhL8Xd4dm9XRE_JSyt94EgFt2t02LiHN_xyTHLLgNi2HdPwK_EvaUMFpXVn_4SF8zX29W9d6X71KdjIKmvHyDZ8_dmaNIsdtzRTBLRp7Ib6D3WMB6xjyeuvuTtV9HuEmSzzy3HFhmQWimkvO1E_50OkMA9Xik23azBKn5HrbcLydhs-TUjYGjyZVdg3YgW7dj1zj_ZAAJOq3qZwzm_mf7BGMKuTbfe7v36DL5CsOusBns7bhSwULmAWtTSzj4tbItTqVK2o-uuJsMUWEEcPNHVLwFS4uDgUZfqmYV6v0wHRKGWjxUTa1M3"
+            }
+          },
+          "id": "prt_ec5a4c9ca001FQQM4xNjGTJ2cu",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a4921c002DdMhu2cpXXAgU5"
+        },
+        {
+          "type": "text",
+          "text": "Task `9 / 15` - Update Semantic Policy Tests And Inventory.\n\nSubtask `9.3 / 15`.\n\nResumen: fallo correcto. Generic compact enum sin evidence ahora debe ser `INELIGIBLE`, no `REVIEW_REQUIRED`.\n\nModifica este test:\n\n```python\ndef test_build_semantic_field_policy_maps_compact_enum_like_table():\n```\n\nCambia asserts finales a:\n\n```python\nassert field_policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE\nassert field_policy.fallback_shape_kind == DomainShapeKind.OPEN_CODED_VALUE\nassert field_policy.enum_eligibility == EnumEligibility.INELIGIBLE\nassert field_policy.policy_confidence == PolicyConfidence.HIGH\nassert \"enum_evidence:missing_enum_evidence\" in field_policy.decision_trace.applied_rules\n```\n\nLuego ejecuta rápido:\n\n```bash\nuv run --link-mode=copy pytest tests/test_semantic_policy_unit.py -q -x\n```\n\nResultado esperado: siguiente fallo en tests temporales `test_temporary_enum_review_policy_*`.\n\nFicheros que debes modificar tú: `tests/test_semantic_policy_unit.py`.\n\nSiguiente paso: pega siguiente fallo. Then seguimos Subtask `9.1-9.2 / 15`.",
+          "time": {
+            "start": 1781432374001,
+            "end": 1781432375223
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_0e8fe514aade0b4a016a2e8036047881918d272a3e8cc9d50a",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec5a4d2f10010J8aGLd4I8XawR",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a4921c002DdMhu2cpXXAgU5"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "ce3a3245ed73f32467b44211c891759950404951",
+          "type": "step-finish",
+          "tokens": {
+            "total": 128788,
+            "input": 116234,
+            "output": 262,
+            "reasoning": 516,
+            "cache": {
+              "write": 0,
+              "read": 11776
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec5a4da31001CkD74Xq2coiP2J",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a4921c002DdMhu2cpXXAgU5"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1781432461405
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.5",
+          "variant": "high"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_ec5a6284a001Yjd7Mfm5Pd8UAQ",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": " results for the test: uv run --link-mode=copy pytest tests/test_semantic_policy_unit.py -q -x\n..................F\n============================================ FAILURES =============================================\n______________ test_temporary_enum_review_policy_marks_cvn_sex_a_as_review_required _______________\n\n    def test_temporary_enum_review_policy_marks_cvn_sex_a_as_review_required():\n        # Arrange\n        bundle = build_default_semantic_policy_bundle()\n        entry = build_normalized_entry(\n            code=\"000.010.000.030\",\n            reference_resolution=build_reference_resolution(\n                raw_reference=\"CVN_SEX_A\",\n                semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n                serialization_pattern=SerializationPattern.FILTER_VALUE,\n            ),\n        )\n    \n        # Act\n        field_policy = build_semantic_field_policy(entry, bundle)\n    \n        # Assert\n        assert field_policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE\n>       assert field_policy.enum_eligibility == EnumEligibility.REVIEW_REQUIRED\nE       AssertionError: assert <EnumEligibil... 'ineligible'> == <EnumEligibil...iew_required'>\nE         \nE         - review_required\nE         + ineligible\n\ntests/test_semantic_policy_unit.py:450: AssertionError\n===================================== short test summary info =====================================\nFAILED tests/test_semantic_policy_unit.py::test_temporary_enum_review_policy_marks_cvn_sex_a_as_review_required - AssertionError: assert <EnumEligibil... 'ineligible'> == <EnumEligibil...iew_required'>\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 18 passed in 2.84s ",
+          "id": "prt_ec5a6284b0016tdpud2MFG7Ju7",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a6284a001Yjd7Mfm5Pd8UAQ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_ec5a6284a001Yjd7Mfm5Pd8UAQ",
+        "role": "assistant",
+        "mode": "plan",
+        "agent": "plan",
+        "variant": "high",
+        "path": {
+          "cwd": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema",
+          "root": "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 129117,
+          "input": 116841,
+          "output": 500,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 11776
+          }
+        },
+        "modelID": "gpt-5.5",
+        "providerID": "openai",
+        "time": {
+          "created": 1781432461427,
+          "completed": 1781432477652
+        },
+        "finish": "stop",
+        "id": "msg_ec5a62873002xePEKyF1yWj0h3",
+        "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE"
+      },
+      "parts": [
+        {
+          "snapshot": "e1b66759c87705a7e4d69c5d397b05499c429eaa",
+          "type": "step-start",
+          "id": "prt_ec5a62fc2001YLDz5Ly3vtkSgP",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a62873002xePEKyF1yWj0h3"
+        },
+        {
+          "type": "text",
+          "text": "Task `9 / 15` - Update Semantic Policy Tests And Inventory.\n\nSubtask `9.1 / 15`.\n\nResumen: test temporal viejo debe convertirse en test dinámico con evidence. Ahora sin evidence, `CVN_SEX_A` queda `INELIGIBLE`; correcto. Para `ELIGIBLE`, test debe pasar `ReferenceTableEnumEvidence`.\n\nRenombra test:\n\n```python\ndef test_dynamic_enum_evidence_marks_cvn_sex_a_as_eligible():\n```\n\nCambia `reference_resolution=...` a:\n\n```python\n        reference_resolution=build_reference_resolution(\n            raw_reference=\"CVN_SEX_A\",\n            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n            serialization_pattern=SerializationPattern.FILTER_VALUE,\n            reference_table_enum_evidence=build_reference_table_enum_evidence(\n                table_name=\"CVN_SEX_A\",\n                item_count=2,\n            ),\n        ),\n```\n\nPero antes, tu helper `build_reference_resolution(...)` necesita aceptar ese parámetro.\n\nCambia firma:\n\n```python\ndef build_reference_resolution(\n    *,\n    raw_reference: str = \"CVN_TEST\",\n    semantic_kind: SemanticReferenceKind = SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,\n    serialization_pattern: SerializationPattern = SerializationPattern.FILTER_VALUE,\n    source_family: ReferenceSourceFamily = ReferenceSourceFamily.REFERENCE_TABLE,\n    reference_table_enum_evidence: ReferenceTableEnumEvidence | None = None,\n) -> ReferenceResolution:\n```\n\nY en constructor `ReferenceResolution(...)`, añade:\n\n```python\n        reference_table_enum_evidence=reference_table_enum_evidence,\n```\n\nCambia asserts del test a:\n\n```python\nassert field_policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE\nassert field_policy.enum_eligibility == EnumEligibility.ELIGIBLE\nassert field_policy.policy_confidence == PolicyConfidence.HIGH\nassert \"enum_evidence:strict_enum_eligible\" in field_policy.decision_trace.applied_rules\n```\n\nElimina assert viejo:\n\n```python\n\"temporary_enum_review_required:CVN_SEX_A\"\n```\n\nFast test:\n\n```bash\nuv run --link-mode=copy pytest tests/test_semantic_policy_unit.py -q -x\n```\n\nResultado esperado: siguiente fallo en `CVN_ENTITY_TYPE` temporal.\n\nFicheros que debes modificar tú: `tests/test_semantic_policy_unit.py`.\n\nSiguiente paso: pega siguiente fallo.",
+          "time": {
+            "start": 1781432464840,
+            "end": 1781432476419
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_0d95cf24d1ef367b016a2e8090e00c8191ba96c500799604b4",
+              "phase": "final_answer"
+            }
+          },
+          "id": "prt_ec5a635c8001a3gWdr10TejS2N",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a62873002xePEKyF1yWj0h3"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "e1b66759c87705a7e4d69c5d397b05499c429eaa",
+          "type": "step-finish",
+          "tokens": {
+            "total": 129117,
+            "input": 116841,
+            "output": 500,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 11776
+            }
+          },
+          "cost": 0,
+          "id": "prt_ec5a66581001EP4j7qpKf2tZtR",
+          "sessionID": "ses_14823e9fbffeFodh3HZOfkrHhE",
+          "messageID": "msg_ec5a62873002xePEKyF1yWj0h3"
         }
       ]
     }

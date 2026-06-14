@@ -4,9 +4,13 @@ from enum import Enum
 
 from cvn_codegen.normalization_types import (
     NormalizedCodeEntry,
+    ReferenceSourceFamily,
+    ReferenceTableEnumEvidence,
     SemanticReferenceKind,
     SerializationPattern,
 )
+
+MAX_STRICT_ENUM_ITEM_COUNT = 64
 
 PRESERVED_ACRONYMS = frozenset(
     {
@@ -20,12 +24,6 @@ PRESERVED_ACRONYMS = frozenset(
     }
 )
 
-TEMPORARY_REVIEW_REQUIRED_REFERENCES = frozenset(
-    {
-        "CVN_SEX_A",
-        "CVN_ENTITY_TYPE",
-    }
-)
 
 WRAPPER_AUTO_APPLICATION_LIMITATION = (
     "NormalizedCodeEntry does not expose structural wrapper type names yet; "
@@ -254,23 +252,65 @@ class SemanticPolicyBundle:
     overrides: tuple[OverrideRule, ...] = ()
     validation_cases: tuple[ValidationCaseDefinition, ...] = ()
 
-def apply_temporary_enum_review_policy(
-    reference_name: str | None,
-    domain_shape_kind: DomainShapeKind,
-    enum_eligibility: EnumEligibility,
-    policy_confidence: PolicyConfidence,
-) -> tuple[DomainShapeKind, EnumEligibility, PolicyConfidence, str | None]:
-    """Apply temporary review-required enum policy until hotfix #7 is implemented."""
-
-    if reference_name not in TEMPORARY_REVIEW_REQUIRED_REFERENCES:
-        return domain_shape_kind, enum_eligibility, policy_confidence, None
-
+def evaluate_reference_table_enum_eligibility(
+    evidence: ReferenceTableEnumEvidence | None,
+    source_family: ReferenceSourceFamily | None,
+    semantic_kind: SemanticReferenceKind | None,
+    is_subtype_backed: bool,
+) -> tuple[EnumEligibility, PolicyConfidence, tuple[str, ...]]:
+    """Evaluate strict enum eligibility from normalized reference-table evidence."""
+    ineligible_reasons: list[str] = []
+    if source_family != ReferenceSourceFamily.REFERENCE_TABLE:
+        ineligible_reasons.append("source_family_not_reference_table")
+    if semantic_kind != SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE:
+        ineligible_reasons.append("semantic_kind_not_compact_enum_like_table")
+    if is_subtype_backed:
+        ineligible_reasons.append("subtype_backed")
+    if evidence is None:
+        ineligible_reasons.append("missing_enum_evidence")
+    if evidence is not None and evidence.has_hierarchy:
+        ineligible_reasons.append("hierarchy_present")
+    if evidence is not None and evidence.has_delegate:
+        ineligible_reasons.append("delegate_present")
+    if ineligible_reasons:
+        return (
+            EnumEligibility.INELIGIBLE,
+            PolicyConfidence.HIGH,
+            tuple(ineligible_reasons),
+        )
+    if evidence is None:
+        return (
+            EnumEligibility.INELIGIBLE,
+            PolicyConfidence.HIGH,
+            ("missing_enum_evidence",),
+        )
+    review_reasons: list[str] = []
+    if evidence.has_other_like_entry:
+        review_reasons.append("other_like_entry")
+    if evidence.has_blank_code:
+        review_reasons.append("blank_code")
+    if evidence.has_blank_preferred_label:
+        review_reasons.append("blank_preferred_label")
+    if evidence.has_duplicate_codes:
+        review_reasons.append("duplicate_codes")
+    if evidence.has_duplicate_preferred_labels:
+        review_reasons.append("duplicate_preferred_labels")
+    if evidence.item_count == 0:
+        review_reasons.append("empty_table")
+    if evidence.item_count > MAX_STRICT_ENUM_ITEM_COUNT:
+        review_reasons.append("item_count_above_limit")
+    if review_reasons:
+        return (
+            EnumEligibility.REVIEW_REQUIRED,
+            PolicyConfidence.REQUIRES_REVIEW,
+            tuple(review_reasons),
+        )
     return (
-        domain_shape_kind,
-        EnumEligibility.REVIEW_REQUIRED,
-        PolicyConfidence.REQUIRES_REVIEW,
-        f"temporary_enum_review_required:{reference_name}",
+        EnumEligibility.ELIGIBLE,
+        PolicyConfidence.HIGH,
+        ("strict_enum_eligible",),
     )
+
 def get_choice_wrapper_policy(
     wrapper_name: str,
     bundle: SemanticPolicyBundle,
@@ -824,21 +864,29 @@ def build_semantic_field_policy(
             f"serialization_pattern:{reference_serialization_pattern.value}"
         )
     
-    reference_name = None
+    enum_rule_reasons: tuple[str, ...] = ()
     if reference_resolution is not None:
-        reference_name = reference_resolution.resolved_name
-
-    (
-        domain_shape_kind,
-        enum_eligibility,
-        policy_confidence,
-        enum_rule,
-    ) = apply_temporary_enum_review_policy(
-        reference_name=reference_name,
-        domain_shape_kind=domain_shape_kind,
-        enum_eligibility=enum_eligibility,
-        policy_confidence=policy_confidence,
-    )
+        (
+            evaluated_enum_eligibility,
+            evaluated_enum_confidence,
+            enum_rule_reasons,
+        ) = evaluate_reference_table_enum_eligibility(
+            evidence=reference_resolution.reference_table_enum_evidence,
+            source_family=reference_resolution.source_family,
+            semantic_kind=reference_resolution.semantic_kind,
+            is_subtype_backed=reference_resolution.is_subtype_backed,
+        )
+        if evaluated_enum_eligibility == EnumEligibility.ELIGIBLE:
+            enum_eligibility = evaluated_enum_eligibility
+            policy_confidence = evaluated_enum_confidence
+        elif evaluated_enum_eligibility == EnumEligibility.REVIEW_REQUIRED:
+            enum_eligibility = evaluated_enum_eligibility
+            policy_confidence = evaluated_enum_confidence
+            if domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE:
+                fallback_shape_kind = DomainShapeKind.OPEN_CODED_VALUE
+        elif domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE:
+            enum_eligibility = evaluated_enum_eligibility
+            policy_confidence = evaluated_enum_confidence
 
     presence_kind = PresenceKind.UNKNOWN
     cardinality_kind = CardinalityKind.UNKNOWN
@@ -880,8 +928,11 @@ def build_semantic_field_policy(
         multiplicity_rule,
         "naming:spanish_first_label",
     )
-    if enum_rule is not None:
-        applied_rules = applied_rules + (enum_rule,)
+    applied_rules = applied_rules + tuple(
+        f"enum_evidence:{reason}"
+        for reason in enum_rule_reasons
+    )
+    
     decision_trace = SemanticDecisionTrace(
         code=entry.code,
         xml_paths=xml_paths,
