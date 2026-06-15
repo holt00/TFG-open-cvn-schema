@@ -337,18 +337,14 @@ Run structural generation:
 uv run python -m cvn_codegen.xsdata_runner all
 ```
 
-Run runner tests:
-
-```bash
-uv run pytest tests/test_xsdata_runner_unit.py -v
-uv run pytest tests/test_xsdata_runner_smoke.py -v
-```
-
 Run the full repository test suite with multicore pytest:
 
 ```bash
 uv run pytest -n auto tests
 ```
+
+Use the full-suite multicore command as the default verification command. Use
+single-file pytest commands only when debugging a specific failure.
 
 ## Files Future Sessions Should Read After The Entry Points
 

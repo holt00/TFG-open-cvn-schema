@@ -79,17 +79,10 @@ uv run python -m cvn_codegen.xsdata_runner all
 
 ### Tests
 
-Use multicore pytest for full-suite and multi-file verification:
+Use multicore pytest for default verification:
 
 ```bash
 uv run pytest -n auto tests
-```
-
-Use targeted single-file commands while iterating on one area:
-
-```bash
-uv run pytest tests/test_xsdata_runner_unit.py -v
-uv run pytest tests/test_xsdata_runner_smoke.py -v
 ```
 
 All automated tests should live under `tests/` so the local and CI entry point
@@ -99,8 +92,11 @@ remains:
 uv run pytest -n auto tests
 ```
 
-Use `uv run pytest --durations=20 tests` when investigating slow tests. Use
-plain non-parallel `pytest` only when debugging order-dependent or
+Use targeted single-file commands only when debugging a specific failure. Keep
+routine verification on `uv run pytest -n auto tests`.
+
+Use `uv run pytest -n auto --durations=20 tests` when investigating slow tests.
+Use plain non-parallel `pytest` only when debugging order-dependent or
 process-isolation failures.
 
 ### Parse Smoke Checks

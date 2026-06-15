@@ -275,6 +275,9 @@ wheels = [
 name = "tfg-open-cvn-schema"
 version = "0.1.0"
 source = { editable = "." }
+dependencies = [
+    { name = "pydantic" },
+]
 
 [package.dev-dependencies]
 codegen = [
@@ -287,6 +290,7 @@ testing = [
 ]
 
 [package.metadata]
+requires-dist = [{ name = "pydantic", specifier = ">=2.12.5" }]
 
 [package.metadata.requires-dev]
 codegen = [
