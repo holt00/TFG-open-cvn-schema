@@ -37,6 +37,8 @@ def test_resolve_manual_reference_returns_no_reference_for_none():
     assert resolution.source_family is None
     assert resolution.serialization_pattern is None
     assert resolution.semantic_kind is None
+    assert resolution.reference_table_enum_evidence is None
+
 def test_resolve_manual_reference_returns_no_reference_for_whitespace():
     # Arrange
     auxiliary_bundle = build_test_auxiliary_bundle()
@@ -50,6 +52,8 @@ def test_resolve_manual_reference_returns_no_reference_for_whitespace():
     assert resolution.source_family is None
     assert resolution.serialization_pattern is None
     assert resolution.semantic_kind is None
+    assert resolution.reference_table_enum_evidence is None
+
 def test_resolve_manual_reference_resolves_reference_table_case():
     # Arrange
     auxiliary_bundle = build_test_auxiliary_bundle()
@@ -65,6 +69,10 @@ def test_resolve_manual_reference_resolves_reference_table_case():
     assert resolution.resolved_name == "CVN_SEX_A"
     assert resolution.serialization_pattern is not None
     assert resolution.semantic_kind is not None
+    assert resolution.reference_table_enum_evidence is not None
+    assert resolution.reference_table_enum_evidence.table_name == "CVN_SEX_A"
+    assert resolution.reference_table_enum_evidence.item_count == 2
+
 def test_resolve_manual_reference_resolves_entity_side_package_case():
     # Arrange
     auxiliary_bundle = build_test_auxiliary_bundle()
@@ -79,6 +87,8 @@ def test_resolve_manual_reference_resolves_entity_side_package_case():
     assert resolution.source_artifact == "Entity.xml"
     assert resolution.serialization_pattern == SerializationPattern.SIDE_PACKAGE_REGISTRY
     assert resolution.semantic_kind == SemanticReferenceKind.SIDE_PACKAGE_REGISTRY
+    assert resolution.reference_table_enum_evidence is None
+
 def test_resolve_manual_reference_resolves_thesaurus_side_package_case():
     # Arrange
     auxiliary_bundle = build_test_auxiliary_bundle()
@@ -115,6 +125,10 @@ def test_resolve_manual_reference_classifies_unesco_codes_as_hierarchical():
         resolution.semantic_kind
         == SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION
     )
+    assert resolution.reference_table_enum_evidence is not None
+    assert resolution.reference_table_enum_evidence.table_name == "UNESCO_CODES"
+    assert resolution.reference_table_enum_evidence.has_hierarchy is True
+
 def test_resolve_manual_reference_returns_unresolved_for_known_manual_only_case():
     # Arrange
     auxiliary_bundle = build_test_auxiliary_bundle()
@@ -132,6 +146,9 @@ def test_resolve_manual_reference_returns_unresolved_for_known_manual_only_case(
         == SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE
     )
     assert resolution.diagnostic_message is not None
+    assert resolution.reference_table_enum_evidence is None
+
+
 def test_resolve_manual_reference_classifies_under_traced_known_table():
     # Arrange
     auxiliary_bundle = build_test_auxiliary_bundle()
@@ -147,6 +164,8 @@ def test_resolve_manual_reference_classifies_under_traced_known_table():
         == SemanticReferenceKind.UNDER_TRACED_REFERENCE_TABLE
     )
     assert resolution.diagnostic_message is not None
+    assert resolution.reference_table_enum_evidence is not None
+    assert resolution.reference_table_enum_evidence.table_name == "CVN_INTERVENTION_A"
 
 def test_resolve_manual_reference_marks_subtype_catalog_available_for_subtype_backed_table():
     # Arrange
@@ -166,3 +185,5 @@ def test_resolve_manual_reference_marks_subtype_catalog_available_for_subtype_ba
         resolution.semantic_kind
         == SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY
     )
+    assert resolution.reference_table_enum_evidence is not None
+    assert resolution.reference_table_enum_evidence.table_name == "CVN_KNOW_A"  

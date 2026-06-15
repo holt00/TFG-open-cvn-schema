@@ -125,8 +125,8 @@ Additional policy-level expectations from issue `#14` are:
 - `000.010.000.020` / `Nombre` remains plain text and enum-ineligible
 - `CVN_SEX_A` remains strict-enum eligible when table evidence is closed and
   stable
-- `CVN_ENTITY_TYPE` remains open or review-required because delegate/open
-  behavior prevents blind strict-enum generation
+- `CVN_ENTITY_TYPE` remains strict-enum ineligible because delegate/open behavior
+  prevents closed strict-enum generation
 - side-package, hierarchical, subtype-backed, unresolved, and under-traced cases
   remain strict-enum ineligible by default
 

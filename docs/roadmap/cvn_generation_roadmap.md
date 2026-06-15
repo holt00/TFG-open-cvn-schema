@@ -202,6 +202,14 @@ Authoritative record:
   replace hardcoded semantic enum decisions with dynamic
   `ReferenceTables.xml` evidence carried through the normalization-to-semantic
   handoff
+- Implemented outcome:
+  - normalization metadata and reference resolution now carry dynamic enum
+    evidence for `ReferenceTables.xml` cases
+  - semantic policy now evaluates strict enum eligibility from evidence rather
+    than temporary table-specific review handling
+  - `CVN_SEX_A` is eligible from dynamic evidence, while `CVN_ENTITY_TYPE` is
+    ineligible because canonical evidence includes `delegate_present`
+  - full repository verification passed after implementation
 
 Authoritative record:
 
@@ -239,10 +247,10 @@ Authoritative record:
     by normalization
 - Implemented outcome:
   - typed semantic policy families, enum categories, override precedence,
-    Spanish-first naming, temporary review-required enum eligibility, wrapper
-    treatment, and representative validation cases are implemented and tested
-  - hotfix `#7` remains the follow-up for dynamic strict enum eligibility over
-    compact `ReferenceTables.xml` evidence
+    Spanish-first naming, dynamic enum eligibility, wrapper treatment, and
+    representative validation cases are implemented and tested
+  - hotfix `#7` supplies dynamic strict enum eligibility over compact
+    `ReferenceTables.xml` evidence
 
 ### Issue `#15`
 

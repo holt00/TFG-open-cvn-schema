@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-06-10
+- Last updated: 2026-06-15
 
 ## Completed Or Stabilized Work
 
@@ -232,16 +232,19 @@
 
 ### Hotfix `#7`
 
-- a new corrective hotfix record now exists for replacing table-specific
-  semantic enum decisions with dynamic `ReferenceTables.xml` evidence
-- the documented required correction makes explicit that strict enum
-  eligibility for compact controlled tables cannot remain hardcoded in issue
-  `#14`
-- the corrective plan requires additive evidence in the normalization handoff
-  so semantic policy can evaluate all relevant direct reference tables
-  dynamically
-- the hotfix record is currently documentation-only and implementation remains
-  pending
+- the corrective hotfix for replacing table-specific semantic enum decisions
+  with dynamic `ReferenceTables.xml` evidence is implemented and verified
+- `ReferenceTableMetadata` now exposes item-code, preferred-label, duplicate,
+  blank, other-like, hierarchy, delegate, and open-world-signal evidence
+- `ReferenceResolution.reference_table_enum_evidence` now carries typed evidence
+  for direct `ReferenceTables.xml` and subtype-backed table resolutions
+- `semantic_policy.py` now evaluates strict enum eligibility dynamically through
+  `evaluate_reference_table_enum_eligibility(...)` instead of temporary
+  table-name-specific review handling
+- `CVN_SEX_A` is dynamically enum-eligible; `CVN_ENTITY_TYPE` is dynamically
+  enum-ineligible because canonical evidence includes `delegate_present`
+- full-suite verification passed with `uv run pytest -n auto tests`
+  and result `146 passed in 404.14s (0:06:44)`
 
 ### Issue `#14`
 
@@ -263,13 +266,14 @@
   - Spanish-first domain naming
   - deterministic override precedence
   - representative validation cases for handoff into issue `#15`
-- issue `#14` uses a temporary review-required policy for representative compact
-  enum-like tables such as `CVN_SEX_A` and `CVN_ENTITY_TYPE` instead of
-  hardcoded final enum decisions
-- the permanent fix for dynamic strict-enum eligibility across all relevant
-  `ReferenceTables.xml` tables is documented by hotfix `#7`
+- issue `#14` now uses dynamic enum evidence from hotfix `#7` for compact
+  enum-like `ReferenceTables.xml` cases instead of temporary review-required
+  handling
+- strict enum eligibility is evidence-backed for direct reference tables:
+  `CVN_SEX_A` is eligible, while `CVN_ENTITY_TYPE` is ineligible due to
+  `delegate_present`
 - the user reported that the semantic-policy tests, regression tests, and full
-  repository test suite passed after implementation
+  repository test suite passed after the original issue `#14` implementation
 - no final domain model emission is implemented yet; that remains issue `#15`
 
 ## Current Technical Baseline
@@ -311,8 +315,8 @@
   `CVNTreeModel_v1.0.xsd` does not declare that child element
 - `Subtype_Spa.xml` does not provide a direct table-family bridge for strict
   per-table subtype verification in the current normalization layer
-- dynamic strict enum eligibility for compact `ReferenceTables.xml` tables still
-  needs hotfix `#7` evidence in the normalization-to-semantic handoff
+- strict enum eligibility for compact `ReferenceTables.xml` tables now uses
+  hotfix `#7` evidence in the normalization-to-semantic handoff
 
 All of these are documented in:
 

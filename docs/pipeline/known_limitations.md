@@ -160,27 +160,28 @@ do not need to rediscover them.
   - later maintenance work may add a stricter bridge only if reliable evidence
     is introduced from the preserved source package
 
-### Strict Enum Eligibility Needs Dynamic Reference-Table Evidence
+### Strict Enum Eligibility Is Evidence-Backed But Conservative
 
 - confirmed behavior:
-  - issue `#14` can classify compact enum-like references by semantic kind and
-    serialization pattern
-  - the current normalization-to-semantic handoff does not yet expose per-table
-    enum evidence such as item count, code stability, label quality, hierarchy,
-    delegate/open behavior, or `OTHERS` handling
-  - representative compact tables such as `CVN_SEX_A` and `CVN_ENTITY_TYPE` are
-    therefore marked as strict-enum candidates with `REVIEW_REQUIRED` eligibility
-    rather than final enum decisions
-- impact:
-  - issue `#15` must not generate strict enums solely from compact enum-like
-    semantic kind
-  - strict enum generation must wait for explicit eligibility evidence or a
-    deliberate override
-- expected follow-up:
-  - hotfix `#7` should add dynamic `ReferenceTables.xml` enum evidence to the
+  - hotfix `#7` adds per-table enum evidence from `ReferenceTables.xml` to the
     normalization-to-semantic handoff
-  - issue `#15` should honor `EnumEligibility.REVIEW_REQUIRED` as non-final for
-    strict enum emission
+  - issue `#14` now evaluates strict enum eligibility through typed evidence such
+    as item count, code stability, label quality, hierarchy, delegate/open
+    behavior, duplicate values, blank values, and other-like entries
+  - compact direct tables can become `EnumEligibility.ELIGIBLE` when evidence
+    shows a small closed table, as with `CVN_SEX_A`
+  - compact tables with delegate/open-world behavior remain strict-enum
+    ineligible, as with `CVN_ENTITY_TYPE` and `delegate_present`
+- impact:
+  - issue `#15` may generate strict enums only when semantic policy reports
+    `EnumEligibility.ELIGIBLE`
+  - `EnumEligibility.REVIEW_REQUIRED` and `EnumEligibility.INELIGIBLE` must not
+    be treated as final strict-enum permission
+- expected follow-up:
+  - issue `#15` should consume the dynamic eligibility result without
+    re-inspecting `ReferenceTables.xml`
+  - future explicit overrides, if any, must remain versioned `OverrideRule` data
+    rather than hidden table-name branches
 
 ## Documentation Rule
 
