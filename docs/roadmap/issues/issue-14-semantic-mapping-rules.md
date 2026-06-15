@@ -335,8 +335,8 @@ File-modification rule:
 - Subtask `10.3 / 15`:
   - mark `CVN_SEX_A` as expected strict-enum candidate
 - Subtask `10.4 / 15`:
-  - mark `CVN_ENTITY_TYPE` as open or review-required rather than blind strict
-    enum
+  - mark `CVN_ENTITY_TYPE` as strict-enum ineligible when dynamic evidence shows
+    delegate/open behavior rather than blind strict enum
 - User manual modifications needed:
   - code file must be edited by the user unless explicit code-edit approval is
     given
@@ -636,8 +636,8 @@ names should carry `naming_confidence=REQUIRES_REVIEW`.
 | Case | Role | Expected policy result |
 | --- | --- | --- |
 | `000.010.000.020` / `Nombre` | simple scalar | `PLAIN_VALUE`, `TEXT`, enum ineligible |
-| `CVN_SEX_A` / `000.010.000.030` | compact closed enum-like table | temporary `STRICT_ENUM_CANDIDATE`, enum review required |
-| `CVN_ENTITY_TYPE` / `010.010.000.040` | compact open/review controlled table | temporary `STRICT_ENUM_CANDIDATE`, enum review required |
+| `CVN_SEX_A` / `000.010.000.030` | compact closed enum-like table | `STRICT_ENUM_CANDIDATE`, enum eligible from dynamic evidence |
+| `CVN_ENTITY_TYPE` / `010.010.000.040` | compact open/delegate controlled table | `STRICT_ENUM_CANDIDATE`, enum ineligible from `delegate_present` evidence |
 | `CVN_KNOW_A` / `050.030.010.030` | subtype-backed family | `SUBTYPE_BACKED_VALUE`, enum ineligible |
 | `ENTITY@Entity.xsd` / `010.010.000.020` | side-package registry | `REGISTRY_REFERENCE`, enum ineligible |
 | `THESAURUS@thesaurus.xsd` / `010.010.000.260` | side-package vocabulary | `VOCABULARY_REFERENCE`, enum ineligible |
@@ -679,10 +679,8 @@ Issue `#15` should:
   under-traced.
 - Generated structural bindings do not enforce `xs:choice` mutual exclusivity.
 - Generated list defaults do not reliably enforce every `minOccurs` constraint.
-- Strict enum eligibility for compact `ReferenceTables.xml` tables is currently
-  implemented with a temporary review-required policy for representative cases
-  until hotfix `#7` extends the normalization-to-semantic handoff with dynamic
-  per-table enum evidence.
+- Strict enum eligibility for compact `ReferenceTables.xml` tables is now
+  evaluated from dynamic per-table evidence added by hotfix `#7`.
 - Final domain model emission remains deferred to issue `#15`.
 
 ## Adjustments Made During Implementation
@@ -707,6 +705,16 @@ Issue `#15` should:
 - When hotfix `#7` is implemented, these temporary reviewed cases must be
   reevaluated dynamically from typed `ReferenceTables.xml` evidence instead of
   table-name-based temporary handling.
+- Hotfix `#7` has now replaced this temporary bridge with typed enum evidence in
+  `ReferenceResolution.reference_table_enum_evidence` and dynamic semantic-policy
+  evaluation.
+- The implemented hotfix keeps `CVN_SEX_A` as an eligible strict-enum candidate
+  because canonical evidence shows a small closed table with stable codes and no
+  hierarchy, delegate, blank, duplicate, or other-like signals.
+- The implemented hotfix treats `CVN_ENTITY_TYPE` as enum-ineligible because
+  canonical evidence shows `has_delegate is True`; this is an implementation
+  adjustment from the older review-required expectation and follows the generic
+  `delegate_present` rule rather than table-name hardcoding.
 
 ## Implementation Performed
 
@@ -723,12 +731,13 @@ Issue `#15` should:
   - Spanish-first naming helpers with ASCII-normalized identifiers
   - wrapper-policy lookup and validation helpers for known `xs:choice` wrappers
   - representative validation inventory for the issue `#15` handoff
-  - temporary compact-table review-required policy for representative enum-like
-    cases until hotfix `#7` supplies dynamic enum evidence
+  - dynamic strict-enum eligibility over typed `ReferenceTables.xml` evidence
+    supplied by hotfix `#7`
 - Unit tests for the semantic policy are implemented in
   `tests/test_semantic_policy_unit.py`.
-- This document records the accepted execution plan, the reporting protocol, and
-  the temporary compact-table plan adjustment introduced during implementation.
+- This document records the accepted execution plan, the reporting protocol, the
+  original temporary compact-table adjustment, and the later hotfix `#7`
+  replacement with evidence-backed enum eligibility.
 
 ## Verification
 
@@ -737,7 +746,7 @@ Issue `#15` should:
   - semantic-policy construction
   - base type mapping
   - reference-kind and serialization-pattern mapping
-  - enum eligibility and temporary review-required handling
+  - enum eligibility and dynamic evidence-backed handling
   - presence and cardinality mapping
   - naming policy
   - override precedence and same-rank conflict behavior
@@ -749,6 +758,9 @@ Issue `#15` should:
   - `uv run pytest tests/test_semantic_policy_unit.py -v`
   - `uv run pytest -n auto tests/test_manual_metadata_unit.py tests/test_tree_metadata_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py -v`
   - `uv run pytest -n auto tests`
+- Hotfix `#7` verification later passed with:
+  - `uv run pytest -n auto tests`
+  - result: `146 passed in 404.14s (0:06:44)`
 
 ## Findings
 
@@ -758,13 +770,11 @@ Issue `#15` should:
   trace evidence, but normalized metadata is the operative semantic input.
 - Override policy must change only semantic outputs, not upstream normalized
   facts.
-- `CVN_ENTITY_TYPE` is not safe for blind strict-enum generation because its
-  compact controlled table has open/review behavior.
-- The current issue `#14` contract is sufficient for semantic-kind and
-  serialization-pattern policy, but not yet sufficient for dynamic strict enum
-  eligibility over all compact `ReferenceTables.xml` tables.
-- Temporary reviewed handling for `CVN_SEX_A` and `CVN_ENTITY_TYPE` is an
-  implementation bridge only and must be replaced by hotfix `#7`.
+- `CVN_ENTITY_TYPE` is not safe for strict-enum generation because its compact
+  controlled table has delegate/open-world behavior.
+- Hotfix `#7` extends the issue `#14` handoff with dynamic enum evidence, so
+  strict enum eligibility no longer depends on temporary representative-case
+  handling.
 
 ## Impact On Future Issues
 

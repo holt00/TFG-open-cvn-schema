@@ -455,7 +455,8 @@ When issue `#16` or the issue `#14` test phase adds semantic-policy tests, the
 minimum required dynamic enum checks are:
 
 1. `CVN_SEX_A` becomes `ELIGIBLE` dynamically
-2. `CVN_ENTITY_TYPE` becomes `REVIEW_REQUIRED` dynamically
+2. `CVN_ENTITY_TYPE` becomes `INELIGIBLE` dynamically because canonical evidence
+   includes `delegate_present`
 3. subtype-backed `CVN_KNOW_A` remains `INELIGIBLE`
 4. hierarchical `UNESCO_CODES` remains `INELIGIBLE`
 5. side-package registry references remain `INELIGIBLE`
@@ -961,7 +962,9 @@ The implementation session that applies this hotfix must verify all of these:
 2. `ReferenceResolution` carries evidence for direct reference-table resolutions
 3. issue `#14` no longer uses table-name hardcoding for enum eligibility
 4. `CVN_SEX_A` passes dynamically as eligible
-5. `CVN_ENTITY_TYPE` lands dynamically in review-required
+5. `CVN_ENTITY_TYPE` is decided dynamically from evidence; current canonical
+   evidence makes it enum-ineligible because `delegate_present` is an immediate
+   blocker
 6. subtype-backed, hierarchical, side-package, unresolved, and under-traced
    families remain non-eligible
 
@@ -974,6 +977,55 @@ uv run pytest tests/test_semantic_policy_unit.py -v
 uv run pytest -n auto tests
 ```
 
+## Implementation Performed
+
+- `ReferenceTableMetadata` now exposes normalization-grade enum evidence derived
+  from `ReferenceTables.xml`, including item codes, preferred labels,
+  normalized codes, normalized preferred labels, duplicate flags, blank flags,
+  other-like detection, and open-world signals.
+- Preferred labels are selected deterministically from multilingual
+  `NameDetail` values using Spanish first, English second, and the first
+  available label otherwise.
+- `ReferenceTableEnumEvidence` is now part of the typed normalization contract.
+- `ReferenceResolution.reference_table_enum_evidence` now carries evidence for
+  resolved direct `ReferenceTables.xml` tables and subtype-backed tables.
+- Non-reference-table families still carry `None` evidence, including
+  side-package registry, side-package thesaurus, no-reference, and unresolved
+  cases.
+- `semantic_policy.py` now evaluates strict enum eligibility through
+  `evaluate_reference_table_enum_eligibility(...)` and
+  `MAX_STRICT_ENUM_ITEM_COUNT = 64`.
+- The previous temporary review-required policy for `CVN_SEX_A` and
+  `CVN_ENTITY_TYPE` has been replaced by evidence-backed rules.
+
+## Implementation Adjustment
+
+- The original validation expectation said `CVN_ENTITY_TYPE` should land in
+  `REVIEW_REQUIRED`.
+- Canonical source inspection during implementation showed that
+  `CVN_ENTITY_TYPE` has `17` items, `has_delegate is True`, and contains
+  open-world evidence such as `OTHERS`.
+- The accepted execution decision was to keep the exact immediate-ineligibility
+  rule for delegates.
+- Therefore `CVN_ENTITY_TYPE` now lands in `INELIGIBLE` dynamically with
+  `delegate_present` as the blocker instead of landing in `REVIEW_REQUIRED`.
+- This is not a hardcoded table-name exception; it follows the generic delegate
+  rule from normalized evidence.
+
+## Verification Performed
+
+- The user reported targeted verification passed with these commands:
+  - `uv run pytest tests/test_auxiliary_source_loaders_unit.py -q`
+  - `uv run pytest tests/test_auxiliary_reference_resolution_unit.py -q`
+  - `uv run pytest tests/test_semantic_policy_unit.py -q`
+  - `uv run pytest -n auto tests/test_normalization_report_unit.py tests/test_normalization_unit.py -q`
+- Targeted documented verification passed with:
+  - `uv run pytest -n auto tests/test_auxiliary_source_loaders_unit.py tests/test_auxiliary_reference_resolution_unit.py tests/test_semantic_policy_unit.py tests/test_normalization_report_unit.py tests/test_normalization_unit.py -v`
+  - result: `95 passed in 364.71s (0:06:04)`
+- Full repository verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `146 passed in 404.14s (0:06:44)`
+
 ## Impact On Future Issues
 
 - removes pressure to hardcode reviewed table names in issue `#14`
@@ -984,5 +1036,5 @@ uv run pytest -n auto tests
 
 ## Status
 
-- Status: documented as required corrective work
-- Implementation state: pending
+- Status: implemented and verified
+- Implementation state: completed
