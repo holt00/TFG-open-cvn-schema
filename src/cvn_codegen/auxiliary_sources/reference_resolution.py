@@ -7,10 +7,14 @@ from cvn_codegen.normalization_types import (
     ReferenceResolutionStatus,
     ReferenceResolutionTrace,
     ReferenceSourceFamily,
+    ReferenceTableEnumEvidence,
     SemanticReferenceKind,
-    SerializationPattern
+    SerializationPattern,
 )
+
 UNRESOLVED_MANUAL_REFERENCE_NAMES = frozenset({"CVN_AGENCY_C"})
+
+
 def _normalize_reference_name(raw_reference: str | None) -> str | None:
     """Normalize a manual reference value for deterministic resolution.
     Args:
@@ -209,6 +213,26 @@ def classify_semantic_reference_kind(
         return SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION
     return SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE
 
+def build_reference_table_enum_evidence(
+    table_metadata: ReferenceTableMetadata,
+) -> ReferenceTableEnumEvidence:
+    """Build enum-eligibility evidence from reference-table metadata."""
+    return ReferenceTableEnumEvidence(
+        table_name=table_metadata.table_name,
+        item_count=table_metadata.item_count,
+        has_hierarchy=table_metadata.has_hierarchy,
+        has_delegate=table_metadata.has_delegate,
+        has_other_like_entry=table_metadata.has_other_like_entry,
+        has_duplicate_codes=table_metadata.has_duplicate_codes,
+        has_duplicate_preferred_labels=table_metadata.has_duplicate_preferred_labels,
+        has_blank_code=table_metadata.has_blank_code,
+        has_blank_preferred_label=table_metadata.has_blank_preferred_label,
+        normalized_codes=table_metadata.normalized_codes,
+        preferred_labels=table_metadata.preferred_labels,
+        normalized_preferred_labels=table_metadata.normalized_preferred_labels,
+        open_world_signals=table_metadata.open_world_signals,
+    )
+
 
 def resolve_manual_reference(
     raw_reference: str | None,
@@ -348,6 +372,9 @@ def resolve_manual_reference(
             table_metadata=table_metadata,
             under_traced_table_names=auxiliary_bundle.under_traced_table_names,
         )
+        reference_table_enum_evidence = build_reference_table_enum_evidence(
+            table_metadata=table_metadata,
+        )
         supporting_metadata = tuple(
             metadata_value
             for metadata_value in (
@@ -388,6 +415,7 @@ def resolve_manual_reference(
                 supporting_metadata=supporting_metadata,
                 manual_code=manual_code,
             ),
+            reference_table_enum_evidence=reference_table_enum_evidence,
         )
     diagnostic_message = None
     if normalized_reference in UNRESOLVED_MANUAL_REFERENCE_NAMES:
