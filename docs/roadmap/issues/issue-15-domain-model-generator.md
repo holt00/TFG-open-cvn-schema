@@ -150,6 +150,233 @@ Issue `#15` should document and implement at minimum:
 - code-level traceability should remain preserved even when generated names and
   domain shapes differ from XML-oriented structures
 
+## Wrapper Traceability Limitation And Hotfix `#8` Handoff
+
+During issue `#15` implementation planning, the current normalized tree metadata
+was checked for wrapper type evidence needed to apply semantic wrapper policies
+automatically.
+
+The relevant wrapper policy names are:
+
+1. `FlexibleDatesType`
+2. `OfficialIdType`
+3. `EntityTypeType`
+4. `EntityNameType`
+
+Those names exist in `CVN.xsd`, generated structural bindings, and issue `#14`
+semantic wrapper-policy validation cases, but they are not exposed by the
+current normalized handoff. In particular, `TreePathEntry.tree_value` does not
+carry these wrapper type names for real canonical entries.
+
+Issue `#15` must therefore not attach wrapper-aware field shapes by scanning raw
+XSD files or generated structural bindings inside the domain generator. That
+would violate the corrected generator boundary: issue `#15` consumes normalized
+metadata and `SemanticPolicyBundle`; it does not rediscover structural meaning.
+
+The corrective follow-up is tracked in:
+
+- `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
+
+Until hotfix `#8` is implemented, issue `#15` should:
+
+- keep wrapper policy decisions visible where already provided by issue `#14`
+- avoid pretending wrapper auto-attachment is implemented
+- generate scalar, controlled-reference, enum, trace, and deterministic output
+  behavior independently from wrapper auto-attachment
+- leave future wrapper-aware field emission ready to consume typed wrapper
+  evidence once hotfix `#8` extends the handoff
+
+## Decisions Recorded During Issue `#15` Execution
+
+This section records implementation decisions taken during the interactive issue
+`#15` execution so future sessions can resume from repository documentation
+rather than reconstructing the chat history.
+
+### Execution And Verification Cadence
+
+- The default verification command for this issue is the fast full-suite command:
+  `uv run pytest -n auto tests`.
+- Single-file pytest commands should be used only for debugging a specific
+  failure, not as the normal documented verification path.
+- Tests are added at the end of each task-level implementation slice rather than
+  after every tiny helper, unless a failure requires tighter isolation.
+- Code changes are made manually by the user unless explicit edit authorization
+  is given; documentation changes may be applied when explicitly requested.
+
+### Output Architecture
+
+- Hand-maintained generator logic belongs in `src/cvn_codegen/`.
+- The domain generator implementation is centered on
+  `src/cvn_codegen/domain_model_generator.py`.
+- Generator intermediate representation records belong in
+  `src/cvn_codegen/domain_model_types.py`.
+- Shared hand-maintained domain components belong in `src/models/cvn/`.
+- Generated domain models will be emitted under `src/models/cvn/generated/`.
+- Structural bindings under `src/generated/` remain a separate generated
+  interoperability layer and must not be edited manually.
+- Shared components are hand-maintained for now, while final block/domain models
+  are generated. This avoids duplicating common component classes in generated
+  output and keeps generated model files cleaner.
+
+### Runtime Dependency Decision
+
+- `pydantic` is an explicit project runtime dependency because generated domain
+  models and shared domain components import Pydantic directly.
+- The dependency should be added through the package manager command
+  `uv add pydantic`, not by manually editing `pyproject.toml`.
+- `xsdata-pydantic` remains part of the `codegen` dependency group because it is
+  tied to structural generation rather than the final domain model runtime.
+
+### Intermediate Representation Decision
+
+The generator IR uses small frozen dataclasses and stores final type names as
+strings to keep rendering deterministic and separate from semantic-policy
+resolution.
+
+The accepted IR records are:
+
+1. `DomainFieldSpec`
+2. `DomainEnumSpec`
+3. `DomainTypeSpec`
+4. `DomainGenerationUnit`
+5. `DomainGenerationResult`
+
+`DomainFieldSpec` records at minimum:
+
+- `field_name`
+- `python_type`
+- `code`
+- `xml_paths`
+- `required`
+- `repeated`
+- `domain_shape_kind`
+- `enum_eligibility`
+- `trace`
+
+`DomainGenerationResult` carries generated units, enum specs, normalized entries,
+and semantic policies so tests and later emitters can validate traceability and
+deterministic ordering.
+
+### Policy Index And Grouping Decisions
+
+- `build_semantic_policy_index(...)` builds one `SemanticFieldPolicy` per
+  normalized code by calling `build_semantic_field_policy(...)` from issue `#14`.
+- The policy index is ordered deterministically by CVN code.
+- Grouping is based on `TreePathEntry.tree_cvn_item_code` where available.
+- Entries without tree paths go to the `__no_tree__` group.
+- Entries with tree paths but without a CVN item code go to the
+  `__no_cvn_item__` group.
+- The same normalized entry must not appear twice in the same group even when it
+  has multiple tree paths in that group.
+
+### Naming And Collision Decisions
+
+- The generator reuses `SemanticFieldPolicy.naming_policy.normalized_field_name`
+  and `normalized_class_name` instead of redefining naming rules.
+- CVN code suffixes are added to field names only when a real field-name
+  collision occurs inside the same generation unit.
+- When a collision occurs, all fields in that collision group receive a CVN code
+  suffix to avoid a confusing mix of one clean name and one suffixed name.
+- The suffix format replaces `.` with `_`, for example
+  `titulo_060_010_000_020`.
+- CVN codes are always preserved in trace metadata even when they are not present
+  in the Python field name.
+
+### Base Type Mapping Decisions
+
+- `SemanticBaseKind.TEXT` maps to `str`.
+- `SemanticBaseKind.BOOLEAN` maps to `bool`.
+- `SemanticBaseKind.DECIMAL_NUMBER` maps to `Decimal`.
+- `SemanticBaseKind.DATE_LIKE` maps to `str` for now.
+- `SemanticBaseKind.DURATION_LIKE` maps to `str` for now.
+- unknown base kinds map to `object` rather than pretending stronger validation.
+- Repeated fields wrap the resolved type as `list[...]`.
+- Controlled references are detected through
+  `SemanticBaseKind.CONTROLLED_REFERENCE` before applying domain-shape mapping.
+
+### Strict Enum Decisions
+
+- Strict enum emission is allowed only when
+  `domain_shape_kind == STRICT_ENUM_CANDIDATE` and
+  `enum_eligibility == ELIGIBLE`.
+- `REVIEW_REQUIRED` and `INELIGIBLE` never emit strict enums in issue `#15`.
+- Reviewed or ineligible strict-enum candidates fall back to safe non-enum
+  representation, currently `str` until later emission logic refines the field
+  type.
+- Enum class names are derived from the semantic class name and receive an
+  `Enum` suffix when needed.
+- Enum member names are derived from preferred labels when they form valid
+  identifiers; otherwise they fall back to `CODE_<normalized_code>`.
+- `DomainEnumSpec` is built from explicit `ReferenceTableEnumEvidence`, not from
+  table-name-specific generator logic.
+- Enum specs are deduplicated by `source_reference` because multiple fields may
+  reuse the same controlled table.
+
+### Non-Enum Controlled Reference Decisions
+
+The generator maps non-enum controlled-reference shapes to shared component type
+names instead of flattening every case to `str`.
+
+Accepted mappings:
+
+| `DomainShapeKind` | Python component type |
+| --- | --- |
+| `OPEN_CODED_VALUE` | `OpenCodedValue` |
+| `MEASURE_OR_SCALE_VALUE` | `MeasureOrScaleValue` |
+| `IDENTIFIER_REFERENCE` | `IdentifierReference` |
+| `SCOPE_REFERENCE` | `ScopeReference` |
+| `SUBTYPE_BACKED_VALUE` | `SubtypeBackedValue` |
+| `HIERARCHICAL_CODE_REFERENCE` | `HierarchicalCodeReference` |
+| `REGISTRY_REFERENCE` | `RegistryReference` |
+| `VOCABULARY_REFERENCE` | `VocabularyReference` |
+| `UNRESOLVED_REFERENCE` | `UnresolvedReference` |
+| `UNDER_TRACED_REFERENCE` | `UnderTracedReference` |
+
+### Shared Component Decisions
+
+- `src/models/cvn/components.py` contains shared hand-maintained component
+  classes for non-enum controlled references.
+- The shared controlled-reference base is `BaseControlledReferenceValue` with
+  `code` and `label` fields.
+- `HierarchicalCodeReference` adds `parent_code`.
+- `RegistryReference` adds `registry_id`.
+- `VocabularyReference` adds `vocabulary_source`.
+- `UnresolvedReference` and `UnderTracedReference` add `raw_reference`.
+- These components do not inherit from `BaseCvnDomainModel`; they are reusable
+  value objects, while generated final models may later inherit from
+  `BaseCvnDomainModel`.
+
+### Trace Component Decisions
+
+The accepted future trace contract is richer than the initial minimal proposal.
+When implemented, `CvnTrace` should contain:
+
+- `code: str`
+- `xml_paths: tuple[str, ...]`
+- `base_kind: str`
+- `domain_shape_kind: str`
+- `enum_eligibility: str`
+- `source_reference: str | None = None`
+- `notes: tuple[str, ...] = ()`
+
+`BaseCvnDomainModel` should expose:
+
+- `cvn_trace: CvnTrace | None = None`
+
+The trace contract intentionally does not yet include full internal
+`SemanticDecisionTrace.applied_rules`, diagnostics, `policy_confidence`, or
+wrapper-policy fields. Those internal policy details can remain in generator
+trace metadata until there is a concrete domain-facing need.
+
+### Wrapper Decision
+
+- Wrapper auto-attachment is not implemented in issue `#15` until hotfix `#8`
+  provides typed wrapper evidence in the normalized or semantic handoff.
+- Issue `#15` must not solve this by reading raw XSD or generated structural
+  bindings inside generator logic.
+- The generator should remain ready to consume wrapper evidence later, but it
+  should not pretend wrapper-aware fields are currently attached.
+
 ## Accepted Execution Protocol
 
 The user accepted this execution plan before implementation starts.
@@ -441,22 +668,23 @@ File-modification rule:
 ### Task `12 / 23` - Handle Wrapper And Choice Policies
 
 - Task summary:
-  - decide how issue `#15` restores high-value wrapper and `xs:choice` semantics
-    from available normalized metadata
+  - verify whether issue `#15` can restore high-value wrapper and `xs:choice`
+    semantics from available normalized metadata without violating the generator
+    boundary
 - Files expected to change when authorized:
-  - `src/cvn_codegen/domain_model_generator.py`
-  - `src/models/cvn/components.py`
+  - `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
+  - `docs/roadmap/issues/issue-15-domain-model-generator.md`
   - `docs/pipeline/known_limitations.md` if the limitation remains
 - Subtask `12.1 / 23`:
   - inspect whether `TreePathEntry.tree_value` exposes wrapper names such as
     `FlexibleDatesType`, `OfficialIdType`, `EntityTypeType`, and `EntityNameType`
     for real normalized entries
 - Subtask `12.2 / 23`:
-  - if wrapper evidence is sufficient, attach wrapper-aware component types to
-    affected fields
+  - if wrapper evidence is insufficient, create a corrective hotfix record for
+    wrapper type traceability in the normalized handoff
 - Subtask `12.3 / 23`:
-  - if wrapper evidence is insufficient, emit reusable wrapper components but
-    document that automatic field attachment remains limited
+  - document that automatic wrapper-aware field attachment remains out of scope
+    for issue `#15` until the hotfix supplies typed evidence
 - Subtask `12.4 / 23`:
   - do not rederive semantic wrapper decisions outside the issue `#14` policy
     contract
@@ -482,7 +710,8 @@ File-modification rule:
   - add controlled-reference components for open coded, registry, vocabulary,
     hierarchical, subtype-backed, unresolved, and under-traced values
 - Subtask `13.4 / 23`:
-  - add wrapper components if Task `12 / 23` finds enough support
+  - avoid adding wrapper-specific components for automatic field attachment until
+    hotfix `#8` supplies typed wrapper evidence
 - Subtask `13.5 / 23`:
   - avoid components that flatten distinct semantic classes into generic `str`
 - User manual modifications needed:
@@ -719,7 +948,7 @@ File-modification rule:
 
 ## Adjustments Made During Implementation
 
-- No implementation has been performed yet.
+- Issue `#15` implementation is now in progress.
 - Pre-implementation planning is now aligned with the agreed semantic policy
   contract from issue `#14`.
 - The generator scope is clarified so semantic decisions come from
@@ -727,17 +956,32 @@ File-modification rule:
   auxiliary-source classification.
 - The accepted execution protocol and detailed 23-task implementation plan have
   been recorded before generator code changes begin.
+- Wrapper auto-attachment was evaluated during Task `12 / 23`; current normalized
+  metadata does not expose `FlexibleDatesType`, `OfficialIdType`,
+  `EntityTypeType`, or `EntityNameType` as field-level wrapper evidence.
+- A follow-up hotfix record now exists for the required handoff fix:
+  `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`.
+- Domain generation execution decisions have been recorded in this document,
+  including output architecture, test cadence, IR records, grouping, naming,
+  base type mapping, enum handling, non-enum controlled-reference components,
+  trace contract, and wrapper handoff boundaries.
 
 ## Implementation Performed
 
-- None yet. Issue `#15` remains pending until issue `#14` implementation is
-  complete.
+- Issue `#15` implementation is in progress.
+- The user has implemented generator scaffolding, IR records, policy indexing,
+  grouping, naming helpers, type mapping, enum helpers, non-enum
+  controlled-reference components, and associated task-level tests in the working
+  tree during the current execution session.
+- Generated final domain model output is not implemented yet.
 
 ## Verification
 
-- No code verification has been run for issue `#15`.
-- Future verification must prove generated domain artifacts consume semantic
-  policy outputs instead of redefining semantic classification in generator code.
+- Task-level verification has been reported by the user using the fast full-suite
+  command `uv run pytest -n auto tests`.
+- Future final verification must prove generated domain artifacts consume
+  semantic policy outputs instead of redefining semantic classification in
+  generator code.
 
 ## Findings
 
@@ -745,6 +989,9 @@ File-modification rule:
   duplicating reference-resolution and semantic-classification logic.
 - Final Python artifact shapes are still an issue `#15` decision, but semantic
   categories and override outcomes are not.
+- Wrapper-aware field attachment also needs an explicit upstream handoff. Current
+  normalized metadata does not expose wrapper type names, so issue `#15` should
+  not scan raw XSD files or generated structural bindings to recover them.
 
 ## Known Limitations
 
@@ -752,6 +999,10 @@ File-modification rule:
 - Concrete Python representations for strict enums, open coded values,
   registries, vocabularies, subtype-backed values, unresolved references, and
   under-traced references remain undecided until issue `#15` implementation.
+- Automatic wrapper-aware field attachment for `FlexibleDatesType`,
+  `OfficialIdType`, `EntityTypeType`, and `EntityNameType` is blocked until
+  hotfix `#8` provides typed wrapper evidence in the normalized or semantic
+  handoff.
 
 ## Impact On Future Issues
 
@@ -759,6 +1010,8 @@ File-modification rule:
   outputs rather than raw source classifications.
 - Issue `#17` must document `SemanticPolicyBundle` as the semantic source of
   truth for domain generation.
+- Hotfix `#8` must be completed before issue `#15` or later generator work can
+  safely attach wrapper-aware field shapes without raw structural rediscovery.
 
 ## Status
 
