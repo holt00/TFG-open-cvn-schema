@@ -21,6 +21,7 @@ from cvn_codegen.domain_model_generator import (
     resolve_python_type_for_policy,
     should_emit_enum_for_policy,
 )
+
 from cvn_codegen.normalization_types import (
     ManualCodeEntry,
     NormalizedCodeEntry,
@@ -35,9 +36,8 @@ from cvn_codegen.normalization_types import (
     SourceTrace,
     TreePathEntry,
 )
+
 from cvn_codegen.semantic_policy import (
-    DomainShapeKind,
-    EnumEligibility,
     SemanticFieldPolicy,
     build_default_semantic_policy_bundle,
     build_semantic_field_policy,
@@ -45,6 +45,20 @@ from cvn_codegen.semantic_policy import (
 from test_semantic_policy_unit import (
     build_normalized_entry,
     build_reference_table_enum_evidence,
+)
+
+from models.cvn.components import (
+    BaseControlledReferenceValue,
+    HierarchicalCodeReference,
+    IdentifierReference,
+    MeasureOrScaleValue,
+    OpenCodedValue,
+    RegistryReference,
+    ScopeReference,
+    SubtypeBackedValue,
+    UnderTracedReference,
+    UnresolvedReference,
+    VocabularyReference,
 )
 
 def build_test_entry_with_tree_path(
@@ -911,3 +925,208 @@ def test_build_domain_generation_result_populates_enums_for_eligible_enum_entrie
     assert len(result.enums) == 1
     assert result.enums[0].source_reference == "CVN_SEX_A"
     assert result.enums[0].class_name.endswith("Enum")
+
+
+def test_controlled_reference_components_are_importable():
+    assert BaseControlledReferenceValue is not None
+    assert OpenCodedValue is not None
+    assert MeasureOrScaleValue is not None
+    assert IdentifierReference is not None
+    assert ScopeReference is not None
+    assert SubtypeBackedValue is not None
+    assert HierarchicalCodeReference is not None
+    assert RegistryReference is not None
+    assert VocabularyReference is not None
+    assert UnresolvedReference is not None
+    assert UnderTracedReference is not None
+def test_controlled_reference_components_inherit_from_base_component():
+    component_types = (
+        OpenCodedValue,
+        MeasureOrScaleValue,
+        IdentifierReference,
+        ScopeReference,
+        SubtypeBackedValue,
+        HierarchicalCodeReference,
+        RegistryReference,
+        VocabularyReference,
+        UnresolvedReference,
+        UnderTracedReference,
+    )
+    for component_type in component_types:
+        assert issubclass(component_type, BaseControlledReferenceValue)
+def test_specialized_controlled_reference_components_expose_expected_extra_fields():
+    hierarchical = HierarchicalCodeReference(
+        code="001",
+        label="Tema",
+        parent_code="000",
+    )
+    registry = RegistryReference(
+        code="001",
+        label="Entidad",
+        registry_id="RID-1",
+    )
+    vocabulary = VocabularyReference(
+        code="001",
+        label="Tesauro",
+        vocabulary_source="THESAURUS",
+    )
+    unresolved = UnresolvedReference(
+        code="001",
+        label="Agencia",
+        raw_reference="CVN_AGENCY_C",
+    )
+    under_traced = UnderTracedReference(
+        code="001",
+        label="Prueba",
+        raw_reference="CVN_PRUEBA",
+    )
+    assert hierarchical.parent_code == "000"
+    assert registry.registry_id == "RID-1"
+    assert vocabulary.vocabulary_source == "THESAURUS"
+    assert unresolved.raw_reference == "CVN_AGENCY_C"
+    assert under_traced.raw_reference == "CVN_PRUEBA"
+def test_resolve_python_type_for_policy_returns_component_names_backed_by_real_components():
+    bundle = build_default_semantic_policy_bundle()
+    policies_and_expected_types = (
+        (
+            build_semantic_field_policy(
+                build_normalized_entry(
+                    code="001",
+                    manual_type="Alphanumeric",
+                    reference_resolution=build_reference_resolution(
+                        raw_reference="CVN_MEASURE",
+                        semantic_kind=SemanticReferenceKind.COMPACT_SCALE_OR_MEASURE,
+                        serialization_pattern=SerializationPattern.QUALITY_MEASURE,
+                    ),
+                ),
+                bundle,
+            ),
+            "MeasureOrScaleValue",
+        ),
+        (
+            build_semantic_field_policy(
+                build_normalized_entry(
+                    code="002",
+                    manual_type="Alphanumeric",
+                    reference_resolution=build_reference_resolution(
+                        raw_reference="CVN_IDTYPE",
+                        semantic_kind=SemanticReferenceKind.IDENTIFIER_TYPE_TABLE,
+                        serialization_pattern=SerializationPattern.EXTERNAL_PK_TYPE,
+                    ),
+                ),
+                bundle,
+            ),
+            "IdentifierReference",
+        ),
+        (
+            build_semantic_field_policy(
+                build_normalized_entry(
+                    code="003",
+                    manual_type="Alphanumeric",
+                    reference_resolution=build_reference_resolution(
+                        raw_reference="CVN_SCOPE",
+                        semantic_kind=SemanticReferenceKind.SCOPE_TABLE,
+                        serialization_pattern=SerializationPattern.SCOPE_TYPE,
+                    ),
+                ),
+                bundle,
+            ),
+            "ScopeReference",
+        ),
+        (
+            build_semantic_field_policy(
+                build_normalized_entry(
+                    code="004",
+                    manual_type="Alphanumeric",
+                    reference_resolution=build_reference_resolution(
+                        raw_reference="CVN_KNOW_A",
+                        semantic_kind=SemanticReferenceKind.SUBTYPE_BACKED_CONTROLLED_FAMILY,
+                        serialization_pattern=SerializationPattern.SUBTYPE,
+                        source_family=ReferenceSourceFamily.SUBTYPE_BACKED_TABLE,
+                    ),
+                ),
+                bundle,
+            ),
+            "SubtypeBackedValue",
+        ),
+        (
+            build_semantic_field_policy(
+                build_normalized_entry(
+                    code="005",
+                    manual_type="Alphanumeric",
+                    reference_resolution=build_reference_resolution(
+                        raw_reference="UNESCO_CODES",
+                        semantic_kind=SemanticReferenceKind.HIERARCHICAL_THEMATIC_CLASSIFICATION,
+                        serialization_pattern=SerializationPattern.SUBJECT_DESCRIPTION,
+                    ),
+                ),
+                bundle,
+            ),
+            "HierarchicalCodeReference",
+        ),
+        (
+            build_semantic_field_policy(
+                build_normalized_entry(
+                    code="006",
+                    manual_type="Alphanumeric",
+                    reference_resolution=build_reference_resolution(
+                        raw_reference="ENTITY@Entity.xsd",
+                        semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+                        serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,
+                        source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+                    ),
+                ),
+                bundle,
+            ),
+            "RegistryReference",
+        ),
+        (
+            build_semantic_field_policy(
+                build_normalized_entry(
+                    code="007",
+                    manual_type="Alphanumeric",
+                    reference_resolution=build_reference_resolution(
+                        raw_reference="THESAURUS@thesaurus.xsd",
+                        semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_THESAURUS_OR_VOCABULARY,
+                        serialization_pattern=SerializationPattern.SIDE_PACKAGE_THESAURUS,
+                        source_family=ReferenceSourceFamily.SIDE_PACKAGE_THESAURUS,
+                    ),
+                ),
+                bundle,
+            ),
+            "VocabularyReference",
+        ),
+        (
+            build_semantic_field_policy(
+                build_normalized_entry(
+                    code="008",
+                    manual_type="Alphanumeric",
+                    reference_resolution=build_reference_resolution(
+                        raw_reference="CVN_AGENCY_C",
+                        semantic_kind=SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE,
+                        serialization_pattern=SerializationPattern.UNRESOLVED,
+                        source_family=ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY,
+                    ),
+                ),
+                bundle,
+            ),
+            "UnresolvedReference",
+        ),
+        (
+            build_semantic_field_policy(
+                build_normalized_entry(
+                    code="009",
+                    manual_type="Alphanumeric",
+                    reference_resolution=build_reference_resolution(
+                        raw_reference="CVN_PRUEBA",
+                        semantic_kind=SemanticReferenceKind.UNDER_TRACED_REFERENCE_TABLE,
+                        serialization_pattern=SerializationPattern.FILTER_VALUE,
+                    ),
+                ),
+                bundle,
+            ),
+            "UnderTracedReference",
+        ),
+    )
+    for policy, expected_type in policies_and_expected_types:
+        assert resolve_python_type_for_policy(policy) == expected_type
