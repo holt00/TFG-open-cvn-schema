@@ -1,9 +1,13 @@
+import re
+
 from collections import defaultdict
 from decimal import Decimal
 
 from cvn_codegen.normalization_types import (
     NormalizationResult,
-    NormalizedCodeEntry
+    NormalizedCodeEntry,
+    ReferenceTableEnumEvidence,
+
 )
 from cvn_codegen.semantic_policy import (
     SemanticFieldPolicy,
@@ -12,13 +16,18 @@ from cvn_codegen.semantic_policy import (
     CardinalityKind,
     PresenceKind,
     DomainShapeKind,
+    EnumEligibility,
     build_semantic_field_policy,
+    normalize_ascii_text,
 )
 from cvn_codegen.domain_model_types import (
     DomainFieldSpec,
     DomainGenerationResult,
     DomainGenerationUnit,
+    DomainEnumSpec,
+
 )
+
 
 
 def build_semantic_policy_index(
@@ -223,15 +232,128 @@ def build_domain_generation_result(
         )
     sorted_codes = tuple(sorted(policy_index))
     normalized_entries = tuple(
-        entry
-        for group_key in sorted(grouped_entries)
-        for entry in sorted(grouped_entries[group_key], key=lambda item: item.code)
+        sorted(
+            (
+                entry
+                for group_key in sorted(grouped_entries)
+                for entry in grouped_entries[group_key]
+            ),
+            key=lambda entry: entry.code,
+        )
+    )
+    enum_specs = build_enum_specs_for_entries(
+        entries=normalized_entries,
+        policy_index=policy_index,
     )
     return DomainGenerationResult(
         units=tuple(sorted(units, key=lambda unit: unit.module_name)),
-        enums=(),
-        normalized_entries=tuple(
-            sorted(normalized_entries, key=lambda entry: entry.code)
-        ),
+        enums=enum_specs,
+        normalized_entries=normalized_entries,
         semantic_policies=tuple(policy_index[code] for code in sorted_codes),
+    )
+
+def should_emit_enum_for_policy(policy: SemanticFieldPolicy) -> bool:
+    return (
+        policy.domain_shape_kind == DomainShapeKind.STRICT_ENUM_CANDIDATE
+        and policy.enum_eligibility == EnumEligibility.ELIGIBLE
+    )
+
+def build_enum_class_name(policy: SemanticFieldPolicy) -> str:
+    base_name = get_class_name_from_policy(policy)
+    if not base_name:
+        return "UnnamedEnum"
+    if base_name.endswith("Enum"):
+        return base_name
+    return f"{base_name}Enum"
+
+def build_enum_member_name(
+    preferred_label: str,
+    code_value: str,
+) -> str:
+    normalized_label = normalize_ascii_text(preferred_label).upper()
+    normalized_label = re.sub(r"[^A-Z0-9]+", "_", normalized_label).strip("_")
+    if normalized_label and not normalized_label[0].isdigit():
+        return normalized_label
+    normalized_code = re.sub(r"[^A-Z0-9]+", "_", code_value.upper()).strip("_")
+    if not normalized_code:
+        normalized_code = "UNKNOWN"
+    return f"CODE_{normalized_code}"
+
+def get_enum_evidence_from_entry(
+    entry: NormalizedCodeEntry,
+) -> tuple[ReferenceTableEnumEvidence | None, str | None]:
+    reference_resolution = entry.reference_resolution
+    if reference_resolution is None:
+        return None, None
+    source_reference = (
+        reference_resolution.resolved_name
+        or reference_resolution.raw_reference
+        or entry.code
+    )
+    evidence = reference_resolution.reference_table_enum_evidence
+    if evidence is None:
+        return None, source_reference
+    return evidence, source_reference
+
+def build_domain_enum_spec(
+    policy: SemanticFieldPolicy,
+    evidence: ReferenceTableEnumEvidence,
+    source_reference: str,
+) -> DomainEnumSpec:
+    members_with_labels = sorted(
+        zip(evidence.normalized_codes, evidence.preferred_labels),
+        key=lambda item: item[0],
+    )
+    members = tuple(
+        (
+            build_enum_member_name(
+                preferred_label=preferred_label,
+                code_value=code_value,
+            ),
+            code_value,
+        )
+        for code_value, preferred_label in members_with_labels
+    )
+    labels = {
+        code_value: preferred_label
+        for code_value, preferred_label in members_with_labels
+    }
+    return DomainEnumSpec(
+        class_name=build_enum_class_name(policy),
+        source_reference=source_reference,
+        members=members,
+        labels=labels,
+        trace={
+            "code": policy.code,
+            "xml_paths": policy.xml_paths,
+            "source_reference": source_reference,
+            "domain_shape_kind": policy.domain_shape_kind.value,
+            "enum_eligibility": policy.enum_eligibility.value,
+        },
+    )
+
+def build_enum_specs_for_entries(
+    entries: tuple[NormalizedCodeEntry, ...],
+    policy_index: dict[str, SemanticFieldPolicy],
+) -> tuple[DomainEnumSpec, ...]:
+    enum_specs_by_source_reference: dict[str, DomainEnumSpec] = {}
+    for entry in sorted(entries, key=lambda item: item.code):
+        policy = policy_index[entry.code]
+        if not should_emit_enum_for_policy(policy):
+            continue
+        evidence, source_reference = get_enum_evidence_from_entry(entry)
+        if evidence is None or source_reference is None:
+            continue
+        if source_reference in enum_specs_by_source_reference:
+            continue
+        enum_specs_by_source_reference[source_reference] = build_domain_enum_spec(
+            policy=policy,
+            evidence=evidence,
+            source_reference=source_reference,
+        )
+    return tuple(
+        sorted(
+            enum_specs_by_source_reference.values(),
+            key=lambda enum_spec: enum_spec.class_name,
+        )
     )

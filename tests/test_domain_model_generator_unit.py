@@ -1,40 +1,26 @@
 from cvn_codegen.domain_model_generator import (
-    build_semantic_policy_index,
-    group_entries_by_cvn_item_code,
-    get_field_name_from_policy,
-    get_class_name_from_policy,
-    resolve_field_name_collisions,
-    build_resolved_field_names,
-    get_python_type_for_base_kind,
+    build_domain_enum_spec,
     build_domain_field_spec,
     build_domain_generation_result,
     build_domain_generation_unit,
+    build_enum_class_name,
+    build_enum_member_name,
+    build_enum_specs_for_entries,
+    build_resolved_field_names,
+    build_semantic_policy_index,
+    get_class_name_from_policy,
+    get_enum_evidence_from_entry,
+    get_field_name_from_policy,
+    get_python_type_for_base_kind,
     get_python_type_for_controlled_reference,
+    group_entries_by_cvn_item_code,
     is_controlled_reference_field,
     is_repeated_field,
     is_required_field,
+    resolve_field_name_collisions,
     resolve_python_type_for_policy,
-
+    should_emit_enum_for_policy,
 )
-
-from cvn_codegen.normalization_types import (
-    ManualCodeEntry,
-    NormalizedCodeEntry,
-    NormalizationResult,
-    SourceTrace, 
-    TreePathEntry,
-
-)
-from cvn_codegen.semantic_policy import (
-    SemanticFieldPolicy,
-    DomainShapeKind,
-    build_default_semantic_policy_bundle,
-    build_semantic_field_policy,
-
-)
-
-from test_semantic_policy_unit import build_normalized_entry
-
 from cvn_codegen.normalization_types import (
     ManualCodeEntry,
     NormalizedCodeEntry,
@@ -43,12 +29,23 @@ from cvn_codegen.normalization_types import (
     ReferenceResolutionStatus,
     ReferenceResolutionTrace,
     ReferenceSourceFamily,
+    ReferenceTableEnumEvidence,
     SemanticReferenceKind,
     SerializationPattern,
     SourceTrace,
     TreePathEntry,
 )
-
+from cvn_codegen.semantic_policy import (
+    DomainShapeKind,
+    EnumEligibility,
+    SemanticFieldPolicy,
+    build_default_semantic_policy_bundle,
+    build_semantic_field_policy,
+)
+from test_semantic_policy_unit import (
+    build_normalized_entry,
+    build_reference_table_enum_evidence,
+)
 
 def build_test_entry_with_tree_path(
     code: str,
@@ -108,6 +105,7 @@ def build_reference_resolution(
     semantic_kind: SemanticReferenceKind = SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
     serialization_pattern: SerializationPattern = SerializationPattern.FILTER_VALUE,
     source_family: ReferenceSourceFamily = ReferenceSourceFamily.REFERENCE_TABLE,
+    reference_table_enum_evidence: ReferenceTableEnumEvidence | None = None,
 ) -> ReferenceResolution:
     return ReferenceResolution(
         raw_reference=raw_reference,
@@ -125,7 +123,7 @@ def build_reference_resolution(
             resolved_from_artifact="ReferenceTables.xml",
             resolution_rule="test_reference_resolution",
         ),
-        reference_table_enum_evidence=None,
+        reference_table_enum_evidence=reference_table_enum_evidence,
     )
 
 def test_build_semantic_policy_index_is_sorted_by_code():
@@ -631,3 +629,285 @@ def test_build_domain_generation_result_builds_units_and_preserves_sorted_entrie
         "002",
         "003",
     )
+
+def test_should_emit_enum_for_policy_returns_true_only_for_eligible_strict_enum_candidates():
+    bundle = build_default_semantic_policy_bundle()
+    eligible_policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="001",
+            manual_type="Alphanumeric",
+            reference_resolution=build_reference_resolution(
+                raw_reference="CVN_SEX_A",
+                semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+                serialization_pattern=SerializationPattern.FILTER_VALUE,
+                reference_table_enum_evidence=build_reference_table_enum_evidence(
+                    table_name="CVN_SEX_A",
+                    item_count=2,
+                ),
+            ),
+        ),
+        bundle,
+    )
+    review_policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="002",
+            manual_type="Alphanumeric",
+            reference_resolution=build_reference_resolution(
+                raw_reference="CVN_OTHER",
+                semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+                serialization_pattern=SerializationPattern.FILTER_VALUE,
+                reference_table_enum_evidence=build_reference_table_enum_evidence(
+                    table_name="CVN_OTHER",
+                    item_count=2,
+                    has_other_like_entry=True,
+                ),
+            ),
+        ),
+        bundle,
+    )
+    non_enum_policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="003",
+            manual_type="Alphanumeric",
+            reference_resolution=build_reference_resolution(
+                raw_reference="ENTITY@Entity.xsd",
+                semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+                serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,
+                source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+            ),
+        ),
+        bundle,
+    )
+    assert should_emit_enum_for_policy(eligible_policy) is True
+    assert should_emit_enum_for_policy(review_policy) is False
+    assert should_emit_enum_for_policy(non_enum_policy) is False
+def test_build_enum_class_name_adds_enum_suffix():
+    bundle = build_default_semantic_policy_bundle()
+    policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="001",
+            manual_name="Sexo",
+            manual_type="Alphanumeric",
+            reference_resolution=build_reference_resolution(
+                raw_reference="CVN_SEX_A",
+                semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+                serialization_pattern=SerializationPattern.FILTER_VALUE,
+                reference_table_enum_evidence=build_reference_table_enum_evidence(
+                    table_name="CVN_SEX_A",
+                    item_count=2,
+                ),
+            ),
+        ),
+        bundle,
+    )
+    assert build_enum_class_name(policy) == "SexoEnum"
+def test_build_enum_member_name_uses_label_or_code_fallback():
+    assert build_enum_member_name("Mujer", "000") == "MUJER"
+    assert build_enum_member_name("Hombre", "010") == "HOMBRE"
+    assert build_enum_member_name("", "010") == "CODE_010"
+    assert build_enum_member_name("3 años", "003") == "CODE_003"
+def test_get_enum_evidence_from_entry_returns_evidence_and_source_reference():
+    entry = build_normalized_entry(
+        code="001",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+    evidence, source_reference = get_enum_evidence_from_entry(entry)
+    assert evidence is not None
+    assert evidence.table_name == "CVN_SEX_A"
+    assert source_reference == "CVN_SEX_A"
+def test_get_enum_evidence_from_entry_returns_none_when_resolution_missing():
+    entry = build_normalized_entry(
+        code="001",
+        manual_type="Alphanumeric",
+        reference_resolution=None,
+    )
+    evidence, source_reference = get_enum_evidence_from_entry(entry)
+    assert evidence is None
+    assert source_reference is None
+def test_build_domain_enum_spec_builds_expected_enum_spec():
+    bundle = build_default_semantic_policy_bundle()
+    policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="001",
+            manual_name="Sexo",
+            manual_type="Alphanumeric",
+            reference_resolution=build_reference_resolution(
+                raw_reference="CVN_SEX_A",
+                semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+                serialization_pattern=SerializationPattern.FILTER_VALUE,
+                reference_table_enum_evidence=ReferenceTableEnumEvidence(
+                    table_name="CVN_SEX_A",
+                    item_count=2,
+                    has_hierarchy=False,
+                    has_delegate=False,
+                    has_other_like_entry=False,
+                    has_duplicate_codes=False,
+                    has_duplicate_preferred_labels=False,
+                    has_blank_code=False,
+                    has_blank_preferred_label=False,
+                    normalized_codes=("000", "010"),
+                    preferred_labels=("Mujer", "Hombre"),
+                    normalized_preferred_labels=("MUJER", "HOMBRE"),
+                    open_world_signals=(),
+                ),
+            ),
+        ),
+        bundle,
+    )
+    evidence, source_reference = get_enum_evidence_from_entry(
+        build_normalized_entry(
+            code="001",
+            manual_type="Alphanumeric",
+            reference_resolution=build_reference_resolution(
+                raw_reference="CVN_SEX_A",
+                semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+                serialization_pattern=SerializationPattern.FILTER_VALUE,
+                reference_table_enum_evidence=ReferenceTableEnumEvidence(
+                    table_name="CVN_SEX_A",
+                    item_count=2,
+                    has_hierarchy=False,
+                    has_delegate=False,
+                    has_other_like_entry=False,
+                    has_duplicate_codes=False,
+                    has_duplicate_preferred_labels=False,
+                    has_blank_code=False,
+                    has_blank_preferred_label=False,
+                    normalized_codes=("000", "010"),
+                    preferred_labels=("Mujer", "Hombre"),
+                    normalized_preferred_labels=("MUJER", "HOMBRE"),
+                    open_world_signals=(),
+                ),
+            ),
+        )
+    )
+    assert evidence is not None
+    assert source_reference is not None
+    enum_spec = build_domain_enum_spec(
+        policy=policy,
+        evidence=evidence,
+        source_reference=source_reference,
+    )
+    assert enum_spec.class_name == "SexoEnum"
+    assert enum_spec.source_reference == "CVN_SEX_A"
+    assert enum_spec.members == (
+        ("MUJER", "000"),
+        ("HOMBRE", "010"),
+    )
+    assert enum_spec.labels == {
+        "000": "Mujer",
+        "010": "Hombre",
+    }
+    assert enum_spec.trace["code"] == "001"
+    assert enum_spec.trace["source_reference"] == "CVN_SEX_A"
+def test_build_enum_specs_for_entries_builds_only_eligible_and_deduplicated_enums():
+    bundle = build_default_semantic_policy_bundle()
+    entry_a = build_normalized_entry(
+        code="001",
+        manual_name="Sexo",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+    entry_b = build_normalized_entry(
+        code="002",
+        manual_name="Sexo alternativo",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+    entry_c = build_normalized_entry(
+        code="003",
+        manual_name="Tipo entidad",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_ENTITY_TYPE",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_ENTITY_TYPE",
+                item_count=17,
+                has_other_like_entry=True,
+            ),
+        ),
+    )
+    policy_index = {
+        "001": build_semantic_field_policy(entry_a, bundle),
+        "002": build_semantic_field_policy(entry_b, bundle),
+        "003": build_semantic_field_policy(entry_c, bundle),
+    }
+    enum_specs = build_enum_specs_for_entries(
+        entries=(entry_c, entry_b, entry_a),
+        policy_index=policy_index,
+    )
+    assert len(enum_specs) == 1
+    assert enum_specs[0].source_reference == "CVN_SEX_A"
+    assert enum_specs[0].class_name.endswith("Enum")
+def test_build_domain_generation_result_populates_enums_for_eligible_enum_entries():
+    bundle = build_default_semantic_policy_bundle()
+    entry_a = build_test_entry_with_tree_path(
+        code="001",
+        tree_cvn_item_code="060.010.000.000",
+        xml_path="/Node/CVNItem[@code='060.010.000.000']/Property[@name='Sexo']",
+    )
+    entry_a = NormalizedCodeEntry(
+        code=entry_a.code,
+        manual=ManualCodeEntry(
+            code=entry_a.code,
+            manual_name="Sexo",
+            manual_short_name=None,
+            manual_type="Alphanumeric",
+            manual_obligatory=False,
+            manual_multiplicity=False,
+            manual_reference_table=None,
+        ),
+        tree_paths=entry_a.tree_paths,
+        source_files=entry_a.source_files,
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+    entry_b = build_test_entry("002")
+    policy_index = {
+        "001": build_semantic_field_policy(entry_a, bundle),
+        "002": build_semantic_field_policy(entry_b, bundle),
+    }
+    grouped_entries = {
+        "060.010.000.000": (entry_a,),
+        "__no_tree__": (entry_b,),
+    }
+    result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+    assert len(result.enums) == 1
+    assert result.enums[0].source_reference == "CVN_SEX_A"
+    assert result.enums[0].class_name.endswith("Enum")
