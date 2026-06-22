@@ -2,6 +2,19 @@ from cvn_codegen.domain_model_generator import (
     build_semantic_policy_index,
     group_entries_by_cvn_item_code,
     get_field_name_from_policy,
+    get_class_name_from_policy,
+    resolve_field_name_collisions,
+    build_resolved_field_names,
+    get_python_type_for_base_kind,
+    build_domain_field_spec,
+    build_domain_generation_result,
+    build_domain_generation_unit,
+    get_python_type_for_controlled_reference,
+    is_controlled_reference_field,
+    is_repeated_field,
+    is_required_field,
+    resolve_python_type_for_policy,
+
 )
 
 from cvn_codegen.normalization_types import (
@@ -14,12 +27,27 @@ from cvn_codegen.normalization_types import (
 )
 from cvn_codegen.semantic_policy import (
     SemanticFieldPolicy,
+    DomainShapeKind,
     build_default_semantic_policy_bundle,
     build_semantic_field_policy,
 
 )
 
 from test_semantic_policy_unit import build_normalized_entry
+
+from cvn_codegen.normalization_types import (
+    ManualCodeEntry,
+    NormalizedCodeEntry,
+    NormalizationResult,
+    ReferenceResolution,
+    ReferenceResolutionStatus,
+    ReferenceResolutionTrace,
+    ReferenceSourceFamily,
+    SemanticReferenceKind,
+    SerializationPattern,
+    SourceTrace,
+    TreePathEntry,
+)
 
 
 def build_test_entry_with_tree_path(
@@ -74,6 +102,31 @@ def build_test_entry(code: str) -> NormalizedCodeEntry:
         source_files=("SpecificationManual.xml",),
     )
 
+def build_reference_resolution(
+    *,
+    raw_reference: str = "CVN_TEST",
+    semantic_kind: SemanticReferenceKind = SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+    serialization_pattern: SerializationPattern = SerializationPattern.FILTER_VALUE,
+    source_family: ReferenceSourceFamily = ReferenceSourceFamily.REFERENCE_TABLE,
+) -> ReferenceResolution:
+    return ReferenceResolution(
+        raw_reference=raw_reference,
+        status=ReferenceResolutionStatus.RESOLVED,
+        source_family=source_family,
+        source_artifact="ReferenceTables.xml",
+        resolved_name=raw_reference,
+        serialization_pattern=serialization_pattern,
+        semantic_kind=semantic_kind,
+        is_subtype_backed=False,
+        subtype_metadata_present=None,
+        diagnostic_message=None,
+        trace=ReferenceResolutionTrace(
+            manual_reference=raw_reference,
+            resolved_from_artifact="ReferenceTables.xml",
+            resolution_rule="test_reference_resolution",
+        ),
+        reference_table_enum_evidence=None,
+    )
 
 def test_build_semantic_policy_index_is_sorted_by_code():
     normalization_result = NormalizationResult(
@@ -233,3 +286,348 @@ def test_get_field_name_from_policy_returns_semantic_policy_name():
     policy = build_semantic_field_policy(entry, bundle)
 
     assert get_field_name_from_policy(policy) == "titulo_del_proyecto"
+
+
+def test_get_class_name_from_policy_returns_semantic_policy_class_name():
+    entry = build_normalized_entry(
+        code="001",
+        manual_name="Título del proyecto",
+    )
+    bundle = build_default_semantic_policy_bundle()
+    policy = build_semantic_field_policy(entry, bundle)
+    assert get_class_name_from_policy(policy) == "TituloDelProyecto"
+
+def test_resolve_field_name_collisions_uses_clean_name_and_code_suffix_on_collision():
+    bundle = build_default_semantic_policy_bundle()
+    entry_a = build_normalized_entry(
+        code="001.002",
+        manual_name="Título",
+    )
+    entry_b = build_normalized_entry(
+        code="003.004",
+        manual_name="Título",
+    )
+    entry_c = build_normalized_entry(
+        code="005.006",
+        manual_name="Resumen",
+    )
+    policy_a = build_semantic_field_policy(entry_a, bundle)
+    policy_b = build_semantic_field_policy(entry_b, bundle)
+    policy_c = build_semantic_field_policy(entry_c, bundle)
+    resolved = resolve_field_name_collisions((policy_b, policy_c, policy_a))
+    assert resolved["001.002"] == "titulo_001_002"
+    assert resolved["003.004"] == "titulo_003_004"
+    assert resolved["005.006"] == "resumen"
+
+def test_build_resolved_field_names_returns_final_names_for_block():
+    bundle = build_default_semantic_policy_bundle()
+    entry_a = build_normalized_entry(
+        code="001.002",
+        manual_name="Título",
+    )
+    entry_b = build_normalized_entry(
+        code="003.004",
+        manual_name="Título",
+    )
+    entry_c = build_normalized_entry(
+        code="005.006",
+        manual_name="Resumen",
+    )
+    policy_a = build_semantic_field_policy(entry_a, bundle)
+    policy_b = build_semantic_field_policy(entry_b, bundle)
+    policy_c = build_semantic_field_policy(entry_c, bundle)
+    resolved = build_resolved_field_names((policy_a, policy_b, policy_c))
+    assert resolved == {
+        "001.002": "titulo_001_002",
+        "003.004": "titulo_003_004",
+        "005.006": "resumen",
+    }
+
+from cvn_codegen.domain_model_generator import get_python_type_for_base_kind
+def test_get_python_type_for_base_kind_maps_supported_base_kinds():
+    bundle = build_default_semantic_policy_bundle()
+    text_policy = build_semantic_field_policy(
+        build_normalized_entry(code="001", manual_type="Alphanumeric"),
+        bundle,
+    )
+    boolean_policy = build_semantic_field_policy(
+        build_normalized_entry(code="002", manual_type="Boolean"),
+        bundle,
+    )
+    decimal_policy = build_semantic_field_policy(
+        build_normalized_entry(code="003", manual_type="Double"),
+        bundle,
+    )
+    date_policy = build_semantic_field_policy(
+        build_normalized_entry(code="004", manual_type="Date"),
+        bundle,
+    )
+    duration_policy = build_semantic_field_policy(
+        build_normalized_entry(code="005", manual_type="Duration"),
+        bundle,
+    )
+    unknown_policy = build_semantic_field_policy(
+        build_normalized_entry(code="006", manual_type="UnexpectedType"),
+        bundle,
+    )
+    assert get_python_type_for_base_kind(text_policy) == "str"
+    assert get_python_type_for_base_kind(boolean_policy) == "bool"
+    assert get_python_type_for_base_kind(decimal_policy) == "Decimal"
+    assert get_python_type_for_base_kind(date_policy) == "str"
+    assert get_python_type_for_base_kind(duration_policy) == "str"
+    assert get_python_type_for_base_kind(unknown_policy) == "object"
+
+def test_is_repeated_field_returns_true_only_for_repeated_cardinality():
+    bundle = build_default_semantic_policy_bundle()
+    repeated_policy = build_semantic_field_policy(
+        build_normalized_entry(code="001", manual_multiplicity=True),
+        bundle,
+    )
+    single_policy = build_semantic_field_policy(
+        build_normalized_entry(code="002", manual_multiplicity=False),
+        bundle,
+    )
+    assert is_repeated_field(repeated_policy) is True
+    assert is_repeated_field(single_policy) is False
+def test_is_required_field_returns_true_only_for_required_presence():
+    bundle = build_default_semantic_policy_bundle()
+    required_policy = build_semantic_field_policy(
+        build_normalized_entry(code="001", manual_obligatory=True),
+        bundle,
+    )
+    optional_policy = build_semantic_field_policy(
+        build_normalized_entry(code="002", manual_obligatory=False),
+        bundle,
+    )
+    assert is_required_field(required_policy) is True
+    assert is_required_field(optional_policy) is False
+def test_is_controlled_reference_field_detects_controlled_reference_base_kind():
+    bundle = build_default_semantic_policy_bundle()
+    controlled_policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="001",
+            manual_type="Alphanumeric",
+            reference_resolution=build_reference_resolution(),
+        ),
+        bundle,
+    )
+    text_policy = build_semantic_field_policy(
+        build_normalized_entry(code="002", manual_type="Alphanumeric"),
+        bundle,
+    )
+    assert is_controlled_reference_field(controlled_policy) is True
+    assert is_controlled_reference_field(text_policy) is False
+def test_get_python_type_for_controlled_reference_maps_supported_domain_shapes():
+    bundle = build_default_semantic_policy_bundle()
+    open_coded_policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="001",
+            reference_resolution=build_reference_resolution(
+                semantic_kind=SemanticReferenceKind.COMPACT_SCALE_OR_MEASURE,
+                serialization_pattern=SerializationPattern.QUALITY_MEASURE,
+            ),
+        ),
+        bundle,
+    )
+    registry_policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="002",
+            reference_resolution=build_reference_resolution(
+                raw_reference="ENTITY@Entity.xsd",
+                semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+                serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,
+                source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+            ),
+        ),
+        bundle,
+    )
+    unresolved_policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="003",
+            reference_resolution=build_reference_resolution(
+                raw_reference="CVN_AGENCY_C",
+                semantic_kind=SemanticReferenceKind.UNRESOLVED_MANUAL_ONLY_REFERENCE,
+                serialization_pattern=SerializationPattern.UNRESOLVED,
+                source_family=ReferenceSourceFamily.UNRESOLVED_MANUAL_ONLY,
+            ),
+        ),
+        bundle,
+    )
+    assert get_python_type_for_controlled_reference(open_coded_policy) == "MeasureOrScaleValue"
+    assert get_python_type_for_controlled_reference(registry_policy) == "RegistryReference"
+    assert get_python_type_for_controlled_reference(unresolved_policy) == "UnresolvedReference"
+def test_resolve_python_type_for_policy_maps_scalar_and_repeated_shapes():
+    bundle = build_default_semantic_policy_bundle()
+    scalar_policy = build_semantic_field_policy(
+        build_normalized_entry(code="001", manual_type="Boolean"),
+        bundle,
+    )
+    repeated_scalar_policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="002",
+            manual_type="Double",
+            manual_multiplicity=True,
+        ),
+        bundle,
+    )
+    repeated_controlled_policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="003",
+            manual_type="Alphanumeric",
+            manual_multiplicity=True,
+            reference_resolution=build_reference_resolution(
+                raw_reference="ENTITY@Entity.xsd",
+                semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+                serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,
+                source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+            ),
+        ),
+        bundle,
+    )
+    assert resolve_python_type_for_policy(scalar_policy) == "bool"
+    assert resolve_python_type_for_policy(repeated_scalar_policy) == "list[Decimal]"
+    assert resolve_python_type_for_policy(repeated_controlled_policy) == "list[RegistryReference]"
+def test_build_domain_field_spec_builds_expected_spec():
+    bundle = build_default_semantic_policy_bundle()
+    policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="001.002",
+            manual_name="Título",
+            manual_type="Alphanumeric",
+            manual_obligatory=True,
+            manual_multiplicity=False,
+        ),
+        bundle,
+    )
+    spec = build_domain_field_spec(
+        policy=policy,
+        resolved_field_name="titulo",
+    )
+    assert spec.field_name == "titulo"
+    assert spec.python_type == "str"
+    assert spec.code == "001.002"
+    assert spec.xml_paths == ()
+    assert spec.required is True
+    assert spec.repeated is False
+    assert spec.domain_shape_kind == policy.domain_shape_kind.value
+    assert spec.enum_eligibility == policy.enum_eligibility.value
+    assert spec.trace["code"] == "001.002"
+    assert spec.trace["base_kind"] == policy.base_kind.value
+    assert spec.trace["domain_shape_kind"] == policy.domain_shape_kind.value
+    assert spec.trace["enum_eligibility"] == policy.enum_eligibility.value
+def test_build_domain_generation_unit_builds_sorted_field_specs():
+    bundle = build_default_semantic_policy_bundle()
+    policy_a = build_semantic_field_policy(
+        build_normalized_entry(
+            code="003.004",
+            manual_name="Título",
+            manual_type="Alphanumeric",
+        ),
+        bundle,
+    )
+    policy_b = build_semantic_field_policy(
+        build_normalized_entry(
+            code="001.002",
+            manual_name="Título",
+            manual_type="Alphanumeric",
+        ),
+        bundle,
+    )
+    policy_c = build_semantic_field_policy(
+        build_normalized_entry(
+            code="005.006",
+            manual_name="Resumen",
+            manual_type="Alphanumeric",
+        ),
+        bundle,
+    )
+    unit = build_domain_generation_unit(
+        group_key="060.010.000.000",
+        policies=(policy_a, policy_c, policy_b),
+    )
+    assert unit.module_name == "cvn_item_060_010_000_000"
+    assert unit.class_name == "Titulo"
+    assert unit.source_group_key == "060.010.000.000"
+    assert tuple(field.code for field in unit.fields) == (
+        "001.002",
+        "003.004",
+        "005.006",
+    )
+    assert tuple(field.field_name for field in unit.fields) == (
+        "titulo_001_002",
+        "titulo_003_004",
+        "resumen",
+    )
+def test_build_domain_generation_unit_uses_manual_only_module_name_for_no_tree_group():
+    bundle = build_default_semantic_policy_bundle()
+    policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="001.002",
+            manual_name="Resumen",
+            manual_type="Alphanumeric",
+        ),
+        bundle,
+    )
+    unit = build_domain_generation_unit(
+        group_key="__no_tree__",
+        policies=(policy,),
+    )
+    assert unit.module_name == "manual_only"
+    assert unit.class_name == "Resumen"
+def test_build_domain_generation_unit_uses_tree_without_item_module_name_for_no_cvn_item_group():
+    bundle = build_default_semantic_policy_bundle()
+    policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="001.002",
+            manual_name="Resumen",
+            manual_type="Alphanumeric",
+        ),
+        bundle,
+    )
+    unit = build_domain_generation_unit(
+        group_key="__no_cvn_item__",
+        policies=(policy,),
+    )
+    assert unit.module_name == "tree_without_item"
+    assert unit.class_name == "Resumen"
+def test_build_domain_generation_result_builds_units_and_preserves_sorted_entries_and_policies():
+    bundle = build_default_semantic_policy_bundle()
+    entry_a = build_test_entry_with_tree_path(
+        code="002",
+        tree_cvn_item_code="060.010.000.000",
+        xml_path="/Node/CVNItem[@code='060.010.000.000']/Property[@name='B']",
+    )
+    entry_b = build_test_entry_with_tree_path(
+        code="001",
+        tree_cvn_item_code="060.010.000.000",
+        xml_path="/Node/CVNItem[@code='060.010.000.000']/Property[@name='A']",
+    )
+    entry_c = build_test_entry("003")
+    policy_index = {
+        "002": build_semantic_field_policy(entry_a, bundle),
+        "001": build_semantic_field_policy(entry_b, bundle),
+        "003": build_semantic_field_policy(entry_c, bundle),
+    }
+    grouped_entries = {
+        "060.010.000.000": (entry_a, entry_b),
+        "__no_tree__": (entry_c,),
+    }
+    result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+    assert tuple(unit.module_name for unit in result.units) == (
+        "cvn_item_060_010_000_000",
+        "manual_only",
+    )
+    assert result.enums == ()
+    assert tuple(entry.code for entry in result.normalized_entries) == (
+        "001",
+        "002",
+        "003",
+    )
+    assert tuple(policy.code for policy in result.semantic_policies) == (
+        "001",
+        "002",
+        "003",
+    )
