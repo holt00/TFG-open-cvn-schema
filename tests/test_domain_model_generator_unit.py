@@ -3,6 +3,7 @@ from cvn_codegen.domain_model_generator import (
     build_domain_field_spec,
     build_domain_generation_result,
     build_domain_generation_unit,
+    collect_unit_import_types,
     build_enum_class_name,
     build_enum_member_name,
     build_enum_specs_for_entries,
@@ -17,6 +18,14 @@ from cvn_codegen.domain_model_generator import (
     is_controlled_reference_field,
     is_repeated_field,
     is_required_field,
+    render_domain_generation_result,
+    render_enums_module,
+    render_field_annotation,
+    render_field_default,
+    render_field_line,
+    render_generated_package_init,
+    render_unit_class,
+    render_unit_module,
     resolve_field_name_collisions,
     resolve_python_type_for_policy,
     should_emit_enum_for_policy,
@@ -36,17 +45,18 @@ from cvn_codegen.normalization_types import (
     SourceTrace,
     TreePathEntry,
 )
+from cvn_codegen.domain_model_types import (
+    DomainEnumSpec,
+    DomainFieldSpec,
+    DomainGenerationResult,
+    DomainGenerationUnit,
+)
 
 from cvn_codegen.semantic_policy import (
     SemanticFieldPolicy,
     build_default_semantic_policy_bundle,
     build_semantic_field_policy,
 )
-from test_semantic_policy_unit import (
-    build_normalized_entry,
-    build_reference_table_enum_evidence,
-)
-
 from models.cvn.components import (
     BaseControlledReferenceValue,
     HierarchicalCodeReference,
@@ -60,6 +70,87 @@ from models.cvn.components import (
     UnresolvedReference,
     VocabularyReference,
 )
+
+
+def build_normalized_entry(
+    *,
+    code: str = "000.000.000.000",
+    manual_type: str | None = "Alphanumeric",
+    reference_resolution: ReferenceResolution | None = None,
+    manual_obligatory: bool | None = False,
+    manual_multiplicity: bool | None = False,
+    manual_name: str | None = "Nombre de prueba",
+    manual_short_name: str | None = "Prueba",
+    xml_path: str | None = None,
+) -> NormalizedCodeEntry:
+    manual_entry = None
+    if manual_type is not None:
+        manual_entry = ManualCodeEntry(
+            code=code,
+            manual_name=manual_name,
+            manual_short_name=manual_short_name,
+            manual_type=manual_type,
+            manual_obligatory=manual_obligatory,
+            manual_multiplicity=manual_multiplicity,
+            manual_reference_table=None,
+        )
+
+    tree_paths: tuple[TreePathEntry, ...] = ()
+    source_files: tuple[str, ...] = ("SpecificationManual.xml",)
+    if xml_path is not None:
+        tree_paths = (
+            TreePathEntry(
+                code=code,
+                tree_cvn_item_code=None,
+                tree_property_name="TestProperty",
+                tree_indicator_name="TestIndicator",
+                tree_value=None,
+                xml_path=xml_path,
+                trace=SourceTrace(
+                    source_file="CVNTreeModel.xml",
+                    xml_path=xml_path,
+                    source_code=code,
+                ),
+            ),
+        )
+        source_files = ("CVNTreeModel.xml", "SpecificationManual.xml")
+
+    return NormalizedCodeEntry(
+        code=code,
+        manual=manual_entry,
+        tree_paths=tree_paths,
+        source_files=source_files,
+        reference_resolution=reference_resolution,
+    )
+
+
+def build_reference_table_enum_evidence(
+    *,
+    table_name: str = "CVN_TEST",
+    item_count: int = 2,
+    has_hierarchy: bool = False,
+    has_delegate: bool = False,
+    has_other_like_entry: bool = False,
+    has_duplicate_codes: bool = False,
+    has_duplicate_preferred_labels: bool = False,
+    has_blank_code: bool = False,
+    has_blank_preferred_label: bool = False,
+) -> ReferenceTableEnumEvidence:
+    return ReferenceTableEnumEvidence(
+        table_name=table_name,
+        item_count=item_count,
+        has_hierarchy=has_hierarchy,
+        has_delegate=has_delegate,
+        has_other_like_entry=has_other_like_entry,
+        has_duplicate_codes=has_duplicate_codes,
+        has_duplicate_preferred_labels=has_duplicate_preferred_labels,
+        has_blank_code=has_blank_code,
+        has_blank_preferred_label=has_blank_preferred_label,
+        normalized_codes=("000", "010"),
+        preferred_labels=("Uno", "Dos"),
+        normalized_preferred_labels=("UNO", "DOS"),
+        open_world_signals=(),
+    )
 
 def build_test_entry_with_tree_path(
     code: str,
@@ -1130,3 +1221,425 @@ def test_resolve_python_type_for_policy_returns_component_names_backed_by_real_c
     )
     for policy, expected_type in policies_and_expected_types:
         assert resolve_python_type_for_policy(policy) == expected_type
+
+
+def test_render_field_annotation_renders_required_optional_and_repeated_cases():
+    required_field = DomainFieldSpec(
+        field_name="titulo",
+        python_type="str",
+        code="001",
+        xml_paths=(),
+        required=True,
+        repeated=False,
+        domain_shape_kind="plain_value",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+    optional_field = DomainFieldSpec(
+        field_name="sexo",
+        python_type="SexoEnum",
+        code="002",
+        xml_paths=(),
+        required=False,
+        repeated=False,
+        domain_shape_kind="strict_enum_candidate",
+        enum_eligibility="eligible",
+        trace={},
+    )
+    repeated_field = DomainFieldSpec(
+        field_name="entidades",
+        python_type="list[RegistryReference]",
+        code="003",
+        xml_paths=(),
+        required=False,
+        repeated=True,
+        domain_shape_kind="registry_reference",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+
+    assert render_field_annotation(required_field) == "str"
+    assert render_field_annotation(optional_field) == "SexoEnum | None"
+    assert render_field_annotation(repeated_field) == "list[RegistryReference]"
+
+
+def test_render_field_default_renders_required_optional_and_repeated_cases():
+    required_field = DomainFieldSpec(
+        field_name="titulo",
+        python_type="str",
+        code="001",
+        xml_paths=(),
+        required=True,
+        repeated=False,
+        domain_shape_kind="plain_value",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+    optional_field = DomainFieldSpec(
+        field_name="sexo",
+        python_type="SexoEnum",
+        code="002",
+        xml_paths=(),
+        required=False,
+        repeated=False,
+        domain_shape_kind="strict_enum_candidate",
+        enum_eligibility="eligible",
+        trace={},
+    )
+    repeated_field = DomainFieldSpec(
+        field_name="entidades",
+        python_type="list[RegistryReference]",
+        code="003",
+        xml_paths=(),
+        required=False,
+        repeated=True,
+        domain_shape_kind="registry_reference",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+
+    assert render_field_default(required_field) == "Field(...)"
+    assert render_field_default(optional_field) == "Field(default=None)"
+    assert render_field_default(repeated_field) == "Field(default_factory=list)"
+
+
+def test_render_field_line_renders_complete_field_line():
+    field = DomainFieldSpec(
+        field_name="sexo",
+        python_type="SexoEnum",
+        code="001",
+        xml_paths=(),
+        required=False,
+        repeated=False,
+        domain_shape_kind="strict_enum_candidate",
+        enum_eligibility="eligible",
+        trace={},
+    )
+
+    assert (
+        render_field_line(field)
+        == "    sexo: SexoEnum | None = Field(default=None)"
+    )
+
+
+def test_collect_unit_import_types_collects_stdlib_shared_and_enum_types():
+    field_a = DomainFieldSpec(
+        field_name="titulo",
+        python_type="str",
+        code="001",
+        xml_paths=(),
+        required=True,
+        repeated=False,
+        domain_shape_kind="plain_value",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+    field_b = DomainFieldSpec(
+        field_name="importe",
+        python_type="Decimal",
+        code="002",
+        xml_paths=(),
+        required=True,
+        repeated=False,
+        domain_shape_kind="plain_value",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+    field_c = DomainFieldSpec(
+        field_name="sexo",
+        python_type="SexoEnum",
+        code="003",
+        xml_paths=(),
+        required=False,
+        repeated=False,
+        domain_shape_kind="strict_enum_candidate",
+        enum_eligibility="eligible",
+        trace={},
+    )
+    field_d = DomainFieldSpec(
+        field_name="entidades",
+        python_type="list[RegistryReference]",
+        code="004",
+        xml_paths=(),
+        required=False,
+        repeated=True,
+        domain_shape_kind="registry_reference",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+
+    unit = DomainGenerationUnit(
+        module_name="cvn_item_060_010_000_000",
+        class_name="DatosPersonales",
+        source_group_key="060.010.000.000",
+        fields=(field_a, field_b, field_c, field_d),
+    )
+
+    stdlib_types, shared_types, enum_types = collect_unit_import_types(unit)
+
+    assert stdlib_types == ("Decimal",)
+    assert shared_types == ("BaseCvnDomainModel", "RegistryReference")
+    assert enum_types == ("SexoEnum",)
+
+
+def test_render_unit_class_renders_class_with_fields():
+    field_a = DomainFieldSpec(
+        field_name="titulo",
+        python_type="str",
+        code="001",
+        xml_paths=(),
+        required=True,
+        repeated=False,
+        domain_shape_kind="plain_value",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+    field_b = DomainFieldSpec(
+        field_name="sexo",
+        python_type="SexoEnum",
+        code="002",
+        xml_paths=(),
+        required=False,
+        repeated=False,
+        domain_shape_kind="strict_enum_candidate",
+        enum_eligibility="eligible",
+        trace={},
+    )
+
+    unit = DomainGenerationUnit(
+        module_name="cvn_item_060_010_000_000",
+        class_name="DatosPersonales",
+        source_group_key="060.010.000.000",
+        fields=(field_a, field_b),
+    )
+
+    rendered = render_unit_class(unit)
+
+    assert rendered == (
+        "class DatosPersonales(BaseCvnDomainModel):\n"
+        "    titulo: str = Field(...)\n"
+        "    sexo: SexoEnum | None = Field(default=None)"
+    )
+
+
+def test_render_unit_class_renders_pass_for_empty_unit():
+    unit = DomainGenerationUnit(
+        module_name="manual_only",
+        class_name="ManualOnly",
+        source_group_key="__no_tree__",
+        fields=(),
+    )
+
+    rendered = render_unit_class(unit)
+
+    assert rendered == (
+        "class ManualOnly(BaseCvnDomainModel):\n"
+        "    pass"
+    )
+
+
+def test_render_unit_module_renders_header_imports_and_class():
+    field_a = DomainFieldSpec(
+        field_name="importe",
+        python_type="Decimal",
+        code="001",
+        xml_paths=(),
+        required=True,
+        repeated=False,
+        domain_shape_kind="plain_value",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+    field_b = DomainFieldSpec(
+        field_name="sexo",
+        python_type="SexoEnum",
+        code="002",
+        xml_paths=(),
+        required=False,
+        repeated=False,
+        domain_shape_kind="strict_enum_candidate",
+        enum_eligibility="eligible",
+        trace={},
+    )
+    field_c = DomainFieldSpec(
+        field_name="entidades",
+        python_type="list[RegistryReference]",
+        code="003",
+        xml_paths=(),
+        required=False,
+        repeated=True,
+        domain_shape_kind="registry_reference",
+        enum_eligibility="ineligible",
+        trace={},
+    )
+
+    unit = DomainGenerationUnit(
+        module_name="cvn_item_060_010_000_000",
+        class_name="DatosPersonales",
+        source_group_key="060.010.000.000",
+        fields=(field_a, field_b, field_c),
+    )
+
+    rendered = render_unit_module(unit)
+
+    assert rendered == (
+        "# Generated by cvn domain model generator. Do not edit manually.\n"
+        "from __future__ import annotations\n"
+        "\n"
+        "from decimal import Decimal\n"
+        "\n"
+        "from pydantic import Field\n"
+        "\n"
+        "from models.cvn.components import BaseCvnDomainModel, RegistryReference\n"
+        "\n"
+        "from .enums import SexoEnum\n"
+        "\n"
+        "\n"
+        "class DatosPersonales(BaseCvnDomainModel):\n"
+        "    importe: Decimal = Field(...)\n"
+        "    sexo: SexoEnum | None = Field(default=None)\n"
+        "    entidades: list[RegistryReference] = Field(default_factory=list)\n"
+    )
+
+
+def test_render_enums_module_renders_string_enums():
+    enums = (
+        DomainEnumSpec(
+            class_name="SexoEnum",
+            source_reference="CVN_SEX_A",
+            members=(
+                ("MUJER", "000"),
+                ("HOMBRE", "010"),
+            ),
+            labels={
+                "000": "Mujer",
+                "010": "Hombre",
+            },
+            trace={},
+        ),
+        DomainEnumSpec(
+            class_name="TipoEntidadEnum",
+            source_reference="CVN_ENTITY_TYPE",
+            members=(("UNIVERSIDAD", "001"),),
+            labels={
+                "001": "Universidad",
+            },
+            trace={},
+        ),
+    )
+
+    rendered = render_enums_module(enums)
+
+    assert rendered == (
+        "# Generated by cvn domain model generator. Do not edit manually.\n"
+        "from __future__ import annotations\n"
+        "\n"
+        "from enum import Enum\n"
+        "\n"
+        "class SexoEnum(str, Enum):\n"
+        "    MUJER = \"000\"\n"
+        "    HOMBRE = \"010\"\n"
+        "\n"
+        "class TipoEntidadEnum(str, Enum):\n"
+        "    UNIVERSIDAD = \"001\"\n"
+        "\n"
+    )
+
+
+def test_render_generated_package_init_renders_units_and_enums_exports():
+    unit_a = DomainGenerationUnit(
+        module_name="cvn_item_060_010_000_000",
+        class_name="DatosPersonales",
+        source_group_key="060.010.000.000",
+        fields=(),
+    )
+    unit_b = DomainGenerationUnit(
+        module_name="manual_only",
+        class_name="ManualOnly",
+        source_group_key="__no_tree__",
+        fields=(),
+    )
+    enum_a = DomainEnumSpec(
+        class_name="SexoEnum",
+        source_reference="CVN_SEX_A",
+        members=(),
+        labels={},
+        trace={},
+    )
+
+    result = DomainGenerationResult(
+        units=(unit_a, unit_b),
+        enums=(enum_a,),
+        normalized_entries=(),
+        semantic_policies=(),
+    )
+
+    rendered = render_generated_package_init(result)
+
+    assert rendered == (
+        "# Generated by cvn domain model generator. Do not edit manually.\n"
+        "from __future__ import annotations\n"
+        "\n"
+        "from .cvn_item_060_010_000_000 import DatosPersonales\n"
+        "from .manual_only import ManualOnly\n"
+        "\n"
+        "from .enums import SexoEnum\n"
+        "\n"
+        "__all__ = [\n"
+        "    \"DatosPersonales\",\n"
+        "    \"ManualOnly\",\n"
+        "    \"SexoEnum\",\n"
+        "]\n"
+        "\n"
+    )
+
+
+def test_render_domain_generation_result_renders_complete_file_map():
+    bundle = build_default_semantic_policy_bundle()
+
+    entry_a = build_normalized_entry(
+        code="001",
+        manual_name="Sexo",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+    entry_b = build_normalized_entry(
+        code="002",
+        manual_name="Entidad",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="ENTITY@Entity.xsd",
+            semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+            serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,
+            source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+        ),
+    )
+
+    policy_index = {
+        "001": build_semantic_field_policy(entry_a, bundle),
+        "002": build_semantic_field_policy(entry_b, bundle),
+    }
+    grouped_entries = {
+        "__no_tree__": (entry_a, entry_b),
+    }
+
+    result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+    rendered_files = render_domain_generation_result(result)
+
+    assert set(rendered_files) == {"__init__.py", "enums.py", "manual_only.py"}
+    assert rendered_files["enums.py"].startswith(
+        "# Generated by cvn domain model generator. Do not edit manually."
+    )
+    assert "class Sexo(BaseCvnDomainModel):" in rendered_files["manual_only.py"]
+    assert "from .manual_only import Sexo" in rendered_files["__init__.py"]
