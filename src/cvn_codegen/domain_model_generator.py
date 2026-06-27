@@ -1,8 +1,11 @@
 import re
+import shutil
 
 from collections import defaultdict
 from decimal import Decimal
+from pathlib import Path
 
+from cvn_codegen.normalization import build_normalization_result
 from cvn_codegen.normalization_types import (
     NormalizationResult,
     NormalizedCodeEntry,
@@ -17,6 +20,7 @@ from cvn_codegen.semantic_policy import (
     PresenceKind,
     DomainShapeKind,
     EnumEligibility,
+    build_default_semantic_policy_bundle,
     build_semantic_field_policy,
     normalize_ascii_text,
 )
@@ -215,6 +219,61 @@ def build_domain_generation_unit(
         ),
     )
 
+
+def build_group_key_class_suffix(group_key: str) -> str:
+    if group_key.startswith("__") and group_key.endswith("__"):
+        tokens = tuple(
+            token
+            for token in re.sub(r"[^A-Za-z0-9]+", " ", group_key).split()
+            if token
+        )
+        if not tokens:
+            return "Group"
+        return "".join(token.capitalize() for token in tokens)
+
+    suffix = re.sub(r"[^A-Za-z0-9]+", "", group_key)
+    return suffix or "Group"
+
+
+def resolve_generation_unit_class_name_collisions(
+    units: tuple[DomainGenerationUnit, ...],
+) -> tuple[DomainGenerationUnit, ...]:
+    grouped_by_class_name: dict[str, list[DomainGenerationUnit]] = defaultdict(list)
+    for unit in units:
+        grouped_by_class_name[unit.class_name].append(unit)
+
+    resolved_units: list[DomainGenerationUnit] = []
+    used_class_names: set[str] = set()
+
+    for class_name in sorted(grouped_by_class_name):
+        grouped_units = sorted(
+            grouped_by_class_name[class_name],
+            key=lambda unit: (unit.source_group_key, unit.module_name),
+        )
+
+        if len(grouped_units) == 1 and class_name not in used_class_names:
+            resolved_units.append(grouped_units[0])
+            used_class_names.add(class_name)
+            continue
+
+        for index, unit in enumerate(grouped_units, start=1):
+            base_suffix = build_group_key_class_suffix(unit.source_group_key)
+            candidate_class_name = f"{unit.class_name}{base_suffix}"
+            if candidate_class_name in used_class_names:
+                candidate_class_name = f"{candidate_class_name}{index}"
+
+            resolved_units.append(
+                DomainGenerationUnit(
+                    module_name=unit.module_name,
+                    class_name=candidate_class_name,
+                    source_group_key=unit.source_group_key,
+                    fields=unit.fields,
+                )
+            )
+            used_class_names.add(candidate_class_name)
+
+    return tuple(sorted(resolved_units, key=lambda unit: unit.module_name))
+
 def build_domain_generation_result(
     policy_index: dict[str, SemanticFieldPolicy],
     grouped_entries: dict[str, tuple[NormalizedCodeEntry, ...]],
@@ -245,8 +304,9 @@ def build_domain_generation_result(
         entries=normalized_entries,
         policy_index=policy_index,
     )
+    resolved_units = resolve_generation_unit_class_name_collisions(tuple(units))
     return DomainGenerationResult(
-        units=tuple(sorted(units, key=lambda unit: unit.module_name)),
+        units=resolved_units,
         enums=enum_specs,
         normalized_entries=normalized_entries,
         semantic_policies=tuple(policy_index[code] for code in sorted_codes),
@@ -570,3 +630,123 @@ def render_domain_generation_result(
     rendered_files["__init__.py"] = render_generated_package_init(result)
 
     return rendered_files
+
+
+def write_rendered_domain_files(
+    output_dir: Path,
+    rendered_files: dict[str, str],
+) -> tuple[Path, ...]:
+    allowed_root = Path("src/models/cvn/generated").resolve()
+    resolved_output_dir = output_dir.resolve()
+
+    if resolved_output_dir != allowed_root:
+        raise ValueError(
+            "output_dir must resolve exactly to src/models/cvn/generated. "
+            f"Received: {resolved_output_dir}"
+        )
+
+    if resolved_output_dir.exists() and not resolved_output_dir.is_dir():
+        raise ValueError(
+            f"output_dir exists but is not a directory: {resolved_output_dir}"
+        )
+
+    resolved_output_dir.mkdir(parents=True, exist_ok=True)
+
+    for existing_item in resolved_output_dir.iterdir():
+        if existing_item.is_dir():
+            if existing_item.name == "__pycache__":
+                shutil.rmtree(existing_item)
+                continue
+            raise ValueError(
+                "Unexpected subdirectory found in generated output directory: "
+                f"{existing_item}"
+            )
+        if existing_item.is_file() and existing_item.suffix == ".py":
+            existing_item.unlink()
+
+    written_paths: list[Path] = []
+
+    for relative_path in sorted(rendered_files):
+        target_path = resolved_output_dir / relative_path
+        resolved_target_path = target_path.resolve()
+
+        if resolved_target_path.parent != resolved_output_dir:
+            raise ValueError(
+                "Rendered file path must stay within src/models/cvn/generated. "
+                f"Received: {relative_path}"
+            )
+
+        resolved_target_path.write_text(rendered_files[relative_path], encoding="utf-8")
+        written_paths.append(resolved_target_path)
+
+    return tuple(written_paths)
+
+
+def get_canonical_generation_paths() -> dict[str, Path]:
+    xml_dir = Path("docs/CvnXML_v1.4.3_2.1_17012025/XML")
+
+    return {
+        "specification_manual": xml_dir / "SpecificationManual.xml",
+        "tree_model": xml_dir / "CVNTreeModel.xml",
+        "reference_tables": xml_dir / "ReferenceTables.xml",
+        "subtypes": xml_dir / "Subtype_Spa.xml",
+        "entity": xml_dir / "Entity.xml",
+        "thesaurus": xml_dir / "Thesaurus.xml",
+    }
+
+
+def generate_domain_models(
+    output_dir: Path | None = None,
+    bundle: SemanticPolicyBundle | None = None,
+) -> tuple[Path, ...]:
+    if output_dir is None:
+        output_dir = Path("src/models/cvn/generated")
+
+    if bundle is None:
+        bundle = build_default_semantic_policy_bundle()
+
+    canonical_paths = get_canonical_generation_paths()
+
+    normalization_result = build_normalization_result(
+        specification_manual_path=canonical_paths["specification_manual"],
+        tree_model_path=canonical_paths["tree_model"],
+        reference_tables_path=canonical_paths["reference_tables"],
+        subtypes_path=canonical_paths["subtypes"],
+        entity_path=canonical_paths["entity"],
+        thesaurus_path=canonical_paths["thesaurus"],
+    )
+
+    policy_index = build_semantic_policy_index(
+        normalization_result=normalization_result,
+        bundle=bundle,
+    )
+
+    grouped_entries = group_entries_by_cvn_item_code(
+        normalization_result.by_code,
+    )
+
+    generation_result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+
+    rendered_files = render_domain_generation_result(generation_result)
+
+    written_paths = write_rendered_domain_files(
+        output_dir=output_dir,
+        rendered_files=rendered_files,
+    )
+
+    return written_paths
+
+
+def main() -> None:
+    written_paths = generate_domain_models()
+
+    print(f"Generated {len(written_paths)} files:")
+    for path in written_paths:
+        print(path)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,3 +1,9 @@
+from pathlib import Path
+
+import pytest
+import importlib
+import sys
+
 from cvn_codegen.domain_model_generator import (
     build_domain_enum_spec,
     build_domain_field_spec,
@@ -9,7 +15,9 @@ from cvn_codegen.domain_model_generator import (
     build_enum_specs_for_entries,
     build_resolved_field_names,
     build_semantic_policy_index,
+    generate_domain_models,
     get_class_name_from_policy,
+    get_canonical_generation_paths,
     get_enum_evidence_from_entry,
     get_field_name_from_policy,
     get_python_type_for_base_kind,
@@ -18,6 +26,7 @@ from cvn_codegen.domain_model_generator import (
     is_controlled_reference_field,
     is_repeated_field,
     is_required_field,
+    main,
     render_domain_generation_result,
     render_enums_module,
     render_field_annotation,
@@ -29,6 +38,7 @@ from cvn_codegen.domain_model_generator import (
     resolve_field_name_collisions,
     resolve_python_type_for_policy,
     should_emit_enum_for_policy,
+    write_rendered_domain_files,
 )
 
 from cvn_codegen.normalization_types import (
@@ -58,7 +68,9 @@ from cvn_codegen.semantic_policy import (
     build_semantic_field_policy,
 )
 from models.cvn.components import (
+    BaseCvnDomainModel,
     BaseControlledReferenceValue,
+    CvnTrace,
     HierarchicalCodeReference,
     IdentifierReference,
     MeasureOrScaleValue,
@@ -151,6 +163,26 @@ def build_reference_table_enum_evidence(
         normalized_preferred_labels=("UNO", "DOS"),
         open_world_signals=(),
     )
+
+
+def clear_generated_imports() -> dict[str, object]:
+    saved_modules = {
+        module_name: module
+        for module_name, module in sys.modules.items()
+        if module_name == "generated" or module_name.startswith("generated.")
+    }
+    for module_name in tuple(saved_modules):
+        sys.modules.pop(module_name, None)
+    importlib.invalidate_caches()
+    return saved_modules
+
+
+def restore_generated_imports(saved_modules: dict[str, object]) -> None:
+    for module_name in tuple(sys.modules):
+        if module_name == "generated" or module_name.startswith("generated."):
+            sys.modules.pop(module_name, None)
+    sys.modules.update(saved_modules)
+    importlib.invalidate_caches()
 
 def build_test_entry_with_tree_path(
     code: str,
@@ -1019,7 +1051,9 @@ def test_build_domain_generation_result_populates_enums_for_eligible_enum_entrie
 
 
 def test_controlled_reference_components_are_importable():
+    assert BaseCvnDomainModel is not None
     assert BaseControlledReferenceValue is not None
+    assert CvnTrace is not None
     assert OpenCodedValue is not None
     assert MeasureOrScaleValue is not None
     assert IdentifierReference is not None
@@ -1045,6 +1079,57 @@ def test_controlled_reference_components_inherit_from_base_component():
     )
     for component_type in component_types:
         assert issubclass(component_type, BaseControlledReferenceValue)
+
+
+def test_controlled_reference_components_do_not_inherit_from_base_cvn_domain_model():
+    component_types = (
+        OpenCodedValue,
+        MeasureOrScaleValue,
+        IdentifierReference,
+        ScopeReference,
+        SubtypeBackedValue,
+        HierarchicalCodeReference,
+        RegistryReference,
+        VocabularyReference,
+        UnresolvedReference,
+        UnderTracedReference,
+    )
+
+    for component_type in component_types:
+        assert not issubclass(component_type, BaseCvnDomainModel)
+
+
+def test_cvn_trace_model_exposes_accepted_trace_contract():
+    trace = CvnTrace(
+        code="001.002",
+        xml_paths=("/Node/CVNItem[@code='001']/Property[@name='Test']",),
+        base_kind="text",
+        domain_shape_kind="plain_value",
+        enum_eligibility="ineligible",
+        source_reference="CVN_TEST",
+        notes=("note-a", "note-b"),
+    )
+
+    assert trace.code == "001.002"
+    assert trace.xml_paths == ("/Node/CVNItem[@code='001']/Property[@name='Test']",)
+    assert trace.base_kind == "text"
+    assert trace.domain_shape_kind == "plain_value"
+    assert trace.enum_eligibility == "ineligible"
+    assert trace.source_reference == "CVN_TEST"
+    assert trace.notes == ("note-a", "note-b")
+
+
+def test_base_cvn_domain_model_exposes_optional_cvn_trace():
+    trace = CvnTrace(
+        code="001.002",
+        xml_paths=("/Node/CVNItem[@code='001']/Property[@name='Test']",),
+        base_kind="text",
+        domain_shape_kind="plain_value",
+        enum_eligibility="ineligible",
+    )
+    model = BaseCvnDomainModel(cvn_trace=trace)
+
+    assert model.cvn_trace is trace
 def test_specialized_controlled_reference_components_expose_expected_extra_fields():
     hierarchical = HierarchicalCodeReference(
         code="001",
@@ -1420,6 +1505,7 @@ def test_render_unit_class_renders_class_with_fields():
         "    titulo: str = Field(...)\n"
         "    sexo: SexoEnum | None = Field(default=None)"
     )
+    assert "cvn_trace:" not in rendered
 
 
 def test_render_unit_class_renders_pass_for_empty_unit():
@@ -1626,7 +1712,7 @@ def test_render_domain_generation_result_renders_complete_file_map():
     policy_index = {
         "001": build_semantic_field_policy(entry_a, bundle),
         "002": build_semantic_field_policy(entry_b, bundle),
-    }
+    }   
     grouped_entries = {
         "__no_tree__": (entry_a, entry_b),
     }
@@ -1643,3 +1729,787 @@ def test_render_domain_generation_result_renders_complete_file_map():
     )
     assert "class Sexo(BaseCvnDomainModel):" in rendered_files["manual_only.py"]
     assert "from .manual_only import Sexo" in rendered_files["__init__.py"]
+
+
+def test_write_rendered_domain_files_creates_output_dir_and_writes_files(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    monkeypatch.chdir(repo_root)
+
+    written_paths = write_rendered_domain_files(
+        output_dir=target_dir,
+        rendered_files={
+            "__init__.py": "# init\n",
+            "manual_only.py": "# module\n",
+        },
+    )
+
+    assert target_dir.is_dir()
+    assert (target_dir / "__init__.py").read_text(encoding="utf-8") == "# init\n"
+    assert (target_dir / "manual_only.py").read_text(encoding="utf-8") == "# module\n"
+    assert written_paths == (
+        target_dir.resolve() / "__init__.py",
+        target_dir.resolve() / "manual_only.py",
+    )
+
+
+def test_write_rendered_domain_files_rejects_wrong_output_dir(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    allowed_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    wrong_dir = repo_root / "src" / "models" / "cvn" / "other"
+    allowed_dir.mkdir(parents=True)
+    wrong_dir.mkdir(parents=True)
+    monkeypatch.chdir(repo_root)
+
+    with pytest.raises(ValueError, match="output_dir must resolve exactly"):
+        write_rendered_domain_files(
+            output_dir=wrong_dir,
+            rendered_files={"__init__.py": "# init\n"},
+        )
+
+
+def test_write_rendered_domain_files_deletes_only_python_files(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    target_dir.mkdir(parents=True)
+    (target_dir / "old.py").write_text("old\n", encoding="utf-8")
+    (target_dir / "keep.txt").write_text("keep\n", encoding="utf-8")
+    monkeypatch.chdir(repo_root)
+
+    write_rendered_domain_files(
+        output_dir=target_dir,
+        rendered_files={"__init__.py": "# init\n"},
+    )
+
+    assert not (target_dir / "old.py").exists()
+    assert (target_dir / "keep.txt").read_text(encoding="utf-8") == "keep\n"
+    assert (target_dir / "__init__.py").read_text(encoding="utf-8") == "# init\n"
+
+
+def test_write_rendered_domain_files_rejects_unexpected_subdirectories(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    nested_dir = target_dir / "nested"
+    nested_dir.mkdir(parents=True)
+    monkeypatch.chdir(repo_root)
+
+    with pytest.raises(ValueError, match="Unexpected subdirectory"):
+        write_rendered_domain_files(
+            output_dir=target_dir,
+            rendered_files={"__init__.py": "# init\n"},
+        )
+
+
+def test_write_rendered_domain_files_rejects_parent_traversal_paths(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    monkeypatch.chdir(repo_root)
+
+    with pytest.raises(ValueError, match="must stay within"):
+        write_rendered_domain_files(
+            output_dir=target_dir,
+            rendered_files={"../escape.py": "bad\n"},
+        )
+
+
+def test_write_rendered_domain_files_rejects_nested_paths_outside_direct_output(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    monkeypatch.chdir(repo_root)
+
+    with pytest.raises(ValueError, match="must stay within"):
+        write_rendered_domain_files(
+            output_dir=target_dir,
+            rendered_files={"nested/module.py": "bad\n"},
+        )
+
+
+def test_write_rendered_domain_files_returns_paths_in_sorted_order(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    monkeypatch.chdir(repo_root)
+
+    written_paths = write_rendered_domain_files(
+        output_dir=target_dir,
+        rendered_files={
+            "zeta.py": "# zeta\n",
+            "__init__.py": "# init\n",
+            "alpha.py": "# alpha\n",
+        },
+    )
+
+    assert written_paths == (
+        target_dir.resolve() / "__init__.py",
+        target_dir.resolve() / "alpha.py",
+        target_dir.resolve() / "zeta.py",
+    )
+
+
+def test_write_rendered_domain_files_overwrites_previous_python_output(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    target_dir.mkdir(parents=True)
+    (target_dir / "__init__.py").write_text("old init\n", encoding="utf-8")
+    (target_dir / "manual_only.py").write_text("old module\n", encoding="utf-8")
+    monkeypatch.chdir(repo_root)
+
+    write_rendered_domain_files(
+        output_dir=target_dir,
+        rendered_files={
+            "__init__.py": "new init\n",
+            "manual_only.py": "new module\n",
+        },
+    )
+
+    assert (target_dir / "__init__.py").read_text(encoding="utf-8") == "new init\n"
+    assert (target_dir / "manual_only.py").read_text(encoding="utf-8") == "new module\n"
+
+
+def test_write_rendered_domain_files_rejects_output_path_when_target_is_file(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    target_dir.parent.mkdir(parents=True)
+    target_dir.write_text("not a dir\n", encoding="utf-8")
+    monkeypatch.chdir(repo_root)
+
+    with pytest.raises(ValueError, match="is not a directory"):
+        write_rendered_domain_files(
+            output_dir=target_dir,
+            rendered_files={"__init__.py": "# init\n"},
+        )
+
+
+def test_get_canonical_generation_paths_returns_expected_keys_and_paths():
+    paths = get_canonical_generation_paths()
+
+    assert set(paths) == {
+        "specification_manual",
+        "tree_model",
+        "reference_tables",
+        "subtypes",
+        "entity",
+        "thesaurus",
+    }
+    assert paths["specification_manual"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XML/SpecificationManual.xml"
+    )
+    assert paths["tree_model"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XML/CVNTreeModel.xml"
+    )
+    assert paths["reference_tables"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XML/ReferenceTables.xml"
+    )
+    assert paths["subtypes"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XML/Subtype_Spa.xml"
+    )
+    assert paths["entity"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XML/Entity.xml"
+    )
+    assert paths["thesaurus"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XML/Thesaurus.xml"
+    )
+
+
+def test_generate_domain_models_orchestrates_pipeline_with_defaults(monkeypatch):
+    recorded: dict[str, object] = {}
+
+    fake_bundle = object()
+    fake_written_paths = (Path("src/models/cvn/generated/__init__.py"),)
+
+    class FakeNormalizationResult:
+        by_code = {"001": "entry-001"}
+
+    fake_normalization_result = FakeNormalizationResult()
+    fake_policy_index = {"001": "policy-001"}
+    fake_grouped_entries = {"__no_tree__": ("entry-001",)}
+    fake_generation_result = "generation-result"
+    fake_rendered_files = {"__init__.py": "# init\n"}
+
+    def fake_build_default_semantic_policy_bundle():
+        return fake_bundle
+
+    def fake_build_normalization_result(**kwargs):
+        recorded["normalization_kwargs"] = kwargs
+        return fake_normalization_result
+
+    def fake_build_semantic_policy_index(normalization_result, bundle):
+        recorded["policy_index_args"] = (normalization_result, bundle)
+        return fake_policy_index
+
+    def fake_group_entries_by_cvn_item_code(by_code):
+        recorded["grouped_by_code"] = by_code
+        return fake_grouped_entries
+
+    def fake_build_domain_generation_result(policy_index, grouped_entries):
+        recorded["generation_result_args"] = (policy_index, grouped_entries)
+        return fake_generation_result
+
+    def fake_render_domain_generation_result(result):
+        recorded["render_result_arg"] = result
+        return fake_rendered_files
+
+    def fake_write_rendered_domain_files(output_dir, rendered_files):
+        recorded["write_args"] = (output_dir, rendered_files)
+        return fake_written_paths
+
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_default_semantic_policy_bundle",
+        fake_build_default_semantic_policy_bundle,
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_normalization_result",
+        fake_build_normalization_result,
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_semantic_policy_index",
+        fake_build_semantic_policy_index,
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.group_entries_by_cvn_item_code",
+        fake_group_entries_by_cvn_item_code,
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_domain_generation_result",
+        fake_build_domain_generation_result,
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.render_domain_generation_result",
+        fake_render_domain_generation_result,
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.write_rendered_domain_files",
+        fake_write_rendered_domain_files,
+    )
+
+    written_paths = generate_domain_models()
+
+    assert written_paths == fake_written_paths
+    assert recorded["policy_index_args"] == (fake_normalization_result, fake_bundle)
+    assert recorded["grouped_by_code"] == {"001": "entry-001"}
+    assert recorded["generation_result_args"] == (
+        fake_policy_index,
+        fake_grouped_entries,
+    )
+    assert recorded["render_result_arg"] == fake_generation_result
+    assert recorded["write_args"] == (
+        Path("src/models/cvn/generated"),
+        fake_rendered_files,
+    )
+
+
+def test_generate_domain_models_uses_explicit_output_dir_and_bundle(monkeypatch, tmp_path):
+    recorded: dict[str, object] = {}
+
+    explicit_output_dir = tmp_path / "generated"
+    explicit_bundle = object()
+    fake_written_paths = (explicit_output_dir / "__init__.py",)
+
+    class FakeNormalizationResult:
+        by_code = {"001": "entry-001"}
+
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_default_semantic_policy_bundle",
+        lambda: pytest.fail("default bundle should not be used"),
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_normalization_result",
+        lambda **kwargs: FakeNormalizationResult(),
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_semantic_policy_index",
+        lambda normalization_result, bundle: {"001": bundle},
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.group_entries_by_cvn_item_code",
+        lambda by_code: {"__no_tree__": ("entry-001",)},
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_domain_generation_result",
+        lambda policy_index, grouped_entries: "generation-result",
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.render_domain_generation_result",
+        lambda result: {"__init__.py": "# init\n"},
+    )
+
+    def fake_write_rendered_domain_files(output_dir, rendered_files):
+        recorded["write_args"] = (output_dir, rendered_files)
+        return fake_written_paths
+
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.write_rendered_domain_files",
+        fake_write_rendered_domain_files,
+    )
+
+    written_paths = generate_domain_models(
+        output_dir=explicit_output_dir,
+        bundle=explicit_bundle,
+    )
+
+    assert written_paths == fake_written_paths
+    assert recorded["write_args"][0] == explicit_output_dir
+
+
+def test_generate_domain_models_passes_canonical_paths_to_normalization(monkeypatch):
+    recorded: dict[str, object] = {}
+
+    class FakeNormalizationResult:
+        by_code = {}
+
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_default_semantic_policy_bundle",
+        lambda: object(),
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_semantic_policy_index",
+        lambda normalization_result, bundle: {},
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.group_entries_by_cvn_item_code",
+        lambda by_code: {},
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_domain_generation_result",
+        lambda policy_index, grouped_entries: "generation-result",
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.render_domain_generation_result",
+        lambda result: {"__init__.py": "# init\n"},
+    )
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.write_rendered_domain_files",
+        lambda output_dir, rendered_files: (),
+    )
+
+    def fake_build_normalization_result(**kwargs):
+        recorded["normalization_kwargs"] = kwargs
+        return FakeNormalizationResult()
+
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.build_normalization_result",
+        fake_build_normalization_result,
+    )
+
+    generate_domain_models()
+
+    assert recorded["normalization_kwargs"] == {
+        "specification_manual_path": Path(
+            "docs/CvnXML_v1.4.3_2.1_17012025/XML/SpecificationManual.xml"
+        ),
+        "tree_model_path": Path(
+            "docs/CvnXML_v1.4.3_2.1_17012025/XML/CVNTreeModel.xml"
+        ),
+        "reference_tables_path": Path(
+            "docs/CvnXML_v1.4.3_2.1_17012025/XML/ReferenceTables.xml"
+        ),
+        "subtypes_path": Path(
+            "docs/CvnXML_v1.4.3_2.1_17012025/XML/Subtype_Spa.xml"
+        ),
+        "entity_path": Path(
+            "docs/CvnXML_v1.4.3_2.1_17012025/XML/Entity.xml"
+        ),
+        "thesaurus_path": Path(
+            "docs/CvnXML_v1.4.3_2.1_17012025/XML/Thesaurus.xml"
+        ),
+    }
+
+
+def test_main_prints_generated_paths(monkeypatch, capsys):
+    fake_paths = (
+        Path("src/models/cvn/generated/__init__.py"),
+        Path("src/models/cvn/generated/enums.py"),
+    )
+
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.generate_domain_models",
+        lambda: fake_paths,
+    )
+
+    main()
+
+    captured = capsys.readouterr()
+
+    assert captured.out == (
+        "Generated 2 files:\n"
+        "src/models/cvn/generated/__init__.py\n"
+        "src/models/cvn/generated/enums.py\n"
+    )
+
+
+def test_main_calls_generate_domain_models_once(monkeypatch):
+    calls = {"count": 0}
+
+    def fake_generate_domain_models():
+        calls["count"] += 1
+        return ()
+
+    monkeypatch.setattr(
+        "cvn_codegen.domain_model_generator.generate_domain_models",
+        fake_generate_domain_models,
+    )
+
+    main()
+
+    assert calls["count"] == 1
+
+
+def test_render_domain_generation_result_is_deterministic_for_same_input():
+    bundle = build_default_semantic_policy_bundle()
+
+    entry_a = build_normalized_entry(
+        code="001",
+        manual_name="Sexo",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+    entry_b = build_normalized_entry(
+        code="002",
+        manual_name="Entidad",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="ENTITY@Entity.xsd",
+            semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+            serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,
+            source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+        ),
+    )
+
+    policy_index = {
+        "001": build_semantic_field_policy(entry_a, bundle),
+        "002": build_semantic_field_policy(entry_b, bundle),
+    }
+    grouped_entries = {
+        "__no_tree__": (entry_a, entry_b),
+    }
+
+    result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+
+    first = render_domain_generation_result(result)
+    second = render_domain_generation_result(result)
+
+    assert first == second
+
+
+def test_write_rendered_domain_files_is_deterministic_for_sorted_paths(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "models" / "cvn" / "generated"
+    monkeypatch.chdir(repo_root)
+
+    rendered_files = {
+        "zeta.py": "# zeta\n",
+        "__init__.py": "# init\n",
+        "alpha.py": "# alpha\n",
+    }
+
+    first_written_paths = write_rendered_domain_files(
+        output_dir=target_dir,
+        rendered_files=rendered_files,
+    )
+    first_contents = {
+        path.name: path.read_text(encoding="utf-8")
+        for path in first_written_paths
+    }
+
+    second_written_paths = write_rendered_domain_files(
+        output_dir=target_dir,
+        rendered_files=rendered_files,
+    )
+    second_contents = {
+        path.name: path.read_text(encoding="utf-8")
+        for path in second_written_paths
+    }
+
+    assert first_written_paths == second_written_paths
+    assert first_contents == second_contents
+
+
+def test_generated_modules_are_importable_from_written_temp_package(tmp_path, monkeypatch):
+    bundle = build_default_semantic_policy_bundle()
+
+    entry_a = build_normalized_entry(
+        code="001",
+        manual_name="Sexo",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+    entry_b = build_normalized_entry(
+        code="002",
+        manual_name="Entidad",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="ENTITY@Entity.xsd",
+            semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+            serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,
+            source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+        ),
+    )
+
+    policy_index = {
+        "001": build_semantic_field_policy(entry_a, bundle),
+        "002": build_semantic_field_policy(entry_b, bundle),
+    }
+    grouped_entries = {
+        "__no_tree__": (entry_a, entry_b),
+    }
+
+    result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+    rendered_files = render_domain_generation_result(result)
+
+    generated_dir = tmp_path / "generated"
+    generated_dir.mkdir(parents=True)
+
+    for relative_path, content in rendered_files.items():
+        (generated_dir / relative_path).write_text(content, encoding="utf-8")
+
+    monkeypatch.syspath_prepend(str(tmp_path))
+    saved_modules = clear_generated_imports()
+
+    try:
+        generated_package = importlib.import_module("generated")
+        generated_enums = importlib.import_module("generated.enums")
+        generated_manual_only = importlib.import_module("generated.manual_only")
+
+        assert generated_package is not None
+        assert generated_enums is not None
+        assert generated_manual_only is not None
+    finally:
+        restore_generated_imports(saved_modules)
+
+
+def test_generated_package_reexports_generated_classes_and_enums(tmp_path, monkeypatch):
+    bundle = build_default_semantic_policy_bundle()
+
+    entry_a = build_normalized_entry(
+        code="001",
+        manual_name="Sexo",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+    entry_b = build_normalized_entry(
+        code="002",
+        manual_name="Entidad",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="ENTITY@Entity.xsd",
+            semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+            serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,
+            source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+        ),
+    )
+
+    policy_index = {
+        "001": build_semantic_field_policy(entry_a, bundle),
+        "002": build_semantic_field_policy(entry_b, bundle),
+    }
+    grouped_entries = {
+        "__no_tree__": (entry_a, entry_b),
+    }
+
+    result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+    rendered_files = render_domain_generation_result(result)
+
+    generated_dir = tmp_path / "generated"
+    generated_dir.mkdir(parents=True)
+
+    for relative_path, content in rendered_files.items():
+        (generated_dir / relative_path).write_text(content, encoding="utf-8")
+
+    monkeypatch.syspath_prepend(str(tmp_path))
+    saved_modules = clear_generated_imports()
+
+    try:
+        generated_package = importlib.import_module("generated")
+
+        assert hasattr(generated_package, "Sexo")
+        assert hasattr(generated_package, "SexoEnum")
+    finally:
+        restore_generated_imports(saved_modules)
+
+
+def test_generated_enum_is_importable_and_exposes_expected_values(tmp_path, monkeypatch):
+    bundle = build_default_semantic_policy_bundle()
+
+    entry = build_normalized_entry(
+        code="001",
+        manual_name="Sexo",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+
+    policy_index = {
+        "001": build_semantic_field_policy(entry, bundle),
+    }
+    grouped_entries = {
+        "__no_tree__": (entry,),
+    }
+
+    result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+    rendered_files = render_domain_generation_result(result)
+
+    generated_dir = tmp_path / "generated"
+    generated_dir.mkdir(parents=True)
+
+    for relative_path, content in rendered_files.items():
+        (generated_dir / relative_path).write_text(content, encoding="utf-8")
+
+    monkeypatch.syspath_prepend(str(tmp_path))
+    saved_modules = clear_generated_imports()
+
+    try:
+        generated_enums = importlib.import_module("generated.enums")
+        sexo_enum = generated_enums.SexoEnum
+
+        assert tuple(member.value for member in sexo_enum) == ("000", "010")
+        assert all(isinstance(member.value, str) for member in sexo_enum)
+        assert issubclass(sexo_enum, str)
+    finally:
+        restore_generated_imports(saved_modules)
+
+
+def test_generated_model_exposes_expected_field_annotations(tmp_path, monkeypatch):
+    bundle = build_default_semantic_policy_bundle()
+
+    entry_a = build_normalized_entry(
+        code="001",
+        manual_name="Sexo",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="CVN_SEX_A",
+            semantic_kind=SemanticReferenceKind.COMPACT_ENUM_LIKE_TABLE,
+            serialization_pattern=SerializationPattern.FILTER_VALUE,
+            reference_table_enum_evidence=build_reference_table_enum_evidence(
+                table_name="CVN_SEX_A",
+                item_count=2,
+            ),
+        ),
+    )
+    entry_b = build_normalized_entry(
+        code="002",
+        manual_name="Entidad",
+        manual_type="Alphanumeric",
+        reference_resolution=build_reference_resolution(
+            raw_reference="ENTITY@Entity.xsd",
+            semantic_kind=SemanticReferenceKind.SIDE_PACKAGE_REGISTRY,
+            serialization_pattern=SerializationPattern.SIDE_PACKAGE_REGISTRY,
+            source_family=ReferenceSourceFamily.SIDE_PACKAGE_REGISTRY,
+        ),
+    )
+
+    policy_index = {
+        "001": build_semantic_field_policy(entry_a, bundle),
+        "002": build_semantic_field_policy(entry_b, bundle),
+    }
+    grouped_entries = {
+        "__no_tree__": (entry_a, entry_b),
+    }
+
+    result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+    rendered_files = render_domain_generation_result(result)
+
+    generated_dir = tmp_path / "generated"
+    generated_dir.mkdir(parents=True)
+
+    for relative_path, content in rendered_files.items():
+        (generated_dir / relative_path).write_text(content, encoding="utf-8")
+
+    monkeypatch.syspath_prepend(str(tmp_path))
+    saved_modules = clear_generated_imports()
+
+    try:
+        generated_manual_only = importlib.import_module("generated.manual_only")
+        model_class = generated_manual_only.Sexo
+
+        annotations = model_class.__annotations__
+
+        assert "sexo" in annotations
+        assert "entidad" in annotations
+    finally:
+        restore_generated_imports(saved_modules)
+
+
+def test_generated_model_inherits_cvn_trace_from_base_model(tmp_path, monkeypatch):
+    bundle = build_default_semantic_policy_bundle()
+
+    entry = build_normalized_entry(
+        code="001",
+        manual_name="Nombre",
+        manual_type="Alphanumeric",
+    )
+
+    policy_index = {
+        "001": build_semantic_field_policy(entry, bundle),
+    }
+    grouped_entries = {
+        "__no_tree__": (entry,),
+    }
+
+    result = build_domain_generation_result(
+        policy_index=policy_index,
+        grouped_entries=grouped_entries,
+    )
+    rendered_files = render_domain_generation_result(result)
+
+    generated_dir = tmp_path / "generated"
+    generated_dir.mkdir(parents=True)
+
+    for relative_path, content in rendered_files.items():
+        (generated_dir / relative_path).write_text(content, encoding="utf-8")
+
+    monkeypatch.syspath_prepend(str(tmp_path))
+    saved_modules = clear_generated_imports()
+
+    try:
+        generated_manual_only = importlib.import_module("generated.manual_only")
+        model_class = generated_manual_only.Nombre
+
+        assert hasattr(model_class, "model_fields")
+        assert "cvn_trace" in model_class.model_fields
+    finally:
+        restore_generated_imports(saved_modules)
