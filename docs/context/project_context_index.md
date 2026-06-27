@@ -28,11 +28,11 @@ Agents should also read `AGENTS.md` before this file.
 ## Current Project Snapshot
 
 - Project: open CVN schema and tooling for Spanish academic CV processing
-- Current pipeline stage: structural generation, metadata normalization, and
-  semantic policy completed
-- Last documented issues: `#11`, `#12`, `#13`, `#14`, and `#25`
-- Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`
-- Next planned issue: `#15`
+- Current pipeline stage: structural generation, metadata normalization,
+  semantic policy, and domain generation completed
+- Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, and `#25`
+- Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
+- Next planned issue: `#16`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -65,8 +65,8 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/roadmap/issues/issue-13-normalization.md`: full record of issue `#13`
 - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: full record of
   issue `#14`
-- `docs/roadmap/issues/issue-15-domain-model-generator.md`: planned scope of
-  issue `#15`
+- `docs/roadmap/issues/issue-15-domain-model-generator.md`: authoritative record
+  of issue `#15`
 - `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`: planned scope of
   issue `#16`
 - `docs/roadmap/issues/issue-17-workflow-documentation.md`: planned scope of
@@ -91,6 +91,9 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`:
   corrective plan for dynamic strict-enum eligibility evaluation across
   `ReferenceTables.xml` without semantic-policy hardcoding
+- `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`:
+  corrective plan for exposing wrapper type evidence to downstream semantic and
+  domain generation without raw structural rediscovery
 
 ### Development And Contribution
 

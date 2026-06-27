@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+import unicodedata
 
 
 from cvn_codegen.normalization_types import (
@@ -701,26 +702,8 @@ def build_default_semantic_policy_bundle() -> SemanticPolicyBundle:
 def normalize_ascii_text(value: str) -> str:
     """Normalize text to ASCII-compatible identifier input."""
 
-    replacements = {
-        "á": "a",
-        "é": "e",
-        "í": "i",
-        "ó": "o",
-        "ú": "u",
-        "ü": "u",
-        "ñ": "n",
-        "Á": "A",
-        "É": "E",
-        "Í": "I",
-        "Ó": "O",
-        "Ú": "U",
-        "Ü": "U",
-        "Ñ": "N",
-    }
-    normalized_value = value
-    for source, replacement in replacements.items():
-        normalized_value = normalized_value.replace(source, replacement)
-    return normalized_value
+    normalized_value = unicodedata.normalize("NFKD", value)
+    return normalized_value.encode("ascii", "ignore").decode("ascii")
 
 def build_snake_case_identifier(value: str) -> str:
     """Build a deterministic snake_case identifier from a label."""

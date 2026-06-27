@@ -92,8 +92,8 @@ files in order:
   `#13`
 - `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`: authoritative
   record of issue `#14`
-- `docs/roadmap/issues/issue-15-domain-model-generator.md`: planned scope of
-  issue `#15`
+- `docs/roadmap/issues/issue-15-domain-model-generator.md`: authoritative record
+  of issue `#15`
 - `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`: planned scope of
   issue `#16`
 - `docs/roadmap/issues/issue-17-workflow-documentation.md`: planned scope of
@@ -119,6 +119,9 @@ files in order:
 - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`:
   corrective plan for replacing hardcoded enum decisions with dynamic
   `ReferenceTables.xml` evidence in the normalization-to-semantic handoff
+- `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`:
+  corrective plan for exposing wrapper type evidence to semantic and domain
+  generation stages without raw structural rediscovery
 
 ### Development Reference
 
