@@ -30,8 +30,8 @@ Goal:
 | `#12` | Generate structural Pydantic bindings from CVN XSDs | Completed with documented limitations | Tree model XML/XSD mismatch remains documented |
 | `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Completed | Core normalization and auxiliary-reference resolution enrichment implemented; baseline overlap counts preserved |
 | `#14` | Define semantic mapping rules and override policy | Completed | Semantic policy bundle, resolver, overrides, naming, wrapper policies, validation inventory, and tests implemented |
-| `#15` | Implement the domain Pydantic model generator | Next | Depends on completed `#14` semantic policy and consumes enriched normalized metadata rather than rediscovering sources |
-| `#16` | Add automated tests for the generation pipeline | Pending | Must cover both core pipeline and auxiliary enrichment path |
+| `#15` | Implement the domain Pydantic model generator | Completed with documented limitations | Generator, shared components, generated output, and verification are implemented; wrapper-aware auto-attachment remains deferred to hotfix `#8` |
+| `#16` | Add automated tests for the generation pipeline | Next | Must cover both core pipeline and auxiliary enrichment path |
 | `#17` | Document and automate the complete workflow | Pending | Must document corrected full workflow including auxiliary stages |
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
 
@@ -215,6 +215,21 @@ Authoritative record:
 
 - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
 
+### Hotfix `#8`
+
+- Goal:
+  restore wrapper-type traceability in the normalized or semantic handoff so
+  domain generation can attach wrapper-aware field shapes without re-reading raw
+  structural sources
+- Current status:
+  - planned follow-up after issue `#15`
+  - issue `#15` is completed without wrapper auto-attachment and documents this
+    boundary explicitly
+
+Authoritative record:
+
+- `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
+
 ## Future Work Focus
 
 ### Issue `#13`
@@ -269,6 +284,14 @@ Authoritative record:
     re-discovering auxiliary-source meaning in generator code
   - preserve `SemanticDecisionTrace` in generated artifacts or metadata so CVN
     source traceability survives the domain-generation step
+- Implemented outcome:
+  - deterministic domain generation is implemented from normalized metadata and
+    `SemanticPolicyBundle`
+  - shared domain components exist for non-enum controlled-reference families
+  - canonical generated output is emitted under `src/models/cvn/generated/`
+  - the canonical generator run emits `105` Python files
+  - full repository verification passed after implementation
+  - wrapper-aware automatic field attachment remains deferred to hotfix `#8`
 
 ### Issue `#16`
 

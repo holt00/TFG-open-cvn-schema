@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-06-15
+- Last updated: 2026-06-27
 
 ## Completed Or Stabilized Work
 
@@ -274,7 +274,45 @@
   `delegate_present`
 - the user reported that the semantic-policy tests, regression tests, and full
   repository test suite passed after the original issue `#14` implementation
-- no final domain model emission is implemented yet; that remains issue `#15`
+- final domain model emission is now implemented by completed issue `#15`
+
+### Hotfix `#8`
+
+- a corrective hotfix record now exists at
+  `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
+- the hotfix records that current normalized tree metadata does not expose
+  wrapper type names such as `FlexibleDatesType`, `OfficialIdType`,
+  `EntityTypeType`, or `EntityNameType`
+- issue `#15` therefore does not attach wrapper-aware field shapes by scanning
+  raw XSD files or generated structural bindings
+- the documented evidence probe found `0` exact and `0` partial wrapper-name
+  matches across `5051` extracted tree entries
+
+### Issue `#15`
+
+- the domain model generator issue is implemented in
+  `src/cvn_codegen/domain_model_generator.py`
+- generator intermediate representation records are implemented in
+  `src/cvn_codegen/domain_model_types.py`
+- shared hand-maintained domain components are implemented in
+  `src/models/cvn/components.py`
+- final generated domain output is emitted under `src/models/cvn/generated/`
+- the canonical generation command is:
+  `uv run python -m cvn_codegen.domain_model_generator`
+- the canonical generation run produced `105` generated Python files
+- the generated package imports were verified for:
+  - `models.cvn.generated`
+  - `models.cvn.generated.enums`
+  - `models.cvn.generated.manual_only`
+- generated domain models inherit `cvn_trace` from `BaseCvnDomainModel`
+- controlled-reference families now emit distinct domain shapes for strict enums,
+  open coded values, measure-or-scale values, identifier references, scope
+  references, subtype-backed values, hierarchical references, registry
+  references, vocabulary references, unresolved references, and under-traced
+  references
+- wrapper-aware automatic field attachment remains deferred to hotfix `#8`
+- full-suite verification passed with `uv run pytest -n auto tests`
+  and result `215 passed in 208.54s (0:03:28)`
 
 ## Current Technical Baseline
 
@@ -287,23 +325,21 @@
 
 ## Next Planned Work
 
-- Next work item: implement issue `#15` domain Pydantic model generator
+- Next work item: implement issue `#16` generation pipeline tests
 - Required corrective references before starting:
   - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
   - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
   - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
   - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
+  - `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
 - Issue document to read first:
-  - `docs/roadmap/issues/issue-15-domain-model-generator.md`
-- Corrected starting assumption for issue `#15`:
-  - the generator should consume `SemanticPolicyBundle` and
-    `SemanticFieldPolicy` outputs instead of redefining semantic classification
-  - the generator should preserve `SemanticDecisionTrace` for CVN code, XML path,
-    manual reference, and auxiliary-source resolution traceability
-  - issue `#15` should not rebuild source-resolution logic for direct tables,
-    subtype-backed references, side-package registries, side-package thesauri,
-    hierarchical thematic references, unresolved references, or under-traced
-    tables
+  - `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`
+- Corrected starting assumption for issue `#16`:
+  - tests should treat `SemanticPolicyBundle` as the semantic source of truth for
+    domain generation behavior
+  - tests should cover canonical generated output, importability, determinism,
+    and representative controlled-reference families
+  - tests should preserve the wrapper-handoff boundary documented by hotfix `#8`
 
 ## Blocking Or Relevant Limitations
 
@@ -337,18 +373,14 @@ Run structural generation:
 uv run python -m cvn_codegen.xsdata_runner all
 ```
 
-Run runner tests:
-
-```bash
-uv run pytest tests/test_xsdata_runner_unit.py -v
-uv run pytest tests/test_xsdata_runner_smoke.py -v
-```
-
 Run the full repository test suite with multicore pytest:
 
 ```bash
 uv run pytest -n auto tests
 ```
+
+Use the full-suite multicore command as the default verification command. Use
+single-file pytest commands only when debugging a specific failure.
 
 ## Files Future Sessions Should Read After The Entry Points
 

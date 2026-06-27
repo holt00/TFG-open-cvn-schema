@@ -21,6 +21,31 @@ do not need to rediscover them.
   - issue `#14` defines the semantic policy
   - issue `#15` should restore domain-facing semantics
 
+### Wrapper Type Names Are Not Present In The Normalized Field Handoff
+
+- Affected wrapper families include:
+  - `FlexibleDatesType`
+  - `OfficialIdType`
+  - `EntityTypeType`
+  - `EntityNameType`
+- Confirmed behavior:
+  - the current normalized tree handoff preserves CVN codes, XML paths,
+    property names, indicator names, and selected `tree_value` content
+  - it does not preserve wrapper type names needed for automatic wrapper-aware
+    field attachment in the domain generator
+  - the issue `#15` evidence probe found `0` exact and `0` partial wrapper-name
+    matches across `5051` extracted tree entries
+- Impact:
+  - issue `#15` cannot safely attach wrapper-aware field shapes from normalized
+    metadata alone
+  - the generator must not recover wrappers by scanning raw XSD files or
+    generated structural bindings because that would violate the pipeline
+    boundary
+- Expected follow-up:
+  - hotfix `#8` must extend the normalized or semantic handoff with typed wrapper
+    evidence
+  - issue `#16` should add regression coverage once that handoff exists
+
 ### `minOccurs` Is Not Enforced For Generated Lists
 
 - Generated list fields with `default_factory=list` do not enforce the minimum
