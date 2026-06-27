@@ -1,4 +1,6 @@
 from pathlib import Path
+from types import ModuleType
+from typing import Any, cast
 
 import pytest
 import importlib
@@ -64,6 +66,7 @@ from cvn_codegen.domain_model_types import (
 
 from cvn_codegen.semantic_policy import (
     SemanticFieldPolicy,
+    SemanticPolicyBundle,
     build_default_semantic_policy_bundle,
     build_semantic_field_policy,
 )
@@ -165,7 +168,7 @@ def build_reference_table_enum_evidence(
     )
 
 
-def clear_generated_imports() -> dict[str, object]:
+def clear_generated_imports() -> dict[str, ModuleType]:
     saved_modules = {
         module_name: module
         for module_name, module in sys.modules.items()
@@ -177,7 +180,7 @@ def clear_generated_imports() -> dict[str, object]:
     return saved_modules
 
 
-def restore_generated_imports(saved_modules: dict[str, object]) -> None:
+def restore_generated_imports(saved_modules: dict[str, ModuleType]) -> None:
     for module_name in tuple(sys.modules):
         if module_name == "generated" or module_name.startswith("generated."):
             sys.modules.pop(module_name, None)
@@ -1911,9 +1914,9 @@ def test_get_canonical_generation_paths_returns_expected_keys_and_paths():
 
 
 def test_generate_domain_models_orchestrates_pipeline_with_defaults(monkeypatch):
-    recorded: dict[str, object] = {}
+    recorded: dict[str, Any] = {}
 
-    fake_bundle = object()
+    fake_bundle = build_default_semantic_policy_bundle()
     fake_written_paths = (Path("src/models/cvn/generated/__init__.py"),)
 
     class FakeNormalizationResult:
@@ -1991,17 +1994,17 @@ def test_generate_domain_models_orchestrates_pipeline_with_defaults(monkeypatch)
         fake_grouped_entries,
     )
     assert recorded["render_result_arg"] == fake_generation_result
-    assert recorded["write_args"] == (
+    assert cast(tuple[Path, dict[str, str]], recorded["write_args"]) == (
         Path("src/models/cvn/generated"),
         fake_rendered_files,
     )
 
 
 def test_generate_domain_models_uses_explicit_output_dir_and_bundle(monkeypatch, tmp_path):
-    recorded: dict[str, object] = {}
+    recorded: dict[str, Any] = {}
 
     explicit_output_dir = tmp_path / "generated"
-    explicit_bundle = object()
+    explicit_bundle: SemanticPolicyBundle = build_default_semantic_policy_bundle()
     fake_written_paths = (explicit_output_dir / "__init__.py",)
 
     class FakeNormalizationResult:
@@ -2047,11 +2050,11 @@ def test_generate_domain_models_uses_explicit_output_dir_and_bundle(monkeypatch,
     )
 
     assert written_paths == fake_written_paths
-    assert recorded["write_args"][0] == explicit_output_dir
+    assert cast(tuple[Path, dict[str, str]], recorded["write_args"])[0] == explicit_output_dir
 
 
 def test_generate_domain_models_passes_canonical_paths_to_normalization(monkeypatch):
-    recorded: dict[str, object] = {}
+    recorded: dict[str, Any] = {}
 
     class FakeNormalizationResult:
         by_code = {}

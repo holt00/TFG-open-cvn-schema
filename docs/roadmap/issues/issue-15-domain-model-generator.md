@@ -948,7 +948,9 @@ File-modification rule:
 
 ## Adjustments Made During Implementation
 
-- Issue `#15` implementation is now in progress.
+- Issue `#15` implementation consumed `NormalizationResult` and
+  `SemanticPolicyBundle` directly without re-reading raw XSD files or generated
+  structural bindings for semantic rediscovery.
 - Pre-implementation planning is now aligned with the agreed semantic policy
   contract from issue `#14`.
 - The generator scope is clarified so semantic decisions come from
@@ -968,51 +970,86 @@ File-modification rule:
 
 ## Implementation Performed
 
-- Issue `#15` implementation is in progress.
-- The user has implemented generator scaffolding, IR records, policy indexing,
-  grouping, naming helpers, type mapping, enum helpers, non-enum
-  controlled-reference components, and associated task-level tests in the working
-  tree during the current execution session.
-- Generated final domain model output is not implemented yet.
+- The domain model generator is implemented in
+  `src/cvn_codegen/domain_model_generator.py`.
+- The generator intermediate representation is implemented in
+  `src/cvn_codegen/domain_model_types.py`.
+- Shared hand-maintained domain components are implemented in
+  `src/models/cvn/components.py`, including `CvnTrace`,
+  `BaseCvnDomainModel`, `BaseControlledReferenceValue`, and the non-enum
+  controlled-reference value objects.
+- The generator now performs deterministic policy indexing, grouping, naming,
+  collision handling, semantic type mapping, enum emission, non-enum
+  controlled-reference mapping, rendering, safe output writing, and canonical
+  runner orchestration.
+- Final generated domain output has been emitted under
+  `src/models/cvn/generated/`.
+- The canonical generation run produced `105` generated Python files.
+- Generated package exports and module imports were verified for
+  `models.cvn.generated`, `models.cvn.generated.enums`, and
+  `models.cvn.generated.manual_only`.
+- The implementation preserves CVN traceability through `cvn_trace` inheritance
+  on generated domain models.
+- Wrapper-aware automatic field attachment remains intentionally deferred to
+  hotfix `#8` rather than being reconstructed from raw structural sources.
 
 ## Verification
 
-- Task-level verification has been reported by the user using the fast full-suite
-  command `uv run pytest -n auto tests`.
-- Future final verification must prove generated domain artifacts consume
-  semantic policy outputs instead of redefining semantic classification in
-  generator code.
+- Full repository verification passed with the contracted command:
+  `uv run pytest -n auto tests`
+- Observed final result:
+  `215 passed in 208.54s (0:03:28)`
+- Additional targeted verification performed during implementation included:
+  - `uv run pytest -n auto tests/test_semantic_policy_unit.py tests/test_domain_model_generator_unit.py -v`
+  - observed result: `123 passed in 213.66s (0:03:33)`
+- Canonical generation entry point verification passed with:
+  `uv run python -m cvn_codegen.domain_model_generator`
+- Canonical generation emitted `105` files and subsequent sanity checks reported:
+  - `compiled_files = 105`
+  - `compile_errors = 0`
+  - `has_cvn_trace = True`
+  - `all_count = 116`
+  - `all_unique_count = 116`
+  - `duplicate_exports = 0`
+  - `files_with_non_ascii = 0`
 
 ## Findings
 
-- The generator needs an explicit handoff boundary from issue `#14` to avoid
-  duplicating reference-resolution and semantic-classification logic.
-- Final Python artifact shapes are still an issue `#15` decision, but semantic
-  categories and override outcomes are not.
-- Wrapper-aware field attachment also needs an explicit upstream handoff. Current
-  normalized metadata does not expose wrapper type names, so issue `#15` should
-  not scan raw XSD files or generated structural bindings to recover them.
+- The issue `#14` to issue `#15` handoff is sufficient for deterministic domain
+  emission of scalar, enum, and non-enum controlled-reference shapes.
+- Final Python artifact shapes can be decided inside the generator without
+  redefining upstream semantic classification.
+- Wrapper-aware field attachment still needs an explicit upstream handoff.
+  Current normalized metadata does not expose wrapper type names, so issue `#15`
+  must not scan raw XSD files or generated structural bindings to recover them.
+- Generated class-name collisions can occur across CVN item groups and need
+  deterministic global resolution rather than per-file local cleanup.
+- Generated-output cleanup must account for Python cache directories such as
+  `__pycache__` to keep regeneration reproducible.
 
 ## Known Limitations
 
-- Domain model emission is not implemented yet.
-- Concrete Python representations for strict enums, open coded values,
-  registries, vocabularies, subtype-backed values, unresolved references, and
-  under-traced references remain undecided until issue `#15` implementation.
 - Automatic wrapper-aware field attachment for `FlexibleDatesType`,
   `OfficialIdType`, `EntityTypeType`, and `EntityNameType` is blocked until
   hotfix `#8` provides typed wrapper evidence in the normalized or semantic
   handoff.
+- `DATE_LIKE` and `DURATION_LIKE` currently emit traced `str` values instead of
+  stronger domain-specific wrapper components.
+- Unknown semantic base kinds still fall back to `object` instead of a stronger
+  validated domain type.
 
 ## Impact On Future Issues
 
 - Issue `#16` must test generator behavior against `SemanticPolicyBundle`
   outputs rather than raw source classifications.
+- Issue `#16` should add regression coverage for canonical generated output,
+  importability, determinism, and wrapper-handoff-dependent future behavior.
 - Issue `#17` must document `SemanticPolicyBundle` as the semantic source of
-  truth for domain generation.
-- Hotfix `#8` must be completed before issue `#15` or later generator work can
-  safely attach wrapper-aware field shapes without raw structural rediscovery.
+  truth for domain generation and the canonical command
+  `uv run python -m cvn_codegen.domain_model_generator`.
+- Hotfix `#8` remains the planned corrective path for future wrapper-aware field
+  attachment without raw structural rediscovery.
 
 ## Status
 
-- Status: pending
+- Status: completed
