@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, VocabularyReference
 
 
 class AportacionesMasRelevantesDeSuCvDeDocencia(BaseCvnDomainModel):
@@ -13,7 +13,7 @@ class AportacionesMasRelevantesDeSuCvDeDocencia(BaseCvnDomainModel):
     pais_de_realizacion_de_la_actividad: str | None = Field(default=None)
     comunidad_autonoma_region_de_realizacion_de_la_actividad: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_realizacion_de_la_actividad: str | None = Field(default=None)
-    entidad_organizadora: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_organizadora: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    fecha_de_finalizacion_de_la_actividad: str | None = Field(default=None)
+    fecha_de_finalizacion_de_la_actividad: FlexibleDateValue | None = Field(default=None)

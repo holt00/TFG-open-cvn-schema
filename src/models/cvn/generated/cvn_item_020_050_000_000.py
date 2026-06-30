@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class CursosYSeminariosRecibidosDePerfeccionamientoInnovacionYMejoraDocenteNuevasTecnologiasEtcCuyoObjetivoSeaLaMejoraDeLaDocencia(BaseCvnDomainModel):
@@ -13,14 +13,14 @@ class CursosYSeminariosRecibidosDePerfeccionamientoInnovacionYMejoraDocenteNueva
     pais_de_la_entidad_organizadora: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_organizadora: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_organizadora: str | None = Field(default=None)
-    entidad_organizadora: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_organizadora: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     duracion_en_horas: str | None = Field(default=None)
-    fecha_de_finalizacion: str | None = Field(default=None)
+    fecha_de_finalizacion: FlexibleDateValue | None = Field(default=None)
     perfil_de_destinatarios_as: str = Field(...)
-    fecha_de_inicio: str = Field(...)
-    facultad_escuela_unidad_centro_hospital_o_instituto: RegistryReference | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue = Field(...)
+    facultad_escuela_unidad_centro_hospital_o_instituto: EntityNameValue | None = Field(default=None)
     meses: str = Field(...)
     programa_por_el_que_se_ha_financiado_la_estancia: str | None = Field(default=None)
     tareas_contrastables: str = Field(...)

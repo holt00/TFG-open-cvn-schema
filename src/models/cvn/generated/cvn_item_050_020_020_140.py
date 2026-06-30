@@ -3,12 +3,12 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, HierarchicalCodeReference
 
 
 class NombreSEntidadEsFinanciadoraS(BaseCvnDomainModel):
-    nombre_s_entidad_es_financiadora_s: list[RegistryReference] = Field(default_factory=list)
-    tipo_de_entidad: list[str] = Field(default_factory=list)
+    nombre_s_entidad_es_financiadora_s: list[EntityNameValue] = Field(default_factory=list)
+    tipo_de_entidad: list[EntityTypeValue] = Field(default_factory=list)
     tipo_de_entidad_otros: list[str] = Field(default_factory=list)
     ciudad_de_la_entidad_financiadora: list[str] = Field(default_factory=list)
     pais_de_la_entidad_financiadora: list[str] = Field(default_factory=list)

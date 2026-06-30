@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference, VocabularyReference
 
 
 class ContratosConveniosOProyectosDeIDINoCompetitivosConAdministracionesOEntidadesPublicasOPrivadas(BaseCvnDomainModel):
@@ -19,10 +19,10 @@ class ContratosConveniosOProyectosDeIDINoCompetitivosConAdministracionesOEntidad
     comunidad_autonoma_region_de_la_entidad_de_realizacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_de_realizacion: str | None = Field(default=None)
     codigo_de_proyecto_segun_la_entidad_financiadora: str | None = Field(default=None)
-    tipo_de_entidad_050_020_020_140: list[str] = Field(default_factory=list)
+    tipo_de_entidad_050_020_020_140: list[EntityTypeValue] = Field(default_factory=list)
     tipo_de_proyecto_asociado_al_proyecto: str | None = Field(default=None)
     nombre_del_programa_asociado_al_proyecto: str | None = Field(default=None)
-    fecha_de_inicio_del_proyecto: str | None = Field(default=None)
+    fecha_de_inicio_del_proyecto: FlexibleDateValue | None = Field(default=None)
     duracion_del_proyecto: str | None = Field(default=None)
     financiacion_del_proyecto_cuantia_total: Decimal = Field(...)
     financiacion_del_proyecto_cuantia_del_subproyecto: Decimal | None = Field(default=None)
@@ -36,8 +36,8 @@ class ContratosConveniosOProyectosDeIDINoCompetitivosConAdministracionesOEntidad
     calidad_en_que_ha_participado_otros: str | None = Field(default=None)
     resultados_mas_relevantes: str | None = Field(default=None)
     palabras_clave_050_020_020_310: list[VocabularyReference] = Field(default_factory=list)
-    entidades_participantes: list[RegistryReference] = Field(default_factory=list)
-    tipo_de_entidad_050_020_020_330: str | None = Field(default=None)
-    entidad_donde_se_desarrolla: RegistryReference | None = Field(default=None)
+    entidades_participantes: list[EntityNameValue] = Field(default_factory=list)
+    tipo_de_entidad_050_020_020_330: EntityTypeValue | None = Field(default=None)
+    entidad_donde_se_desarrolla: EntityNameValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     explicacion_narrativa_de_la_aportacion: str | None = Field(default=None)

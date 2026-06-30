@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, VocabularyReference
 
 
 class FormacionSanitariaEnIDYOPosformacionSanitariaEspecializadaEnIDImpartida(BaseCvnDomainModel):
@@ -12,18 +12,18 @@ class FormacionSanitariaEnIDYOPosformacionSanitariaEspecializadaEnIDImpartida(Ba
     pais_donde_ha_impartido_la_formacion: str | None = Field(default=None)
     comunidad_autonoma_region_donde_ha_impartido_la_formacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_formacion_impartida: str | None = Field(default=None)
-    entidad_de_la_que_depende_el_programa: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_030_030_000_080: str | None = Field(default=None)
+    entidad_de_la_que_depende_el_programa: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_030_030_000_080: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_030_030_000_090: str | None = Field(default=None)
-    entidad_donde_se_imparte_la_formacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_030_030_000_120: str | None = Field(default=None)
+    entidad_donde_se_imparte_la_formacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_030_030_000_120: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_030_030_000_130: str | None = Field(default=None)
-    departamento: str | None = Field(default=None)
-    servicio: str | None = Field(default=None)
-    seccion: str | None = Field(default=None)
-    unidad: str | None = Field(default=None)
-    fecha_de_inicio_de_la_formacion: str | None = Field(default=None)
-    fecha_de_finalizacion_de_la_formacion: str | None = Field(default=None)
+    departamento: EntityNameValue | None = Field(default=None)
+    servicio: EntityNameValue | None = Field(default=None)
+    seccion: EntityNameValue | None = Field(default=None)
+    unidad: EntityNameValue | None = Field(default=None)
+    fecha_de_inicio_de_la_formacion: FlexibleDateValue | None = Field(default=None)
+    fecha_de_finalizacion_de_la_formacion: FlexibleDateValue | None = Field(default=None)
     duracion: str | None = Field(default=None)
     destinatarios_as_en_palabras_clave: list[VocabularyReference] = Field(default_factory=list)
     pais_de_la_entidad_de_realizacion: str | None = Field(default=None)

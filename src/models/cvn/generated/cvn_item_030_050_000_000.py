@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, HierarchicalCodeReference
 
 
 class TutoriasAcademicasDeEstudiantes(BaseCvnDomainModel):
@@ -15,8 +15,8 @@ class TutoriasAcademicasDeEstudiantes(BaseCvnDomainModel):
     pais_de_la_tutoria: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_tutoria: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_tutoria: str | None = Field(default=None)
-    entidad_donde_se_ejerce_la_tutoria: RegistryReference | None = Field(default=None)
-    entidad_donde_se_ejerce_la_tutoria_tipo: str | None = Field(default=None)
+    entidad_donde_se_ejerce_la_tutoria: EntityNameValue | None = Field(default=None)
+    entidad_donde_se_ejerce_la_tutoria_tipo: EntityTypeValue | None = Field(default=None)
     entidad_donde_se_presta_la_tutoria_tipo_otros: str | None = Field(default=None)
     numero_total_de_alumnos_as_tutelados_as: Decimal | None = Field(default=None)
     frecuencia_de_la_actividad: Decimal | None = Field(default=None)

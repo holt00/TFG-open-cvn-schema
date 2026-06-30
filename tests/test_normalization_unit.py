@@ -54,6 +54,8 @@ ENTITY_XML = (
 THESAURUS_XML = (
     REPO_ROOT / "docs" / "CvnXML_v1.4.3_2.1_17012025" / "XML" / "Thesaurus.xml"
 )
+CVN_XSD = REPO_ROOT / "docs" / "CvnXML_v1.4.3_2.1_17012025" / "XSD" / "CVN.xsd"
+COMMON_XSD = REPO_ROOT / "docs" / "CvnXML_v1.4.3_2.1_17012025" / "XSD" / "Common.xsd"
 
 def test_collect_all_code_raises_for_invalid_manual_entries_type():
     # Arrange
@@ -217,6 +219,30 @@ def test_build_normalization_result_returns_expected_shape():
     assert isinstance(normalization_result.tree_only_codes, tuple)
     assert isinstance(normalization_result.mismatches, tuple)
     assert len(normalization_result.mismatches) >= 2
+
+
+def test_build_normalization_result_exposes_structural_wrapper_evidence():
+    normalization_result = build_normalization_result(
+        specification_manual_path=SPECIFICATION_MANUAL_XML,
+        tree_model_path=TREE_MODEL_XML,
+        cvn_xsd_path=CVN_XSD,
+        common_xsd_path=COMMON_XSD,
+    )
+    expected_wrappers_by_code = {
+        "000.010.000.100": "OfficialIdType",
+        "010.010.000.040": "EntityTypeType",
+        "010.010.000.020": "EntityNameType",
+        "010.010.000.180": "FlexibleDatesType",
+    }
+
+    for code, expected_wrapper_type_name in expected_wrappers_by_code.items():
+        normalized_entry = normalization_result.by_code[code]
+        terminal_wrapper_type_names = tuple(
+            evidence.terminal_wrapper_type_name
+            for evidence in normalized_entry.structural_type_evidence
+            if evidence.terminal_wrapper_type_name is not None
+        )
+        assert expected_wrapper_type_name in terminal_wrapper_type_names
 
 
 def test_build_normalization_result_contains_known_code_and_expected_overlap_examples():

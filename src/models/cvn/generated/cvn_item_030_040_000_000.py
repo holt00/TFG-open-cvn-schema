@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, SubtypeBackedValue, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, SubtypeBackedValue, VocabularyReference
 
 
 class DireccionDeTesisDoctoralesYOTrabajosFinDeEstudios(BaseCvnDomainModel):
@@ -14,16 +14,16 @@ class DireccionDeTesisDoctoralesYOTrabajosFinDeEstudios(BaseCvnDomainModel):
     pais_de_direccion_td: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_direccion_td: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_direccion_td: str | None = Field(default=None)
-    entidad_de_la_direccion_td: RegistryReference = Field(...)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_de_la_direccion_td: EntityNameValue = Field(...)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     alumno_a: str | None = Field(default=None)
     palabras_clave: list[VocabularyReference] = Field(default_factory=list)
-    fecha_de_defensa: str | None = Field(default=None)
+    fecha_de_defensa: FlexibleDateValue | None = Field(default=None)
     calificacion_obtenida: str | None = Field(default=None)
-    si_es_doctorado_europeo_internacional_fecha_de_mencion: str | None = Field(default=None)
+    si_es_doctorado_europeo_internacional_fecha_de_mencion: FlexibleDateValue | None = Field(default=None)
     mencion_de_calidad_del_programa: bool | None = Field(default=None)
     codirector_a_de_tesis: list[str] = Field(default_factory=list)
     doctorado_europeo_internacional: bool = Field(...)
-    fecha_mencion_de_calidad: str | None = Field(default=None)
+    fecha_mencion_de_calidad: FlexibleDateValue | None = Field(default=None)
     explicacion_narrativa_de_la_aportacion: str | None = Field(default=None)

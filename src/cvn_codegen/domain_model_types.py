@@ -19,6 +19,7 @@ class DomainFieldSpec:
     domain_shape_kind: str
     enum_eligibility: str
     trace: dict[str, object]
+    wrapper_type_names: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -51,4 +52,3 @@ class DomainGenerationResult:
     enums: tuple[DomainEnumSpec, ...]
     normalized_entries: tuple[NormalizedCodeEntry, ...]
     semantic_policies: tuple[SemanticFieldPolicy, ...]
-

@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class RedesDeCooperacion(BaseCvnDomainModel):
@@ -15,14 +15,14 @@ class RedesDeCooperacion(BaseCvnDomainModel):
     numero_de_investigadores_as: Decimal | None = Field(default=None)
     pais_de_radicacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_radicacion: HierarchicalCodeReference | None = Field(default=None)
-    entidad_es_participante_s: list[RegistryReference] = Field(default_factory=list)
-    tipo_de_entidad_060_030_040_090: list[str] = Field(default_factory=list)
+    entidad_es_participante_s: list[EntityNameValue] = Field(default_factory=list)
+    tipo_de_entidad_060_030_040_090: list[EntityTypeValue] = Field(default_factory=list)
     tipo_de_entidad_otros_060_030_040_100: list[str] = Field(default_factory=list)
-    entidad_que_realizo_la_seleccion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_060_030_040_130: str | None = Field(default=None)
+    entidad_que_realizo_la_seleccion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_060_030_040_130: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_060_030_040_140: str | None = Field(default=None)
     tareas_desarrolladas: str | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
     duracion: str | None = Field(default=None)
     ciudad_de_radicacion: str | None = Field(default=None)
     pais_de_la_entidad_de_afiliacion: str | None = Field(default=None)

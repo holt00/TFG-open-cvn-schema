@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-06-27
+- Last updated: 2026-06-30
 
 ## Completed Or Stabilized Work
 
@@ -278,15 +278,27 @@
 
 ### Hotfix `#8`
 
-- a corrective hotfix record now exists at
+- the corrective hotfix for wrapper type traceability is implemented and verified
+- the authoritative record exists at
   `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
-- the hotfix records that current normalized tree metadata does not expose
-  wrapper type names such as `FlexibleDatesType`, `OfficialIdType`,
-  `EntityTypeType`, or `EntityNameType`
-- issue `#15` therefore does not attach wrapper-aware field shapes by scanning
-  raw XSD files or generated structural bindings
-- the documented evidence probe found `0` exact and `0` partial wrapper-name
-  matches across `5051` extracted tree entries
+- `src/cvn_codegen/structural_type_trace.py` now resolves structural type
+  evidence from `CVN.xsd`, `Common.xsd`, and normalized `CVNTreeModel.xml`
+  paths
+- normalized entries can now carry `StructuralTypeEvidence` through
+  `TreePathEntry.structural_type_evidence` and
+  `NormalizedCodeEntry.structural_type_evidence`
+- canonical domain generation passes `CVN.xsd` and `Common.xsd` into
+  normalization so wrapper evidence is available without generator-side raw XSD
+  scanning
+- semantic policy now attaches wrapper policies for terminal wrapper evidence
+  from `FlexibleDatesType`, `OfficialIdType`, `EntityTypeType`, and
+  `EntityNameType`
+- shared wrapper value components now exist for `FlexibleDateValue`,
+  `OfficialIdValue`, `EntityTypeValue`, and `EntityNameValue`
+- child alternatives such as `DNI` preserve ancestor wrapper trace without being
+  treated as terminal wrapper fields
+- full-suite verification passed with `uv run pytest -n auto tests`
+  and result `228 passed in 189.76s (0:03:09)`
 
 ### Issue `#15`
 
@@ -310,9 +322,10 @@
   references, subtype-backed values, hierarchical references, registry
   references, vocabulary references, unresolved references, and under-traced
   references
-- wrapper-aware automatic field attachment remains deferred to hotfix `#8`
-- full-suite verification passed with `uv run pytest -n auto tests`
-  and result `215 passed in 208.54s (0:03:28)`
+- wrapper-aware fields now consume hotfix `#8` structural type evidence and map
+  to shared wrapper value components when canonical XSD enrichment is provided
+- latest full-suite verification passed with `uv run pytest -n auto tests`
+  and result `228 passed in 189.76s (0:03:09)`
 
 ## Current Technical Baseline
 
@@ -339,7 +352,7 @@
     domain generation behavior
   - tests should cover canonical generated output, importability, determinism,
     and representative controlled-reference families
-  - tests should preserve the wrapper-handoff boundary documented by hotfix `#8`
+  - tests should cover the wrapper-handoff boundary implemented by hotfix `#8`
 
 ## Blocking Or Relevant Limitations
 
@@ -353,6 +366,8 @@
   per-table subtype verification in the current normalization layer
 - strict enum eligibility for compact `ReferenceTables.xml` tables now uses
   hotfix `#7` evidence in the normalization-to-semantic handoff
+- wrapper-aware domain attachment requires normalization runs that provide
+  `cvn_xsd_path` and `common_xsd_path`; canonical generation provides them
 
 All of these are documented in:
 

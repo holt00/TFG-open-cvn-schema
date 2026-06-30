@@ -22,6 +22,10 @@ from cvn_codegen.normalization_types import (
     TreePathEntry,
 )
 from cvn_codegen.normalization_report import collect_normalization_mismatches
+from cvn_codegen.structural_type_trace import (
+    build_structural_type_index,
+    enrich_tree_entries_with_structural_type_evidence,
+)
 
 from cvn_codegen.auxiliary_sources import build_auxiliary_source_bundle
 from cvn_codegen.auxiliary_sources.bundle import AuxiliarySourceBundle
@@ -109,12 +113,18 @@ def build_normalized_code(
             auxiliary_bundle=auxiliary_bundle,
             manual_code=manual_entry.code,
         )
+    structural_type_evidence = tuple(
+        entry.structural_type_evidence
+        for entry in tree_paths
+        if entry.structural_type_evidence is not None
+    )
     return NormalizedCodeEntry(
         code=normalized_code,
         manual=manual_entry,
         tree_paths=tree_paths,
         source_files=tuple(sorted(source_files_set)),
         reference_resolution=reference_resolution,
+        structural_type_evidence=structural_type_evidence,
     )
 
 def build_normalized_code_index(
@@ -157,6 +167,8 @@ def build_normalization_result(
     subtypes_path: Path | None = None,
     entity_path: Path | None = None,
     thesaurus_path: Path | None = None,
+    cvn_xsd_path: Path | None = None,
+    common_xsd_path: Path | None = None,
 ) -> NormalizationResult:
 
     """Run the normalization orchestration for the canonical metadata sources.
@@ -181,6 +193,16 @@ def build_normalization_result(
     manual_entries_by_code = extract_manual_entries(specification_manual)
 
     tree_entries = load_and_extract_tree_entries(tree_model_path)
+
+    if cvn_xsd_path is not None and common_xsd_path is not None:
+        structural_type_index = build_structural_type_index(
+            cvn_xsd_path=cvn_xsd_path,
+            common_xsd_path=common_xsd_path,
+        )
+        tree_entries = enrich_tree_entries_with_structural_type_evidence(
+            tree_entries=tree_entries,
+            structural_type_index=structural_type_index,
+        )
 
     tree_entries_by_code = index_tree_entries_by_code(tree_entries)
 

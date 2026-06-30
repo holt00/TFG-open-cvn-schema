@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class Doctorados(BaseCvnDomainModel):
@@ -12,15 +12,15 @@ class Doctorados(BaseCvnDomainModel):
     pais_entidad_de_la_titulacion: str | None = Field(default=None)
     comunidad_autonoma_region_entidad_de_la_titulacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_entidad_de_la_titulacion: str | None = Field(default=None)
-    entidad_de_titulacion: RegistryReference = Field(...)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_de_titulacion: EntityNameValue = Field(...)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    fecha_de_titulacion: str = Field(...)
-    doctorado_europeo_internacional_fecha_de_mencion: str | None = Field(default=None)
+    fecha_de_titulacion: FlexibleDateValue = Field(...)
+    doctorado_europeo_internacional_fecha_de_mencion: FlexibleDateValue | None = Field(default=None)
     titulo_de_la_tesis: str | None = Field(default=None)
     doctorado_europeo_internacional: bool = Field(...)
     mencion_de_calidad: bool = Field(...)
     premio_extraordinario_del_doctorado: bool = Field(...)
-    fecha_de_obtencion: str = Field(...)
+    fecha_de_obtencion: FlexibleDateValue = Field(...)
     titulo_homologado: bool = Field(...)
-    titulo_homologado_fecha_de_homologacion: str = Field(...)
+    titulo_homologado_fecha_de_homologacion: FlexibleDateValue = Field(...)

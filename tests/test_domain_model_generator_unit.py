@@ -24,6 +24,7 @@ from cvn_codegen.domain_model_generator import (
     get_field_name_from_policy,
     get_python_type_for_base_kind,
     get_python_type_for_controlled_reference,
+    get_python_type_for_wrapper,
     group_entries_by_cvn_item_code,
     is_controlled_reference_field,
     is_repeated_field,
@@ -55,6 +56,7 @@ from cvn_codegen.normalization_types import (
     SemanticReferenceKind,
     SerializationPattern,
     SourceTrace,
+    StructuralTypeEvidence,
     TreePathEntry,
 )
 from cvn_codegen.domain_model_types import (
@@ -74,9 +76,13 @@ from models.cvn.components import (
     BaseCvnDomainModel,
     BaseControlledReferenceValue,
     CvnTrace,
+    EntityNameValue,
+    EntityTypeValue,
+    FlexibleDateValue,
     HierarchicalCodeReference,
     IdentifierReference,
     MeasureOrScaleValue,
+    OfficialIdValue,
     OpenCodedValue,
     RegistryReference,
     ScopeReference,
@@ -97,6 +103,7 @@ def build_normalized_entry(
     manual_name: str | None = "Nombre de prueba",
     manual_short_name: str | None = "Prueba",
     xml_path: str | None = None,
+    structural_type_evidence: tuple[StructuralTypeEvidence, ...] = (),
 ) -> NormalizedCodeEntry:
     manual_entry = None
     if manual_type is not None:
@@ -136,6 +143,7 @@ def build_normalized_entry(
         tree_paths=tree_paths,
         source_files=source_files,
         reference_resolution=reference_resolution,
+        structural_type_evidence=structural_type_evidence,
     )
 
 
@@ -625,6 +633,30 @@ def test_resolve_python_type_for_policy_maps_scalar_and_repeated_shapes():
     assert resolve_python_type_for_policy(scalar_policy) == "bool"
     assert resolve_python_type_for_policy(repeated_scalar_policy) == "list[Decimal]"
     assert resolve_python_type_for_policy(repeated_controlled_policy) == "list[RegistryReference]"
+
+
+def test_resolve_python_type_for_policy_prefers_wrapper_type():
+    bundle = build_default_semantic_policy_bundle()
+    structural_type_evidence = StructuralTypeEvidence(
+        element_name="OfficialId",
+        declaring_type_name="PersonalIdentificationType",
+        structural_type_name="OfficialIdType",
+        xml_path="/Node/Agent/Property[@name='Identification']/Indicator[@name='OfficialId']",
+        source_xsd_file="CVN.xsd",
+        terminal_wrapper_type_name="OfficialIdType",
+    )
+    policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="000.010.000.100",
+            structural_type_evidence=(structural_type_evidence,),
+        ),
+        bundle,
+    )
+
+    assert get_python_type_for_wrapper(policy) == "OfficialIdValue"
+    assert resolve_python_type_for_policy(policy) == "OfficialIdValue"
+
+
 def test_build_domain_field_spec_builds_expected_spec():
     bundle = build_default_semantic_policy_bundle()
     policy = build_semantic_field_policy(
@@ -653,6 +685,40 @@ def test_build_domain_field_spec_builds_expected_spec():
     assert spec.trace["base_kind"] == policy.base_kind.value
     assert spec.trace["domain_shape_kind"] == policy.domain_shape_kind.value
     assert spec.trace["enum_eligibility"] == policy.enum_eligibility.value
+    assert spec.wrapper_type_names == ()
+    assert spec.trace["wrapper_type_names"] == ()
+    assert spec.trace["wrapper_policy_kinds"] == ()
+
+
+def test_build_domain_field_spec_includes_wrapper_trace():
+    bundle = build_default_semantic_policy_bundle()
+    structural_type_evidence = StructuralTypeEvidence(
+        element_name="StartDate",
+        declaring_type_name="DateType",
+        structural_type_name="FlexibleDatesType",
+        xml_path="/Node/CVNItem[@code='010.010.000.000']/Property[@name='Date']/Indicator[@name='StartDate']",
+        source_xsd_file="Common.xsd",
+        terminal_wrapper_type_name="FlexibleDatesType",
+    )
+    policy = build_semantic_field_policy(
+        build_normalized_entry(
+            code="010.010.000.180",
+            structural_type_evidence=(structural_type_evidence,),
+        ),
+        bundle,
+    )
+
+    spec = build_domain_field_spec(
+        policy=policy,
+        resolved_field_name="fecha_inicio",
+    )
+
+    assert spec.python_type == "FlexibleDateValue"
+    assert spec.wrapper_type_names == ("FlexibleDatesType",)
+    assert spec.trace["wrapper_type_names"] == ("FlexibleDatesType",)
+    assert spec.trace["wrapper_policy_kinds"] == ("choice_object_candidate",)
+
+
 def test_build_domain_generation_unit_builds_sorted_field_specs():
     bundle = build_default_semantic_policy_bundle()
     policy_a = build_semantic_field_policy(
@@ -1164,6 +1230,25 @@ def test_specialized_controlled_reference_components_expose_expected_extra_field
     assert vocabulary.vocabulary_source == "THESAURUS"
     assert unresolved.raw_reference == "CVN_AGENCY_C"
     assert under_traced.raw_reference == "CVN_PRUEBA"
+
+
+def test_wrapper_value_components_expose_expected_fields():
+    flexible_date = FlexibleDateValue(year="2026", month="06", day="29")
+    official_id = OfficialIdValue(dni="12345678Z")
+    entity_type = EntityTypeValue(code="000", label="Entidad", others="Otra")
+    entity_name = EntityNameValue(name="Universidad", others="Otro nombre")
+
+    assert flexible_date.year == "2026"
+    assert flexible_date.month == "06"
+    assert flexible_date.day == "29"
+    assert official_id.dni == "12345678Z"
+    assert entity_type.code == "000"
+    assert entity_type.label == "Entidad"
+    assert entity_type.others == "Otra"
+    assert entity_name.name == "Universidad"
+    assert entity_name.others == "Otro nombre"
+
+
 def test_resolve_python_type_for_policy_returns_component_names_backed_by_real_components():
     bundle = build_default_semantic_policy_bundle()
     policies_and_expected_types = (
@@ -1455,18 +1540,34 @@ def test_collect_unit_import_types_collects_stdlib_shared_and_enum_types():
         enum_eligibility="ineligible",
         trace={},
     )
+    field_e = DomainFieldSpec(
+        field_name="identificador",
+        python_type="OfficialIdValue",
+        code="005",
+        xml_paths=(),
+        required=False,
+        repeated=False,
+        domain_shape_kind="plain_value",
+        enum_eligibility="ineligible",
+        trace={},
+        wrapper_type_names=("OfficialIdType",),
+    )
 
     unit = DomainGenerationUnit(
         module_name="cvn_item_060_010_000_000",
         class_name="DatosPersonales",
         source_group_key="060.010.000.000",
-        fields=(field_a, field_b, field_c, field_d),
+        fields=(field_a, field_b, field_c, field_d, field_e),
     )
 
     stdlib_types, shared_types, enum_types = collect_unit_import_types(unit)
 
     assert stdlib_types == ("Decimal",)
-    assert shared_types == ("BaseCvnDomainModel", "RegistryReference")
+    assert shared_types == (
+        "BaseCvnDomainModel",
+        "OfficialIdValue",
+        "RegistryReference",
+    )
     assert enum_types == ("SexoEnum",)
 
 
@@ -1892,6 +1993,8 @@ def test_get_canonical_generation_paths_returns_expected_keys_and_paths():
         "subtypes",
         "entity",
         "thesaurus",
+        "cvn_xsd",
+        "common_xsd",
     }
     assert paths["specification_manual"] == Path(
         "docs/CvnXML_v1.4.3_2.1_17012025/XML/SpecificationManual.xml"
@@ -1910,6 +2013,12 @@ def test_get_canonical_generation_paths_returns_expected_keys_and_paths():
     )
     assert paths["thesaurus"] == Path(
         "docs/CvnXML_v1.4.3_2.1_17012025/XML/Thesaurus.xml"
+    )
+    assert paths["cvn_xsd"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XSD/CVN.xsd"
+    )
+    assert paths["common_xsd"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XSD/Common.xsd"
     )
 
 
@@ -1997,6 +2106,12 @@ def test_generate_domain_models_orchestrates_pipeline_with_defaults(monkeypatch)
     assert cast(tuple[Path, dict[str, str]], recorded["write_args"]) == (
         Path("src/models/cvn/generated"),
         fake_rendered_files,
+    )
+    assert recorded["normalization_kwargs"]["cvn_xsd_path"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XSD/CVN.xsd"
+    )
+    assert recorded["normalization_kwargs"]["common_xsd_path"] == Path(
+        "docs/CvnXML_v1.4.3_2.1_17012025/XSD/Common.xsd"
     )
 
 
@@ -2113,6 +2228,12 @@ def test_generate_domain_models_passes_canonical_paths_to_normalization(monkeypa
         ),
         "thesaurus_path": Path(
             "docs/CvnXML_v1.4.3_2.1_17012025/XML/Thesaurus.xml"
+        ),
+        "cvn_xsd_path": Path(
+            "docs/CvnXML_v1.4.3_2.1_17012025/XSD/CVN.xsd"
+        ),
+        "common_xsd_path": Path(
+            "docs/CvnXML_v1.4.3_2.1_17012025/XSD/Common.xsd"
         ),
     }
 

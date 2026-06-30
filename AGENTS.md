@@ -67,6 +67,8 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
 - hotfix `#7`:
   `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
+- hotfix `#8`:
+  `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
 
 ### Development Reference
 
