@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference
 
 
 class OrganizacionDeActividadesDeIDI(BaseCvnDomainModel):
@@ -15,17 +15,17 @@ class OrganizacionDeActividadesDeIDI(BaseCvnDomainModel):
     pais_de_la_actividad: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_actividad: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_actividad: str | None = Field(default=None)
-    entidad_convocante: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_convocante: str | None = Field(default=None)
+    entidad_convocante: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_convocante: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_convocante_otros: str | None = Field(default=None)
     modo_de_participacion: str | None = Field(default=None)
     modo_de_participacion_otros: str | None = Field(default=None)
     ambito_de_la_reunion: ScopeReference | None = Field(default=None)
     ambito_de_la_reunion_otros: str | None = Field(default=None)
     numero_de_asistentes: Decimal | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
     duracion: str | None = Field(default=None)
     pais_de_la_entidad_convocante: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_convocante: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_convocante: str | None = Field(default=None)
-    fecha_de_finalizacion: str = Field(...)
+    fecha_de_finalizacion: FlexibleDateValue = Field(...)

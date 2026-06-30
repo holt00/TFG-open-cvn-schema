@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, VocabularyReference
 
 
 class SociedadesCientificasYAsociacionesProfesionales(BaseCvnDomainModel):
@@ -13,14 +13,14 @@ class SociedadesCientificasYAsociacionesProfesionales(BaseCvnDomainModel):
     nombre_de_la_sociedad: str | None = Field(default=None)
     pais_de_radicacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_radicacion: HierarchicalCodeReference | None = Field(default=None)
-    entidad_de_afiliacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_de_afiliacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     palabras_clave: list[VocabularyReference] = Field(default_factory=list)
     categoria_profesional: str | None = Field(default=None)
     tamano_de_la_sociedad: Decimal | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
-    fecha_de_finalizacion: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
+    fecha_de_finalizacion: FlexibleDateValue | None = Field(default=None)
     pais_de_la_entidad_de_afiliacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_afiliacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_de_afiliacion: str | None = Field(default=None)

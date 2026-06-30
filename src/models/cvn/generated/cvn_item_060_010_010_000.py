@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, IdentifierReference, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, FlexibleDateValue, HierarchicalCodeReference, IdentifierReference, SubtypeBackedValue
 
 
 class PublicacionesDocumentosCientificosYTecnicos(BaseCvnDomainModel):
@@ -19,10 +19,10 @@ class PublicacionesDocumentosCientificosYTecnicos(BaseCvnDomainModel):
     soporte: SubtypeBackedValue | None = Field(default=None)
     publicacion_volumen_revista_capitulo_libro: str | None = Field(default=None)
     publicacion_pagina_inicial_final: str | None = Field(default=None)
-    publicacion_editorial: str | None = Field(default=None)
+    publicacion_editorial: EntityNameValue | None = Field(default=None)
     publicacion_pais: str | None = Field(default=None)
     publicacion_comunidad_autonoma_region: HierarchicalCodeReference | None = Field(default=None)
-    publicacion_fecha: str | None = Field(default=None)
+    publicacion_fecha: FlexibleDateValue | None = Field(default=None)
     publicacion_direccion_electronica: str | None = Field(default=None)
     publicacion_isbn_issn: list[str] = Field(default_factory=list)
     publicacion_deposito_legal: str | None = Field(default=None)

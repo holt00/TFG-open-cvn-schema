@@ -10,6 +10,7 @@ from cvn_codegen.normalization_types import (
     SemanticReferenceKind,
     SerializationPattern,
     SourceTrace,
+    StructuralTypeEvidence,
     TreePathEntry,
     ReferenceTableEnumEvidence,
 )
@@ -58,6 +59,7 @@ def build_normalized_entry(
     manual_name: str | None = "Nombre de prueba",
     manual_short_name: str | None = "Prueba",
     xml_path: str | None = None,
+    structural_type_evidence: tuple[StructuralTypeEvidence, ...] = (),
 ) -> NormalizedCodeEntry:
     manual_entry = None
     if manual_type is not None:
@@ -97,6 +99,7 @@ def build_normalized_entry(
         tree_paths=tree_paths,
         source_files=source_files,
         reference_resolution=reference_resolution,
+        structural_type_evidence=structural_type_evidence,
     )
 
 def build_reference_resolution(
@@ -838,13 +841,76 @@ def test_validate_wrapper_case_resolves_wrapper_validation_cases():
         assert wrapper_policy.confidence == validation_case.expected_confidence
 
 
+def test_build_semantic_field_policy_attaches_terminal_wrapper_policy():
+    # Arrange
+    bundle = build_default_semantic_policy_bundle()
+    structural_type_evidence = StructuralTypeEvidence(
+        element_name="OfficialId",
+        declaring_type_name="PersonalIdentificationType",
+        structural_type_name="OfficialIdType",
+        xml_path="/Node/Agent/Property[@name='Identification']/Indicator[@name='OfficialId']",
+        source_xsd_file="CVN.xsd",
+        terminal_wrapper_type_name="OfficialIdType",
+    )
+    entry = build_normalized_entry(
+        code="000.010.000.100",
+        structural_type_evidence=(structural_type_evidence,),
+    )
+
+    # Act
+    field_policy = build_semantic_field_policy(entry, bundle)
+
+    # Assert
+    assert field_policy.wrapper_type_names == ("OfficialIdType",)
+    assert field_policy.wrapper_policy_kinds == (
+        WrapperPolicyKind.CHOICE_OBJECT_CANDIDATE,
+    )
+    assert (
+        StructuralLimitationFlag.CHOICE_NOT_ENFORCED
+        in field_policy.structural_limitation_flags
+    )
+    assert "wrapper_type:OfficialIdType" in field_policy.decision_trace.applied_rules
+    assert field_policy.decision_trace.terminal_wrapper_type_names == (
+        "OfficialIdType",
+    )
+
+
+def test_build_semantic_field_policy_does_not_attach_ancestor_only_wrapper():
+    # Arrange
+    bundle = build_default_semantic_policy_bundle()
+    structural_type_evidence = StructuralTypeEvidence(
+        element_name="DNI",
+        declaring_type_name="OfficialIdType",
+        structural_type_name="CVN_string",
+        xml_path="/Node/Agent/Property[@name='Identification']/Indicator[@name='OfficialId']/Indicator[@name='DNI']",
+        source_xsd_file="Common.xsd",
+        ancestor_wrapper_type_names=("OfficialIdType",),
+    )
+    entry = build_normalized_entry(
+        code="000.010.000.100",
+        structural_type_evidence=(structural_type_evidence,),
+    )
+
+    # Act
+    field_policy = build_semantic_field_policy(entry, bundle)
+
+    # Assert
+    assert field_policy.wrapper_type_names == ()
+    assert field_policy.wrapper_policy_kinds == ()
+    assert field_policy.decision_trace.terminal_wrapper_type_names == ()
+    assert field_policy.decision_trace.ancestor_wrapper_type_names == (
+        "OfficialIdType",
+    )
+    assert "wrapper_type:OfficialIdType" not in field_policy.decision_trace.applied_rules
+
+
 def test_get_wrapper_auto_application_limitation_documents_current_limit():
     # Act
     limitation = get_wrapper_auto_application_limitation()
 
     # Assert
-    assert "NormalizedCodeEntry" in limitation
-    assert "does not expose structural wrapper type names" in limitation
+    assert "structural_type_evidence" in limitation
+    assert "without structural XSD enrichment" in limitation
 
 def test_validation_inventory_has_required_case_ids():
     # Arrange

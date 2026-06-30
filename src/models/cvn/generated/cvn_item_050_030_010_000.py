@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, SubtypeBackedValue, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, FlexibleDateValue, HierarchicalCodeReference, SubtypeBackedValue, VocabularyReference
 
 
 class PropiedadIndustrialEIntelectual(BaseCvnDomainModel):
@@ -21,7 +21,7 @@ class PropiedadIndustrialEIntelectual(BaseCvnDomainModel):
     numero_de_solicitud: str | None = Field(default=None)
     pais_de_prioridad: str | None = Field(default=None)
     comunidad_autonoma_region_de_prioridad: HierarchicalCodeReference | None = Field(default=None)
-    fecha_de_registro: str | None = Field(default=None)
+    fecha_de_registro: FlexibleDateValue | None = Field(default=None)
     ambito_geografico_espana: bool | None = Field(default=None)
     ambito_geografico_patente_europea: bool | None = Field(default=None)
     ambito_geografico_internacional_no_ue: bool | None = Field(default=None)
@@ -30,12 +30,12 @@ class PropiedadIndustrialEIntelectual(BaseCvnDomainModel):
     explotacion_licencias_de_explotacion: bool | None = Field(default=None)
     explotacion_paises_en_los_que_se_ha_extendido_formalizado_separados_por: list[str] = Field(default_factory=list)
     explotacion_comunidad_autonoma_region_en_las_que_se_ha_extendido_formalizado: list[HierarchicalCodeReference] = Field(default_factory=list)
-    explotacion_empresas_entidades_que_estan_explotando_la_licencia: list[RegistryReference] = Field(default_factory=list)
+    explotacion_empresas_entidades_que_estan_explotando_la_licencia: list[EntityNameValue] = Field(default_factory=list)
     explotacion_en_exclusiva: bool | None = Field(default=None)
     generacion_de_una_empresa_innovadora: bool | None = Field(default=None)
     en_este_caso_el_resultado_en_relacion_con_la_empresa_es_de: str | None = Field(default=None)
     nombre_de_los_productos_a_los_que_ha_dado_lugar: list[str] = Field(default_factory=list)
-    entidad_titular_de_derechos: RegistryReference | None = Field(default=None)
+    entidad_titular_de_derechos: EntityNameValue | None = Field(default=None)
     numero_de_patente: str | None = Field(default=None)
-    fecha_de_concesion: str | None = Field(default=None)
+    fecha_de_concesion: FlexibleDateValue | None = Field(default=None)
     patente_pct: bool = Field(...)

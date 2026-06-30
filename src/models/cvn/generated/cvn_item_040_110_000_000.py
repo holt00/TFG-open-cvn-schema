@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class ProyectosDeInnovacionSanitaria(BaseCvnDomainModel):
@@ -24,15 +24,15 @@ class ProyectosDeInnovacionSanitaria(BaseCvnDomainModel):
     tipo_de_convocatoria: str | None = Field(default=None)
     tipo_de_convocatoria_otros: str | None = Field(default=None)
     nombre_del_de_la_investigador_a_principal_ip: str | None = Field(default=None)
-    entidad_financiadora: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_040_110_000_180: str | None = Field(default=None)
+    entidad_financiadora: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_040_110_000_180: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_040_110_000_190: str | None = Field(default=None)
     importe_concedido: Decimal | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
     duracion: str | None = Field(default=None)
     ciudad_de_la_entidad_financiadora: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_financiadora: HierarchicalCodeReference | None = Field(default=None)
     pais_de_la_entidad_financiadora: str | None = Field(default=None)
     tipo_de_entidad_otros_040_110_000_260: str | None = Field(default=None)
-    tipo_de_entidad_040_110_000_270: str | None = Field(default=None)
-    entidad_de_realizacion: RegistryReference | None = Field(default=None)
+    tipo_de_entidad_040_110_000_270: EntityTypeValue | None = Field(default=None)
+    entidad_de_realizacion: EntityNameValue | None = Field(default=None)

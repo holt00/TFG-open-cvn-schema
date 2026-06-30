@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, SubtypeBackedValue
 
 
 class OtraFormacionUniversitariaDePosgrado(BaseCvnDomainModel):
@@ -13,11 +13,11 @@ class OtraFormacionUniversitariaDePosgrado(BaseCvnDomainModel):
     pais_entidad_titulacion: str | None = Field(default=None)
     comunidad_autonoma_region_entidad_titulacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_entidad_titulacion: str | None = Field(default=None)
-    entidad_de_titulacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_de_titulacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    fecha_de_titulacion: str | None = Field(default=None)
+    fecha_de_titulacion: FlexibleDateValue | None = Field(default=None)
     calificacion_obtenida: str | None = Field(default=None)
-    facultad_escuela_unidad_centro_hospital_o_instituto: RegistryReference | None = Field(default=None)
+    facultad_escuela_unidad_centro_hospital_o_instituto: EntityNameValue | None = Field(default=None)
     titulo_homologado: bool | None = Field(default=None)
-    titulo_homologado_fecha_de_homologacion: str | None = Field(default=None)
+    titulo_homologado_fecha_de_homologacion: FlexibleDateValue | None = Field(default=None)

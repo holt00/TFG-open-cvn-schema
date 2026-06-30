@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference, VocabularyReference
 
 
 class ProyectosDeIDIFinanciadosEnConvocatoriasCompetitivasDeAdministracionesOEntidadesPublicasYPrivadas(BaseCvnDomainModel):
@@ -18,20 +18,20 @@ class ProyectosDeIDIFinanciadosEnConvocatoriasCompetitivasDeAdministracionesOEnt
     pais_de_la_entidad_de_realizacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_realizacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_de_realizacion: str | None = Field(default=None)
-    entidad_donde_se_desarrolla: RegistryReference = Field(...)
-    tipo_de_entidad_050_020_010_120: str | None = Field(default=None)
+    entidad_donde_se_desarrolla: EntityNameValue = Field(...)
+    tipo_de_entidad_050_020_010_120: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     nombre_del_de_la_investigador_a_principal_ip_co_ip: list[str] = Field(default_factory=list)
     numero_de_investigadores_as_participantes: Decimal = Field(...)
     numero_de_personas_ano: Decimal | None = Field(default=None)
     grado_de_contribucion: str | None = Field(default=None)
     calidad_en_que_ha_participado_otros: str | None = Field(default=None)
-    tipo_de_entidad_050_020_010_210: list[str] = Field(default_factory=list)
+    tipo_de_entidad_050_020_010_210: list[EntityTypeValue] = Field(default_factory=list)
     tipo_de_participacion: str | None = Field(default=None)
     tipo_de_participacion_otros: str | None = Field(default=None)
     nombre_del_programa_de_financiacion: str | None = Field(default=None)
     codigo_de_proyecto_segun_la_entidad_financiadora: str | None = Field(default=None)
-    fecha_de_inicio_del_proyecto: str = Field(...)
+    fecha_de_inicio_del_proyecto: FlexibleDateValue = Field(...)
     duracion_del_proyecto: str | None = Field(default=None)
     financiacion_del_proyecto_cuantia_total: Decimal | None = Field(default=None)
     financiacion_del_proyecto_cuantia_del_subproyecto: Decimal | None = Field(default=None)
@@ -40,7 +40,7 @@ class ProyectosDeIDIFinanciadosEnConvocatoriasCompetitivasDeAdministracionesOEnt
     financiacion_del_proyecto_mixto: Decimal | None = Field(default=None)
     resultados_mas_relevantes: str | None = Field(default=None)
     palabras_clave_050_020_010_350: list[VocabularyReference] = Field(default_factory=list)
-    entidades_participantes: list[RegistryReference] = Field(default_factory=list)
-    fecha_de_finalizacion: str = Field(...)
+    entidades_participantes: list[EntityNameValue] = Field(default_factory=list)
+    fecha_de_finalizacion: FlexibleDateValue = Field(...)
     explicacion_narrativa_de_la_aportacion_del_solicitante_al_proyecto: str = Field(...)
     regimen_de_dedicacion: str = Field(...)

@@ -3,17 +3,17 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, VocabularyReference
 
 
 class SituacionProfesionalActual(BaseCvnDomainModel):
     situacion_profesional_actual: list[str] = Field(default_factory=list)
     direccion_y_gestion: bool | None = Field(default=None)
-    entidad_empleadora: RegistryReference = Field(...)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_empleadora: EntityNameValue = Field(...)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    facultad_escuela_unidad_centro_hospital_o_instituto: RegistryReference | None = Field(default=None)
-    departamento_servicio_seccion_unidad_etc: RegistryReference | None = Field(default=None)
+    facultad_escuela_unidad_centro_hospital_o_instituto: EntityNameValue | None = Field(default=None)
+    departamento_servicio_seccion_unidad_etc: EntityNameValue | None = Field(default=None)
     ciudad_entidad_empleadora: str | None = Field(default=None)
     pais_entidad_empleadora: str | None = Field(default=None)
     comunidad_autonoma_region_entidad_empleadora: HierarchicalCodeReference | None = Field(default=None)
@@ -21,7 +21,7 @@ class SituacionProfesionalActual(BaseCvnDomainModel):
     fax: str | None = Field(default=None)
     correo_electronico: list[str] = Field(default_factory=list)
     categoria_profesional_puesto_o_cargo: str = Field(...)
-    fecha_de_inicio: str = Field(...)
+    fecha_de_inicio: FlexibleDateValue = Field(...)
     modalidad_de_contrato: str = Field(...)
     modalidad_de_contrato_otros: str | None = Field(default=None)
     regimen_de_dedicacion: str = Field(...)

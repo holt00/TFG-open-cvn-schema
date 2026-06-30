@@ -110,6 +110,19 @@ class ReferenceTableEnumEvidence:
 
 
 @dataclass(frozen=True)
+class StructuralTypeEvidence:
+    """Store structural XSD type evidence for one normalized tree path."""
+
+    element_name: str
+    declaring_type_name: str | None
+    structural_type_name: str | None
+    xml_path: str
+    source_xsd_file: str
+    terminal_wrapper_type_name: str | None = None
+    ancestor_wrapper_type_names: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
 class ReferenceResolution:
     """Represent resolved auxiliary-reference metadata for one manual reference."""
     raw_reference: str | None
@@ -176,6 +189,8 @@ class TreePathEntry:
         tree_value (str | None): Optional ``Value`` content found in the tree.
         xml_path (str): Stable XML-like path of the current tree node.
         trace (SourceTrace): Traceability back to the source XML element.
+        structural_type_evidence (StructuralTypeEvidence | None): Optional XSD
+            type evidence resolved upstream for this tree path.
     """
 
     code: str
@@ -185,6 +200,7 @@ class TreePathEntry:
     tree_value: str | None
     xml_path: str
     trace: SourceTrace
+    structural_type_evidence: StructuralTypeEvidence | None = None
 
 
 @dataclass(frozen=True)
@@ -201,6 +217,8 @@ class NormalizedCodeEntry:
             aggregate entry.
         reference_resolution (ReferenceResolution | None): Resolved auxiliary
             reference metadata attached to the aggregate entry when available.
+        structural_type_evidence (tuple[StructuralTypeEvidence, ...]): XSD type
+            evidence aggregated from tree paths.
     """
 
     code: str
@@ -208,6 +226,7 @@ class NormalizedCodeEntry:
     tree_paths: tuple[TreePathEntry, ...]
     source_files: tuple[str, ...]
     reference_resolution: ReferenceResolution | None = None
+    structural_type_evidence: tuple[StructuralTypeEvidence, ...] = ()
 
 
 @dataclass(frozen=True)

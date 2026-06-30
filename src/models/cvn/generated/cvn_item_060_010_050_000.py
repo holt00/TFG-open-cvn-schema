@@ -3,27 +3,27 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, VocabularyReference
 
 
 class EstanciasEnCentrosPublicosOPrivados(BaseCvnDomainModel):
     estancias_en_centros_publicos_o_privados: list[str] = Field(default_factory=list)
-    centro_entidad_de_realizacion: RegistryReference = Field(...)
+    centro_entidad_de_realizacion: EntityNameValue = Field(...)
     tipo_de_estancia_en_centro_de_realizacion: str = Field(...)
-    tipo_de_entidad_060_010_050_030: str | None = Field(default=None)
+    tipo_de_entidad_060_010_050_030: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_060_010_050_040: str | None = Field(default=None)
     localizacion_pais: str = Field(...)
     localizacion_comunidad_autonoma_region: HierarchicalCodeReference | None = Field(default=None)
     localizacion_localidad: str = Field(...)
-    localizacion_fecha_inicio: str = Field(...)
+    localizacion_fecha_inicio: FlexibleDateValue = Field(...)
     localizacion_duracion: str = Field(...)
     objetivo_de_la_estancia: str = Field(...)
     objetivo_de_la_estancia_otros: str | None = Field(default=None)
     codigo_unesco_especializacion_primaria: list[HierarchicalCodeReference] = Field(default_factory=list)
     codigo_unesco_especializacion_secundaria: list[HierarchicalCodeReference] = Field(default_factory=list)
     codigo_unesco_especializacion_terciaria: list[HierarchicalCodeReference] = Field(default_factory=list)
-    entidad_fuente_de_la_financiacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_060_010_050_180: str | None = Field(default=None)
+    entidad_fuente_de_la_financiacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_060_010_050_180: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_060_010_050_190: str | None = Field(default=None)
     nombre_del_programa: str | None = Field(default=None)
     tareas_contrastables_desarrolladas: str = Field(...)
@@ -33,5 +33,5 @@ class EstanciasEnCentrosPublicosOPrivados(BaseCvnDomainModel):
     pais_de_la_entidad_financiadora: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_financiadora: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_financiadora: str | None = Field(default=None)
-    facultad_escuela_unidad_centro_hospital_o_instituto: RegistryReference | None = Field(default=None)
-    fecha_de_finalizacion: str = Field(...)
+    facultad_escuela_unidad_centro_hospital_o_instituto: EntityNameValue | None = Field(default=None)
+    fecha_de_finalizacion: FlexibleDateValue = Field(...)

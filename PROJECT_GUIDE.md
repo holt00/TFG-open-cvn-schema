@@ -120,8 +120,8 @@ files in order:
   corrective plan for replacing hardcoded enum decisions with dynamic
   `ReferenceTables.xml` evidence in the normalization-to-semantic handoff
 - `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`:
-  corrective plan for exposing wrapper type evidence to semantic and domain
-  generation stages without raw structural rediscovery
+  implemented corrective handoff for exposing wrapper type evidence to semantic
+  and domain generation stages without raw structural rediscovery
 
 ### Development Reference
 

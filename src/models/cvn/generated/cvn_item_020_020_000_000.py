@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, SubtypeBackedValue
 
 
 class FormacionEspecializadaContinuadaTecnicaProfesionalizadaDeReciclajeYActualizacionDistintaALaFormacionAcademicaRegladaYALaSanitaria(BaseCvnDomainModel):
@@ -14,10 +14,10 @@ class FormacionEspecializadaContinuadaTecnicaProfesionalizadaDeReciclajeYActuali
     pais_entidad_titulacion: str | None = Field(default=None)
     comunidad_autonoma_region_entidad_titulacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_entidad_titulacion: str | None = Field(default=None)
-    entidad_de_titulacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_de_titulacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     objetivos_de_la_entidad: str | None = Field(default=None)
     nombre_del_responsable_de_la_formacion: str | None = Field(default=None)
     duracion_en_horas: str | None = Field(default=None)
-    fecha_de_finalizacion_de_la_formacion: str | None = Field(default=None)
+    fecha_de_finalizacion_de_la_formacion: FlexibleDateValue | None = Field(default=None)

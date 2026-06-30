@@ -3,12 +3,12 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, HierarchicalCodeReference
 
 
 class EntidadEsDestinatariaSDeLaActividad(BaseCvnDomainModel):
-    entidad_es_destinataria_s_de_la_actividad: list[RegistryReference] = Field(default_factory=list)
-    tipo_de_entidad_es: list[str] = Field(default_factory=list)
+    entidad_es_destinataria_s_de_la_actividad: list[EntityNameValue] = Field(default_factory=list)
+    tipo_de_entidad_es: list[EntityTypeValue] = Field(default_factory=list)
     tipo_de_entidad_es_otros: list[str] = Field(default_factory=list)
     pais_de_la_entidad_destinataria: list[str] = Field(default_factory=list)
     comunidad_autonoma_region_de_la_entidad_destinataria: list[HierarchicalCodeReference] = Field(default_factory=list)

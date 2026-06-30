@@ -3,19 +3,19 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference
 
 
 class PeriodosDeActividadInvestigadoraDocenteYDeTransferenciaDelConocimiento(BaseCvnDomainModel):
     periodos_de_actividad_investigadora_docente_y_de_transferencia_del_conocimiento: list[str] = Field(default_factory=list)
     pais_de_la_entidad_que_acredita: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_que_acredita: HierarchicalCodeReference | None = Field(default=None)
-    entidad_que_concede: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_que_concede: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     ambito: ScopeReference | None = Field(default=None)
     ambito_otros: str | None = Field(default=None)
-    fecha_de_obtencion: str | None = Field(default=None)
+    fecha_de_obtencion: FlexibleDateValue | None = Field(default=None)
     ciudad_de_la_entidad_que_acredita: str | None = Field(default=None)
     nombre_de_la_actuacion: str | None = Field(default=None)
     tipo_de_actividad: str | None = Field(default=None)

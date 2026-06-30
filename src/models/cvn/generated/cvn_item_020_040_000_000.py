@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class FormacionSanitariaEnID(BaseCvnDomainModel):
@@ -12,19 +12,19 @@ class FormacionSanitariaEnID(BaseCvnDomainModel):
     pais_entidad_de_titulacion: str | None = Field(default=None)
     c_auton_reg_de_la_entidad_de_titulacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_de_titulacion: str | None = Field(default=None)
-    entidad_donde_se_llevo_a_cabo: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_donde_se_llevo_a_cabo: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    entidad_a_la_que_pertenece_el_programa: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_a_la_que_pertenece_el_programa: str | None = Field(default=None)
+    entidad_a_la_que_pertenece_el_programa: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_a_la_que_pertenece_el_programa: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_a_la_que_pertenece_el_programa_otros: str | None = Field(default=None)
-    departamento: str | None = Field(default=None)
-    servicio: str | None = Field(default=None)
-    seccion: str | None = Field(default=None)
-    unidad: str | None = Field(default=None)
+    departamento: EntityNameValue | None = Field(default=None)
+    servicio: EntityNameValue | None = Field(default=None)
+    seccion: EntityNameValue | None = Field(default=None)
+    unidad: EntityNameValue | None = Field(default=None)
     duracion_efectiva: str | None = Field(default=None)
-    fecha_inicio_de_la_formacion: str | None = Field(default=None)
-    fecha_de_finalizacion_de_la_formacion: str | None = Field(default=None)
+    fecha_inicio_de_la_formacion: FlexibleDateValue | None = Field(default=None)
+    fecha_de_finalizacion_de_la_formacion: FlexibleDateValue | None = Field(default=None)
     calificacion_obtenida: str | None = Field(default=None)
     pais_entidad_de_realizacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_realizacion: HierarchicalCodeReference | None = Field(default=None)

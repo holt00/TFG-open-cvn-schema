@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, ScopeReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference, VocabularyReference
 
 
 class ResultadosDerivadosDeActividadesEspecializadasYDeTransferenciaNoIncluidosEnApartadosAnteriores(BaseCvnDomainModel):
@@ -24,9 +24,9 @@ class ResultadosDerivadosDeActividadesEspecializadasYDeTransferenciaNoIncluidosE
     clave_de_actividad_convenios_de_colaboracion: bool | None = Field(default=None)
     ambito_de_la_actividad: ScopeReference | None = Field(default=None)
     ambito_de_la_actividad_otros: str | None = Field(default=None)
-    tipo_de_entidad_es_050_030_020_190: list[str] = Field(default_factory=list)
-    tipo_de_entidad_es_050_030_020_230: list[str] = Field(default_factory=list)
-    fecha_de_inicio_de_la_actividad: str | None = Field(default=None)
+    tipo_de_entidad_es_050_030_020_190: list[EntityTypeValue] = Field(default_factory=list)
+    tipo_de_entidad_es_050_030_020_230: list[EntityTypeValue] = Field(default_factory=list)
+    fecha_de_inicio_de_la_actividad: FlexibleDateValue | None = Field(default=None)
     duracion: str | None = Field(default=None)
     resultados_mas_relevantes: str | None = Field(default=None)
     palabras_clave: list[VocabularyReference] = Field(default_factory=list)

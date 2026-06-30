@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, IdentifierReference
+from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, IdentifierReference, OfficialIdValue
 
 
 class Apellidos(BaseCvnDomainModel):
@@ -15,7 +15,7 @@ class Apellidos(BaseCvnDomainModel):
     pais_de_nacimiento: str | None = Field(default=None)
     comunidad_autonoma_region_de_nacimiento: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_nacimiento: str | None = Field(default=None)
-    dni: str | None = Field(default=None)
+    dni: OfficialIdValue | None = Field(default=None)
     nie: str | None = Field(default=None)
     pasaporte: str | None = Field(default=None)
     fotografia_digital: str | None = Field(default=None)

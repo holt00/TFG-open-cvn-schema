@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, SubtypeBackedValue
 
 
 class CursosYSeminariosImpartidosOrientadosALaMejoraDeLaAtencionDeSaludParaProfesionalesSanitarios(BaseCvnDomainModel):
@@ -16,16 +16,16 @@ class CursosYSeminariosImpartidosOrientadosALaMejoraDeLaAtencionDeSaludParaProfe
     ciudad_de_la_entidad_organizadora: str | None = Field(default=None)
     objetivos_del_curso: str | None = Field(default=None)
     perfil_de_los_as_destinatarios_as: str | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
-    fecha_de_finalizacion: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
+    fecha_de_finalizacion: FlexibleDateValue | None = Field(default=None)
     horas_impartidas: Decimal | None = Field(default=None)
     tipo_de_participacion: str | None = Field(default=None)
     tipo_de_participacion_otros: str | None = Field(default=None)
-    entidad_responsable_de_la_formacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_040_090_000_150: str | None = Field(default=None)
+    entidad_responsable_de_la_formacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_040_090_000_150: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_040_090_000_160: str | None = Field(default=None)
-    entidad_de_realizacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_040_090_000_190: str | None = Field(default=None)
+    entidad_de_realizacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_040_090_000_190: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_040_090_000_200: str | None = Field(default=None)
     idioma: str | None = Field(default=None)
     publicacion_tipo: SubtypeBackedValue | None = Field(default=None)

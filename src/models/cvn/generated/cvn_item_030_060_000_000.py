@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, SubtypeBackedValue
 
 
 class CursosYSeminariosImpartidos(BaseCvnDomainModel):
@@ -16,13 +16,13 @@ class CursosYSeminariosImpartidos(BaseCvnDomainModel):
     pais_entidad_organizadora: str | None = Field(default=None)
     comunidad_autonoma_region_entidad_organizadora: HierarchicalCodeReference | None = Field(default=None)
     ciudad_entidad_organizadora: str | None = Field(default=None)
-    entidad_organizadora: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_organizadora: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     objetivos_del_curso: str | None = Field(default=None)
     perfil_de_los_as_destinatarios_as: str | None = Field(default=None)
     idioma_en_que_se_impartio: str | None = Field(default=None)
-    fecha_de_imparticion: str | None = Field(default=None)
+    fecha_de_imparticion: FlexibleDateValue | None = Field(default=None)
     horas_impartidas: Decimal | None = Field(default=None)
     tipo_de_participacion: str | None = Field(default=None)
     tipo_de_participacion_otros: str | None = Field(default=None)

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class FormacionSanitariaEspecializada(BaseCvnDomainModel):
@@ -13,16 +13,16 @@ class FormacionSanitariaEspecializada(BaseCvnDomainModel):
     pais_entidad_de_realizacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_realizacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_entidad_de_realizacion: str | None = Field(default=None)
-    entidad_donde_se_llevo_a_cabo_la_especialidad: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_donde_se_llevo_a_cabo_la_especialidad: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    entidad_que_expide_el_titulo_de_especialista: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_que_expide_el_titulo_de_especialista: str | None = Field(default=None)
+    entidad_que_expide_el_titulo_de_especialista: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_que_expide_el_titulo_de_especialista: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_que_expide_el_titulo_de_especialista_otros: str | None = Field(default=None)
-    fecha_inicio_de_la_formacion: str | None = Field(default=None)
-    fecha_de_finalizacion_de_la_formacion: str | None = Field(default=None)
+    fecha_inicio_de_la_formacion: FlexibleDateValue | None = Field(default=None)
+    fecha_de_finalizacion_de_la_formacion: FlexibleDateValue | None = Field(default=None)
     tiempo_de_permanencia_en_la_entidad: str | None = Field(default=None)
-    fecha_de_convalidacion: str | None = Field(default=None)
+    fecha_de_convalidacion: FlexibleDateValue | None = Field(default=None)
     pais_de_la_entidad_que_expide_el_titulo: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_que_expide_el_titulo: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_que_expide_el_titulo: str | None = Field(default=None)

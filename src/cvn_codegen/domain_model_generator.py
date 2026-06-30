@@ -160,8 +160,26 @@ def get_python_type_for_controlled_reference(policy: SemanticFieldPolicy) -> str
         return "UnderTracedReference"
     return "str"
 
+
+def get_python_type_for_wrapper(policy: SemanticFieldPolicy) -> str | None:
+    wrapper_type_by_structural_name = {
+        "FlexibleDatesType": "FlexibleDateValue",
+        "OfficialIdType": "OfficialIdValue",
+        "EntityTypeType": "EntityTypeValue",
+        "EntityNameType": "EntityNameValue",
+    }
+    for wrapper_type_name in policy.wrapper_type_names:
+        python_type = wrapper_type_by_structural_name.get(wrapper_type_name)
+        if python_type is not None:
+            return python_type
+    return None
+
+
 def resolve_python_type_for_policy(policy: SemanticFieldPolicy) -> str:
-    if is_controlled_reference_field(policy):
+    wrapper_type = get_python_type_for_wrapper(policy)
+    if wrapper_type is not None:
+        base_type = wrapper_type
+    elif is_controlled_reference_field(policy):
         base_type = get_python_type_for_controlled_reference(policy)
     else:
         base_type = get_python_type_for_base_kind(policy)
@@ -182,12 +200,18 @@ def build_domain_field_spec(
         repeated=is_repeated_field(policy),
         domain_shape_kind=policy.domain_shape_kind.value,
         enum_eligibility=policy.enum_eligibility.value,
+        wrapper_type_names=policy.wrapper_type_names,
         trace={
             "code": policy.code,
             "xml_paths": policy.xml_paths,
             "base_kind": policy.base_kind.value,
             "domain_shape_kind": policy.domain_shape_kind.value,
             "enum_eligibility": policy.enum_eligibility.value,
+            "wrapper_type_names": policy.wrapper_type_names,
+            "wrapper_policy_kinds": tuple(
+                wrapper_policy_kind.value
+                for wrapper_policy_kind in policy.wrapper_policy_kinds
+            ),
         },
     )
 
@@ -484,6 +508,10 @@ def collect_unit_import_types(
         "VocabularyReference",
         "UnresolvedReference",
         "UnderTracedReference",
+        "FlexibleDateValue",
+        "OfficialIdValue",
+        "EntityTypeValue",
+        "EntityNameValue",
     }
 
     for field in unit.fields:
@@ -683,7 +711,9 @@ def write_rendered_domain_files(
 
 
 def get_canonical_generation_paths() -> dict[str, Path]:
-    xml_dir = Path("docs/CvnXML_v1.4.3_2.1_17012025/XML")
+    source_package_dir = Path("docs/CvnXML_v1.4.3_2.1_17012025")
+    xml_dir = source_package_dir / "XML"
+    xsd_dir = source_package_dir / "XSD"
 
     return {
         "specification_manual": xml_dir / "SpecificationManual.xml",
@@ -692,6 +722,8 @@ def get_canonical_generation_paths() -> dict[str, Path]:
         "subtypes": xml_dir / "Subtype_Spa.xml",
         "entity": xml_dir / "Entity.xml",
         "thesaurus": xml_dir / "Thesaurus.xml",
+        "cvn_xsd": xsd_dir / "CVN.xsd",
+        "common_xsd": xsd_dir / "Common.xsd",
     }
 
 
@@ -714,6 +746,8 @@ def generate_domain_models(
         subtypes_path=canonical_paths["subtypes"],
         entity_path=canonical_paths["entity"],
         thesaurus_path=canonical_paths["thesaurus"],
+        cvn_xsd_path=canonical_paths["cvn_xsd"],
+        common_xsd_path=canonical_paths["common_xsd"],
     )
 
     policy_index = build_semantic_policy_index(

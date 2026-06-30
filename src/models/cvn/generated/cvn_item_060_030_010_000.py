@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, VocabularyReference
 
 
 class AyudasYBecasObtenidas(BaseCvnDomainModel):
@@ -16,13 +16,13 @@ class AyudasYBecasObtenidas(BaseCvnDomainModel):
     palabras_clave: list[VocabularyReference] = Field(default_factory=list)
     finalidad: str | None = Field(default=None)
     finalidad_otros: str | None = Field(default=None)
-    entidad_que_la_concede: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_que_la_concede: str | None = Field(default=None)
+    entidad_que_la_concede: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_que_la_concede: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_que_la_concede_otros: str | None = Field(default=None)
     importe: Decimal | None = Field(default=None)
-    fecha: str | None = Field(default=None)
+    fecha: FlexibleDateValue | None = Field(default=None)
     duracion_de_la_ayuda: str | None = Field(default=None)
     ciudad_de_la_entidad_que_la_concede: str | None = Field(default=None)
-    fecha_de_finalizacion: str = Field(...)
-    facultad_escuela_unidad_centro_hospital_o_instituto: RegistryReference | None = Field(default=None)
-    entidad_de_realizacion: RegistryReference = Field(...)
+    fecha_de_finalizacion: FlexibleDateValue = Field(...)
+    facultad_escuela_unidad_centro_hospital_o_instituto: EntityNameValue | None = Field(default=None)
+    entidad_de_realizacion: EntityNameValue = Field(...)

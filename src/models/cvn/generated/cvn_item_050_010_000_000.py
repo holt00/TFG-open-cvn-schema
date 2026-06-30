@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, VocabularyReference
 
 
 class GruposEquiposDeInvestigacionDesarrolloOInnovacion(BaseCvnDomainModel):
@@ -17,11 +17,11 @@ class GruposEquiposDeInvestigacionDesarrolloOInnovacion(BaseCvnDomainModel):
     comunidad_autonoma_region_de_radicacion_del_grupo: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_radicacion_del_grupo: str | None = Field(default=None)
     nombre_del_de_la_investigador_a_principal_ip: str | None = Field(default=None)
-    entidad_a_la_que_pertenece: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_a_la_que_pertenece: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     numero_de_componentes_del_grupo: Decimal | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
     duracion: str | None = Field(default=None)
     clases_de_colaboracion: str | None = Field(default=None)
     resultados_numero_de_tesis_dirigidas: Decimal | None = Field(default=None)

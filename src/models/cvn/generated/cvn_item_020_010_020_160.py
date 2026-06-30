@@ -3,12 +3,12 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, FlexibleDateValue
 
 
 class SuficienciaInvestigadoraDeaEntidad(BaseCvnDomainModel):
-    suficiencia_investigadora_dea_entidad: RegistryReference | None = Field(default=None)
-    suficiencia_investigadora_dea_fecha: str | None = Field(default=None)
+    suficiencia_investigadora_dea_entidad: EntityNameValue | None = Field(default=None)
+    suficiencia_investigadora_dea_fecha: FlexibleDateValue | None = Field(default=None)
     titulo_de_la_tesis: str | None = Field(default=None)
     director_a_de_tesis: str | None = Field(default=None)
     codirector_a_de_tesis: list[str] = Field(default_factory=list)

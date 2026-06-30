@@ -182,6 +182,7 @@ Official XSDs
   -> structural Pydantic bindings
 
 SpecificationManual.xml + CVNTreeModel.xml
+  + optional CVN.xsd/Common.xsd structural type trace
   -> normalization
   -> semantic mapping rules and overrides
   -> domain Pydantic models
@@ -200,8 +201,13 @@ This means:
   roadmap issues, including:
   - normalized entries by CVN code
   - tree entries by technical XML path
+  - optional structural type evidence when `cvn_xsd_path` and `common_xsd_path`
+    are provided
   - source-exclusive code sets
   - currently documented mismatch reporting
+- canonical domain generation provides `CVN.xsd` and `Common.xsd` to this entry
+  point so wrapper policies can be attached without generator-side raw XSD
+  inspection
 - lower-level helper functions inside `cvn_codegen.normalization` remain
   importable when needed, but they are not the preferred integration surface for
   later stages

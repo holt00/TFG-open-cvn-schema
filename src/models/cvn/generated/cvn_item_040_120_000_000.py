@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class ProyectosParaLaPlanificacionMejoraDeLaSanidad(BaseCvnDomainModel):
@@ -15,17 +15,17 @@ class ProyectosParaLaPlanificacionMejoraDeLaSanidad(BaseCvnDomainModel):
     tipo_de_participacion: str | None = Field(default=None)
     tipo_de_participacion_otros: str | None = Field(default=None)
     regimen_de_dedicacion: str | None = Field(default=None)
-    entidad_financiadora: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_financiadora: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    entidad_de_realizacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_de_realizacion: str | None = Field(default=None)
+    entidad_de_realizacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_de_realizacion: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_de_realizacion_otros: str | None = Field(default=None)
     tipo_de_convocatoria: str | None = Field(default=None)
     tipo_de_convocatoria_otros: str | None = Field(default=None)
     nombre_de_la_convocatoria: str | None = Field(default=None)
     referencia_de_la_convocatoria: str | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
     duracion: str | None = Field(default=None)
     nombre_del_de_la_investigador_a_principal_ip: str | None = Field(default=None)
     grado_de_responsabilidad: str | None = Field(default=None)

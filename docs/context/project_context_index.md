@@ -92,8 +92,8 @@ Agents should also read `AGENTS.md` before this file.
   corrective plan for dynamic strict-enum eligibility evaluation across
   `ReferenceTables.xml` without semantic-policy hardcoding
 - `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`:
-  corrective plan for exposing wrapper type evidence to downstream semantic and
-  domain generation without raw structural rediscovery
+  implemented corrective handoff for exposing wrapper type evidence to downstream
+  semantic and domain generation without raw structural rediscovery
 
 ### Development And Contribution
 
@@ -177,6 +177,8 @@ docs/CvnXML_v1.4.3_2.1_17012025/
   `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
 - Hotfix `#7`:
   `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
+- Hotfix `#8`:
+  `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
 
 Each issue document records:
 

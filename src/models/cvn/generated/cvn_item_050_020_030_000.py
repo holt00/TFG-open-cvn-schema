@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference
+from models.cvn.components import BaseCvnDomainModel, FlexibleDateValue, HierarchicalCodeReference
 
 
 class ObrasArtisticasYProfesionales(BaseCvnDomainModel):
@@ -18,7 +18,7 @@ class ObrasArtisticasYProfesionales(BaseCvnDomainModel):
     caracteristicas_monografica: bool | None = Field(default=None)
     caracteristicas_catalogo: bool | None = Field(default=None)
     caracteristicas_comisario_de_exposicion: bool | None = Field(default=None)
-    caracteristicas_fecha: str | None = Field(default=None)
+    caracteristicas_fecha: FlexibleDateValue | None = Field(default=None)
     reconocimiento_y_repercusion_catalogacion: str | None = Field(default=None)
     reconocimiento_y_repercusion_premio: str | None = Field(default=None)
     reconocimiento_y_repercusion_publicacion: str | None = Field(default=None)

@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, FlexibleDateValue, SubtypeBackedValue
 
 
 class ProtocolosYOtrosMaterialesDeAtencionDeSalud(BaseCvnDomainModel):
@@ -13,7 +13,7 @@ class ProtocolosYOtrosMaterialesDeAtencionDeSalud(BaseCvnDomainModel):
     nombre_del_protocolo_material: str | None = Field(default=None)
     autores_as_p_o_de_firma_nombres: list[str] = Field(default_factory=list)
     posicion_del_de_la_solicitante_sobre_el_total: Decimal | None = Field(default=None)
-    fecha_de_elaboracion: str | None = Field(default=None)
+    fecha_de_elaboracion: FlexibleDateValue | None = Field(default=None)
     tipologia: SubtypeBackedValue | None = Field(default=None)
     tipologia_otros: str | None = Field(default=None)
     publicacion_titulo: str | None = Field(default=None)

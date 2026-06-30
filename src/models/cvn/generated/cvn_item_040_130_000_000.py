@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference, SubtypeBackedValue
 
 
 class CongresosCursosYSeminariosOrientadosALaAtencionDeSalud(BaseCvnDomainModel):
@@ -14,14 +14,14 @@ class CongresosCursosYSeminariosOrientadosALaAtencionDeSalud(BaseCvnDomainModel)
     pais_de_la_entidad_de_realizacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_realizacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_de_realizacion: str | None = Field(default=None)
-    entidad_organizadora: RegistryReference | None = Field(default=None)
+    entidad_organizadora: EntityNameValue | None = Field(default=None)
     ambito_del_evento: ScopeReference | None = Field(default=None)
     ambito_del_evento_otros: str | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     tipo_de_participacion: str | None = Field(default=None)
     tipo_de_participacion_otros: str | None = Field(default=None)
-    fecha_de_presentacion: str | None = Field(default=None)
+    fecha_de_presentacion: FlexibleDateValue | None = Field(default=None)
     idioma_de_la_ponencia: str | None = Field(default=None)
     publicacion_titulo: str | None = Field(default=None)
     pais_de_la_entidad_financiadora: str | None = Field(default=None)

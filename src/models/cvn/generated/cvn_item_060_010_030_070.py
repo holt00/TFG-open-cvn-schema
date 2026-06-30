@@ -3,18 +3,18 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference
 
 
 class AmbitoDelEvento060010030070(BaseCvnDomainModel):
     ambito_del_evento: ScopeReference | None = Field(default=None)
     ambito_del_evento_otros: str | None = Field(default=None)
     localizacion_nombre_del_evento: str | None = Field(default=None)
-    localizacion_entidad_organizadora: RegistryReference | None = Field(default=None)
-    localizacion_tipo_de_entidad: str | None = Field(default=None)
+    localizacion_entidad_organizadora: EntityNameValue | None = Field(default=None)
+    localizacion_tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     localizacion_tipo_de_entidad_otros: str | None = Field(default=None)
     localizacion_pais: str | None = Field(default=None)
     localizacion_comunidad_autonoma_region: HierarchicalCodeReference | None = Field(default=None)
     localizacion_ciudad: str | None = Field(default=None)
-    localizacion_fecha: str | None = Field(default=None)
-    fecha_de_finalizacion: str = Field(...)
+    localizacion_fecha: FlexibleDateValue | None = Field(default=None)
+    fecha_de_finalizacion: FlexibleDateValue = Field(...)

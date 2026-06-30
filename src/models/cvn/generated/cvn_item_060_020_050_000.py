@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class ForosYComitesNacionalesEInternacionales(BaseCvnDomainModel):
@@ -12,15 +12,15 @@ class ForosYComitesNacionalesEInternacionales(BaseCvnDomainModel):
     pais_de_la_entidad_de_realizacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_realizacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_de_realizacion: str | None = Field(default=None)
-    entidad_organizadora: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_organizadora: str | None = Field(default=None)
+    entidad_organizadora: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_organizadora: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_organizadora_otros: str | None = Field(default=None)
     categoria_profesional: str | None = Field(default=None)
-    organismo_que_representa: RegistryReference | None = Field(default=None)
-    tipo_de_organismo_que_representa: str | None = Field(default=None)
+    organismo_que_representa: EntityNameValue | None = Field(default=None)
+    tipo_de_organismo_que_representa: EntityTypeValue | None = Field(default=None)
     tipo_de_organismo_que_representa_otros: str | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
-    fecha_de_finalizacion: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
+    fecha_de_finalizacion: FlexibleDateValue | None = Field(default=None)
     pais_de_la_entidad_organizadora: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_organizadora: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_organizadora: str | None = Field(default=None)

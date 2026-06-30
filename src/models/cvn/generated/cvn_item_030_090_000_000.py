@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, SubtypeBackedValue
 
 
 class EventosConIntervencionesOrientadasALaFormacionDocente(BaseCvnDomainModel):
@@ -14,13 +14,13 @@ class EventosConIntervencionesOrientadasALaFormacionDocente(BaseCvnDomainModel):
     pais_de_celebracion: str | None = Field(default=None)
     comunidad_autonoma_region_de_celebracion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_celebracion: str | None = Field(default=None)
-    entidad_organizadora: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_organizadora: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     objetivos_del_evento: str | None = Field(default=None)
     perfil_de_los_as_destinatarios_as: str | None = Field(default=None)
     idioma_de_la_presentacion: str | None = Field(default=None)
-    fecha_de_presentacion: str | None = Field(default=None)
+    fecha_de_presentacion: FlexibleDateValue | None = Field(default=None)
     tipo_de_participacion: str | None = Field(default=None)
     tipo_de_participacion_otros: str | None = Field(default=None)
     pais_de_la_entidad_organizadora: str | None = Field(default=None)
@@ -28,5 +28,5 @@ class EventosConIntervencionesOrientadasALaFormacionDocente(BaseCvnDomainModel):
     ciudad_de_la_entidad_organizadora: str | None = Field(default=None)
     publicacion_tipo: SubtypeBackedValue | None = Field(default=None)
     numero_de_horas: str = Field(...)
-    fecha_de_inicio: str = Field(...)
-    fecha_de_finalizacion: str = Field(...)
+    fecha_de_inicio: FlexibleDateValue = Field(...)
+    fecha_de_finalizacion: FlexibleDateValue = Field(...)

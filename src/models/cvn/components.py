@@ -66,3 +66,32 @@ class UnresolvedReference(BaseControlledReferenceValue):
 
 class UnderTracedReference(BaseControlledReferenceValue):
     raw_reference: str | None = None
+
+
+class FlexibleDateValue(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    day: str | None = None
+    month: str | None = None
+    year: str | None = None
+    raw_value: str | None = None
+
+
+class OfficialIdValue(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    dni: str | None = None
+    passport: str | None = None
+    nie: str | None = None
+    others: str | None = None
+
+
+class EntityTypeValue(BaseControlledReferenceValue):
+    others: str | None = None
+
+
+class EntityNameValue(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str | None = None
+    others: str | None = None

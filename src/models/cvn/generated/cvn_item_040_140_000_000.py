@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, VocabularyReference
 
 
 class OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior040140000000(BaseCvnDomainModel):
@@ -13,14 +13,14 @@ class OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior040140000000(BaseCvn
     pais_de_la_entidad_de_realizacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_realizacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_de_realizacion: str | None = Field(default=None)
-    entidad_de_la_experiencia: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_de_la_experiencia: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    entidad_de_concesion_del_merito: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_de_concesion_del_merito: str | None = Field(default=None)
+    entidad_de_concesion_del_merito: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_de_concesion_del_merito: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_de_concesion_del_merito_otros: str | None = Field(default=None)
-    fecha_de_finalizacion_de_la_experiencia: str | None = Field(default=None)
-    fecha_de_la_concesion: str | None = Field(default=None)
+    fecha_de_finalizacion_de_la_experiencia: FlexibleDateValue | None = Field(default=None)
+    fecha_de_la_concesion: FlexibleDateValue | None = Field(default=None)
     pais_de_la_entidad_financiadora: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_financiadora: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_financiadora: str | None = Field(default=None)

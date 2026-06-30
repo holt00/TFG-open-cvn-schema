@@ -21,7 +21,7 @@ do not need to rediscover them.
   - issue `#14` defines the semantic policy
   - issue `#15` should restore domain-facing semantics
 
-### Wrapper Type Names Are Not Present In The Normalized Field Handoff
+### Wrapper Type Evidence Requires XSD-Enriched Normalization
 
 - Affected wrapper families include:
   - `FlexibleDatesType`
@@ -29,22 +29,19 @@ do not need to rediscover them.
   - `EntityTypeType`
   - `EntityNameType`
 - Confirmed behavior:
-  - the current normalized tree handoff preserves CVN codes, XML paths,
-    property names, indicator names, and selected `tree_value` content
-  - it does not preserve wrapper type names needed for automatic wrapper-aware
-    field attachment in the domain generator
-  - the issue `#15` evidence probe found `0` exact and `0` partial wrapper-name
-    matches across `5051` extracted tree entries
+  - hotfix `#8` adds typed `StructuralTypeEvidence` to the normalized handoff
+    when normalization receives `cvn_xsd_path` and `common_xsd_path`
+  - canonical domain generation provides those XSD paths and can attach wrapper
+    policy without scanning raw XSD files inside generator logic
+  - normalization calls that omit XSD paths preserve backward-compatible empty
+    structural evidence and therefore cannot attach wrapper-aware field shapes
 - Impact:
-  - issue `#15` cannot safely attach wrapper-aware field shapes from normalized
-    metadata alone
-  - the generator must not recover wrappers by scanning raw XSD files or
-    generated structural bindings because that would violate the pipeline
-    boundary
+  - canonical issue `#15` generation can consume wrapper-aware domain shapes
+  - custom callers that need wrapper attachment must use the XSD-enriched
+    normalization path
 - Expected follow-up:
-  - hotfix `#8` must extend the normalized or semantic handoff with typed wrapper
-    evidence
-  - issue `#16` should add regression coverage once that handoff exists
+  - issue `#16` should keep regression coverage for both enriched wrapper
+    handoff behavior and no-XSD backward-compatible behavior
 
 ### `minOccurs` Is Not Enforced For Generated Lists
 

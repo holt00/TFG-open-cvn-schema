@@ -5,12 +5,12 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, UnresolvedReference
+from models.cvn.components import BaseCvnDomainModel, FlexibleDateValue, UnresolvedReference
 
 
 class ProduccionCientifica(BaseCvnDomainModel):
     produccion_cientifica: list[str] = Field(default_factory=list)
     indice_h_valor: Decimal | None = Field(default=None)
-    indice_h_fecha_de_aplicacion: str | None = Field(default=None)
+    indice_h_fecha_de_aplicacion: FlexibleDateValue | None = Field(default=None)
     fuente_de_indice_h: UnresolvedReference | None = Field(default=None)
     fuente_de_indice_h_otros: str | None = Field(default=None)

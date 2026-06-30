@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class PremiosMencionesYDistinciones(BaseCvnDomainModel):
@@ -11,9 +11,9 @@ class PremiosMencionesYDistinciones(BaseCvnDomainModel):
     breve_descripcion_del_titulo_o_premio: str | None = Field(default=None)
     pais_de_la_entidad_que_lo_concede: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_que_lo_concede: HierarchicalCodeReference | None = Field(default=None)
-    entidad_que_lo_concede: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_que_lo_concede: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     reconocimientos_ligados_a_su_concesion: str | None = Field(default=None)
-    fecha_de_concesion: str | None = Field(default=None)
+    fecha_de_concesion: FlexibleDateValue | None = Field(default=None)
     ciudad_de_la_entidad_que_lo_concede: str | None = Field(default=None)

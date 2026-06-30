@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference, SubtypeBackedValue
 
 
 class FormacionAcademicaImpartida(BaseCvnDomainModel):
@@ -15,10 +15,10 @@ class FormacionAcademicaImpartida(BaseCvnDomainModel):
     pais_de_la_entidad_de_realizacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_realizacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_de_realizacion: str | None = Field(default=None)
-    entidad_de_realizacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_030_010_000_110: str | None = Field(default=None)
+    entidad_de_realizacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_030_010_000_110: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_030_010_000_120: str | None = Field(default=None)
-    departamento: str | None = Field(default=None)
+    departamento: EntityNameValue | None = Field(default=None)
     tipo_de_programa: str | None = Field(default=None)
     tipo_de_programa_otros: str | None = Field(default=None)
     nombre_de_asignatura_nombre_del_curso: str | None = Field(default=None)
@@ -30,16 +30,16 @@ class FormacionAcademicaImpartida(BaseCvnDomainModel):
     numero_de_horas_creditos_ects: Decimal | None = Field(default=None)
     idioma_en_el_que_impartio_la_asignatura: str | None = Field(default=None)
     frecuencia_de_imparticion_de_la_asignatura: Decimal | None = Field(default=None)
-    field_030_010_000_250: object | None = Field(default=None)
+    field_030_010_000_250: FlexibleDateValue | None = Field(default=None)
     competencias_relacionadas_con_la_asignatura_impartida: str | None = Field(default=None)
     categoria_profesional_del_de_la_solicitante_en_el_momento_en_el_que_desempeno_la_docencia_senalada: str | None = Field(default=None)
     evaluacion_sobre_la_calidad_de_la_docencia_calificacion_obtenida: str | None = Field(default=None)
     evaluacion_sobre_la_calidad_de_la_docencia_calificacion_maxima_posible: str | None = Field(default=None)
-    evaluacion_sobre_la_calidad_de_la_docencia_entidad_de_evaluacion: RegistryReference | None = Field(default=None)
+    evaluacion_sobre_la_calidad_de_la_docencia_entidad_de_evaluacion: EntityNameValue | None = Field(default=None)
     tipo_de_evaluacion: str | None = Field(default=None)
     tipo_de_evaluacion_otros: str | None = Field(default=None)
-    financiacion_obtenida_entidad: RegistryReference | None = Field(default=None)
-    financiacion_obtenida_tipo_de_entidad: str | None = Field(default=None)
+    financiacion_obtenida_entidad: EntityNameValue | None = Field(default=None)
+    financiacion_obtenida_tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     financiacion_obtenida_tipo_de_entidad_otros: str | None = Field(default=None)
     financiacion_obtenida_tipo_de_convocatoria: str | None = Field(default=None)
     financiacion_obtenida_tipo_de_convocatoria_otros: str | None = Field(default=None)
@@ -52,8 +52,8 @@ class FormacionAcademicaImpartida(BaseCvnDomainModel):
     pais_de_la_entidad_financiadora: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_financiadora: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_financiadora: str | None = Field(default=None)
-    tipo_de_entidad_030_010_000_520: str | None = Field(default=None)
+    tipo_de_entidad_030_010_000_520: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_030_010_000_530: str | None = Field(default=None)
-    facultad_escuela_unidad_centro_hospital_o_instituto: RegistryReference | None = Field(default=None)
-    fecha_de_inicio: str = Field(...)
-    fecha_de_finalizacion: str = Field(...)
+    facultad_escuela_unidad_centro_hospital_o_instituto: EntityNameValue | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue = Field(...)
+    fecha_de_finalizacion: FlexibleDateValue = Field(...)

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, IdentifierReference, SubtypeBackedValue
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, FlexibleDateValue, HierarchicalCodeReference, IdentifierReference, SubtypeBackedValue
 
 
 class PublicacionISBNISSN(BaseCvnDomainModel):
@@ -12,10 +12,10 @@ class PublicacionISBNISSN(BaseCvnDomainModel):
     publicacion_titulo: str | None = Field(default=None)
     publicacion_volumen: str | None = Field(default=None)
     publicacion_pagina_inicial_final: str | None = Field(default=None)
-    publicacion_editorial: str | None = Field(default=None)
+    publicacion_editorial: EntityNameValue | None = Field(default=None)
     publicacion_pais: str | None = Field(default=None)
     publicacion_comunidad_autonoma_region: HierarchicalCodeReference | None = Field(default=None)
-    publicacion_fecha: str | None = Field(default=None)
+    publicacion_fecha: FlexibleDateValue | None = Field(default=None)
     publicacion_direccion_electronica: str | None = Field(default=None)
     publicacion_deposito_legal: str | None = Field(default=None)
     publicacion_nombre: str | None = Field(default=None)

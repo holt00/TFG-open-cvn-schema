@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference
 
 
 class ConsejosEditoriales(BaseCvnDomainModel):
@@ -13,15 +13,15 @@ class ConsejosEditoriales(BaseCvnDomainModel):
     nombre_del_consejo_editorial: str | None = Field(default=None)
     pais_de_radicacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_radicacion: HierarchicalCodeReference | None = Field(default=None)
-    entidad_de_afiliacion: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_de_afiliacion: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     tareas_desarrolladas: str | None = Field(default=None)
     categoria_profesional: str | None = Field(default=None)
     tamano_de_la_sociedad: Decimal | None = Field(default=None)
     ambito: ScopeReference | None = Field(default=None)
     ambito_otros: str | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
     duracion: str | None = Field(default=None)
     ciudad_de_radicacion: str | None = Field(default=None)
     pais_de_la_entidad_de_afiliacion: str | None = Field(default=None)
