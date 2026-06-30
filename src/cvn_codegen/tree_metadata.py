@@ -1,5 +1,6 @@
 from pathlib import Path
 from cvn_codegen.normalization_types import (
+    StructuralTypeEvidence,
     TreePathEntry,
     SourceTrace,
 )
@@ -87,6 +88,7 @@ def build_tree_path_entry(
     tree_indicator_name: str | None,
     tree_value: str | None,
     xml_path: str,
+    structural_type_evidence: StructuralTypeEvidence | None = None,
 ) -> TreePathEntry:
     """Create a normalized tree-path entry from extracted tree metadata.
 
@@ -101,6 +103,8 @@ def build_tree_path_entry(
         tree_value (str | None): Optional ``Value`` content associated with the
             current indicator.
         xml_path (str): Stable XML-like path of the current node.
+        structural_type_evidence (StructuralTypeEvidence | None): Optional XSD
+            type evidence resolved by an upstream structural trace step.
 
     Returns:
         TreePathEntry: Normalized tree-model metadata entry.
@@ -127,6 +131,7 @@ def build_tree_path_entry(
             xml_path=xml_path,
             source_code=normalized_code,
         ),
+        structural_type_evidence=structural_type_evidence,
     )
 
 

@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, HierarchicalCodeReference
 
 
 class TutoriasSupervisionDeActividadesDeAtencionDeSalud(BaseCvnDomainModel):
@@ -19,11 +19,11 @@ class TutoriasSupervisionDeActividadesDeAtencionDeSalud(BaseCvnDomainModel):
     pais_de_la_entidad_de_realizacion_de_la_tutoria: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_realizacion_de_la_tutoria: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_la_entidad_de_realizacion_de_la_tutoria: str | None = Field(default=None)
-    entidad_donde_realizo_la_tutoria: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_040_080_000_130: str | None = Field(default=None)
+    entidad_donde_realizo_la_tutoria: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_040_080_000_130: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_040_080_000_140: str | None = Field(default=None)
-    entidad_organizadora_de_la_que_depende_el_programa: RegistryReference | None = Field(default=None)
-    tipo_de_entidad_040_080_000_170: str | None = Field(default=None)
+    entidad_organizadora_de_la_que_depende_el_programa: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad_040_080_000_170: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros_040_080_000_180: str | None = Field(default=None)
     pais_de_la_entidad_organizadora_de_la_que_depende_el_programa: str | None = Field(default=None)
     ciudad_de_la_entidad_organizadora_de_la_que_depende_el_programa: str | None = Field(default=None)

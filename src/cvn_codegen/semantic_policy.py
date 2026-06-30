@@ -27,9 +27,9 @@ PRESERVED_ACRONYMS = frozenset(
 
 
 WRAPPER_AUTO_APPLICATION_LIMITATION = (
-    "NormalizedCodeEntry does not expose structural wrapper type names yet; "
-    "wrapper policy is currently validated by wrapper-name cases and not "
-    "automatically attached to field policies."
+    "Wrapper policy auto-attachment depends on normalized "
+    "structural_type_evidence. Normalization results built without structural "
+    "XSD enrichment preserve wrapper policies but cannot attach them to fields."
 )
 
 class SemanticBaseKind(str, Enum):
@@ -126,6 +126,8 @@ class SemanticDecisionTrace:
     serialization_pattern: SerializationPattern | None
     semantic_reference_kind: SemanticReferenceKind | None
     applied_rules: tuple[str, ...]
+    terminal_wrapper_type_names: tuple[str, ...] = ()
+    ancestor_wrapper_type_names: tuple[str, ...] = ()
     diagnostics: tuple[str, ...] = ()
 
 @dataclass(frozen=True)
@@ -236,6 +238,8 @@ class SemanticFieldPolicy:
     naming_policy: NamingPolicy
     structural_limitation_flags: tuple[StructuralLimitationFlag, ...]
     decision_trace: SemanticDecisionTrace
+    wrapper_type_names: tuple[str, ...] = ()
+    wrapper_policy_kinds: tuple[WrapperPolicyKind, ...] = ()
     notes: tuple[str, ...] = ()
 
 @dataclass(frozen=True)
@@ -342,6 +346,75 @@ def get_wrapper_auto_application_limitation() -> str:
     """Return current limitation for automatic wrapper policy application."""
 
     return WRAPPER_AUTO_APPLICATION_LIMITATION
+
+
+def dedupe_preserving_order(values: tuple[str, ...]) -> tuple[str, ...]:
+    """Return unique string values while preserving first-seen order."""
+    seen_values: set[str] = set()
+    deduped_values: list[str] = []
+    for value in values:
+        if value in seen_values:
+            continue
+        seen_values.add(value)
+        deduped_values.append(value)
+    return tuple(deduped_values)
+
+
+def collect_terminal_wrapper_type_names(
+    entry: NormalizedCodeEntry,
+) -> tuple[str, ...]:
+    """Collect terminal wrapper names attached to normalized structural evidence."""
+    return dedupe_preserving_order(
+        tuple(
+            evidence.terminal_wrapper_type_name
+            for evidence in entry.structural_type_evidence
+            if evidence.terminal_wrapper_type_name is not None
+        )
+    )
+
+
+def collect_ancestor_wrapper_type_names(
+    entry: NormalizedCodeEntry,
+) -> tuple[str, ...]:
+    """Collect ancestor wrapper names without using them for field attachment."""
+    return dedupe_preserving_order(
+        tuple(
+            wrapper_type_name
+            for evidence in entry.structural_type_evidence
+            for wrapper_type_name in evidence.ancestor_wrapper_type_names
+        )
+    )
+
+
+def resolve_choice_wrapper_policies(
+    wrapper_type_names: tuple[str, ...],
+    bundle: SemanticPolicyBundle,
+) -> tuple[ChoiceWrapperPolicy, ...]:
+    """Resolve semantic wrapper policies for terminal structural wrapper names."""
+    resolved_policies: list[ChoiceWrapperPolicy] = []
+    for wrapper_type_name in wrapper_type_names:
+        wrapper_policy = get_choice_wrapper_policy(
+            wrapper_name=wrapper_type_name,
+            bundle=bundle,
+        )
+        if wrapper_policy is None:
+            continue
+        resolved_policies.append(wrapper_policy)
+    return tuple(resolved_policies)
+
+
+def merge_structural_limitation_flags(
+    existing_flags: tuple[StructuralLimitationFlag, ...],
+    wrapper_policies: tuple[ChoiceWrapperPolicy, ...],
+) -> tuple[StructuralLimitationFlag, ...]:
+    """Merge existing and wrapper-derived structural limitation flags."""
+    merged_flags: list[StructuralLimitationFlag] = list(existing_flags)
+    for wrapper_policy in wrapper_policies:
+        for limitation_flag in wrapper_policy.structural_limitation_flags:
+            if limitation_flag in merged_flags:
+                continue
+            merged_flags.append(limitation_flag)
+    return tuple(merged_flags)
 
 def build_default_semantic_policy_bundle() -> SemanticPolicyBundle:
     """Build the default semantic policy bundle for issue #14."""
@@ -887,7 +960,20 @@ def build_semantic_field_policy(
     
     naming_policy = build_naming_policy(entry)
 
-    structural_limitation_flags: tuple[StructuralLimitationFlag, ...] = ()
+    terminal_wrapper_type_names = collect_terminal_wrapper_type_names(entry)
+    ancestor_wrapper_type_names = collect_ancestor_wrapper_type_names(entry)
+    wrapper_policies = resolve_choice_wrapper_policies(
+        wrapper_type_names=terminal_wrapper_type_names,
+        bundle=bundle,
+    )
+    wrapper_policy_kinds = tuple(
+        wrapper_policy.wrapper_policy_kind
+        for wrapper_policy in wrapper_policies
+    )
+    structural_limitation_flags = merge_structural_limitation_flags(
+        existing_flags=(),
+        wrapper_policies=wrapper_policies,
+    )
     
     reference_source_family = None
     reference_source_artifact = None
@@ -915,6 +1001,10 @@ def build_semantic_field_policy(
         f"enum_evidence:{reason}"
         for reason in enum_rule_reasons
     )
+    applied_rules = applied_rules + tuple(
+        f"wrapper_type:{wrapper_type_name}"
+        for wrapper_type_name in terminal_wrapper_type_names
+    )
     
     decision_trace = SemanticDecisionTrace(
         code=entry.code,
@@ -925,6 +1015,8 @@ def build_semantic_field_policy(
         serialization_pattern=serialization_pattern,
         semantic_reference_kind=semantic_reference_kind,
         applied_rules=applied_rules,
+        terminal_wrapper_type_names=terminal_wrapper_type_names,
+        ancestor_wrapper_type_names=ancestor_wrapper_type_names,
         diagnostics=diagnostics,
     )
     field_policy = SemanticFieldPolicy(
@@ -940,6 +1032,8 @@ def build_semantic_field_policy(
         naming_policy=naming_policy,
         structural_limitation_flags=structural_limitation_flags,
         decision_trace=decision_trace,
+        wrapper_type_names=terminal_wrapper_type_names,
+        wrapper_policy_kinds=wrapper_policy_kinds,
     )
     override_selection = select_applicable_override(
         entry=entry,
@@ -1060,6 +1154,8 @@ def apply_override_to_field_policy(
             naming_policy=field_policy.naming_policy,
             structural_limitation_flags=field_policy.structural_limitation_flags,
             decision_trace=field_policy.decision_trace,
+            wrapper_type_names=field_policy.wrapper_type_names,
+            wrapper_policy_kinds=field_policy.wrapper_policy_kinds,
             notes=field_policy.notes
             + (
                 "Override conflict detected for matching rule IDs: "
@@ -1126,6 +1222,8 @@ def apply_override_to_field_policy(
             else override.structural_limitation_flags
         ),
         decision_trace=field_policy.decision_trace,
+        wrapper_type_names=field_policy.wrapper_type_names,
+        wrapper_policy_kinds=field_policy.wrapper_policy_kinds,
         notes=field_policy.notes
         + (
             f"Applied override rule '{override.rule_id}'.",

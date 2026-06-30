@@ -152,9 +152,9 @@ Issue `#15` should document and implement at minimum:
 
 ## Wrapper Traceability Limitation And Hotfix `#8` Handoff
 
-During issue `#15` implementation planning, the current normalized tree metadata
-was checked for wrapper type evidence needed to apply semantic wrapper policies
-automatically.
+During issue `#15` implementation planning, the then-current normalized tree
+metadata was checked for wrapper type evidence needed to apply semantic wrapper
+policies automatically.
 
 The relevant wrapper policy names are:
 
@@ -163,21 +163,23 @@ The relevant wrapper policy names are:
 3. `EntityTypeType`
 4. `EntityNameType`
 
-Those names exist in `CVN.xsd`, generated structural bindings, and issue `#14`
-semantic wrapper-policy validation cases, but they are not exposed by the
-current normalized handoff. In particular, `TreePathEntry.tree_value` does not
-carry these wrapper type names for real canonical entries.
+Those names existed in `CVN.xsd`, generated structural bindings, and issue `#14`
+semantic wrapper-policy validation cases, but they were not exposed by the
+normalized handoff available during the original issue `#15` implementation. In
+particular, `TreePathEntry.tree_value` did not carry these wrapper type names for
+real canonical entries.
 
-Issue `#15` must therefore not attach wrapper-aware field shapes by scanning raw
-XSD files or generated structural bindings inside the domain generator. That
-would violate the corrected generator boundary: issue `#15` consumes normalized
-metadata and `SemanticPolicyBundle`; it does not rediscover structural meaning.
+Issue `#15` therefore correctly avoided attaching wrapper-aware field shapes by
+scanning raw XSD files or generated structural bindings inside the domain
+generator. That would have violated the corrected generator boundary: issue
+`#15` consumes normalized metadata and `SemanticPolicyBundle`; it does not
+rediscover structural meaning.
 
 The corrective follow-up is tracked in:
 
 - `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
 
-Until hotfix `#8` is implemented, issue `#15` should:
+Before hotfix `#8` was implemented, issue `#15` had to:
 
 - keep wrapper policy decisions visible where already provided by issue `#14`
 - avoid pretending wrapper auto-attachment is implemented
@@ -185,6 +187,12 @@ Until hotfix `#8` is implemented, issue `#15` should:
   behavior independently from wrapper auto-attachment
 - leave future wrapper-aware field emission ready to consume typed wrapper
   evidence once hotfix `#8` extends the handoff
+
+Hotfix `#8` has now implemented that typed handoff. Canonical domain generation
+passes `CVN.xsd` and `Common.xsd` into normalization, receives
+`StructuralTypeEvidence`, attaches wrapper policies through semantic policy, and
+maps wrapper-aware fields to shared wrapper value components without raw XSD
+inspection inside the generator.
 
 ## Decisions Recorded During Issue `#15` Execution
 
@@ -370,12 +378,15 @@ trace metadata until there is a concrete domain-facing need.
 
 ### Wrapper Decision
 
-- Wrapper auto-attachment is not implemented in issue `#15` until hotfix `#8`
-  provides typed wrapper evidence in the normalized or semantic handoff.
-- Issue `#15` must not solve this by reading raw XSD or generated structural
-  bindings inside generator logic.
-- The generator should remain ready to consume wrapper evidence later, but it
-  should not pretend wrapper-aware fields are currently attached.
+- Wrapper auto-attachment is implemented after issue `#15` through hotfix `#8`.
+- The generator consumes `SemanticFieldPolicy.wrapper_type_names` and shared
+  wrapper value components instead of reading raw XSD or generated structural
+  bindings.
+- Canonical generation supplies `CVN.xsd` and `Common.xsd` to the upstream
+  normalization stage so wrapper evidence enters before semantic and domain
+  generation.
+- Normalization runs that omit those XSD paths preserve backward-compatible empty
+  wrapper evidence and therefore cannot attach wrapper-aware fields.
 
 ## Accepted Execution Protocol
 
@@ -958,11 +969,11 @@ File-modification rule:
   auxiliary-source classification.
 - The accepted execution protocol and detailed 23-task implementation plan have
   been recorded before generator code changes begin.
-- Wrapper auto-attachment was evaluated during Task `12 / 23`; current normalized
-  metadata does not expose `FlexibleDatesType`, `OfficialIdType`,
-  `EntityTypeType`, or `EntityNameType` as field-level wrapper evidence.
-- A follow-up hotfix record now exists for the required handoff fix:
-  `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`.
+- Wrapper auto-attachment was evaluated during Task `12 / 23`; the initial issue
+  `#15` implementation correctly avoided raw structural rediscovery and recorded
+  hotfix `#8` as the required handoff fix.
+- Hotfix `#8` is now implemented and supplies `StructuralTypeEvidence` through
+  the normalized and semantic handoff.
 - Domain generation execution decisions have been recorded in this document,
   including output architecture, test cadence, IR records, grouping, naming,
   base type mapping, enum handling, non-enum controlled-reference components,
@@ -990,8 +1001,8 @@ File-modification rule:
   `models.cvn.generated.manual_only`.
 - The implementation preserves CVN traceability through `cvn_trace` inheritance
   on generated domain models.
-- Wrapper-aware automatic field attachment remains intentionally deferred to
-  hotfix `#8` rather than being reconstructed from raw structural sources.
+- Wrapper-aware automatic field attachment now consumes hotfix `#8` structural
+  type evidence and shared wrapper value components.
 
 ## Verification
 
@@ -1019,9 +1030,9 @@ File-modification rule:
   emission of scalar, enum, and non-enum controlled-reference shapes.
 - Final Python artifact shapes can be decided inside the generator without
   redefining upstream semantic classification.
-- Wrapper-aware field attachment still needs an explicit upstream handoff.
-  Current normalized metadata does not expose wrapper type names, so issue `#15`
-  must not scan raw XSD files or generated structural bindings to recover them.
+- Wrapper-aware field attachment now uses the explicit upstream handoff from
+  hotfix `#8`; issue `#15` still must not scan raw XSD files or generated
+  structural bindings inside generator logic.
 - Generated class-name collisions can occur across CVN item groups and need
   deterministic global resolution rather than per-file local cleanup.
 - Generated-output cleanup must account for Python cache directories such as
@@ -1029,10 +1040,8 @@ File-modification rule:
 
 ## Known Limitations
 
-- Automatic wrapper-aware field attachment for `FlexibleDatesType`,
-  `OfficialIdType`, `EntityTypeType`, and `EntityNameType` is blocked until
-  hotfix `#8` provides typed wrapper evidence in the normalized or semantic
-  handoff.
+- Wrapper-aware field attachment requires normalization output enriched with
+  `CVN.xsd` and `Common.xsd`; canonical generation provides those inputs.
 - `DATE_LIKE` and `DURATION_LIKE` currently emit traced `str` values instead of
   stronger domain-specific wrapper components.
 - Unknown semantic base kinds still fall back to `object` instead of a stronger
@@ -1043,11 +1052,11 @@ File-modification rule:
 - Issue `#16` must test generator behavior against `SemanticPolicyBundle`
   outputs rather than raw source classifications.
 - Issue `#16` should add regression coverage for canonical generated output,
-  importability, determinism, and wrapper-handoff-dependent future behavior.
+  importability, determinism, and the hotfix `#8` wrapper handoff.
 - Issue `#17` must document `SemanticPolicyBundle` as the semantic source of
   truth for domain generation and the canonical command
   `uv run python -m cvn_codegen.domain_model_generator`.
-- Hotfix `#8` remains the planned corrective path for future wrapper-aware field
+- Hotfix `#8` is now the implemented corrective path for wrapper-aware field
   attachment without raw structural rediscovery.
 
 ## Status

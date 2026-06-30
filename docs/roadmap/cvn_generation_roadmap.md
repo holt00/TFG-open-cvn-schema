@@ -30,7 +30,7 @@ Goal:
 | `#12` | Generate structural Pydantic bindings from CVN XSDs | Completed with documented limitations | Tree model XML/XSD mismatch remains documented |
 | `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Completed | Core normalization and auxiliary-reference resolution enrichment implemented; baseline overlap counts preserved |
 | `#14` | Define semantic mapping rules and override policy | Completed | Semantic policy bundle, resolver, overrides, naming, wrapper policies, validation inventory, and tests implemented |
-| `#15` | Implement the domain Pydantic model generator | Completed with documented limitations | Generator, shared components, generated output, and verification are implemented; wrapper-aware auto-attachment remains deferred to hotfix `#8` |
+| `#15` | Implement the domain Pydantic model generator | Completed | Generator, shared components, wrapper-aware handoff, generated output, and verification are implemented |
 | `#16` | Add automated tests for the generation pipeline | Next | Must cover both core pipeline and auxiliary enrichment path |
 | `#17` | Document and automate the complete workflow | Pending | Must document corrected full workflow including auxiliary stages |
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
@@ -222,9 +222,9 @@ Authoritative record:
   domain generation can attach wrapper-aware field shapes without re-reading raw
   structural sources
 - Current status:
-  - planned follow-up after issue `#15`
-  - issue `#15` is completed without wrapper auto-attachment and documents this
-    boundary explicitly
+  - implemented and verified after issue `#15`
+  - canonical domain generation now consumes typed wrapper evidence without raw
+    structural rediscovery in generator logic
 
 Authoritative record:
 
@@ -291,7 +291,8 @@ Authoritative record:
   - canonical generated output is emitted under `src/models/cvn/generated/`
   - the canonical generator run emits `105` Python files
   - full repository verification passed after implementation
-  - wrapper-aware automatic field attachment remains deferred to hotfix `#8`
+  - wrapper-aware automatic field attachment consumes hotfix `#8` structural type
+    evidence
 
 ### Issue `#16`
 

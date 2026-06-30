@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference
 
 
 class ProyectosDeInnovacionDocente(BaseCvnDomainModel):
@@ -17,21 +17,21 @@ class ProyectosDeInnovacionDocente(BaseCvnDomainModel):
     tipo_de_participacion_otros: str | None = Field(default=None)
     aportacion_del_titular_al_proyecto: str | None = Field(default=None)
     regimen_de_dedicacion: str | None = Field(default=None)
-    entidad_financiadora: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_financiadora: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     tipo_de_convocatoria: str | None = Field(default=None)
     tipo_de_convocatoria_otros: str | None = Field(default=None)
-    entidad_es_participante_s: list[RegistryReference] = Field(default_factory=list)
-    tipo_de_entidad_participante: list[str] = Field(default_factory=list)
+    entidad_es_participante_s: list[EntityNameValue] = Field(default_factory=list)
+    tipo_de_entidad_participante: list[EntityTypeValue] = Field(default_factory=list)
     tipo_de_entidad_participante_otros: list[str] = Field(default_factory=list)
     tipo_de_duracion_de_la_relacion_laboral: str | None = Field(default=None)
     duracion_de_la_participacion: str | None = Field(default=None)
-    fecha_de_finalizacion_de_la_participacion: str | None = Field(default=None)
+    fecha_de_finalizacion_de_la_participacion: FlexibleDateValue | None = Field(default=None)
     nombre_del_de_la_investigador_a_principal_ip: str | None = Field(default=None)
     numero_de_participantes: Decimal | None = Field(default=None)
     importe_concedido: Decimal | None = Field(default=None)
     ciudad_de_realizacion: str | None = Field(default=None)
     ambito_del_proyecto: ScopeReference = Field(...)
     ambito_del_proyecto_otros: str | None = Field(default=None)
-    fecha_de_inicio: str = Field(...)
+    fecha_de_inicio: FlexibleDateValue = Field(...)

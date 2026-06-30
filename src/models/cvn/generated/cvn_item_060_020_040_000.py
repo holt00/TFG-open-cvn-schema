@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference, VocabularyReference
 
 
 class GestionDeIDI(BaseCvnDomainModel):
@@ -17,10 +17,10 @@ class GestionDeIDI(BaseCvnDomainModel):
     nombre_de_la_actividad: str | None = Field(default=None)
     tipologia_de_la_gestion: str | None = Field(default=None)
     tipologia_de_la_gestion_otros: str | None = Field(default=None)
-    entorno_entidad_donde_se_ejercio_la_responsabilidad: RegistryReference | None = Field(default=None)
-    entorno_tipo_de_entidad: str | None = Field(default=None)
+    entorno_entidad_donde_se_ejercio_la_responsabilidad: EntityNameValue | None = Field(default=None)
+    entorno_tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     entorno_tipo_de_entidad_otros: str | None = Field(default=None)
-    entorno_fecha_de_inicio: str | None = Field(default=None)
+    entorno_fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
     entorno_duracion: str | None = Field(default=None)
     sistema_de_acceso: str | None = Field(default=None)
     sistema_de_acceso_otros: str | None = Field(default=None)

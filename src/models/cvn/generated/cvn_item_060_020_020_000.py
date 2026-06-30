@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, VocabularyReference
+from models.cvn.components import BaseCvnDomainModel, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, VocabularyReference
 
 
 class OtrosModosDeColaboracionConInvestigadoresAsOTecnologosAs(BaseCvnDomainModel):
@@ -14,8 +14,8 @@ class OtrosModosDeColaboracionConInvestigadoresAsOTecnologosAs(BaseCvnDomainMode
     comunidad_autonoma_region_de_radicacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_radicacion: str | None = Field(default=None)
     nombres_de_los_investigadores_principales_ip_co_ip: list[str] = Field(default_factory=list)
-    tipo_de_entidad: list[str] = Field(default_factory=list)
-    fecha_de_inicio: str | None = Field(default=None)
+    tipo_de_entidad: list[EntityTypeValue] = Field(default_factory=list)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
     duracion: str | None = Field(default=None)
     descripcion_del_objeto_de_la_colaboracion: str | None = Field(default=None)
     resultados_mas_relevantes: str | None = Field(default=None)

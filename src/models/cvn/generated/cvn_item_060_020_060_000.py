@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference
 
 
 class EvaluacionYRevisionDeProyectosYArticulosDeIDI(BaseCvnDomainModel):
@@ -16,11 +16,11 @@ class EvaluacionYRevisionDeProyectosYArticulosDeIDI(BaseCvnDomainModel):
     comunidad_autonoma_region_de_la_entidad_de_realizacion: HierarchicalCodeReference | None = Field(default=None)
     modalidad_de_la_actividad: str | None = Field(default=None)
     modalidad_de_la_actividad_otros: str | None = Field(default=None)
-    entidad_organizadora: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_organizadora: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    fecha_de_inicio: str | None = Field(default=None)
-    fecha_de_finalizacion: str | None = Field(default=None)
+    fecha_de_inicio: FlexibleDateValue | None = Field(default=None)
+    fecha_de_finalizacion: FlexibleDateValue | None = Field(default=None)
     frecuencia_de_la_actividad: Decimal | None = Field(default=None)
     sistema_de_acceso: str | None = Field(default=None)
     sistema_de_acceso_otros: str | None = Field(default=None)

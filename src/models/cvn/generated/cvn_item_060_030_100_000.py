@@ -3,16 +3,16 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference
 
 
 class ResumenDeOtrosMeritos(BaseCvnDomainModel):
     resumen_de_otros_meritos: list[str] = Field(default_factory=list)
     resumen_de_otros_meritos_en_texto_libre: str | None = Field(default=None)
-    entidad_que_acredita: RegistryReference | None = Field(default=None)
-    fecha_de_concesion: str | None = Field(default=None)
+    entidad_que_acredita: EntityNameValue | None = Field(default=None)
+    fecha_de_concesion: FlexibleDateValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     pais_de_la_entidad_que_acredita: str | None = Field(default=None)
     ciudad_de_la_entidad_que_acredita: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_que_acredita: HierarchicalCodeReference | None = Field(default=None)

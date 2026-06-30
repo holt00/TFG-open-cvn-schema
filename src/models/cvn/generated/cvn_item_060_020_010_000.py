@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from models.cvn.components import BaseCvnDomainModel, HierarchicalCodeReference, RegistryReference, ScopeReference
+from models.cvn.components import BaseCvnDomainModel, EntityNameValue, EntityTypeValue, FlexibleDateValue, HierarchicalCodeReference, ScopeReference
 
 
 class ComitesCientificosTecnicosYOAsesores(BaseCvnDomainModel):
@@ -12,16 +12,16 @@ class ComitesCientificosTecnicosYOAsesores(BaseCvnDomainModel):
     pais_de_radicacion: str | None = Field(default=None)
     comunidad_autonoma_region_de_radicacion: HierarchicalCodeReference | None = Field(default=None)
     ciudad_de_radicacion: str | None = Field(default=None)
-    entidad_de_la_que_depende: RegistryReference | None = Field(default=None)
-    tipo_de_entidad: str | None = Field(default=None)
+    entidad_de_la_que_depende: EntityNameValue | None = Field(default=None)
+    tipo_de_entidad: EntityTypeValue | None = Field(default=None)
     tipo_de_entidad_otros: str | None = Field(default=None)
     ambito_de_la_actividad: ScopeReference | None = Field(default=None)
     ambito_de_la_actividad_otros: str | None = Field(default=None)
     codigo_unesco_especializacion_primaria: list[HierarchicalCodeReference] = Field(default_factory=list)
     codigo_unesco_especializacion_secundaria: list[HierarchicalCodeReference] = Field(default_factory=list)
     codigo_unesco_especializacion_terciaria: list[HierarchicalCodeReference] = Field(default_factory=list)
-    fecha_inicio: str | None = Field(default=None)
-    fecha_de_finalizacion: str | None = Field(default=None)
+    fecha_inicio: FlexibleDateValue | None = Field(default=None)
+    fecha_de_finalizacion: FlexibleDateValue | None = Field(default=None)
     ciudad_de_la_entidad_de_la_que_depende_el_programa: str | None = Field(default=None)
     comunidad_autonoma_region_de_la_entidad_de_la_que_depende_el_programa: HierarchicalCodeReference | None = Field(default=None)
     pais_de_la_entidad_de_la_que_depende_el_programa: str | None = Field(default=None)
