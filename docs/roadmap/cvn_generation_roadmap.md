@@ -31,8 +31,8 @@ Goal:
 | `#13` | Parse and normalize `SpecificationManual.xml` and `CVNTreeModel.xml` | Completed | Core normalization and auxiliary-reference resolution enrichment implemented; baseline overlap counts preserved |
 | `#14` | Define semantic mapping rules and override policy | Completed | Semantic policy bundle, resolver, overrides, naming, wrapper policies, validation inventory, and tests implemented |
 | `#15` | Implement the domain Pydantic model generator | Completed | Generator, shared components, wrapper-aware handoff, generated output, and verification are implemented |
-| `#16` | Add automated tests for the generation pipeline | Next | Must cover both core pipeline and auxiliary enrichment path |
-| `#17` | Document and automate the complete workflow | Pending | Must document corrected full workflow including auxiliary stages |
+| `#16` | Add automated tests for the generation pipeline | Completed | Pipeline, source coverage, wrapper, generator, importability, determinism, and E2E tests implemented |
+| `#17` | Document and automate the complete workflow | Next | Must document corrected full workflow including auxiliary stages |
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
@@ -309,6 +309,15 @@ Authoritative record:
   - end-to-end pipeline coverage
   - regression coverage for auxiliary structural targets and reference-resolution
     behavior
+- Implemented outcome:
+  - shared canonical test fixtures cover source-package paths, auxiliary bundles,
+    enriched normalization, and temporary generated domain output
+  - pipeline tests now cover structural generation, parse smoke behavior,
+    normalization integration, reference regressions, semantic policy,
+    wrapper handoff, domain generation, source coverage, importability,
+    determinism, and E2E flow
+  - xsdata regeneration tests are serialized under xdist with a test-only lock
+  - full repository verification passed with `uv run pytest -n auto tests`
 
 ### Issue `#17`
 
