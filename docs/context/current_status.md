@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-06-30
+- Last updated: 2026-07-01
 
 ## Completed Or Stabilized Work
 
@@ -327,6 +327,36 @@
 - latest full-suite verification passed with `uv run pytest -n auto tests`
   and result `228 passed in 189.76s (0:03:09)`
 
+### Issue `#16`
+
+- automated generation pipeline tests are implemented under `tests/`
+- shared canonical test fixtures now exist in `tests/conftest.py` for canonical
+  XML/XSD paths, auxiliary bundles, XSD-enriched normalization, and temporary
+  domain output
+- new pipeline coverage includes:
+  - core and auxiliary structural generation targets
+  - real XML parse smoke behavior for specification manual and auxiliary sources
+  - documented `CVNTreeModel.xml` parse mismatch behavior
+  - canonical normalization baseline and enriched auxiliary-reference resolution
+  - representative reference regressions for direct, subtype-backed,
+    side-package, hierarchical, unresolved, and under-traced references
+  - semantic policy integration, override precedence, Spanish-first naming, trace
+    preservation, and wrapper handoff behavior
+  - canonical domain generator behavior, importability, rendered-output
+    determinism, ASCII output, and end-to-end generation
+  - explicit source coverage for manual items, tree codes, auxiliary catalog
+    items, normalized entries, semantic policies, domain generation, and core
+    `AuxTable.xsd` structural enums
+- xsdata generation tests now use a test-only file lock in
+  `tests/xsdata_generation_lock.py` so shared `src/generated/*` regeneration is
+  serialized under `pytest -n auto`
+- targeted issue `#16` verification passed with:
+  `uv run pytest -n auto tests/test_generation_pipeline_structural.py tests/test_generation_pipeline_parse_smoke.py tests/test_generation_pipeline_normalization_integration.py tests/test_generation_pipeline_reference_regressions.py tests/test_generation_pipeline_semantic_integration.py tests/test_generation_pipeline_wrapper_handoff.py tests/test_generation_pipeline_domain_generation.py tests/test_generation_pipeline_e2e.py -v`
+  and result `61 passed in 146.76s (0:02:26)`
+- final full-suite verification passed with `uv run pytest -n auto tests`
+- final full-suite verification after the source-coverage audit passed with
+  `uv run pytest -n auto tests` and result `294 passed in 277.77s (0:04:37)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -338,21 +368,22 @@
 
 ## Next Planned Work
 
-- Next work item: implement issue `#16` generation pipeline tests
-- Required corrective references before starting:
+- Next work item: implement issue `#17` workflow documentation
+- Relevant corrective references before starting:
   - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
   - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
   - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
   - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
   - `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
 - Issue document to read first:
-  - `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`
-- Corrected starting assumption for issue `#16`:
-  - tests should treat `SemanticPolicyBundle` as the semantic source of truth for
-    domain generation behavior
-  - tests should cover canonical generated output, importability, determinism,
-    and representative controlled-reference families
-  - tests should cover the wrapper-handoff boundary implemented by hotfix `#8`
+  - `docs/roadmap/issues/issue-17-workflow-documentation.md`
+- Corrected starting assumption for issue `#17`:
+  - workflow documentation must cover the implemented structural, normalization,
+    semantic-policy, domain-generation, wrapper-handoff, and test layers
+  - `SemanticPolicyBundle` is the source-of-truth handoff between normalization
+    and domain generation
+  - full-suite verification uses `uv run pytest -n auto tests`, with xsdata
+    regeneration tests serialized internally by a test-only lock
 
 ## Blocking Or Relevant Limitations
 
