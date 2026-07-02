@@ -15,6 +15,10 @@ Before starting any implementation work, read these files in order:
 
 ## Development Setup
 
+The complete CVN regeneration and verification workflow lives in:
+
+- `docs/development/regeneration_workflow.md`
+
 ### Prerequisites
 
 - `uv`

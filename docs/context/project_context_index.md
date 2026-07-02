@@ -98,6 +98,8 @@ Agents should also read `AGENTS.md` before this file.
 ### Development And Contribution
 
 - `docs/development/setup.md`: environment and execution commands
+- `docs/development/regeneration_workflow.md`: complete CVN regeneration and
+  verification workflow
 - `docs/development/code_style.md`: code style, typing, and documentation rules
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy and
   update protocol
@@ -198,4 +200,6 @@ When starting a new session:
 2. Read the last completed issue document
 3. Read the next issue document from the roadmap
 4. Review `docs/pipeline/known_limitations.md`
-5. Only then start implementation work
+5. Review `docs/development/regeneration_workflow.md` when the work touches
+   generated artifacts or pipeline verification
+6. Only then start implementation work

@@ -192,6 +192,18 @@ This means:
 
 - `src/generated/` is an interoperability layer
 - future semantic cleanup belongs outside `src/generated/`
+- `SemanticPolicyBundle` is the source of truth for generator semantics
+- the domain generator must not re-derive semantic policy from raw XML, raw XSD,
+  or generated structural bindings
+
+The complete implemented handoff is:
+
+```text
+normalized metadata + auxiliary reference resolution + structural type evidence
+-> SemanticPolicyBundle
+-> domain generator
+-> domain-oriented Pydantic artifacts
+```
 
 ### Current Normalization Entry Point
 
@@ -232,8 +244,105 @@ src/
 ### Responsibilities
 
 - `src/generated/`: generated structural bindings
-- `src/cvn_codegen/`: hand-maintained pipeline logic and generation runner
-- `src/models/cvn/`: future domain-oriented model output
+- `src/cvn_codegen/`: hand-maintained loading, normalization, resolution,
+  semantic-policy, and generation logic
+- `src/models/cvn/components.py`: hand-maintained shared domain components
+- `src/models/cvn/generated/`: generated domain-oriented model output
+
+Do not edit `src/generated/` manually. Regenerate it from the canonical XSDs.
+
+Do not edit `src/models/cvn/generated/` manually. Regenerate it through the
+domain generator.
+
+## Complete Regeneration Workflow
+
+The contributor-facing workflow is documented in:
+
+- `docs/development/regeneration_workflow.md`
+
+The command sequence is:
+
+```bash
+uv sync --group codegen --group testing
+uv pip install -e .
+uv run python -m cvn_codegen.xsdata_runner all
+uv run python -m cvn_codegen.domain_model_generator
+uv run pytest -n auto tests
+```
+
+The implemented workflow stages are:
+
+1. core structural binding generation from `CVN.xsd`,
+   `SpecificationManual.xsd`, and `CVNTreeModel_v1.0.xsd`
+2. auxiliary structural binding generation from `ReferenceTables.xsd`,
+   `Subtypes.xsd`, `Entity_v1.4.xsd`, and `Thesaurus.xsd`
+3. normalization of `SpecificationManual.xml` and `CVNTreeModel.xml`
+4. auxiliary-source loading and deterministic reference-resolution enrichment
+5. XSD-enriched structural type evidence for wrapper handoff
+6. semantic policy application over enriched normalized metadata
+7. domain model generation under `src/models/cvn/generated/`
+8. local and CI verification through `uv run pytest -n auto tests`
+
+### Controlled-Reference Source Order
+
+Normalization materializes controlled-reference meaning before semantic policy
+consumes it. The effective source-of-truth order is:
+
+1. explicit side-package references such as `ENTITY@Entity.xsd` and
+   `THESAURUS@thesaurus.xsd`
+2. direct `ReferenceTables.xml` matches where applicable
+3. subtype-backed classification through `Subtype@Subtypes.xsd`
+4. hierarchical thematic classification where technical metadata supports it
+5. unresolved documented exceptions and under-traced tables
+
+Representative cases include `CVN_SEX_A`, `CVN_ENTITY_TYPE`, `CVN_KNOW_A`,
+`ENTITY@Entity.xsd`, `THESAURUS@thesaurus.xsd`, `UNESCO_CODES`, `CVN_AGENCY_C`,
+`CVN_INTERVENTION_A`, and `CVN_PRUEBA`.
+
+### Semantic Policy Contract
+
+The domain generator consumes issue `#14` semantic-policy outputs directly:
+
+- `domain_shape_kind`
+- `fallback_shape_kind`
+- `enum_eligibility`
+- `policy_confidence`
+- `wrapper_policy`
+- `presence_kind`
+- `cardinality_kind`
+- `normalized_name`
+- `naming_confidence`
+- `structural_limitation_flags`
+- `SemanticDecisionTrace`
+
+Semantic policy owns Spanish-first naming, deterministic identifier
+normalization, override precedence, strict-enum eligibility, open coded-value
+fallback behavior, wrapper treatment, and trace preservation.
+
+### Domain Generation Contract
+
+The canonical domain generation command is:
+
+```bash
+uv run python -m cvn_codegen.domain_model_generator
+```
+
+The current canonical output emits `105` files under
+`src/models/cvn/generated/`, including `enums.py`, `manual_only.py`,
+`tree_without_item.py`, and `cvn_item_*` modules. Generated files are expected to
+be deterministic, importable, ASCII-only under the current policy, and traceable
+back to CVN `code`, XML paths, reference-resolution trace, and semantic-policy
+decisions.
+
+### Wrapper Handoff
+
+Canonical domain generation passes `CVN.xsd` and `Common.xsd` into normalization
+so normalized entries can carry `StructuralTypeEvidence`. Semantic policy maps
+terminal wrapper evidence to shared components such as `FlexibleDateValue`,
+`OfficialIdValue`, `EntityTypeValue`, and `EntityNameValue`.
+
+Normalization calls that omit `CVN.xsd` and `Common.xsd` preserve empty
+structural type evidence and cannot attach wrapper-aware field shapes.
 
 ## Current Structural Generation Workflow
 
@@ -310,6 +419,17 @@ The runner:
 - `Subtype_Spa.xml`: parse OK
 - `Entity.xml`: parse OK
 - `Thesaurus.xml`: parse OK
+
+### Tests And CI
+
+- full local verification command: `uv run pytest -n auto tests`
+- latest issue `#17` baseline verification before workflow documentation:
+  `294 passed in 297.99s (0:04:57)`
+- pull-request CI runs the same full-suite command through
+  `.github/workflows/pr-tests.yml`
+- the CI job name is `tests`
+- xsdata regeneration tests are serialized under xdist by
+  `tests/xsdata_generation_lock.py`
 
 ## Known Limitations
 
