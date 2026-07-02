@@ -35,6 +35,9 @@ Goal:
 | `#17` | Document and automate the complete workflow | Completed | Complete workflow guide, architecture updates, command sequence, verification matrix, and known limitations documented |
 | `#26` | Epic for remaining Open CVN work | Planned | Placeholder epic only; details intentionally deferred after issue `#17` closure |
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
+| `#41` | Epic: agnostic CVN schema, JSON schema, and parser | Planned | Post-generation epic for conceptual schema, JSON schema, and parser work |
+| `#42` | Research Pydantic-to-UML options | Completed | Recommends conceptual IR first, PlantUML primary target, Mermaid secondary target, Pyreverse diagnostic only |
+| `#43` | Define agnostic conceptual model extraction layer | Planned | Next issue; should consume issue `#42` recommendation |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
@@ -368,6 +371,25 @@ Authoritative record:
 Authoritative record:
 
 - `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
+
+### Issue `#42`
+
+- Goal:
+  research how to transform the generated and domain-oriented Pydantic model
+  layer into UML or UML-like documentation that supports an agnostic curriculum
+  model
+- Implemented outcome:
+  - generated domain model inventory was measured from the current repository
+  - Pyreverse was evaluated and classified as diagnostic-only
+  - PlantUML was recommended as the primary issue `#44` diagram target
+  - Mermaid was recorded as a secondary Markdown-friendly target
+  - direct final UML generation from generated Python classes was rejected
+  - issue `#43` was directed toward a conceptual intermediate representation over
+    normalized metadata, semantic policy, and generated-domain evidence
+
+Authoritative record:
+
+- `docs/roadmap/issues/issue-42-research-pydantic-to-uml-options.md`
 
 ## Required Companion Documents
 
