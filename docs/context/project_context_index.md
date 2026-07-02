@@ -48,6 +48,8 @@ Agents should also read `AGENTS.md` before this file.
 
 - `docs/pipeline/cvn_pydantic_generation_pipeline.md`: technical architecture
   of the CVN generation pipeline
+- `docs/pipeline/conceptual_model_extraction.md`: issue `#43` conceptual IR
+  extraction layer for later diagram and JSON outputs
 - `docs/pipeline/known_limitations.md`: structural limitations, detected
   discrepancies, and follow-up implications
 - `docs/adr/`: architecture decision records
@@ -73,6 +75,8 @@ Agents should also read `AGENTS.md` before this file.
   issue `#17`
 - `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`:
   implementation record for issue `#25`
+- `docs/roadmap/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`:
+  implementation record for issue `#43`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

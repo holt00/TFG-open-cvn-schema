@@ -3,6 +3,7 @@
 ## Status Date
 
 - Last updated: 2026-07-02
+- Last updated: 2026-07-02
 
 ## Completed Or Stabilized Work
 
@@ -409,6 +410,34 @@
   recommended primary target and Mermaid as an optional Markdown-friendly
   secondary target
 
+### Issue `#43`
+
+- the agnostic conceptual model extraction layer is implemented under
+  `src/cvn_codegen/`
+- conceptual IR records now exist in:
+  - `src/cvn_codegen/conceptual_model_types.py`
+- conceptual extraction logic now exists in:
+  - `src/cvn_codegen/conceptual_model_extractor.py`
+- the extractor consumes `DomainGenerationResult`, `NormalizedCodeEntry`,
+  `SemanticFieldPolicy`, and `SemanticDecisionTrace` instead of treating generated
+  Python classes as the final schema
+- the inventory includes domain areas, conceptual entities, attributes,
+  conservative relationships, vocabularies, trace data, and limitations
+- a stable `core.curriculum` root entity is emitted for later diagram and JSON
+  schema work
+- identity fields under technical placeholder groups are remapped by CVN code
+  prefix so `000.*` fields form a conceptual identity area
+- conceptual extraction rules are documented in:
+  - `docs/pipeline/conceptual_model_extraction.md`
+- targeted verification passed with:
+  `uv run pytest -n auto tests/test_conceptual_model_extractor_unit.py tests/test_generation_pipeline_conceptual_model.py`
+- targeted verification result:
+  `13 passed in 74.28s (0:01:14)`
+- full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- full-suite verification result:
+  `307 passed in 318.93s (0:05:18)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -420,15 +449,13 @@
 
 ## Next Planned Work
 
-- Next work item: issue `#43`, define the agnostic conceptual model extraction
-  layer
-- Issue `#43` should consume the completed issue `#42` recommendation:
-  - use a conceptual IR before diagram rendering
-  - preserve CVN trace and semantic-policy evidence
+- Next work item after issue `#43` closure: issue `#44`, generate UML or UML-like
+  diagrams from the conceptual IR
+- Issue `#44` should consume the issue `#43` conceptual inventory:
+  - render from `ConceptualModelInventory`
+  - preserve trace notes where useful
   - avoid treating generated Python classes or raw CVN XML structure as the final
     conceptual model
-- Issue `#44` should later render UML or UML-like diagrams from the issue `#43`
-  conceptual IR
 
 ## Blocking Or Relevant Limitations
 
