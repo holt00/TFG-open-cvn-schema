@@ -126,6 +126,8 @@ files in order:
 ### Development Reference
 
 - `docs/development/setup.md`: environment and execution commands
+- `docs/development/regeneration_workflow.md`: complete CVN regeneration and
+  verification workflow
 - `docs/development/code_style.md`: code style, typing, and conventions
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy,
   cross-linking rules, and update protocol
