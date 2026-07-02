@@ -357,6 +357,33 @@
 - final full-suite verification after the source-coverage audit passed with
   `uv run pytest -n auto tests` and result `294 passed in 277.77s (0:04:37)`
 
+### Issue `#17`
+
+- complete workflow documentation is implemented
+- the contributor-facing regeneration guide now exists at:
+  - `docs/development/regeneration_workflow.md`
+- the pipeline architecture documentation now describes the full implemented
+  workflow from canonical source inputs through structural generation,
+  normalization, auxiliary-reference resolution, structural type evidence,
+  semantic policy, domain generation, tests, and CI
+- the documented canonical command sequence is:
+  - `uv sync --group codegen --group testing`
+  - `uv pip install -e .`
+  - `uv run python -m cvn_codegen.xsdata_runner all`
+  - `uv run python -m cvn_codegen.domain_model_generator`
+  - `uv run pytest -n auto tests`
+- workflow documentation records `SemanticPolicyBundle` as the semantic source of
+  truth for domain generation
+- workflow documentation records the controlled-reference source-of-truth order,
+  wrapper handoff through `StructuralTypeEvidence`, generated-output boundaries,
+  verification matrix, and known limitations
+- baseline verification during issue `#17` passed with:
+  - `uv run pytest -n auto tests`
+  - result: `294 passed in 297.99s (0:04:57)`
+- canonical domain generator verification during issue `#17` passed with:
+  - `uv run python -m cvn_codegen.domain_model_generator`
+  - result: `Generated 105 files`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -368,22 +395,12 @@
 
 ## Next Planned Work
 
-- Next work item: implement issue `#17` workflow documentation
-- Relevant corrective references before starting:
-  - `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
-  - `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
-  - `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
-  - `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
-  - `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
-- Issue document to read first:
-  - `docs/roadmap/issues/issue-17-workflow-documentation.md`
-- Corrected starting assumption for issue `#17`:
-  - workflow documentation must cover the implemented structural, normalization,
-    semantic-policy, domain-generation, wrapper-handoff, and test layers
-  - `SemanticPolicyBundle` is the source-of-truth handoff between normalization
-    and domain generation
-  - full-suite verification uses `uv run pytest -n auto tests`, with xsdata
-    regeneration tests serialized internally by a test-only lock
+- Next work item: create and later detail the post-issue-`#17` epic for remaining
+  project work
+- Current placeholder epic target:
+  - `docs/roadmap/issues/issue-26-epic-remaining-open-cvn-work.md`
+- Detailed planning for that epic remains intentionally deferred until the user
+  requests it
 
 ## Blocking Or Relevant Limitations
 
@@ -419,6 +436,12 @@ Run structural generation:
 uv run python -m cvn_codegen.xsdata_runner all
 ```
 
+Run canonical domain generation:
+
+```bash
+uv run python -m cvn_codegen.domain_model_generator
+```
+
 Run the full repository test suite with multicore pytest:
 
 ```bash
@@ -444,19 +467,20 @@ Then continue with these supporting files as needed:
 3. `docs/roadmap/issues/issue-12-structural-bindings.md`
 4. `docs/roadmap/issues/issue-13-normalization.md`
 5. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
-6. `docs/pipeline/known_limitations.md`
-7. `docs/roadmap/hotfixes/`
-8. `docs/cvn_source_package_auxiliary_artifacts.md`
-9. `docs/cvn_source_package_annex_table_coverage.md`
-10. `docs/cvn_annex_priority_table_families.md`
-11. `docs/cvn_annex_table_families_batch3.md`
-12. `docs/cvn_annex_table_families_batch4.md`
-13. `docs/cvn_annex_table_families_batch5.md`
-14. `docs/cvn_annex_table_families_batch6.md`
-15. `docs/cvn_annex_table_families_batch7.md`
-16. `docs/cvn_annex_table_families_batch8.md`
-17. `docs/cvn_serialization_patterns_reference.md`
-18. `docs/cvn_field_reference_traceability.md`
-19. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
-20. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
-21. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+6. `docs/development/regeneration_workflow.md`
+7. `docs/pipeline/known_limitations.md`
+8. `docs/roadmap/hotfixes/`
+9. `docs/cvn_source_package_auxiliary_artifacts.md`
+10. `docs/cvn_source_package_annex_table_coverage.md`
+11. `docs/cvn_annex_priority_table_families.md`
+12. `docs/cvn_annex_table_families_batch3.md`
+13. `docs/cvn_annex_table_families_batch4.md`
+14. `docs/cvn_annex_table_families_batch5.md`
+15. `docs/cvn_annex_table_families_batch6.md`
+16. `docs/cvn_annex_table_families_batch7.md`
+17. `docs/cvn_annex_table_families_batch8.md`
+18. `docs/cvn_serialization_patterns_reference.md`
+19. `docs/cvn_field_reference_traceability.md`
+20. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+21. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+22. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`

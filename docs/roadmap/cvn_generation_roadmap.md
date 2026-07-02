@@ -32,7 +32,8 @@ Goal:
 | `#14` | Define semantic mapping rules and override policy | Completed | Semantic policy bundle, resolver, overrides, naming, wrapper policies, validation inventory, and tests implemented |
 | `#15` | Implement the domain Pydantic model generator | Completed | Generator, shared components, wrapper-aware handoff, generated output, and verification are implemented |
 | `#16` | Add automated tests for the generation pipeline | Completed | Pipeline, source coverage, wrapper, generator, importability, determinism, and E2E tests implemented |
-| `#17` | Document and automate the complete workflow | Next | Must document corrected full workflow including auxiliary stages |
+| `#17` | Document and automate the complete workflow | Completed | Complete workflow guide, architecture updates, command sequence, verification matrix, and known limitations documented |
+| `#26` | Epic for remaining Open CVN work | Planned | Placeholder epic only; details intentionally deferred after issue `#17` closure |
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
@@ -333,6 +334,26 @@ Authoritative record:
     auxiliary-reference resolution stages
   - explicit source-of-truth order for controlled-reference resolution and
     fallback behavior
+- Implemented outcome:
+  - complete contributor-facing regeneration guide added at
+    `docs/development/regeneration_workflow.md`
+  - pipeline architecture documentation now covers structural generation,
+    normalization, auxiliary-reference resolution, structural type evidence,
+    semantic policy, domain generation, tests, and CI
+  - `SemanticPolicyBundle` is documented as the semantic source of truth for
+    domain generation
+  - generated-output boundaries, controlled-reference source order, wrapper
+    handoff, verification matrix, and known limitations are documented
+
+### Issue `#26`
+
+- Goal:
+  create a placeholder epic for remaining Open CVN work after issue `#17`
+- Current scope:
+  - create the epic record only
+  - defer detailed planning until the user explicitly requests it
+- Planned authoritative record:
+  - `docs/roadmap/issues/issue-26-epic-remaining-open-cvn-work.md`
 
 ### Issue `#25`
 

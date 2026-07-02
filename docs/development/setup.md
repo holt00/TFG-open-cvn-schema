@@ -61,6 +61,10 @@ tooling serves a separate workflow that would otherwise blur repository setup.
 
 ## Common Commands
 
+For the complete regeneration workflow, see:
+
+- `docs/development/regeneration_workflow.md`
+
 ### Structural Generation
 
 Run one target:
