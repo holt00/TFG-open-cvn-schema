@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-01
+- Last updated: 2026-07-02
 
 ## Completed Or Stabilized Work
 
@@ -384,6 +384,31 @@
   - `uv run python -m cvn_codegen.domain_model_generator`
   - result: `Generated 105 files`
 
+### Issue `#42`
+
+- Pydantic-to-UML research is completed and recorded in:
+  - `docs/roadmap/issues/issue-42-research-pydantic-to-uml-options.md`
+- current generated domain inventory was measured from the repository:
+  - generated Python files excluding `__init__.py`: `104`
+  - generated domain model classes: `103`
+  - generated enum classes: `13`
+  - shared component classes: `17`
+  - generated domain model fields: `1487`
+- direct UML generation from generated Python classes is not recommended for
+  final conceptual documentation
+- Pyreverse was evaluated through a tiny local experiment under `/tmp/opencode`
+  and classified as diagnostic-only for this repository
+- Pydantic metadata can expose useful technical facts such as field names, type
+  annotations, required flags, list defaults, shared value objects, and JSON
+  Schema `$defs`, but it does not provide enough field-level CVN trace or
+  conceptual grouping by itself
+- issue `#43` should define a conceptual intermediate representation consuming
+  normalized metadata, semantic policy, and generated-domain evidence rather than
+  treating generated Python classes as the final schema
+- issue `#44` should render diagrams from that conceptual IR, with PlantUML as the
+  recommended primary target and Mermaid as an optional Markdown-friendly
+  secondary target
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -395,12 +420,15 @@
 
 ## Next Planned Work
 
-- Next work item: create and later detail the post-issue-`#17` epic for remaining
-  project work
-- Current placeholder epic target:
-  - `docs/roadmap/issues/issue-26-epic-remaining-open-cvn-work.md`
-- Detailed planning for that epic remains intentionally deferred until the user
-  requests it
+- Next work item: issue `#43`, define the agnostic conceptual model extraction
+  layer
+- Issue `#43` should consume the completed issue `#42` recommendation:
+  - use a conceptual IR before diagram rendering
+  - preserve CVN trace and semantic-policy evidence
+  - avoid treating generated Python classes or raw CVN XML structure as the final
+    conceptual model
+- Issue `#44` should later render UML or UML-like diagrams from the issue `#43`
+  conceptual IR
 
 ## Blocking Or Relevant Limitations
 
