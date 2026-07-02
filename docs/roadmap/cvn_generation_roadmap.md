@@ -37,7 +37,7 @@ Goal:
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
 | `#41` | Epic: agnostic CVN schema, JSON schema, and parser | Planned | Post-generation epic for conceptual schema, JSON schema, and parser work |
 | `#42` | Research Pydantic-to-UML options | Completed | Recommends conceptual IR first, PlantUML primary target, Mermaid secondary target, Pyreverse diagnostic only |
-| `#43` | Define agnostic conceptual model extraction layer | Planned | Next issue; should consume issue `#42` recommendation |
+| `#43` | Define agnostic conceptual model extraction layer | Completed | Conceptual IR, extractor, targeted/full-suite tests, and extraction documentation implemented |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
@@ -390,6 +390,28 @@ Authoritative record:
 Authoritative record:
 
 - `docs/roadmap/issues/issue-42-research-pydantic-to-uml-options.md`
+
+### Issue `#43`
+
+- Goal:
+  define an agnostic conceptual model extraction layer between generated/domain
+  Pydantic evidence and later diagram or JSON outputs
+- Implemented outcome:
+  - conceptual IR records are implemented in
+    `src/cvn_codegen/conceptual_model_types.py`
+  - conceptual extraction logic is implemented in
+    `src/cvn_codegen/conceptual_model_extractor.py`
+  - the extractor consumes normalization, semantic policy, and domain generation
+    IR evidence instead of treating generated Python classes as the final schema
+  - the inventory preserves CVN code, XML path, reference resolution, semantic
+    policy, vocabulary, and limitation trace data
+  - conceptual extraction rules are documented in
+    `docs/pipeline/conceptual_model_extraction.md`
+  - targeted conceptual-model tests and the full repository suite pass
+
+Authoritative record:
+
+- `docs/roadmap/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`
 
 ## Required Companion Documents
 

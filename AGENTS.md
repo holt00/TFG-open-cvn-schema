@@ -39,6 +39,7 @@ Every new session should read these files in order before making changes:
 ### Architecture And Limits
 
 - pipeline architecture: `docs/pipeline/cvn_pydantic_generation_pipeline.md`
+- conceptual extraction: `docs/pipeline/conceptual_model_extraction.md`
 - known limitations: `docs/pipeline/known_limitations.md`
 - architecture decisions: `docs/adr/`
 
@@ -55,6 +56,8 @@ Every new session should read these files in order before making changes:
 - issue `#17`: `docs/roadmap/issues/issue-17-workflow-documentation.md`
 - issue `#25`:
   `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
+- issue `#43`:
+  `docs/roadmap/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`
 - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 - hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
 - hotfix `#3`:

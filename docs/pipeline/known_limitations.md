@@ -86,6 +86,27 @@ do not need to rediscover them.
 - Expected follow-up:
   - keep documented through issue `#17`
 
+## Conceptual Extraction Limitations
+
+### Conceptual Relationships Require Curation
+
+- Confirmed behavior:
+  - issue `#43` builds a conceptual inventory from normalized metadata, semantic
+    policy, and domain generation IR
+  - generated field annotations and CVN tree grouping do not prove a complete
+    domain ontology by themselves
+  - the extractor therefore emits only conservative relationships and records a
+    limitation instead of inventing hard associations
+- Impact:
+  - issue `#44` can render representative relationships from the conceptual IR
+  - richer UML relationships may need explicit curated rules before they are
+    treated as normative
+- Expected follow-up:
+  - issue `#44` should render only relationships present in the conceptual IR or
+    explicitly curated for diagram output
+  - later JSON format decisions in issue `#46` should not assume every generated
+    field relation is a domain association
+
 ## Canonical Source Package Inconsistencies
 
 ### `CVNTreeModel.xml` Diverges From `CVNTreeModel_v1.0.xsd`

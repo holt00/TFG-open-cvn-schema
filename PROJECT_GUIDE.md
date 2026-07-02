@@ -74,6 +74,8 @@ files in order:
 
 - `docs/pipeline/cvn_pydantic_generation_pipeline.md`: architecture of the CVN
   generation workflow
+- `docs/pipeline/conceptual_model_extraction.md`: conceptual IR extraction layer
+  between generated-domain evidence and later UML or JSON outputs
 - `docs/pipeline/known_limitations.md`: structural limitations, source-package
   inconsistencies, and follow-up implications
 - `docs/adr/`: architecture decision records
@@ -100,6 +102,8 @@ files in order:
   issue `#17`
 - `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`:
   authoritative record of issue `#25`
+- `docs/roadmap/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`:
+  authoritative record of issue `#43`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance
