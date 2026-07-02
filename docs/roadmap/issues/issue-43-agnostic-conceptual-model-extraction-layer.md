@@ -551,6 +551,49 @@ File-modification rule:
   - trace records
   - extraction limitations
 
+## Implementation Objective
+
+The implementation creates the first agnostic conceptual layer of the Open CVN
+pipeline. Its purpose is to move the project from generated Pydantic artifacts to
+a reusable curriculum model inventory.
+
+The implemented layer is meant to answer this question:
+
+> What curriculum concepts, attributes, vocabularies, cardinalities, and CVN trace
+> evidence exist after normalization and semantic policy have been applied?
+
+This layer is intentionally placed before UML, JSON Schema, and parser work. It
+lets later outputs consume a shared conceptual inventory instead of each output
+rediscovering meaning from generated Python classes, XML paths, or raw CVN source
+files.
+
+## Change Rationale
+
+- Generated structural bindings preserve CVN XML fidelity, but are too XML-centric
+  for the final TFG domain model.
+- Generated domain Pydantic models are useful for validation and traceability, but
+  still reflect implementation grouping and generated code decisions.
+- UML and JSON work need curriculum concepts, not Python modules or XSD structures.
+- The conceptual inventory preserves CVN traceability while making the model
+  easier to render, explain, and evolve.
+
+The change therefore introduces a separate conceptual extraction stage between the
+domain generation IR and later representation-specific outputs.
+
+## Direction Enabled By This Change
+
+- Issue `#44` can render PlantUML or Mermaid diagrams from
+  `ConceptualModelInventory` instead of from generated Python classes.
+- Issue `#45` can use the conceptual inventory to guide JSON Schema generation and
+  avoid blindly exporting implementation-oriented Pydantic schemas.
+- Issue `#46` can define the canonical Open CVN JSON shape around conceptual
+  entities, vocabularies, and trace rules.
+- Later parser issues can keep XML, JSON, and PDF import paths aligned with the
+  same conceptual model.
+
+The long-term direction is to keep CVN XML as a normative source and trace target,
+while the Open CVN model becomes an agnostic curriculum representation.
+
 ## Implementation Adjustments
 
 - A stable `core.curriculum` root entity was added so later diagram and JSON work
@@ -560,6 +603,18 @@ File-modification rule:
   fields that are not grouped under a regular CVN item in the tree model.
 - Conceptual relationships remain conservative. The extractor records a limitation
   instead of inferring a complete domain ontology from generated field annotations.
+
+## Change Impact
+
+- `src/cvn_codegen/` now contains the hand-maintained conceptual extraction layer.
+- `src/generated/` remains untouched and continues to represent generated
+  structural bindings only.
+- `src/models/cvn/generated/` remains untouched and continues to represent
+  generated domain Pydantic artifacts only.
+- The pipeline now has a reusable conceptual handoff for later diagram and schema
+  issues.
+- The known limitations register now records that conceptual relationships require
+  curation beyond generated field annotations.
 
 ## Artifacts Created
 
