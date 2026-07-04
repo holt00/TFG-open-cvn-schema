@@ -1,0 +1,28 @@
+@startuml
+title Open CVN - CVN Research Reference - Section 050
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "CVN Research Reference - Section 050" as 050_reference_index {
+class "Section 050 Part 1" as reference_section_050_part_01 <<reference_section>> {
+  entities : 6
+  file : open_cvn_research_050_part_01_reference.puml
+  representative : ContratosConveniosOProyectosDeIDINoCompetitivosConAdministracionesOEntidadesPublicasOPrivadas, EntidadEsColaboradoraS, EntidadEsDestinatariaSDeLaActividad, +3 more
+}
+
+class "Section 050 Part 2" as reference_section_050_part_02 <<reference_section>> {
+  entities : 5
+  file : open_cvn_research_050_part_02_reference.puml
+  representative : ObrasArtisticasYProfesionales, PropiedadIndustrialEIntelectual, ProyectosDeIDIFinanciadosEnConvocatoriasCompetitivasDeAdministracionesOEntidadesPublicasYPrivadas, +2 more
+}
+
+}
+
+note bottom
+Reference subsection index for Section 050
+Detailed subsection files:
+- open_cvn_research_050_part_01_reference.puml
+- open_cvn_research_050_part_02_reference.puml
+end note
+@enduml

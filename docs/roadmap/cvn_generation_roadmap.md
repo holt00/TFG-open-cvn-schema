@@ -38,6 +38,7 @@ Goal:
 | `#41` | Epic: agnostic CVN schema, JSON schema, and parser | Planned | Post-generation epic for conceptual schema, JSON schema, and parser work |
 | `#42` | Research Pydantic-to-UML options | Completed | Recommends conceptual IR first, PlantUML primary target, Mermaid secondary target, Pyreverse diagnostic only |
 | `#43` | Define agnostic conceptual model extraction layer | Completed | Conceptual IR, extractor, targeted/full-suite tests, and extraction documentation implemented |
+| `#44` | Generate UML or UML-like diagrams | Completed | PlantUML now emits readable and reference views under `docs/diagrams/`; Mermaid remains optional future output |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
@@ -412,6 +413,33 @@ Authoritative record:
 Authoritative record:
 
 - `docs/roadmap/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`
+
+### Issue `#44`
+
+- Goal:
+  generate readable UML or UML-like diagrams from the agnostic conceptual model
+  inventory defined in issue `#43`
+- Implemented outcome:
+  - PlantUML rendering is implemented in
+    `src/cvn_codegen/conceptual_model_diagrams.py`
+  - the renderer consumes `ConceptualModelInventory` instead of generated Python,
+    raw XML, or raw XSD structure as final diagram input
+  - canonical `.puml` sources are generated under `docs/diagrams/`
+  - readable diagrams provide a compact overview, small-area detailed views, and
+    split subdiagrams for large areas such as education, research, and fallback
+    concepts
+  - reference diagrams preserve fuller vocabulary, attribute, and trace detail for
+    auditability
+  - large reference diagrams use index files, split `..._part_XX_reference.puml`
+    chunks, and local `controlled references` notes instead of long global
+    entity-to-vocabulary edges
+  - diagram regeneration and review are documented in `docs/diagrams/README.md`
+    and `docs/development/regeneration_workflow.md`
+  - targeted diagram tests and full-suite verification pass
+
+Authoritative record:
+
+- `docs/roadmap/issues/issue-44-generate-uml-or-uml-like-diagrams.md`
 
 ## Required Companion Documents
 

@@ -1,0 +1,20 @@
+@startuml
+title Open CVN - CVN Achievements
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Achievements" as area_achievements {
+class "OtrosMeritosDeLiderazgo" as entity_achievements_otrosmeritosdeliderazgo_070_050_010_000 <<entity>> {
+  otros_meritos_de_liderazgo_070_050_010_000 : text <<optional, single>>
+  otros_meritos_de_liderazgo_070_050_010_010 : text <<optional, single>>
+}
+
+class "ResumenLibreDelCurriculum" as entity_achievements_resumenlibredelcurriculum_070_010_000_000 <<entity>> {
+  resumen_libre_del_curriculum_070_010_000_000 : text <<optional, single>>
+  resumen_libre_del_curriculum_070_010_000_010 : text <<optional, single>>
+}
+
+}
+
+@enduml

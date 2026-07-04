@@ -1,0 +1,48 @@
+@startuml
+title Open CVN - Other CVN Concepts Reference - Fallback Concepts
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "Other CVN Concepts Reference - Fallback Concepts" as area_other_no_tree_reference {
+class "IdentificacionYContacto" as entity_other_identificacionycontacto_no_tree <<entity>> {
+  actividad_cientifica_o_tecnologica : text <<optional, single>> [CVN: 050.020.000.000]
+  actividad_docente : text <<optional, single>> [CVN: 030.000.000.000]
+  actividad_sanitaria : text <<optional, single>> [CVN: 040.000.000.000]
+  actividades_cientificas_y_tecnologicas : text <<optional, single>> [CVN: 060.000.000.000]
+  duracion : duration_like <<required, single>> [CVN: 010.030.000.040]
+  experiencia_cientifica_y_tecnologica : text <<optional, single>> [CVN: 050.000.000.000]
+  fecha_de_finalizacion : date_like <<required, single>> [CVN: 010.030.000.060]
+  fecha_de_inicio : date_like <<required, single>> [CVN: 010.030.000.030]
+  formacion_academica_recibida : text <<optional, single>> [CVN: 020.000.000.000]
+  gestion_de_i_d_i_y_participacion_en_comites_cientificos : text <<optional, single>> [CVN: 060.020.000.000]
+  identificacion_cvn : text <<required, single>> [CVN: 000.010.000.000]
+  identificacion_de_curriculo : text <<optional, single>> [CVN: 000.020.000.000]
+  identificacion_y_contacto : text <<required, single>> [CVN: 000.000.000.000]
+  interrupciones_en_la_carrera_investigadora : text <<optional, repeated>> [CVN: 010.030.000.000]
+  meritos_de_liderazgo : text <<optional, single>> [CVN: 070.050.000.000]
+  motivo_de_interrupcion : controlled_reference <<required, single>> [CVN: 010.030.000.010]
+  motivo_de_interrupcion_otros : text <<optional, single>> [CVN: 010.030.000.020]
+  numero_total_de_autores_060_010_020_470 : decimal_number <<optional, single>> [CVN: 060.010.020.470]
+  numero_total_de_autores_060_010_030_470 : decimal_number <<optional, single>> [CVN: 060.010.030.470]
+  observaciones : text <<required, single>> [CVN: 010.030.000.050]
+  otros_meritos : text <<optional, single>> [CVN: 060.030.000.000]
+  posicion_sobre_total_060_010_020_460 : decimal_number <<optional, single>> [CVN: 060.010.020.460]
+  posicion_sobre_total_060_010_030_460 : decimal_number <<optional, single>> [CVN: 060.010.030.460]
+  resultados : text <<optional, single>> [CVN: 050.030.000.000]
+  resumen_libre_del_curriculum : text <<optional, single>> [CVN: 070.000.000.000]
+  situacion_profesional : text <<optional, single>> [CVN: 010.000.000.000]
+  titulacion_universitaria : text <<optional, single>> [CVN: 020.010.000.000]
+}
+note right of entity_other_identificacionycontacto_no_tree
+controlled references:
+- CVN_SITUATION_B (code_list, enum=review_required, items=17)
+end note
+
+}
+
+
+
+@enduml

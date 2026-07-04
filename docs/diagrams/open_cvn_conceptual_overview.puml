@@ -1,0 +1,57 @@
+@startuml
+title Open CVN Conceptual Overview
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "Core Structure" as overview_core {
+class "Curriculum" as entity_core_curriculum <<entity>>
+class "Person" as entity_identity_person <<entity>>
+class "ProfessionalSituation" as entity_professional_experience_professionalsituation_010_010_000_000 <<entity>>
+}
+
+package "Conceptual Areas" as conceptual_areas {
+class "CVN Achievements" as summary_achievements <<domain_area>> {
+  entities : 2
+  representative : OtrosMeritosDeLiderazgo, ResumenLibreDelCurriculum
+}
+
+class "CVN Education" as summary_education <<domain_area>> {
+  entities : 30
+  representative : AportacionesMasRelevantesDeSuCvDeDocencia, CodirectorADeTesis, ConocimientoDeIdiomas, +27 more
+}
+
+class "CVN Identity" as summary_identity <<domain_area>> {
+  entities : 1
+  representative : Person
+}
+
+class "Other CVN Concepts" as summary_other <<domain_area>> {
+  entities : 20
+  representative : ActividadDeAtencionDeSaludEnOtrosPaisesExtranjeros, ActividadEnCooperacionPracticandoLaAtencionDeSaludEnPaisesEnDesarrollo, ActividadEnCooperacionSanitariaEnPaisesEnDesarrollo, +17 more
+}
+
+class "CVN Professional Experience" as summary_professional_experience <<domain_area>> {
+  entities : 3
+  representative : CargosYActividadesDesempenadosConAnterioridad, ProfessionalSituation, ResumenDeLaActividadProfesional
+}
+
+class "CVN Research" as summary_research <<domain_area>> {
+  entities : 47
+  representative : AcreditacionesReconocimientosObtenidos, ActividadesDeDivulgacion, AmbitoDelCongreso, +44 more
+}
+
+}
+
+entity_core_curriculum "1" *-- "1" entity_identity_person : owner
+entity_core_curriculum "1" *-- "0..*" entity_professional_experience_professionalsituation_010_010_000_000 : professionalSituations
+
+note bottom
+Inventory: open_cvn_conceptual_model
+Source issue: #43
+Policy: default_cvn_semantic_policy 0.1.0
+Limitations:
+- Conceptual relationships are conservative; generated field annotations alone do not prove complete domain associations.
+- Some manual codes lack tree-model XML paths.
+end note
+@enduml

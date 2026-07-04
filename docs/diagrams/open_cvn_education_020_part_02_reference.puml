@@ -1,0 +1,84 @@
+@startuml
+title Open CVN - CVN Education Reference - Section 020 Part 2
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Education Reference - Section 020 Part 2" as area_education_020_part_02_reference {
+class "FormacionSanitariaEspecializada" as entity_education_formacionsanitariaespecializada_020_030_000_000 <<entity>> {
+  ciudad_de_la_entidad_que_expide_el_titulo : text <<optional, single>> [CVN: 020.030.000.210]
+  ciudad_entidad_de_realizacion : text <<optional, single>> [CVN: 020.030.000.060]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 020.030.000.040]
+  comunidad_autonoma_region_de_la_entidad_que_expide_el_titulo : controlled_reference <<optional, single>> [CVN: 020.030.000.200]
+  entidad_donde_se_llevo_a_cabo_la_especialidad : value_object<EntityNameType> <<optional, single>> [CVN: 020.030.000.070]
+  entidad_que_expide_el_titulo_de_especialista : value_object<EntityNameType> <<optional, single>> [CVN: 020.030.000.110]
+  fecha_de_convalidacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.030.000.180]
+  fecha_de_finalizacion_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.030.000.160]
+  fecha_inicio_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.030.000.150]
+  formacion_sanitaria_especializada : text <<optional, repeated>> [CVN: 020.030.000.000]
+  pais_de_la_entidad_que_expide_el_titulo : controlled_reference <<optional, single>> [CVN: 020.030.000.190]
+  pais_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 020.030.000.030]
+  tiempo_de_permanencia_en_la_entidad : duration_like <<optional, single>> [CVN: 020.030.000.170]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 020.030.000.090]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 020.030.000.100]
+  tipo_de_entidad_que_expide_el_titulo_de_especialista : value_object<EntityTypeType> <<optional, single>> [CVN: 020.030.000.130]
+  tipo_de_entidad_que_expide_el_titulo_de_especialista_otros : text <<optional, single>> [CVN: 020.030.000.140]
+  titulo_de_la_especialidad_sanitaria_realizada : text <<optional, single>> [CVN: 020.030.000.010]
+  titulo_de_la_subespecialidad_sanitaria_realizada : text <<optional, single>> [CVN: 020.030.000.020]
+}
+note right of entity_education_formacionsanitariaespecializada_020_030_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "OtraFormacionUniversitariaDePosgrado" as entity_education_otraformacionuniversitariadeposgrado_020_010_030_000 <<entity>> {
+  calificacion_obtenida : text <<optional, single>> [CVN: 020.010.030.130]
+  ciudad_entidad_titulacion : text <<optional, single>> [CVN: 020.010.030.070]
+  comunidad_autonoma_region_entidad_titulacion : controlled_reference <<optional, single>> [CVN: 020.010.030.050]
+  entidad_de_titulacion : value_object<EntityNameType> <<optional, single>> [CVN: 020.010.030.080]
+  facultad_escuela_unidad_centro_hospital_o_instituto : value_object<EntityNameType> <<optional, single>> [CVN: 020.010.030.140]
+  fecha_de_titulacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.010.030.120]
+  otra_formacion_universitaria_de_posgrado : text <<optional, repeated>> [CVN: 020.010.030.000]
+  pais_entidad_titulacion : controlled_reference <<optional, single>> [CVN: 020.010.030.040]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 020.010.030.100]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 020.010.030.110]
+  tipo_de_formacion : controlled_reference <<optional, single>> [CVN: 020.010.030.010]
+  titulacion_de_posgrado : controlled_reference <<optional, single>> [CVN: 020.010.030.020]
+  titulo_homologado : boolean <<optional, single>> [CVN: 020.010.030.150]
+  titulo_homologado_fecha_de_homologacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.010.030.160]
+}
+note right of entity_education_otraformacionuniversitariadeposgrado_020_010_030_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_FORMATION_A (subtype_backed_code_list, enum=ineligible, items=4)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_TITLE_D (hierarchical_code_list, enum=ineligible, items=4467)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "SuficienciaInvestigadoraDeaEntidad" as entity_education_suficienciainvestigadoradeaentidad_020_010_020_160 <<entity>> {
+  calificacion_obtenida : text <<optional, single>> [CVN: 020.010.020.190]
+  codirector_a_de_tesis : text <<optional, repeated>> [CVN: 020.010.020.180]
+  director_a_de_tesis : text <<optional, single>> [CVN: 020.010.020.170]
+  suficiencia_investigadora_dea_entidad : value_object<EntityNameType> <<optional, single>> [CVN: 020.010.020.040]
+  suficiencia_investigadora_dea_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.010.020.050]
+  titulo_de_la_tesis : text <<optional, single>> [CVN: 020.010.020.160]
+}
+note right of entity_education_suficienciainvestigadoradeaentidad_020_010_020_160
+controlled references:
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+end note
+
+}
+
+entity_education_formacionsanitariaespecializada_020_030_000_000 -[hidden]down-> entity_education_otraformacionuniversitariadeposgrado_020_010_030_000
+entity_education_otraformacionuniversitariadeposgrado_020_010_030_000 -[hidden]down-> entity_education_suficienciainvestigadoradeaentidad_020_010_020_160
+
+
+@enduml

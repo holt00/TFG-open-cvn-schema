@@ -1,0 +1,162 @@
+@startuml
+title Open CVN - CVN Research Reference - Section 050 Part 1
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Research Reference - Section 050 Part 1" as area_research_050_part_01_reference {
+class "ContratosConveniosOProyectosDeIDINoCompetitivosConAdministracionesOEntidadesPublicasOPrivadas" as entity_research_contratosconveniosoproyectosdeidinocompetitivosconadministracionesoentidadespublicasoprivadas_050_020_020_000 <<entity>> {
+  ambito_del_proyecto : controlled_reference <<optional, single>> [CVN: 050.020.020.040]
+  ambito_del_proyecto_otros : text <<optional, single>> [CVN: 050.020.020.050]
+  calidad_en_que_ha_participado_otros : text <<optional, single>> [CVN: 050.020.020.290]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 050.020.020.090]
+  codigo_de_proyecto_segun_la_entidad_financiadora : text <<optional, single>> [CVN: 050.020.020.110]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 050.020.020.070]
+  contratos_convenios_o_proyectos_de_i_d_i_no_competitivos_con_administraciones_o_entidades_publicas_o_privadas : text <<optional, repeated>> [CVN: 050.020.020.000]
+  duracion_del_proyecto : duration_like <<optional, single>> [CVN: 050.020.020.190]
+  entidad_donde_se_desarrolla : value_object<EntityNameType> <<optional, single>> [CVN: 050.020.020.370]
+  entidades_participantes : value_object<EntityNameType> <<optional, repeated>> [CVN: 050.020.020.320]
+  explicacion_narrativa_de_la_aportacion : text <<optional, single>> [CVN: 050.020.020.390]
+  fecha_de_inicio_del_proyecto : value_object<FlexibleDatesType> <<optional, single>> [CVN: 050.020.020.180]
+  financiacion_del_proyecto_cuantia_del_subproyecto : decimal_number <<optional, single>> [CVN: 050.020.020.210]
+  financiacion_del_proyecto_cuantia_total : decimal_number <<required, single>> [CVN: 050.020.020.200]
+  financiacion_del_proyecto_en_credito : decimal_number <<optional, single>> [CVN: 050.020.020.230]
+  financiacion_del_proyecto_mixto : decimal_number <<optional, single>> [CVN: 050.020.020.240]
+  financiacion_del_proyecto_porcentaje_en_subvencion : decimal_number <<optional, single>> [CVN: 050.020.020.220]
+  grado_de_contribucion : controlled_reference <<required, single>> [CVN: 050.020.020.280]
+  modalidad_del_proyecto : controlled_reference <<optional, single>> [CVN: 050.020.020.030]
+  nombre_del_de_la_investigador_a_principal_ip_co_ip : text <<optional, repeated>> [CVN: 050.020.020.250]
+  nombre_del_programa_asociado_al_proyecto : text <<optional, single>> [CVN: 050.020.020.170]
+  nombre_del_proyecto : text <<required, single>> [CVN: 050.020.020.010]
+  numero_de_investigadores_as_participantes : decimal_number <<optional, single>> [CVN: 050.020.020.260]
+  numero_de_personas_ano : decimal_number <<optional, single>> [CVN: 050.020.020.270]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 050.020.020.060]
+  palabras_clave_050_020_020_020 : controlled_reference <<optional, repeated>> [CVN: 050.020.020.020]
+  palabras_clave_050_020_020_310 : controlled_reference <<optional, repeated>> [CVN: 050.020.020.310]
+  resultados_mas_relevantes : text <<optional, single>> [CVN: 050.020.020.300]
+  tipo_de_entidad_050_020_020_140 : value_object<EntityTypeType> <<optional, repeated>> [CVN: 050.020.020.140]
+  tipo_de_entidad_050_020_020_330 : value_object<EntityTypeType> <<optional, single>> [CVN: 050.020.020.330]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 050.020.020.380]
+  tipo_de_proyecto_asociado_al_proyecto : controlled_reference <<optional, single>> [CVN: 050.020.020.160]
+}
+note right of entity_research_contratosconveniosoproyectosdeidinocompetitivosconadministracionesoentidadespublicasoprivadas_050_020_020_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_PARTICIPATION_B (code_list, enum=review_required, items=7)
+- CVN_PARTICIPATION_F (enumeration, enum=eligible, items=2)
+- CVN_PROJECT_C (enumeration, enum=eligible, items=6)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "EntidadEsColaboradoraS" as entity_research_entidadescolaboradoras_050_030_020_190 <<entity>> {
+  ciudad_de_la_entidad_colaboradora : text <<optional, repeated>> [CVN: 050.030.020.340]
+  comunidad_autonoma_region_de_la_entidad_colaboradora : controlled_reference <<optional, repeated>> [CVN: 050.030.020.330]
+  entidad_es_colaboradora_s : value_object<EntityNameType> <<optional, repeated>> [CVN: 050.030.020.170]
+  pais_de_la_entidad_colaboradora : controlled_reference <<optional, repeated>> [CVN: 050.030.020.320]
+  tipo_de_entidad_es : value_object<EntityTypeType> <<optional, repeated>> [CVN: 050.030.020.190]
+  tipo_de_entidad_es_otros : text <<optional, repeated>> [CVN: 050.030.020.200]
+}
+note right of entity_research_entidadescolaboradoras_050_030_020_190
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "EntidadEsDestinatariaSDeLaActividad" as entity_research_entidadesdestinatariasdelaactividad_050_030_020_230 <<entity>> {
+  ciudad_de_la_entidad_destinataria : text <<optional, repeated>> [CVN: 050.030.020.310]
+  comunidad_autonoma_region_de_la_entidad_destinataria : controlled_reference <<optional, repeated>> [CVN: 050.030.020.300]
+  entidad_es_destinataria_s_de_la_actividad : value_object<EntityNameType> <<optional, repeated>> [CVN: 050.030.020.210]
+  pais_de_la_entidad_destinataria : controlled_reference <<optional, repeated>> [CVN: 050.030.020.290]
+  tipo_de_entidad_es : value_object<EntityTypeType> <<optional, repeated>> [CVN: 050.030.020.230]
+  tipo_de_entidad_es_otros : text <<optional, repeated>> [CVN: 050.030.020.240]
+}
+note right of entity_research_entidadesdestinatariasdelaactividad_050_030_020_230
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "EntidadEsFinanciadoraS" as entity_research_entidadesfinanciadoras_050_020_010_210 <<entity>> {
+  ciudad_de_la_entidad_financiadora : text <<optional, repeated>> [CVN: 050.020.010.390]
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, repeated>> [CVN: 050.020.010.370]
+  entidad_es_financiadora_s : value_object<EntityNameType> <<required, repeated>> [CVN: 050.020.010.190]
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, repeated>> [CVN: 050.020.010.360]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, repeated>> [CVN: 050.020.010.210]
+  tipo_de_entidad_otros : text <<optional, repeated>> [CVN: 050.020.010.220]
+}
+note right of entity_research_entidadesfinanciadoras_050_020_010_210
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "GruposEquiposDeInvestigacionDesarrolloOInnovacion" as entity_research_gruposequiposdeinvestigaciondesarrollooinnovacion_050_010_000_000 <<entity>> {
+  ciudad_de_radicacion_del_grupo : text <<optional, single>> [CVN: 050.010.000.070]
+  clases_de_colaboracion : controlled_reference <<optional, single>> [CVN: 050.010.000.160]
+  codigo_normalizado : text <<optional, single>> [CVN: 050.010.000.030]
+  comunidad_autonoma_region_de_radicacion_del_grupo : controlled_reference <<optional, single>> [CVN: 050.010.000.050]
+  duracion : duration_like <<optional, single>> [CVN: 050.010.000.150]
+  entidad_a_la_que_pertenece : value_object<EntityNameType> <<optional, single>> [CVN: 050.010.000.090]
+  explicacion_narrativa_de_la_aportacion : text <<optional, single>> [CVN: 050.010.000.200]
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>> [CVN: 050.010.000.140]
+  grupos_equipos_de_investigacion_desarrollo_o_innovacion : text <<optional, repeated>> [CVN: 050.010.000.000]
+  nombre_del_de_la_investigador_a_principal_ip : text <<optional, single>> [CVN: 050.010.000.080]
+  nombre_del_grupo : text <<optional, single>> [CVN: 050.010.000.020]
+  numero_de_componentes_del_grupo : decimal_number <<optional, single>> [CVN: 050.010.000.130]
+  objeto_del_grupo : text <<optional, single>> [CVN: 050.010.000.010]
+  pais_de_radicacion_del_grupo : controlled_reference <<optional, single>> [CVN: 050.010.000.040]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 050.010.000.210]
+  resultados_numero_de_posdoc_dirigidos : decimal_number <<optional, single>> [CVN: 050.010.000.180]
+  resultados_numero_de_tesis_dirigidas : decimal_number <<optional, single>> [CVN: 050.010.000.170]
+  resultados_otros : text <<optional, single>> [CVN: 050.010.000.190]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 050.010.000.110]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 050.010.000.120]
+}
+note right of entity_research_gruposequiposdeinvestigaciondesarrollooinnovacion_050_010_000_000
+controlled references:
+- CVN_COOPERANTION_A (enumeration, enum=eligible, items=6)
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "NombreSEntidadEsFinanciadoraS" as entity_research_nombresentidadesfinanciadoras_050_020_020_140 <<entity>> {
+  ciudad_de_la_entidad_financiadora : text <<optional, repeated>> [CVN: 050.020.020.340]
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, repeated>> [CVN: 050.020.020.360]
+  nombre_s_entidad_es_financiadora_s : value_object<EntityNameType> <<required, repeated>> [CVN: 050.020.020.120]
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, repeated>> [CVN: 050.020.020.350]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, repeated>> [CVN: 050.020.020.140]
+  tipo_de_entidad_otros : text <<optional, repeated>> [CVN: 050.020.020.150]
+}
+note right of entity_research_nombresentidadesfinanciadoras_050_020_020_140
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+}
+
+entity_research_contratosconveniosoproyectosdeidinocompetitivosconadministracionesoentidadespublicasoprivadas_050_020_020_000 -[hidden]down-> entity_research_entidadescolaboradoras_050_030_020_190
+entity_research_entidadescolaboradoras_050_030_020_190 -[hidden]down-> entity_research_entidadesdestinatariasdelaactividad_050_030_020_230
+entity_research_entidadesdestinatariasdelaactividad_050_030_020_230 -[hidden]down-> entity_research_entidadesfinanciadoras_050_020_010_210
+entity_research_entidadesfinanciadoras_050_020_010_210 -[hidden]down-> entity_research_gruposequiposdeinvestigaciondesarrollooinnovacion_050_010_000_000
+entity_research_gruposequiposdeinvestigaciondesarrollooinnovacion_050_010_000_000 -[hidden]down-> entity_research_nombresentidadesfinanciadoras_050_020_020_140
+
+
+@enduml

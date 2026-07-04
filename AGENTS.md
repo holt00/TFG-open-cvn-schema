@@ -40,6 +40,7 @@ Every new session should read these files in order before making changes:
 
 - pipeline architecture: `docs/pipeline/cvn_pydantic_generation_pipeline.md`
 - conceptual extraction: `docs/pipeline/conceptual_model_extraction.md`
+- conceptual diagrams: `docs/diagrams/`
 - known limitations: `docs/pipeline/known_limitations.md`
 - architecture decisions: `docs/adr/`
 

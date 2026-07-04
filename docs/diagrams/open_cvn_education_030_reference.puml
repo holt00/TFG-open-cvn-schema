@@ -1,0 +1,42 @@
+@startuml
+title Open CVN - CVN Education Reference - Section 030
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "CVN Education Reference - Section 030" as 030_reference_index {
+class "Section 030 Part 1" as reference_section_030_part_01 <<reference_section>> {
+  entities : 5
+  file : open_cvn_education_030_part_01_reference.puml
+  representative : AportacionesMasRelevantesDeSuCvDeDocencia, CodirectorADeTesis, CursosYSeminariosImpartidos, +2 more
+}
+
+class "Section 030 Part 2" as reference_section_030_part_02 <<reference_section>> {
+  entities : 5
+  file : open_cvn_education_030_part_02_reference.puml
+  representative : FormacionAcademicaImpartida, FormacionSanitariaEnIDYOPosformacionSanitariaEspecializadaEnIDImpartida, FormacionSanitariaEspecializadaImpartida, +2 more
+}
+
+class "Section 030 Part 3" as reference_section_030_part_03 <<reference_section>> {
+  entities : 6
+  file : open_cvn_education_030_part_03_reference.puml
+  representative : OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior030100000000, OtrosMeritosDeDocencia, PluralidadInterdisciplinariedadYComplejidadDocente, +3 more
+}
+
+class "Section 030 Part 4" as reference_section_030_part_04 <<reference_section>> {
+  entities : 5
+  file : open_cvn_education_030_part_04_reference.puml
+  representative : PublicacionNombre030090000330, PublicacionTitulo030070000080, TitulacionUniversitaria, +2 more
+}
+
+}
+
+note bottom
+Reference subsection index for Section 030
+Detailed subsection files:
+- open_cvn_education_030_part_01_reference.puml
+- open_cvn_education_030_part_02_reference.puml
+- open_cvn_education_030_part_03_reference.puml
+- open_cvn_education_030_part_04_reference.puml
+end note
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+title Open CVN - CVN Education Reference - Section 020
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "CVN Education Reference - Section 020" as 020_reference_index {
+class "Section 020 Part 1" as reference_section_020_part_01 <<reference_section>> {
+  entities : 6
+  file : open_cvn_education_020_part_01_reference.puml
+  representative : ConocimientoDeIdiomas, CursosYSeminariosRecibidosDePerfeccionamientoInnovacionYMejoraDocenteNuevasTecnologiasEtcCuyoObjetivoSeaLaMejoraDeLaDocencia, Doctorados, +3 more
+}
+
+class "Section 020 Part 2" as reference_section_020_part_02 <<reference_section>> {
+  entities : 3
+  file : open_cvn_education_020_part_02_reference.puml
+  representative : FormacionSanitariaEspecializada, OtraFormacionUniversitariaDePosgrado, SuficienciaInvestigadoraDeaEntidad
+}
+
+}
+
+note bottom
+Reference subsection index for Section 020
+Detailed subsection files:
+- open_cvn_education_020_part_01_reference.puml
+- open_cvn_education_020_part_02_reference.puml
+end note
+@enduml

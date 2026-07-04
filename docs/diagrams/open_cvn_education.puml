@@ -1,0 +1,30 @@
+@startuml
+title Open CVN - CVN Education
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "CVN Education" as area_education {
+class "Section 020" as section_020 <<section>> {
+  entities : 9
+  file : open_cvn_education_020.puml
+  representative : ConocimientoDeIdiomas, CursosYSeminariosRecibidosDePerfeccionamientoInnovacionYMejoraDocenteNuevasTecnologiasEtcCuyoObjetivoSeaLaMejoraDeLaDocencia, Doctorados, +6 more
+}
+
+class "Section 030" as section_030 <<section>> {
+  entities : 21
+  file : open_cvn_education_030.puml
+  representative : AportacionesMasRelevantesDeSuCvDeDocencia, CodirectorADeTesis, CursosYSeminariosImpartidos, +18 more
+}
+
+}
+
+note bottom
+Readable index for CVN Education
+Detailed section files:
+- open_cvn_education_020.puml
+- open_cvn_education_030.puml
+Reference view:
+- open_cvn_education_reference.puml
+end note
+@enduml

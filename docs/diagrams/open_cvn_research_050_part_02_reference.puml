@@ -1,0 +1,180 @@
+@startuml
+title Open CVN - CVN Research Reference - Section 050 Part 2
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Research Reference - Section 050 Part 2" as area_research_050_part_02_reference {
+class "ObrasArtisticasYProfesionales" as entity_research_obrasartisticasyprofesionales_050_020_030_000 <<entity>> {
+  autores_as_p_o_de_firma : text <<optional, repeated>> [CVN: 050.020.030.030]
+  caracteristicas_catalogo : boolean <<optional, single>> [CVN: 050.020.030.100]
+  caracteristicas_comisario_de_exposicion : boolean <<optional, single>> [CVN: 050.020.030.110]
+  caracteristicas_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 050.020.030.120]
+  caracteristicas_monografica : boolean <<optional, single>> [CVN: 050.020.030.090]
+  ciudad_de_la_exposicion : text <<optional, single>> [CVN: 050.020.030.070]
+  comunidad_autonoma_region_de_la_exposicion : controlled_reference <<optional, single>> [CVN: 050.020.030.050]
+  descripcion : text <<optional, single>> [CVN: 050.020.030.010]
+  explicacion_narrativa_de_la_aportacion : text <<optional, single>> [CVN: 050.020.030.190]
+  foro_donde_se_expone : text <<optional, single>> [CVN: 050.020.030.080]
+  nombre_de_la_exposicion : text <<optional, single>> [CVN: 050.020.030.020]
+  obras_artisticas_y_profesionales : text <<optional, repeated>> [CVN: 050.020.030.000]
+  pais_de_la_exposicion : controlled_reference <<optional, single>> [CVN: 050.020.030.040]
+  reconocimiento_y_repercusion_catalogacion : text <<optional, single>> [CVN: 050.020.030.130]
+  reconocimiento_y_repercusion_otros : text <<optional, single>> [CVN: 050.020.030.160]
+  reconocimiento_y_repercusion_premio : text <<optional, single>> [CVN: 050.020.030.140]
+  reconocimiento_y_repercusion_publicacion : text <<optional, single>> [CVN: 050.020.030.150]
+  tipologia_de_la_aportacion : controlled_reference <<required, single>> [CVN: 050.020.030.170]
+  tipologia_de_la_aportacion_otros : text <<optional, single>> [CVN: 050.020.030.180]
+}
+note right of entity_research_obrasartisticasyprofesionales_050_020_030_000
+controlled references:
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_THEMATIC_B (code_list, enum=review_required, items=5)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "PropiedadIndustrialEIntelectual" as entity_research_propiedadindustrialeintelectual_050_030_010_000 <<entity>> {
+  ambito_geografico_espana : boolean <<optional, single>> [CVN: 050.030.010.160]
+  ambito_geografico_internacional_no_ue : boolean <<optional, single>> [CVN: 050.030.010.180]
+  ambito_geografico_patente_europea : boolean <<optional, single>> [CVN: 050.030.010.170]
+  codigo_de_referencia_n_o_de_registro_si_procede : text <<optional, single>> [CVN: 050.030.010.100]
+  comunidad_autonoma_region_de_prioridad : controlled_reference <<optional, single>> [CVN: 050.030.010.130]
+  en_este_caso_el_resultado_en_relacion_con_la_empresa_es_de : controlled_reference <<optional, single>> [CVN: 050.030.010.280]
+  entidad_titular_de_derechos : value_object<EntityNameType> <<optional, single>> [CVN: 050.030.010.300]
+  explotacion_comunidad_autonoma_region_en_las_que_se_ha_extendido_formalizado : controlled_reference <<optional, repeated>> [CVN: 050.030.010.230]
+  explotacion_empresas_entidades_que_estan_explotando_la_licencia : value_object<EntityNameType> <<optional, repeated>> [CVN: 050.030.010.250]
+  explotacion_en_exclusiva : boolean <<optional, single>> [CVN: 050.030.010.260]
+  explotacion_licencias_de_explotacion : boolean <<optional, single>> [CVN: 050.030.010.210]
+  explotacion_paises_en_los_que_se_ha_extendido_formalizado_separados_por : controlled_reference <<optional, repeated>> [CVN: 050.030.010.220]
+  fecha_de_concesion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 050.030.010.320]
+  fecha_de_registro : value_object<FlexibleDatesType> <<optional, single>> [CVN: 050.030.010.150]
+  generacion_de_una_empresa_innovadora : boolean <<optional, single>> [CVN: 050.030.010.270]
+  inventores_as_autores_as_obtentores_as : text <<required, repeated>> [CVN: 050.030.010.090]
+  modalidad_de_know_how : boolean <<optional, single>> [CVN: 050.030.010.080]
+  modalidad_de_know_how_secreto_empresarial_industrial : boolean <<optional, single>> [CVN: 050.030.010.070]
+  modalidad_de_propiedad_intelectual_derechos_conexos : boolean <<optional, single>> [CVN: 050.030.010.060]
+  modalidad_de_propiedad_intelectual_derechos_de_autor : boolean <<optional, single>> [CVN: 050.030.010.050]
+  nombre_de_los_productos_a_los_que_ha_dado_lugar : text <<optional, repeated>> [CVN: 050.030.010.290]
+  numero_de_patente : text <<optional, single>> [CVN: 050.030.010.310]
+  numero_de_solicitud : text <<optional, single>> [CVN: 050.030.010.110]
+  objeto_y_o_breve_descripcion_de_cualidades_caracteristicas_mas_significativas : text <<optional, single>> [CVN: 050.030.010.010]
+  pais_de_prioridad : controlled_reference <<optional, single>> [CVN: 050.030.010.120]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 050.030.010.200]
+  patente_pct : boolean <<required, single>> [CVN: 050.030.010.330]
+  propiedad_industrial_e_intelectual : text <<optional, repeated>> [CVN: 050.030.010.000]
+  resultados_mas_relevantes : text <<optional, single>> [CVN: 050.030.010.190]
+  tipo_de_la_propiedad_industrial : controlled_reference <<optional, single>> [CVN: 050.030.010.030]
+  tipo_de_la_propiedad_industrial_otros : text <<optional, single>> [CVN: 050.030.010.040]
+  titulo_nombre_denominacion : text <<required, single>> [CVN: 050.030.010.020]
+}
+note right of entity_research_propiedadindustrialeintelectual_050_030_010_000
+controlled references:
+- CVN_KNOW_A (subtype_backed_code_list, enum=ineligible, items=6)
+- CVN_QUALIFICATION_A (enumeration, enum=eligible, items=2)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "ProyectosDeIDIFinanciadosEnConvocatoriasCompetitivasDeAdministracionesOEntidadesPublicasYPrivadas" as entity_research_proyectosdeidifinanciadosenconvocatoriascompetitivasdeadministracionesoentidadespublicasyprivadas_050_020_010_000 <<entity>> {
+  ambito_del_proyecto : controlled_reference <<optional, single>> [CVN: 050.020.010.040]
+  ambito_del_proyecto_otros : text <<optional, single>> [CVN: 050.020.010.050]
+  calidad_en_que_ha_participado_otros : text <<optional, single>> [CVN: 050.020.010.180]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 050.020.010.090]
+  codigo_de_proyecto_segun_la_entidad_financiadora : text <<optional, single>> [CVN: 050.020.010.260]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 050.020.010.070]
+  duracion_del_proyecto : duration_like <<optional, single>> [CVN: 050.020.010.280]
+  entidad_donde_se_desarrolla : value_object<EntityNameType> <<required, single>> [CVN: 050.020.010.100]
+  entidades_participantes : value_object<EntityNameType> <<required, repeated>> [CVN: 050.020.010.400]
+  explicacion_narrativa_de_la_aportacion_del_solicitante_al_proyecto : text <<required, single>> [CVN: 050.020.010.420]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 050.020.010.410]
+  fecha_de_inicio_del_proyecto : value_object<FlexibleDatesType> <<required, single>> [CVN: 050.020.010.270]
+  financiacion_del_proyecto_cuantia_del_subproyecto : decimal_number <<optional, single>> [CVN: 050.020.010.300]
+  financiacion_del_proyecto_cuantia_total : decimal_number <<optional, single>> [CVN: 050.020.010.290]
+  financiacion_del_proyecto_en_credito : decimal_number <<optional, single>> [CVN: 050.020.010.320]
+  financiacion_del_proyecto_mixto : decimal_number <<optional, single>> [CVN: 050.020.010.330]
+  financiacion_del_proyecto_porcentaje_en_subvencion : decimal_number <<optional, single>> [CVN: 050.020.010.310]
+  grado_de_contribucion : controlled_reference <<optional, single>> [CVN: 050.020.010.170]
+  modalidad_del_proyecto : controlled_reference <<optional, single>> [CVN: 050.020.010.030]
+  nombre_del_de_la_investigador_a_principal_ip_co_ip : text <<required, repeated>> [CVN: 050.020.010.140]
+  nombre_del_programa_de_financiacion : text <<optional, single>> [CVN: 050.020.010.250]
+  nombre_del_proyecto : text <<required, single>> [CVN: 050.020.010.010]
+  numero_de_investigadores_as_participantes : decimal_number <<required, single>> [CVN: 050.020.010.150]
+  numero_de_personas_ano : decimal_number <<optional, single>> [CVN: 050.020.010.160]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 050.020.010.060]
+  palabras_clave_050_020_010_020 : controlled_reference <<optional, repeated>> [CVN: 050.020.010.020]
+  palabras_clave_050_020_010_350 : controlled_reference <<optional, repeated>> [CVN: 050.020.010.350]
+  proyectos_de_i_d_i_financiados_en_convocatorias_competitivas_de_administraciones_o_entidades_publicas_y_privadas : text <<optional, repeated>> [CVN: 050.020.010.000]
+  regimen_de_dedicacion : controlled_reference <<required, single>> [CVN: 050.020.010.430]
+  resultados_mas_relevantes : text <<optional, single>> [CVN: 050.020.010.340]
+  tipo_de_entidad_050_020_010_120 : value_object<EntityTypeType> <<optional, single>> [CVN: 050.020.010.120]
+  tipo_de_entidad_050_020_010_210 : value_object<EntityTypeType> <<optional, repeated>> [CVN: 050.020.010.210]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 050.020.010.130]
+  tipo_de_participacion : controlled_reference <<optional, single>> [CVN: 050.020.010.230]
+  tipo_de_participacion_otros : text <<optional, single>> [CVN: 050.020.010.240]
+}
+note right of entity_research_proyectosdeidifinanciadosenconvocatoriascompetitivasdeadministracionesoentidadespublicasyprivadas_050_020_010_000
+controlled references:
+- CVN_DEDICATION_A (enumeration, enum=eligible, items=2)
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_PARTICIPATION_A (code_list, enum=ineligible, items=5)
+- CVN_PARTICIPATION_B (code_list, enum=review_required, items=7)
+- CVN_PROJECT_C (enumeration, enum=eligible, items=6)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "ResultadosDerivadosDeActividadesEspecializadasYDeTransferenciaNoIncluidosEnApartadosAnteriores" as entity_research_resultadosderivadosdeactividadesespecializadasydetransferencianoincluidosenapartadosanteriores_050_030_020_000 <<entity>> {
+  ambito_de_la_actividad : controlled_reference <<optional, single>> [CVN: 050.030.020.150]
+  ambito_de_la_actividad_otros : text <<optional, single>> [CVN: 050.030.020.160]
+  calidad_en_que_ha_participado_otros : text <<optional, single>> [CVN: 050.030.020.080]
+  clave_de_actividad_convenios_de_colaboracion : boolean <<optional, single>> [CVN: 050.030.020.140]
+  clave_de_actividad_participacion_como_experto_a_tecnologico_a_en_labores_de_supervision_asesoria_evaluacion_o_peritaje : boolean <<optional, single>> [CVN: 050.030.020.130]
+  clave_de_actividad_participacion_en_la_generacion_de_empresas_spin_off_basadas_en_resultados_de_i_d_i : boolean <<optional, single>> [CVN: 050.030.020.100]
+  clave_de_actividad_puesta_en_marcha_de_nuevas_tecnicas_o_procedimientos_operacion_y_mantenimiento_de_grandes_instalaciones_o_equipamientos_complejos : boolean <<optional, single>> [CVN: 050.030.020.090]
+  clave_de_actividad_realizacion_de_servicios_tecnologicos_maduros_homologacion_calibracion_analisis_u_otros : boolean <<optional, single>> [CVN: 050.030.020.120]
+  clave_de_actividad_resultados_de_actividades_de_transferencia_de_tecnologia_introduccion_de_mejoras_de_productos_en_el_mercado_o_en_procesos_en_marcha : boolean <<optional, single>> [CVN: 050.030.020.110]
+  codigo_unesco_especializacion_primaria : controlled_reference <<optional, repeated>> [CVN: 050.030.020.020]
+  codigo_unesco_especializacion_secundaria : controlled_reference <<optional, repeated>> [CVN: 050.030.020.030]
+  codigo_unesco_especializacion_terciaria : controlled_reference <<optional, repeated>> [CVN: 050.030.020.040]
+  descripcion_del_tema_y_tareas_de_la_actividad_contrastable_desarrollada : text <<optional, single>> [CVN: 050.030.020.010]
+  duracion : duration_like <<optional, single>> [CVN: 050.030.020.260]
+  fecha_de_inicio_de_la_actividad : value_object<FlexibleDatesType> <<optional, single>> [CVN: 050.030.020.250]
+  grado_de_contribucion : controlled_reference <<optional, single>> [CVN: 050.030.020.070]
+  nombre_del_de_la_investigador_a_corresponsable_co_ip : text <<optional, single>> [CVN: 050.030.020.060]
+  nombre_del_de_la_investigador_a_principal_ip : text <<optional, single>> [CVN: 050.030.020.050]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 050.030.020.280]
+  resultados_derivados_de_actividades_especializadas_y_de_transferencia_no_incluidos_en_apartados_anteriores : text <<optional, repeated>> [CVN: 050.030.020.000]
+  resultados_mas_relevantes : text <<optional, single>> [CVN: 050.030.020.270]
+  tipo_de_entidad_es_050_030_020_190 : value_object<EntityTypeType> <<optional, repeated>> [CVN: 050.030.020.190]
+  tipo_de_entidad_es_050_030_020_230 : value_object<EntityTypeType> <<optional, repeated>> [CVN: 050.030.020.230]
+}
+note right of entity_research_resultadosderivadosdeactividadesespecializadasydetransferencianoincluidosenapartadosanteriores_050_030_020_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_PARTICIPATION_B (code_list, enum=review_required, items=7)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+- UNESCO_CODES (hierarchical_code_list, enum=ineligible, items=2513)
+end note
+
+class "TransferenciaEIntercambioDeConocimiento" as entity_research_transferenciaeintercambiodeconocimiento_050_040_000_000 <<entity>> {
+  transferencia_e_intercambio_de_conocimiento_050_040_000_000 : text <<optional, single>> [CVN: 050.040.000.000]
+  transferencia_e_intercambio_de_conocimiento_050_040_000_010 : text <<optional, single>> [CVN: 050.040.000.010]
+}
+
+}
+
+entity_research_obrasartisticasyprofesionales_050_020_030_000 -[hidden]down-> entity_research_propiedadindustrialeintelectual_050_030_010_000
+entity_research_propiedadindustrialeintelectual_050_030_010_000 -[hidden]down-> entity_research_proyectosdeidifinanciadosenconvocatoriascompetitivasdeadministracionesoentidadespublicasyprivadas_050_020_010_000
+entity_research_proyectosdeidifinanciadosenconvocatoriascompetitivasdeadministracionesoentidadespublicasyprivadas_050_020_010_000 -[hidden]down-> entity_research_resultadosderivadosdeactividadesespecializadasydetransferencianoincluidosenapartadosanteriores_050_030_020_000
+entity_research_resultadosderivadosdeactividadesespecializadasydetransferencianoincluidosenapartadosanteriores_050_030_020_000 -[hidden]down-> entity_research_transferenciaeintercambiodeconocimiento_050_040_000_000
+
+
+@enduml

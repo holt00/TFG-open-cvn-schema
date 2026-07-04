@@ -1,0 +1,388 @@
+@startuml
+title Open CVN - CVN Research - Section 060
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Research - Section 060" as area_research_060 {
+class "AcreditacionesReconocimientosObtenidos" as entity_research_acreditacionesreconocimientosobtenidos_060_030_090_000 <<entity>> {
+  acreditaciones_reconocimientos_obtenidos : text <<optional, repeated>>
+  ciudad_de_la_entidad_que_acredita : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_que_acredita : controlled_reference <<optional, single>>
+  entidad_que_acredita : value_object<EntityNameType> <<optional, single>>
+  fecha_de_obtencion : value_object<FlexibleDatesType> <<optional, single>>
+  fecha_del_reconocimiento : value_object<FlexibleDatesType> <<optional, single>>
+  nombre_descripcion : text <<optional, single>>
+  numero_de_tramos_de_docencia_reconocidos : decimal_number <<optional, single>>
+  .. +3 more attributes ..
+}
+
+class "ActividadesDeDivulgacion" as entity_research_actividadesdedivulgacion_060_010_040_000 <<entity>> {
+  actividades_de_divulgacion : text <<optional, repeated>>
+  autores_as_p_o_de_firma : text <<optional, repeated>>
+  ciudad_de_la_entidad_organizadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  intervencion_por : controlled_reference <<optional, single>>
+  intervencion_por_indicar : text <<optional, single>>
+  localizacion_nombre_del_evento : text <<optional, single>>
+  pais_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  .. +7 more attributes ..
+}
+
+class "AmbitoDelCongreso" as entity_research_ambitodelcongreso_060_010_020_100 <<entity>> {
+  ambito_del_congreso : controlled_reference <<optional, single>>
+  ambito_del_congreso_otros : text <<optional, single>>
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>>
+  localizacion_ciudad : text <<optional, single>>
+  localizacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  localizacion_entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  localizacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  localizacion_nombre_del_congreso : text <<optional, single>>
+  .. +3 more attributes ..
+}
+
+class "AmbitoDelEvento060010030070" as entity_research_ambitodelevento060010030070_060_010_030_070 <<entity>> {
+  ambito_del_evento : controlled_reference <<optional, single>>
+  ambito_del_evento_otros : text <<optional, single>>
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>>
+  localizacion_ciudad : text <<optional, single>>
+  localizacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  localizacion_entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  localizacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  localizacion_nombre_del_evento : text <<optional, single>>
+  .. +3 more attributes ..
+}
+
+class "AmbitoDelEvento060010040080" as entity_research_ambitodelevento060010040080_060_010_040_080 <<entity>> {
+  ambito_del_evento : controlled_reference <<optional, single>>
+  ambito_del_evento_otros : text <<optional, single>>
+  localizacion_ciudad : text <<optional, single>>
+  localizacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  localizacion_entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  localizacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  localizacion_nombre_del_evento : text <<optional, single>>
+  localizacion_pais : controlled_reference <<optional, single>>
+  .. +2 more attributes ..
+}
+
+class "AyudasYBecasObtenidas" as entity_research_ayudasybecasobtenidas_060_030_010_000 <<entity>> {
+  ayudas_y_becas_obtenidas : text <<optional, repeated>>
+  ciudad_de_la_entidad_que_la_concede : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_que_la_concede : controlled_reference <<optional, single>>
+  duracion_de_la_ayuda : duration_like <<optional, single>>
+  entidad_de_realizacion : value_object<EntityNameType> <<required, single>>
+  entidad_que_la_concede : value_object<EntityNameType> <<optional, single>>
+  facultad_escuela_unidad_centro_hospital_o_instituto : value_object<EntityNameType> <<optional, single>>
+  fecha : value_object<FlexibleDatesType> <<optional, single>>
+  .. +9 more attributes ..
+}
+
+class "ComitesCientificosTecnicosYOAsesores" as entity_research_comitescientificostecnicosyoasesores_060_020_010_000 <<entity>> {
+  ambito_de_la_actividad : controlled_reference <<optional, single>>
+  ambito_de_la_actividad_otros : text <<optional, single>>
+  ciudad_de_la_entidad_de_la_que_depende_el_programa : text <<optional, single>>
+  ciudad_de_radicacion : text <<optional, single>>
+  codigo_unesco_especializacion_primaria : controlled_reference <<optional, repeated>>
+  codigo_unesco_especializacion_secundaria : controlled_reference <<optional, repeated>>
+  codigo_unesco_especializacion_terciaria : controlled_reference <<optional, repeated>>
+  comites_cientificos_tecnicos_y_o_asesores : text <<optional, repeated>>
+  .. +11 more attributes ..
+}
+
+class "ConsejosEditoriales" as entity_research_consejoseditoriales_060_030_030_000 <<entity>> {
+  ambito : controlled_reference <<optional, single>>
+  ambito_otros : text <<optional, single>>
+  categoria_profesional : text <<optional, single>>
+  ciudad_de_la_entidad_de_afiliacion : text <<optional, single>>
+  ciudad_de_radicacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_afiliacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_radicacion : controlled_reference <<optional, single>>
+  consejos_editoriales : text <<optional, repeated>>
+  .. +10 more attributes ..
+}
+
+class "EntidadesParticipantes" as entity_research_entidadesparticipantes_060_020_020_100 <<entity>> {
+  ciudad_de_la_entidad_participante : text <<optional, repeated>>
+  comunidad_autonoma_region_de_la_entidad_participante : controlled_reference <<optional, repeated>>
+  entidades_participantes : value_object<EntityNameType> <<optional, repeated>>
+  pais_de_la_entidad_participante : controlled_reference <<optional, repeated>>
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, repeated>>
+  tipo_de_entidad_otros : text <<optional, repeated>>
+}
+
+class "EstanciasEnCentrosPublicosOPrivados" as entity_research_estanciasencentrospublicosoprivados_060_010_050_000 <<entity>> {
+  capacidades_adquiridas_posteriormente_desarrolladas : text <<optional, single>>
+  centro_entidad_de_realizacion : value_object<EntityNameType> <<required, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  codigo_unesco_especializacion_primaria : controlled_reference <<optional, repeated>>
+  codigo_unesco_especializacion_secundaria : controlled_reference <<optional, repeated>>
+  codigo_unesco_especializacion_terciaria : controlled_reference <<optional, repeated>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  entidad_fuente_de_la_financiacion : value_object<EntityNameType> <<optional, single>>
+  .. +20 more attributes ..
+}
+
+class "EvaluacionYRevisionDeProyectosYArticulosDeIDI" as entity_research_evaluacionyrevisiondeproyectosyarticulosdeidi_060_020_060_000 <<entity>> {
+  ambito : controlled_reference <<optional, single>>
+  ambito_otros : text <<optional, single>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  evaluacion_y_revision_de_proyectos_y_articulos_de_i_d_i : text <<optional, repeated>>
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<optional, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>>
+  .. +10 more attributes ..
+}
+
+class "FormaDeContribucion" as entity_research_formadecontribucion_060_010_020_220 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  forma_de_contribucion : controlled_reference <<optional, single>>
+  identificador_de_publicacion_digital : text <<optional, repeated>>
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  publicacion_deposito_legal : text <<optional, single>>
+  publicacion_direccion_electronica : text <<optional, single>>
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>>
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  .. +8 more attributes ..
+}
+
+class "ForosYComitesNacionalesEInternacionales" as entity_research_forosycomitesnacionaleseinternacionales_060_020_050_000 <<entity>> {
+  categoria_profesional : text <<optional, single>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_organizadora : text <<optional, single>>
+  ciudad_de_la_entidad_que_representa : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_que_representa : controlled_reference <<optional, single>>
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  .. +12 more attributes ..
+}
+
+class "GestionDeIDI" as entity_research_gestiondeidi_060_020_040_000 <<entity>> {
+  ambito_territorial : controlled_reference <<optional, single>>
+  ambito_territorial_otros : text <<optional, single>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  entorno_duracion : duration_like <<optional, single>>
+  entorno_entidad_donde_se_ejercio_la_responsabilidad : value_object<EntityNameType> <<optional, single>>
+  entorno_fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>>
+  entorno_tipo_de_entidad : value_object<EntityTypeType> <<optional, single>>
+  .. +15 more attributes ..
+}
+
+class "IndicadoresGeneralesDeCalidadDeLaProduccionCientifica" as entity_research_indicadoresgeneralesdecalidaddelaproduccioncientifica_060_010_060_000 <<entity>> {
+  indicadores_generales_de_calidad_de_la_produccion_cientifica_060_010_060_000 : text <<optional, single>>
+  indicadores_generales_de_calidad_de_la_produccion_cientifica_060_010_060_010 : text <<optional, single>>
+}
+
+class "OrganizacionDeActividadesDeIDI" as entity_research_organizaciondeactividadesdeidi_060_020_030_000 <<entity>> {
+  ambito_de_la_reunion : controlled_reference <<optional, single>>
+  ambito_de_la_reunion_otros : text <<optional, single>>
+  ciudad_de_la_actividad : text <<optional, single>>
+  ciudad_de_la_entidad_convocante : text <<optional, single>>
+  comunidad_autonoma_region_de_la_actividad : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_convocante : controlled_reference <<optional, single>>
+  duracion : duration_like <<optional, single>>
+  entidad_convocante : value_object<EntityNameType> <<optional, single>>
+  .. +12 more attributes ..
+}
+
+class "OtrasDistincionesCarreraProfesionalYOEmpresarial" as entity_research_otrasdistincionescarreraprofesionalyoempresarial_060_030_060_000 <<entity>> {
+  ambito : controlled_reference <<optional, single>>
+  ambito_otros : text <<optional, single>>
+  breve_descripcion_del_ambito_de_capacidades_cientificas_o_tecnologicas_del_ascenso_y_cambios_de_responsabilidad : text <<optional, single>>
+  ciudad_de_la_entidad_que_concede_el_reconocimiento : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_que_concede_el_reconocimiento : controlled_reference <<optional, single>>
+  entidad_que_lo_concede : value_object<EntityNameType> <<optional, single>>
+  fecha_de_concesion : value_object<FlexibleDatesType> <<optional, single>>
+  otras_distinciones_carrera_profesional_y_o_empresarial : text <<optional, repeated>>
+  .. +3 more attributes ..
+}
+
+class "OtrosMeritosDeLaActividadInvestigadora" as entity_research_otrosmeritosdelaactividadinvestigadora_060_030_110_000 <<entity>> {
+  otros_meritos_de_la_actividad_investigadora_060_030_110_000 : text <<optional, single>>
+  otros_meritos_de_la_actividad_investigadora_060_030_110_010 : text <<optional, single>>
+}
+
+class "OtrosModosDeColaboracionConInvestigadoresAsOTecnologosAs" as entity_research_otrosmodosdecolaboracionconinvestigadoresasotecnologosas_060_020_020_000 <<entity>> {
+  ciudad_de_radicacion : text <<optional, single>>
+  comunidad_autonoma_region_de_radicacion : controlled_reference <<optional, single>>
+  descripcion_del_objeto_de_la_colaboracion : text <<optional, single>>
+  duracion : duration_like <<optional, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>>
+  modo_de_relacion : controlled_reference <<optional, single>>
+  modo_de_relacion_otros : text <<optional, single>>
+  nombres_de_los_investigadores_principales_ip_co_ip : text <<optional, repeated>>
+  .. +5 more attributes ..
+}
+
+class "PeriodosDeActividadInvestigadoraDocenteYDeTransferenciaDelConocimiento" as entity_research_periodosdeactividadinvestigadoradocenteydetransferenciadelconocimiento_060_030_070_000 <<entity>> {
+  ambito : controlled_reference <<optional, single>>
+  ambito_otros : text <<optional, single>>
+  ano_de_convocatoria : text <<optional, single>>
+  ano_de_finalizacion : text <<optional, single>>
+  ano_de_inicio : text <<optional, single>>
+  calificacion_obtenida : text <<optional, single>>
+  ciudad_de_la_entidad_que_acredita : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_que_acredita : controlled_reference <<optional, single>>
+  .. +12 more attributes ..
+}
+
+class "PremiosDeInnovacionDocente" as entity_research_premiosdeinnovaciondocente_060_030_080_000 <<entity>> {
+  a_propuesta_de : text <<optional, single>>
+  ciudad_de_la_entidad_que_concede_el_premio : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_que_concede_el_premio : controlled_reference <<optional, single>>
+  entidad_que_concede : value_object<EntityNameType> <<optional, single>>
+  explicacion_narrativa_del_merito : text <<optional, single>>
+  fecha_de_concesion : value_object<FlexibleDatesType> <<optional, single>>
+  nombre_del_premio : text <<optional, single>>
+  pais_de_la_entidad_que_concede_el_premio : controlled_reference <<optional, single>>
+  .. +3 more attributes ..
+}
+
+class "PremiosMencionesYDistinciones" as entity_research_premiosmencionesydistinciones_060_030_050_000 <<entity>> {
+  breve_descripcion_del_titulo_o_premio : text <<optional, single>>
+  ciudad_de_la_entidad_que_lo_concede : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_que_lo_concede : controlled_reference <<optional, single>>
+  entidad_que_lo_concede : value_object<EntityNameType> <<optional, single>>
+  fecha_de_concesion : value_object<FlexibleDatesType> <<optional, single>>
+  pais_de_la_entidad_que_lo_concede : controlled_reference <<optional, single>>
+  premios_menciones_y_distinciones : text <<optional, repeated>>
+  reconocimientos_ligados_a_su_concesion : text <<optional, single>>
+  .. +2 more attributes ..
+}
+
+class "ProduccionCientifica" as entity_research_produccioncientifica_060_010_000_000 <<entity>> {
+  fuente_de_indice_h : controlled_reference <<optional, single>>
+  fuente_de_indice_h_otros : text <<optional, single>>
+  indice_h_fecha_de_aplicacion : value_object<FlexibleDatesType> <<optional, single>>
+  indice_h_valor : decimal_number <<optional, single>>
+  produccion_cientifica : text <<optional, repeated>>
+}
+
+class "PublicacionesDocumentosCientificosYTecnicos" as entity_research_publicacionesdocumentoscientificosytecnicos_060_010_010_000 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  autores_as_p_o_de_firma_nombre : text <<optional, repeated>>
+  categoria : controlled_reference <<optional, repeated>>
+  ciudad_de_publicacion : text <<optional, single>>
+  coleccion : text <<optional, single>>
+  fuente_de_citas : controlled_reference <<optional, repeated>>
+  fuente_de_citas_otros : text <<optional, repeated>>
+  fuente_del_dato : controlled_reference <<optional, single>>
+  .. +25 more attributes ..
+}
+
+class "PublicacionIndiceDeImpactoDeAnoDePublicacion" as entity_research_publicacionindicedeimpactodeanodepublicacion_060_010_010_240 <<entity>> {
+  categoria : controlled_reference <<optional, repeated>>
+  fuente_de_impacto : controlled_reference <<optional, repeated>>
+  fuente_de_impacto_otros : text <<optional, repeated>>
+  numero_de_revistas_en_la_categoria : decimal_number <<optional, repeated>>
+  posicion_que_ocupa_la_revista_en_la_categoria : decimal_number <<optional, repeated>>
+  publicacion_indice_de_impacto_de_ano_de_publicacion : text <<optional, repeated>>
+  revista_dentro_del_25_de_mayor_indice_de_impacto : boolean <<optional, repeated>>
+}
+
+class "PublicacionNombre060010020370" as entity_research_publicacionnombre060010020370_060_010_020_370 <<entity>> {
+  publicacion_nombre : text <<optional, single>>
+}
+
+class "PublicacionNombre060010030350" as entity_research_publicacionnombre060010030350_060_010_030_350 <<entity>> {
+  publicacion_nombre : text <<optional, single>>
+}
+
+class "PublicacionNombre060010040360" as entity_research_publicacionnombre060010040360_060_010_040_360 <<entity>> {
+  publicacion_nombre : text <<optional, single>>
+}
+
+class "PublicacionTipo060010030190" as entity_research_publicaciontipo060010030190_060_010_030_190 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  identificador_de_publicacion_digital : text <<optional, repeated>>
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  publicacion_deposito_legal : text <<optional, single>>
+  publicacion_direccion_electronica : text <<optional, single>>
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>>
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  publicacion_isbn_issn : text <<optional, repeated>>
+  .. +8 more attributes ..
+}
+
+class "PublicacionTipo060010040200" as entity_research_publicaciontipo060010040200_060_010_040_200 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  identificador_de_publicacion_digital : text <<optional, repeated>>
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  publicacion_deposito_legal : text <<optional, single>>
+  publicacion_direccion_electronica : text <<optional, single>>
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>>
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  publicacion_isbn_issn : text <<optional, repeated>>
+  .. +8 more attributes ..
+}
+
+class "RedesDeCooperacion" as entity_research_redesdecooperacion_060_030_040_000 <<entity>> {
+  ciudad_de_la_entidad_de_afiliacion : text <<optional, single>>
+  ciudad_de_radicacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_afiliacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_radicacion : controlled_reference <<optional, single>>
+  duracion : duration_like <<optional, single>>
+  entidad_es_participante_s : value_object<EntityNameType> <<optional, repeated>>
+  entidad_que_realizo_la_seleccion : value_object<EntityNameType> <<optional, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>>
+  .. +11 more attributes ..
+}
+
+class "ResumenDeOtrosMeritos" as entity_research_resumendeotrosmeritos_060_030_100_000 <<entity>> {
+  ciudad_de_la_entidad_que_acredita : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_que_acredita : controlled_reference <<optional, single>>
+  entidad_que_acredita : value_object<EntityNameType> <<optional, single>>
+  fecha_de_concesion : value_object<FlexibleDatesType> <<optional, single>>
+  pais_de_la_entidad_que_acredita : controlled_reference <<optional, single>>
+  resumen_de_otros_meritos : text <<optional, repeated>>
+  resumen_de_otros_meritos_en_texto_libre : text <<optional, single>>
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>>
+  .. +1 more attributes ..
+}
+
+class "SociedadesCientificasYAsociacionesProfesionales" as entity_research_sociedadescientificasyasociacionesprofesionales_060_030_020_000 <<entity>> {
+  categoria_profesional : text <<optional, single>>
+  ciudad_de_la_entidad_de_afiliacion : text <<optional, single>>
+  ciudad_de_radicacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_afiliacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_radicacion : controlled_reference <<optional, single>>
+  entidad_de_afiliacion : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<optional, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>>
+  .. +8 more attributes ..
+}
+
+class "Soporte" as entity_research_soporte_060_010_010_070 <<entity>> {
+  publicacion_nombre : text <<optional, single>>
+  soporte : controlled_reference <<optional, single>>
+}
+
+class "TrabajosPresentadosEnCongresosNacionalesOInternacionales" as entity_research_trabajospresentadosencongresosnacionalesointernacionales_060_010_020_000 <<entity>> {
+  autores_as_p_o_de_firma : text <<optional, repeated>>
+  ciudad_de_la_entidad_organizadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  forma_de_contribucion : controlled_reference <<optional, single>>
+  fuente_de_citas : controlled_reference <<optional, repeated>>
+  fuente_de_citas_otros : text <<optional, repeated>>
+  intervencion_por : controlled_reference <<optional, single>>
+  intervencion_por_otros : text <<optional, single>>
+  .. +11 more attributes ..
+}
+
+class "TrabajosPresentadosEnJornadasSeminariosTalleresDeTrabajoYOCursosNacionalesOInternacionales" as entity_research_trabajospresentadosenjornadasseminariostalleresdetrabajoyocursosnacionalesointernacionales_060_010_030_000 <<entity>> {
+  autores_as_p_o_de_firma : text <<optional, repeated>>
+  ciudad_de_la_entidad_organizadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  fuente_de_citas : controlled_reference <<optional, repeated>>
+  fuente_de_citas_otros : text <<optional, repeated>>
+  intervencion_por : controlled_reference <<optional, single>>
+  localizacion_nombre_del_evento : text <<optional, single>>
+  numero_de_citas : decimal_number <<optional, repeated>>
+  .. +8 more attributes ..
+}
+
+}
+
+@enduml
