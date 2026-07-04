@@ -1,0 +1,28 @@
+@startuml
+title Open CVN - CVN Research Reference
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "CVN Research Reference" as area_research_reference {
+class "Section 050" as reference_section_050 <<reference_section>> {
+  entities : 11
+  file : open_cvn_research_050_reference.puml
+  representative : ContratosConveniosOProyectosDeIDINoCompetitivosConAdministracionesOEntidadesPublicasOPrivadas, EntidadEsColaboradoraS, EntidadEsDestinatariaSDeLaActividad, +8 more
+}
+
+class "Section 060" as reference_section_060 <<reference_section>> {
+  entities : 36
+  file : open_cvn_research_060_reference.puml
+  representative : AcreditacionesReconocimientosObtenidos, ActividadesDeDivulgacion, AmbitoDelCongreso, +33 more
+}
+
+}
+
+note bottom
+Reference index for CVN Research
+Detailed reference section files:
+- open_cvn_research_050_reference.puml
+- open_cvn_research_060_reference.puml
+end note
+@enduml

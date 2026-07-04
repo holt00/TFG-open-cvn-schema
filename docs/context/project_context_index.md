@@ -50,6 +50,8 @@ Agents should also read `AGENTS.md` before this file.
   of the CVN generation pipeline
 - `docs/pipeline/conceptual_model_extraction.md`: issue `#43` conceptual IR
   extraction layer for later diagram and JSON outputs
+- `docs/diagrams/`: issue `#44` generated PlantUML sources and diagram
+  regeneration notes
 - `docs/pipeline/known_limitations.md`: structural limitations, detected
   discrepancies, and follow-up implications
 - `docs/adr/`: architecture decision records

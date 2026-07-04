@@ -1,0 +1,28 @@
+@startuml
+title Open CVN - Other CVN Concepts Reference
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "Other CVN Concepts Reference" as area_other_reference {
+class "Section 040" as reference_section_040 <<reference_section>> {
+  entities : 19
+  file : open_cvn_other_040_reference.puml
+  representative : ActividadDeAtencionDeSaludEnOtrosPaisesExtranjeros, ActividadEnCooperacionPracticandoLaAtencionDeSaludEnPaisesEnDesarrollo, ActividadEnCooperacionSanitariaEnPaisesEnDesarrollo, +16 more
+}
+
+class "Fallback Concepts" as reference_section_no_tree <<reference_section>> {
+  entities : 1
+  file : open_cvn_other_no_tree_reference.puml
+  representative : IdentificacionYContacto
+}
+
+}
+
+note bottom
+Reference index for Other CVN Concepts
+Detailed reference section files:
+- open_cvn_other_040_reference.puml
+- open_cvn_other_no_tree_reference.puml
+end note
+@enduml

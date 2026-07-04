@@ -1,0 +1,123 @@
+@startuml
+title Open CVN - CVN Research - Section 050
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Research - Section 050" as area_research_050 {
+class "ContratosConveniosOProyectosDeIDINoCompetitivosConAdministracionesOEntidadesPublicasOPrivadas" as entity_research_contratosconveniosoproyectosdeidinocompetitivosconadministracionesoentidadespublicasoprivadas_050_020_020_000 <<entity>> {
+  ambito_del_proyecto : controlled_reference <<optional, single>>
+  ambito_del_proyecto_otros : text <<optional, single>>
+  calidad_en_que_ha_participado_otros : text <<optional, single>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  codigo_de_proyecto_segun_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  contratos_convenios_o_proyectos_de_i_d_i_no_competitivos_con_administraciones_o_entidades_publicas_o_privadas : text <<optional, repeated>>
+  duracion_del_proyecto : duration_like <<optional, single>>
+  .. +24 more attributes ..
+}
+
+class "EntidadEsColaboradoraS" as entity_research_entidadescolaboradoras_050_030_020_190 <<entity>> {
+  ciudad_de_la_entidad_colaboradora : text <<optional, repeated>>
+  comunidad_autonoma_region_de_la_entidad_colaboradora : controlled_reference <<optional, repeated>>
+  entidad_es_colaboradora_s : value_object<EntityNameType> <<optional, repeated>>
+  pais_de_la_entidad_colaboradora : controlled_reference <<optional, repeated>>
+  tipo_de_entidad_es : value_object<EntityTypeType> <<optional, repeated>>
+  tipo_de_entidad_es_otros : text <<optional, repeated>>
+}
+
+class "EntidadEsDestinatariaSDeLaActividad" as entity_research_entidadesdestinatariasdelaactividad_050_030_020_230 <<entity>> {
+  ciudad_de_la_entidad_destinataria : text <<optional, repeated>>
+  comunidad_autonoma_region_de_la_entidad_destinataria : controlled_reference <<optional, repeated>>
+  entidad_es_destinataria_s_de_la_actividad : value_object<EntityNameType> <<optional, repeated>>
+  pais_de_la_entidad_destinataria : controlled_reference <<optional, repeated>>
+  tipo_de_entidad_es : value_object<EntityTypeType> <<optional, repeated>>
+  tipo_de_entidad_es_otros : text <<optional, repeated>>
+}
+
+class "EntidadEsFinanciadoraS" as entity_research_entidadesfinanciadoras_050_020_010_210 <<entity>> {
+  ciudad_de_la_entidad_financiadora : text <<optional, repeated>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, repeated>>
+  entidad_es_financiadora_s : value_object<EntityNameType> <<required, repeated>>
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, repeated>>
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, repeated>>
+  tipo_de_entidad_otros : text <<optional, repeated>>
+}
+
+class "GruposEquiposDeInvestigacionDesarrolloOInnovacion" as entity_research_gruposequiposdeinvestigaciondesarrollooinnovacion_050_010_000_000 <<entity>> {
+  ciudad_de_radicacion_del_grupo : text <<optional, single>>
+  clases_de_colaboracion : controlled_reference <<optional, single>>
+  codigo_normalizado : text <<optional, single>>
+  comunidad_autonoma_region_de_radicacion_del_grupo : controlled_reference <<optional, single>>
+  duracion : duration_like <<optional, single>>
+  entidad_a_la_que_pertenece : value_object<EntityNameType> <<optional, single>>
+  explicacion_narrativa_de_la_aportacion : text <<optional, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>>
+  .. +12 more attributes ..
+}
+
+class "NombreSEntidadEsFinanciadoraS" as entity_research_nombresentidadesfinanciadoras_050_020_020_140 <<entity>> {
+  ciudad_de_la_entidad_financiadora : text <<optional, repeated>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, repeated>>
+  nombre_s_entidad_es_financiadora_s : value_object<EntityNameType> <<required, repeated>>
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, repeated>>
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, repeated>>
+  tipo_de_entidad_otros : text <<optional, repeated>>
+}
+
+class "ObrasArtisticasYProfesionales" as entity_research_obrasartisticasyprofesionales_050_020_030_000 <<entity>> {
+  autores_as_p_o_de_firma : text <<optional, repeated>>
+  caracteristicas_catalogo : boolean <<optional, single>>
+  caracteristicas_comisario_de_exposicion : boolean <<optional, single>>
+  caracteristicas_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  caracteristicas_monografica : boolean <<optional, single>>
+  ciudad_de_la_exposicion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_exposicion : controlled_reference <<optional, single>>
+  descripcion : text <<optional, single>>
+  .. +11 more attributes ..
+}
+
+class "PropiedadIndustrialEIntelectual" as entity_research_propiedadindustrialeintelectual_050_030_010_000 <<entity>> {
+  ambito_geografico_espana : boolean <<optional, single>>
+  ambito_geografico_internacional_no_ue : boolean <<optional, single>>
+  ambito_geografico_patente_europea : boolean <<optional, single>>
+  codigo_de_referencia_n_o_de_registro_si_procede : text <<optional, single>>
+  comunidad_autonoma_region_de_prioridad : controlled_reference <<optional, single>>
+  en_este_caso_el_resultado_en_relacion_con_la_empresa_es_de : controlled_reference <<optional, single>>
+  entidad_titular_de_derechos : value_object<EntityNameType> <<optional, single>>
+  explotacion_comunidad_autonoma_region_en_las_que_se_ha_extendido_formalizado : controlled_reference <<optional, repeated>>
+  .. +24 more attributes ..
+}
+
+class "ProyectosDeIDIFinanciadosEnConvocatoriasCompetitivasDeAdministracionesOEntidadesPublicasYPrivadas" as entity_research_proyectosdeidifinanciadosenconvocatoriascompetitivasdeadministracionesoentidadespublicasyprivadas_050_020_010_000 <<entity>> {
+  ambito_del_proyecto : controlled_reference <<optional, single>>
+  ambito_del_proyecto_otros : text <<optional, single>>
+  calidad_en_que_ha_participado_otros : text <<optional, single>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  codigo_de_proyecto_segun_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  duracion_del_proyecto : duration_like <<optional, single>>
+  entidad_donde_se_desarrolla : value_object<EntityNameType> <<required, single>>
+  .. +27 more attributes ..
+}
+
+class "ResultadosDerivadosDeActividadesEspecializadasYDeTransferenciaNoIncluidosEnApartadosAnteriores" as entity_research_resultadosderivadosdeactividadesespecializadasydetransferencianoincluidosenapartadosanteriores_050_030_020_000 <<entity>> {
+  ambito_de_la_actividad : controlled_reference <<optional, single>>
+  ambito_de_la_actividad_otros : text <<optional, single>>
+  calidad_en_que_ha_participado_otros : text <<optional, single>>
+  clave_de_actividad_convenios_de_colaboracion : boolean <<optional, single>>
+  clave_de_actividad_participacion_como_experto_a_tecnologico_a_en_labores_de_supervision_asesoria_evaluacion_o_peritaje : boolean <<optional, single>>
+  clave_de_actividad_participacion_en_la_generacion_de_empresas_spin_off_basadas_en_resultados_de_i_d_i : boolean <<optional, single>>
+  clave_de_actividad_puesta_en_marcha_de_nuevas_tecnicas_o_procedimientos_operacion_y_mantenimiento_de_grandes_instalaciones_o_equipamientos_complejos : boolean <<optional, single>>
+  clave_de_actividad_realizacion_de_servicios_tecnologicos_maduros_homologacion_calibracion_analisis_u_otros : boolean <<optional, single>>
+  .. +15 more attributes ..
+}
+
+class "TransferenciaEIntercambioDeConocimiento" as entity_research_transferenciaeintercambiodeconocimiento_050_040_000_000 <<entity>> {
+  transferencia_e_intercambio_de_conocimiento_050_040_000_000 : text <<optional, single>>
+  transferencia_e_intercambio_de_conocimiento_050_040_000_010 : text <<optional, single>>
+}
+
+}
+
+@enduml

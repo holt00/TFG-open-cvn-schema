@@ -1,0 +1,160 @@
+@startuml
+title Open CVN - CVN Research Reference - Section 060 Part 1
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Research Reference - Section 060 Part 1" as area_research_060_part_01_reference {
+class "AcreditacionesReconocimientosObtenidos" as entity_research_acreditacionesreconocimientosobtenidos_060_030_090_000 <<entity>> {
+  acreditaciones_reconocimientos_obtenidos : text <<optional, repeated>> [CVN: 060.030.090.000]
+  ciudad_de_la_entidad_que_acredita : text <<optional, single>> [CVN: 060.030.090.120]
+  comunidad_autonoma_region_de_la_entidad_que_acredita : controlled_reference <<optional, single>> [CVN: 060.030.090.030]
+  entidad_que_acredita : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.090.060]
+  fecha_de_obtencion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.090.050]
+  fecha_del_reconocimiento : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.090.110]
+  nombre_descripcion : text <<optional, single>> [CVN: 060.030.090.010]
+  numero_de_tramos_de_docencia_reconocidos : decimal_number <<optional, single>> [CVN: 060.030.090.100]
+  pais_de_la_entidad_que_acredita : controlled_reference <<optional, single>> [CVN: 060.030.090.020]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.030.090.080]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.030.090.090]
+}
+note right of entity_research_acreditacionesreconocimientosobtenidos_060_030_090_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "ActividadesDeDivulgacion" as entity_research_actividadesdedivulgacion_060_010_040_000 <<entity>> {
+  actividades_de_divulgacion : text <<optional, repeated>> [CVN: 060.010.040.000]
+  autores_as_p_o_de_firma : text <<optional, repeated>> [CVN: 060.010.040.350]
+  ciudad_de_la_entidad_organizadora : text <<optional, single>> [CVN: 060.010.040.340]
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 060.010.040.330]
+  intervencion_por : controlled_reference <<optional, single>> [CVN: 060.010.040.040]
+  intervencion_por_indicar : text <<optional, single>> [CVN: 060.010.040.050]
+  localizacion_nombre_del_evento : text <<optional, single>> [CVN: 060.010.040.080]
+  pais_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 060.010.040.320]
+  publicacion_de_la_participacion_publicacion_en_actas_de_congreso_con_comite_evaluador_de_admision_externo : boolean <<optional, single>> [CVN: 060.010.040.190]
+  publicacion_de_la_participacion_publicacion_en_actas_de_evento : boolean <<optional, single>> [CVN: 060.010.040.180]
+  publicacion_tipo : controlled_reference <<optional, single>> [CVN: 060.010.040.200]
+  resultados_relevantes : text <<optional, single>> [CVN: 060.010.040.430]
+  tipo_de_evento : controlled_reference <<optional, single>> [CVN: 060.010.040.020]
+  tipo_de_evento_otros : text <<optional, single>> [CVN: 060.010.040.030]
+  titulo_u_objeto : text <<optional, single>> [CVN: 060.010.040.010]
+}
+note right of entity_research_actividadesdedivulgacion_060_010_040_000
+controlled references:
+- CVN_EVENT_A (subtype_backed_code_list, enum=ineligible, items=4)
+- CVN_PUBLICATION_A (subtype_backed_code_list, enum=ineligible, items=18)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SUPERVISION_A (code_list, enum=review_required, items=5)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "AmbitoDelCongreso" as entity_research_ambitodelcongreso_060_010_020_100 <<entity>> {
+  ambito_del_congreso : controlled_reference <<optional, single>> [CVN: 060.010.020.080]
+  ambito_del_congreso_otros : text <<optional, single>> [CVN: 060.010.020.090]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 060.010.020.380]
+  localizacion_ciudad : text <<optional, single>> [CVN: 060.010.020.180]
+  localizacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 060.010.020.160]
+  localizacion_entidad_organizadora : value_object<EntityNameType> <<optional, single>> [CVN: 060.010.020.110]
+  localizacion_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.010.020.190]
+  localizacion_nombre_del_congreso : text <<optional, single>> [CVN: 060.010.020.100]
+  localizacion_pais : controlled_reference <<optional, single>> [CVN: 060.010.020.150]
+  localizacion_tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.010.020.130]
+  localizacion_tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.010.020.140]
+}
+note right of entity_research_ambitodelcongreso_060_010_020_100
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "AmbitoDelEvento060010030070" as entity_research_ambitodelevento060010030070_060_010_030_070 <<entity>> {
+  ambito_del_evento : controlled_reference <<optional, single>> [CVN: 060.010.030.050]
+  ambito_del_evento_otros : text <<optional, single>> [CVN: 060.010.030.060]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 060.010.030.370]
+  localizacion_ciudad : text <<optional, single>> [CVN: 060.010.030.150]
+  localizacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 060.010.030.130]
+  localizacion_entidad_organizadora : value_object<EntityNameType> <<optional, single>> [CVN: 060.010.030.080]
+  localizacion_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.010.030.160]
+  localizacion_nombre_del_evento : text <<optional, single>> [CVN: 060.010.030.070]
+  localizacion_pais : controlled_reference <<optional, single>> [CVN: 060.010.030.120]
+  localizacion_tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.010.030.100]
+  localizacion_tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.010.030.110]
+}
+note right of entity_research_ambitodelevento060010030070_060_010_030_070
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "AmbitoDelEvento060010040080" as entity_research_ambitodelevento060010040080_060_010_040_080 <<entity>> {
+  ambito_del_evento : controlled_reference <<optional, single>> [CVN: 060.010.040.060]
+  ambito_del_evento_otros : text <<optional, single>> [CVN: 060.010.040.070]
+  localizacion_ciudad : text <<optional, single>> [CVN: 060.010.040.160]
+  localizacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 060.010.040.140]
+  localizacion_entidad_organizadora : value_object<EntityNameType> <<optional, single>> [CVN: 060.010.040.090]
+  localizacion_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.010.040.170]
+  localizacion_nombre_del_evento : text <<optional, single>> [CVN: 060.010.040.080]
+  localizacion_pais : controlled_reference <<optional, single>> [CVN: 060.010.040.130]
+  localizacion_tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.010.040.110]
+  localizacion_tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.010.040.120]
+}
+note right of entity_research_ambitodelevento060010040080_060_010_040_080
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "AyudasYBecasObtenidas" as entity_research_ayudasybecasobtenidas_060_030_010_000 <<entity>> {
+  ayudas_y_becas_obtenidas : text <<optional, repeated>> [CVN: 060.030.010.000]
+  ciudad_de_la_entidad_que_la_concede : text <<optional, single>> [CVN: 060.030.010.150]
+  comunidad_autonoma_region_de_la_entidad_que_la_concede : controlled_reference <<optional, single>> [CVN: 060.030.010.030]
+  duracion_de_la_ayuda : duration_like <<optional, single>> [CVN: 060.030.010.140]
+  entidad_de_realizacion : value_object<EntityNameType> <<required, single>> [CVN: 060.030.010.180]
+  entidad_que_la_concede : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.010.080]
+  facultad_escuela_unidad_centro_hospital_o_instituto : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.010.170]
+  fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.010.130]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 060.030.010.160]
+  finalidad : controlled_reference <<optional, single>> [CVN: 060.030.010.060]
+  finalidad_otros : text <<optional, single>> [CVN: 060.030.010.070]
+  importe : decimal_number <<optional, single>> [CVN: 060.030.010.120]
+  nombre_de_la_ayuda : text <<optional, single>> [CVN: 060.030.010.010]
+  pais_de_la_entidad_que_la_concede : controlled_reference <<optional, single>> [CVN: 060.030.010.020]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 060.030.010.050]
+  tipo_de_entidad_que_la_concede : value_object<EntityTypeType> <<optional, single>> [CVN: 060.030.010.100]
+  tipo_de_entidad_que_la_concede_otros : text <<optional, single>> [CVN: 060.030.010.110]
+}
+note right of entity_research_ayudasybecasobtenidas_060_030_010_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SUMMONS_A (code_list, enum=review_required, items=3)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+}
+
+entity_research_acreditacionesreconocimientosobtenidos_060_030_090_000 -[hidden]down-> entity_research_actividadesdedivulgacion_060_010_040_000
+entity_research_actividadesdedivulgacion_060_010_040_000 -[hidden]down-> entity_research_ambitodelcongreso_060_010_020_100
+entity_research_ambitodelcongreso_060_010_020_100 -[hidden]down-> entity_research_ambitodelevento060010030070_060_010_030_070
+entity_research_ambitodelevento060010030070_060_010_030_070 -[hidden]down-> entity_research_ambitodelevento060010040080_060_010_040_080
+entity_research_ambitodelevento060010040080_060_010_040_080 -[hidden]down-> entity_research_ayudasybecasobtenidas_060_030_010_000
+
+
+@enduml

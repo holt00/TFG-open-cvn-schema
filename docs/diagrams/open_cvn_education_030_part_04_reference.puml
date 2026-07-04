@@ -1,0 +1,78 @@
+@startuml
+title Open CVN - CVN Education Reference - Section 030 Part 4
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Education Reference - Section 030 Part 4" as area_education_030_part_04_reference {
+class "PublicacionNombre030090000330" as entity_education_publicacionnombre030090000330_030_090_000_330 <<entity>> {
+  publicacion_nombre : text <<optional, single>> [CVN: 030.090.000.330]
+}
+
+class "PublicacionTitulo030070000080" as entity_education_publicaciontitulo030070000080_030_070_000_080 <<entity>> {
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 030.070.000.130]
+  publicacion_deposito_legal : text <<optional, single>> [CVN: 030.070.000.180]
+  publicacion_direccion_electronica : text <<optional, single>> [CVN: 030.070.000.160]
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>> [CVN: 030.070.000.110]
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 030.070.000.150]
+  publicacion_isbn_issn : text <<optional, repeated>> [CVN: 030.070.000.170]
+  publicacion_nombre : text <<optional, single>> [CVN: 030.070.000.190]
+  publicacion_pagina_inicial_final : text <<optional, single>> [CVN: 030.070.000.100]
+  publicacion_pais : controlled_reference <<optional, single>> [CVN: 030.070.000.120]
+  publicacion_titulo : text <<optional, single>> [CVN: 030.070.000.080]
+  publicacion_volumen : text <<optional, single>> [CVN: 030.070.000.090]
+}
+note right of entity_education_publicaciontitulo030070000080_030_070_000_080
+controlled references:
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "TitulacionUniversitaria" as entity_education_titulacionuniversitaria_030_010_000_020 <<entity>> {
+  titulacion_universitaria : controlled_reference <<optional, single>> [CVN: 030.010.000.020]
+}
+note right of entity_education_titulacionuniversitaria_030_010_000_020
+controlled references:
+- CVN_TITLE_B (hierarchical_code_list, enum=ineligible, items=2765)
+end note
+
+class "TituloDeLaSubespecialidad" as entity_education_titulodelasubespecialidad_030_020_000_030 <<entity>> {
+  titulo_de_la_subespecialidad : text <<optional, single>> [CVN: 030.020.000.030]
+}
+
+class "TutoriasAcademicasDeEstudiantes" as entity_education_tutoriasacademicasdeestudiantes_030_050_000_000 <<entity>> {
+  ciudad_de_la_tutoria : text <<optional, single>> [CVN: 030.050.000.060]
+  comunidad_autonoma_region_de_la_tutoria : controlled_reference <<optional, single>> [CVN: 030.050.000.040]
+  entidad_donde_se_ejerce_la_tutoria : value_object<EntityNameType> <<optional, single>> [CVN: 030.050.000.070]
+  entidad_donde_se_ejerce_la_tutoria_tipo : value_object<EntityTypeType> <<optional, single>> [CVN: 030.050.000.090]
+  entidad_donde_se_presta_la_tutoria_tipo_otros : text <<optional, single>> [CVN: 030.050.000.100]
+  explicacion_narrativa_de_la_tutorizacion : text <<optional, single>> [CVN: 030.050.000.150]
+  frecuencia_de_la_actividad : decimal_number <<optional, single>> [CVN: 030.050.000.120]
+  nombre_del_programa : controlled_reference <<optional, single>> [CVN: 030.050.000.010]
+  nombre_del_programa_otros : text <<optional, single>> [CVN: 030.050.000.020]
+  numero_de_horas_creditos_ects_docentes_reconocidos_por_la_actividad_de_tutorias : decimal_number <<optional, single>> [CVN: 030.050.000.130]
+  numero_total_de_alumnos_as_tutelados_as : decimal_number <<optional, single>> [CVN: 030.050.000.110]
+  pais_de_la_tutoria : controlled_reference <<optional, single>> [CVN: 030.050.000.030]
+  tutoria_reglada : boolean <<required, single>> [CVN: 030.050.000.140]
+  tutorias_academicas_de_estudiantes : text <<optional, repeated>> [CVN: 030.050.000.000]
+}
+note right of entity_education_tutoriasacademicasdeestudiantes_030_050_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_PROGRAMME_C (code_list, enum=review_required, items=6)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+}
+
+entity_education_publicacionnombre030090000330_030_090_000_330 -[hidden]down-> entity_education_publicaciontitulo030070000080_030_070_000_080
+entity_education_publicaciontitulo030070000080_030_070_000_080 -[hidden]down-> entity_education_titulacionuniversitaria_030_010_000_020
+entity_education_titulacionuniversitaria_030_010_000_020 -[hidden]down-> entity_education_titulodelasubespecialidad_030_020_000_030
+entity_education_titulodelasubespecialidad_030_020_000_030 -[hidden]down-> entity_education_tutoriasacademicasdeestudiantes_030_050_000_000
+
+
+@enduml

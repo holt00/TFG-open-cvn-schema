@@ -1,0 +1,28 @@
+@startuml
+title Open CVN - CVN Education Reference
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "CVN Education Reference" as area_education_reference {
+class "Section 020" as reference_section_020 <<reference_section>> {
+  entities : 9
+  file : open_cvn_education_020_reference.puml
+  representative : ConocimientoDeIdiomas, CursosYSeminariosRecibidosDePerfeccionamientoInnovacionYMejoraDocenteNuevasTecnologiasEtcCuyoObjetivoSeaLaMejoraDeLaDocencia, Doctorados, +6 more
+}
+
+class "Section 030" as reference_section_030 <<reference_section>> {
+  entities : 21
+  file : open_cvn_education_030_reference.puml
+  representative : AportacionesMasRelevantesDeSuCvDeDocencia, CodirectorADeTesis, CursosYSeminariosImpartidos, +18 more
+}
+
+}
+
+note bottom
+Reference index for CVN Education
+Detailed reference section files:
+- open_cvn_education_020_reference.puml
+- open_cvn_education_030_reference.puml
+end note
+@enduml

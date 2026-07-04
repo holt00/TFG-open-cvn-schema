@@ -1,0 +1,19 @@
+@startuml
+title Open CVN - CVN Professional Experience Reference - ResumenDeLaActividadProfesional
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Professional Experience Reference - ResumenDeLaActividadProfesional" as area_professional_experience_010_040_000_000_reference {
+class "ResumenDeLaActividadProfesional" as entity_professional_experience_resumendelaactividadprofesional_010_040_000_000 <<entity>> {
+  resumen_de_la_actividad_profesional_010_040_000_000 : text <<optional, single>> [CVN: 010.040.000.000]
+  resumen_de_la_actividad_profesional_010_040_000_010 : text <<optional, single>> [CVN: 010.040.000.010]
+}
+
+}
+
+
+
+@enduml

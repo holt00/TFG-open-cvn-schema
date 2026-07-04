@@ -1,0 +1,187 @@
+@startuml
+title Open CVN - Other CVN Concepts Reference - Section 040 Part 2
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "Other CVN Concepts Reference - Section 040 Part 2" as area_other_040_part_02_reference {
+class "ActividadSanitariaEnPaisesExtranjeros" as entity_other_actividadsanitariaenpaisesextranjeros_040_070_000_000 <<entity>> {
+  actividad_sanitaria_en_paises_extranjeros : text <<optional, repeated>> [CVN: 040.070.000.000]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.070.000.060]
+  ciudad_de_la_entidad_financiadora : text <<optional, single>> [CVN: 040.070.000.210]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.070.000.040]
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.070.000.120]
+  duracion_de_la_experiencia : duration_like <<optional, single>> [CVN: 040.070.000.200]
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.070.000.070]
+  entidad_financiadora : value_object<EntityNameType> <<optional, single>> [CVN: 040.070.000.140]
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.070.000.190]
+  fecha_de_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.070.000.180]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.070.000.030]
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.070.000.110]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 040.070.000.020]
+  resultados_mas_relevantes_de_cada_una_de_sus_experiencias_en_este_ambito : text <<optional, single>> [CVN: 040.070.000.010]
+  tipo_de_entidad_040_070_000_090 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.070.000.090]
+  tipo_de_entidad_040_070_000_160 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.070.000.160]
+  tipo_de_entidad_otros_040_070_000_100 : text <<optional, single>> [CVN: 040.070.000.100]
+  tipo_de_entidad_otros_040_070_000_170 : text <<optional, single>> [CVN: 040.070.000.170]
+}
+note right of entity_other_actividadsanitariaenpaisesextranjeros_040_070_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "CongresosCursosYSeminariosOrientadosALaAtencionDeSalud" as entity_other_congresoscursosyseminariosorientadosalaatenciondesalud_040_130_000_000 <<entity>> {
+  ambito_del_evento : controlled_reference <<optional, single>> [CVN: 040.130.000.100]
+  ambito_del_evento_otros : text <<optional, single>> [CVN: 040.130.000.110]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.130.000.070]
+  ciudad_de_la_entidad_financiadora : text <<optional, single>> [CVN: 040.130.000.320]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.130.000.050]
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.130.000.310]
+  congresos_cursos_y_seminarios_orientados_a_la_atencion_de_salud : text <<optional, repeated>> [CVN: 040.130.000.000]
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>> [CVN: 040.130.000.080]
+  fecha_de_presentacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.130.000.160]
+  idioma_de_la_ponencia : controlled_reference <<optional, single>> [CVN: 040.130.000.170]
+  objetivos_del_evento : text <<optional, single>> [CVN: 040.130.000.030]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.130.000.040]
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.130.000.300]
+  publicacion_titulo : text <<optional, single>> [CVN: 040.130.000.180]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 040.130.000.120]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 040.130.000.130]
+  tipo_de_evento_otros : text <<optional, single>> [CVN: 040.130.000.020]
+  tipo_de_participacion : controlled_reference <<optional, single>> [CVN: 040.130.000.140]
+  tipo_de_participacion_otros : text <<optional, single>> [CVN: 040.130.000.150]
+  tipo_del_evento : controlled_reference <<optional, single>> [CVN: 040.130.000.010]
+}
+note right of entity_other_congresoscursosyseminariosorientadosalaatenciondesalud_040_130_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_EVENT_B (subtype_backed_code_list, enum=ineligible, items=6)
+- CVN_PARTICIPATION_E (code_list, enum=ineligible, items=10)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_B (code_list, enum=review_required, items=7)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- ISO_639 (code_list, enum=ineligible, items=427)
+end note
+
+class "CursosYSeminariosImpartidosOrientadosALaMejoraDeLaAtencionDeSaludParaProfesionalesSanitarios" as entity_other_cursosyseminariosimpartidosorientadosalamejoradelaatenciondesaludparaprofesionalessanitarios_040_090_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.090.000.370]
+  ciudad_de_la_entidad_organizadora : text <<optional, single>> [CVN: 040.090.000.050]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.090.000.360]
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 040.090.000.030]
+  cursos_y_seminarios_impartidos_orientados_a_la_mejora_de_la_atencion_de_salud_para_profesionales_sanitarios : text <<optional, repeated>> [CVN: 040.090.000.000]
+  entidad_de_realizacion : value_object<EntityNameType> <<optional, single>> [CVN: 040.090.000.170]
+  entidad_responsable_de_la_formacion : value_object<EntityNameType> <<optional, single>> [CVN: 040.090.000.130]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.090.000.090]
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.090.000.080]
+  horas_impartidas : decimal_number <<optional, single>> [CVN: 040.090.000.100]
+  idioma : controlled_reference <<optional, single>> [CVN: 040.090.000.210]
+  nombre_del_curso : text <<optional, single>> [CVN: 040.090.000.010]
+  objetivos_del_curso : text <<optional, single>> [CVN: 040.090.000.060]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.090.000.350]
+  pais_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 040.090.000.020]
+  perfil_de_los_as_destinatarios_as : text <<optional, single>> [CVN: 040.090.000.070]
+  publicacion_tipo : controlled_reference <<optional, single>> [CVN: 040.090.000.230]
+  tipo_de_entidad_040_090_000_150 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.090.000.150]
+  tipo_de_entidad_040_090_000_190 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.090.000.190]
+  tipo_de_entidad_otros_040_090_000_160 : text <<optional, single>> [CVN: 040.090.000.160]
+  tipo_de_entidad_otros_040_090_000_200 : text <<optional, single>> [CVN: 040.090.000.200]
+  tipo_de_participacion : controlled_reference <<optional, single>> [CVN: 040.090.000.110]
+  tipo_de_participacion_otros : text <<optional, single>> [CVN: 040.090.000.120]
+}
+note right of entity_other_cursosyseminariosimpartidosorientadosalamejoradelaatenciondesaludparaprofesionalessanitarios_040_090_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_PARTICIPATION_E (code_list, enum=ineligible, items=10)
+- CVN_PUBLICATION_A (subtype_backed_code_list, enum=ineligible, items=18)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- ISO_639 (code_list, enum=ineligible, items=427)
+end note
+
+class "NODeISBNISSN" as entity_other_nodeisbnissn_040_090_000_230 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>> [CVN: 040.090.000.390]
+  identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 040.090.000.400]
+  n_o_de_isbn_issn : text <<optional, repeated>> [CVN: 040.090.000.220]
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 040.090.000.290]
+  publicacion_deposito_legal : text <<optional, single>> [CVN: 040.090.000.340]
+  publicacion_direccion_electronica : text <<optional, single>> [CVN: 040.090.000.330]
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>> [CVN: 040.090.000.270]
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.090.000.310]
+  publicacion_nombre : text <<optional, single>> [CVN: 040.090.000.380]
+  publicacion_pagina_inicial_final : text <<optional, single>> [CVN: 040.090.000.260]
+  publicacion_pais : controlled_reference <<optional, single>> [CVN: 040.090.000.280]
+  publicacion_tipo : controlled_reference <<optional, single>> [CVN: 040.090.000.230]
+  publicacion_titulo : text <<optional, single>> [CVN: 040.090.000.240]
+  publicacion_volumen : text <<optional, single>> [CVN: 040.090.000.250]
+  tipo_de_identificador_de_publicacion_digital : controlled_reference <<optional, repeated>> [CVN: 040.090.000.410]
+  tipo_de_identificador_de_publicacion_digital_otros : text <<optional, repeated>> [CVN: 040.090.000.420]
+}
+note right of entity_other_nodeisbnissn_040_090_000_230
+controlled references:
+- CVN_PUBLICATION_A (subtype_backed_code_list, enum=ineligible, items=18)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SOURCE_B (code_list, enum=ineligible, items=4)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior040140000000" as entity_other_otrasactividadesmeritosnoincluidosenlarelacionanterior040140000000_040_140_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.140.000.060]
+  ciudad_de_la_entidad_financiadora : text <<optional, single>> [CVN: 040.140.000.190]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.140.000.040]
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.140.000.180]
+  entidad_de_concesion_del_merito : value_object<EntityNameType> <<optional, single>> [CVN: 040.140.000.110]
+  entidad_de_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.140.000.070]
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.140.000.150]
+  fecha_de_la_concesion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.140.000.160]
+  otras_actividades_meritos_no_incluidos_en_la_relacion_anterior : text <<optional, repeated>> [CVN: 040.140.000.000]
+  otras_actividades_relevantes : text <<optional, single>> [CVN: 040.140.000.010]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.140.000.030]
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.140.000.170]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 040.140.000.020]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 040.140.000.090]
+  tipo_de_entidad_de_concesion_del_merito : value_object<EntityTypeType> <<optional, single>> [CVN: 040.140.000.130]
+  tipo_de_entidad_de_concesion_del_merito_otros : text <<optional, single>> [CVN: 040.140.000.140]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 040.140.000.100]
+}
+note right of entity_other_otrasactividadesmeritosnoincluidosenlarelacionanterior040140000000_040_140_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "ProtocolosYOtrosMaterialesDeAtencionDeSalud" as entity_other_protocolosyotrosmaterialesdeatenciondesalud_040_100_000_000 <<entity>> {
+  autores_as_p_o_de_firma_nombres : text <<optional, repeated>> [CVN: 040.100.000.020]
+  fecha_de_elaboracion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.100.000.040]
+  nombre_del_protocolo_material : text <<optional, single>> [CVN: 040.100.000.010]
+  posicion_del_de_la_solicitante_sobre_el_total : decimal_number <<optional, single>> [CVN: 040.100.000.030]
+  protocolos_y_otros_materiales_de_atencion_de_salud : text <<optional, repeated>> [CVN: 040.100.000.000]
+  publicacion_titulo : text <<optional, single>> [CVN: 040.100.000.070]
+  tipologia : controlled_reference <<optional, single>> [CVN: 040.100.000.050]
+  tipologia_otros : text <<optional, single>> [CVN: 040.100.000.060]
+}
+note right of entity_other_protocolosyotrosmaterialesdeatenciondesalud_040_100_000_000
+controlled references:
+- CVN_SUPPORT_A (subtype_backed_code_list, enum=ineligible, items=10)
+end note
+
+}
+
+entity_other_actividadsanitariaenpaisesextranjeros_040_070_000_000 -[hidden]down-> entity_other_congresoscursosyseminariosorientadosalaatenciondesalud_040_130_000_000
+entity_other_congresoscursosyseminariosorientadosalaatenciondesalud_040_130_000_000 -[hidden]down-> entity_other_cursosyseminariosimpartidosorientadosalamejoradelaatenciondesaludparaprofesionalessanitarios_040_090_000_000
+entity_other_cursosyseminariosimpartidosorientadosalamejoradelaatenciondesaludparaprofesionalessanitarios_040_090_000_000 -[hidden]down-> entity_other_nodeisbnissn_040_090_000_230
+entity_other_nodeisbnissn_040_090_000_230 -[hidden]down-> entity_other_otrasactividadesmeritosnoincluidosenlarelacionanterior040140000000_040_140_000_000
+entity_other_otrasactividadesmeritosnoincluidosenlarelacionanterior040140000000_040_140_000_000 -[hidden]down-> entity_other_protocolosyotrosmaterialesdeatenciondesalud_040_100_000_000
+
+
+@enduml

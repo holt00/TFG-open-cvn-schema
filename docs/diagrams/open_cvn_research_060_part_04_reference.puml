@@ -1,0 +1,178 @@
+@startuml
+title Open CVN - CVN Research Reference - Section 060 Part 4
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Research Reference - Section 060 Part 4" as area_research_060_part_04_reference {
+class "OtrosModosDeColaboracionConInvestigadoresAsOTecnologosAs" as entity_research_otrosmodosdecolaboracionconinvestigadoresasotecnologosas_060_020_020_000 <<entity>> {
+  ciudad_de_radicacion : text <<optional, single>> [CVN: 060.020.020.060]
+  comunidad_autonoma_region_de_radicacion : controlled_reference <<optional, single>> [CVN: 060.020.020.040]
+  descripcion_del_objeto_de_la_colaboracion : text <<optional, single>> [CVN: 060.020.020.140]
+  duracion : duration_like <<optional, single>> [CVN: 060.020.020.130]
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.020.020.120]
+  modo_de_relacion : controlled_reference <<optional, single>> [CVN: 060.020.020.010]
+  modo_de_relacion_otros : text <<optional, single>> [CVN: 060.020.020.020]
+  nombres_de_los_investigadores_principales_ip_co_ip : text <<optional, repeated>> [CVN: 060.020.020.070]
+  otros_modos_de_colaboracion_con_investigadores_as_o_tecnologos_as : text <<optional, repeated>> [CVN: 060.020.020.000]
+  pais_de_radicacion : controlled_reference <<optional, single>> [CVN: 060.020.020.030]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 060.020.020.160]
+  resultados_mas_relevantes : text <<optional, single>> [CVN: 060.020.020.150]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, repeated>> [CVN: 060.020.020.100]
+}
+note right of entity_research_otrosmodosdecolaboracionconinvestigadoresasotecnologosas_060_020_020_000
+controlled references:
+- CVN_COLLABORATION_A (code_list, enum=review_required, items=7)
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "PeriodosDeActividadInvestigadoraDocenteYDeTransferenciaDelConocimiento" as entity_research_periodosdeactividadinvestigadoradocenteydetransferenciadelconocimiento_060_030_070_000 <<entity>> {
+  ambito : controlled_reference <<optional, single>> [CVN: 060.030.070.090]
+  ambito_otros : text <<optional, single>> [CVN: 060.030.070.100]
+  ano_de_convocatoria : text <<optional, single>> [CVN: 060.030.070.210]
+  ano_de_finalizacion : text <<optional, single>> [CVN: 060.030.070.200]
+  ano_de_inicio : text <<optional, single>> [CVN: 060.030.070.190]
+  calificacion_obtenida : text <<optional, single>> [CVN: 060.030.070.220]
+  ciudad_de_la_entidad_que_acredita : text <<optional, single>> [CVN: 060.030.070.120]
+  comunidad_autonoma_region_de_la_entidad_que_acredita : controlled_reference <<optional, single>> [CVN: 060.030.070.030]
+  entidad_que_concede : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.070.050]
+  fecha_de_obtencion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.070.110]
+  nombre_de_la_actuacion : controlled_reference <<optional, single>> [CVN: 060.030.070.160]
+  nombre_de_la_actuacion_otros : text <<optional, single>> [CVN: 060.030.070.240]
+  pais_de_la_entidad_que_acredita : controlled_reference <<optional, single>> [CVN: 060.030.070.020]
+  periodo_cubierto : text <<optional, single>> [CVN: 060.030.070.250]
+  periodos_de_actividad_investigadora_docente_y_de_transferencia_del_conocimiento : text <<optional, repeated>> [CVN: 060.030.070.000]
+  tipo_de_actividad : controlled_reference <<optional, single>> [CVN: 060.030.070.170]
+  tipo_de_actividad_otros : text <<optional, single>> [CVN: 060.030.070.180]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.030.070.070]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.030.070.080]
+  tramo_vivo : boolean <<optional, single>> [CVN: 060.030.070.230]
+}
+note right of entity_research_periodosdeactividadinvestigadoradocenteydetransferenciadelconocimiento_060_030_070_000
+controlled references:
+- CVN_ACTIVITY_D (code_list, enum=review_required, items=4)
+- CVN_CATEGORY_B (code_list, enum=review_required, items=3)
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "PremiosDeInnovacionDocente" as entity_research_premiosdeinnovaciondocente_060_030_080_000 <<entity>> {
+  a_propuesta_de : text <<optional, single>> [CVN: 060.030.080.090]
+  ciudad_de_la_entidad_que_concede_el_premio : text <<optional, single>> [CVN: 060.030.080.110]
+  comunidad_autonoma_region_de_la_entidad_que_concede_el_premio : controlled_reference <<optional, single>> [CVN: 060.030.080.030]
+  entidad_que_concede : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.080.050]
+  explicacion_narrativa_del_merito : text <<optional, single>> [CVN: 060.030.080.120]
+  fecha_de_concesion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.080.100]
+  nombre_del_premio : text <<optional, single>> [CVN: 060.030.080.010]
+  pais_de_la_entidad_que_concede_el_premio : controlled_reference <<optional, single>> [CVN: 060.030.080.020]
+  premios_de_innovacion_docente : text <<optional, repeated>> [CVN: 060.030.080.000]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.030.080.070]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.030.080.080]
+}
+note right of entity_research_premiosdeinnovaciondocente_060_030_080_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "PremiosMencionesYDistinciones" as entity_research_premiosmencionesydistinciones_060_030_050_000 <<entity>> {
+  breve_descripcion_del_titulo_o_premio : text <<optional, single>> [CVN: 060.030.050.010]
+  ciudad_de_la_entidad_que_lo_concede : text <<optional, single>> [CVN: 060.030.050.110]
+  comunidad_autonoma_region_de_la_entidad_que_lo_concede : controlled_reference <<optional, single>> [CVN: 060.030.050.030]
+  entidad_que_lo_concede : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.050.050]
+  fecha_de_concesion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.050.100]
+  pais_de_la_entidad_que_lo_concede : controlled_reference <<optional, single>> [CVN: 060.030.050.020]
+  premios_menciones_y_distinciones : text <<optional, repeated>> [CVN: 060.030.050.000]
+  reconocimientos_ligados_a_su_concesion : text <<optional, single>> [CVN: 060.030.050.090]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.030.050.070]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.030.050.080]
+}
+note right of entity_research_premiosmencionesydistinciones_060_030_050_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "ProduccionCientifica" as entity_research_produccioncientifica_060_010_000_000 <<entity>> {
+  fuente_de_indice_h : controlled_reference <<optional, single>> [CVN: 060.010.000.030]
+  fuente_de_indice_h_otros : text <<optional, single>> [CVN: 060.010.000.040]
+  indice_h_fecha_de_aplicacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.010.000.020]
+  indice_h_valor : decimal_number <<optional, single>> [CVN: 060.010.000.010]
+  produccion_cientifica : text <<optional, repeated>> [CVN: 060.010.000.000]
+}
+note right of entity_research_produccioncientifica_060_010_000_000
+controlled references:
+- CVN_AGENCY_C (unresolved_reference, enum=ineligible)
+end note
+
+class "PublicacionesDocumentosCientificosYTecnicos" as entity_research_publicacionesdocumentoscientificosytecnicos_060_010_010_000 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>> [CVN: 060.010.010.390]
+  autores_as_p_o_de_firma_nombre : text <<optional, repeated>> [CVN: 060.010.010.040]
+  categoria : controlled_reference <<optional, repeated>> [CVN: 060.010.010.240]
+  ciudad_de_publicacion : text <<optional, single>> [CVN: 060.010.010.220]
+  coleccion : text <<optional, single>> [CVN: 060.010.010.270]
+  fuente_de_citas : controlled_reference <<optional, repeated>> [CVN: 060.010.010.320]
+  fuente_de_citas_otros : text <<optional, repeated>> [CVN: 060.010.010.370]
+  fuente_del_dato : controlled_reference <<optional, single>> [CVN: 060.010.010.550]
+  grado_de_contribucion : controlled_reference <<optional, single>> [CVN: 060.010.010.060]
+  identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 060.010.010.400]
+  numero_de_citas : decimal_number <<optional, repeated>> [CVN: 060.010.010.310]
+  numero_total_de_autores : decimal_number <<optional, single>> [CVN: 060.010.010.380]
+  posicion_sobre_total : decimal_number <<optional, single>> [CVN: 060.010.010.050]
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 060.010.010.120]
+  publicacion_deposito_legal : text <<optional, single>> [CVN: 060.010.010.170]
+  publicacion_direccion_electronica : text <<optional, single>> [CVN: 060.010.010.150]
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>> [CVN: 060.010.010.100]
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.010.010.140]
+  publicacion_isbn_issn : text <<optional, repeated>> [CVN: 060.010.010.160]
+  publicacion_pagina_inicial_final : text <<optional, single>> [CVN: 060.010.010.090]
+  publicacion_pais : controlled_reference <<optional, single>> [CVN: 060.010.010.110]
+  publicacion_relevante : boolean <<optional, single>> [CVN: 060.010.010.300]
+  publicacion_titulo : text <<optional, single>> [CVN: 060.010.010.030]
+  publicacion_volumen_revista_capitulo_libro : text <<optional, single>> [CVN: 060.010.010.080]
+  publicaciones_documentos_cientificos_y_tecnicos : text <<optional, repeated>> [CVN: 060.010.010.000]
+  resenas_en_revistas_cientificas_especializadas : decimal_number <<optional, single>> [CVN: 060.010.010.340]
+  resultados_mas_destacados : text <<optional, single>> [CVN: 060.010.010.290]
+  soporte : controlled_reference <<optional, single>> [CVN: 060.010.010.070]
+  tipo_de_identificador_de_publicacion_digital : controlled_reference <<optional, repeated>> [CVN: 060.010.010.410]
+  tipo_de_identificador_de_publicacion_digital_otros : text <<optional, repeated>> [CVN: 060.010.010.420]
+  tipo_de_produccion : controlled_reference <<required, single>> [CVN: 060.010.010.010]
+  tipo_de_produccion_otros : text <<optional, single>> [CVN: 060.010.010.020]
+  traducciones_a_otras_lenguas : controlled_reference <<optional, repeated>> [CVN: 060.010.010.350]
+}
+note right of entity_research_publicacionesdocumentoscientificosytecnicos_060_010_010_000
+controlled references:
+- CVN_CATEGORY_A (hierarchical_code_list, enum=ineligible, items=547)
+- CVN_PARTICIPATION_G (enumeration, enum=eligible, items=11)
+- CVN_PUBLICATION_A (subtype_backed_code_list, enum=ineligible, items=18)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SOURCE_A (code_list, enum=review_required, items=5)
+- CVN_SOURCE_B (code_list, enum=ineligible, items=4)
+- CVN_SOURCE_DATO (enumeration, enum=eligible, items=6)
+- CVN_SUPPORT_B (subtype_backed_code_list, enum=ineligible, items=4)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- ISO_639 (code_list, enum=ineligible, items=427)
+end note
+
+}
+
+entity_research_otrosmodosdecolaboracionconinvestigadoresasotecnologosas_060_020_020_000 -[hidden]down-> entity_research_periodosdeactividadinvestigadoradocenteydetransferenciadelconocimiento_060_030_070_000
+entity_research_periodosdeactividadinvestigadoradocenteydetransferenciadelconocimiento_060_030_070_000 -[hidden]down-> entity_research_premiosdeinnovaciondocente_060_030_080_000
+entity_research_premiosdeinnovaciondocente_060_030_080_000 -[hidden]down-> entity_research_premiosmencionesydistinciones_060_030_050_000
+entity_research_premiosmencionesydistinciones_060_030_050_000 -[hidden]down-> entity_research_produccioncientifica_060_010_000_000
+entity_research_produccioncientifica_060_010_000_000 -[hidden]down-> entity_research_publicacionesdocumentoscientificosytecnicos_060_010_010_000
+
+
+@enduml

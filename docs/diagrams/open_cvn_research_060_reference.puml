@@ -1,0 +1,56 @@
+@startuml
+title Open CVN - CVN Research Reference - Section 060
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "CVN Research Reference - Section 060" as 060_reference_index {
+class "Section 060 Part 1" as reference_section_060_part_01 <<reference_section>> {
+  entities : 6
+  file : open_cvn_research_060_part_01_reference.puml
+  representative : AcreditacionesReconocimientosObtenidos, ActividadesDeDivulgacion, AmbitoDelCongreso, +3 more
+}
+
+class "Section 060 Part 2" as reference_section_060_part_02 <<reference_section>> {
+  entities : 6
+  file : open_cvn_research_060_part_02_reference.puml
+  representative : ComitesCientificosTecnicosYOAsesores, ConsejosEditoriales, EntidadesParticipantes, +3 more
+}
+
+class "Section 060 Part 3" as reference_section_060_part_03 <<reference_section>> {
+  entities : 6
+  file : open_cvn_research_060_part_03_reference.puml
+  representative : ForosYComitesNacionalesEInternacionales, GestionDeIDI, IndicadoresGeneralesDeCalidadDeLaProduccionCientifica, +3 more
+}
+
+class "Section 060 Part 4" as reference_section_060_part_04 <<reference_section>> {
+  entities : 6
+  file : open_cvn_research_060_part_04_reference.puml
+  representative : OtrosModosDeColaboracionConInvestigadoresAsOTecnologosAs, PeriodosDeActividadInvestigadoraDocenteYDeTransferenciaDelConocimiento, PremiosDeInnovacionDocente, +3 more
+}
+
+class "Section 060 Part 5" as reference_section_060_part_05 <<reference_section>> {
+  entities : 6
+  file : open_cvn_research_060_part_05_reference.puml
+  representative : PublicacionIndiceDeImpactoDeAnoDePublicacion, PublicacionNombre060010020370, PublicacionNombre060010030350, +3 more
+}
+
+class "Section 060 Part 6" as reference_section_060_part_06 <<reference_section>> {
+  entities : 6
+  file : open_cvn_research_060_part_06_reference.puml
+  representative : RedesDeCooperacion, ResumenDeOtrosMeritos, SociedadesCientificasYAsociacionesProfesionales, +3 more
+}
+
+}
+
+note bottom
+Reference subsection index for Section 060
+Detailed subsection files:
+- open_cvn_research_060_part_01_reference.puml
+- open_cvn_research_060_part_02_reference.puml
+- open_cvn_research_060_part_03_reference.puml
+- open_cvn_research_060_part_04_reference.puml
+- open_cvn_research_060_part_05_reference.puml
+- open_cvn_research_060_part_06_reference.puml
+end note
+@enduml

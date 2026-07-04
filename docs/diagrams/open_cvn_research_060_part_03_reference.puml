@@ -1,0 +1,151 @@
+@startuml
+title Open CVN - CVN Research Reference - Section 060 Part 3
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Research Reference - Section 060 Part 3" as area_research_060_part_03_reference {
+class "ForosYComitesNacionalesEInternacionales" as entity_research_forosycomitesnacionaleseinternacionales_060_020_050_000 <<entity>> {
+  categoria_profesional : text <<optional, single>> [CVN: 060.020.050.100]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 060.020.050.050]
+  ciudad_de_la_entidad_organizadora : text <<optional, single>> [CVN: 060.020.050.190]
+  ciudad_de_la_entidad_que_representa : text <<optional, single>> [CVN: 060.020.050.220]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 060.020.050.030]
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 060.020.050.180]
+  comunidad_autonoma_region_de_la_entidad_que_representa : controlled_reference <<optional, single>> [CVN: 060.020.050.210]
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>> [CVN: 060.020.050.060]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.020.050.160]
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.020.050.150]
+  foros_y_comites_nacionales_e_internacionales : text <<optional, repeated>> [CVN: 060.020.050.000]
+  nombre_del_foro : text <<optional, single>> [CVN: 060.020.050.010]
+  organismo_que_representa : value_object<EntityNameType> <<optional, single>> [CVN: 060.020.050.110]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 060.020.050.020]
+  pais_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 060.020.050.170]
+  pais_de_la_entidad_que_representa : controlled_reference <<optional, single>> [CVN: 060.020.050.200]
+  tipo_de_entidad_organizadora : value_object<EntityTypeType> <<optional, single>> [CVN: 060.020.050.080]
+  tipo_de_entidad_organizadora_otros : text <<optional, single>> [CVN: 060.020.050.090]
+  tipo_de_organismo_que_representa : value_object<EntityTypeType> <<optional, single>> [CVN: 060.020.050.130]
+  tipo_de_organismo_que_representa_otros : text <<optional, single>> [CVN: 060.020.050.140]
+}
+note right of entity_research_forosycomitesnacionaleseinternacionales_060_020_050_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "GestionDeIDI" as entity_research_gestiondeidi_060_020_040_000 <<entity>> {
+  ambito_territorial : controlled_reference <<optional, single>> [CVN: 060.020.040.200]
+  ambito_territorial_otros : text <<optional, single>> [CVN: 060.020.040.210]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 060.020.040.050]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 060.020.040.030]
+  entorno_duracion : duration_like <<optional, single>> [CVN: 060.020.040.140]
+  entorno_entidad_donde_se_ejercio_la_responsabilidad : value_object<EntityNameType> <<optional, single>> [CVN: 060.020.040.090]
+  entorno_fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.020.040.130]
+  entorno_tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.020.040.110]
+  entorno_tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.020.040.120]
+  explicacion_del_tipo_de_actividad_tareas_concretas : text <<optional, single>> [CVN: 060.020.040.220]
+  funciones_desempenadas : text <<optional, single>> [CVN: 060.020.040.010]
+  gestion_de_i_d_i : text <<optional, repeated>> [CVN: 060.020.040.000]
+  nombre_de_la_actividad : text <<optional, single>> [CVN: 060.020.040.060]
+  numero_de_personas : decimal_number <<optional, single>> [CVN: 060.020.040.180]
+  objetivos_del_evento : text <<optional, single>> [CVN: 060.020.040.240]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 060.020.040.020]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 060.020.040.230]
+  perfil_del_grupo_receptor : controlled_reference <<optional, single>> [CVN: 060.020.040.190]
+  promedio_de_presupuesto_anual : decimal_number <<optional, single>> [CVN: 060.020.040.170]
+  sistema_de_acceso : controlled_reference <<optional, single>> [CVN: 060.020.040.150]
+  sistema_de_acceso_otros : text <<optional, single>> [CVN: 060.020.040.160]
+  tipologia_de_la_gestion : controlled_reference <<optional, single>> [CVN: 060.020.040.070]
+  tipologia_de_la_gestion_otros : text <<optional, single>> [CVN: 060.020.040.080]
+}
+note right of entity_research_gestiondeidi_060_020_040_000
+controlled references:
+- CVN_ACCESS_A (code_list, enum=review_required, items=7)
+- CVN_AGENCY_A (enumeration, enum=eligible, items=6)
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_MANAGEMENT_A (code_list, enum=review_required, items=6)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "IndicadoresGeneralesDeCalidadDeLaProduccionCientifica" as entity_research_indicadoresgeneralesdecalidaddelaproduccioncientifica_060_010_060_000 <<entity>> {
+  indicadores_generales_de_calidad_de_la_produccion_cientifica_060_010_060_000 : text <<optional, single>> [CVN: 060.010.060.000]
+  indicadores_generales_de_calidad_de_la_produccion_cientifica_060_010_060_010 : text <<optional, single>> [CVN: 060.010.060.010]
+}
+
+class "OrganizacionDeActividadesDeIDI" as entity_research_organizaciondeactividadesdeidi_060_020_030_000 <<entity>> {
+  ambito_de_la_reunion : controlled_reference <<optional, single>> [CVN: 060.020.030.130]
+  ambito_de_la_reunion_otros : text <<optional, single>> [CVN: 060.020.030.140]
+  ciudad_de_la_actividad : text <<optional, single>> [CVN: 060.020.030.060]
+  ciudad_de_la_entidad_convocante : text <<optional, single>> [CVN: 060.020.030.200]
+  comunidad_autonoma_region_de_la_actividad : controlled_reference <<optional, single>> [CVN: 060.020.030.040]
+  comunidad_autonoma_region_de_la_entidad_convocante : controlled_reference <<optional, single>> [CVN: 060.020.030.190]
+  duracion : duration_like <<optional, single>> [CVN: 060.020.030.170]
+  entidad_convocante : value_object<EntityNameType> <<optional, single>> [CVN: 060.020.030.070]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 060.020.030.220]
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.020.030.160]
+  modo_de_participacion : controlled_reference <<optional, single>> [CVN: 060.020.030.110]
+  modo_de_participacion_otros : text <<optional, single>> [CVN: 060.020.030.120]
+  numero_de_asistentes : decimal_number <<optional, single>> [CVN: 060.020.030.150]
+  organizacion_de_actividades_de_i_d_i : text <<optional, repeated>> [CVN: 060.020.030.000]
+  pais_de_la_actividad : controlled_reference <<optional, single>> [CVN: 060.020.030.030]
+  pais_de_la_entidad_convocante : controlled_reference <<optional, single>> [CVN: 060.020.030.180]
+  tipo_de_actividad : text <<optional, single>> [CVN: 060.020.030.020]
+  tipo_de_entidad_convocante : value_object<EntityTypeType> <<optional, single>> [CVN: 060.020.030.090]
+  tipo_de_entidad_convocante_otros : text <<optional, single>> [CVN: 060.020.030.100]
+  titulo_de_la_actividad : text <<required, single>> [CVN: 060.020.030.010]
+}
+note right of entity_research_organizaciondeactividadesdeidi_060_020_030_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_PARTICIPATION_C (code_list, enum=review_required, items=5)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "OtrasDistincionesCarreraProfesionalYOEmpresarial" as entity_research_otrasdistincionescarreraprofesionalyoempresarial_060_030_060_000 <<entity>> {
+  ambito : controlled_reference <<optional, single>> [CVN: 060.030.060.090]
+  ambito_otros : text <<optional, single>> [CVN: 060.030.060.100]
+  breve_descripcion_del_ambito_de_capacidades_cientificas_o_tecnologicas_del_ascenso_y_cambios_de_responsabilidad : text <<optional, single>> [CVN: 060.030.060.010]
+  ciudad_de_la_entidad_que_concede_el_reconocimiento : text <<optional, single>> [CVN: 060.030.060.120]
+  comunidad_autonoma_region_de_la_entidad_que_concede_el_reconocimiento : controlled_reference <<optional, single>> [CVN: 060.030.060.030]
+  entidad_que_lo_concede : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.060.050]
+  fecha_de_concesion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.060.110]
+  otras_distinciones_carrera_profesional_y_o_empresarial : text <<optional, repeated>> [CVN: 060.030.060.000]
+  pais_de_la_entidad_que_concede_el_reconocimiento : controlled_reference <<optional, single>> [CVN: 060.030.060.020]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.030.060.070]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.030.060.080]
+}
+note right of entity_research_otrasdistincionescarreraprofesionalyoempresarial_060_030_060_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "OtrosMeritosDeLaActividadInvestigadora" as entity_research_otrosmeritosdelaactividadinvestigadora_060_030_110_000 <<entity>> {
+  otros_meritos_de_la_actividad_investigadora_060_030_110_000 : text <<optional, single>> [CVN: 060.030.110.000]
+  otros_meritos_de_la_actividad_investigadora_060_030_110_010 : text <<optional, single>> [CVN: 060.030.110.010]
+}
+
+}
+
+entity_research_forosycomitesnacionaleseinternacionales_060_020_050_000 -[hidden]down-> entity_research_gestiondeidi_060_020_040_000
+entity_research_gestiondeidi_060_020_040_000 -[hidden]down-> entity_research_indicadoresgeneralesdecalidaddelaproduccioncientifica_060_010_060_000
+entity_research_indicadoresgeneralesdecalidaddelaproduccioncientifica_060_010_060_000 -[hidden]down-> entity_research_organizaciondeactividadesdeidi_060_020_030_000
+entity_research_organizaciondeactividadesdeidi_060_020_030_000 -[hidden]down-> entity_research_otrasdistincionescarreraprofesionalyoempresarial_060_030_060_000
+entity_research_otrasdistincionescarreraprofesionalyoempresarial_060_030_060_000 -[hidden]down-> entity_research_otrosmeritosdelaactividadinvestigadora_060_030_110_000
+
+
+@enduml

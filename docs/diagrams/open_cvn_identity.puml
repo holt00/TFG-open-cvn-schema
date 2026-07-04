@@ -1,0 +1,47 @@
+@startuml
+title Open CVN - CVN Identity
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Identity" as area_identity {
+class "Person" as entity_identity_person <<entity>> {
+  apellidos : text <<required, single>>
+  ciudad_de_contacto : text <<optional, single>>
+  ciudad_de_nacimiento : text <<optional, single>>
+  codigo_postal : text <<optional, single>>
+  comunidad_autonoma_region_de_contacto : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_nacimiento : controlled_reference <<optional, single>>
+  correo_electronico : text <<optional, single>>
+  direccion_de_contacto : text <<optional, single>>
+  dni : value_object<OfficialIdType> <<optional, single>>
+  fax : text <<optional, single>>
+  fecha_de_nacimiento : date_like <<required, single>>
+  fecha_del_documento : date_like <<required, single>>
+  fotografia_digital : text <<optional, single>>
+  identificador_digital_de_autor : text <<optional, repeated>>
+  identificador_unico_de_cv : text <<optional, single>>
+  idioma_de_redaccion_del_cv : controlled_reference <<optional, single>>
+  nacionalidad : controlled_reference <<optional, single>>
+  nie : text <<optional, single>>
+  nombre : text <<required, single>>
+  pagina_web_personal : text <<optional, single>>
+  pais_de_contacto : controlled_reference <<optional, single>>
+  pais_de_nacimiento : controlled_reference <<optional, single>>
+  pasaporte : text <<optional, single>>
+  provincia_de_contacto : controlled_reference <<optional, single>>
+  resto_de_direccion_contacto : text <<optional, single>>
+  sexo : controlled_reference <<required, single>>
+  telefono_fijo : text <<required, single>>
+  telefono_movil : text <<optional, single>>
+  tipo_de_identificador_digital_de_autor : controlled_reference <<optional, repeated>>
+  tipo_de_identificador_digital_de_autor_otros : text <<optional, repeated>>
+  version_de_codificacion : text <<optional, single>>
+}
+
+}
+
+class "Curriculum" as entity_core_curriculum <<external>>
+
+entity_core_curriculum "1" *-- "1" entity_identity_person : owner
+@enduml

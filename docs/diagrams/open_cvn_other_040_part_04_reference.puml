@@ -1,0 +1,44 @@
+@startuml
+title Open CVN - Other CVN Concepts Reference - Section 040 Part 4
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "Other CVN Concepts Reference - Section 040 Part 4" as area_other_040_part_04_reference {
+class "TutoriasSupervisionDeActividadesDeAtencionDeSalud" as entity_other_tutoriassupervisiondeactividadesdeatenciondesalud_040_080_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion_de_la_tutoria : text <<optional, single>> [CVN: 040.080.000.100]
+  ciudad_de_la_entidad_organizadora_de_la_que_depende_el_programa : text <<optional, single>> [CVN: 040.080.000.200]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion_de_la_tutoria : controlled_reference <<optional, single>> [CVN: 040.080.000.080]
+  comunidad_autonoma_region_de_la_entidad_organizadora_de_la_que_depende_el_programa : controlled_reference <<optional, single>> [CVN: 040.080.000.210]
+  descripcion_del_programa : text <<optional, single>> [CVN: 040.080.000.040]
+  entidad_donde_realizo_la_tutoria : value_object<EntityNameType> <<optional, single>> [CVN: 040.080.000.110]
+  entidad_organizadora_de_la_que_depende_el_programa : value_object<EntityNameType> <<optional, single>> [CVN: 040.080.000.150]
+  frecuencia_de_la_actividad : decimal_number <<optional, single>> [CVN: 040.080.000.060]
+  nombre_del_programa : text <<optional, single>> [CVN: 040.080.000.010]
+  numero_total_de_profesionales_tutelados_as : decimal_number <<optional, single>> [CVN: 040.080.000.050]
+  pais_de_la_entidad_de_realizacion_de_la_tutoria : controlled_reference <<optional, single>> [CVN: 040.080.000.070]
+  pais_de_la_entidad_organizadora_de_la_que_depende_el_programa : controlled_reference <<optional, single>> [CVN: 040.080.000.190]
+  tipo_de_entidad_040_080_000_130 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.080.000.130]
+  tipo_de_entidad_040_080_000_170 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.080.000.170]
+  tipo_de_entidad_otros_040_080_000_140 : text <<optional, single>> [CVN: 040.080.000.140]
+  tipo_de_entidad_otros_040_080_000_180 : text <<optional, single>> [CVN: 040.080.000.180]
+  tipo_de_programa : controlled_reference <<optional, single>> [CVN: 040.080.000.020]
+  tipo_de_programa_otros : text <<optional, single>> [CVN: 040.080.000.030]
+  tutorias_supervision_de_actividades_de_atencion_de_salud : text <<optional, repeated>> [CVN: 040.080.000.000]
+}
+note right of entity_other_tutoriassupervisiondeactividadesdeatenciondesalud_040_080_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_PROGRAMME_B (code_list, enum=review_required, items=4)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+}
+
+
+
+@enduml

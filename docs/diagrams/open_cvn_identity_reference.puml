@@ -1,0 +1,60 @@
+@startuml
+title Open CVN - CVN Identity Reference
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Identity" as area_identity {
+class "Person" as entity_identity_person <<entity>> {
+  apellidos : text <<required, single>> [CVN: 000.010.000.010]
+  ciudad_de_contacto : text <<optional, single>> [CVN: 000.010.000.170]
+  ciudad_de_nacimiento : text <<optional, single>> [CVN: 000.010.000.090]
+  codigo_postal : text <<optional, single>> [CVN: 000.010.000.160]
+  comunidad_autonoma_region_de_contacto : controlled_reference <<optional, single>> [CVN: 000.010.000.190]
+  comunidad_autonoma_region_de_nacimiento : controlled_reference <<optional, single>> [CVN: 000.010.000.070]
+  correo_electronico : text <<optional, single>> [CVN: 000.010.000.230]
+  direccion_de_contacto : text <<optional, single>> [CVN: 000.010.000.140]
+  dni : value_object<OfficialIdType> <<optional, single>> [CVN: 000.010.000.100]
+  fax : text <<optional, single>> [CVN: 000.010.000.220]
+  fecha_de_nacimiento : date_like <<required, single>> [CVN: 000.010.000.050]
+  fecha_del_documento : date_like <<required, single>> [CVN: 000.020.000.020]
+  fotografia_digital : text <<optional, single>> [CVN: 000.010.000.130]
+  identificador_digital_de_autor : text <<optional, repeated>> [CVN: 000.010.000.260]
+  identificador_unico_de_cv : text <<optional, single>> [CVN: 000.020.000.010]
+  idioma_de_redaccion_del_cv : controlled_reference <<optional, single>> [CVN: 000.020.000.070]
+  nacionalidad : controlled_reference <<optional, single>> [CVN: 000.010.000.040]
+  nie : text <<optional, single>> [CVN: 000.010.000.110]
+  nombre : text <<required, single>> [CVN: 000.010.000.020]
+  pagina_web_personal : text <<optional, single>> [CVN: 000.010.000.250]
+  pais_de_contacto : controlled_reference <<optional, single>> [CVN: 000.010.000.180]
+  pais_de_nacimiento : controlled_reference <<optional, single>> [CVN: 000.010.000.060]
+  pasaporte : text <<optional, single>> [CVN: 000.010.000.120]
+  provincia_de_contacto : controlled_reference <<optional, single>> [CVN: 000.010.000.200]
+  resto_de_direccion_contacto : text <<optional, single>> [CVN: 000.010.000.150]
+  sexo : controlled_reference <<required, single>> [CVN: 000.010.000.030]
+  telefono_fijo : text <<required, single>> [CVN: 000.010.000.210]
+  telefono_movil : text <<optional, single>> [CVN: 000.010.000.240]
+  tipo_de_identificador_digital_de_autor : controlled_reference <<optional, repeated>> [CVN: 000.010.000.270]
+  tipo_de_identificador_digital_de_autor_otros : text <<optional, repeated>> [CVN: 000.010.000.280]
+  version_de_codificacion : text <<optional, single>> [CVN: 000.020.000.080]
+}
+note right of entity_identity_person
+controlled references:
+- CVN_PROVINCE (hierarchical_code_list, enum=ineligible, items=50)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SEX_A (enumeration, enum=eligible, items=2)
+- CVN_SOURCE_C (code_list, enum=ineligible, items=4)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- ISO_639 (code_list, enum=ineligible, items=427)
+end note
+
+}
+
+
+class "Curriculum" as entity_core_curriculum <<external>>
+
+entity_core_curriculum "1" *-- "1" entity_identity_person : owner
+
+@enduml

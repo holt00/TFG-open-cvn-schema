@@ -1,0 +1,78 @@
+@startuml
+title Open CVN - CVN Professional Experience
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Professional Experience" as area_professional_experience {
+class "CargosYActividadesDesempenadosConAnterioridad" as entity_professional_experience_cargosyactividadesdesempenadosconanterioridad_010_020_000_000 <<entity>> {
+  ambito_actividad_de_direccion_y_o_gestion : controlled_reference <<required, single>>
+  ambito_de_la_actividad_de_direccion_y_o_gestion_otros : text <<optional, single>>
+  cargos_y_actividades_desempenados_con_anterioridad : text <<optional, repeated>>
+  categoria_profesional_puesto_o_cargo : text <<required, single>>
+  ciudad_entidad_empleadora : text <<optional, single>>
+  codigo_unesco_especializacion_primaria : controlled_reference <<optional, repeated>>
+  codigo_unesco_especializacion_secundaria : controlled_reference <<optional, repeated>>
+  codigo_unesco_especializacion_terciaria : controlled_reference <<optional, repeated>>
+  comunidad_autonoma_region_entidad_empleadora : controlled_reference <<optional, single>>
+  correo_electronico : text <<optional, repeated>>
+  departamento_servicio_seccion_unidad_etc : value_object<EntityNameType> <<optional, single>>
+  direccion_y_gestion : boolean <<optional, single>>
+  duracion : duration_like <<required, single>>
+  entidad_empleadora : value_object<EntityNameType> <<required, single>>
+  facultad_escuela_unidad_centro_hospital_o_instituto : value_object<EntityNameType> <<optional, single>>
+  fax : text <<optional, single>>
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<required, single>>
+  funciones_desempenadas : text <<optional, single>>
+  interes_para_la_docencia_y_o_investigacion : text <<optional, single>>
+  modalidad_de_contrato : controlled_reference <<optional, single>>
+  modalidad_de_contrato_otros : text <<optional, single>>
+  pais_entidad_empleadora : controlled_reference <<optional, single>>
+  palabras_clave : controlled_reference <<optional, repeated>>
+  regimen_de_dedicacion : controlled_reference <<optional, single>>
+  telefono_fijo : text <<optional, single>>
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>>
+  tipo_de_entidad_otros : text <<optional, single>>
+}
+
+class "ProfessionalSituation" as entity_professional_experience_professionalsituation_010_010_000_000 <<entity>> {
+  ambito_actividad_de_direccion_y_o_gestion : controlled_reference <<required, single>>
+  ambito_de_la_actividad_de_direccion_y_o_gestion_otros : text <<optional, single>>
+  categoria_profesional_puesto_o_cargo : text <<required, single>>
+  ciudad_entidad_empleadora : text <<optional, single>>
+  codigo_unesco_especializacion_primaria : controlled_reference <<optional, repeated>>
+  codigo_unesco_especializacion_secundaria : controlled_reference <<optional, repeated>>
+  codigo_unesco_especializacion_terciaria : controlled_reference <<optional, repeated>>
+  comunidad_autonoma_region_entidad_empleadora : controlled_reference <<optional, single>>
+  correo_electronico : text <<optional, repeated>>
+  departamento_servicio_seccion_unidad_etc : value_object<EntityNameType> <<optional, single>>
+  direccion_y_gestion : boolean <<optional, single>>
+  entidad_empleadora : value_object<EntityNameType> <<required, single>>
+  facultad_escuela_unidad_centro_hospital_o_instituto : value_object<EntityNameType> <<optional, single>>
+  fax : text <<optional, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<required, single>>
+  funciones_desempenadas : text <<required, single>>
+  interes_para_la_docencia_y_o_investigacion : text <<optional, single>>
+  modalidad_de_contrato : controlled_reference <<required, single>>
+  modalidad_de_contrato_otros : text <<optional, single>>
+  pais_entidad_empleadora : controlled_reference <<optional, single>>
+  palabras_clave : controlled_reference <<optional, repeated>>
+  regimen_de_dedicacion : controlled_reference <<required, single>>
+  situacion_profesional_actual : text <<optional, repeated>>
+  telefono_fijo : text <<optional, single>>
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>>
+  tipo_de_entidad_otros : text <<optional, single>>
+}
+
+class "ResumenDeLaActividadProfesional" as entity_professional_experience_resumendelaactividadprofesional_010_040_000_000 <<entity>> {
+  resumen_de_la_actividad_profesional_010_040_000_000 : text <<optional, single>>
+  resumen_de_la_actividad_profesional_010_040_000_010 : text <<optional, single>>
+}
+
+}
+
+class "Curriculum" as entity_core_curriculum <<external>>
+
+entity_core_curriculum "1" *-- "0..*" entity_professional_experience_professionalsituation_010_010_000_000 : professionalSituations
+@enduml

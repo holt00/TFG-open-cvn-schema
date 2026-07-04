@@ -1,0 +1,179 @@
+@startuml
+title Open CVN - Other CVN Concepts Reference - Section 040 Part 1
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "Other CVN Concepts Reference - Section 040 Part 1" as area_other_040_part_01_reference {
+class "ActividadDeAtencionDeSaludEnOtrosPaisesExtranjeros" as entity_other_actividaddeatenciondesaludenotrospaisesextranjeros_040_060_000_000 <<entity>> {
+  actividad_de_atencion_de_salud_en_otros_paises_extranjeros : text <<optional, repeated>> [CVN: 040.060.000.000]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.060.000.060]
+  ciudad_de_la_entidad_financiadora : text <<optional, single>> [CVN: 040.060.000.210]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.060.000.040]
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.060.000.120]
+  duracion_de_la_experiencia : duration_like <<optional, single>> [CVN: 040.060.000.200]
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.060.000.070]
+  entidad_financiadora : value_object<EntityNameType> <<optional, single>> [CVN: 040.060.000.140]
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.060.000.190]
+  fecha_de_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.060.000.180]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.060.000.030]
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.060.000.110]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 040.060.000.020]
+  resultados_mas_relevantes_de_cada_una_de_sus_experiencias_en_este_ambito : text <<optional, single>> [CVN: 040.060.000.010]
+  tipo_de_entidad_040_060_000_090 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.060.000.090]
+  tipo_de_entidad_040_060_000_160 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.060.000.160]
+  tipo_de_entidad_otros_040_060_000_100 : text <<optional, single>> [CVN: 040.060.000.100]
+  tipo_de_entidad_otros_040_060_000_170 : text <<optional, single>> [CVN: 040.060.000.170]
+}
+note right of entity_other_actividaddeatenciondesaludenotrospaisesextranjeros_040_060_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "ActividadEnCooperacionPracticandoLaAtencionDeSaludEnPaisesEnDesarrollo" as entity_other_actividadencooperacionpracticandolaatenciondesaludenpaisesendesarrollo_040_040_000_000 <<entity>> {
+  actividad_en_cooperacion_practicando_la_atencion_de_salud_en_paises_en_desarrollo : text <<optional, repeated>> [CVN: 040.040.000.000]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.040.000.060]
+  ciudad_de_la_entidad_financiadora : text <<optional, single>> [CVN: 040.040.000.190]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.040.000.040]
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.040.000.200]
+  duracion_de_la_experiencia : duration_like <<optional, single>> [CVN: 040.040.000.170]
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.040.000.070]
+  entidad_financiadora_de_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.040.000.110]
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.040.000.160]
+  fecha_de_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.040.000.150]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.040.000.030]
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.040.000.180]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 040.040.000.020]
+  resultados_mas_relevantes_de_cada_una_de_sus_experiencias_en_este_ambito : text <<optional, single>> [CVN: 040.040.000.010]
+  tipo_de_entidad_040_040_000_090 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.040.000.090]
+  tipo_de_entidad_040_040_000_130 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.040.000.130]
+  tipo_de_entidad_otros_040_040_000_100 : text <<optional, single>> [CVN: 040.040.000.100]
+  tipo_de_entidad_otros_040_040_000_140 : text <<optional, single>> [CVN: 040.040.000.140]
+}
+note right of entity_other_actividadencooperacionpracticandolaatenciondesaludenpaisesendesarrollo_040_040_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "ActividadEnCooperacionSanitariaEnPaisesEnDesarrollo" as entity_other_actividadencooperacionsanitariaenpaisesendesarrollo_040_050_000_000 <<entity>> {
+  actividad_en_cooperacion_sanitaria_en_paises_en_desarrollo : text <<optional, repeated>> [CVN: 040.050.000.000]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.050.000.060]
+  ciudad_de_la_entidad_financiadora : text <<optional, single>> [CVN: 040.050.000.210]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.050.000.040]
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.050.000.120]
+  duracion_de_la_experiencia : duration_like <<optional, single>> [CVN: 040.050.000.200]
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.050.000.070]
+  entidad_financiadora : value_object<EntityNameType> <<optional, single>> [CVN: 040.050.000.140]
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.050.000.190]
+  fecha_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.050.000.180]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.050.000.030]
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 040.050.000.110]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 040.050.000.020]
+  resultados_mas_relevantes_de_cada_una_de_sus_experiencias_en_este_ambito : text <<optional, single>> [CVN: 040.050.000.010]
+  tipo_de_entidad_040_050_000_090 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.050.000.090]
+  tipo_de_entidad_040_050_000_160 : value_object<EntityTypeType> <<optional, single>> [CVN: 040.050.000.160]
+  tipo_de_entidad_otros_040_050_000_100 : text <<optional, single>> [CVN: 040.050.000.100]
+  tipo_de_entidad_otros_040_050_000_170 : text <<optional, single>> [CVN: 040.050.000.170]
+}
+note right of entity_other_actividadencooperacionsanitariaenpaisesendesarrollo_040_050_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "ActividadSanitariaEnInstitucionesDeLaUe" as entity_other_actividadsanitariaeninstitucionesdelaue_040_010_000_000 <<entity>> {
+  actividad_sanitaria_en_instituciones_de_la_ue : text <<optional, repeated>> [CVN: 040.010.000.000]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.010.000.060]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.010.000.040]
+  duracion_de_la_experiencia : duration_like <<optional, single>> [CVN: 040.010.000.140]
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.010.000.080]
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.010.000.130]
+  fecha_de_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.010.000.120]
+  institucion_de_la_ue_de_la_que_depende_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.010.000.070]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.010.000.030]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 040.010.000.020]
+  resultados_mas_relevantes_de_cada_una_de_sus_experiencias_en_este_ambito : text <<optional, single>> [CVN: 040.010.000.010]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 040.010.000.100]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 040.010.000.110]
+}
+note right of entity_other_actividadsanitariaeninstitucionesdelaue_040_010_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "ActividadSanitariaEnLaOms" as entity_other_actividadsanitariaenlaoms_040_020_000_000 <<entity>> {
+  actividad_sanitaria_en_la_oms : text <<optional, repeated>> [CVN: 040.020.000.000]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.020.000.060]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.020.000.040]
+  departamento_de_la_oms_del_que_dependio_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.020.000.070]
+  duracion_de_la_experiencia : duration_like <<optional, single>> [CVN: 040.020.000.140]
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.020.000.080]
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.020.000.130]
+  fecha_de_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.020.000.120]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.020.000.030]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 040.020.000.020]
+  resultados_mas_relevantes_de_cada_una_de_sus_experiencias_en_este_ambito : text <<optional, single>> [CVN: 040.020.000.010]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 040.020.000.100]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 040.020.000.110]
+}
+note right of entity_other_actividadsanitariaenlaoms_040_020_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "ActividadSanitariaEnOrganizacionesInternacionalesIntergubernamentales" as entity_other_actividadsanitariaenorganizacionesinternacionalesintergubernamentales_040_030_000_000 <<entity>> {
+  actividad_sanitaria_en_organizaciones_internacionales_intergubernamentales : text <<optional, repeated>> [CVN: 040.030.000.000]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.030.000.060]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.030.000.040]
+  duracion_de_la_experiencia : duration_like <<optional, single>> [CVN: 040.030.000.150]
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>> [CVN: 040.030.000.090]
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.030.000.140]
+  fecha_de_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>> [CVN: 040.030.000.130]
+  organismo_internacional_departamento : value_object<EntityNameType> <<optional, single>> [CVN: 040.030.000.080]
+  organizacion_intergubernamental : value_object<EntityNameType> <<optional, single>> [CVN: 040.030.000.070]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.030.000.030]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 040.030.000.020]
+  resultados_mas_relevantes_de_cada_una_de_sus_experiencias_en_este_ambito : text <<optional, single>> [CVN: 040.030.000.010]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 040.030.000.110]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 040.030.000.120]
+}
+note right of entity_other_actividadsanitariaenorganizacionesinternacionalesintergubernamentales_040_030_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+}
+
+entity_other_actividaddeatenciondesaludenotrospaisesextranjeros_040_060_000_000 -[hidden]down-> entity_other_actividadencooperacionpracticandolaatenciondesaludenpaisesendesarrollo_040_040_000_000
+entity_other_actividadencooperacionpracticandolaatenciondesaludenpaisesendesarrollo_040_040_000_000 -[hidden]down-> entity_other_actividadencooperacionsanitariaenpaisesendesarrollo_040_050_000_000
+entity_other_actividadencooperacionsanitariaenpaisesendesarrollo_040_050_000_000 -[hidden]down-> entity_other_actividadsanitariaeninstitucionesdelaue_040_010_000_000
+entity_other_actividadsanitariaeninstitucionesdelaue_040_010_000_000 -[hidden]down-> entity_other_actividadsanitariaenlaoms_040_020_000_000
+entity_other_actividadsanitariaenlaoms_040_020_000_000 -[hidden]down-> entity_other_actividadsanitariaenorganizacionesinternacionalesintergubernamentales_040_030_000_000
+
+
+@enduml
