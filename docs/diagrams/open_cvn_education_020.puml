@@ -1,0 +1,113 @@
+@startuml
+title Open CVN - CVN Education - Section 020
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Education - Section 020" as area_education_020 {
+class "ConocimientoDeIdiomas" as entity_education_conocimientodeidiomas_020_060_000_000 <<entity>> {
+  comprension_auditiva : controlled_reference <<optional, single>>
+  comprension_de_lectura : controlled_reference <<optional, single>>
+  conocimiento_de_idiomas : text <<optional, repeated>>
+  expresion_escrita : controlled_reference <<optional, single>>
+  expresion_oral : controlled_reference <<optional, single>>
+  idioma : controlled_reference <<required, single>>
+  interaccion_oral : controlled_reference <<optional, single>>
+}
+
+class "CursosYSeminariosRecibidosDePerfeccionamientoInnovacionYMejoraDocenteNuevasTecnologiasEtcCuyoObjetivoSeaLaMejoraDeLaDocencia" as entity_education_cursosyseminariosrecibidosdeperfeccionamientoinnovacionymejoradocentenuevastecnologiasetccuyoobjetivosealamejoradeladocencia_020_050_000_000 <<entity>> {
+  ciudad_de_la_entidad_organizadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  cursos_y_seminarios_recibidos_de_perfeccionamiento_innovacion_y_mejora_docente_nuevas_tecnologias_etc_cuyo_objetivo_sea_la_mejora_de_la_docencia : text <<optional, repeated>>
+  duracion_en_horas : duration_like <<optional, single>>
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  facultad_escuela_unidad_centro_hospital_o_instituto : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<optional, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<required, single>>
+  .. +11 more attributes ..
+}
+
+class "Doctorados" as entity_education_doctorados_020_010_020_000 <<entity>> {
+  ciudad_entidad_de_la_titulacion : text <<optional, single>>
+  comunidad_autonoma_region_entidad_de_la_titulacion : controlled_reference <<optional, single>>
+  doctorado_europeo_internacional : boolean <<required, single>>
+  doctorado_europeo_internacional_fecha_de_mencion : value_object<FlexibleDatesType> <<optional, single>>
+  doctorados : text <<optional, repeated>>
+  entidad_de_titulacion : value_object<EntityNameType> <<required, single>>
+  fecha_de_obtencion : value_object<FlexibleDatesType> <<required, single>>
+  fecha_de_titulacion : value_object<FlexibleDatesType> <<required, single>>
+  .. +9 more attributes ..
+}
+
+class "EstudiosDe1oY2oCicloYAntiguosCiclosLicenciadosDiplomadosIngenierosSuperioresIngenierosTecnicosArquitectos" as entity_education_estudiosde1oy2ocicloyantiguoscicloslicenciadosdiplomadosingenierossuperioresingenierostecnicosarquitectos_020_010_010_000 <<entity>> {
+  ciudad_entidad_titulacion : text <<optional, single>>
+  comunidad_autonoma_region_entidad_titulacion : controlled_reference <<optional, single>>
+  entidad_de_titulacion : value_object<EntityNameType> <<required, single>>
+  estudios_de_1o_y_2o_ciclo_y_antiguos_ciclos_licenciados_diplomados_ingenieros_superiores_ingenieros_tecnicos_arquitectos : text <<optional, repeated>>
+  fecha_de_titulacion : value_object<FlexibleDatesType> <<required, single>>
+  nombre_del_titulo : controlled_reference <<optional, single>>
+  nota_media_del_expediente : controlled_reference <<optional, single>>
+  pais_entidad_titulacion : controlled_reference <<optional, single>>
+  .. +9 more attributes ..
+}
+
+class "FormacionEspecializadaContinuadaTecnicaProfesionalizadaDeReciclajeYActualizacionDistintaALaFormacionAcademicaRegladaYALaSanitaria" as entity_education_formacionespecializadacontinuadatecnicaprofesionalizadadereciclajeyactualizaciondistintaalaformacionacademicaregladayalasanitaria_020_020_000_000 <<entity>> {
+  ciudad_entidad_titulacion : text <<optional, single>>
+  comunidad_autonoma_region_entidad_titulacion : controlled_reference <<optional, single>>
+  duracion_en_horas : duration_like <<optional, single>>
+  entidad_de_titulacion : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>>
+  formacion_especializada_continuada_tecnica_profesionalizada_de_reciclaje_y_actualizacion_distinta_a_la_formacion_academica_reglada_y_a_la_sanitaria : text <<optional, repeated>>
+  nombre_del_responsable_de_la_formacion : text <<optional, single>>
+  objetivos_de_la_entidad : text <<optional, single>>
+  .. +6 more attributes ..
+}
+
+class "FormacionSanitariaEnID" as entity_education_formacionsanitariaenid_020_040_000_000 <<entity>> {
+  c_auton_reg_de_la_entidad_de_titulacion : controlled_reference <<optional, single>>
+  calificacion_obtenida : text <<optional, single>>
+  categoria_profesional_puesto_o_cargo : text <<required, single>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_de_titulacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  departamento : value_object<EntityNameType> <<optional, single>>
+  duracion_efectiva : duration_like <<optional, single>>
+  .. +16 more attributes ..
+}
+
+class "FormacionSanitariaEspecializada" as entity_education_formacionsanitariaespecializada_020_030_000_000 <<entity>> {
+  ciudad_de_la_entidad_que_expide_el_titulo : text <<optional, single>>
+  ciudad_entidad_de_realizacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_que_expide_el_titulo : controlled_reference <<optional, single>>
+  entidad_donde_se_llevo_a_cabo_la_especialidad : value_object<EntityNameType> <<optional, single>>
+  entidad_que_expide_el_titulo_de_especialista : value_object<EntityNameType> <<optional, single>>
+  fecha_de_convalidacion : value_object<FlexibleDatesType> <<optional, single>>
+  fecha_de_finalizacion_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>>
+  .. +11 more attributes ..
+}
+
+class "OtraFormacionUniversitariaDePosgrado" as entity_education_otraformacionuniversitariadeposgrado_020_010_030_000 <<entity>> {
+  calificacion_obtenida : text <<optional, single>>
+  ciudad_entidad_titulacion : text <<optional, single>>
+  comunidad_autonoma_region_entidad_titulacion : controlled_reference <<optional, single>>
+  entidad_de_titulacion : value_object<EntityNameType> <<optional, single>>
+  facultad_escuela_unidad_centro_hospital_o_instituto : value_object<EntityNameType> <<optional, single>>
+  fecha_de_titulacion : value_object<FlexibleDatesType> <<optional, single>>
+  otra_formacion_universitaria_de_posgrado : text <<optional, repeated>>
+  pais_entidad_titulacion : controlled_reference <<optional, single>>
+  .. +6 more attributes ..
+}
+
+class "SuficienciaInvestigadoraDeaEntidad" as entity_education_suficienciainvestigadoradeaentidad_020_010_020_160 <<entity>> {
+  calificacion_obtenida : text <<optional, single>>
+  codirector_a_de_tesis : text <<optional, repeated>>
+  director_a_de_tesis : text <<optional, single>>
+  suficiencia_investigadora_dea_entidad : value_object<EntityNameType> <<optional, single>>
+  suficiencia_investigadora_dea_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  titulo_de_la_tesis : text <<optional, single>>
+}
+
+}
+
+@enduml

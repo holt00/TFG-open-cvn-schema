@@ -76,6 +76,8 @@ files in order:
   generation workflow
 - `docs/pipeline/conceptual_model_extraction.md`: conceptual IR extraction layer
   between generated-domain evidence and later UML or JSON outputs
+- `docs/diagrams/`: generated PlantUML sources and regeneration notes for the
+  issue `#44` agnostic conceptual diagrams
 - `docs/pipeline/known_limitations.md`: structural limitations, source-package
   inconsistencies, and follow-up implications
 - `docs/adr/`: architecture decision records

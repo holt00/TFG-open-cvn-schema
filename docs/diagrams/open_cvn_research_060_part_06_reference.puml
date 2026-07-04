@@ -1,0 +1,163 @@
+@startuml
+title Open CVN - CVN Research Reference - Section 060 Part 6
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Research Reference - Section 060 Part 6" as area_research_060_part_06_reference {
+class "RedesDeCooperacion" as entity_research_redesdecooperacion_060_030_040_000 <<entity>> {
+  ciudad_de_la_entidad_de_afiliacion : text <<optional, single>> [CVN: 060.030.040.210]
+  ciudad_de_radicacion : text <<optional, single>> [CVN: 060.030.040.180]
+  comunidad_autonoma_region_de_la_entidad_de_afiliacion : controlled_reference <<optional, single>> [CVN: 060.030.040.200]
+  comunidad_autonoma_region_de_radicacion : controlled_reference <<optional, single>> [CVN: 060.030.040.050]
+  duracion : duration_like <<optional, single>> [CVN: 060.030.040.170]
+  entidad_es_participante_s : value_object<EntityNameType> <<optional, repeated>> [CVN: 060.030.040.070]
+  entidad_que_realizo_la_seleccion : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.040.110]
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.040.160]
+  identificacion_de_la_red : text <<optional, single>> [CVN: 060.030.040.020]
+  nombre_de_la_red : text <<optional, single>> [CVN: 060.030.040.010]
+  numero_de_investigadores_as : decimal_number <<optional, single>> [CVN: 060.030.040.030]
+  pais_de_la_entidad_de_afiliacion : controlled_reference <<optional, single>> [CVN: 060.030.040.190]
+  pais_de_radicacion : controlled_reference <<optional, single>> [CVN: 060.030.040.040]
+  redes_de_cooperacion : text <<optional, repeated>> [CVN: 060.030.040.000]
+  tareas_desarrolladas : text <<optional, single>> [CVN: 060.030.040.150]
+  tipo_de_entidad_060_030_040_090 : value_object<EntityTypeType> <<optional, repeated>> [CVN: 060.030.040.090]
+  tipo_de_entidad_060_030_040_130 : value_object<EntityTypeType> <<optional, single>> [CVN: 060.030.040.130]
+  tipo_de_entidad_otros_060_030_040_100 : text <<optional, repeated>> [CVN: 060.030.040.100]
+  tipo_de_entidad_otros_060_030_040_140 : text <<optional, single>> [CVN: 060.030.040.140]
+}
+note right of entity_research_redesdecooperacion_060_030_040_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "ResumenDeOtrosMeritos" as entity_research_resumendeotrosmeritos_060_030_100_000 <<entity>> {
+  ciudad_de_la_entidad_que_acredita : text <<optional, single>> [CVN: 060.030.100.080]
+  comunidad_autonoma_region_de_la_entidad_que_acredita : controlled_reference <<optional, single>> [CVN: 060.030.100.090]
+  entidad_que_acredita : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.100.020]
+  fecha_de_concesion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.100.040]
+  pais_de_la_entidad_que_acredita : controlled_reference <<optional, single>> [CVN: 060.030.100.070]
+  resumen_de_otros_meritos : text <<optional, repeated>> [CVN: 060.030.100.000]
+  resumen_de_otros_meritos_en_texto_libre : text <<optional, single>> [CVN: 060.030.100.010]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.030.100.060]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.030.100.050]
+}
+note right of entity_research_resumendeotrosmeritos_060_030_100_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "SociedadesCientificasYAsociacionesProfesionales" as entity_research_sociedadescientificasyasociacionesprofesionales_060_030_020_000 <<entity>> {
+  categoria_profesional : text <<optional, single>> [CVN: 060.030.020.100]
+  ciudad_de_la_entidad_de_afiliacion : text <<optional, single>> [CVN: 060.030.020.170]
+  ciudad_de_radicacion : text <<optional, single>> [CVN: 060.030.020.180]
+  comunidad_autonoma_region_de_la_entidad_de_afiliacion : controlled_reference <<optional, single>> [CVN: 060.030.020.160]
+  comunidad_autonoma_region_de_radicacion : controlled_reference <<optional, single>> [CVN: 060.030.020.030]
+  entidad_de_afiliacion : value_object<EntityNameType> <<optional, single>> [CVN: 060.030.020.050]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.020.130]
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.030.020.120]
+  nombre_de_la_sociedad : text <<optional, single>> [CVN: 060.030.020.010]
+  pais_de_la_entidad_de_afiliacion : controlled_reference <<optional, single>> [CVN: 060.030.020.150]
+  pais_de_radicacion : controlled_reference <<optional, single>> [CVN: 060.030.020.020]
+  palabras_clave : controlled_reference <<optional, repeated>> [CVN: 060.030.020.090]
+  sociedades_cientificas_y_asociaciones_profesionales : text <<optional, repeated>> [CVN: 060.030.020.000]
+  tamano_de_la_sociedad : decimal_number <<optional, single>> [CVN: 060.030.020.110]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 060.030.020.070]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 060.030.020.080]
+}
+note right of entity_research_sociedadescientificasyasociacionesprofesionales_060_030_020_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "Soporte" as entity_research_soporte_060_010_010_070 <<entity>> {
+  publicacion_nombre : text <<optional, single>> [CVN: 060.010.010.210]
+  soporte : controlled_reference <<optional, single>> [CVN: 060.010.010.070]
+}
+note right of entity_research_soporte_060_010_010_070
+controlled references:
+- CVN_SUPPORT_B (subtype_backed_code_list, enum=ineligible, items=4)
+end note
+
+class "TrabajosPresentadosEnCongresosNacionalesOInternacionales" as entity_research_trabajospresentadosencongresosnacionalesointernacionales_060_010_020_000 <<entity>> {
+  autores_as_p_o_de_firma : text <<optional, repeated>> [CVN: 060.010.020.040]
+  ciudad_de_la_entidad_organizadora : text <<optional, single>> [CVN: 060.010.020.360]
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 060.010.020.350]
+  forma_de_contribucion : controlled_reference <<optional, single>> [CVN: 060.010.020.220]
+  fuente_de_citas : controlled_reference <<optional, repeated>> [CVN: 060.010.020.440]
+  fuente_de_citas_otros : text <<optional, repeated>> [CVN: 060.010.020.450]
+  intervencion_por : controlled_reference <<optional, single>> [CVN: 060.010.020.060]
+  intervencion_por_otros : text <<optional, single>> [CVN: 060.010.020.070]
+  localizacion_nombre_del_congreso : text <<optional, single>> [CVN: 060.010.020.100]
+  numero_de_citas : decimal_number <<optional, repeated>> [CVN: 060.010.020.430]
+  pais_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 060.010.020.340]
+  publicacion_de_la_participacion_publicacion_en_actas_de_congreso : boolean <<optional, single>> [CVN: 060.010.020.200]
+  publicacion_de_la_participacion_publicacion_en_actas_de_congreso_con_comite_evaluador_de_admision_externo : boolean <<optional, single>> [CVN: 060.010.020.210]
+  resultados_mas_destacados : text <<optional, single>> [CVN: 060.010.020.480]
+  tipo_de_evento : controlled_reference <<optional, single>> [CVN: 060.010.020.010]
+  tipo_de_evento_otros : text <<optional, single>> [CVN: 060.010.020.020]
+  tipo_de_participacion : controlled_reference <<optional, single>> [CVN: 060.010.020.050]
+  titulo_del_trabajo : text <<optional, single>> [CVN: 060.010.020.030]
+  trabajos_presentados_en_congresos_nacionales_o_internacionales : text <<optional, repeated>> [CVN: 060.010.020.000]
+}
+note right of entity_research_trabajospresentadosencongresosnacionalesointernacionales_060_010_020_000
+controlled references:
+- CVN_EVENT_B (subtype_backed_code_list, enum=ineligible, items=6)
+- CVN_PARTICIPATION_E (code_list, enum=ineligible, items=10)
+- CVN_PUBLICATION_A (subtype_backed_code_list, enum=ineligible, items=18)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SOURCE_A (code_list, enum=review_required, items=5)
+- CVN_SUPERVISION_A (code_list, enum=review_required, items=5)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "TrabajosPresentadosEnJornadasSeminariosTalleresDeTrabajoYOCursosNacionalesOInternacionales" as entity_research_trabajospresentadosenjornadasseminariostalleresdetrabajoyocursosnacionalesointernacionales_060_010_030_000 <<entity>> {
+  autores_as_p_o_de_firma : text <<optional, repeated>> [CVN: 060.010.030.310]
+  ciudad_de_la_entidad_organizadora : text <<optional, single>> [CVN: 060.010.030.340]
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 060.010.030.330]
+  fuente_de_citas : controlled_reference <<optional, repeated>> [CVN: 060.010.030.440]
+  fuente_de_citas_otros : text <<optional, repeated>> [CVN: 060.010.030.450]
+  intervencion_por : controlled_reference <<optional, single>> [CVN: 060.010.030.040]
+  localizacion_nombre_del_evento : text <<optional, single>> [CVN: 060.010.030.070]
+  numero_de_citas : decimal_number <<optional, repeated>> [CVN: 060.010.030.430]
+  pais_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 060.010.030.320]
+  publicacion_de_la_participacion_publicacion_en_acta_de_congreso : boolean <<optional, single>> [CVN: 060.010.030.170]
+  publicacion_de_la_participacion_publicacion_en_acta_de_congreso_con_comite_evaluador_de_admision_externo : boolean <<optional, single>> [CVN: 060.010.030.180]
+  publicacion_tipo : controlled_reference <<optional, single>> [CVN: 060.010.030.190]
+  tipo_de_evento : controlled_reference <<optional, single>> [CVN: 060.010.030.020]
+  tipo_de_evento_otros : text <<optional, single>> [CVN: 060.010.030.030]
+  titulo : text <<optional, single>> [CVN: 060.010.030.010]
+  trabajos_presentados_en_jornadas_seminarios_talleres_de_trabajo_y_o_cursos_nacionales_o_internacionales : text <<optional, repeated>> [CVN: 060.010.030.000]
+}
+note right of entity_research_trabajospresentadosenjornadasseminariostalleresdetrabajoyocursosnacionalesointernacionales_060_010_030_000
+controlled references:
+- CVN_EVENT_C (subtype_backed_code_list, enum=ineligible, items=5)
+- CVN_PUBLICATION_A (subtype_backed_code_list, enum=ineligible, items=18)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SOURCE_A (code_list, enum=review_required, items=5)
+- CVN_SUPERVISION_B (enumeration, enum=eligible, items=2)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+}
+
+entity_research_redesdecooperacion_060_030_040_000 -[hidden]down-> entity_research_resumendeotrosmeritos_060_030_100_000
+entity_research_resumendeotrosmeritos_060_030_100_000 -[hidden]down-> entity_research_sociedadescientificasyasociacionesprofesionales_060_030_020_000
+entity_research_sociedadescientificasyasociacionesprofesionales_060_030_020_000 -[hidden]down-> entity_research_soporte_060_010_010_070
+entity_research_soporte_060_010_010_070 -[hidden]down-> entity_research_trabajospresentadosencongresosnacionalesointernacionales_060_010_020_000
+entity_research_trabajospresentadosencongresosnacionalesointernacionales_060_010_020_000 -[hidden]down-> entity_research_trabajospresentadosenjornadasseminariostalleresdetrabajoyocursosnacionalesointernacionales_060_010_030_000
+
+
+@enduml

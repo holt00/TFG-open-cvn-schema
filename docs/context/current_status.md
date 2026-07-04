@@ -438,6 +438,41 @@
 - full-suite verification result:
   `307 passed in 318.93s (0:05:18)`
 
+### Issue `#44`
+
+- UML-like diagram generation from the agnostic conceptual inventory is
+  implemented under `src/cvn_codegen/`
+- PlantUML rendering logic now exists in:
+  - `src/cvn_codegen/conceptual_model_diagrams.py`
+- The renderer consumes `ConceptualModelInventory` from issue `#43`; it does not
+  generate final diagrams directly from generated Python classes, raw XML, or raw
+  XSD structure
+- Canonical generated PlantUML sources now exist under:
+  - `docs/diagrams/`
+- Generated diagram sources now include two complementary views:
+  - readable views for navigation and presentation
+  - reference views for fuller attribute, vocabulary, and trace detail
+- Detailed reference chunks now render controlled-vocabulary membership as local
+  notes next to each entity instead of long global dependency edges, avoiding
+  dangling-looking lines and PNG clipping in large education/research chunks
+- Large areas such as education, research, and fallback `other` concepts now
+  generate readable split subdiagrams in addition to area-level index views;
+  oversized reference sections can drill down to `..._part_XX_reference.puml`
+  detail chunks
+- Rendered PNGs are optional review artifacts derived from the canonical `.puml`
+  sources
+- Diagram regeneration and review guidance is documented in:
+  - `docs/diagrams/README.md`
+  - `docs/development/regeneration_workflow.md`
+- Targeted diagram verification passed with:
+  `uv run pytest -n auto tests/test_conceptual_model_diagrams_unit.py tests/test_generation_pipeline_conceptual_diagrams.py`
+- Targeted verification result:
+  `6 passed in 63.21s (0:01:03)`
+- Full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- Full-suite verification result:
+  `313 passed in 715.42s (0:11:55)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -449,13 +484,11 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#43` closure: issue `#44`, generate UML or UML-like
-  diagrams from the conceptual IR
-- Issue `#44` should consume the issue `#43` conceptual inventory:
-  - render from `ConceptualModelInventory`
-  - preserve trace notes where useful
-  - avoid treating generated Python classes or raw CVN XML structure as the final
-    conceptual model
+- Next work item after issue `#44` closure: issue `#45`, generate JSON Schema from
+  domain models
+- Issue `#45` should use the issue `#43` conceptual inventory and issue `#44`
+  diagrams as context when deciding which schema shape is conceptual and which
+  parts are implementation-oriented Pydantic output
 
 ## Blocking Or Relevant Limitations
 
@@ -495,6 +528,12 @@ Run canonical domain generation:
 
 ```bash
 uv run python -m cvn_codegen.domain_model_generator
+```
+
+Run canonical conceptual diagram generation:
+
+```bash
+uv run python -m cvn_codegen.conceptual_model_diagrams --output-dir docs/diagrams
 ```
 
 Run the full repository test suite with multicore pytest:

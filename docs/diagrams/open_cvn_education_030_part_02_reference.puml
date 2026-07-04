@@ -1,0 +1,192 @@
+@startuml
+title Open CVN - CVN Education Reference - Section 030 Part 2
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Education Reference - Section 030 Part 2" as area_education_030_part_02_reference {
+class "FormacionAcademicaImpartida" as entity_education_formacionacademicaimpartida_030_010_000_000 <<entity>> {
+  categoria_profesional_del_de_la_solicitante_en_el_momento_en_el_que_desempeno_la_docencia_senalada : text <<optional, single>> [CVN: 030.010.000.270]
+  ciudad_de_la_entidad_de_evaluacion : text <<optional, single>> [CVN: 030.010.000.470]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 030.010.000.070]
+  ciudad_de_la_entidad_financiadora : text <<optional, single>> [CVN: 030.010.000.510]
+  competencias_relacionadas_con_la_asignatura_impartida : text <<optional, single>> [CVN: 030.010.000.260]
+  comunidad_autonoma_region_de_entidad_de_evaluacion : controlled_reference <<optional, single>> [CVN: 030.010.000.450]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 030.010.000.050]
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 030.010.000.500]
+  curso_de_la_titulacion_que_se_imparte : text <<optional, single>> [CVN: 030.010.000.200]
+  departamento : value_object<EntityNameType> <<optional, single>> [CVN: 030.010.000.130]
+  entidad_de_realizacion : value_object<EntityNameType> <<optional, single>> [CVN: 030.010.000.080]
+  evaluacion_sobre_la_calidad_de_la_docencia_calificacion_maxima_posible : text <<optional, single>> [CVN: 030.010.000.290]
+  evaluacion_sobre_la_calidad_de_la_docencia_calificacion_obtenida : text <<optional, single>> [CVN: 030.010.000.280]
+  evaluacion_sobre_la_calidad_de_la_docencia_entidad_de_evaluacion : value_object<EntityNameType> <<optional, single>> [CVN: 030.010.000.300]
+  facultad_escuela_unidad_centro_hospital_o_instituto : value_object<EntityNameType> <<optional, single>> [CVN: 030.010.000.540]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 030.010.000.610]
+  fecha_de_inicio : value_object<FlexibleDatesType> <<required, single>> [CVN: 030.010.000.550]
+  field_030_010_000_250 : value_object<FlexibleDatesType> <<unknown, unknown>> [CVN: 030.010.000.250]
+  financiacion_obtenida_ambito_geografico : controlled_reference <<optional, single>> [CVN: 030.010.000.410]
+  financiacion_obtenida_ambito_otros : text <<optional, single>> [CVN: 030.010.000.420]
+  financiacion_obtenida_entidad : value_object<EntityNameType> <<optional, single>> [CVN: 030.010.000.350]
+  financiacion_obtenida_tipo_de_convocatoria : controlled_reference <<optional, single>> [CVN: 030.010.000.390]
+  financiacion_obtenida_tipo_de_convocatoria_otros : text <<optional, single>> [CVN: 030.010.000.400]
+  financiacion_obtenida_tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 030.010.000.370]
+  financiacion_obtenida_tipo_de_entidad_otros : text <<optional, single>> [CVN: 030.010.000.380]
+  formacion_academica_impartida : text <<optional, repeated>> [CVN: 030.010.000.000]
+  frecuencia_de_imparticion_de_la_asignatura : decimal_number <<optional, single>> [CVN: 030.010.000.240]
+  idioma_en_el_que_impartio_la_asignatura : controlled_reference <<optional, single>> [CVN: 030.010.000.230]
+  nombre_de_asignatura_nombre_del_curso : text <<optional, single>> [CVN: 030.010.000.160]
+  numero_de_horas_creditos_ects : decimal_number <<optional, single>> [CVN: 030.010.000.220]
+  pais_de_la_entidad_de_evaluacion : controlled_reference <<optional, single>> [CVN: 030.010.000.440]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 030.010.000.040]
+  pais_de_la_entidad_financiadora : controlled_reference <<optional, single>> [CVN: 030.010.000.480]
+  tipo_de_asignatura : controlled_reference <<optional, single>> [CVN: 030.010.000.190]
+  tipo_de_asignatura_otros : text <<optional, single>> [CVN: 030.010.000.430]
+  tipo_de_docencia_030_010_000_010 : controlled_reference <<optional, single>> [CVN: 030.010.000.010]
+  tipo_de_docencia_030_010_000_170 : controlled_reference <<optional, single>> [CVN: 030.010.000.170]
+  tipo_de_docencia_otros : text <<optional, single>> [CVN: 030.010.000.180]
+  tipo_de_entidad_030_010_000_110 : value_object<EntityTypeType> <<optional, single>> [CVN: 030.010.000.110]
+  tipo_de_entidad_030_010_000_520 : value_object<EntityTypeType> <<optional, single>> [CVN: 030.010.000.520]
+  tipo_de_entidad_otros_030_010_000_120 : text <<optional, single>> [CVN: 030.010.000.120]
+  tipo_de_entidad_otros_030_010_000_530 : text <<optional, single>> [CVN: 030.010.000.530]
+  tipo_de_evaluacion : controlled_reference <<optional, single>> [CVN: 030.010.000.320]
+  tipo_de_evaluacion_otros : text <<optional, single>> [CVN: 030.010.000.330]
+  tipo_de_horas_creditos_ects : controlled_reference <<optional, single>> [CVN: 030.010.000.210]
+  tipo_de_programa : controlled_reference <<optional, single>> [CVN: 030.010.000.140]
+  tipo_de_programa_otros : text <<optional, single>> [CVN: 030.010.000.150]
+  titulacion_universitaria : controlled_reference <<optional, single>> [CVN: 030.010.000.020]
+}
+note right of entity_education_formacionacademicaimpartida_030_010_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_EVALUATION_A (code_list, enum=review_required, items=4)
+- CVN_PROGRAMME_A (code_list, enum=review_required, items=9)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SCOPE_B (code_list, enum=review_required, items=7)
+- CVN_SUBJECT_A (code_list, enum=ineligible, items=7)
+- CVN_SUMMONS_B (code_list, enum=review_required, items=3)
+- CVN_TEACHING_A (subtype_backed_code_list, enum=ineligible, items=3)
+- CVN_TEACHING_B (code_list, enum=review_required, items=6)
+- CVN_TIME_A (enumeration, enum=eligible, items=2)
+- CVN_TITLE_B (hierarchical_code_list, enum=ineligible, items=2765)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- ISO_639 (code_list, enum=ineligible, items=427)
+end note
+
+class "FormacionSanitariaEnIDYOPosformacionSanitariaEspecializadaEnIDImpartida" as entity_education_formacionsanitariaenidyoposformacionsanitariaespecializadaenidimpartida_030_030_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_la_realizacion : text <<optional, single>> [CVN: 030.030.000.230]
+  ciudad_de_la_formacion_impartida : text <<optional, single>> [CVN: 030.030.000.050]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 030.030.000.240]
+  comunidad_autonoma_region_donde_ha_impartido_la_formacion : controlled_reference <<optional, single>> [CVN: 030.030.000.030]
+  departamento : value_object<EntityNameType> <<optional, single>> [CVN: 030.030.000.140]
+  destinatarios_as_en_palabras_clave : controlled_reference <<optional, repeated>> [CVN: 030.030.000.210]
+  duracion : duration_like <<optional, single>> [CVN: 030.030.000.200]
+  entidad_de_la_que_depende_el_programa : value_object<EntityNameType> <<optional, single>> [CVN: 030.030.000.060]
+  entidad_donde_se_imparte_la_formacion : value_object<EntityNameType> <<optional, single>> [CVN: 030.030.000.100]
+  fecha_de_finalizacion_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 030.030.000.190]
+  fecha_de_inicio_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 030.030.000.180]
+  formacion_sanitaria_en_i_d_y_o_posformacion_sanitaria_especializada_en_i_d_impartida : text <<optional, repeated>> [CVN: 030.030.000.000]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 030.030.000.220]
+  pais_donde_ha_impartido_la_formacion : controlled_reference <<optional, single>> [CVN: 030.030.000.020]
+  seccion : value_object<EntityNameType> <<optional, single>> [CVN: 030.030.000.160]
+  servicio : value_object<EntityNameType> <<optional, single>> [CVN: 030.030.000.150]
+  tipo_de_entidad_030_030_000_080 : value_object<EntityTypeType> <<optional, single>> [CVN: 030.030.000.080]
+  tipo_de_entidad_030_030_000_120 : value_object<EntityTypeType> <<optional, single>> [CVN: 030.030.000.120]
+  tipo_de_entidad_otros_030_030_000_090 : text <<optional, single>> [CVN: 030.030.000.090]
+  tipo_de_entidad_otros_030_030_000_130 : text <<optional, single>> [CVN: 030.030.000.130]
+  titulo_de_la_especialidad : text <<optional, single>> [CVN: 030.030.000.010]
+  unidad : value_object<EntityNameType> <<optional, single>> [CVN: 030.030.000.170]
+}
+note right of entity_education_formacionsanitariaenidyoposformacionsanitariaespecializadaenidimpartida_030_030_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "FormacionSanitariaEspecializadaImpartida" as entity_education_formacionsanitariaespecializadaimpartida_030_020_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 030.020.000.280]
+  ciudad_de_la_formacion_impartida : text <<optional, single>> [CVN: 030.020.000.090]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 030.020.000.260]
+  comunidad_autonoma_region_donde_ha_impartido_la_formacion : controlled_reference <<optional, single>> [CVN: 030.020.000.070]
+  departamento : value_object<EntityNameType> <<optional, single>> [CVN: 030.020.000.180]
+  duracion : duration_like <<optional, single>> [CVN: 030.020.000.240]
+  entidad_donde_se_llevo_a_cabo : value_object<EntityNameType> <<optional, single>> [CVN: 030.020.000.100]
+  entidad_que_expide_el_titulo : value_object<EntityNameType> <<optional, single>> [CVN: 030.020.000.140]
+  fecha_de_finalizacion_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 030.020.000.230]
+  fecha_de_inicio_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 030.020.000.220]
+  formacion_sanitaria_especializada_impartida : text <<optional, repeated>> [CVN: 030.020.000.000]
+  pais_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 030.020.000.270]
+  pais_donde_impartio_la_formacion : controlled_reference <<optional, single>> [CVN: 030.020.000.060]
+  seccion : value_object<EntityNameType> <<optional, single>> [CVN: 030.020.000.200]
+  servicio : value_object<EntityNameType> <<optional, single>> [CVN: 030.020.000.190]
+  tipo_de_entidad_030_020_000_120 : value_object<EntityTypeType> <<optional, single>> [CVN: 030.020.000.120]
+  tipo_de_entidad_030_020_000_160 : value_object<EntityTypeType> <<optional, single>> [CVN: 030.020.000.160]
+  tipo_de_entidad_otros_030_020_000_130 : text <<optional, single>> [CVN: 030.020.000.130]
+  tipo_de_entidad_otros_030_020_000_170 : text <<optional, single>> [CVN: 030.020.000.170]
+  tipo_de_participacion : controlled_reference <<optional, single>> [CVN: 030.020.000.040]
+  tipo_de_participacion_otros : text <<optional, single>> [CVN: 030.020.000.050]
+  titulacion_de_los_as_destinatarios_as_en_palabras_clave : controlled_reference <<optional, repeated>> [CVN: 030.020.000.250]
+  titulo_de_la_especialidad : text <<optional, single>> [CVN: 030.020.000.020]
+  titulo_de_la_subespecialidad : text <<optional, single>> [CVN: 030.020.000.030]
+  unidad : value_object<EntityNameType> <<optional, single>> [CVN: 030.020.000.210]
+}
+note right of entity_education_formacionsanitariaespecializadaimpartida_030_020_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_PARTICIPATION_H (code_list, enum=review_required, items=5)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+- THESAURUS@thesaurus.xsd (thesaurus, enum=ineligible)
+end note
+
+class "ISBNISSNPublicacion" as entity_education_isbnissnpublicacion_030_060_000_190 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>> [CVN: 030.060.000.200]
+  identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 030.060.000.210]
+  isbn_issn_publicacion : text <<optional, repeated>> [CVN: 030.060.000.190]
+  tipo_de_identificador_de_publicacion_digital : controlled_reference <<optional, repeated>> [CVN: 030.060.000.220]
+  tipo_de_identificador_de_publicacion_digital_otros : text <<optional, repeated>> [CVN: 030.060.000.230]
+}
+note right of entity_education_isbnissnpublicacion_030_060_000_190
+controlled references:
+- CVN_SOURCE_B (code_list, enum=ineligible, items=4)
+end note
+
+class "MaterialYOtrasPublicacionesDocentesODeCaracterPedagogico" as entity_education_materialyotraspublicacionesdocentesodecaracterpedagogico_030_070_000_000 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>> [CVN: 030.070.000.220]
+  autores_as_p_o_de_firma_nombres : text <<optional, repeated>> [CVN: 030.070.000.030]
+  explicacion_narrativa_del_material_elaborado : text <<optional, single>> [CVN: 030.070.000.200]
+  fecha_de_elaboracion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 030.070.000.050]
+  grado_de_contribucion : controlled_reference <<required, single>> [CVN: 030.070.000.210]
+  identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 030.070.000.230]
+  material_y_otras_publicaciones_docentes_o_de_caracter_pedagogico : text <<optional, repeated>> [CVN: 030.070.000.000]
+  nombre_del_material : text <<optional, single>> [CVN: 030.070.000.010]
+  perfil_de_los_as_destinatarios_as : text <<optional, single>> [CVN: 030.070.000.020]
+  posicion_del_de_la_solicitante_sobre_el_total : decimal_number <<optional, single>> [CVN: 030.070.000.040]
+  publicacion_titulo : text <<optional, single>> [CVN: 030.070.000.080]
+  tipo_de_identificador_de_publicacion_digital : controlled_reference <<optional, repeated>> [CVN: 030.070.000.240]
+  tipo_de_identificador_de_publicacion_digital_otros : text <<optional, repeated>> [CVN: 030.070.000.250]
+  tipologia_libro_articulo_manual_apuntes_etc : controlled_reference <<optional, single>> [CVN: 030.070.000.060]
+  tipologia_otros : text <<optional, single>> [CVN: 030.070.000.070]
+}
+note right of entity_education_materialyotraspublicacionesdocentesodecaracterpedagogico_030_070_000_000
+controlled references:
+- CVN_PARTICIPATION_G (enumeration, enum=eligible, items=11)
+- CVN_SOURCE_B (code_list, enum=ineligible, items=4)
+- CVN_SUPPORT_A (subtype_backed_code_list, enum=ineligible, items=10)
+end note
+
+}
+
+entity_education_formacionacademicaimpartida_030_010_000_000 -[hidden]down-> entity_education_formacionsanitariaenidyoposformacionsanitariaespecializadaenidimpartida_030_030_000_000
+entity_education_formacionsanitariaenidyoposformacionsanitariaespecializadaenidimpartida_030_030_000_000 -[hidden]down-> entity_education_formacionsanitariaespecializadaimpartida_030_020_000_000
+entity_education_formacionsanitariaespecializadaimpartida_030_020_000_000 -[hidden]down-> entity_education_isbnissnpublicacion_030_060_000_190
+entity_education_isbnissnpublicacion_030_060_000_190 -[hidden]down-> entity_education_materialyotraspublicacionesdocentesodecaracterpedagogico_030_070_000_000
+
+
+@enduml

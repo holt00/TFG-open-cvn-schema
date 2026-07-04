@@ -107,6 +107,26 @@ do not need to rediscover them.
   - later JSON format decisions in issue `#46` should not assume every generated
     field relation is a domain association
 
+### Domain-Area Diagrams Can Be Verbose
+
+- Confirmed behavior:
+  - issue `#44` renders PlantUML diagrams from the issue `#43` conceptual
+    inventory
+  - splitting diagrams by conceptual domain area keeps the overview readable, but
+    large areas such as research still contain many CVN-backed conceptual entities
+    and attributes
+  - detailed reference chunks use local `controlled references` notes rather than
+    long global dependency edges to keep rendered PNGs inside frame
+  - controlled vocabularies are summarized when large, but the source model itself
+    remains broad
+- Impact:
+  - `.puml` sources are reproducible and traceable, but some area diagrams are
+    better used as reference artifacts than compact presentation slides
+  - PNGs are derived review artifacts; the canonical output remains PlantUML source
+- Expected follow-up:
+  - future curated conceptual modeling work may add smaller thematic diagrams or
+    manually selected publication views without changing the canonical inventory
+
 ## Canonical Source Package Inconsistencies
 
 ### `CVNTreeModel.xml` Diverges From `CVNTreeModel_v1.0.xsd`

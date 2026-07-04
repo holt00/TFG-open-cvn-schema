@@ -1,0 +1,22 @@
+@startuml
+title Open CVN - Other CVN Concepts - Fallback Concepts
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "Other CVN Concepts - Fallback Concepts" as area_other_no_tree {
+class "IdentificacionYContacto" as entity_other_identificacionycontacto_no_tree <<entity>> {
+  actividad_cientifica_o_tecnologica : text <<optional, single>>
+  actividad_docente : text <<optional, single>>
+  actividad_sanitaria : text <<optional, single>>
+  actividades_cientificas_y_tecnologicas : text <<optional, single>>
+  duracion : duration_like <<required, single>>
+  experiencia_cientifica_y_tecnologica : text <<optional, single>>
+  fecha_de_finalizacion : date_like <<required, single>>
+  fecha_de_inicio : date_like <<required, single>>
+  .. +19 more attributes ..
+}
+
+}
+
+@enduml

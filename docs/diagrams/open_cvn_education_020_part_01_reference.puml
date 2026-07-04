@@ -1,0 +1,182 @@
+@startuml
+title Open CVN - CVN Education Reference - Section 020 Part 1
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Education Reference - Section 020 Part 1" as area_education_020_part_01_reference {
+class "ConocimientoDeIdiomas" as entity_education_conocimientodeidiomas_020_060_000_000 <<entity>> {
+  comprension_auditiva : controlled_reference <<optional, single>> [CVN: 020.060.000.120]
+  comprension_de_lectura : controlled_reference <<optional, single>> [CVN: 020.060.000.130]
+  conocimiento_de_idiomas : text <<optional, repeated>> [CVN: 020.060.000.000]
+  expresion_escrita : controlled_reference <<optional, single>> [CVN: 020.060.000.160]
+  expresion_oral : controlled_reference <<optional, single>> [CVN: 020.060.000.150]
+  idioma : controlled_reference <<required, single>> [CVN: 020.060.000.010]
+  interaccion_oral : controlled_reference <<optional, single>> [CVN: 020.060.000.140]
+}
+note right of entity_education_conocimientodeidiomas_020_060_000_000
+controlled references:
+- CVN_LANGUAGE_B (code_list, enum=review_required, items=6)
+- ISO_639 (code_list, enum=ineligible, items=427)
+end note
+
+class "CursosYSeminariosRecibidosDePerfeccionamientoInnovacionYMejoraDocenteNuevasTecnologiasEtcCuyoObjetivoSeaLaMejoraDeLaDocencia" as entity_education_cursosyseminariosrecibidosdeperfeccionamientoinnovacionymejoradocentenuevastecnologiasetccuyoobjetivosealamejoradeladocencia_020_050_000_000 <<entity>> {
+  ciudad_de_la_entidad_organizadora : text <<optional, single>> [CVN: 020.050.000.060]
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 020.050.000.040]
+  cursos_y_seminarios_recibidos_de_perfeccionamiento_innovacion_y_mejora_docente_nuevas_tecnologias_etc_cuyo_objetivo_sea_la_mejora_de_la_docencia : text <<optional, repeated>> [CVN: 020.050.000.000]
+  duracion_en_horas : duration_like <<optional, single>> [CVN: 020.050.000.110]
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>> [CVN: 020.050.000.070]
+  facultad_escuela_unidad_centro_hospital_o_instituto : value_object<EntityNameType> <<optional, single>> [CVN: 020.050.000.150]
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.050.000.120]
+  fecha_de_inicio : value_object<FlexibleDatesType> <<required, single>> [CVN: 020.050.000.140]
+  meses : duration_like <<required, single>> [CVN: 020.050.000.170]
+  objetivo_de_la_estancia : controlled_reference <<required, single>> [CVN: 020.050.000.200]
+  objetivo_de_la_estancia_otros : text <<optional, single>> [CVN: 020.050.000.210]
+  objetivos_del_curso_seminario : text <<optional, single>> [CVN: 020.050.000.020]
+  pais_de_la_entidad_organizadora : controlled_reference <<optional, single>> [CVN: 020.050.000.030]
+  perfil_de_destinatarios_as : text <<required, single>> [CVN: 020.050.000.130]
+  programa_por_el_que_se_ha_financiado_la_estancia : text <<optional, single>> [CVN: 020.050.000.180]
+  tareas_contrastables : text <<required, single>> [CVN: 020.050.000.190]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 020.050.000.090]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 020.050.000.100]
+  titulo_del_curso_seminario : text <<optional, single>> [CVN: 020.050.000.010]
+}
+note right of entity_education_cursosyseminariosrecibidosdeperfeccionamientoinnovacionymejoradocentenuevastecnologiasetccuyoobjetivosealamejoradeladocencia_020_050_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_STAY_A (code_list, enum=review_required, items=5)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "Doctorados" as entity_education_doctorados_020_010_020_000 <<entity>> {
+  ciudad_entidad_de_la_titulacion : text <<optional, single>> [CVN: 020.010.020.090]
+  comunidad_autonoma_region_entidad_de_la_titulacion : controlled_reference <<optional, single>> [CVN: 020.010.020.070]
+  doctorado_europeo_internacional : boolean <<required, single>> [CVN: 020.010.020.200]
+  doctorado_europeo_internacional_fecha_de_mencion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.010.020.150]
+  doctorados : text <<optional, repeated>> [CVN: 020.010.020.000]
+  entidad_de_titulacion : value_object<EntityNameType> <<required, single>> [CVN: 020.010.020.100]
+  fecha_de_obtencion : value_object<FlexibleDatesType> <<required, single>> [CVN: 020.010.020.230]
+  fecha_de_titulacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 020.010.020.140]
+  mencion_de_calidad : boolean <<required, single>> [CVN: 020.010.020.210]
+  pais_entidad_de_la_titulacion : controlled_reference <<optional, single>> [CVN: 020.010.020.060]
+  premio_extraordinario_del_doctorado : boolean <<required, single>> [CVN: 020.010.020.220]
+  programa_de_doctorado : controlled_reference <<required, single>> [CVN: 020.010.020.010]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 020.010.020.120]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 020.010.020.130]
+  titulo_de_la_tesis : text <<optional, single>> [CVN: 020.010.020.160]
+  titulo_homologado : boolean <<required, single>> [CVN: 020.010.020.240]
+  titulo_homologado_fecha_de_homologacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 020.010.020.250]
+}
+note right of entity_education_doctorados_020_010_020_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_TITLE_C (hierarchical_code_list, enum=ineligible, items=3102)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "EstudiosDe1oY2oCicloYAntiguosCiclosLicenciadosDiplomadosIngenierosSuperioresIngenierosTecnicosArquitectos" as entity_education_estudiosde1oy2ocicloyantiguoscicloslicenciadosdiplomadosingenierossuperioresingenierostecnicosarquitectos_020_010_010_000 <<entity>> {
+  ciudad_entidad_titulacion : text <<optional, single>> [CVN: 020.010.010.080]
+  comunidad_autonoma_region_entidad_titulacion : controlled_reference <<optional, single>> [CVN: 020.010.010.060]
+  entidad_de_titulacion : value_object<EntityNameType> <<required, single>> [CVN: 020.010.010.090]
+  estudios_de_1o_y_2o_ciclo_y_antiguos_ciclos_licenciados_diplomados_ingenieros_superiores_ingenieros_tecnicos_arquitectos : text <<optional, repeated>> [CVN: 020.010.010.000]
+  fecha_de_titulacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 020.010.010.130]
+  nombre_del_titulo : controlled_reference <<optional, single>> [CVN: 020.010.010.030]
+  nota_media_del_expediente : controlled_reference <<optional, single>> [CVN: 020.010.010.140]
+  pais_entidad_titulacion : controlled_reference <<optional, single>> [CVN: 020.010.010.050]
+  premio : controlled_reference <<optional, single>> [CVN: 020.010.010.190]
+  premio_otros : text <<optional, single>> [CVN: 020.010.010.200]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 020.010.010.110]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 020.010.010.120]
+  titulacion_universitaria : controlled_reference <<optional, single>> [CVN: 020.010.010.010]
+  titulacion_universitaria_otros : text <<optional, single>> [CVN: 020.010.010.020]
+  titulo_extranjero : controlled_reference <<optional, single>> [CVN: 020.010.010.150]
+  titulo_homologado : boolean <<optional, single>> [CVN: 020.010.010.180]
+  titulo_homologado_fecha_de_homologacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.010.010.170]
+}
+note right of entity_education_estudiosde1oy2ocicloyantiguoscicloslicenciadosdiplomadosingenierossuperioresingenierostecnicosarquitectos_020_010_010_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_PRIZE_A (code_list, enum=review_required, items=3)
+- CVN_QUALIFICATION_B (code_list, enum=review_required, items=4)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_TITLE_A (hierarchical_code_list, enum=ineligible, items=4)
+- CVN_TITLE_B (hierarchical_code_list, enum=ineligible, items=2765)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "FormacionEspecializadaContinuadaTecnicaProfesionalizadaDeReciclajeYActualizacionDistintaALaFormacionAcademicaRegladaYALaSanitaria" as entity_education_formacionespecializadacontinuadatecnicaprofesionalizadadereciclajeyactualizaciondistintaalaformacionacademicaregladayalasanitaria_020_020_000_000 <<entity>> {
+  ciudad_entidad_titulacion : text <<optional, single>> [CVN: 020.020.000.070]
+  comunidad_autonoma_region_entidad_titulacion : controlled_reference <<optional, single>> [CVN: 020.020.000.050]
+  duracion_en_horas : duration_like <<optional, single>> [CVN: 020.020.000.140]
+  entidad_de_titulacion : value_object<EntityNameType> <<optional, single>> [CVN: 020.020.000.080]
+  fecha_de_finalizacion_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.020.000.150]
+  formacion_especializada_continuada_tecnica_profesionalizada_de_reciclaje_y_actualizacion_distinta_a_la_formacion_academica_reglada_y_a_la_sanitaria : text <<optional, repeated>> [CVN: 020.020.000.000]
+  nombre_del_responsable_de_la_formacion : text <<optional, single>> [CVN: 020.020.000.130]
+  objetivos_de_la_entidad : text <<optional, single>> [CVN: 020.020.000.120]
+  pais_entidad_titulacion : controlled_reference <<optional, single>> [CVN: 020.020.000.040]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 020.020.000.100]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 020.020.000.110]
+  tipo_de_la_formacion : controlled_reference <<optional, single>> [CVN: 020.020.000.010]
+  tipologia_de_la_formacion_otros : text <<optional, single>> [CVN: 020.020.000.020]
+  titulo_de_la_formacion : text <<optional, single>> [CVN: 020.020.000.030]
+}
+note right of entity_education_formacionespecializadacontinuadatecnicaprofesionalizadadereciclajeyactualizaciondistintaalaformacionacademicaregladayalasanitaria_020_020_000_000
+controlled references:
+- CVN_ACTIVITY_B (subtype_backed_code_list, enum=ineligible, items=4)
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "FormacionSanitariaEnID" as entity_education_formacionsanitariaenid_020_040_000_000 <<entity>> {
+  c_auton_reg_de_la_entidad_de_titulacion : controlled_reference <<optional, single>> [CVN: 020.040.000.030]
+  calificacion_obtenida : text <<optional, single>> [CVN: 020.040.000.210]
+  categoria_profesional_puesto_o_cargo : text <<required, single>> [CVN: 020.040.000.260]
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 020.040.000.240]
+  ciudad_de_la_entidad_de_titulacion : text <<optional, single>> [CVN: 020.040.000.050]
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 020.040.000.230]
+  departamento : value_object<EntityNameType> <<optional, single>> [CVN: 020.040.000.140]
+  duracion_efectiva : duration_like <<optional, single>> [CVN: 020.040.000.180]
+  entidad_a_la_que_pertenece_el_programa : value_object<EntityNameType> <<optional, single>> [CVN: 020.040.000.100]
+  entidad_donde_se_llevo_a_cabo : value_object<EntityNameType> <<optional, single>> [CVN: 020.040.000.060]
+  fecha_de_finalizacion_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.040.000.200]
+  fecha_inicio_de_la_formacion : value_object<FlexibleDatesType> <<optional, single>> [CVN: 020.040.000.190]
+  formacion_sanitaria_en_i_d : text <<optional, repeated>> [CVN: 020.040.000.000]
+  interes_para_la_docencia_y_o_investigacion : text <<optional, single>> [CVN: 020.040.000.250]
+  nombre_de_la_formacion : text <<optional, single>> [CVN: 020.040.000.010]
+  pais_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 020.040.000.220]
+  pais_entidad_de_titulacion : controlled_reference <<optional, single>> [CVN: 020.040.000.020]
+  seccion : value_object<EntityNameType> <<optional, single>> [CVN: 020.040.000.160]
+  servicio : value_object<EntityNameType> <<optional, single>> [CVN: 020.040.000.150]
+  tipo_de_entidad : value_object<EntityTypeType> <<optional, single>> [CVN: 020.040.000.080]
+  tipo_de_entidad_a_la_que_pertenece_el_programa : value_object<EntityTypeType> <<optional, single>> [CVN: 020.040.000.120]
+  tipo_de_entidad_a_la_que_pertenece_el_programa_otros : text <<optional, single>> [CVN: 020.040.000.130]
+  tipo_de_entidad_otros : text <<optional, single>> [CVN: 020.040.000.090]
+  unidad : value_object<EntityNameType> <<optional, single>> [CVN: 020.040.000.170]
+}
+note right of entity_education_formacionsanitariaenid_020_040_000_000
+controlled references:
+- CVN_ENTITY_TYPE (code_list, enum=ineligible, items=17)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- ENTITY@Entity.xsd (registry, enum=ineligible)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+}
+
+entity_education_conocimientodeidiomas_020_060_000_000 -[hidden]down-> entity_education_cursosyseminariosrecibidosdeperfeccionamientoinnovacionymejoradocentenuevastecnologiasetccuyoobjetivosealamejoradeladocencia_020_050_000_000
+entity_education_cursosyseminariosrecibidosdeperfeccionamientoinnovacionymejoradocentenuevastecnologiasetccuyoobjetivosealamejoradeladocencia_020_050_000_000 -[hidden]down-> entity_education_doctorados_020_010_020_000
+entity_education_doctorados_020_010_020_000 -[hidden]down-> entity_education_estudiosde1oy2ocicloyantiguoscicloslicenciadosdiplomadosingenierossuperioresingenierostecnicosarquitectos_020_010_010_000
+entity_education_estudiosde1oy2ocicloyantiguoscicloslicenciadosdiplomadosingenierossuperioresingenierostecnicosarquitectos_020_010_010_000 -[hidden]down-> entity_education_formacionespecializadacontinuadatecnicaprofesionalizadadereciclajeyactualizaciondistintaalaformacionacademicaregladayalasanitaria_020_020_000_000
+entity_education_formacionespecializadacontinuadatecnicaprofesionalizadadereciclajeyactualizaciondistintaalaformacionacademicaregladayalasanitaria_020_020_000_000 -[hidden]down-> entity_education_formacionsanitariaenid_020_040_000_000
+
+
+@enduml

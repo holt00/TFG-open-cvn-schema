@@ -80,6 +80,30 @@ This regenerates domain-oriented output under `src/models/cvn/generated/`. The
 current canonical generator emits `105` files when source inputs and generator
 policy remain unchanged.
 
+Run canonical conceptual diagram generation:
+
+```bash
+uv run python -m cvn_codegen.conceptual_model_diagrams --output-dir docs/diagrams
+```
+
+This regenerates PlantUML source diagrams under `docs/diagrams/` from the issue
+`#43` `ConceptualModelInventory`. The generator emits both readable presentation
+views and fuller reference views. The `.puml` files are the canonical diagram
+artifacts; rendered images are optional and are not required for the repository
+workflow.
+
+Reference diagrams for large areas may be index files that point to split
+`..._part_XX_reference.puml` chunks. Detailed reference chunks keep controlled
+vocabulary membership in local `controlled references` notes beside each entity,
+instead of using long global vocabulary dependency edges that can be hard to read
+or render into clipped PNGs.
+
+For local visual review only, render PNGs with:
+
+```bash
+plantuml -tpng docs/diagrams/*.puml
+```
+
 Run full verification:
 
 ```bash
@@ -102,7 +126,10 @@ The implemented pipeline stages are:
 5. XSD-enriched structural type evidence for wrapper handoff
 6. semantic policy application over enriched normalized metadata
 7. domain model generation from `SemanticPolicyBundle`
-8. repository verification through tests and CI
+8. conceptual model extraction from normalized, semantic, and domain-generation
+   evidence
+9. conceptual PlantUML diagram generation from `ConceptualModelInventory`
+10. repository verification through tests and CI
 
 The semantic handoff is:
 
@@ -215,6 +242,7 @@ The implemented tests cover:
 - wrapper handoff through structural type evidence
 - domain generation, importability, determinism, ASCII output, and end-to-end
   generation
+- conceptual model extraction and conceptual PlantUML diagram rendering
 - source coverage for manual, tree, auxiliary, semantic, and generated artifacts
 
 Tests that regenerate `src/generated/*` use `tests/xsdata_generation_lock.py` so

@@ -1,0 +1,22 @@
+@startuml
+title Open CVN - CVN Core Reference
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Core" as area_core {
+class "Curriculum" as entity_core_curriculum <<entity>> {
+}
+
+}
+
+
+class "Person" as entity_identity_person <<external>>
+class "ProfessionalSituation" as entity_professional_experience_professionalsituation_010_010_000_000 <<external>>
+
+entity_core_curriculum "1" *-- "1" entity_identity_person : owner
+entity_core_curriculum "1" *-- "0..*" entity_professional_experience_professionalsituation_010_010_000_000 : professionalSituations
+
+@enduml

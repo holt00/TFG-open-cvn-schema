@@ -1,0 +1,98 @@
+@startuml
+title Open CVN - CVN Research Reference - Section 060 Part 5
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+top to bottom direction
+hide empty members
+
+package "CVN Research Reference - Section 060 Part 5" as area_research_060_part_05_reference {
+class "PublicacionIndiceDeImpactoDeAnoDePublicacion" as entity_research_publicacionindicedeimpactodeanodepublicacion_060_010_010_240 <<entity>> {
+  categoria : controlled_reference <<optional, repeated>> [CVN: 060.010.010.240]
+  fuente_de_impacto : controlled_reference <<optional, repeated>> [CVN: 060.010.010.190]
+  fuente_de_impacto_otros : text <<optional, repeated>> [CVN: 060.010.010.200]
+  numero_de_revistas_en_la_categoria : decimal_number <<optional, repeated>> [CVN: 060.010.010.260]
+  posicion_que_ocupa_la_revista_en_la_categoria : decimal_number <<optional, repeated>> [CVN: 060.010.010.250]
+  publicacion_indice_de_impacto_de_ano_de_publicacion : text <<optional, repeated>> [CVN: 060.010.010.180]
+  revista_dentro_del_25_de_mayor_indice_de_impacto : boolean <<optional, repeated>> [CVN: 060.010.010.330]
+}
+note right of entity_research_publicacionindicedeimpactodeanodepublicacion_060_010_010_240
+controlled references:
+- CVN_AGENCY_B (code_list, enum=review_required, items=4)
+- CVN_CATEGORY_A (hierarchical_code_list, enum=ineligible, items=547)
+end note
+
+class "PublicacionNombre060010020370" as entity_research_publicacionnombre060010020370_060_010_020_370 <<entity>> {
+  publicacion_nombre : text <<optional, single>> [CVN: 060.010.020.370]
+}
+
+class "PublicacionNombre060010030350" as entity_research_publicacionnombre060010030350_060_010_030_350 <<entity>> {
+  publicacion_nombre : text <<optional, single>> [CVN: 060.010.030.350]
+}
+
+class "PublicacionNombre060010040360" as entity_research_publicacionnombre060010040360_060_010_040_360 <<entity>> {
+  publicacion_nombre : text <<optional, single>> [CVN: 060.010.040.360]
+}
+
+class "PublicacionTipo060010030190" as entity_research_publicaciontipo060010030190_060_010_030_190 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>> [CVN: 060.010.030.390]
+  identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 060.010.030.400]
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 060.010.030.250]
+  publicacion_deposito_legal : text <<optional, single>> [CVN: 060.010.030.300]
+  publicacion_direccion_electronica : text <<optional, single>> [CVN: 060.010.030.280]
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>> [CVN: 060.010.030.230]
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.010.030.270]
+  publicacion_isbn_issn : text <<optional, repeated>> [CVN: 060.010.030.290]
+  publicacion_nombre : text <<optional, single>> [CVN: 060.010.030.350]
+  publicacion_pagina_inicial_final : text <<optional, single>> [CVN: 060.010.030.220]
+  publicacion_pais : controlled_reference <<optional, single>> [CVN: 060.010.030.240]
+  publicacion_tipo : controlled_reference <<optional, single>> [CVN: 060.010.030.190]
+  publicacion_titulo : text <<optional, single>> [CVN: 060.010.030.200]
+  publicacion_volumen : text <<optional, single>> [CVN: 060.010.030.210]
+  tipo_de_identificador_de_publicacion_digital : controlled_reference <<optional, repeated>> [CVN: 060.010.030.410]
+  tipo_de_identificador_de_publicacion_digital_otros : text <<optional, repeated>> [CVN: 060.010.030.420]
+}
+note right of entity_research_publicaciontipo060010030190_060_010_030_190
+controlled references:
+- CVN_PUBLICATION_A (subtype_backed_code_list, enum=ineligible, items=18)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SOURCE_B (code_list, enum=ineligible, items=4)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+class "PublicacionTipo060010040200" as entity_research_publicaciontipo060010040200_060_010_040_200 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>> [CVN: 060.010.040.390]
+  identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 060.010.040.400]
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 060.010.040.260]
+  publicacion_deposito_legal : text <<optional, single>> [CVN: 060.010.040.310]
+  publicacion_direccion_electronica : text <<optional, single>> [CVN: 060.010.040.290]
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>> [CVN: 060.010.040.240]
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>> [CVN: 060.010.040.280]
+  publicacion_isbn_issn : text <<optional, repeated>> [CVN: 060.010.040.300]
+  publicacion_nombre : text <<optional, single>> [CVN: 060.010.040.360]
+  publicacion_pagina_inicial_final : text <<optional, single>> [CVN: 060.010.040.230]
+  publicacion_pais : controlled_reference <<optional, single>> [CVN: 060.010.040.250]
+  publicacion_tipo : controlled_reference <<optional, single>> [CVN: 060.010.040.200]
+  publicacion_titulo : text <<optional, single>> [CVN: 060.010.040.210]
+  publicacion_volumen : text <<optional, single>> [CVN: 060.010.040.220]
+  tipo_de_identificador_de_publicacion_digital : controlled_reference <<optional, repeated>> [CVN: 060.010.040.410]
+  tipo_de_identificador_de_publicacion_digital_otros : text <<optional, repeated>> [CVN: 060.010.040.420]
+}
+note right of entity_research_publicaciontipo060010040200_060_010_040_200
+controlled references:
+- CVN_PUBLICATION_A (subtype_backed_code_list, enum=ineligible, items=18)
+- CVN_REGION (hierarchical_code_list, enum=ineligible, items=280)
+- CVN_SOURCE_B (code_list, enum=ineligible, items=4)
+- ISO_3166 (code_list, enum=ineligible, items=312)
+end note
+
+}
+
+entity_research_publicacionindicedeimpactodeanodepublicacion_060_010_010_240 -[hidden]down-> entity_research_publicacionnombre060010020370_060_010_020_370
+entity_research_publicacionnombre060010020370_060_010_020_370 -[hidden]down-> entity_research_publicacionnombre060010030350_060_010_030_350
+entity_research_publicacionnombre060010030350_060_010_030_350 -[hidden]down-> entity_research_publicacionnombre060010040360_060_010_040_360
+entity_research_publicacionnombre060010040360_060_010_040_360 -[hidden]down-> entity_research_publicaciontipo060010030190_060_010_030_190
+entity_research_publicaciontipo060010030190_060_010_030_190 -[hidden]down-> entity_research_publicaciontipo060010040200_060_010_040_200
+
+
+@enduml

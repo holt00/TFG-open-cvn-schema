@@ -1,0 +1,35 @@
+@startuml
+title Open CVN - CVN Professional Experience Reference
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "CVN Professional Experience Reference" as area_professional_experience_reference {
+class "CargosYActividadesDesempenadosConAnterioridad" as reference_section_010_020_000_000 <<reference_section>> {
+  entities : 1
+  file : open_cvn_professional_experience_010_020_000_000_reference.puml
+  representative : CargosYActividadesDesempenadosConAnterioridad
+}
+
+class "ProfessionalSituation" as reference_section_010_010_000_000 <<reference_section>> {
+  entities : 1
+  file : open_cvn_professional_experience_010_010_000_000_reference.puml
+  representative : ProfessionalSituation
+}
+
+class "ResumenDeLaActividadProfesional" as reference_section_010_040_000_000 <<reference_section>> {
+  entities : 1
+  file : open_cvn_professional_experience_010_040_000_000_reference.puml
+  representative : ResumenDeLaActividadProfesional
+}
+
+}
+
+note bottom
+Reference index for CVN Professional Experience
+Detailed reference section files:
+- open_cvn_professional_experience_010_020_000_000_reference.puml
+- open_cvn_professional_experience_010_010_000_000_reference.puml
+- open_cvn_professional_experience_010_040_000_000_reference.puml
+end note
+@enduml
