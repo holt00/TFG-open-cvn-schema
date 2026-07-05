@@ -22,6 +22,13 @@ from cvn_codegen.conceptual_model_types import (
 OPEN_CVN_SCHEMA_ID = "https://open-cvn.local/schema/open-cvn.schema.json"
 OPEN_CVN_SCHEMA_VERSION = "0.1.0"
 JSON_SCHEMA_DRAFT_2020_12 = "https://json-schema.org/draft/2020-12/schema"
+CURRICULUM_SECTION_NAMES = (
+    "education",
+    "research",
+    "professional_experience",
+    "achievements",
+    "other",
+)
 
 
 WRAPPER_DEFINITIONS: dict[str, dict[str, Any]] = {
@@ -84,8 +91,8 @@ def build_json_schema_metadata(
         "$schema": JSON_SCHEMA_DRAFT_2020_12,
         "description": (
             "Generated Open CVN JSON Schema from the conceptual model inventory "
-            "and domain-oriented Pydantic evidence. Root shape is provisional "
-            "until issue #46 defines the canonical Open CVN JSON representation."
+            "and domain-oriented Pydantic evidence. Root shape follows the "
+            "canonical Open CVN JSON representation defined in issue #46."
         ),
         "title": "Open CVN JSON Schema",
         "type": "object",
@@ -93,7 +100,7 @@ def build_json_schema_metadata(
         "x-open-cvn-policy-name": inventory.policy_name,
         "x-open-cvn-policy-version": inventory.policy_version,
         "x-open-cvn-schema-version": OPEN_CVN_SCHEMA_VERSION,
-        "x-open-cvn-source-issue": "#45",
+        "x-open-cvn-source-issue": "#46",
     }
 
 
@@ -152,7 +159,112 @@ def build_controlled_reference_schema(attribute: ConceptualAttribute) -> dict[st
         "properties": {
             "code": code_schema,
             "label": {"type": ["string", "null"]},
+            "raw_value": {"type": ["string", "null"]},
+            "reference_status": {"type": ["string", "null"]},
+            "source": {"type": ["string", "null"]},
+            "uri": {"type": ["string", "null"]},
         },
+        "type": "object",
+    }
+
+
+def build_metadata_schema(inventory: ConceptualModelInventory) -> dict[str, Any]:
+    return {
+        "additionalProperties": False,
+        "properties": {
+            "created_at": {"type": ["string", "null"]},
+            "generator": {
+                "additionalProperties": False,
+                "properties": {
+                    "name": {"type": ["string", "null"]},
+                    "version": {"type": ["string", "null"]},
+                },
+                "type": "object",
+            },
+            "language": {"type": "string"},
+            "policy": {
+                "additionalProperties": False,
+                "properties": {
+                    "name": {"const": inventory.policy_name, "type": "string"},
+                    "version": {"const": inventory.policy_version, "type": "string"},
+                },
+                "required": ["name", "version"],
+                "type": "object",
+            },
+            "source": {
+                "additionalProperties": True,
+                "properties": {
+                    "format": {"type": ["string", "null"]},
+                },
+                "type": "object",
+            },
+            "updated_at": {"type": ["string", "null"]},
+        },
+        "required": ["language", "policy"],
+        "type": "object",
+    }
+
+
+def build_trace_schema() -> dict[str, Any]:
+    string_array_schema = {"items": {"type": "string"}, "type": "array"}
+    return {
+        "additionalProperties": False,
+        "properties": {
+            "confidence": {"type": ["string", "null"]},
+            "cvn_codes": string_array_schema,
+            "domain_shape_kind": {"type": ["string", "null"]},
+            "manual_reference_table": {"type": ["string", "null"]},
+            "semantic_reference_kind": {"type": ["string", "null"]},
+            "serialization_pattern": {"type": ["string", "null"]},
+            "source_artifacts": string_array_schema,
+            "source_files": string_array_schema,
+            "xml_paths": string_array_schema,
+        },
+        "type": "object",
+    }
+
+
+def build_extensions_schema() -> dict[str, Any]:
+    return {
+        "additionalProperties": True,
+        "type": "object",
+    }
+
+
+def build_entry_schema() -> dict[str, Any]:
+    return {
+        "additionalProperties": False,
+        "properties": {
+            "data": {
+                "additionalProperties": True,
+                "type": "object",
+            },
+            "extensions": build_extensions_schema(),
+            "id": {"type": ["string", "null"]},
+            "trace": build_trace_schema(),
+            "type": {"type": "string"},
+        },
+        "required": ["type", "data"],
+        "type": "object",
+    }
+
+
+def build_curriculum_schema() -> dict[str, Any]:
+    entry_array_schema = {
+        "items": build_entry_schema(),
+        "type": "array",
+    }
+    properties: dict[str, Any] = {
+        "identity": {
+            "additionalProperties": True,
+            "type": "object",
+        }
+    }
+    for section_name in CURRICULUM_SECTION_NAMES:
+        properties[section_name] = entry_array_schema
+    return {
+        "additionalProperties": False,
+        "properties": properties,
         "type": "object",
     }
 
@@ -279,15 +391,14 @@ def build_open_cvn_json_schema(
             "$defs": build_schema_definitions(inventory),
             "additionalProperties": False,
             "properties": {
-                "curriculum": {"$ref": "#/$defs/core.curriculum"},
-                "policy_name": {"const": inventory.policy_name, "type": "string"},
-                "policy_version": {"const": inventory.policy_version, "type": "string"},
+                "curriculum": build_curriculum_schema(),
+                "extensions": build_extensions_schema(),
+                "metadata": build_metadata_schema(inventory),
                 "schema_version": {"const": OPEN_CVN_SCHEMA_VERSION, "type": "string"},
             },
             "required": [
                 "schema_version",
-                "policy_name",
-                "policy_version",
+                "metadata",
                 "curriculum",
             ],
         }

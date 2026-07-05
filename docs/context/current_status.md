@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-04
+- Last updated: 2026-07-05
 
 ## Completed Or Stabilized Work
 
@@ -505,6 +505,53 @@
   `uv run pytest -n auto tests`
 - Full-suite verification result:
   `326 passed in 780.28s (0:13:00)`
+- Additional manual schema checks passed for:
+  - canonical regeneration without artifact drift
+  - JSON parsing
+  - root metadata
+  - `$defs` presence and internal `$ref` resolution
+  - `core.curriculum` and `identity.person` definitions
+  - `CVN_SEX_A` closed enum behavior
+  - `CVN_ENTITY_TYPE` open reference behavior
+  - temporary CLI output byte-for-byte equality
+  - historical issue `#45` provisional root example shape
+- issue `#46` later replaced the issue `#45` provisional root with the canonical
+  Open CVN JSON root: `schema_version`, `metadata`, `curriculum`, and
+  `extensions`
+- External `jsonschema` meta-schema validation was not executed because the
+  `jsonschema` package is not installed in the project environment
+
+### Issue `#46`
+
+- the canonical Open CVN JSON format is documented in:
+  - `docs/pipeline/open_cvn_json_format.md`
+- mapping notes from conceptual inventory and schema annotations to runtime JSON
+  are documented in:
+  - `docs/pipeline/open_cvn_json_mapping.md`
+- representative JSON examples now exist under:
+  - `examples/open_cvn/`
+- the canonical JSON root shape is now:
+  - `schema_version`
+  - `metadata`
+  - `curriculum`
+  - `extensions`
+- semantic policy metadata now lives under `metadata.policy` instead of root-level
+  `policy_name` and `policy_version`
+- curriculum content is grouped by conceptual domain area, with `identity` as a
+  single object and repeated sections represented as arrays of entries
+- controlled references use a common runtime shape while keeping enum-ineligible,
+  unresolved, registry, thesaurus, hierarchical, and subtype-backed references
+  open
+- the JSON Schema generator now emits the issue `#46` canonical root shape while
+  preserving conceptual `$defs`
+- targeted issue `#46` verification passed with:
+  `uv run pytest -n auto tests/test_json_schema_generator_unit.py tests/test_generation_pipeline_json_schema.py tests/test_open_cvn_json_format_examples.py -v`
+- targeted verification result:
+  `21 passed in 159.97s (0:02:39)`
+- full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- full-suite verification result:
+  `334 passed in 890.21s (0:14:50)`
 
 ## Current Technical Baseline
 
@@ -517,11 +564,10 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#45` closure: issue `#46`, define canonical Open CVN
-  JSON shape
-- Issue `#46` should use the issue `#45` generated schema as a traceable
-  prototype, not as a final constraint that prevents refining the canonical JSON
-  document layout
+- Next work item after issue `#46` closure: issue `#47`, define the unified parser
+  and validator contract
+- Issue `#47` should consume the issue `#46` canonical Open CVN JSON format and
+  distinguish parser contracts from concrete XML/PDF/JSON import implementations
 
 ## Blocking Or Relevant Limitations
 

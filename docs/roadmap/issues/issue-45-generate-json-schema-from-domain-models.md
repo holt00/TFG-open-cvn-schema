@@ -401,6 +401,33 @@ reason and the strongest executed substitute verification in this issue document
 - Full-suite verification result:
   `326 passed in 780.28s (0:13:00)`
 
+Additional manual schema checks were executed after implementation:
+
+- canonical regeneration with:
+  `uv run python -m cvn_codegen.json_schema_generator`
+- JSON parsing of `schemas/open_cvn.schema.json`
+- metadata verification for `$schema`, `$id`, and `title`
+- `$defs` presence verification; current generated schema contains `182`
+  definitions
+- internal `$ref` resolution check; no broken local `$defs` references found
+- presence verification for `core.curriculum` and `identity.person`
+- `CVN_SEX_A` vocabulary verification; emitted as a closed enum with `2` values
+- `CVN_ENTITY_TYPE` vocabulary verification; remains open and has
+  `x-open-cvn-enum-eligibility: ineligible`
+- temporary CLI output verification with:
+  `uv run python -m cvn_codegen.json_schema_generator --output-path /tmp/opencode/open_cvn.schema.json`
+- byte-for-byte comparison between temporary output and
+  `schemas/open_cvn.schema.json`
+- historical issue `#45` provisional root example shape verification with:
+  `schema_version`, `policy_name`, `policy_version`, and empty `curriculum`
+
+Issue `#46` later replaced this provisional root with the canonical Open CVN JSON
+root shape: `schema_version`, `metadata`, `curriculum`, and `extensions`.
+
+External JSON Schema meta-schema validation with the `jsonschema` Python package
+was not executed because `jsonschema` is not installed in the project
+environment.
+
 ## Verification
 
 - schema is valid JSON
