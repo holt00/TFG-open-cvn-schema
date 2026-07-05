@@ -39,6 +39,7 @@ Goal:
 | `#42` | Research Pydantic-to-UML options | Completed | Recommends conceptual IR first, PlantUML primary target, Mermaid secondary target, Pyreverse diagnostic only |
 | `#43` | Define agnostic conceptual model extraction layer | Completed | Conceptual IR, extractor, targeted/full-suite tests, and extraction documentation implemented |
 | `#44` | Generate UML or UML-like diagrams | Completed | PlantUML now emits readable and reference views under `docs/diagrams/`; Mermaid remains optional future output |
+| `#45` | Generate JSON Schema from domain models | Completed | JSON Schema Draft 2020-12 artifact now generated from conceptual inventory under `schemas/open_cvn.schema.json` |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
@@ -441,8 +442,31 @@ Authoritative record:
 
 - `docs/roadmap/issues/issue-44-generate-uml-or-uml-like-diagrams.md`
 
+### Issue `#45`
+
+- Goal:
+  generate a JSON Schema artifact for the Open CVN data representation from the
+  domain/conceptual generation layer
+- Implemented outcome:
+  - JSON Schema generation is implemented in
+    `src/cvn_codegen/json_schema_generator.py`
+  - the generator consumes the issue `#43` conceptual inventory as the canonical
+    root source and avoids exposing generated Python module names as the final
+    schema shape
+  - Pydantic v2 JSON Schema support was evaluated and retained as technical
+    evidence rather than the canonical root output
+  - the generated artifact is `schemas/open_cvn.schema.json`
+  - the artifact declares JSON Schema Draft 2020-12, preserves Open CVN trace
+    through `x-open-cvn-*` extensions, and keeps enum-ineligible references open
+  - targeted JSON Schema tests passed
+
+Authoritative record:
+
+- `docs/roadmap/issues/issue-45-generate-json-schema-from-domain-models.md`
+
 ## Required Companion Documents
 
 - architecture: `docs/pipeline/cvn_pydantic_generation_pipeline.md`
+- JSON Schema generation: `docs/pipeline/json_schema_generation.md`
 - limitations: `docs/pipeline/known_limitations.md`
 - current state: `docs/context/current_status.md`

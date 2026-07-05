@@ -2,8 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-02
-- Last updated: 2026-07-02
+- Last updated: 2026-07-04
 
 ## Completed Or Stabilized Work
 
@@ -473,6 +472,40 @@
 - Full-suite verification result:
   `313 passed in 715.42s (0:11:55)`
 
+### Issue `#45`
+
+- JSON Schema generation from the agnostic conceptual inventory is implemented
+  under `src/cvn_codegen/`
+- JSON Schema generation logic now exists in:
+  - `src/cvn_codegen/json_schema_generator.py`
+- The generator consumes `ConceptualModelInventory` from issue `#43`; it does not
+  use raw XML, raw XSD, generated structural bindings, or generated Python class
+  names as the canonical root shape
+- Pydantic v2 JSON Schema support was evaluated during the implementation spike:
+  - current generated domain package exports `103` Pydantic model classes
+  - current generated domain package exports `13` enum classes
+  - Pydantic emits useful component schemas but does not add `$schema`
+    automatically
+- The canonical generated JSON Schema artifact now exists at:
+  - `schemas/open_cvn.schema.json`
+- The artifact declares JSON Schema Draft 2020-12 and includes Open CVN metadata,
+  conceptual entity definitions, vocabulary definitions, shared wrapper value
+  definitions, and non-validating `x-open-cvn-*` trace extensions
+- Controlled vocabulary treatment is evidence-backed:
+  - `CVN_SEX_A` is emitted as a closed enum-backed vocabulary definition
+  - `CVN_ENTITY_TYPE` remains open because semantic policy marks it
+    enum-ineligible
+- The issue `#45` generation approach is documented in:
+  - `docs/pipeline/json_schema_generation.md`
+- Targeted JSON Schema verification passed with:
+  `uv run pytest -n auto tests/test_json_schema_generator_unit.py tests/test_generation_pipeline_json_schema.py -v`
+- Targeted verification result:
+  `13 passed in 109.45s (0:01:49)`
+- Full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- Full-suite verification result:
+  `326 passed in 780.28s (0:13:00)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -484,11 +517,11 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#44` closure: issue `#45`, generate JSON Schema from
-  domain models
-- Issue `#45` should use the issue `#43` conceptual inventory and issue `#44`
-  diagrams as context when deciding which schema shape is conceptual and which
-  parts are implementation-oriented Pydantic output
+- Next work item after issue `#45` closure: issue `#46`, define canonical Open CVN
+  JSON shape
+- Issue `#46` should use the issue `#45` generated schema as a traceable
+  prototype, not as a final constraint that prevents refining the canonical JSON
+  document layout
 
 ## Blocking Or Relevant Limitations
 
@@ -534,6 +567,12 @@ Run canonical conceptual diagram generation:
 
 ```bash
 uv run python -m cvn_codegen.conceptual_model_diagrams --output-dir docs/diagrams
+```
+
+Run canonical JSON Schema generation:
+
+```bash
+uv run python -m cvn_codegen.json_schema_generator
 ```
 
 Run the full repository test suite with multicore pytest:

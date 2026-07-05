@@ -86,6 +86,39 @@ do not need to rediscover them.
 - Expected follow-up:
   - keep documented through issue `#17`
 
+## JSON Schema Generation Limitations
+
+### Issue `#45` JSON Schema Root Is Provisional
+
+- Confirmed behavior:
+  - issue `#45` generates `schemas/open_cvn.schema.json` from the issue `#43`
+    conceptual inventory
+  - the artifact declares JSON Schema Draft 2020-12 and preserves trace through
+    `x-open-cvn-*` extensions
+  - direct Pydantic JSON Schema output is not used as the canonical root because
+    it exposes generated Python class shapes
+- Impact:
+  - the schema is useful for validation research and traceable review
+  - the final Open CVN JSON document layout remains intentionally deferred
+- Expected follow-up:
+  - issue `#46` should define the canonical JSON shape and decide whether to keep,
+    refine, or replace the provisional root layout from issue `#45`
+
+### JSON Schema Cannot Express Every CVN Semantic Rule
+
+- Confirmed behavior:
+  - the generated schema represents types, required fields, arrays, wrapper
+    shapes, and eligible closed vocabularies
+  - open-world registries, thesauri, unresolved references, and curated domain
+    relationships cannot be fully enforced by JSON Schema alone
+- Impact:
+  - issue `#49` validation work may need runtime checks in addition to JSON Schema
+  - `x-open-cvn-*` extensions preserve trace for validators and tooling, but they
+    are non-validating annotations
+- Expected follow-up:
+  - issue `#49` should distinguish JSON Schema validation from semantic validation
+    that depends on external registries or curated project rules
+
 ## Conceptual Extraction Limitations
 
 ### Conceptual Relationships Require Curation
