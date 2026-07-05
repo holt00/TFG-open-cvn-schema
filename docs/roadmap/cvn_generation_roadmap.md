@@ -41,6 +41,9 @@ Goal:
 | `#44` | Generate UML or UML-like diagrams | Completed | PlantUML now emits readable and reference views under `docs/diagrams/`; Mermaid remains optional future output |
 | `#45` | Generate JSON Schema from domain models | Completed | JSON Schema Draft 2020-12 artifact now generated from conceptual inventory under `schemas/open_cvn.schema.json` |
 | `#46` | Define canonical Open CVN JSON format | Completed | Canonical root, metadata, curriculum sections, entries, trace, extensions, examples, and schema alignment implemented |
+| `#47` | Define unified parser and validator contract | Completed | Public `open_cvn` contract package, structured result/error/trace models, deferred parser signatures, docs, and tests implemented |
+| `#48` | Extract CVN XML from PDF inputs | Planned | Should implement PDF XML extraction behind the issue `#47` contract |
+| `#49` | Validate XML and JSON import paths | Planned | Should implement CVN XML and Open CVN JSON import validation behind the issue `#47` contract |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
