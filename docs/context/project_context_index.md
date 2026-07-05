@@ -52,6 +52,9 @@ Agents should also read `AGENTS.md` before this file.
   extraction layer for later diagram and JSON outputs
 - `docs/diagrams/`: issue `#44` generated PlantUML sources and diagram
   regeneration notes
+- `docs/pipeline/json_schema_generation.md`: issue `#45` JSON Schema generation
+  approach and regeneration notes
+- `schemas/open_cvn.schema.json`: generated issue `#45` JSON Schema artifact
 - `docs/pipeline/known_limitations.md`: structural limitations, detected
   discrepancies, and follow-up implications
 - `docs/adr/`: architecture decision records
@@ -79,6 +82,8 @@ Agents should also read `AGENTS.md` before this file.
   implementation record for issue `#25`
 - `docs/roadmap/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`:
   implementation record for issue `#43`
+- `docs/roadmap/issues/issue-45-generate-json-schema-from-domain-models.md`:
+  implementation record for issue `#45`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

@@ -78,6 +78,9 @@ files in order:
   between generated-domain evidence and later UML or JSON outputs
 - `docs/diagrams/`: generated PlantUML sources and regeneration notes for the
   issue `#44` agnostic conceptual diagrams
+- `docs/pipeline/json_schema_generation.md`: issue `#45` JSON Schema generation
+  approach and regeneration notes
+- `schemas/open_cvn.schema.json`: generated issue `#45` JSON Schema artifact
 - `docs/pipeline/known_limitations.md`: structural limitations, source-package
   inconsistencies, and follow-up implications
 - `docs/adr/`: architecture decision records
