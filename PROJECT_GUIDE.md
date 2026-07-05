@@ -80,7 +80,12 @@ files in order:
   issue `#44` agnostic conceptual diagrams
 - `docs/pipeline/json_schema_generation.md`: issue `#45` JSON Schema generation
   approach and regeneration notes
+- `docs/pipeline/open_cvn_json_format.md`: issue `#46` canonical Open CVN JSON
+  document format
+- `docs/pipeline/open_cvn_json_mapping.md`: issue `#46` mapping notes from the
+  conceptual inventory and schema annotations to runtime JSON
 - `schemas/open_cvn.schema.json`: generated issue `#45` JSON Schema artifact
+- `examples/open_cvn/`: representative issue `#46` Open CVN JSON examples
 - `docs/pipeline/known_limitations.md`: structural limitations, source-package
   inconsistencies, and follow-up implications
 - `docs/adr/`: architecture decision records
@@ -109,6 +114,8 @@ files in order:
   authoritative record of issue `#25`
 - `docs/roadmap/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`:
   authoritative record of issue `#43`
+- `docs/roadmap/issues/issue-46-define-canonical-open-cvn-json-format.md`:
+  authoritative record of issue `#46`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

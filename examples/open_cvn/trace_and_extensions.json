@@ -1,0 +1,54 @@
+{
+  "schema_version": "0.1.0",
+  "metadata": {
+    "language": "es",
+    "generator": {
+      "name": "open-cvn-example-writer",
+      "version": "0.1.0"
+    },
+    "policy": {
+      "name": "default_cvn_semantic_policy",
+      "version": "0.1.0"
+    }
+  },
+  "curriculum": {
+    "identity": {},
+    "education": [],
+    "research": [
+      {
+        "id": "research-001",
+        "type": "research.project",
+        "data": {
+          "project_title": "Open CVN validation pipeline"
+        },
+        "trace": {
+          "cvn_codes": [
+            "050.020.010.000"
+          ],
+          "xml_paths": [
+            "/Node/CVNItem[@code='050.020.010.000']"
+          ],
+          "source_files": [
+            "SpecificationManual.xml",
+            "CVNTreeModel.xml"
+          ],
+          "domain_shape_kind": "plain_value",
+          "confidence": "high"
+        },
+        "extensions": {
+          "x-local-review-note": {
+            "reviewed": false
+          }
+        }
+      }
+    ],
+    "professional_experience": [],
+    "achievements": [],
+    "other": []
+  },
+  "extensions": {
+    "org.open-cvn.example": {
+      "purpose": "trace and extension demonstration"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.1.0",
+  "metadata": {
+    "language": "es",
+    "policy": {
+      "name": "default_cvn_semantic_policy",
+      "version": "0.1.0"
+    }
+  },
+  "curriculum": {
+    "identity": {},
+    "education": [],
+    "research": [
+      {
+        "id": "research-001",
+        "type": "research.publication",
+        "data": {
+          "title": "Open CVN data representation",
+          "publication_year": "2026",
+          "subject": {
+            "code": "1203.17",
+            "label": "Informatica",
+            "source": "UNESCO_CODES"
+          },
+          "authors": [
+            "Ana Garcia Lopez",
+            "Carlos Perez"
+          ]
+        },
+        "trace": {
+          "cvn_codes": [
+            "060.010.010.000"
+          ],
+          "manual_reference_table": "UNESCO_CODES",
+          "semantic_reference_kind": "hierarchical_code_list"
+        }
+      }
+    ],
+    "professional_experience": [],
+    "achievements": [],
+    "other": []
+  }
+}

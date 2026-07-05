@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1.0",
+  "metadata": {
+    "language": "es",
+    "policy": {
+      "name": "default_cvn_semantic_policy",
+      "version": "0.1.0"
+    }
+  },
+  "curriculum": {
+    "identity": {},
+    "education": [],
+    "research": [],
+    "professional_experience": [],
+    "achievements": [],
+    "other": []
+  }
+}

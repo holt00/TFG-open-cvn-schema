@@ -55,6 +55,11 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/pipeline/json_schema_generation.md`: issue `#45` JSON Schema generation
   approach and regeneration notes
 - `schemas/open_cvn.schema.json`: generated issue `#45` JSON Schema artifact
+- `docs/pipeline/open_cvn_json_format.md`: issue `#46` canonical Open CVN JSON
+  document format
+- `docs/pipeline/open_cvn_json_mapping.md`: issue `#46` mapping notes from the
+  conceptual inventory and schema annotations to runtime JSON
+- `examples/open_cvn/`: representative issue `#46` Open CVN JSON examples
 - `docs/pipeline/known_limitations.md`: structural limitations, detected
   discrepancies, and follow-up implications
 - `docs/adr/`: architecture decision records
@@ -84,6 +89,8 @@ Agents should also read `AGENTS.md` before this file.
   implementation record for issue `#43`
 - `docs/roadmap/issues/issue-45-generate-json-schema-from-domain-models.md`:
   implementation record for issue `#45`
+- `docs/roadmap/issues/issue-46-define-canonical-open-cvn-json-format.md`:
+  implementation record for issue `#46`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

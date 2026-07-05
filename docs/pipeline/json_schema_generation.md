@@ -57,13 +57,15 @@ The schema metadata includes:
 - policy name and policy version from the semantic policy bundle
 - issue and inventory trace through `x-open-cvn-*` extensions
 
-The root object is provisional until issue `#46` defines the canonical Open CVN
-JSON shape. The current root includes:
+The root object follows the canonical Open CVN JSON shape defined by issue `#46`.
+The current root includes:
 
 - `schema_version`
-- `policy_name`
-- `policy_version`
+- `metadata`
 - `curriculum`
+- `extensions`
+
+Semantic policy metadata is represented under `metadata.policy`.
 
 Definitions are emitted under `$defs` for conceptual entities, vocabularies, and
 shared wrapper value shapes.
@@ -112,16 +114,36 @@ Targeted verification for issue `#45` is:
 uv run pytest -n auto tests/test_json_schema_generator_unit.py tests/test_generation_pipeline_json_schema.py -v
 ```
 
+Targeted verification for the issue `#46` canonical JSON root and examples is:
+
+```bash
+uv run pytest -n auto tests/test_json_schema_generator_unit.py tests/test_generation_pipeline_json_schema.py tests/test_open_cvn_json_format_examples.py -v
+```
+
 Default repository verification remains:
 
 ```bash
 uv run pytest -n auto tests
 ```
 
+Additional manual checks used during issue `#45` completion:
+
+- regenerate `schemas/open_cvn.schema.json` and confirm no artifact drift
+- parse the generated artifact with Python `json`
+- verify `$schema`, `$id`, `title`, and policy metadata
+- verify `$defs` is present and representative definitions exist
+- verify every local `$ref` resolves to a `$defs` entry
+- verify `CVN_SEX_A` is closed as an enum-backed vocabulary
+- verify `CVN_ENTITY_TYPE` remains open because it is enum-ineligible
+- generate to a temporary path and compare bytes with the canonical artifact
+- verify the canonical issue `#46` root object shape
+
+External meta-schema validation can be added later with the `jsonschema` package,
+but that package is not part of the current project dependencies.
+
 ## Limitations
 
-- The issue `#45` root shape is provisional and intentionally defers final Open
-  CVN JSON layout decisions to issue `#46`.
+- The issue `#46` root shape is now canonical for Open CVN JSON validation.
 - JSON Schema cannot express every CVN semantic invariant, external registry
   requirement, or curated conceptual relationship.
 - Conceptual relationships remain conservative because issue `#43` does not infer

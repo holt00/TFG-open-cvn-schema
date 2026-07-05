@@ -88,21 +88,23 @@ do not need to rediscover them.
 
 ## JSON Schema Generation Limitations
 
-### Issue `#45` JSON Schema Root Is Provisional
+### Issue `#45` Provisional Root Was Replaced By Issue `#46`
 
 - Confirmed behavior:
   - issue `#45` generates `schemas/open_cvn.schema.json` from the issue `#43`
     conceptual inventory
-  - the artifact declares JSON Schema Draft 2020-12 and preserves trace through
-    `x-open-cvn-*` extensions
+  - issue `#46` defines the canonical Open CVN JSON root shape and aligns the
+    generated schema root to `schema_version`, `metadata`, `curriculum`, and
+    `extensions`
   - direct Pydantic JSON Schema output is not used as the canonical root because
     it exposes generated Python class shapes
 - Impact:
-  - the schema is useful for validation research and traceable review
-  - the final Open CVN JSON document layout remains intentionally deferred
+  - the schema is now aligned with the canonical issue `#46` JSON document layout
+  - future parser work can consume the schema without inheriting the older
+    root-level `policy_name` and `policy_version` prototype
 - Expected follow-up:
-  - issue `#46` should define the canonical JSON shape and decide whether to keep,
-    refine, or replace the provisional root layout from issue `#45`
+  - issue `#47` should define parser contracts over the canonical issue `#46`
+    JSON shape
 
 ### JSON Schema Cannot Express Every CVN Semantic Rule
 
