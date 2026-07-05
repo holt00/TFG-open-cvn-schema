@@ -92,6 +92,18 @@ views and fuller reference views. The `.puml` files are the canonical diagram
 artifacts; rendered images are optional and are not required for the repository
 workflow.
 
+Run canonical JSON Schema generation:
+
+```bash
+uv run python -m cvn_codegen.json_schema_generator
+```
+
+This regenerates the issue `#45` JSON Schema artifact at
+`schemas/open_cvn.schema.json` from the same conceptual inventory. The schema
+declares JSON Schema Draft 2020-12 and preserves CVN trace through
+`x-open-cvn-*` extensions. Its root shape remains provisional until issue `#46`
+defines the canonical Open CVN JSON representation.
+
 Reference diagrams for large areas may be index files that point to split
 `..._part_XX_reference.puml` chunks. Detailed reference chunks keep controlled
 vocabulary membership in local `controlled references` notes beside each entity,
@@ -129,7 +141,8 @@ The implemented pipeline stages are:
 8. conceptual model extraction from normalized, semantic, and domain-generation
    evidence
 9. conceptual PlantUML diagram generation from `ConceptualModelInventory`
-10. repository verification through tests and CI
+10. JSON Schema generation from the conceptual inventory
+11. repository verification through tests and CI
 
 The semantic handoff is:
 
@@ -243,6 +256,8 @@ The implemented tests cover:
 - domain generation, importability, determinism, ASCII output, and end-to-end
   generation
 - conceptual model extraction and conceptual PlantUML diagram rendering
+- JSON Schema generation, metadata, enum/open-reference treatment, determinism,
+  and CLI output
 - source coverage for manual, tree, auxiliary, semantic, and generated artifacts
 
 Tests that regenerate `src/generated/*` use `tests/xsdata_generation_lock.py` so

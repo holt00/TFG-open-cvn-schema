@@ -186,6 +186,8 @@ SpecificationManual.xml + CVNTreeModel.xml
   -> normalization
   -> semantic mapping rules and overrides
   -> domain Pydantic models
+  -> conceptual inventory
+  -> diagrams and JSON Schema artifacts
 ```
 
 This means:
@@ -248,6 +250,7 @@ src/
   semantic-policy, and generation logic
 - `src/models/cvn/components.py`: hand-maintained shared domain components
 - `src/models/cvn/generated/`: generated domain-oriented model output
+- `schemas/`: generated JSON Schema artifacts
 
 Do not edit `src/generated/` manually. Regenerate it from the canonical XSDs.
 
@@ -267,6 +270,7 @@ uv sync --group codegen --group testing
 uv pip install -e .
 uv run python -m cvn_codegen.xsdata_runner all
 uv run python -m cvn_codegen.domain_model_generator
+uv run python -m cvn_codegen.json_schema_generator
 uv run pytest -n auto tests
 ```
 
@@ -281,7 +285,9 @@ The implemented workflow stages are:
 5. XSD-enriched structural type evidence for wrapper handoff
 6. semantic policy application over enriched normalized metadata
 7. domain model generation under `src/models/cvn/generated/`
-8. local and CI verification through `uv run pytest -n auto tests`
+8. conceptual model extraction and diagram rendering
+9. JSON Schema generation under `schemas/`
+10. local and CI verification through `uv run pytest -n auto tests`
 
 ### Controlled-Reference Source Order
 
@@ -333,6 +339,23 @@ The current canonical output emits `105` files under
 be deterministic, importable, ASCII-only under the current policy, and traceable
 back to CVN `code`, XML paths, reference-resolution trace, and semantic-policy
 decisions.
+
+### JSON Schema Generation Contract
+
+The canonical JSON Schema generation command is:
+
+```bash
+uv run python -m cvn_codegen.json_schema_generator
+```
+
+The current canonical output is `schemas/open_cvn.schema.json`. The generator
+uses the issue `#43` conceptual inventory as the schema root source and preserves
+trace through `x-open-cvn-*` extensions. Direct Pydantic JSON Schema output is
+treated as technical support, not as the canonical Open CVN root shape for issue
+`#45`.
+
+The schema declares JSON Schema Draft 2020-12. Its root shape is provisional until
+issue `#46` defines the final Open CVN JSON representation.
 
 ### Wrapper Handoff
 
