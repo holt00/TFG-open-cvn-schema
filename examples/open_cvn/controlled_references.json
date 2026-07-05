@@ -1,0 +1,53 @@
+{
+  "schema_version": "0.1.0",
+  "metadata": {
+    "language": "es",
+    "policy": {
+      "name": "default_cvn_semantic_policy",
+      "version": "0.1.0"
+    }
+  },
+  "curriculum": {
+    "identity": {
+      "sex": {
+        "code": "000",
+        "label": "Mujer",
+        "source": "CVN_SEX_A"
+      },
+      "entity_type": {
+        "code": "OTHERS",
+        "label": "Otra entidad",
+        "source": "CVN_ENTITY_TYPE",
+        "raw_value": "Fundacion privada"
+      }
+    },
+    "education": [],
+    "research": [
+      {
+        "id": "research-001",
+        "type": "research.topic",
+        "data": {
+          "unesco_code": {
+            "code": "1203.17",
+            "label": "Informatica",
+            "source": "UNESCO_CODES"
+          },
+          "keyword": {
+            "code": "example-term",
+            "label": "Curriculum interoperable",
+            "source": "THESAURUS@thesaurus.xsd"
+          },
+          "agency": {
+            "label": "Agencia no resuelta",
+            "source": "CVN_AGENCY_C",
+            "raw_value": "AGENCIA EJEMPLO",
+            "reference_status": "unresolved"
+          }
+        }
+      }
+    ],
+    "professional_experience": [],
+    "achievements": [],
+    "other": []
+  }
+}

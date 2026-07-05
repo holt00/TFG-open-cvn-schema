@@ -56,6 +56,7 @@ def test_json_schema_pipeline_declares_metadata(
     assert schema["title"] == "Open CVN JSON Schema"
     assert schema["x-open-cvn-policy-name"]
     assert schema["x-open-cvn-policy-version"]
+    assert schema["x-open-cvn-source-issue"] == "#46"
 
 
 def test_json_schema_pipeline_contains_core_definitions(
@@ -66,7 +67,19 @@ def test_json_schema_pipeline_contains_core_definitions(
     assert schema["$defs"]
     assert "core.curriculum" in schema["$defs"]
     assert "identity.person" in schema["$defs"]
-    assert schema["properties"]["curriculum"] == {"$ref": "#/$defs/core.curriculum"}
+    assert schema["properties"]["curriculum"]["properties"]["identity"]["type"] == "object"
+    assert schema["properties"]["curriculum"]["properties"]["research"]["type"] == "array"
+
+
+def test_json_schema_pipeline_uses_canonical_root_shape(
+    canonical_normalization_result: NormalizationResult,
+):
+    schema = build_canonical_schema(canonical_normalization_result)
+
+    assert schema["required"] == ["schema_version", "metadata", "curriculum"]
+    assert "policy_name" not in schema["properties"]
+    assert "policy_version" not in schema["properties"]
+    assert schema["properties"]["metadata"]["required"] == ["language", "policy"]
 
 
 def test_json_schema_pipeline_closes_eligible_enum_reference(

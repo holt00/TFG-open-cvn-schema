@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.1.0",
+  "metadata": {
+    "language": "es",
+    "policy": {
+      "name": "default_cvn_semantic_policy",
+      "version": "0.1.0"
+    }
+  },
+  "curriculum": {
+    "identity": {},
+    "education": [
+      {
+        "id": "education-001",
+        "type": "education.degree",
+        "data": {
+          "degree_name": "Doctorado en Informatica",
+          "entity_name": {
+            "name": "Universidad de Ejemplo",
+            "others": null
+          },
+          "start_date": {
+            "day": null,
+            "month": "09",
+            "raw_value": "2020-09",
+            "year": "2020"
+          },
+          "end_date": {
+            "day": null,
+            "month": "06",
+            "raw_value": "2024-06",
+            "year": "2024"
+          }
+        },
+        "trace": {
+          "cvn_codes": [
+            "020.010.010.000"
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "research": [],
+    "professional_experience": [],
+    "achievements": [],
+    "other": []
+  }
+}

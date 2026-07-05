@@ -40,6 +40,7 @@ Goal:
 | `#43` | Define agnostic conceptual model extraction layer | Completed | Conceptual IR, extractor, targeted/full-suite tests, and extraction documentation implemented |
 | `#44` | Generate UML or UML-like diagrams | Completed | PlantUML now emits readable and reference views under `docs/diagrams/`; Mermaid remains optional future output |
 | `#45` | Generate JSON Schema from domain models | Completed | JSON Schema Draft 2020-12 artifact now generated from conceptual inventory under `schemas/open_cvn.schema.json` |
+| `#46` | Define canonical Open CVN JSON format | Completed | Canonical root, metadata, curriculum sections, entries, trace, extensions, examples, and schema alignment implemented |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
@@ -463,6 +464,26 @@ Authoritative record:
 Authoritative record:
 
 - `docs/roadmap/issues/issue-45-generate-json-schema-from-domain-models.md`
+
+### Issue `#46`
+
+- Goal:
+  define the canonical Open CVN JSON document format that later parser and
+  validation work will consume
+- Implemented outcome:
+  - the canonical JSON format is documented in
+    `docs/pipeline/open_cvn_json_format.md`
+  - mapping notes are documented in `docs/pipeline/open_cvn_json_mapping.md`
+  - representative JSON examples exist under `examples/open_cvn/`
+  - the generated JSON Schema root now follows the canonical issue `#46` shape:
+    `schema_version`, `metadata`, `curriculum`, and `extensions`
+  - policy metadata now lives under `metadata.policy`
+  - runtime trace and extension conventions are documented for future parser work
+  - targeted JSON Schema and example tests passed
+
+Authoritative record:
+
+- `docs/roadmap/issues/issue-46-define-canonical-open-cvn-json-format.md`
 
 ## Required Companion Documents
 

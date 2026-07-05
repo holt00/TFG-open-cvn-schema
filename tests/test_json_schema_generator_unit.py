@@ -96,6 +96,25 @@ def test_schema_metadata_declares_draft_2020_12():
     assert schema["$id"] == "https://open-cvn.local/schema/open-cvn.schema.json"
     assert schema["title"] == "Open CVN JSON Schema"
     assert schema["x-open-cvn-policy-name"] == "test_policy"
+    assert schema["x-open-cvn-source-issue"] == "#46"
+
+
+def test_schema_root_uses_canonical_open_cvn_format():
+    schema = build_open_cvn_json_schema(build_inventory())
+
+    assert schema["required"] == ["schema_version", "metadata", "curriculum"]
+    assert set(schema["properties"]) == {
+        "schema_version",
+        "metadata",
+        "curriculum",
+        "extensions",
+    }
+    assert schema["properties"]["schema_version"]["const"] == "0.1.0"
+    assert schema["properties"]["metadata"]["properties"]["policy"]["properties"]["name"] == {
+        "const": "test_policy",
+        "type": "string",
+    }
+    assert schema["properties"]["curriculum"]["properties"]["education"]["type"] == "array"
 
 
 def test_optional_string_attribute_allows_null():
@@ -127,6 +146,24 @@ def test_trace_extensions_are_emitted_for_attribute():
     assert schema["x-open-cvn-code"] == "000.010.000.030"
     assert schema["x-open-cvn-xml-paths"] == ["CVN/CvnItem/Value"]
     assert schema["x-open-cvn-source-reference"] == "CVN_SEX_A"
+
+
+def test_controlled_reference_attribute_accepts_canonical_reference_fields():
+    schema = build_schema_for_attribute(
+        build_attribute(
+            value_kind=ConceptualValueKind.CONTROLLED_REFERENCE,
+            presence=ConceptualPresenceKind.REQUIRED,
+        )
+    )
+
+    assert set(schema["properties"]) == {
+        "code",
+        "label",
+        "raw_value",
+        "reference_status",
+        "source",
+        "uri",
+    }
 
 
 def test_schema_generation_is_deterministic_for_same_inventory():
