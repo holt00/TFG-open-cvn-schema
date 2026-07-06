@@ -43,7 +43,7 @@ Goal:
 | `#46` | Define canonical Open CVN JSON format | Completed | Canonical root, metadata, curriculum sections, entries, trace, extensions, examples, and schema alignment implemented |
 | `#47` | Define unified parser and validator contract | Completed | Public `open_cvn` contract package, structured result/error/trace models, deferred parser signatures, docs, and tests implemented |
 | `#48` | Extract CVN XML from PDF inputs | Completed | Deterministic PDF XML extraction implemented behind `parse_cvn_pdf(...)` with embedded-file and XML metadata support |
-| `#49` | Validate XML and JSON import paths | Planned | Should implement CVN XML and Open CVN JSON import validation behind the issue `#47` contract |
+| `#49` | Validate XML and JSON import paths | Completed | JSON Schema plus Pydantic Open CVN JSON validation implemented; CVN XML well-formedness, trace extraction, and trace-only Open CVN mapping implemented |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
