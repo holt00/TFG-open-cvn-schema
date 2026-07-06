@@ -121,6 +121,39 @@ do not need to rediscover them.
   - issue `#49` should distinguish JSON Schema validation from semantic validation
     that depends on external registries or curated project rules
 
+## Parser And Import Limitations
+
+### CVN XML Import Is Trace-Only For Plausible CVN XML
+
+- Confirmed behavior:
+  - issue `#49` can read CVN XML inputs, check XML well-formedness, detect basic
+    CVN evidence, preserve XML paths, and preserve CVN code-like trace values
+  - plausible CVN XML maps to an Open CVN document with empty curriculum sections
+    and import diagnostics under `extensions["x-open-cvn.import"]`
+  - arbitrary CVN XML records are not yet semantically mapped into domain entries
+- Impact:
+  - XML import now provides structured validation and trace preservation, but it is
+    not yet a full CVN XML-to-Open-CVN semantic converter
+  - downstream consumers should treat `mapping_status = "trace_only"` as an import
+    diagnostic, not as proof that all curriculum content was converted
+- Expected follow-up:
+  - a later issue should define curated XML-to-domain mapping rules before the
+    importer converts real CVN XML records into populated Open CVN sections
+
+### JSON Schema Validation Runs Before Runtime Model Validation
+
+- Confirmed behavior:
+  - issue `#49` validates Open CVN JSON against `schemas/open_cvn.schema.json`
+    before applying Pydantic runtime model checks
+  - documents rejected by the generated schema may never reach runtime model
+    validation
+- Impact:
+  - some invalid JSON documents report `json_schema_validation_failure` even when
+    the same payload would also violate runtime model rules
+- Expected follow-up:
+  - later validator UX work may add grouped multi-layer diagnostics if users need
+    schema and runtime errors in the same result
+
 ## Conceptual Extraction Limitations
 
 ### Conceptual Relationships Require Curation

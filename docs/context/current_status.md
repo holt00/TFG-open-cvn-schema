@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-05
+- Last updated: 2026-07-06
 
 ## Completed Or Stabilized Work
 
@@ -624,6 +624,46 @@
 - full-suite verification result:
   `354 passed in 850.95s (0:14:10)`
 
+### Issue `#49`
+
+- Open CVN JSON import validation is implemented behind the issue `#47` public
+  parser contract
+- CVN XML import validation is implemented behind the issue `#47` public parser
+  contract
+- new runtime modules exist under:
+  - `src/open_cvn/import_utils.py`
+  - `src/open_cvn/json_import.py`
+  - `src/open_cvn/open_cvn_models.py`
+  - `src/open_cvn/xml_import.py`
+- `parse_open_cvn_json(...)` now accepts path, inline JSON string, JSON bytes, and
+  mapping inputs
+- `validate_open_cvn_json(...)` validates the generated
+  `schemas/open_cvn.schema.json` Draft 2020-12 artifact before applying Pydantic
+  runtime model checks
+- JSON import failures are reported through structured issue `#47` errors:
+  - `invalid_json`
+  - `json_schema_validation_failure`
+  - `pydantic_validation_failure`
+- `parse_cvn_xml(...)` now accepts path, inline XML string, and XML bytes inputs
+- CVN XML import performs well-formedness checks, CVN plausibility checks, XML path
+  trace extraction, and CVN code-like trace extraction
+- plausible CVN XML currently maps to a conservative Open CVN trace-only document
+  with import diagnostics under `extensions["x-open-cvn.import"]`
+- full semantic XML-to-domain mapping remains a documented limitation because the
+  runtime importer does not yet have enough curated mapping behavior for arbitrary
+  CVN XML records
+- synthetic JSON and XML fixtures exist under:
+  - `tests/fixtures/open_cvn/`
+  - `tests/fixtures/cvn_xml/`
+- targeted issue `#49` verification passed with:
+  `uv run pytest -n auto tests/test_open_cvn_json_import_unit.py tests/test_cvn_xml_import_unit.py tests/test_parser_validator_contract_unit.py -v`
+- targeted verification result:
+  `28 passed in 16.04s`
+- full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- full-suite verification result:
+  `369 passed in 347.12s (0:05:47)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -635,8 +675,9 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#48` closure: issue `#49`, implement XML and JSON
-  import validation behind the same issue `#47` contract
+- Next work item after issue `#49` closure: continue the post-parser Open CVN
+  roadmap, including richer XML semantic mapping or downstream import/export
+  behavior when a later issue defines that scope
 
 ## Blocking Or Relevant Limitations
 
@@ -652,6 +693,8 @@
   hotfix `#7` evidence in the normalization-to-semantic handoff
 - wrapper-aware domain attachment requires normalization runs that provide
   `cvn_xsd_path` and `common_xsd_path`; canonical generation provides them
+- issue `#49` XML import is currently trace-only for plausible CVN XML and does
+  not yet perform full semantic XML-to-domain mapping
 
 All of these are documented in:
 

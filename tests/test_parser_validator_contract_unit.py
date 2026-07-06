@@ -1,5 +1,6 @@
 import pytest
 from pydantic import ValidationError
+from pathlib import Path
 
 from open_cvn import (
     CvnErrorCode,
@@ -13,9 +14,6 @@ from open_cvn import (
     parse_open_cvn_json,
     validate_open_cvn_json,
 )
-
-
-DEFERRED_IMPLEMENTATION_MESSAGE = "Parser implementation is deferred to issue #48/#49."
 
 
 def test_contract_enums_have_stable_serialized_values():
@@ -189,18 +187,52 @@ def test_parse_result_rejects_warning_status_without_warning():
         )
 
 
-@pytest.mark.parametrize(
-    ("parser", "source"),
-    [
-        (parse_cvn_xml, "<CVNRoot />"),
-        (parse_open_cvn_json, '{"schema_version": "0.1.0"}'),
-    ],
-)
-def test_public_parser_functions_defer_implementation(parser, source):
-    with pytest.raises(NotImplementedError, match=DEFERRED_IMPLEMENTATION_MESSAGE):
-        parser(source, source_identifier="input")
+def test_parse_cvn_xml_returns_contract_result():
+    result = parse_cvn_xml("<CVNRoot />", source_identifier="input")
+
+    assert result.source_format == CvnSourceFormat.CVN_XML
+    assert result.source_identifier == "input"
+    assert result.validation_status == CvnValidationStatus.VALID
 
 
-def test_public_validator_function_defers_implementation():
-    with pytest.raises(NotImplementedError, match=DEFERRED_IMPLEMENTATION_MESSAGE):
-        validate_open_cvn_json({"schema_version": "0.1.0"}, source_identifier="input")
+def test_parse_open_cvn_json_returns_contract_result():
+    payload = Path("tests/fixtures/open_cvn/valid_minimal.json").read_text(encoding="utf-8")
+
+    result = parse_open_cvn_json(
+        payload,
+        source_identifier="input",
+    )
+
+    assert result.source_format == CvnSourceFormat.OPEN_CVN_JSON
+    assert result.source_identifier == "input"
+    assert result.validation_status == CvnValidationStatus.VALID
+
+
+def test_validate_open_cvn_json_returns_contract_result():
+    payload = {
+        "schema_version": "0.1.0",
+        "metadata": {
+            "language": "es",
+            "policy": {
+                "name": "default_cvn_semantic_policy",
+                "version": "0.1.0",
+            },
+        },
+        "curriculum": {
+            "identity": {},
+            "education": [],
+            "research": [],
+            "professional_experience": [],
+            "achievements": [],
+            "other": [],
+        },
+    }
+
+    result = validate_open_cvn_json(
+        payload,
+        source_identifier="input",
+    )
+
+    assert result.source_format == CvnSourceFormat.OPEN_CVN_JSON
+    assert result.source_identifier == "input"
+    assert result.validation_status == CvnValidationStatus.VALID
