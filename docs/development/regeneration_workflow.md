@@ -142,7 +142,9 @@ The implemented pipeline stages are:
    evidence
 9. conceptual PlantUML diagram generation from `ConceptualModelInventory`
 10. JSON Schema generation from the conceptual inventory
-11. repository verification through tests and CI
+11. public parser and validator workflow verification for PDF, XML, and Open CVN
+    JSON inputs
+12. repository verification through tests and CI
 
 The semantic handoff is:
 
@@ -258,6 +260,8 @@ The implemented tests cover:
 - conceptual model extraction and conceptual PlantUML diagram rendering
 - JSON Schema generation, metadata, enum/open-reference treatment, determinism,
   and CLI output
+- parser contract, deterministic PDF XML extraction, Open CVN JSON validation,
+  trace-only CVN XML import, structured errors, and trace preservation
 - source coverage for manual, tree, auxiliary, semantic, and generated artifacts
 
 Tests that regenerate `src/generated/*` use `tests/xsdata_generation_lock.py` so
@@ -283,3 +287,12 @@ through `.github/workflows/pr-tests.yml`. The workflow job is named `tests`.
 
 See `docs/pipeline/known_limitations.md` for the authoritative limitation
 register.
+
+## Parser Workflow
+
+For public parser and validator usage examples, structured error handling, trace
+metadata expectations, and parser-focused test commands, see:
+
+```text
+docs/development/parser_workflow.md
+```

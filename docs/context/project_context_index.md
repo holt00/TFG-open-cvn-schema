@@ -32,9 +32,9 @@ Agents should also read `AGENTS.md` before this file.
   semantic policy, domain generation, conceptual schema, Open CVN JSON format,
   and parser/validator contract completed
 - Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
-  `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, and `#48`
+  `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, `#48`, `#49`, and `#50`
 - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Next planned issue: `#49`
+- Next planned issue: post-epic Open CVN work to be defined by a later issue
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -101,6 +101,8 @@ Agents should also read `AGENTS.md` before this file.
   issue `#48`
 - `docs/roadmap/issues/issue-49-xml-json-import-validation.md`: planned scope of
   issue `#49`
+- `docs/roadmap/issues/issue-50-parser-workflow-tests-and-documentation.md`:
+  implementation record for issue `#50`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance
@@ -128,6 +130,8 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/development/setup.md`: environment and execution commands
 - `docs/development/regeneration_workflow.md`: complete CVN regeneration and
   verification workflow
+- `docs/development/parser_workflow.md`: contributor guide for using and testing
+  the public PDF/XML/JSON parser workflow
 - `docs/development/code_style.md`: code style, typing, and documentation rules
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy and
   update protocol
@@ -230,4 +234,6 @@ When starting a new session:
 4. Review `docs/pipeline/known_limitations.md`
 5. Review `docs/development/regeneration_workflow.md` when the work touches
    generated artifacts or pipeline verification
-6. Only then start implementation work
+6. Review `docs/development/parser_workflow.md` when the work touches the public
+   parser or validator workflow
+7. Only then start implementation work

@@ -35,7 +35,7 @@ Goal:
 | `#17` | Document and automate the complete workflow | Completed | Complete workflow guide, architecture updates, command sequence, verification matrix, and known limitations documented |
 | `#26` | Epic for remaining Open CVN work | Planned | Placeholder epic only; details intentionally deferred after issue `#17` closure |
 | `#25` | GitHub Actions CI pipeline for PR testing on main and development | Completed | PRs to `main` and `development` now run the `tests` check |
-| `#41` | Epic: agnostic CVN schema, JSON schema, and parser | Planned | Post-generation epic for conceptual schema, JSON schema, and parser work |
+| `#41` | Epic: agnostic CVN schema, JSON schema, and parser | Completed | Conceptual IR, PlantUML diagrams, JSON Schema, Open CVN JSON format, parser contract, PDF/XML/JSON parser paths, tests, and workflow docs implemented |
 | `#42` | Research Pydantic-to-UML options | Completed | Recommends conceptual IR first, PlantUML primary target, Mermaid secondary target, Pyreverse diagnostic only |
 | `#43` | Define agnostic conceptual model extraction layer | Completed | Conceptual IR, extractor, targeted/full-suite tests, and extraction documentation implemented |
 | `#44` | Generate UML or UML-like diagrams | Completed | PlantUML now emits readable and reference views under `docs/diagrams/`; Mermaid remains optional future output |
@@ -44,6 +44,7 @@ Goal:
 | `#47` | Define unified parser and validator contract | Completed | Public `open_cvn` contract package, structured result/error/trace models, deferred parser signatures, docs, and tests implemented |
 | `#48` | Extract CVN XML from PDF inputs | Completed | Deterministic PDF XML extraction implemented behind `parse_cvn_pdf(...)` with embedded-file and XML metadata support |
 | `#49` | Validate XML and JSON import paths | Completed | JSON Schema plus Pydantic Open CVN JSON validation implemented; CVN XML well-formedness, trace extraction, and trace-only Open CVN mapping implemented |
+| `#50` | Add tests and documentation for parser workflow | Completed | Parser workflow docs, coverage audit, `pydantic_validation_failure` regression, drift checks, and full-suite verification completed |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
