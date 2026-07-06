@@ -29,10 +29,12 @@ Agents should also read `AGENTS.md` before this file.
 
 - Project: open CVN schema and tooling for Spanish academic CV processing
 - Current pipeline stage: structural generation, metadata normalization,
-  semantic policy, and domain generation completed
-- Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, and `#25`
+  semantic policy, domain generation, conceptual schema, Open CVN JSON format,
+  and parser/validator contract completed
+- Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
+  `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, and `#48`
 - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Next planned issue: `#16`
+- Next planned issue: `#49`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -59,6 +61,8 @@ Agents should also read `AGENTS.md` before this file.
   document format
 - `docs/pipeline/open_cvn_json_mapping.md`: issue `#46` mapping notes from the
   conceptual inventory and schema annotations to runtime JSON
+- `docs/pipeline/parser_validator_contract.md`: issue `#47` public parser and
+  validator contract for future PDF, XML, and JSON import work
 - `examples/open_cvn/`: representative issue `#46` Open CVN JSON examples
 - `docs/pipeline/known_limitations.md`: structural limitations, detected
   discrepancies, and follow-up implications
@@ -91,6 +95,12 @@ Agents should also read `AGENTS.md` before this file.
   implementation record for issue `#45`
 - `docs/roadmap/issues/issue-46-define-canonical-open-cvn-json-format.md`:
   implementation record for issue `#46`
+- `docs/roadmap/issues/issue-47-unified-parser-validator-contract.md`:
+  implementation record for issue `#47`
+- `docs/roadmap/issues/issue-48-cvn-pdf-xml-extraction.md`: planned scope of
+  issue `#48`
+- `docs/roadmap/issues/issue-49-xml-json-import-validation.md`: planned scope of
+  issue `#49`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

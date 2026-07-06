@@ -42,6 +42,7 @@ Every new session should read these files in order before making changes:
 - conceptual extraction: `docs/pipeline/conceptual_model_extraction.md`
 - conceptual diagrams: `docs/diagrams/`
 - JSON Schema generation: `docs/pipeline/json_schema_generation.md`
+- parser/validator contract: `docs/pipeline/parser_validator_contract.md`
 - known limitations: `docs/pipeline/known_limitations.md`
 - architecture decisions: `docs/adr/`
 
@@ -62,6 +63,14 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`
 - issue `#45`:
   `docs/roadmap/issues/issue-45-generate-json-schema-from-domain-models.md`
+- issue `#46`:
+  `docs/roadmap/issues/issue-46-define-canonical-open-cvn-json-format.md`
+- issue `#47`:
+  `docs/roadmap/issues/issue-47-unified-parser-validator-contract.md`
+- issue `#48`:
+  `docs/roadmap/issues/issue-48-cvn-pdf-xml-extraction.md`
+- issue `#49`:
+  `docs/roadmap/issues/issue-49-xml-json-import-validation.md`
 - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 - hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
 - hotfix `#3`:

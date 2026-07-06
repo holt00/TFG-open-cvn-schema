@@ -553,6 +553,77 @@
 - full-suite verification result:
   `334 passed in 890.21s (0:14:50)`
 
+### Issue `#47`
+
+- the unified parser and validator contract is implemented under:
+  - `src/open_cvn/`
+- the public contract module is:
+  - `src/open_cvn/parser_contract.py`
+- the public package exports:
+  - `CvnSourceFormat`
+  - `CvnValidationStatus`
+  - `CvnIssueSeverity`
+  - `CvnErrorCode`
+  - `CvnParseIssue`
+  - `CvnParseTrace`
+  - `CvnParseResult`
+  - `parse_cvn_pdf(...)`
+  - `parse_cvn_xml(...)`
+  - `parse_open_cvn_json(...)`
+  - `validate_open_cvn_json(...)`
+- public parser and validator functions intentionally raise `NotImplementedError`
+  because real parsing and validation are deferred to issues `#48` and `#49`
+- parser result invariants now require error-bearing results to use `invalid` or
+  `failed`, and `valid_with_warnings` results to include warning issues
+- the contract documentation exists at:
+  - `docs/pipeline/parser_validator_contract.md`
+- contract-only tests exist at:
+  - `tests/test_parser_validator_contract_unit.py`
+- targeted issue `#47` verification passed with:
+  `uv run pytest -n auto tests/test_parser_validator_contract_unit.py -v`
+- targeted verification result:
+  `14 passed in 2.07s`
+- full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- full-suite verification result:
+  `348 passed in 857.18s (0:14:17)`
+
+### Issue `#48`
+
+- deterministic CVN XML extraction from PDF inputs is implemented behind the
+  public issue `#47` contract
+- the PDF extraction helper exists at:
+  - `src/open_cvn/pdf_xml_extraction.py`
+- `parse_cvn_pdf(...)` in `src/open_cvn/parser_contract.py` now accepts PDF paths
+  and PDF bytes and returns `CvnParseResult`
+- PyMuPDF is now a runtime dependency for PDF embedded-file and XML metadata
+  access
+- implemented extraction sources are:
+  - embedded PDF files
+  - PDF XML metadata when it contains CVN XML evidence
+- extracted candidates must be well-formed XML and plausibly CVN-related before
+  being returned
+- successful PDF extraction returns `validation_status=not_run` because XML
+  import, XML-to-domain mapping, and Open CVN validation remain deferred to issue
+  `#49`
+- PDF failure behavior is structured through the issue `#47` error contract:
+  - unreadable PDF inputs return `unreadable_file`
+  - readable PDFs without extractable CVN XML return
+    `pdf_without_extractable_xml`
+  - unsupported input shapes return `unsupported_input_format`
+- no OCR, page text reconstruction, LLM reconstruction, or domain validation is
+  attempted in the PDF path
+- synthetic PyMuPDF PDF tests cover embedded XML, XML metadata, PDFs without XML,
+  unreadable inputs, unsupported mapping inputs, and no page-text fallback
+- targeted issue `#48` verification passed with:
+  `uv run pytest -n auto tests/test_pdf_xml_extraction_unit.py tests/test_parser_validator_contract_unit.py -v`
+- targeted verification result:
+  `20 passed in 2.64s`
+- full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- full-suite verification result:
+  `354 passed in 850.95s (0:14:10)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -564,10 +635,8 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#46` closure: issue `#47`, define the unified parser
-  and validator contract
-- Issue `#47` should consume the issue `#46` canonical Open CVN JSON format and
-  distinguish parser contracts from concrete XML/PDF/JSON import implementations
+- Next work item after issue `#48` closure: issue `#49`, implement XML and JSON
+  import validation behind the same issue `#47` contract
 
 ## Blocking Or Relevant Limitations
 
@@ -648,18 +717,19 @@ Then continue with these supporting files as needed:
 5. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 6. `docs/development/regeneration_workflow.md`
 7. `docs/pipeline/known_limitations.md`
-8. `docs/roadmap/hotfixes/`
-9. `docs/cvn_source_package_auxiliary_artifacts.md`
-10. `docs/cvn_source_package_annex_table_coverage.md`
-11. `docs/cvn_annex_priority_table_families.md`
-12. `docs/cvn_annex_table_families_batch3.md`
-13. `docs/cvn_annex_table_families_batch4.md`
-14. `docs/cvn_annex_table_families_batch5.md`
-15. `docs/cvn_annex_table_families_batch6.md`
-16. `docs/cvn_annex_table_families_batch7.md`
-17. `docs/cvn_annex_table_families_batch8.md`
-18. `docs/cvn_serialization_patterns_reference.md`
-19. `docs/cvn_field_reference_traceability.md`
-20. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
-21. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
-22. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+8. `docs/pipeline/parser_validator_contract.md`
+9. `docs/roadmap/hotfixes/`
+10. `docs/cvn_source_package_auxiliary_artifacts.md`
+11. `docs/cvn_source_package_annex_table_coverage.md`
+12. `docs/cvn_annex_priority_table_families.md`
+13. `docs/cvn_annex_table_families_batch3.md`
+14. `docs/cvn_annex_table_families_batch4.md`
+15. `docs/cvn_annex_table_families_batch5.md`
+16. `docs/cvn_annex_table_families_batch6.md`
+17. `docs/cvn_annex_table_families_batch7.md`
+18. `docs/cvn_annex_table_families_batch8.md`
+19. `docs/cvn_serialization_patterns_reference.md`
+20. `docs/cvn_field_reference_traceability.md`
+21. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+22. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+23. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
