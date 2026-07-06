@@ -588,6 +588,42 @@
 - full-suite verification result:
   `348 passed in 857.18s (0:14:17)`
 
+### Issue `#48`
+
+- deterministic CVN XML extraction from PDF inputs is implemented behind the
+  public issue `#47` contract
+- the PDF extraction helper exists at:
+  - `src/open_cvn/pdf_xml_extraction.py`
+- `parse_cvn_pdf(...)` in `src/open_cvn/parser_contract.py` now accepts PDF paths
+  and PDF bytes and returns `CvnParseResult`
+- PyMuPDF is now a runtime dependency for PDF embedded-file and XML metadata
+  access
+- implemented extraction sources are:
+  - embedded PDF files
+  - PDF XML metadata when it contains CVN XML evidence
+- extracted candidates must be well-formed XML and plausibly CVN-related before
+  being returned
+- successful PDF extraction returns `validation_status=not_run` because XML
+  import, XML-to-domain mapping, and Open CVN validation remain deferred to issue
+  `#49`
+- PDF failure behavior is structured through the issue `#47` error contract:
+  - unreadable PDF inputs return `unreadable_file`
+  - readable PDFs without extractable CVN XML return
+    `pdf_without_extractable_xml`
+  - unsupported input shapes return `unsupported_input_format`
+- no OCR, page text reconstruction, LLM reconstruction, or domain validation is
+  attempted in the PDF path
+- synthetic PyMuPDF PDF tests cover embedded XML, XML metadata, PDFs without XML,
+  unreadable inputs, unsupported mapping inputs, and no page-text fallback
+- targeted issue `#48` verification passed with:
+  `uv run pytest -n auto tests/test_pdf_xml_extraction_unit.py tests/test_parser_validator_contract_unit.py -v`
+- targeted verification result:
+  `20 passed in 2.64s`
+- full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- full-suite verification result:
+  `354 passed in 850.95s (0:14:10)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -599,10 +635,8 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#47` closure: issue `#48`, implement CVN PDF XML
-  extraction behind the unified parser contract
-- Issue `#49` should later implement XML and JSON import validation behind the
-  same issue `#47` contract
+- Next work item after issue `#48` closure: issue `#49`, implement XML and JSON
+  import validation behind the same issue `#47` contract
 
 ## Blocking Or Relevant Limitations
 

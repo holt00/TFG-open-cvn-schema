@@ -120,6 +120,10 @@ files in order:
   authoritative record of issue `#46`
 - `docs/roadmap/issues/issue-47-unified-parser-validator-contract.md`:
   authoritative record of issue `#47`
+- `docs/roadmap/issues/issue-48-cvn-pdf-xml-extraction.md`: authoritative
+  record of issue `#48`
+- `docs/roadmap/issues/issue-49-xml-json-import-validation.md`: planned scope of
+  issue `#49`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

@@ -32,9 +32,9 @@ Agents should also read `AGENTS.md` before this file.
   semantic policy, domain generation, conceptual schema, Open CVN JSON format,
   and parser/validator contract completed
 - Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
-  `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, and `#47`
+  `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, and `#48`
 - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Next planned issue: `#48`
+- Next planned issue: `#49`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map

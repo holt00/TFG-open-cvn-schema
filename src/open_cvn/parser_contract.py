@@ -96,7 +96,106 @@ class CvnParseResult(BaseModel):
 
 
 def parse_cvn_pdf(source: CvnInput, *, source_identifier: str | None = None) -> CvnParseResult:
-    raise NotImplementedError(DEFERRED_IMPLEMENTATION_MESSAGE)
+    from open_cvn.pdf_xml_extraction import (
+        UnsupportedPdfInputError,
+        UnreadablePdfError,
+        extract_cvn_xml_from_pdf,
+    )
+
+    if isinstance(source, Mapping):
+        return _failed_pdf_result(
+            source_identifier=source_identifier,
+            source_path=None,
+            error_code=CvnErrorCode.UNSUPPORTED_INPUT_FORMAT,
+            message="PDF input must be a path or bytes.",
+            details={"input_type": type(source).__name__},
+        )
+
+    try:
+        extraction_result = extract_cvn_xml_from_pdf(source)  # type: ignore[arg-type]
+    except UnsupportedPdfInputError as exc:
+        return _failed_pdf_result(
+            source_identifier=source_identifier,
+            source_path=None,
+            error_code=CvnErrorCode.UNSUPPORTED_INPUT_FORMAT,
+            message="PDF input must be a path or bytes.",
+            details={"error": str(exc)},
+        )
+    except UnreadablePdfError as exc:
+        return _failed_pdf_result(
+            source_identifier=source_identifier,
+            source_path=exc.source_path,
+            error_code=CvnErrorCode.UNREADABLE_FILE,
+            message="PDF input could not be read.",
+            details={"error": str(exc)},
+        )
+
+    diagnostics = extraction_result.diagnostics
+    extracted_xml = extraction_result.extracted_xml
+    result_identifier = source_identifier or diagnostics.source_path
+    if extracted_xml is None:
+        return _failed_pdf_result(
+            source_identifier=result_identifier,
+            source_path=diagnostics.source_path,
+            error_code=CvnErrorCode.PDF_WITHOUT_EXTRACTABLE_XML,
+            message="PDF does not contain extractable CVN XML.",
+            details=diagnostics.as_details(),
+        )
+
+    extracted_from = extracted_xml.source_kind
+    if extracted_xml.source_name is not None:
+        extracted_from = f"{extracted_from}:{extracted_xml.source_name}"
+
+    return CvnParseResult(
+        source_format=CvnSourceFormat.PDF,
+        source_identifier=result_identifier,
+        data={
+            "xml_text": extracted_xml.xml_text,
+            "extraction": {
+                "source_kind": extracted_xml.source_kind,
+                "source_name": extracted_xml.source_name,
+                "source_index": extracted_xml.source_index,
+                "xml_bytes_size": extracted_xml.xml_bytes_size,
+                "metadata_xref": extracted_xml.metadata_xref,
+                **diagnostics.as_details(),
+            },
+        },
+        validation_status=CvnValidationStatus.NOT_RUN,
+        trace=CvnParseTrace(
+            source_format=CvnSourceFormat.PDF,
+            source_identifier=result_identifier,
+            source_path=diagnostics.source_path,
+            extracted_from=extracted_from,
+        ),
+    )
+
+
+def _failed_pdf_result(
+    *,
+    source_identifier: str | None,
+    source_path: str | None,
+    error_code: CvnErrorCode,
+    message: str,
+    details: dict[str, str | int | float | bool | None],
+) -> CvnParseResult:
+    return CvnParseResult(
+        source_format=CvnSourceFormat.PDF,
+        source_identifier=source_identifier or source_path,
+        validation_status=CvnValidationStatus.FAILED,
+        errors=(
+            CvnParseIssue(
+                code=error_code,
+                severity=CvnIssueSeverity.ERROR,
+                message=message,
+                details=details,
+            ),
+        ),
+        trace=CvnParseTrace(
+            source_format=CvnSourceFormat.PDF,
+            source_identifier=source_identifier or source_path,
+            source_path=source_path,
+        ),
+    )
 
 
 def parse_cvn_xml(source: CvnInput, *, source_identifier: str | None = None) -> CvnParseResult:

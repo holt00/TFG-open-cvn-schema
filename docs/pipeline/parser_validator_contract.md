@@ -53,15 +53,15 @@ parse_open_cvn_json(source, *, source_identifier=None) -> CvnParseResult
 validate_open_cvn_json(document, *, source_identifier=None) -> CvnParseResult
 ```
 
-In issue `#47`, these functions intentionally raise `NotImplementedError` with
+In issue `#47`, these functions intentionally raised `NotImplementedError` with
 this message:
 
 ```text
 Parser implementation is deferred to issue #48/#49.
 ```
 
-This makes the public contract importable without pretending that parsing already
-exists.
+Issue `#48` implements `parse_cvn_pdf(...)` for deterministic PDF XML
+extraction. The XML and JSON entry points remain deferred to issue `#49`.
 
 ## Source Formats
 
@@ -146,16 +146,30 @@ identity when available. Open CVN JSON validation should preserve
 
 ### PDF
 
-Issue `#48` should implement PDF handling behind `parse_cvn_pdf(...)`.
+Issue `#48` implements PDF handling behind `parse_cvn_pdf(...)`.
 
 Responsibilities:
 
 - read PDF input
-- extract embedded or recoverable CVN XML when possible
+- extract embedded-file CVN XML when possible
+- extract PDF XML metadata when it contains CVN XML evidence
+- validate only that the extracted candidate is well-formed and plausibly
+  CVN-related
 - return `pdf_without_extractable_xml` when no XML can be extracted
-- delegate XML interpretation to the XML import path
+- leave XML interpretation to the issue `#49` XML import path
 
-PDF parsing must not become the domain validator.
+PDF parsing is not the domain validator. It does not perform OCR, page text
+reconstruction, LLM reconstruction, XML-to-domain mapping, Open CVN JSON
+validation, or JSON Schema validation.
+
+Successful PDF extraction returns `validation_status="not_run"` because issue
+`#48` extracts XML but does not validate the XML against the future import path.
+The result `data` contains:
+
+- `xml_text`: extracted XML text
+- `extraction`: metadata such as source kind, source name, byte size,
+  embedded-file count, candidate count, metadata presence, and metadata xref when
+  available
 
 ### XML
 
@@ -271,6 +285,42 @@ Responsibilities:
     "cvn_codes": [],
     "xml_paths": [],
     "schema_version": "0.1.0",
+    "policy_name": null,
+    "policy_version": null
+  }
+}
+```
+
+### Successful PDF XML Extraction
+
+```json
+{
+  "source_format": "pdf",
+  "source_identifier": "cvn.pdf",
+  "data": {
+    "xml_text": "<CVNRoot />",
+    "extraction": {
+      "source_kind": "embedded_file",
+      "source_name": "cvn.xml",
+      "source_index": 0,
+      "xml_bytes_size": 11,
+      "metadata_xref": null,
+      "embedded_file_count": 1,
+      "candidate_count": 1,
+      "metadata_present": false
+    }
+  },
+  "validation_status": "not_run",
+  "warnings": [],
+  "errors": [],
+  "trace": {
+    "source_format": "pdf",
+    "source_identifier": "cvn.pdf",
+    "source_path": "cvn.pdf",
+    "extracted_from": "embedded_file:cvn.xml",
+    "cvn_codes": [],
+    "xml_paths": [],
+    "schema_version": null,
     "policy_name": null,
     "policy_version": null
   }

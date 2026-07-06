@@ -9,7 +9,6 @@ from open_cvn import (
     CvnParseTrace,
     CvnSourceFormat,
     CvnValidationStatus,
-    parse_cvn_pdf,
     parse_cvn_xml,
     parse_open_cvn_json,
     validate_open_cvn_json,
@@ -193,7 +192,6 @@ def test_parse_result_rejects_warning_status_without_warning():
 @pytest.mark.parametrize(
     ("parser", "source"),
     [
-        (parse_cvn_pdf, b"%PDF"),
         (parse_cvn_xml, "<CVNRoot />"),
         (parse_open_cvn_json, '{"schema_version": "0.1.0"}'),
     ],

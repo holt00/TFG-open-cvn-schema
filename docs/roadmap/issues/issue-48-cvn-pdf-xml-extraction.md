@@ -31,12 +31,561 @@ APIs such as embedded file counts, names, extraction, and XML metadata access.
 7. define clear errors for PDFs without extractable XML
 8. add tests with fixtures when sample files are available and safe to commit
 
+## Accepted Execution Plan
+
+Issue `#48` is a deterministic PDF XML extraction issue. It implements the PDF
+entry point behind `parse_cvn_pdf(...)` from issue `#47`, but it must not
+implement OCR, LLM reconstruction, direct XML-to-domain mapping, Open CVN JSON
+validation, or XML import validation. Those parser and validator paths remain in
+issue `#49`.
+
+Every implementation session must state the active task and subtask before work
+continues, using the format `Task N/Subtask N.M`. Each task and subtask below
+records a short summary, the expected user file-modification ownership, and the
+next step.
+
+### Task 1 - Confirm Scope And Boundaries
+
+Summary:
+
+- confirm that issue `#48` only extracts CVN XML deterministically from PDF
+- confirm that domain validation and XML import remain deferred to issue `#49`
+- confirm that `src/generated/` must not be edited manually
+
+Subtasks:
+
+1.1. Re-read issue `#48`, issue `#47`, issue `#49`, and
+`docs/pipeline/parser_validator_contract.md` before implementation.
+
+1.2. Record that `parse_cvn_pdf(...)` may become concrete, while
+`parse_cvn_xml(...)`, `parse_open_cvn_json(...)`, and
+`validate_open_cvn_json(...)` remain deferred unless a later issue changes scope.
+
+1.3. Record that no OCR, page text reconstruction, or LLM fallback is allowed in
+this issue.
+
+User file modifications required:
+
+- none during this task
+
+Next step:
+
+- proceed to dependency and API feasibility confirmation.
+
+### Task 2 - Add Or Confirm PDF Runtime Dependency
+
+Summary:
+
+- introduce the PDF library needed for deterministic embedded-file and XML
+  metadata extraction
+- keep dependency scope explicit and minimal
+
+Subtasks:
+
+2.1. Confirm the target PyMuPDF package name and import style for the current
+Python environment.
+
+2.2. Add `pymupdf` to the project dependency set if it is not already available.
+
+2.3. Prefer `import pymupdf` in implementation code instead of the older `fitz`
+import spelling.
+
+2.4. If PyMuPDF cannot be installed or does not support Python `>=3.14`, record a
+blocker and do not invent a text/OCR workaround.
+
+User file modifications required:
+
+- code/dependency file edit required if `pymupdf` is not already in the project
+- by default, the user should modify `pyproject.toml` unless they delegate the
+  edit
+
+Next step:
+
+- design the internal PDF extraction helper.
+
+### Task 3 - Design Internal PDF XML Extraction Helper
+
+Summary:
+
+- isolate PDF-specific extraction from the public parser contract
+- keep extracted XML traceable to its PDF source
+
+Subtasks:
+
+3.1. Create an internal helper module under `src/open_cvn/`, for example
+`src/open_cvn/pdf_xml_extraction.py`.
+
+3.2. Define an internal extracted-payload structure with fields such as:
+
+- `xml_text`
+- `xml_bytes_size`
+- `source_kind`
+- `source_name`
+- `source_index`
+- `metadata_xref`
+
+3.3. Keep the helper internal unless a concrete public API need appears.
+
+3.4. Do not expose generated structural bindings directly through this helper.
+
+User file modifications required:
+
+- code file creation required
+- by default, the user should create or edit the code file unless they delegate
+  the edit
+
+Next step:
+
+- implement PDF input resolution.
+
+### Task 4 - Resolve PDF Input Sources
+
+Summary:
+
+- accept the issue `#47` flexible input contract for PDF sources
+- classify unreadable and unsupported inputs with structured results
+
+Subtasks:
+
+4.1. Accept `Path`, filesystem `str`, and `bytes` inputs for `parse_cvn_pdf(...)`.
+
+4.2. Open path-like inputs with `pymupdf.open(path)`.
+
+4.3. Open byte inputs with `pymupdf.open(stream=source, filetype="pdf")`.
+
+4.4. Preserve `source_identifier` and file path when available in
+`CvnParseTrace`.
+
+4.5. Convert PyMuPDF open failures into `CvnErrorCode.UNREADABLE_FILE` with
+`CvnValidationStatus.FAILED`.
+
+4.6. Convert unsupported non-PDF input shapes into
+`CvnErrorCode.UNSUPPORTED_INPUT_FORMAT` or `CvnErrorCode.UNREADABLE_FILE`, using
+the most specific result supported by the contract.
+
+User file modifications required:
+
+- code edits required
+- by default, the user should modify code unless they delegate the edit
+
+Next step:
+
+- implement embedded-file candidate extraction.
+
+### Task 5 - Extract Candidate XML From Embedded Files
+
+Summary:
+
+- inspect PDF embedded-file streams before falling back to metadata
+- avoid writing extracted content to disk
+
+Subtasks:
+
+5.1. Use PyMuPDF embedded-file APIs such as `Document.embfile_count()`,
+`Document.embfile_names()`, `Document.embfile_info(...)`, and
+`Document.embfile_get(...)`.
+
+5.2. Iterate over every embedded-file entry deterministically.
+
+5.3. Prioritize candidates whose embedded filename ends with `.xml` or contains
+CVN-like naming evidence.
+
+5.4. Also inspect non-XML-named attachments when their bytes look like XML.
+
+5.5. Preserve candidate source details in extraction metadata.
+
+User file modifications required:
+
+- code edits required
+- by default, the user should modify code unless they delegate the edit
+
+Next step:
+
+- implement XML metadata candidate extraction.
+
+### Task 6 - Extract Candidate XML From PDF XML Metadata
+
+Summary:
+
+- inspect file-level PDF XML metadata as the second deterministic source
+- reject generic XMP metadata unless it contains CVN XML evidence
+
+Subtasks:
+
+6.1. Use PyMuPDF XML metadata APIs such as `Document.get_xml_metadata()`.
+
+6.2. Capture metadata xref when available through the installed PyMuPDF API.
+
+6.3. Treat XML metadata as a candidate only if it contains CVN-like XML evidence.
+
+6.4. Preserve `source_kind="xml_metadata"` and xref details when available.
+
+User file modifications required:
+
+- code edits required
+- by default, the user should modify code unless they delegate the edit
+
+Next step:
+
+- validate candidate XML shape minimally.
+
+### Task 7 - Validate Candidate XML Shape Minimally
+
+Summary:
+
+- prove that extracted bytes are well-formed XML and plausibly CVN-related
+- avoid performing the full XML import path reserved for issue `#49`
+
+Subtasks:
+
+7.1. Decode candidate bytes using `utf-8-sig` or `utf-8`; use fallback decoding
+only when required and record the behavior if it matters.
+
+7.2. Parse candidates with the standard XML parser to confirm well-formed XML.
+
+7.3. Accept a candidate when root name, namespace, or content provides CVN-like
+evidence.
+
+7.4. Reject malformed XML candidates and continue scanning remaining candidates.
+
+7.5. If no candidate is accepted, return the unsupported PDF path rather than
+attempting OCR, page text extraction, or LLM reconstruction.
+
+User file modifications required:
+
+- code edits required
+- by default, the user should modify code unless they delegate the edit
+
+Next step:
+
+- wire the helper into `parse_cvn_pdf(...)`.
+
+### Task 8 - Implement `parse_cvn_pdf(...)`
+
+Summary:
+
+- replace only the PDF stub from issue `#47` with concrete deterministic
+  extraction behavior
+- keep XML and JSON functions deferred
+
+Subtasks:
+
+8.1. Update `parse_cvn_pdf(...)` in `src/open_cvn/parser_contract.py` to call the
+internal PDF extraction helper.
+
+8.2. Return `CvnParseResult` with `source_format=CvnSourceFormat.PDF`.
+
+8.3. For success, use `CvnValidationStatus.NOT_RUN` because XML validation and
+domain mapping are not performed in issue `#48`.
+
+8.4. For success, place extracted XML and extraction metadata in `data` without
+claiming Open CVN JSON or domain validation.
+
+8.5. Populate `CvnParseTrace` with PDF source identity and extracted XML source
+identity through `extracted_from`.
+
+8.6. Leave `parse_cvn_xml(...)`, `parse_open_cvn_json(...)`, and
+`validate_open_cvn_json(...)` raising the issue `#47` deferred implementation
+message.
+
+User file modifications required:
+
+- code edits required
+- by default, the user should modify code unless they delegate the edit
+
+Next step:
+
+- normalize structured error behavior.
+
+### Task 9 - Define Structured Error Results
+
+Summary:
+
+- make unsupported and failed PDF cases deterministic and machine-readable
+- keep diagnostic detail useful without leaking raw exception objects
+
+Subtasks:
+
+9.1. Return `CvnErrorCode.UNREADABLE_FILE` for unreadable, missing, encrypted, or
+invalid PDF inputs when processing cannot begin.
+
+9.2. Return `CvnErrorCode.PDF_WITHOUT_EXTRACTABLE_XML` when the PDF opens but no
+acceptable CVN XML candidate is found.
+
+9.3. Return `CvnValidationStatus.FAILED` for both failure families.
+
+9.4. Include details such as embedded-file count, candidate count, metadata
+presence, and sanitized PyMuPDF error messages where useful.
+
+9.5. Keep `details` values JSON-serializable according to the issue `#47`
+contract.
+
+User file modifications required:
+
+- code edits required
+- by default, the user should modify code unless they delegate the edit
+
+Next step:
+
+- add safe PDF fixtures for tests.
+
+### Task 10 - Create Safe Test Fixtures
+
+Summary:
+
+- test deterministic extraction without committing personal FECYT PDF data
+- use synthetic PDFs where possible
+
+Subtasks:
+
+10.1. Create synthetic PDF fixtures during tests using PyMuPDF.
+
+10.2. Include one PDF with an embedded XML file containing safe CVN-like XML.
+
+10.3. Include one PDF with XML metadata containing safe CVN-like XML if supported
+by the installed PyMuPDF version.
+
+10.4. Include one valid PDF without XML.
+
+10.5. Include one unreadable PDF input case.
+
+10.6. Do not commit real FECYT PDFs unless they are safe, anonymized, and
+explicitly approved.
+
+User file modifications required:
+
+- test fixture code edits required
+- by default, the user should modify tests unless they delegate the edit
+
+Next step:
+
+- add unit tests for extraction and parser results.
+
+### Task 11 - Add PDF Extraction Tests
+
+Summary:
+
+- verify the new PDF behavior without testing future XML/domain validation
+
+Subtasks:
+
+11.1. Add `tests/test_pdf_xml_extraction_unit.py` or equivalent focused test
+module.
+
+11.2. Test extraction from embedded XML file.
+
+11.3. Test extraction from XML metadata when the installed PyMuPDF supports the
+required write/read path.
+
+11.4. Test PDF without XML returns `pdf_without_extractable_xml`.
+
+11.5. Test unreadable input returns `unreadable_file`.
+
+11.6. Test `parse_cvn_pdf(...)` no longer raises `NotImplementedError` for
+supported PDF inputs.
+
+11.7. Test XML and JSON parser functions still raise the deferred implementation
+message.
+
+11.8. Test no OCR, page text extraction, or LLM fallback is attempted.
+
+User file modifications required:
+
+- test edits required
+- by default, the user should modify tests unless they delegate the edit
+
+Next step:
+
+- update issue `#47` contract tests affected by the PDF implementation.
+
+### Task 12 - Adjust Existing Parser Contract Tests
+
+Summary:
+
+- keep issue `#47` tests aligned now that the PDF entry point is implemented
+- avoid changing XML and JSON deferred behavior
+
+Subtasks:
+
+12.1. Remove `parse_cvn_pdf(...)` from tests that expect all public parser
+functions to raise `NotImplementedError`.
+
+12.2. Keep `parse_cvn_xml(...)`, `parse_open_cvn_json(...)`, and
+`validate_open_cvn_json(...)` deferred tests unchanged.
+
+12.3. Add or update contract-level assertions for PDF success and failure result
+shape if needed.
+
+User file modifications required:
+
+- test edits required
+- by default, the user should modify tests unless they delegate the edit
+
+Next step:
+
+- update persistent documentation.
+
+### Task 13 - Update Persistent Documentation
+
+Summary:
+
+- make issue `#48` behavior discoverable without chat history
+- keep repository status synchronized with implementation
+
+Subtasks:
+
+13.1. Update `docs/pipeline/parser_validator_contract.md` with PDF extraction
+order, success payload, failure cases, and explicit non-goals.
+
+13.2. Update this issue document with implementation outcome, deviations,
+artifacts, verification, findings, and final status when complete.
+
+13.3. Update `docs/context/current_status.md` with issue `#48` outcome and next
+planned work.
+
+13.4. Update `docs/roadmap/cvn_generation_roadmap.md` if issue status changes.
+
+13.5. Update `docs/pipeline/known_limitations.md` only if a new limitation is
+found, such as FECYT PDFs without embedded XML or PyMuPDF metadata limitations.
+
+13.6. Update `PROJECT_GUIDE.md` only if human-facing document map or repository
+orientation changes.
+
+User file modifications required:
+
+- documentation edits required
+- agent may update issue plan/status documentation when explicitly requested;
+  user may keep ownership of code changes
+
+Next step:
+
+- run targeted and full verification.
+
+### Task 14 - Verification
+
+Summary:
+
+- prove PDF extraction works and existing parser contract remains stable
+
+Subtasks:
+
+14.1. Run targeted PDF and contract tests:
+
+```bash
+uv run pytest -n auto tests/test_pdf_xml_extraction_unit.py tests/test_parser_validator_contract_unit.py -v
+```
+
+14.2. Run the full repository test suite:
+
+```bash
+uv run pytest -n auto tests
+```
+
+14.3. Confirm `src/generated/` was not manually edited.
+
+14.4. Confirm `parse_cvn_pdf(...)` returns structured results for success,
+unsupported PDF, and unreadable PDF cases.
+
+14.5. Confirm XML and JSON parser/validator functions remain deferred to issue
+`#49`.
+
+User file modifications required:
+
+- none unless verification exposes failures requiring code, test, or
+  documentation fixes
+
+Next step:
+
+- finalize completion criteria.
+
+### Task 15 - Final Completion Criteria
+
+Summary:
+
+- define what must be true before issue `#48` is complete
+
+Completion checklist:
+
+- `parse_cvn_pdf(...)` is implemented behind the issue `#47` contract
+- deterministic extraction supports embedded XML files
+- deterministic extraction supports PDF XML metadata when available
+- PDF without extractable CVN XML returns `pdf_without_extractable_xml`
+- unreadable PDF returns `unreadable_file`
+- no OCR, page text reconstruction, or LLM fallback is attempted
+- extracted XML is well-formed and plausibly CVN-related before being returned
+- XML/domain/Open CVN validation remains deferred to issue `#49`
+- targeted tests pass
+- full repository tests pass
+- persistent documentation is updated
+- `src/generated/` remains untouched by manual edits
+
+User file modifications required:
+
+- none after all implementation, verification, and documentation tasks are
+  complete unless the user chooses to make final manual edits
+
+Next step:
+
+- begin issue `#49` XML and JSON import validation after issue `#48` is closed.
+
 ## Expected Output
 
 - PDF extraction helper or parser implementation if approved
 - documented extraction behavior
 - tests for PDF with extractable XML when fixture exists
 - explicit unsupported-path behavior for PDF without XML
+
+## Implementation Outcome
+
+- PDF runtime dependency added:
+  - `pymupdf>=1.26`
+- internal deterministic extraction helper implemented in:
+  - `src/open_cvn/pdf_xml_extraction.py`
+- public PDF parser implementation added behind the issue `#47` contract in:
+  - `src/open_cvn/parser_contract.py`
+- synthetic PDF extraction tests added in:
+  - `tests/test_pdf_xml_extraction_unit.py`
+- issue `#47` contract tests updated so only XML and JSON parser functions remain
+  deferred:
+  - `tests/test_parser_validator_contract_unit.py`
+
+Implemented PDF extraction behavior:
+
+- accepts PDF paths and PDF bytes through `parse_cvn_pdf(...)`
+- scans embedded-file streams before XML metadata
+- extracts embedded XML files using PyMuPDF embedded-file APIs
+- extracts PDF XML metadata using PyMuPDF XML metadata APIs when it contains CVN
+  XML evidence
+- requires candidates to be well-formed XML and plausibly CVN-related before
+  returning them
+- returns `validation_status=not_run` for successful PDF extraction because XML
+  import and semantic validation are deferred to issue `#49`
+- returns `unreadable_file` for unreadable PDF inputs
+- returns `unsupported_input_format` for non-PDF input shapes such as mappings
+- returns `pdf_without_extractable_xml` for readable PDFs without extractable CVN
+  XML
+- does not attempt OCR, page text reconstruction, LLM reconstruction, or XML
+  domain mapping
+
+## Implementation Deviations
+
+- No real FECYT PDF fixture was committed because safe anonymized sample files
+  were not available in the repository.
+- Tests use synthetic PyMuPDF-generated PDFs with safe CVN-like XML fixtures.
+- `parse_cvn_pdf(...)` returns extracted XML text and extraction metadata instead
+  of delegating to `parse_cvn_xml(...)`, because the XML import path remains
+  deferred to issue `#49`.
+
+## Verification Performed
+
+- targeted PDF and contract verification passed with:
+  `uv run pytest -n auto tests/test_pdf_xml_extraction_unit.py tests/test_parser_validator_contract_unit.py -v`
+- targeted verification result:
+  `20 passed in 2.64s`
+- full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- full-suite verification result:
+  `354 passed in 850.95s (0:14:10)`
 
 ## Verification
 
@@ -58,4 +607,4 @@ APIs such as embedded file counts, names, extraction, and XML metadata access.
 
 ## Status
 
-- Status: planned
+- Status: completed
