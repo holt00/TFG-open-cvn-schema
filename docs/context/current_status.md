@@ -664,6 +664,48 @@
 - full-suite verification result:
   `369 passed in 347.12s (0:05:47)`
 
+### Issue `#50`
+
+- parser workflow tests and documentation closure for epic `#41` is completed
+- a contributor parser workflow guide now exists at:
+  - `docs/development/parser_workflow.md`
+- the guide documents:
+  - public `open_cvn` parser imports
+  - Open CVN JSON parsing and validation
+  - direct CVN XML parsing and trace-only output interpretation
+  - deterministic CVN PDF XML extraction and PDF-to-XML handoff
+  - structured parser errors
+  - parser trace metadata
+  - targeted parser, schema, conceptual, diagram, and full-suite verification
+    commands
+- parser test coverage was audited for:
+  - parser contract invariants
+  - valid and invalid Open CVN JSON import
+  - valid and invalid CVN XML import
+  - PDF with extractable XML and PDF without extractable XML
+  - trace metadata preservation
+- a direct regression test was added for the existing `pydantic_validation_failure`
+  JSON path when syntactically valid JSON is not an object
+- JSON Schema and PlantUML drift checks passed against temporary regenerated
+  outputs under `/tmp/opencode`
+- no new durable limitations were found
+- targeted parser workflow verification passed with:
+  `uv run pytest -n auto tests/test_parser_validator_contract_unit.py tests/test_pdf_xml_extraction_unit.py tests/test_open_cvn_json_import_unit.py tests/test_cvn_xml_import_unit.py -v`
+- targeted parser workflow verification result:
+  `36 passed in 16.61s`
+- targeted JSON Schema and Open CVN example verification passed with:
+  `uv run pytest -n auto tests/test_json_schema_generator_unit.py tests/test_generation_pipeline_json_schema.py tests/test_open_cvn_json_format_examples.py -v`
+- targeted JSON Schema and example verification result:
+  `21 passed in 92.86s (0:01:32)`
+- targeted conceptual model and diagram verification passed with:
+  `uv run pytest -n auto tests/test_conceptual_model_extractor_unit.py tests/test_generation_pipeline_conceptual_model.py tests/test_conceptual_model_diagrams_unit.py tests/test_generation_pipeline_conceptual_diagrams.py -v`
+- targeted conceptual and diagram verification result:
+  `19 passed in 90.61s (0:01:30)`
+- full-suite verification passed with:
+  `uv run pytest -n auto tests`
+- full-suite verification result:
+  `370 passed in 287.52s (0:04:47)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -675,9 +717,10 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#49` closure: continue the post-parser Open CVN
-  roadmap, including richer XML semantic mapping or downstream import/export
-  behavior when a later issue defines that scope
+- Next work item after epic `#41` closure: continue the post-parser Open CVN
+  roadmap, including richer XML semantic mapping, downstream import/export
+  behavior, storage, application, or LaTeX workflow only when a later issue defines
+  that scope
 
 ## Blocking Or Relevant Limitations
 
@@ -759,20 +802,21 @@ Then continue with these supporting files as needed:
 4. `docs/roadmap/issues/issue-13-normalization.md`
 5. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 6. `docs/development/regeneration_workflow.md`
-7. `docs/pipeline/known_limitations.md`
-8. `docs/pipeline/parser_validator_contract.md`
-9. `docs/roadmap/hotfixes/`
-10. `docs/cvn_source_package_auxiliary_artifacts.md`
-11. `docs/cvn_source_package_annex_table_coverage.md`
-12. `docs/cvn_annex_priority_table_families.md`
-13. `docs/cvn_annex_table_families_batch3.md`
-14. `docs/cvn_annex_table_families_batch4.md`
-15. `docs/cvn_annex_table_families_batch5.md`
-16. `docs/cvn_annex_table_families_batch6.md`
-17. `docs/cvn_annex_table_families_batch7.md`
-18. `docs/cvn_annex_table_families_batch8.md`
-19. `docs/cvn_serialization_patterns_reference.md`
-20. `docs/cvn_field_reference_traceability.md`
-21. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
-22. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
-23. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+7. `docs/development/parser_workflow.md`
+8. `docs/pipeline/known_limitations.md`
+9. `docs/pipeline/parser_validator_contract.md`
+10. `docs/roadmap/hotfixes/`
+11. `docs/cvn_source_package_auxiliary_artifacts.md`
+12. `docs/cvn_source_package_annex_table_coverage.md`
+13. `docs/cvn_annex_priority_table_families.md`
+14. `docs/cvn_annex_table_families_batch3.md`
+15. `docs/cvn_annex_table_families_batch4.md`
+16. `docs/cvn_annex_table_families_batch5.md`
+17. `docs/cvn_annex_table_families_batch6.md`
+18. `docs/cvn_annex_table_families_batch7.md`
+19. `docs/cvn_annex_table_families_batch8.md`
+20. `docs/cvn_serialization_patterns_reference.md`
+21. `docs/cvn_field_reference_traceability.md`
+22. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+23. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+24. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`

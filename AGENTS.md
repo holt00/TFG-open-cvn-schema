@@ -71,6 +71,8 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/issues/issue-48-cvn-pdf-xml-extraction.md`
 - issue `#49`:
   `docs/roadmap/issues/issue-49-xml-json-import-validation.md`
+- issue `#50`:
+  `docs/roadmap/issues/issue-50-parser-workflow-tests-and-documentation.md`
 - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 - hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
 - hotfix `#3`:
@@ -90,6 +92,7 @@ Every new session should read these files in order before making changes:
 
 - setup and commands: `docs/development/setup.md`
 - complete regeneration workflow: `docs/development/regeneration_workflow.md`
+- parser workflow: `docs/development/parser_workflow.md`
 - code style and conventions: `docs/development/code_style.md`
 - documentation conventions: `docs/documentation/documentation_conventions.md`
 - old AGENTS content migration map:

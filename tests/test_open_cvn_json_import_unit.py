@@ -58,6 +58,14 @@ def test_parse_open_cvn_json_reports_malformed_json():
     assert result.errors[0].source_location == "line 2 column 1"
 
 
+def test_parse_open_cvn_json_reports_runtime_validation_failure_for_non_object():
+    result = parse_open_cvn_json("[]", source_identifier="json-list")
+
+    assert result.validation_status == CvnValidationStatus.INVALID
+    assert result.errors[0].code == CvnErrorCode.PYDANTIC_VALIDATION_FAILURE
+    assert result.errors[0].details["input_type"] == "list"
+
+
 def test_validate_open_cvn_json_reports_schema_failures():
     payload = json.loads((FIXTURES / "wrong_shape.json").read_text(encoding="utf-8"))
 

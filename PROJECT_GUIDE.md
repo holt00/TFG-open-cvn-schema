@@ -124,6 +124,8 @@ files in order:
   record of issue `#48`
 - `docs/roadmap/issues/issue-49-xml-json-import-validation.md`: planned scope of
   issue `#49`
+- `docs/roadmap/issues/issue-50-parser-workflow-tests-and-documentation.md`:
+  authoritative record of issue `#50`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance
@@ -152,6 +154,8 @@ files in order:
 - `docs/development/setup.md`: environment and execution commands
 - `docs/development/regeneration_workflow.md`: complete CVN regeneration and
   verification workflow
+- `docs/development/parser_workflow.md`: contributor guide for using and testing
+  the public PDF/XML/JSON parser workflow
 - `docs/development/code_style.md`: code style, typing, and conventions
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy,
   cross-linking rules, and update protocol
