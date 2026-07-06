@@ -199,14 +199,20 @@ def _failed_pdf_result(
 
 
 def parse_cvn_xml(source: CvnInput, *, source_identifier: str | None = None) -> CvnParseResult:
-    raise NotImplementedError(DEFERRED_IMPLEMENTATION_MESSAGE)
+    from open_cvn.xml_import import parse_cvn_xml as _parse_cvn_xml
+
+    return _parse_cvn_xml(source, source_identifier=source_identifier)
 
 
 def parse_open_cvn_json(source: CvnInput, *, source_identifier: str | None = None) -> CvnParseResult:
-    raise NotImplementedError(DEFERRED_IMPLEMENTATION_MESSAGE)
+    from open_cvn.json_import import parse_open_cvn_json as _parse_open_cvn_json
+
+    return _parse_open_cvn_json(source, source_identifier=source_identifier)
 
 
 def validate_open_cvn_json(
     document: Mapping[str, Any], *, source_identifier: str | None = None
 ) -> CvnParseResult:
-    raise NotImplementedError(DEFERRED_IMPLEMENTATION_MESSAGE)
+    from open_cvn.json_import import validate_open_cvn_json as _validate_open_cvn_json
+
+    return _validate_open_cvn_json(document, source_identifier=source_identifier)

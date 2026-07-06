@@ -173,7 +173,7 @@ The result `data` contains:
 
 ### XML
 
-Issue `#49` should implement CVN XML import behind `parse_cvn_xml(...)`.
+Issue `#49` implements CVN XML import behind `parse_cvn_xml(...)`.
 
 Responsibilities:
 
@@ -183,10 +183,20 @@ Responsibilities:
 - report `xml_semantically_unmappable` when structurally readable XML cannot map
   to Open CVN/domain representation
 
+Implemented behavior:
+
+- accepts path, inline XML string, and XML bytes inputs
+- rejects mapping inputs as `unsupported_input_format`
+- validates XML well-formedness with `xml.etree.ElementTree`
+- records simplified XML paths and detected CVN code-like values in trace metadata
+- emits a conservative Open CVN JSON document with trace-only import diagnostics
+  for plausible CVN XML
+- does not yet perform full semantic XML-to-domain mapping from real CVN records
+
 ### JSON
 
-Issue `#49` should implement Open CVN JSON import behind
-`parse_open_cvn_json(...)` and `validate_open_cvn_json(...)`.
+Issue `#49` implements Open CVN JSON import behind `parse_open_cvn_json(...)` and
+`validate_open_cvn_json(...)`.
 
 Responsibilities:
 
@@ -196,6 +206,17 @@ Responsibilities:
   validation when the validation dependency is introduced
 - distinguish JSON Schema validation failures from Pydantic/runtime validation
   failures
+
+Implemented behavior:
+
+- accepts path, inline JSON string, JSON bytes, and already-loaded mapping inputs
+- validates the generated Draft 2020-12 schema with `jsonschema`
+- runs JSON Schema validation before Pydantic runtime validation
+- maps malformed JSON to `invalid_json`
+- maps JSON Schema failures to `json_schema_validation_failure`
+- maps runtime model failures to `pydantic_validation_failure`
+- preserves `schema_version`, `metadata.policy.name`, and
+  `metadata.policy.version` in parser trace metadata
 
 ## Examples
 
@@ -386,6 +407,59 @@ Responsibilities:
     "extracted_from": null,
     "cvn_codes": [],
     "xml_paths": ["CVNRoot"],
+    "schema_version": null,
+    "policy_name": null,
+    "policy_version": null
+  }
+}
+```
+
+### Successful Trace-Only CVN XML Import
+
+```json
+{
+  "source_format": "cvn_xml",
+  "source_identifier": "minimal_cvn.xml",
+  "data": {
+    "schema_version": "0.1.0",
+    "metadata": {
+      "source": {
+        "format": "cvn_xml",
+        "identifier": "minimal_cvn.xml",
+        "path": "minimal_cvn.xml",
+        "root": "CVNRoot"
+      },
+      "policy": {
+        "name": "default_cvn_semantic_policy",
+        "version": "0.1.0"
+      }
+    },
+    "curriculum": {
+      "identity": {},
+      "education": [],
+      "research": [],
+      "professional_experience": [],
+      "achievements": [],
+      "other": []
+    },
+    "extensions": {
+      "x-open-cvn.import": {
+        "cvn_codes": ["000.010.000.000"],
+        "xml_paths": ["CVNRoot", "CVNRoot/CVNItem[1]"],
+        "mapping_status": "trace_only"
+      }
+    }
+  },
+  "validation_status": "valid",
+  "warnings": [],
+  "errors": [],
+  "trace": {
+    "source_format": "cvn_xml",
+    "source_identifier": "minimal_cvn.xml",
+    "source_path": "minimal_cvn.xml",
+    "extracted_from": null,
+    "cvn_codes": ["000.010.000.000"],
+    "xml_paths": ["CVNRoot", "CVNRoot/CVNItem[1]"],
     "schema_version": null,
     "policy_name": null,
     "policy_version": null
