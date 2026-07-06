@@ -175,10 +175,13 @@ The detailed issue records for this epic are:
 
 ### Issue `#50` - Add Tests And Documentation For Parser Workflow
 
-- add fixtures for XML, JSON, and PDF-with-embedded-XML when available
-- test parser contracts and error reporting
-- document commands and examples for contributors
-- update current status, roadmap, and known limitations
+- audited parser, schema, conceptual, and diagram regression coverage after issues
+  `#42` through `#49`
+- added direct coverage for the existing `pydantic_validation_failure` JSON path
+- documented the public parser workflow for contributors in
+  `docs/development/parser_workflow.md`
+- verified parser, schema, conceptual, diagram, drift-check, and full-suite
+  workflows
 
 ## Expected Outputs
 
@@ -228,5 +231,7 @@ Those concerns belong to the later application epic.
 
 ## Status
 
-- Status: planned
-- Details for child issues should be expanded when epic `#41` starts
+- Status: completed
+- Issues `#42` through `#50` are implemented or documented with verification
+  records. Later application, storage, export, and richer XML semantic-mapping
+  work remain outside this epic.
