@@ -84,6 +84,8 @@ files in order:
   document format
 - `docs/pipeline/open_cvn_json_mapping.md`: issue `#46` mapping notes from the
   conceptual inventory and schema annotations to runtime JSON
+- `docs/pipeline/parser_validator_contract.md`: issue `#47` public parser and
+  validator contract for future PDF, XML, and JSON import work
 - `schemas/open_cvn.schema.json`: generated issue `#45` JSON Schema artifact
 - `examples/open_cvn/`: representative issue `#46` Open CVN JSON examples
 - `docs/pipeline/known_limitations.md`: structural limitations, source-package
@@ -116,6 +118,12 @@ files in order:
   authoritative record of issue `#43`
 - `docs/roadmap/issues/issue-46-define-canonical-open-cvn-json-format.md`:
   authoritative record of issue `#46`
+- `docs/roadmap/issues/issue-47-unified-parser-validator-contract.md`:
+  authoritative record of issue `#47`
+- `docs/roadmap/issues/issue-48-cvn-pdf-xml-extraction.md`: authoritative
+  record of issue `#48`
+- `docs/roadmap/issues/issue-49-xml-json-import-validation.md`: planned scope of
+  issue `#49`
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance
