@@ -593,7 +593,7 @@ File-modification rule:
 
 ## Impact On Later Issues
 
-- epic `#51` can consume a documented and tested parser/schema foundation
+- epic `#60` can consume a documented and tested parser/schema foundation
 - future application work should not need to rediscover parser contracts
 
 ## Status

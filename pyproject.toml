@@ -14,6 +14,9 @@ dependencies = [
     "pymupdf>=1.26",
 ]
 
+[project.scripts]
+open-cvn = "open_cvn_app.cli:main"
+
 [dependency-groups]
 codegen = [
     "xsdata-pydantic>=24.5",

@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-06
+- Last updated: 2026-07-07
 
 ## Completed Or Stabilized Work
 
@@ -706,6 +706,46 @@
 - full-suite verification result:
   `370 passed in 287.52s (0:04:47)`
 
+### Issue `#61`
+
+- the application MVP scope and CLI shell issue is implemented under:
+  - `src/open_cvn_app/`
+- the application package currently contains:
+  - `src/open_cvn_app/__init__.py`
+  - `src/open_cvn_app/config.py`
+  - `src/open_cvn_app/results.py`
+  - `src/open_cvn_app/cli.py`
+- `pyproject.toml` now registers the console command:
+  - `open-cvn = "open_cvn_app.cli:main"`
+- the CLI uses standard-library `argparse`; no new CLI dependency was added
+- implemented command surface:
+  - `open-cvn --help`
+  - `open-cvn --version`
+  - `open-cvn version`
+  - `open-cvn store init [--path PATH]`
+  - `open-cvn json import INPUT [--store PATH]`
+  - `open-cvn json export OUTPUT [--store PATH] [--version NAME]`
+  - `open-cvn versions list [--store PATH]`
+  - `open-cvn versions derive NAME [--from SOURCE] [--store PATH]`
+  - `open-cvn latex export OUTPUT [--store PATH] [--version NAME]`
+  - `open-cvn pdf generate OUTPUT [--store PATH] [--version NAME]`
+- placeholder commands route deterministically to later issue messages without
+  creating storage, importing/exporting data, creating versions, rendering LaTeX,
+  or generating PDF artifacts
+- CLI smoke tests are implemented in:
+  - `tests/test_open_cvn_app_cli_unit.py`
+- targeted parser contract verification passed with:
+  - `uv run pytest -n auto tests/test_parser_validator_contract_unit.py`
+  - result: `13 passed in 19.62s`
+- targeted CLI verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `9 passed in 15.76s`
+- console-script smoke verification passed with:
+  - `uv run open-cvn --help`
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `379 passed in 334.53s (0:05:34)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -717,10 +757,19 @@
 
 ## Next Planned Work
 
-- Next work item after epic `#41` closure: continue the post-parser Open CVN
-  roadmap, including richer XML semantic mapping, downstream import/export
-  behavior, storage, application, or LaTeX workflow only when a later issue defines
-  that scope
+- Next work item after issue `#61`: issue `#62` local SQLite storage repository
+- Epic `#60` has been expanded into issues `#61` through `#69`
+- MVP direction:
+  - CLI-first local prototype
+  - SQLite local storage
+  - master curriculum plus derived versions
+  - Open CVN JSON import/export using epic `#41` parser/validator
+  - basic derived-version include/exclude editing
+  - LaTeX export
+  - optional PDF generation and preview handoff
+  - application MVP tests and user documentation
+  - post-MVP LLM-assisted import spike
+- Next implementation issue: `#62` local storage with SQLite
 
 ## Blocking Or Relevant Limitations
 
@@ -803,20 +852,23 @@ Then continue with these supporting files as needed:
 5. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 6. `docs/development/regeneration_workflow.md`
 7. `docs/development/parser_workflow.md`
-8. `docs/pipeline/known_limitations.md`
-9. `docs/pipeline/parser_validator_contract.md`
-10. `docs/roadmap/hotfixes/`
-11. `docs/cvn_source_package_auxiliary_artifacts.md`
-12. `docs/cvn_source_package_annex_table_coverage.md`
-13. `docs/cvn_annex_priority_table_families.md`
-14. `docs/cvn_annex_table_families_batch3.md`
-15. `docs/cvn_annex_table_families_batch4.md`
-16. `docs/cvn_annex_table_families_batch5.md`
-17. `docs/cvn_annex_table_families_batch6.md`
-18. `docs/cvn_annex_table_families_batch7.md`
-19. `docs/cvn_annex_table_families_batch8.md`
-20. `docs/cvn_serialization_patterns_reference.md`
-21. `docs/cvn_field_reference_traceability.md`
-22. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
-23. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
-24. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+8. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
+9. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
+10. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
+11. `docs/pipeline/known_limitations.md`
+12. `docs/pipeline/parser_validator_contract.md`
+13. `docs/roadmap/hotfixes/`
+14. `docs/cvn_source_package_auxiliary_artifacts.md`
+15. `docs/cvn_source_package_annex_table_coverage.md`
+16. `docs/cvn_annex_priority_table_families.md`
+17. `docs/cvn_annex_table_families_batch3.md`
+18. `docs/cvn_annex_table_families_batch4.md`
+19. `docs/cvn_annex_table_families_batch5.md`
+20. `docs/cvn_annex_table_families_batch6.md`
+21. `docs/cvn_annex_table_families_batch7.md`
+22. `docs/cvn_annex_table_families_batch8.md`
+23. `docs/cvn_serialization_patterns_reference.md`
+24. `docs/cvn_field_reference_traceability.md`
+25. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+26. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+27. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`

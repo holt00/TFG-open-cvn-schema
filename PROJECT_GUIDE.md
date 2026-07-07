@@ -126,6 +126,26 @@ files in order:
   issue `#49`
 - `docs/roadmap/issues/issue-50-parser-workflow-tests-and-documentation.md`:
   authoritative record of issue `#50`
+- `docs/roadmap/issues/issue-60-epic-cv-management-application.md`:
+  planned MVP application epic after issue `#41`
+- `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`:
+  planned first issue for the application MVP
+- `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`: planned
+  local SQLite storage issue
+- `docs/roadmap/issues/issue-63-master-and-derived-curriculum-versions.md`:
+  planned master and derived curriculum versioning issue
+- `docs/roadmap/issues/issue-64-open-cvn-json-import-export-workflow.md`:
+  planned Open CVN JSON application import/export issue
+- `docs/roadmap/issues/issue-65-curriculum-editing-and-selection-mvp.md`:
+  planned MVP editing and selection issue
+- `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`: planned LaTeX
+  export issue
+- `docs/roadmap/issues/issue-67-pdf-generation-and-preview-handoff.md`: planned
+  optional PDF generation issue
+- `docs/roadmap/issues/issue-68-application-mvp-tests-and-documentation.md`:
+  planned application MVP tests and documentation issue
+- `docs/roadmap/issues/issue-69-llm-assisted-import-spike.md`: planned post-MVP
+  LLM import exploration
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

@@ -682,7 +682,7 @@ File-modification rule:
 ## Impact On Later Issues
 
 - issue `#49` imports and validates this JSON format
-- epic `#51` stores, edits, and exports this format
+- epic `#60` stores, edits, and exports this format
 
 ## Status
 
