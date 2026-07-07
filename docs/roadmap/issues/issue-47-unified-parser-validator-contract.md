@@ -617,7 +617,7 @@ Implemented public result and diagnostic structures:
 
 - issue `#48` implements PDF XML extraction behind this contract
 - issue `#49` implements XML and JSON import validation behind this contract
-- epic `#51` consumes this contract in the application layer
+- epic `#60` consumes this contract in the application layer
 
 ## Status
 

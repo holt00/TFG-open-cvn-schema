@@ -45,6 +45,16 @@ Goal:
 | `#48` | Extract CVN XML from PDF inputs | Completed | Deterministic PDF XML extraction implemented behind `parse_cvn_pdf(...)` with embedded-file and XML metadata support |
 | `#49` | Validate XML and JSON import paths | Completed | JSON Schema plus Pydantic Open CVN JSON validation implemented; CVN XML well-formedness, trace extraction, and trace-only Open CVN mapping implemented |
 | `#50` | Add tests and documentation for parser workflow | Completed | Parser workflow docs, coverage audit, `pydantic_validation_failure` regression, drift checks, and full-suite verification completed |
+| `#60` | Epic: CV management application | Planned | MVP application roadmap for local storage, master/derived versions, JSON import/export, LaTeX/PDF export, and post-MVP LLM spike expanded |
+| `#61` | Application MVP scope and CLI shell | Completed | CLI-first prototype shell, command surface, console script, placeholders, and smoke tests implemented |
+| `#62` | Local storage with SQLite | Planned | Local single-user Open CVN document persistence |
+| `#63` | Master and derived curriculum versions | Planned | Master curriculum plus target-specific derived CV versions |
+| `#64` | Open CVN JSON import/export workflow | Planned | Application import/export using epic `#41` parser and validator |
+| `#65` | Curriculum editing and selection MVP | Planned | Basic include/exclude customization for derived versions |
+| `#66` | LaTeX export from Open CVN | Planned | Jinja-style LaTeX rendering from stored Open CVN data |
+| `#67` | PDF generation and preview handoff | Planned | Optional local TeX compilation and generated-PDF path handoff |
+| `#68` | Application MVP tests and documentation | Planned | End-to-end MVP tests, user docs, and epic `#60` closure |
+| `#69` | LLM-assisted import spike | Planned | Post-MVP exploration for PDFs without deterministic XML extraction |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
@@ -495,3 +505,20 @@ Authoritative record:
 - JSON Schema generation: `docs/pipeline/json_schema_generation.md`
 - limitations: `docs/pipeline/known_limitations.md`
 - current state: `docs/context/current_status.md`
+
+## Post-Parser Application Epic
+
+Epic `#60` is the planned MVP application layer after epic `#41` completion.
+
+Authoritative records:
+
+- `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
+- `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
+- `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
+- `docs/roadmap/issues/issue-63-master-and-derived-curriculum-versions.md`
+- `docs/roadmap/issues/issue-64-open-cvn-json-import-export-workflow.md`
+- `docs/roadmap/issues/issue-65-curriculum-editing-and-selection-mvp.md`
+- `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`
+- `docs/roadmap/issues/issue-67-pdf-generation-and-preview-handoff.md`
+- `docs/roadmap/issues/issue-68-application-mvp-tests-and-documentation.md`
+- `docs/roadmap/issues/issue-69-llm-assisted-import-spike.md`
