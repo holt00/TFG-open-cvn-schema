@@ -703,7 +703,7 @@ File-modification rule:
 ## Impact On Later Issues
 
 - completes parser input support with issue `#48`
-- epic `#51` consumes XML and JSON import/export behavior
+- epic `#60` consumes XML and JSON import/export behavior
 
 ## Status
 

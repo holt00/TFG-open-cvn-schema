@@ -34,7 +34,7 @@ Agents should also read `AGENTS.md` before this file.
 - Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
   `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, `#48`, `#49`, and `#50`
 - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Next planned issue: post-epic Open CVN work to be defined by a later issue
+- Next planned issue: `#62`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -103,6 +103,26 @@ Agents should also read `AGENTS.md` before this file.
   issue `#49`
 - `docs/roadmap/issues/issue-50-parser-workflow-tests-and-documentation.md`:
   implementation record for issue `#50`
+- `docs/roadmap/issues/issue-60-epic-cv-management-application.md`:
+  planned MVP application epic after issue `#41`
+- `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`:
+  implementation record for the CLI-first application shell
+- `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`: planned
+  local SQLite storage issue
+- `docs/roadmap/issues/issue-63-master-and-derived-curriculum-versions.md`:
+  planned master/derived versioning issue
+- `docs/roadmap/issues/issue-64-open-cvn-json-import-export-workflow.md`:
+  planned Open CVN JSON application import/export issue
+- `docs/roadmap/issues/issue-65-curriculum-editing-and-selection-mvp.md`:
+  planned MVP editing and selection issue
+- `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`: planned LaTeX
+  export issue
+- `docs/roadmap/issues/issue-67-pdf-generation-and-preview-handoff.md`: planned
+  optional PDF generation issue
+- `docs/roadmap/issues/issue-68-application-mvp-tests-and-documentation.md`:
+  planned application MVP closure issue
+- `docs/roadmap/issues/issue-69-llm-assisted-import-spike.md`: planned post-MVP
+  LLM import exploration
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

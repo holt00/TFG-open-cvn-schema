@@ -73,6 +73,26 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/issues/issue-49-xml-json-import-validation.md`
 - issue `#50`:
   `docs/roadmap/issues/issue-50-parser-workflow-tests-and-documentation.md`
+- issue `#60`:
+  `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
+- issue `#61`:
+  `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
+- issue `#62`:
+  `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
+- issue `#63`:
+  `docs/roadmap/issues/issue-63-master-and-derived-curriculum-versions.md`
+- issue `#64`:
+  `docs/roadmap/issues/issue-64-open-cvn-json-import-export-workflow.md`
+- issue `#65`:
+  `docs/roadmap/issues/issue-65-curriculum-editing-and-selection-mvp.md`
+- issue `#66`:
+  `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`
+- issue `#67`:
+  `docs/roadmap/issues/issue-67-pdf-generation-and-preview-handoff.md`
+- issue `#68`:
+  `docs/roadmap/issues/issue-68-application-mvp-tests-and-documentation.md`
+- issue `#69`:
+  `docs/roadmap/issues/issue-69-llm-assisted-import-spike.md`
 - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 - hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
 - hotfix `#3`:

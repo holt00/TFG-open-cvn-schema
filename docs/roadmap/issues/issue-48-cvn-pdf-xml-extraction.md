@@ -603,7 +603,7 @@ Implemented PDF extraction behavior:
 ## Impact On Later Issues
 
 - issue `#49` consumes extracted XML through the XML validation path
-- epic `#51` uses PDF import through the parser contract
+- epic `#60` uses PDF import through the parser contract
 
 ## Status
 
