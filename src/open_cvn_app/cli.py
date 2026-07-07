@@ -7,7 +7,7 @@ from collections.abc import Sequence
 from open_cvn_app import __version__
 from open_cvn_app.config import OpenCvnAppConfig
 from open_cvn_app.results import AppResult
-from open_cvn_app.storage import SCHEMA_VERSION, StorageError, initialize_store
+from open_cvn_app.storage import SCHEMA_VERSION, CurriculumRepository, StorageError, initialize_store
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -49,6 +49,14 @@ def build_parser() -> argparse.ArgumentParser:
     versions_list_parser = versions_subparsers.add_parser("list", help="List curriculum versions.")
     _add_store_path_option(versions_list_parser)
     versions_list_parser.set_defaults(handler=_handle_versions_list)
+    versions_master_parser = versions_subparsers.add_parser("master", help="Assign master curriculum version.")
+    versions_master_parser.add_argument("curriculum_id", help="Stored curriculum ID to assign as master.")
+    _add_store_path_option(versions_master_parser)
+    versions_master_parser.set_defaults(handler=_handle_versions_master)
+    versions_show_parser = versions_subparsers.add_parser("show", help="Show curriculum version metadata.")
+    versions_show_parser.add_argument("name", help="Version name or ID.")
+    _add_store_path_option(versions_show_parser)
+    versions_show_parser.set_defaults(handler=_handle_versions_show)
     versions_derive_parser = versions_subparsers.add_parser(
         "derive",
         help="Create derived curriculum version.",
@@ -62,6 +70,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_store_path_option(versions_derive_parser)
     versions_derive_parser.set_defaults(handler=_handle_versions_derive)
+    versions_include_parser = versions_subparsers.add_parser("include", help="Include selection pointer in derived version.")
+    versions_include_parser.add_argument("name", help="Derived version name or ID.")
+    versions_include_parser.add_argument("pointer", help="JSON Pointer under /curriculum.")
+    _add_store_path_option(versions_include_parser)
+    versions_include_parser.set_defaults(handler=_handle_versions_include)
+    versions_exclude_parser = versions_subparsers.add_parser("exclude", help="Exclude selection pointer from derived version.")
+    versions_exclude_parser.add_argument("name", help="Derived version name or ID.")
+    versions_exclude_parser.add_argument("pointer", help="JSON Pointer under /curriculum.")
+    _add_store_path_option(versions_exclude_parser)
+    versions_exclude_parser.set_defaults(handler=_handle_versions_exclude)
 
     latex_parser = subparsers.add_parser("latex", help="Export curriculum to LaTeX.")
     latex_subparsers = latex_parser.add_subparsers(dest="latex_command")
@@ -148,11 +166,81 @@ def _handle_json_export(args: argparse.Namespace) -> AppResult:
 
 
 def _handle_versions_list(args: argparse.Namespace) -> AppResult:
-    return _planned_result("Version listing", "#63", args)
+    repository = _repository_from_args(args)
+    try:
+        versions = repository.list_versions()
+    except StorageError as exc:
+        return AppResult.failed("Version listing failed.", error=str(exc))
+    if not versions:
+        return AppResult.ok("No curriculum versions found.")
+    lines = ["Curriculum versions:"]
+    lines.extend(
+        f"- {version.name} ({version.kind}) id={version.id} "
+        f"master={version.master_curriculum_id} source={version.source_version_id or '-'} "
+        f"updated={version.updated_at}"
+        for version in versions
+    )
+    return AppResult.ok("\n".join(lines))
+
+
+def _handle_versions_master(args: argparse.Namespace) -> AppResult:
+    repository = _repository_from_args(args)
+    try:
+        version = repository.assign_master_curriculum(args.curriculum_id)
+    except StorageError as exc:
+        return AppResult.failed("Master version assignment failed.", error=str(exc))
+    return AppResult.ok(f"Assigned master curriculum version '{version.name}' with id {version.id}.")
+
+
+def _handle_versions_show(args: argparse.Namespace) -> AppResult:
+    repository = _repository_from_args(args)
+    try:
+        version = repository.get_version(args.name)
+    except StorageError as exc:
+        return AppResult.failed("Version lookup failed.", error=str(exc))
+    return AppResult.ok(
+        "\n".join(
+            (
+                f"Name: {version.name}",
+                f"ID: {version.id}",
+                f"Kind: {version.kind}",
+                f"Master curriculum ID: {version.master_curriculum_id}",
+                f"Source version ID: {version.source_version_id or '-'}",
+                f"Selection mode: {version.selection.mode}",
+                f"Included pointers: {', '.join(version.selection.included_pointers) or '-'}",
+                f"Excluded pointers: {', '.join(version.selection.excluded_pointers) or '-'}",
+                f"Created at: {version.created_at}",
+                f"Updated at: {version.updated_at}",
+            )
+        )
+    )
 
 
 def _handle_versions_derive(args: argparse.Namespace) -> AppResult:
-    return _planned_result("Derived version creation", "#63", args)
+    repository = _repository_from_args(args)
+    try:
+        version = repository.create_derived_version(args.name, source=args.source)
+    except StorageError as exc:
+        return AppResult.failed("Derived version creation failed.", error=str(exc))
+    return AppResult.ok(f"Created derived curriculum version '{version.name}' with id {version.id}.")
+
+
+def _handle_versions_include(args: argparse.Namespace) -> AppResult:
+    repository = _repository_from_args(args)
+    try:
+        version = repository.include_in_version(args.name, args.pointer)
+    except StorageError as exc:
+        return AppResult.failed("Version include failed.", error=str(exc))
+    return AppResult.ok(f"Included {args.pointer} in derived curriculum version '{version.name}'.")
+
+
+def _handle_versions_exclude(args: argparse.Namespace) -> AppResult:
+    repository = _repository_from_args(args)
+    try:
+        version = repository.exclude_from_version(args.name, args.pointer)
+    except StorageError as exc:
+        return AppResult.failed("Version exclude failed.", error=str(exc))
+    return AppResult.ok(f"Excluded {args.pointer} from derived curriculum version '{version.name}'.")
 
 
 def _handle_latex_export(args: argparse.Namespace) -> AppResult:
@@ -161,3 +249,8 @@ def _handle_latex_export(args: argparse.Namespace) -> AppResult:
 
 def _handle_pdf_generate(args: argparse.Namespace) -> AppResult:
     return _planned_result("PDF generation", "#67", args)
+
+
+def _repository_from_args(args: argparse.Namespace) -> CurriculumRepository:
+    config = _config_from_args(args)
+    return CurriculumRepository(config.store_path)

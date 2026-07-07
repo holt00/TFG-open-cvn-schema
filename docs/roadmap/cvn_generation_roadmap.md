@@ -48,7 +48,7 @@ Goal:
 | `#60` | Epic: CV management application | Planned | MVP application roadmap for local storage, master/derived versions, JSON import/export, LaTeX/PDF export, and post-MVP LLM spike expanded |
 | `#61` | Application MVP scope and CLI shell | Completed | CLI-first prototype shell, command surface, console script, placeholders, and smoke tests implemented |
 | `#62` | Local storage with SQLite | Completed | SQLite store initialization, schema metadata, curriculum repository, diagnostics, CLI store init, and tests implemented |
-| `#63` | Master and derived curriculum versions | Planned | Master curriculum plus target-specific derived CV versions |
+| `#63` | Master and derived curriculum versions | Completed | Schema v2 migration, master/derived repository operations, selection materialization, CLI commands, and tests implemented |
 | `#64` | Open CVN JSON import/export workflow | Planned | Application import/export using epic `#41` parser and validator |
 | `#65` | Curriculum editing and selection MVP | Planned | Basic include/exclude customization for derived versions |
 | `#66` | LaTeX export from Open CVN | Planned | Jinja-style LaTeX rendering from stored Open CVN data |
