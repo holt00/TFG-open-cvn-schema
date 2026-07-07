@@ -715,6 +715,7 @@
   - `src/open_cvn_app/config.py`
   - `src/open_cvn_app/results.py`
   - `src/open_cvn_app/cli.py`
+  - `src/open_cvn_app/storage.py`
 - `pyproject.toml` now registers the console command:
   - `open-cvn = "open_cvn_app.cli:main"`
 - the CLI uses standard-library `argparse`; no new CLI dependency was added
@@ -729,9 +730,10 @@
   - `open-cvn versions derive NAME [--from SOURCE] [--store PATH]`
   - `open-cvn latex export OUTPUT [--store PATH] [--version NAME]`
   - `open-cvn pdf generate OUTPUT [--store PATH] [--version NAME]`
-- placeholder commands route deterministically to later issue messages without
-  creating storage, importing/exporting data, creating versions, rendering LaTeX,
-  or generating PDF artifacts
+- after issue `#62`, `store init` creates real local SQLite storage while the
+  remaining later-issue command groups still route deterministically to
+  placeholder messages without importing/exporting data, creating versions,
+  rendering LaTeX, or generating PDF artifacts
 - CLI smoke tests are implemented in:
   - `tests/test_open_cvn_app_cli_unit.py`
 - targeted parser contract verification passed with:
@@ -746,6 +748,59 @@
   - `uv run pytest -n auto tests`
   - result: `379 passed in 334.53s (0:05:34)`
 
+### Issue `#62`
+
+- the local SQLite storage repository issue is implemented under:
+  - `src/open_cvn_app/storage.py`
+- the storage layer uses Python standard-library `sqlite3`; no new database
+  dependency was added
+- the initial local store schema version is `1` and is recorded in
+  `app_metadata`
+- the implemented SQLite tables are:
+  - `app_metadata`
+  - `curricula`
+  - `curriculum_diagnostics`
+- store initialization is exposed through `initialize_store(path)` and is
+  idempotent
+- `open-cvn store init [--path PATH]` now creates a real SQLite store and reports
+  the resolved path plus schema version
+- repository operations are exposed through `CurriculumRepository` for create,
+  read, list, update, payload replacement, delete, and diagnostic listing
+- Open CVN JSON documents are validated with `validate_open_cvn_json(...)` before
+  storage
+- invalid or failed validation results are rejected before insertion
+- valid Open CVN documents are stored as deterministic canonical JSON text while
+  preserving semantic data for later export
+- parser or import diagnostics can be persisted and replaced through repository
+  create and payload replacement operations
+- storage tests are implemented in:
+  - `tests/test_open_cvn_app_storage_unit.py`
+- CLI storage initialization coverage was added to:
+  - `tests/test_open_cvn_app_cli_unit.py`
+- the existing JSON Schema CLI subprocess test now uses the xsdata generation
+  lock to avoid racing with generated artifact regeneration under `pytest -n auto`
+- targeted storage verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_storage_unit.py -v`
+  - result: `7 passed in 24.88s`
+- targeted CLI verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `9 passed in 20.66s`
+- targeted parser regression verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_json_import_unit.py tests/test_parser_validator_contract_unit.py -v`
+  - result: `22 passed in 32.96s`
+- targeted JSON Schema CLI lock verification passed with:
+  - `uv run pytest -n auto tests/test_generation_pipeline_json_schema.py::test_json_schema_generator_cli_writes_output -v`
+  - result: `1 passed in 62.65s`
+- combined app storage and CLI verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_storage_unit.py tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `16 passed in 26.62s`
+- console-script store initialization smoke verification passed with:
+  - `uv run open-cvn store init --path /tmp/opencode/open-cvn-issue-62-smoke.sqlite`
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `386 passed in 371.09s (0:06:11)`
+- no new durable limitations were found
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -757,7 +812,8 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#61`: issue `#62` local SQLite storage repository
+- Next work item after issue `#62`: issue `#63` master and derived curriculum
+  versions
 - Epic `#60` has been expanded into issues `#61` through `#69`
 - MVP direction:
   - CLI-first local prototype
@@ -769,7 +825,7 @@
   - optional PDF generation and preview handoff
   - application MVP tests and user documentation
   - post-MVP LLM-assisted import spike
-- Next implementation issue: `#62` local storage with SQLite
+- Next implementation issue: `#63` master and derived curriculum versions
 
 ## Blocking Or Relevant Limitations
 

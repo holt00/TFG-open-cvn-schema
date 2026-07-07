@@ -47,7 +47,7 @@ Goal:
 | `#50` | Add tests and documentation for parser workflow | Completed | Parser workflow docs, coverage audit, `pydantic_validation_failure` regression, drift checks, and full-suite verification completed |
 | `#60` | Epic: CV management application | Planned | MVP application roadmap for local storage, master/derived versions, JSON import/export, LaTeX/PDF export, and post-MVP LLM spike expanded |
 | `#61` | Application MVP scope and CLI shell | Completed | CLI-first prototype shell, command surface, console script, placeholders, and smoke tests implemented |
-| `#62` | Local storage with SQLite | Planned | Local single-user Open CVN document persistence |
+| `#62` | Local storage with SQLite | Completed | SQLite store initialization, schema metadata, curriculum repository, diagnostics, CLI store init, and tests implemented |
 | `#63` | Master and derived curriculum versions | Planned | Master curriculum plus target-specific derived CV versions |
 | `#64` | Open CVN JSON import/export workflow | Planned | Application import/export using epic `#41` parser and validator |
 | `#65` | Curriculum editing and selection MVP | Planned | Basic include/exclude customization for derived versions |

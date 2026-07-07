@@ -16,6 +16,7 @@ from cvn_codegen.json_schema_generator import (
 )
 from cvn_codegen.normalization_types import NormalizationResult
 from cvn_codegen.semantic_policy import build_default_semantic_policy_bundle
+from xsdata_generation_lock import locked_xsdata_generation
 
 
 def build_canonical_schema(normalization_result: NormalizationResult):
@@ -119,18 +120,19 @@ def test_json_schema_pipeline_written_output_is_deterministic(
 def test_json_schema_generator_cli_writes_output(tmp_path: Path):
     output_path = tmp_path / "open_cvn.schema.json"
 
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "cvn_codegen.json_schema_generator",
-            "--output-path",
-            str(output_path),
-        ],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
+    with locked_xsdata_generation():
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "cvn_codegen.json_schema_generator",
+                "--output-path",
+                str(output_path),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
 
     assert "Generated JSON Schema" in result.stdout
     assert output_path.exists()
