@@ -7,6 +7,7 @@ from collections.abc import Sequence
 from open_cvn_app import __version__
 from open_cvn_app.config import OpenCvnAppConfig
 from open_cvn_app.results import AppResult
+from open_cvn_app.storage import SCHEMA_VERSION, StorageError, initialize_store
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -127,7 +128,15 @@ def _handle_version(args: argparse.Namespace) -> AppResult:
 
 
 def _handle_store_init(args: argparse.Namespace) -> AppResult:
-    return _planned_result("Store initialization", "#62", args)
+    config = _config_from_args(args)
+    try:
+        store_info = initialize_store(config.store_path)
+    except StorageError as exc:
+        return AppResult.failed("Store initialization failed.", error=str(exc))
+    return AppResult.ok(
+        f"Initialized Open CVN store at {store_info.path}. "
+        f"Schema version: {SCHEMA_VERSION}"
+    )
 
 
 def _handle_json_import(args: argparse.Namespace) -> AppResult:

@@ -26,15 +26,16 @@ def test_cli_version_command_outputs_project_version(capsys: pytest.CaptureFixtu
     assert capsys.readouterr().out.strip() == f"open-cvn {__version__}"
 
 
-def test_store_init_routes_to_issue_62_placeholder(capsys: pytest.CaptureFixture[str], tmp_path):
+def test_store_init_creates_local_store(capsys: pytest.CaptureFixture[str], tmp_path):
     store_path = tmp_path / "open-cvn.sqlite"
 
     exit_code = run(["store", "init", "--path", str(store_path)])
 
     output = capsys.readouterr().out
     assert exit_code == 0
-    assert "Store initialization is planned for issue #62" in output
+    assert "Initialized Open CVN store" in output
     assert str(store_path) in output
+    assert store_path.exists()
 
 
 def test_json_import_routes_to_issue_64_placeholder(capsys: pytest.CaptureFixture[str]):
