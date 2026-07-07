@@ -801,6 +801,59 @@
   - result: `386 passed in 371.09s (0:06:11)`
 - no new durable limitations were found
 
+### Issue `#63`
+
+- the master and derived curriculum versioning issue is implemented under:
+  - `src/open_cvn_app/storage.py`
+  - `src/open_cvn_app/cli.py`
+- the local store schema version is now `2`
+- schema version `1` stores from issue `#62` migrate additively to schema version
+  `2` without losing existing curricula or diagnostics
+- the implemented versioning table is:
+  - `curriculum_versions`
+- versioning repository operations are exposed through `CurriculumRepository` for:
+  - master assignment
+  - master lookup
+  - version lookup
+  - version listing
+  - derived version creation
+  - include selection edits
+  - exclude selection edits
+  - materialized version generation
+- derived selections use deterministic JSON with `include_all` and `include_only`
+  modes plus JSON Pointer-style paths under `/curriculum`
+- materialized versions are validated through `validate_open_cvn_json(...)` before
+  being returned
+- materialized version metadata is recorded under
+  `extensions["x-open-cvn.versioning"]`
+- issue `#63` replaces versioning CLI placeholders with functional commands:
+  - `open-cvn versions list [--store PATH]`
+  - `open-cvn versions master CURRICULUM_ID [--store PATH]`
+  - `open-cvn versions show NAME [--store PATH]`
+  - `open-cvn versions derive NAME [--from SOURCE] [--store PATH]`
+  - `open-cvn versions include NAME POINTER [--store PATH]`
+  - `open-cvn versions exclude NAME POINTER [--store PATH]`
+- JSON import/export, LaTeX, and PDF command groups remain scoped to later issues
+- versioning tests are implemented in:
+  - `tests/test_open_cvn_app_versioning_unit.py`
+- CLI versioning coverage was added to:
+  - `tests/test_open_cvn_app_cli_unit.py`
+- targeted versioning verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_versioning_unit.py -v`
+  - result: `11 passed in 34.52s`
+- targeted storage and CLI verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_storage_unit.py tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `18 passed in 32.47s`
+- targeted parser regression verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_json_import_unit.py tests/test_parser_validator_contract_unit.py -v`
+  - result: `22 passed in 34.91s`
+- console-script versioning smoke verification passed with:
+  - `uv run open-cvn store init --path /tmp/opencode/open-cvn-issue-63-smoke.sqlite && uv run open-cvn versions list --store /tmp/opencode/open-cvn-issue-63-smoke.sqlite`
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `399 passed in 431.30s (0:07:11)`
+- no new durable limitations were found
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -812,8 +865,8 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#62`: issue `#63` master and derived curriculum
-  versions
+- Next work item after issue `#63`: issue `#64` Open CVN JSON import/export
+  workflow
 - Epic `#60` has been expanded into issues `#61` through `#69`
 - MVP direction:
   - CLI-first local prototype
@@ -825,7 +878,7 @@
   - optional PDF generation and preview handoff
   - application MVP tests and user documentation
   - post-MVP LLM-assisted import spike
-- Next implementation issue: `#63` master and derived curriculum versions
+- Next implementation issue: `#64` Open CVN JSON import/export workflow
 
 ## Blocking Or Relevant Limitations
 

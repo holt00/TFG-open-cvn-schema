@@ -30,12 +30,13 @@ Agents should also read `AGENTS.md` before this file.
 - Project: open CVN schema and tooling for Spanish academic CV processing
 - Current pipeline stage: structural generation, metadata normalization,
   semantic policy, domain generation, conceptual schema, Open CVN JSON format,
-  parser/validator contract, CLI shell, and local SQLite storage completed
+  parser/validator contract, CLI shell, local SQLite storage, and master/derived
+  curriculum versioning completed
 - Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
   `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, `#48`, `#49`, `#50`,
-  `#61`, and `#62`
+  `#61`, `#62`, and `#63`
 - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Next planned issue: `#63`
+- Next planned issue: `#64`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
