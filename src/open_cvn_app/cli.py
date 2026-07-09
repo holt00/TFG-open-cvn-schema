@@ -10,6 +10,7 @@ from open_cvn import CvnParseIssue, CvnValidationStatus, parse_open_cvn_json
 from open_cvn_app import __version__
 from open_cvn_app.config import OpenCvnAppConfig
 from open_cvn_app.editing import list_curriculum_entries, list_curriculum_sections
+from open_cvn_app.latex import export_latex_document
 from open_cvn_app.results import AppResult
 from open_cvn_app.storage import (
     SCHEMA_VERSION,
@@ -435,7 +436,25 @@ def _handle_versions_field_edit(args: argparse.Namespace) -> AppResult:
 
 
 def _handle_latex_export(args: argparse.Namespace) -> AppResult:
-    return _planned_result("LaTeX export", "#66", args)
+    repository = _repository_from_args(args)
+    try:
+        result = export_latex_document(
+            repository,
+            version=args.version_name,
+            output_path=args.output,
+        )
+    except StorageError as exc:
+        return AppResult.failed("LaTeX export failed.", error=str(exc))
+    except OSError as exc:
+        return AppResult.failed("LaTeX export failed.", error=str(exc))
+    return AppResult.ok(
+        "\n".join(
+            (
+                f"Exported LaTeX version '{result.version_name}' to {result.output_path}.",
+                f"Validation status: {result.validation_status}",
+            )
+        )
+    )
 
 
 def _handle_pdf_generate(args: argparse.Namespace) -> AppResult:

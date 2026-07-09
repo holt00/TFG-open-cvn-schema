@@ -138,8 +138,8 @@ files in order:
   authoritative record of the Open CVN JSON application import/export issue
 - `docs/roadmap/issues/issue-65-curriculum-editing-and-selection-mvp.md`:
   planned MVP editing and selection issue
-- `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`: planned LaTeX
-  export issue
+- `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`: authoritative
+  record of the LaTeX export issue
 - `docs/roadmap/issues/issue-67-pdf-generation-and-preview-handoff.md`: planned
   optional PDF generation issue
 - `docs/roadmap/issues/issue-68-application-mvp-tests-and-documentation.md`:
@@ -176,6 +176,8 @@ files in order:
   verification workflow
 - `docs/development/parser_workflow.md`: contributor guide for using and testing
   the public PDF/XML/JSON parser workflow
+- `docs/development/latex_export_workflow.md`: issue `#66` user workflow for
+  exporting stored Open CVN master or derived versions to LaTeX
 - `docs/development/code_style.md`: code style, typing, and conventions
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy,
   cross-linking rules, and update protocol

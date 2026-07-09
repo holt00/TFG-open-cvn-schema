@@ -387,12 +387,56 @@ def test_versions_derive_reports_missing_master(capsys: pytest.CaptureFixture[st
     assert "Master curriculum version has not been assigned." in captured.err
 
 
-def test_latex_export_routes_to_issue_66_placeholder(capsys: pytest.CaptureFixture[str]):
-    exit_code = run(["latex", "export", "cv.tex"])
+def test_latex_export_writes_master_tex(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path, curriculum = _create_store_with_curriculum(tmp_path)
+    repository = CurriculumRepository(store_path)
+    repository.assign_master_curriculum(curriculum.id)
+    output_path = tmp_path / "exports" / "cv.tex"
+
+    exit_code = run(["latex", "export", str(output_path), "--store", str(store_path), "--version", "master"])
 
     output = capsys.readouterr().out
+    exported_text = output_path.read_text(encoding="utf-8")
     assert exit_code == 0
-    assert "LaTeX export is planned for issue #66" in output
+    assert "Exported LaTeX version 'master'" in output
+    assert "Validation status: valid" in output
+    assert "\\documentclass[11pt,a4paper]{article}" in exported_text
+    assert "\\section*{Version Metadata}" in exported_text
+    assert exported_text.endswith("\n")
+
+
+def test_latex_export_writes_materialized_derived_tex(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    repository = CurriculumRepository(store_path)
+    document = json.loads((EXAMPLES_DIR / "research_entry.json").read_text(encoding="utf-8"))
+    curriculum = repository.create_curriculum(CurriculumCreate(display_name="Master CV", document=document))
+    repository.assign_master_curriculum(curriculum.id)
+    repository.create_derived_version("public")
+    repository.exclude_from_version("public", "/curriculum/research")
+    output_path = tmp_path / "public.tex"
+
+    exit_code = run(["latex", "export", str(output_path), "--store", str(store_path), "--version", "public"])
+
+    output = capsys.readouterr().out
+    exported_text = output_path.read_text(encoding="utf-8")
+    assert exit_code == 0
+    assert "Exported LaTeX version 'public'" in output
+    assert "\\item[Version] public" in exported_text
+    assert "Open CVN data representation" not in exported_text
+
+
+def test_latex_export_reports_missing_version(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    output_path = tmp_path / "missing.tex"
+
+    exit_code = run(["latex", "export", str(output_path), "--store", str(store_path), "--version", "missing"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "LaTeX export failed." in captured.err
+    assert "Curriculum version not found: missing" in captured.err
 
 
 def test_pdf_generate_routes_to_issue_67_placeholder(capsys: pytest.CaptureFixture[str]):
