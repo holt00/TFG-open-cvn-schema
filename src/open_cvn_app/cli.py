@@ -1,13 +1,23 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from collections.abc import Sequence
+from pathlib import Path
 
+from open_cvn import CvnParseIssue, CvnValidationStatus, parse_open_cvn_json
 from open_cvn_app import __version__
 from open_cvn_app.config import OpenCvnAppConfig
 from open_cvn_app.results import AppResult
-from open_cvn_app.storage import SCHEMA_VERSION, CurriculumRepository, StorageError, initialize_store
+from open_cvn_app.storage import (
+    SCHEMA_VERSION,
+    CurriculumCreate,
+    CurriculumRepository,
+    MasterCurriculumNotFound,
+    StorageError,
+    initialize_store,
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -36,6 +46,12 @@ def build_parser() -> argparse.ArgumentParser:
     json_subparsers = json_parser.add_subparsers(dest="json_command")
     json_import_parser = json_subparsers.add_parser("import", help="Import Open CVN JSON.")
     json_import_parser.add_argument("input", help="Input Open CVN JSON file.")
+    json_import_parser.add_argument("--name", help="Stored curriculum display name.")
+    json_import_parser.add_argument(
+        "--as-master",
+        action="store_true",
+        help="Assign imported curriculum as the master version.",
+    )
     _add_store_path_option(json_import_parser)
     json_import_parser.set_defaults(handler=_handle_json_import)
     json_export_parser = json_subparsers.add_parser("export", help="Export Open CVN JSON.")
@@ -158,11 +174,82 @@ def _handle_store_init(args: argparse.Namespace) -> AppResult:
 
 
 def _handle_json_import(args: argparse.Namespace) -> AppResult:
-    return _planned_result("Open CVN JSON import", "#64", args)
+    input_path = Path(args.input)
+    repository = _repository_from_args(args)
+    parse_result = parse_open_cvn_json(input_path, source_identifier=str(input_path))
+    if parse_result.validation_status in {CvnValidationStatus.INVALID, CvnValidationStatus.FAILED}:
+        return AppResult.failed(
+            "Open CVN JSON import failed.",
+            error="\n".join(
+                (
+                    f"Validation status: {parse_result.validation_status.value}",
+                    "Errors:",
+                    _format_parse_issues(parse_result.errors),
+                )
+            ),
+        )
+    if parse_result.data is None:
+        return AppResult.failed(
+            "Open CVN JSON import failed.",
+            error="Parser accepted input but did not return Open CVN JSON data.",
+        )
+
+    display_name = args.name or input_path.stem
+    try:
+        if args.as_master:
+            try:
+                repository.get_master_version()
+            except MasterCurriculumNotFound:
+                pass
+            else:
+                return AppResult.failed(
+                    "Open CVN JSON import failed.",
+                    error="A master curriculum version already exists.",
+                )
+        record = repository.create_curriculum(
+            CurriculumCreate(
+                display_name=display_name,
+                document=parse_result.data,
+                source_identifier=str(input_path),
+                diagnostics=parse_result.warnings,
+            )
+        )
+        master_line = None
+        if args.as_master:
+            master = repository.assign_master_curriculum(record.id)
+            master_line = f"Assigned master curriculum version '{master.name}' with id {master.id}."
+    except StorageError as exc:
+        return AppResult.failed("Open CVN JSON import failed.", error=str(exc))
+
+    lines = [
+        f"Imported Open CVN JSON as curriculum '{record.display_name}'.",
+        f"Curriculum ID: {record.id}",
+        f"Validation status: {record.validation_status}",
+        f"Source: {input_path}",
+    ]
+    if master_line is not None:
+        lines.append(master_line)
+    return AppResult.ok("\n".join(lines))
 
 
 def _handle_json_export(args: argparse.Namespace) -> AppResult:
-    return _planned_result("Open CVN JSON export", "#64", args)
+    repository = _repository_from_args(args)
+    output_path = Path(args.output)
+    try:
+        materialized = repository.materialize_version(args.version_name)
+        _write_canonical_json(output_path, materialized.document)
+    except StorageError as exc:
+        return AppResult.failed("Open CVN JSON export failed.", error=str(exc))
+    except OSError as exc:
+        return AppResult.failed("Open CVN JSON export failed.", error=str(exc))
+    return AppResult.ok(
+        "\n".join(
+            (
+                f"Exported Open CVN JSON version '{materialized.version.name}' to {output_path}.",
+                f"Validation status: {materialized.validation_status}",
+            )
+        )
+    )
 
 
 def _handle_versions_list(args: argparse.Namespace) -> AppResult:
@@ -254,3 +341,29 @@ def _handle_pdf_generate(args: argparse.Namespace) -> AppResult:
 def _repository_from_args(args: argparse.Namespace) -> CurriculumRepository:
     config = _config_from_args(args)
     return CurriculumRepository(config.store_path)
+
+
+def _format_parse_issues(issues: tuple[CvnParseIssue, ...]) -> str:
+    if not issues:
+        return "-"
+    return "\n".join(_format_parse_issue(issue) for issue in issues)
+
+
+def _format_parse_issue(issue: CvnParseIssue) -> str:
+    location = issue.source_location or "-"
+    return (
+        f"- code={issue.code.value} severity={issue.severity.value} "
+        f"path={_format_issue_path(issue.path)} location={location} message={issue.message}"
+    )
+
+
+def _format_issue_path(path: tuple[str, ...]) -> str:
+    if not path:
+        return "-"
+    return "/".join(path)
+
+
+def _write_canonical_json(path: Path, document: object) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = json.dumps(document, ensure_ascii=False, sort_keys=True, indent=2)
+    path.write_text(f"{payload}\n", encoding="utf-8")

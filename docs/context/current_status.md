@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-07
+- Last updated: 2026-07-08
 
 ## Completed Or Stabilized Work
 
@@ -854,6 +854,48 @@
   - result: `399 passed in 431.30s (0:07:11)`
 - no new durable limitations were found
 
+### Issue `#64`
+
+- the Open CVN JSON import/export workflow issue is implemented under:
+  - `src/open_cvn_app/cli.py`
+- the JSON CLI placeholders from issue `#61` are now functional:
+  - `open-cvn json import INPUT [--store PATH] [--name NAME] [--as-master]`
+  - `open-cvn json export OUTPUT [--store PATH] [--version NAME]`
+- import uses `parse_open_cvn_json(...)` from the public `open_cvn` parser package
+  and does not introduce an app-specific JSON validator or alternate JSON shape
+- valid imports are stored through `CurriculumRepository.create_curriculum(...)`
+  with parser warnings preserved as repository diagnostics when present
+- `--name` sets the stored curriculum display name; otherwise the input path stem
+  is used
+- `--as-master` assigns the imported curriculum as the master version when no
+  master already exists
+- duplicate `--as-master` imports fail before creating a new curriculum so a
+  one-step import/master command does not leave an orphan curriculum record
+- export uses `CurriculumRepository.materialize_version(...)`, so master and
+  derived exports share the issue `#63` version materialization behavior
+- exported JSON is deterministic with `ensure_ascii=False`, sorted object keys,
+  two-space indentation, and a final newline
+- export creates parent directories for explicit nested output paths
+- CLI output reports structured parser failures with issue code, severity, path,
+  source location, and message
+- CLI import/export coverage was added to:
+  - `tests/test_open_cvn_app_cli_unit.py`
+- targeted CLI verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `18 passed in 17.84s`
+- targeted storage and versioning regression verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_storage_unit.py tests/test_open_cvn_app_versioning_unit.py -v`
+  - result: `18 passed in 16.82s`
+- targeted parser contract regression verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_json_import_unit.py tests/test_parser_validator_contract_unit.py -v`
+  - result: `22 passed in 16.91s`
+- console-script smoke verification passed for store init, JSON import with
+  `--as-master`, and JSON export of the master version
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `406 passed in 719.75s (0:11:59)`
+- no new durable limitations were found
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -865,8 +907,8 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#63`: issue `#64` Open CVN JSON import/export
-  workflow
+- Next work item after issue `#64`: issue `#65` curriculum editing and selection
+  MVP
 - Epic `#60` has been expanded into issues `#61` through `#69`
 - MVP direction:
   - CLI-first local prototype
@@ -878,7 +920,7 @@
   - optional PDF generation and preview handoff
   - application MVP tests and user documentation
   - post-MVP LLM-assisted import spike
-- Next implementation issue: `#64` Open CVN JSON import/export workflow
+- Next implementation issue: `#65` curriculum editing and selection MVP
 
 ## Blocking Or Relevant Limitations
 

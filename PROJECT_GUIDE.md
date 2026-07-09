@@ -135,7 +135,7 @@ files in order:
 - `docs/roadmap/issues/issue-63-master-and-derived-curriculum-versions.md`:
   planned master and derived curriculum versioning issue
 - `docs/roadmap/issues/issue-64-open-cvn-json-import-export-workflow.md`:
-  planned Open CVN JSON application import/export issue
+  authoritative record of the Open CVN JSON application import/export issue
 - `docs/roadmap/issues/issue-65-curriculum-editing-and-selection-mvp.md`:
   planned MVP editing and selection issue
 - `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`: planned LaTeX
