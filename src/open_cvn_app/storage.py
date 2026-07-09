@@ -108,6 +108,7 @@ class DerivedSelection:
     mode: str = "include_all"
     included_pointers: tuple[str, ...] = ()
     excluded_pointers: tuple[str, ...] = ()
+    metadata: Mapping[str, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -423,6 +424,41 @@ class CurriculumRepository:
     def exclude_from_version(self, version: str, pointer: str) -> CurriculumVersionRecord:
         return self._update_selection(version, pointer, include=False)
 
+    def update_version_metadata(
+        self,
+        version: str,
+        *,
+        display_name: str | None = None,
+        purpose: str | None = None,
+    ) -> CurriculumVersionRecord:
+        with self._connection() as connection:
+            row = _fetch_version_row(connection, version)
+            if row is None:
+                raise CurriculumVersionNotFound(f"Curriculum version not found: {version}")
+            version_record = _row_to_version(row)
+            if version_record.kind == "master":
+                raise InvalidSelectionRule("Master curriculum version metadata cannot be edited.")
+            metadata = dict(version_record.selection.metadata or {})
+            if display_name is not None:
+                _set_or_remove_metadata(metadata, "display_name", display_name)
+            if purpose is not None:
+                _set_or_remove_metadata(metadata, "purpose", purpose)
+            selection = DerivedSelection(
+                mode=version_record.selection.mode,
+                included_pointers=version_record.selection.included_pointers,
+                excluded_pointers=version_record.selection.excluded_pointers,
+                metadata=metadata,
+            )
+            now = _utc_now()
+            connection.execute(
+                "UPDATE curriculum_versions SET selection_json = ?, updated_at = ? WHERE id = ?",
+                (_selection_to_json(selection), now, version_record.id),
+            )
+            connection.commit()
+        updated = self.get_version(version_record.id)
+        self.materialize_version(updated.id)
+        return updated
+
     def materialize_version(self, version: str) -> MaterializedVersion:
         version_record = self.get_version(version)
         master = self.get_curriculum(version_record.master_curriculum_id)
@@ -442,6 +478,8 @@ class CurriculumRepository:
             "source_version_id": version_record.source_version_id,
             "selection": _selection_to_data(version_record.selection),
         }
+        if version_record.selection.metadata:
+            extensions["x-open-cvn.versioning"]["metadata"] = dict(version_record.selection.metadata)
 
         validation_result = validate_open_cvn_json(document, source_identifier=f"version:{version_record.name}")
         if validation_result.validation_status in {CvnValidationStatus.INVALID, CvnValidationStatus.FAILED}:
@@ -625,10 +663,14 @@ def _fetch_version_row(connection: sqlite3.Connection, version: str) -> sqlite3.
 
 def _selection_from_json(value: str) -> DerivedSelection:
     data = json.loads(value)
+    raw_metadata = data.get("metadata") or {}
+    if not isinstance(raw_metadata, Mapping):
+        raise InvalidSelectionRule("Selection metadata must be an object.")
     selection = DerivedSelection(
         mode=str(data.get("mode", "include_all")),
         included_pointers=tuple(str(pointer) for pointer in data.get("included_pointers", ())),
         excluded_pointers=tuple(str(pointer) for pointer in data.get("excluded_pointers", ())),
+        metadata={str(key): str(value) for key, value in raw_metadata.items()},
     )
     _validate_selection(selection)
     return selection
@@ -640,11 +682,14 @@ def _selection_to_json(selection: DerivedSelection) -> str:
 
 
 def _selection_to_data(selection: DerivedSelection) -> dict[str, Any]:
-    return {
+    data = {
         "mode": selection.mode,
         "included_pointers": list(selection.included_pointers),
         "excluded_pointers": list(selection.excluded_pointers),
     }
+    if selection.metadata:
+        data["metadata"] = dict(sorted(selection.metadata.items()))
+    return data
 
 
 def _validate_selection(selection: DerivedSelection) -> None:
@@ -652,6 +697,20 @@ def _validate_selection(selection: DerivedSelection) -> None:
         raise InvalidSelectionRule(f"Unsupported selection mode: {selection.mode}")
     for pointer in selection.included_pointers + selection.excluded_pointers:
         _validate_selection_pointer(pointer)
+    if selection.metadata is not None:
+        for key, value in selection.metadata.items():
+            if key not in {"display_name", "purpose"}:
+                raise InvalidSelectionRule(f"Unsupported version metadata key: {key}")
+            if not isinstance(value, str):
+                raise InvalidSelectionRule(f"Version metadata value must be a string: {key}")
+
+
+def _set_or_remove_metadata(metadata: dict[str, str], key: str, value: str) -> None:
+    clean_value = value.strip()
+    if clean_value:
+        metadata[key] = clean_value
+    else:
+        metadata.pop(key, None)
 
 
 def _validate_selection_pointer(pointer: str) -> None:
@@ -681,6 +740,7 @@ def _change_selection(selection: DerivedSelection, pointer: str, *, include: boo
         mode=selection.mode,
         included_pointers=tuple(sorted(included)),
         excluded_pointers=tuple(sorted(excluded)),
+        metadata=selection.metadata,
     )
 
 

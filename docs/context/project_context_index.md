@@ -31,12 +31,13 @@ Agents should also read `AGENTS.md` before this file.
 - Current pipeline stage: structural generation, metadata normalization,
   semantic policy, domain generation, conceptual schema, Open CVN JSON format,
   parser/validator contract, CLI shell, local SQLite storage, master/derived
-  curriculum versioning, and Open CVN JSON application import/export completed
+  curriculum versioning, Open CVN JSON application import/export, and curriculum
+  editing/selection MVP completed
 - Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
   `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, `#48`, `#49`, `#50`,
-  `#61`, `#62`, `#63`, and `#64`
+  `#61`, `#62`, `#63`, `#64`, and `#65`
 - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Next planned issue: `#65`
+- Next planned issue: `#66`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
