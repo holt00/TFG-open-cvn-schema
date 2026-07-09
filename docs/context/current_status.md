@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-08
+- Last updated: 2026-07-09
 
 ## Completed Or Stabilized Work
 
@@ -896,6 +896,56 @@
   - result: `406 passed in 719.75s (0:11:59)`
 - no new durable limitations were found
 
+### Issue `#65`
+
+- the curriculum editing and selection MVP issue is implemented under:
+  - `src/open_cvn_app/editing.py`
+  - `src/open_cvn_app/cli.py`
+  - `src/open_cvn_app/storage.py`
+- user-facing selection discovery commands are now functional:
+  - `open-cvn versions sections NAME [--store PATH]`
+  - `open-cvn versions entries NAME SECTION [--store PATH]`
+- section listing reports materialized curriculum section names, JSON Pointer
+  selectors, value kinds, and entry counts where applicable
+- entry listing reports zero-based index, JSON Pointer selector, optional entry
+  `id`, optional entry `type`, compact summary, and trace CVN codes when present
+- existing selection mutation commands now validate the materialized version after
+  mutation:
+  - `open-cvn versions include NAME POINTER [--store PATH]`
+  - `open-cvn versions exclude NAME POINTER [--store PATH]`
+- derived-version metadata editing is now functional:
+  - `open-cvn versions metadata NAME [--store PATH] [--display-name TEXT] [--purpose TEXT]`
+- derived metadata is stored additively inside deterministic `selection_json` and
+  exposed during materialization under
+  `extensions["x-open-cvn.versioning"]["metadata"]`
+- unsupported fine-grained field edits now fail explicitly through:
+  - `open-cvn versions field-edit NAME POINTER VALUE [--store PATH]`
+- field-level edits do not mutate stored data and instruct users to use
+  include/exclude section or entry selection instead
+- editing tests are implemented in:
+  - `tests/test_open_cvn_app_editing_unit.py`
+- CLI coverage for issue `#65` was added to:
+  - `tests/test_open_cvn_app_cli_unit.py`
+- targeted editing verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_editing_unit.py -v`
+  - result: `7 passed in 24.78s`
+- targeted CLI verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `23 passed in 26.12s`
+- targeted storage and versioning regression verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_storage_unit.py tests/test_open_cvn_app_versioning_unit.py -v`
+  - result: `18 passed in 26.31s`
+- targeted parser regression verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_json_import_unit.py tests/test_parser_validator_contract_unit.py -v`
+  - result: `22 passed in 25.91s`
+- console-script smoke verification passed for store init, JSON import as master,
+  derived creation, section listing, entry listing, entry exclusion, derived JSON
+  export, and exported empty `research` entries after exclusion
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `418 passed in 801.95s (0:13:21)`
+- no new durable limitations were found
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -907,8 +957,7 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#64`: issue `#65` curriculum editing and selection
-  MVP
+- Next work item after issue `#65`: issue `#66` LaTeX export from Open CVN
 - Epic `#60` has been expanded into issues `#61` through `#69`
 - MVP direction:
   - CLI-first local prototype
@@ -920,7 +969,7 @@
   - optional PDF generation and preview handoff
   - application MVP tests and user documentation
   - post-MVP LLM-assisted import spike
-- Next implementation issue: `#65` curriculum editing and selection MVP
+- Next implementation issue: `#66` LaTeX export from Open CVN
 
 ## Blocking Or Relevant Limitations
 
