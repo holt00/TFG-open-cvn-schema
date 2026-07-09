@@ -9,6 +9,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "jinja2>=3.1",
     "jsonschema>=4.26",
     "pydantic>=2.12.5",
     "pymupdf>=1.26",
@@ -32,3 +33,6 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+open_cvn_app = ["templates/latex/*.jinja"]

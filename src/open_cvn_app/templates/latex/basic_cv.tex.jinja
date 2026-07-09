@@ -1,0 +1,47 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+
+\title{ {{ title|latex }} }
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Version Metadata}
+\begin{description}
+\item[Schema version] {{ schema_version|latex }}
+\item[Language] {{ language|latex }}
+\item[Version] {{ version_name|latex }}
+\item[Version kind] {{ version_kind|latex }}
+\end{description}
+
+{% if identity_fields %}
+\section*{Identity}
+\begin{description}
+{% for field in identity_fields %}
+\item[{{ field.label|latex }}] {{ field.value|latex }}
+{% endfor %}
+\end{description}
+{% endif %}
+
+{% for section in sections %}
+\section*{ {{ section.title|latex }} }
+{% for entry in section.entries %}
+\subsection*{ {{ entry.summary|default(entry.entry_type or entry.entry_id or "Entry", true)|latex }} }
+\begin{description}
+{% if entry.entry_id %}\item[ID] {{ entry.entry_id|latex }}
+{% endif %}
+{% if entry.entry_type %}\item[Type] {{ entry.entry_type|latex }}
+{% endif %}
+{% for field in entry.fields %}
+\item[{{ field.label|latex }}] {{ field.value|latex }}
+{% endfor %}
+\end{description}
+{% endfor %}
+{% endfor %}
+
+\end{document}
