@@ -49,7 +49,7 @@ Goal:
 | `#61` | Application MVP scope and CLI shell | Completed | CLI-first prototype shell, command surface, console script, placeholders, and smoke tests implemented |
 | `#62` | Local storage with SQLite | Completed | SQLite store initialization, schema metadata, curriculum repository, diagnostics, CLI store init, and tests implemented |
 | `#63` | Master and derived curriculum versions | Completed | Schema v2 migration, master/derived repository operations, selection materialization, CLI commands, and tests implemented |
-| `#64` | Open CVN JSON import/export workflow | Planned | Application import/export using epic `#41` parser and validator |
+| `#64` | Open CVN JSON import/export workflow | Completed | CLI JSON import/export implemented using the public parser/validator, SQLite storage, master/derived materialization, deterministic export formatting, and tests |
 | `#65` | Curriculum editing and selection MVP | Planned | Basic include/exclude customization for derived versions |
 | `#66` | LaTeX export from Open CVN | Planned | Jinja-style LaTeX rendering from stored Open CVN data |
 | `#67` | PDF generation and preview handoff | Planned | Optional local TeX compilation and generated-PDF path handoff |

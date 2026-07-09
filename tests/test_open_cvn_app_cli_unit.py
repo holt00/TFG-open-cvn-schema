@@ -5,12 +5,14 @@ from pathlib import Path
 
 import pytest
 
+from open_cvn import CvnValidationStatus, validate_open_cvn_json
 from open_cvn_app import __version__
 from open_cvn_app.cli import build_parser, run
 from open_cvn_app.storage import CurriculumCreate, CurriculumRepository, initialize_store
 
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures" / "open_cvn"
+EXAMPLES_DIR = Path(__file__).parent.parent / "examples" / "open_cvn"
 
 
 def _create_store_with_curriculum(tmp_path):
@@ -54,20 +56,162 @@ def test_store_init_creates_local_store(capsys: pytest.CaptureFixture[str], tmp_
     assert store_path.exists()
 
 
-def test_json_import_routes_to_issue_64_placeholder(capsys: pytest.CaptureFixture[str]):
-    exit_code = run(["json", "import", "input.json"])
+def test_json_import_stores_valid_open_cvn_document(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    input_path = FIXTURES_DIR / "valid_minimal.json"
+
+    exit_code = run([
+        "json",
+        "import",
+        str(input_path),
+        "--store",
+        str(store_path),
+        "--name",
+        "Imported CV",
+    ])
 
     output = capsys.readouterr().out
     assert exit_code == 0
-    assert "Open CVN JSON import is planned for issue #64" in output
+    assert "Imported Open CVN JSON as curriculum 'Imported CV'." in output
+    assert "Curriculum ID:" in output
+    assert "Validation status: valid" in output
+    repository = CurriculumRepository(store_path)
+    curricula = repository.list_curricula()
+    assert len(curricula) == 1
+    assert curricula[0].display_name == "Imported CV"
+    assert curricula[0].source_identifier == str(input_path)
 
 
-def test_json_export_routes_to_issue_64_placeholder(capsys: pytest.CaptureFixture[str]):
-    exit_code = run(["json", "export", "output.json", "--version", "public"])
+def test_json_import_can_assign_master_version(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    input_path = FIXTURES_DIR / "valid_minimal.json"
+
+    exit_code = run(["json", "import", str(input_path), "--store", str(store_path), "--as-master"])
 
     output = capsys.readouterr().out
     assert exit_code == 0
-    assert "Open CVN JSON export is planned for issue #64" in output
+    assert "Assigned master curriculum version 'master'" in output
+    repository = CurriculumRepository(store_path)
+    curricula = repository.list_curricula()
+    versions = repository.list_versions()
+    assert len(curricula) == 1
+    assert len(versions) == 1
+    assert versions[0].kind == "master"
+    assert versions[0].master_curriculum_id == curricula[0].id
+
+
+def test_json_import_reports_duplicate_master(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path, curriculum = _create_store_with_curriculum(tmp_path)
+    repository = CurriculumRepository(store_path)
+    repository.assign_master_curriculum(curriculum.id)
+    input_path = FIXTURES_DIR / "valid_minimal.json"
+
+    exit_code = run(["json", "import", str(input_path), "--store", str(store_path), "--as-master"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "Open CVN JSON import failed." in captured.err
+    assert "A master curriculum version already exists." in captured.err
+
+
+def test_json_import_reports_schema_validation_errors(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    input_path = FIXTURES_DIR / "wrong_shape.json"
+
+    exit_code = run(["json", "import", str(input_path), "--store", str(store_path)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "Open CVN JSON import failed." in captured.err
+    assert "Validation status: invalid" in captured.err
+    assert "json_schema_validation_failure" in captured.err
+    assert CurriculumRepository(store_path).list_curricula() == ()
+
+
+def test_json_import_reports_malformed_json(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    input_path = FIXTURES_DIR / "malformed.json"
+
+    exit_code = run(["json", "import", str(input_path), "--store", str(store_path)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "Open CVN JSON import failed." in captured.err
+    assert "Validation status: failed" in captured.err
+    assert "invalid_json" in captured.err
+    assert CurriculumRepository(store_path).list_curricula() == ()
+
+
+def test_json_export_writes_revalidatable_master_document(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path, curriculum = _create_store_with_curriculum(tmp_path)
+    repository = CurriculumRepository(store_path)
+    repository.assign_master_curriculum(curriculum.id)
+    output_path = tmp_path / "exports" / "master.json"
+
+    exit_code = run(["json", "export", str(output_path), "--store", str(store_path), "--version", "master"])
+
+    output = capsys.readouterr().out
+    exported_text = output_path.read_text(encoding="utf-8")
+    exported_document = json.loads(exported_text)
+    validation_result = validate_open_cvn_json(exported_document, source_identifier="exported-master")
+    assert exit_code == 0
+    assert "Exported Open CVN JSON version 'master'" in output
+    assert "Validation status: valid" in output
+    assert validation_result.validation_status == CvnValidationStatus.VALID
+    assert exported_text.endswith("\n")
+    assert exported_text == f"{json.dumps(exported_document, ensure_ascii=False, sort_keys=True, indent=2)}\n"
+
+
+def test_json_export_writes_materialized_derived_document(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    repository = CurriculumRepository(store_path)
+    document = json.loads((EXAMPLES_DIR / "research_entry.json").read_text(encoding="utf-8"))
+    curriculum = repository.create_curriculum(CurriculumCreate(display_name="Master CV", document=document))
+    repository.assign_master_curriculum(curriculum.id)
+    repository.create_derived_version("public")
+    repository.exclude_from_version("public", "/curriculum/research")
+    output_path = tmp_path / "public.json"
+
+    exit_code = run(["json", "export", str(output_path), "--store", str(store_path), "--version", "public"])
+
+    output = capsys.readouterr().out
+    exported_document = json.loads(output_path.read_text(encoding="utf-8"))
+    validation_result = validate_open_cvn_json(exported_document, source_identifier="exported-public")
+    assert exit_code == 0
+    assert "Exported Open CVN JSON version 'public'" in output
+    assert exported_document["curriculum"]["research"] == []
+    assert exported_document["extensions"]["x-open-cvn.versioning"]["version_name"] == "public"
+    assert validation_result.validation_status == CvnValidationStatus.VALID
+
+
+def test_json_export_reports_missing_version(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    output_path = tmp_path / "missing.json"
+
+    exit_code = run(["json", "export", str(output_path), "--store", str(store_path), "--version", "missing"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "Open CVN JSON export failed." in captured.err
+    assert "Curriculum version not found: missing" in captured.err
+
+
+def test_json_export_reports_uninitialized_store(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    output_path = tmp_path / "missing.json"
+
+    exit_code = run(["json", "export", str(output_path), "--store", str(store_path)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "Open CVN JSON export failed." in captured.err
+    assert "SQLite file is not an initialized Open CVN store." in captured.err
 
 
 def test_versions_list_reads_initialized_store(capsys: pytest.CaptureFixture[str], tmp_path):
