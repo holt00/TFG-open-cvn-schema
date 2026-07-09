@@ -9,6 +9,7 @@ from pathlib import Path
 from open_cvn import CvnParseIssue, CvnValidationStatus, parse_open_cvn_json
 from open_cvn_app import __version__
 from open_cvn_app.config import OpenCvnAppConfig
+from open_cvn_app.editing import list_curriculum_entries, list_curriculum_sections
 from open_cvn_app.results import AppResult
 from open_cvn_app.storage import (
     SCHEMA_VERSION,
@@ -73,6 +74,30 @@ def build_parser() -> argparse.ArgumentParser:
     versions_show_parser.add_argument("name", help="Version name or ID.")
     _add_store_path_option(versions_show_parser)
     versions_show_parser.set_defaults(handler=_handle_versions_show)
+    versions_sections_parser = versions_subparsers.add_parser(
+        "sections",
+        help="List curriculum sections in a version.",
+    )
+    versions_sections_parser.add_argument("name", help="Version name or ID.")
+    _add_store_path_option(versions_sections_parser)
+    versions_sections_parser.set_defaults(handler=_handle_versions_sections)
+    versions_entries_parser = versions_subparsers.add_parser(
+        "entries",
+        help="List entries in a curriculum section.",
+    )
+    versions_entries_parser.add_argument("name", help="Version name or ID.")
+    versions_entries_parser.add_argument("section", help="Curriculum section name or /curriculum section pointer.")
+    _add_store_path_option(versions_entries_parser)
+    versions_entries_parser.set_defaults(handler=_handle_versions_entries)
+    versions_metadata_parser = versions_subparsers.add_parser(
+        "metadata",
+        help="Show or update derived version metadata.",
+    )
+    versions_metadata_parser.add_argument("name", help="Derived version name or ID.")
+    versions_metadata_parser.add_argument("--display-name", help="Human display name for the derived version.")
+    versions_metadata_parser.add_argument("--purpose", help="Human purpose for the derived version.")
+    _add_store_path_option(versions_metadata_parser)
+    versions_metadata_parser.set_defaults(handler=_handle_versions_metadata)
     versions_derive_parser = versions_subparsers.add_parser(
         "derive",
         help="Create derived curriculum version.",
@@ -96,6 +121,15 @@ def build_parser() -> argparse.ArgumentParser:
     versions_exclude_parser.add_argument("pointer", help="JSON Pointer under /curriculum.")
     _add_store_path_option(versions_exclude_parser)
     versions_exclude_parser.set_defaults(handler=_handle_versions_exclude)
+    versions_field_edit_parser = versions_subparsers.add_parser(
+        "field-edit",
+        help="Report unsupported field-level edit behavior for the MVP.",
+    )
+    versions_field_edit_parser.add_argument("name", help="Version name or ID.")
+    versions_field_edit_parser.add_argument("pointer", help="Field JSON Pointer.")
+    versions_field_edit_parser.add_argument("value", help="Replacement value.")
+    _add_store_path_option(versions_field_edit_parser)
+    versions_field_edit_parser.set_defaults(handler=_handle_versions_field_edit)
 
     latex_parser = subparsers.add_parser("latex", help="Export curriculum to LaTeX.")
     latex_subparsers = latex_parser.add_subparsers(dest="latex_command")
@@ -303,6 +337,67 @@ def _handle_versions_show(args: argparse.Namespace) -> AppResult:
     )
 
 
+def _handle_versions_sections(args: argparse.Namespace) -> AppResult:
+    repository = _repository_from_args(args)
+    try:
+        sections = list_curriculum_sections(repository, args.name)
+    except StorageError as exc:
+        return AppResult.failed("Section listing failed.", error=str(exc))
+    if not sections:
+        return AppResult.ok("No curriculum sections found.")
+    lines = [f"Curriculum sections for version '{args.name}':"]
+    for section in sections:
+        entries = section.entry_count if section.entry_count is not None else section.value_kind
+        lines.append(f"- {section.name} pointer={section.pointer} entries={entries}")
+    return AppResult.ok("\n".join(lines))
+
+
+def _handle_versions_entries(args: argparse.Namespace) -> AppResult:
+    repository = _repository_from_args(args)
+    try:
+        entries = list_curriculum_entries(repository, args.name, args.section)
+    except StorageError as exc:
+        return AppResult.failed("Entry listing failed.", error=str(exc))
+    section_name = _display_section_name(args.section)
+    if not entries:
+        return AppResult.ok(f"No entries found in section '{section_name}'.")
+    lines = [f"Entries for version '{args.name}' section '{section_name}':"]
+    for entry in entries:
+        lines.append(
+            f"- [{entry.index}] pointer={entry.pointer} "
+            f"id={entry.entry_id or '-'} type={entry.entry_type or '-'} "
+            f"summary={entry.summary or '-'} cvn_codes={', '.join(entry.cvn_codes) or '-'}"
+        )
+    return AppResult.ok("\n".join(lines))
+
+
+def _handle_versions_metadata(args: argparse.Namespace) -> AppResult:
+    repository = _repository_from_args(args)
+    try:
+        if args.display_name is not None or args.purpose is not None:
+            version = repository.update_version_metadata(
+                args.name,
+                display_name=args.display_name,
+                purpose=args.purpose,
+            )
+            prefix = f"Updated metadata for derived curriculum version '{version.name}'."
+        else:
+            version = repository.get_version(args.name)
+            prefix = f"Metadata for curriculum version '{version.name}':"
+    except StorageError as exc:
+        return AppResult.failed("Version metadata update failed.", error=str(exc))
+    metadata = version.selection.metadata or {}
+    return AppResult.ok(
+        "\n".join(
+            (
+                prefix,
+                f"Display name: {metadata.get('display_name', '-')}",
+                f"Purpose: {metadata.get('purpose', '-')}",
+            )
+        )
+    )
+
+
 def _handle_versions_derive(args: argparse.Namespace) -> AppResult:
     repository = _repository_from_args(args)
     try:
@@ -316,6 +411,7 @@ def _handle_versions_include(args: argparse.Namespace) -> AppResult:
     repository = _repository_from_args(args)
     try:
         version = repository.include_in_version(args.name, args.pointer)
+        repository.materialize_version(version.id)
     except StorageError as exc:
         return AppResult.failed("Version include failed.", error=str(exc))
     return AppResult.ok(f"Included {args.pointer} in derived curriculum version '{version.name}'.")
@@ -325,9 +421,17 @@ def _handle_versions_exclude(args: argparse.Namespace) -> AppResult:
     repository = _repository_from_args(args)
     try:
         version = repository.exclude_from_version(args.name, args.pointer)
+        repository.materialize_version(version.id)
     except StorageError as exc:
         return AppResult.failed("Version exclude failed.", error=str(exc))
     return AppResult.ok(f"Excluded {args.pointer} from derived curriculum version '{version.name}'.")
+
+
+def _handle_versions_field_edit(args: argparse.Namespace) -> AppResult:
+    return AppResult.failed(
+        "Field-level edits are not supported in issue #65 MVP.",
+        error="Use include/exclude section or entry selection instead.",
+    )
 
 
 def _handle_latex_export(args: argparse.Namespace) -> AppResult:
@@ -361,6 +465,14 @@ def _format_issue_path(path: tuple[str, ...]) -> str:
     if not path:
         return "-"
     return "/".join(path)
+
+
+def _display_section_name(section: str) -> str:
+    if section.startswith("/curriculum/"):
+        parts = section.split("/")
+        if len(parts) == 3:
+            return parts[2].replace("~1", "/").replace("~0", "~")
+    return section
 
 
 def _write_canonical_json(path: Path, document: object) -> None:

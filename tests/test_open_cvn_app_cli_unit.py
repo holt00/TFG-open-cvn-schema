@@ -257,6 +257,124 @@ def test_versions_include_and_exclude_update_derived_selection(capsys: pytest.Ca
     assert "Included /curriculum/research" in output
 
 
+def test_versions_sections_lists_materialized_sections(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    repository = CurriculumRepository(store_path)
+    document = json.loads((EXAMPLES_DIR / "research_entry.json").read_text(encoding="utf-8"))
+    curriculum = repository.create_curriculum(CurriculumCreate(display_name="Master CV", document=document))
+    repository.assign_master_curriculum(curriculum.id)
+    repository.create_derived_version("public")
+
+    exit_code = run(["versions", "sections", "public", "--store", str(store_path)])
+
+    output = capsys.readouterr().out
+    assert exit_code == 0
+    assert "Curriculum sections for version 'public':" in output
+    assert "- research pointer=/curriculum/research entries=1" in output
+    assert "- identity pointer=/curriculum/identity entries=object" in output
+
+
+def test_versions_entries_lists_plain_and_pointer_sections(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    repository = CurriculumRepository(store_path)
+    document = json.loads((EXAMPLES_DIR / "research_entry.json").read_text(encoding="utf-8"))
+    curriculum = repository.create_curriculum(CurriculumCreate(display_name="Master CV", document=document))
+    repository.assign_master_curriculum(curriculum.id)
+    repository.create_derived_version("public")
+
+    plain_exit = run(["versions", "entries", "public", "research", "--store", str(store_path)])
+    pointer_exit = run([
+        "versions",
+        "entries",
+        "public",
+        "/curriculum/research",
+        "--store",
+        str(store_path),
+    ])
+
+    output = capsys.readouterr().out
+    assert plain_exit == 0
+    assert pointer_exit == 0
+    assert "Entries for version 'public' section 'research':" in output
+    assert "pointer=/curriculum/research/0" in output
+    assert "id=research-001" in output
+    assert "type=research.publication" in output
+
+
+def test_versions_entries_reports_empty_and_non_list_sections(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    repository = CurriculumRepository(store_path)
+    document = json.loads((EXAMPLES_DIR / "education_entry.json").read_text(encoding="utf-8"))
+    curriculum = repository.create_curriculum(CurriculumCreate(display_name="Master CV", document=document))
+    repository.assign_master_curriculum(curriculum.id)
+    repository.create_derived_version("public")
+
+    empty_exit = run(["versions", "entries", "public", "research", "--store", str(store_path)])
+    non_list_exit = run(["versions", "entries", "public", "identity", "--store", str(store_path)])
+
+    captured = capsys.readouterr()
+    assert empty_exit == 0
+    assert "No entries found in section 'research'." in captured.out
+    assert non_list_exit == 1
+    assert "Entry listing failed." in captured.err
+    assert "Curriculum section is not a repeated entry list: identity" in captured.err
+
+
+def test_versions_metadata_show_and_update(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path, curriculum = _create_store_with_curriculum(tmp_path)
+    repository = CurriculumRepository(store_path)
+    repository.assign_master_curriculum(curriculum.id)
+    repository.create_derived_version("public")
+
+    update_exit = run([
+        "versions",
+        "metadata",
+        "public",
+        "--display-name",
+        "Public CV",
+        "--purpose",
+        "grant application",
+        "--store",
+        str(store_path),
+    ])
+    show_exit = run(["versions", "metadata", "public", "--store", str(store_path)])
+
+    output = capsys.readouterr().out
+    assert update_exit == 0
+    assert show_exit == 0
+    assert "Updated metadata for derived curriculum version 'public'." in output
+    assert "Display name: Public CV" in output
+    assert "Purpose: grant application" in output
+
+
+def test_versions_field_edit_reports_unsupported_without_mutating(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path, curriculum = _create_store_with_curriculum(tmp_path)
+    repository = CurriculumRepository(store_path)
+    repository.assign_master_curriculum(curriculum.id)
+    repository.create_derived_version("public")
+    before = repository.materialize_version("public").document
+
+    exit_code = run([
+        "versions",
+        "field-edit",
+        "public",
+        "/curriculum/research/0/data/title",
+        "New title",
+        "--store",
+        str(store_path),
+    ])
+
+    captured = capsys.readouterr()
+    after = repository.materialize_version("public").document
+    assert exit_code == 1
+    assert "Field-level edits are not supported in issue #65 MVP." in captured.err
+    assert "Use include/exclude section or entry selection instead." in captured.err
+    assert after == before
+
+
 def test_versions_derive_reports_missing_master(capsys: pytest.CaptureFixture[str], tmp_path):
     store_path = tmp_path / "open-cvn.sqlite"
     initialize_store(store_path)
