@@ -946,6 +946,43 @@
   - result: `418 passed in 801.95s (0:13:21)`
 - no new durable limitations were found
 
+### Issue `#66`
+
+- the LaTeX export from Open CVN issue is implemented under:
+  - `src/open_cvn_app/latex.py`
+  - `src/open_cvn_app/templates/latex/basic_cv.tex.jinja`
+  - `src/open_cvn_app/cli.py`
+- the existing LaTeX CLI placeholder is now functional:
+  - `open-cvn latex export OUTPUT [--store PATH] [--version NAME]`
+- LaTeX export uses `CurriculumRepository.materialize_version(...)`, so master
+  and derived versions share the existing versioning and selection behavior
+- Jinja is now a runtime dependency because LaTeX rendering is an application CLI
+  workflow
+- the initial MVP template renders version metadata, identity fields when present,
+  and non-empty education, research, professional experience, achievements, and
+  other sections
+- empty repeated sections are omitted by the MVP template
+- text values are escaped for common LaTeX-sensitive characters through the
+  `latex` Jinja filter implemented in `src/open_cvn_app/latex.py`
+- exported `.tex` files are deterministic, UTF-8 encoded, and end with one final
+  newline
+- PDF compilation remains deferred to issue `#67`
+- LaTeX export workflow documentation now exists at:
+  - `docs/development/latex_export_workflow.md`
+- targeted LaTeX and CLI verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_latex_unit.py tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `29 passed in 40.59s`
+- targeted storage, versioning, and editing regression verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_storage_unit.py tests/test_open_cvn_app_versioning_unit.py tests/test_open_cvn_app_editing_unit.py -v`
+  - result: `25 passed in 49.19s`
+- console-script smoke verification passed for store initialization, JSON import
+  as master, derived creation, derived selection exclusion, and derived LaTeX
+  export
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `424 passed in 357.81s (0:05:57)`
+- no new durable limitations were found
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -957,7 +994,7 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#65`: issue `#66` LaTeX export from Open CVN
+- Next work item after issue `#66`: issue `#67` PDF generation and preview handoff
 - Epic `#60` has been expanded into issues `#61` through `#69`
 - MVP direction:
   - CLI-first local prototype
@@ -969,7 +1006,7 @@
   - optional PDF generation and preview handoff
   - application MVP tests and user documentation
   - post-MVP LLM-assisted import spike
-- Next implementation issue: `#66` LaTeX export from Open CVN
+- Next implementation issue: `#67` PDF generation and preview handoff
 
 ## Blocking Or Relevant Limitations
 

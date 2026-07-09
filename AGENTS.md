@@ -113,6 +113,7 @@ Every new session should read these files in order before making changes:
 - setup and commands: `docs/development/setup.md`
 - complete regeneration workflow: `docs/development/regeneration_workflow.md`
 - parser workflow: `docs/development/parser_workflow.md`
+- LaTeX export workflow: `docs/development/latex_export_workflow.md`
 - code style and conventions: `docs/development/code_style.md`
 - documentation conventions: `docs/documentation/documentation_conventions.md`
 - old AGENTS content migration map:

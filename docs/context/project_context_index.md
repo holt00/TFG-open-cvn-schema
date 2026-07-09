@@ -31,13 +31,13 @@ Agents should also read `AGENTS.md` before this file.
 - Current pipeline stage: structural generation, metadata normalization,
   semantic policy, domain generation, conceptual schema, Open CVN JSON format,
   parser/validator contract, CLI shell, local SQLite storage, master/derived
-  curriculum versioning, Open CVN JSON application import/export, and curriculum
-  editing/selection MVP completed
+  curriculum versioning, Open CVN JSON application import/export, curriculum
+  editing/selection MVP, and LaTeX export completed
 - Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
   `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, `#48`, `#49`, `#50`,
-  `#61`, `#62`, `#63`, `#64`, and `#65`
+  `#61`, `#62`, `#63`, `#64`, `#65`, and `#66`
 - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Next planned issue: `#66`
+- Next planned issue: `#67`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -118,8 +118,8 @@ Agents should also read `AGENTS.md` before this file.
   planned Open CVN JSON application import/export issue
 - `docs/roadmap/issues/issue-65-curriculum-editing-and-selection-mvp.md`:
   planned MVP editing and selection issue
-- `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`: planned LaTeX
-  export issue
+- `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`: authoritative
+  record of the LaTeX export issue
 - `docs/roadmap/issues/issue-67-pdf-generation-and-preview-handoff.md`: planned
   optional PDF generation issue
 - `docs/roadmap/issues/issue-68-application-mvp-tests-and-documentation.md`:
@@ -155,6 +155,8 @@ Agents should also read `AGENTS.md` before this file.
   verification workflow
 - `docs/development/parser_workflow.md`: contributor guide for using and testing
   the public PDF/XML/JSON parser workflow
+- `docs/development/latex_export_workflow.md`: issue `#66` workflow for exporting
+  stored Open CVN master or derived versions to LaTeX
 - `docs/development/code_style.md`: code style, typing, and documentation rules
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy and
   update protocol
