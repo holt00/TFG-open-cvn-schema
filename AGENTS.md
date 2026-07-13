@@ -113,6 +113,7 @@ Every new session should read these files in order before making changes:
 - setup and commands: `docs/development/setup.md`
 - complete regeneration workflow: `docs/development/regeneration_workflow.md`
 - parser workflow: `docs/development/parser_workflow.md`
+- application MVP workflow: `docs/development/application_mvp_workflow.md`
 - LaTeX export workflow: `docs/development/latex_export_workflow.md`
 - PDF generation workflow: `docs/development/pdf_generation_workflow.md`
 - code style and conventions: `docs/development/code_style.md`

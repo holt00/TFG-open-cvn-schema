@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-10
+- Last updated: 2026-07-13
 
 ## Completed Or Stabilized Work
 
@@ -1023,6 +1023,44 @@
   - result: `439 passed in 355.05s (0:05:55)`
 - no new durable limitations were found
 
+### Issue `#68`
+
+- the application MVP tests and documentation closure issue is implemented
+- end-to-end workflow tests were added in:
+  - `tests/test_open_cvn_app_mvp_workflow.py`
+- a user-facing local application MVP guide now exists at:
+  - `docs/development/application_mvp_workflow.md`
+- the MVP workflow tests cover:
+  - store initialization over temporary SQLite paths
+  - Open CVN JSON import with master assignment
+  - derived version creation
+  - section and entry listing
+  - derived selection exclusion
+  - derived Open CVN JSON export and revalidation
+  - derived LaTeX export
+  - structured missing-compiler PDF behavior
+  - invalid import without storage pollution
+  - isolation between temporary stores
+- documentation entry points and related workflow docs now link the application
+  MVP guide
+- issue `#60` is now closed as a local CLI-first application MVP through completed
+  issues `#61` through `#68`
+- issue `#69` remains post-MVP exploratory LLM-assisted import work
+- targeted MVP workflow verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_mvp_workflow.py -v`
+  - result: `3 passed in 27.66s`
+- application MVP regression verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_mvp_workflow.py tests/test_open_cvn_app_cli_unit.py tests/test_open_cvn_app_storage_unit.py tests/test_open_cvn_app_versioning_unit.py tests/test_open_cvn_app_editing_unit.py tests/test_open_cvn_app_latex_unit.py tests/test_open_cvn_app_pdf_unit.py -v`
+  - result: `72 passed in 90.20s (0:01:30)`
+- console-script smoke verification passed through store initialization, JSON
+  import as master, derived creation, derived selection exclusion, derived JSON
+  export, derived LaTeX export, and expected missing-compiler PDF behavior because
+  no `latexmk` or `pdflatex` executable is installed in the local environment
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `442 passed in 359.41s (0:05:59)`
+- no new durable limitations were found
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -1034,8 +1072,7 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#67`: issue `#68` application MVP tests and
-  documentation
+- Next work item after issue `#68`: issue `#69` LLM-assisted import spike
 - Epic `#60` has been expanded into issues `#61` through `#69`
 - MVP direction:
   - CLI-first local prototype
@@ -1047,7 +1084,7 @@
   - optional PDF generation and preview handoff
   - application MVP tests and user documentation
   - post-MVP LLM-assisted import spike
-- Next implementation issue: `#68` application MVP tests and documentation
+- Next implementation issue: `#69` LLM-assisted import spike
 
 ## Blocking Or Relevant Limitations
 

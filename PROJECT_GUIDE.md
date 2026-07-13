@@ -176,6 +176,8 @@ files in order:
   verification workflow
 - `docs/development/parser_workflow.md`: contributor guide for using and testing
   the public PDF/XML/JSON parser workflow
+- `docs/development/application_mvp_workflow.md`: issue `#68` user workflow for
+  the local CLI-first CV management MVP
 - `docs/development/latex_export_workflow.md`: issue `#66` user workflow for
   exporting stored Open CVN master or derived versions to LaTeX
 - `docs/development/pdf_generation_workflow.md`: issue `#67` user workflow for

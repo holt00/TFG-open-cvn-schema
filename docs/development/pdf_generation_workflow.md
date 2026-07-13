@@ -10,6 +10,12 @@ JSON, and render LaTeX when no local TeX distribution is installed.
 
 ## Command
 
+For the complete local application workflow from import to export, see:
+
+```text
+docs/development/application_mvp_workflow.md
+```
+
 Generate a PDF for the master version:
 
 ```bash
