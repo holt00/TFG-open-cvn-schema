@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-09
+- Last updated: 2026-07-10
 
 ## Completed Or Stabilized Work
 
@@ -983,6 +983,46 @@
   - result: `424 passed in 357.81s (0:05:57)`
 - no new durable limitations were found
 
+### Issue `#67`
+
+- the PDF generation and preview handoff issue is implemented under:
+  - `src/open_cvn_app/pdf.py`
+  - `src/open_cvn_app/cli.py`
+- the existing PDF CLI placeholder is now functional:
+  - `open-cvn pdf generate OUTPUT [--store PATH] [--version NAME] [--open]`
+- PDF generation uses `CurriculumRepository.materialize_version(...)`, so master
+  and derived versions share existing versioning and selection behavior
+- PDF generation reuses the issue `#66` LaTeX renderer and compiles the rendered
+  `.tex` document in an isolated temporary build directory
+- supported compiler discovery order is:
+  - `latexmk`
+  - `pdflatex`
+- `latexmk` is preferred for multi-pass compilation; `pdflatex` fallback runs two
+  passes
+- missing compiler behavior is structured and reports that one of `latexmk` or
+  `pdflatex` must be installed
+- compiler failures preserve command, return code, timeout status, stdout, and
+  stderr diagnostics
+- `--open` performs an explicit best-effort preview handoff through the platform
+  default viewer; automated tests mock this behavior
+- PDF generation workflow documentation now exists at:
+  - `docs/development/pdf_generation_workflow.md`
+- targeted PDF and CLI verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_pdf_unit.py tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `40 passed in 52.02s`
+- targeted storage, versioning, editing, and LaTeX regression verification passed
+  with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_latex_unit.py tests/test_open_cvn_app_storage_unit.py tests/test_open_cvn_app_versioning_unit.py tests/test_open_cvn_app_editing_unit.py -v`
+  - result: `29 passed in 45.92s`
+- console-script smoke verification passed through store initialization, JSON
+  import as master, derived creation, derived selection exclusion, and expected
+  missing-compiler PDF generation behavior because no `latexmk` or `pdflatex`
+  executable is installed in the local environment
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `439 passed in 355.05s (0:05:55)`
+- no new durable limitations were found
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -994,7 +1034,8 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#66`: issue `#67` PDF generation and preview handoff
+- Next work item after issue `#67`: issue `#68` application MVP tests and
+  documentation
 - Epic `#60` has been expanded into issues `#61` through `#69`
 - MVP direction:
   - CLI-first local prototype
@@ -1006,7 +1047,7 @@
   - optional PDF generation and preview handoff
   - application MVP tests and user documentation
   - post-MVP LLM-assisted import spike
-- Next implementation issue: `#67` PDF generation and preview handoff
+- Next implementation issue: `#68` application MVP tests and documentation
 
 ## Blocking Or Relevant Limitations
 

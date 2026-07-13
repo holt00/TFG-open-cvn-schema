@@ -52,7 +52,7 @@ Goal:
 | `#64` | Open CVN JSON import/export workflow | Completed | CLI JSON import/export implemented using the public parser/validator, SQLite storage, master/derived materialization, deterministic export formatting, and tests |
 | `#65` | Curriculum editing and selection MVP | Completed | Section/entry listing, derived metadata, immediate selection validation, unsupported field-edit messaging, and tests implemented |
 | `#66` | LaTeX export from Open CVN | Completed | Jinja-based deterministic `.tex` export from stored master or derived Open CVN versions implemented |
-| `#67` | PDF generation and preview handoff | Planned | Optional local TeX compilation and generated-PDF path handoff |
+| `#67` | PDF generation and preview handoff | Completed | Optional `latexmk`/`pdflatex` compilation, structured missing-compiler behavior, mocked tests, and explicit `--open` preview handoff implemented |
 | `#68` | Application MVP tests and documentation | Planned | End-to-end MVP tests, user docs, and epic `#60` closure |
 | `#69` | LLM-assisted import spike | Planned | Post-MVP exploration for PDFs without deterministic XML extraction |
 

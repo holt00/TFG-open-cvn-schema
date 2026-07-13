@@ -157,6 +157,8 @@ Agents should also read `AGENTS.md` before this file.
   the public PDF/XML/JSON parser workflow
 - `docs/development/latex_export_workflow.md`: issue `#66` workflow for exporting
   stored Open CVN master or derived versions to LaTeX
+- `docs/development/pdf_generation_workflow.md`: issue `#67` workflow for optional
+  PDF generation and preview handoff from stored curriculum versions
 - `docs/development/code_style.md`: code style, typing, and documentation rules
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy and
   update protocol
