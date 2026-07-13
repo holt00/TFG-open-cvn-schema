@@ -78,10 +78,22 @@ the generated `.tex` content.
 Nested Open CVN values rendered as JSON use sorted keys. Exported files end with
 one final newline.
 
+## PDF Generation
+
+PDF compilation from generated LaTeX is implemented by issue `#67` and documented
+in:
+
+```text
+docs/development/pdf_generation_workflow.md
+```
+
+The PDF workflow remains optional because it depends on a local TeX distribution
+outside Python dependencies.
+
 ## Limitations
 
 The issue `#66` template is not a final CV design. It is a deterministic technical
 proof for the export workflow.
 
-PDF compilation, TeX engine discovery, and preview handoff are deferred to issue
-`#67`.
+The issue `#66` template is still not a final CV design. Issue `#67` compiles the
+generated source into PDF when `latexmk` or `pdflatex` is available.
