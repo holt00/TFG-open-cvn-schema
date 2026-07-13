@@ -11,6 +11,13 @@ from open_cvn_app import __version__
 from open_cvn_app.config import OpenCvnAppConfig
 from open_cvn_app.editing import list_curriculum_entries, list_curriculum_sections
 from open_cvn_app.latex import export_latex_document
+from open_cvn_app.pdf import (
+    PdfCompilationError,
+    PdfGenerationUnavailable,
+    PdfPreviewError,
+    format_compilation_diagnostics,
+    generate_pdf_document,
+)
 from open_cvn_app.results import AppResult
 from open_cvn_app.storage import (
     SCHEMA_VERSION,
@@ -144,6 +151,11 @@ def build_parser() -> argparse.ArgumentParser:
     pdf_subparsers = pdf_parser.add_subparsers(dest="pdf_command")
     pdf_generate_parser = pdf_subparsers.add_parser("generate", help="Generate PDF file.")
     pdf_generate_parser.add_argument("output", help="Output PDF file.")
+    pdf_generate_parser.add_argument(
+        "--open",
+        action="store_true",
+        help="Open the generated PDF with the platform default viewer.",
+    )
     _add_store_path_option(pdf_generate_parser)
     _add_version_option(pdf_generate_parser)
     pdf_generate_parser.set_defaults(handler=_handle_pdf_generate)
@@ -458,7 +470,35 @@ def _handle_latex_export(args: argparse.Namespace) -> AppResult:
 
 
 def _handle_pdf_generate(args: argparse.Namespace) -> AppResult:
-    return _planned_result("PDF generation", "#67", args)
+    repository = _repository_from_args(args)
+    try:
+        result = generate_pdf_document(
+            repository,
+            version=args.version_name,
+            output_path=args.output,
+            open_pdf=args.open,
+        )
+    except StorageError as exc:
+        return AppResult.failed("PDF generation failed.", error=str(exc))
+    except PdfGenerationUnavailable as exc:
+        return AppResult.failed("PDF generation unavailable.", error=str(exc))
+    except PdfCompilationError as exc:
+        return AppResult.failed(
+            "PDF generation failed.",
+            error="\n".join((str(exc), format_compilation_diagnostics(exc.diagnostics))),
+        )
+    except PdfPreviewError as exc:
+        return AppResult.failed("PDF preview failed.", error=str(exc))
+    except OSError as exc:
+        return AppResult.failed("PDF generation failed.", error=str(exc))
+    lines = [
+        f"Generated PDF version '{result.version_name}' to {result.output_path}.",
+        f"Validation status: {result.validation_status}",
+        f"Compiler: {result.compiler_name}",
+    ]
+    if result.preview_opened:
+        lines.append("Preview handoff: opened")
+    return AppResult.ok("\n".join(lines))
 
 
 def _repository_from_args(args: argparse.Namespace) -> CurriculumRepository:

@@ -6,8 +6,10 @@ from pathlib import Path
 import pytest
 
 from open_cvn import CvnValidationStatus, validate_open_cvn_json
+import open_cvn_app.cli as cli_module
 from open_cvn_app import __version__
 from open_cvn_app.cli import build_parser, run
+from open_cvn_app.pdf import CompilerRunDiagnostic, PdfCompilationError, PdfGenerationResult, PdfGenerationUnavailable
 from open_cvn_app.storage import CurriculumCreate, CurriculumRepository, initialize_store
 
 
@@ -439,9 +441,149 @@ def test_latex_export_reports_missing_version(capsys: pytest.CaptureFixture[str]
     assert "Curriculum version not found: missing" in captured.err
 
 
-def test_pdf_generate_routes_to_issue_67_placeholder(capsys: pytest.CaptureFixture[str]):
+def test_pdf_generate_reports_missing_compiler(capsys: pytest.CaptureFixture[str], monkeypatch):
+    def unavailable(*args, **kwargs):
+        raise PdfGenerationUnavailable(("latexmk", "pdflatex"))
+
+    monkeypatch.setattr(cli_module, "generate_pdf_document", unavailable)
+
     exit_code = run(["pdf", "generate", "cv.pdf"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "PDF generation unavailable." in captured.err
+    assert "No supported TeX compiler found" in captured.err
+
+
+def test_pdf_generate_writes_master_pdf(capsys: pytest.CaptureFixture[str], monkeypatch, tmp_path):
+    store_path, curriculum = _create_store_with_curriculum(tmp_path)
+    repository = CurriculumRepository(store_path)
+    repository.assign_master_curriculum(curriculum.id)
+    output_path = tmp_path / "exports" / "cv.pdf"
+    calls = []
+
+    def fake_generate_pdf_document(repository, **kwargs):
+        calls.append(kwargs)
+        output = Path(kwargs["output_path"])
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_bytes(b"%PDF-1.4\n")
+        return PdfGenerationResult(
+            output_path=output,
+            version_name="master",
+            validation_status="valid",
+            compiler_name="latexmk",
+            preview_opened=False,
+        )
+
+    monkeypatch.setattr(cli_module, "generate_pdf_document", fake_generate_pdf_document)
+
+    exit_code = run(["pdf", "generate", str(output_path), "--store", str(store_path), "--version", "master"])
 
     output = capsys.readouterr().out
     assert exit_code == 0
-    assert "PDF generation is planned for issue #67" in output
+    assert output_path.exists()
+    assert "Generated PDF version 'master'" in output
+    assert "Validation status: valid" in output
+    assert "Compiler: latexmk" in output
+    assert calls == [{"version": "master", "output_path": str(output_path), "open_pdf": False}]
+
+
+def test_pdf_generate_writes_materialized_derived_pdf(capsys: pytest.CaptureFixture[str], monkeypatch, tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    repository = CurriculumRepository(store_path)
+    document = json.loads((EXAMPLES_DIR / "research_entry.json").read_text(encoding="utf-8"))
+    curriculum = repository.create_curriculum(CurriculumCreate(display_name="Master CV", document=document))
+    repository.assign_master_curriculum(curriculum.id)
+    repository.create_derived_version("public")
+    repository.exclude_from_version("public", "/curriculum/research")
+    output_path = tmp_path / "public.pdf"
+    materialized_versions = []
+
+    def fake_generate_pdf_document(repository, **kwargs):
+        materialized_versions.append(repository.materialize_version(kwargs["version"]).document)
+        output = Path(kwargs["output_path"])
+        output.write_bytes(b"%PDF-1.4\n")
+        return PdfGenerationResult(
+            output_path=output,
+            version_name="public",
+            validation_status="valid",
+            compiler_name="pdflatex",
+            preview_opened=False,
+        )
+
+    monkeypatch.setattr(cli_module, "generate_pdf_document", fake_generate_pdf_document)
+
+    exit_code = run(["pdf", "generate", str(output_path), "--store", str(store_path), "--version", "public"])
+
+    output = capsys.readouterr().out
+    assert exit_code == 0
+    assert "Generated PDF version 'public'" in output
+    assert "Compiler: pdflatex" in output
+    assert materialized_versions[0]["curriculum"]["research"] == []
+
+
+def test_pdf_generate_open_triggers_preview_flag(capsys: pytest.CaptureFixture[str], monkeypatch, tmp_path):
+    store_path, curriculum = _create_store_with_curriculum(tmp_path)
+    CurriculumRepository(store_path).assign_master_curriculum(curriculum.id)
+    output_path = tmp_path / "cv.pdf"
+    calls = []
+
+    def fake_generate_pdf_document(repository, **kwargs):
+        calls.append(kwargs)
+        output = Path(kwargs["output_path"])
+        output.write_bytes(b"%PDF-1.4\n")
+        return PdfGenerationResult(
+            output_path=output,
+            version_name="master",
+            validation_status="valid",
+            compiler_name="latexmk",
+            preview_opened=True,
+        )
+
+    monkeypatch.setattr(cli_module, "generate_pdf_document", fake_generate_pdf_document)
+
+    exit_code = run(["pdf", "generate", str(output_path), "--store", str(store_path), "--open"])
+
+    output = capsys.readouterr().out
+    assert exit_code == 0
+    assert "Preview handoff: opened" in output
+    assert calls[0]["open_pdf"] is True
+
+
+def test_pdf_generate_reports_missing_version(capsys: pytest.CaptureFixture[str], tmp_path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    output_path = tmp_path / "missing.pdf"
+
+    exit_code = run(["pdf", "generate", str(output_path), "--store", str(store_path), "--version", "missing"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "PDF generation failed." in captured.err
+    assert "Curriculum version not found: missing" in captured.err
+
+
+def test_pdf_generate_reports_compiler_failure(capsys: pytest.CaptureFixture[str], monkeypatch, tmp_path):
+    store_path, curriculum = _create_store_with_curriculum(tmp_path)
+    CurriculumRepository(store_path).assign_master_curriculum(curriculum.id)
+    diagnostic = CompilerRunDiagnostic(
+        command=("latexmk", "cv.tex"),
+        return_code=1,
+        stdout="compiler stdout",
+        stderr="compiler stderr",
+    )
+
+    def fake_generate_pdf_document(repository, **kwargs):
+        raise PdfCompilationError("PDF compilation failed.", (diagnostic,))
+
+    monkeypatch.setattr(cli_module, "generate_pdf_document", fake_generate_pdf_document)
+
+    exit_code = run(["pdf", "generate", str(tmp_path / "cv.pdf"), "--store", str(store_path)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "PDF generation failed." in captured.err
+    assert "PDF compilation failed." in captured.err
+    assert "compiler stdout" in captured.err
+    assert "compiler stderr" in captured.err
