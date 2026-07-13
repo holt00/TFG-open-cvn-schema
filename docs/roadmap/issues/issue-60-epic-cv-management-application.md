@@ -162,6 +162,35 @@ The epic should later revisit:
 - tests for storage, import/export, versioning, and LaTeX rendering
 - user documentation for running the prototype
 
+## Implementation Notes
+
+- Issues `#61` through `#68` now complete the local application MVP delivery path.
+- The implemented MVP provides:
+  - CLI-first application shell through `open-cvn`
+  - local SQLite store initialization and repository behavior
+  - master curriculum assignment
+  - derived curriculum versions
+  - section and entry include/exclude selection
+  - Open CVN JSON import and export through the public parser/validator contract
+  - deterministic LaTeX export
+  - optional PDF generation with structured missing-compiler behavior
+  - user-facing MVP workflow documentation
+- The issue `#68` closure guide exists at:
+  - `docs/development/application_mvp_workflow.md`
+- Post-MVP issue `#69` remains the planned LLM-assisted import spike and does not
+  block the local storage and export MVP.
+
+## Verification Performed For MVP Closure
+
+- Issue `#68` added end-to-end application workflow tests in:
+  - `tests/test_open_cvn_app_mvp_workflow.py`
+- Application MVP regression verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_mvp_workflow.py tests/test_open_cvn_app_cli_unit.py tests/test_open_cvn_app_storage_unit.py tests/test_open_cvn_app_versioning_unit.py tests/test_open_cvn_app_editing_unit.py tests/test_open_cvn_app_latex_unit.py tests/test_open_cvn_app_pdf_unit.py -v`
+  - result: `72 passed in 90.20s (0:01:30)`
+- Full repository verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `442 passed in 359.41s (0:05:59)`
+
 ## Verification Strategy
 
 - unit tests for storage repositories and versioning logic
@@ -174,5 +203,6 @@ The epic should later revisit:
 
 ## Status
 
-- Status: planned
-- Details expanded after epic `#41` completion
+- Status: completed
+- Issues `#61` through `#68` complete the local application MVP.
+- Issue `#69` remains post-MVP exploratory work.

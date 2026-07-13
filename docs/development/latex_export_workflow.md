@@ -11,6 +11,12 @@ to a deterministic `.tex` file.
 
 ## Command
 
+For the complete local application workflow from import to export, see:
+
+```text
+docs/development/application_mvp_workflow.md
+```
+
 Export the master version:
 
 ```bash
