@@ -187,6 +187,67 @@ Schema rather than re-running the generation pipeline at import time.
 
 ## Execution Plan
 
+### Accepted Execution Protocol
+
+Status: accepted for execution.
+
+This issue must be executed task by task. Every work update must identify the
+current task and, when applicable, the current subtask using this format:
+
+```text
+Task N/Subtask N.M activo.
+```
+
+Each task or subtask update must include:
+
+- a short summary of what the task or subtask is for
+- whether the user must modify any files before continuing
+- the next step to follow
+
+Default collaboration rule:
+
+- documentation changes may be made by the agent when they record accepted plans,
+  status, verification, or deviations
+- code changes should be left for the user unless the user explicitly authorizes
+  the agent to modify code files
+- if a code change is required, the agent should state the exact files and the
+  intended change before the user edits them
+- generated files under `src/generated/` must not be edited manually
+
+Required reporting cadence:
+
+- at the start of each task, state the task goal and first subtask
+- at the start of each subtask, state the subtask goal and expected files touched
+- at the end of each subtask, state completion status, user action needed, and
+  next subtask
+- at the end of each task, state task result, deviations, tests or checks run,
+  user action needed, and next task
+
+External research may be performed at any point when repository evidence is not
+enough. Repository-local source artifacts remain canonical for implementation.
+
+### Accepted High-Level Task Flow
+
+1. Confirm baseline trace-only XML behavior and current parser/PDF/CLI tests.
+2. Build a runtime semantic mapping index from `schemas/open_cvn.schema.json`.
+3. Extract semantic `CvnItem` records and field candidates from namespaced and
+   non-namespaced XML without depending on generated bindings.
+4. Convert extracted raw XML values into conservative Open CVN JSON-compatible
+   primitives, controlled references, wrappers, and `raw_value` fallbacks.
+5. Build semantic partial Open CVN documents with populated canonical curriculum
+   sections, trace, diagnostics, and validation through `validate_open_cvn_json(...)`.
+6. Integrate semantic import into `parse_cvn_xml(...)` while preserving structured
+   errors and parser contract behavior.
+7. Add synthetic non-personal XML fixtures for identity, education, research, and
+   unmapped cases.
+8. Add and update unit/integration tests for mapping, extraction, conversion,
+   semantic import, XML parser, PDF handoff, CLI storage, and LLM fallback
+   boundaries.
+9. Update persistent documentation so future sessions no longer treat CVN XML
+   import as trace-only.
+10. Run targeted parser/PDF/CLI/MVP verification and the full repository suite,
+    then record final results in this issue.
+
 ### Task 1 - Baseline And Scope Confirmation
 
 Summary: confirm current trace-only behavior, record target behavior, and avoid
@@ -418,6 +479,71 @@ Summary: run targeted and full verification, then record final status.
 - updated documentation replacing the old trace-only limitation with a semantic
   partial import limitation
 
+## Implementation Notes
+
+- Implemented semantic XML import modules:
+  - `src/open_cvn/xml_semantic_mapping.py`
+  - `src/open_cvn/xml_semantic_extraction.py`
+  - `src/open_cvn/xml_value_conversion.py`
+  - `src/open_cvn/xml_semantic_import.py`
+- `src/open_cvn/xml_import.py` now delegates plausible CVN XML to the semantic
+  importer after well-formedness and CVN-evidence checks.
+- The runtime mapping index is built from `schemas/open_cvn.schema.json` and uses
+  `x-open-cvn-entity-id`, `x-open-cvn-domain-area-id`,
+  `x-open-cvn-source-group-key`, `x-open-cvn-code`,
+  `x-open-cvn-domain-shape-kind`, and related annotations.
+- Identity is handled through the generated schema source group
+  `__no_cvn_item__`, with runtime fallback for `000.*` CVN identity-like codes.
+- XML extraction supports namespace-safe simplified fixtures and official-like
+  `CvnItem` item-code structures without using generated structural bindings.
+- Value conversion is conservative: known primitive, date, array, controlled
+  reference, and wrapper-like values are converted; unrecognized values preserve
+  raw source data.
+- Generated documents include `metadata.language = "es"`, parser source metadata,
+  policy metadata, canonical curriculum sections, legacy import diagnostics under
+  `extensions["x-open-cvn.import"]`, and semantic import diagnostics under
+  `extensions["x-open-cvn.xml_import"]`.
+- Generated documents are validated through `validate_open_cvn_json(...)` before
+  successful parser results are returned.
+- PDF import with `validate_extracted_xml=True` now receives semantic partial Open
+  CVN JSON from embedded compatible XML before any configured LLM fallback.
+
+## Implemented Artifacts
+
+- Added tests:
+  - `tests/test_xml_semantic_mapping_unit.py`
+  - `tests/test_xml_semantic_extraction_unit.py`
+  - `tests/test_xml_value_conversion_unit.py`
+  - `tests/test_xml_semantic_import_unit.py`
+- Added synthetic non-personal fixtures:
+  - `tests/fixtures/cvn_xml/semantic_identity.xml`
+  - `tests/fixtures/cvn_xml/semantic_education.xml`
+  - `tests/fixtures/cvn_xml/semantic_research.xml`
+  - `tests/fixtures/cvn_xml/semantic_unmapped.xml`
+- Updated parser/PDF/CLI tests for semantic partial XML import and deterministic
+  PDF XML handoff before LLM fallback.
+- Updated persistent documentation in parser, LLM import, MVP workflow,
+  regeneration workflow, limitations, roadmap, current status, and entry-point
+  maps.
+
+## Verification Results
+
+- Baseline before implementation:
+  `uv run pytest -n auto tests/test_cvn_xml_import_unit.py tests/test_pdf_xml_extraction_unit.py tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `53 passed in 10.57s`
+- Semantic XML unit verification:
+  `uv run pytest -n auto tests/test_xml_semantic_mapping_unit.py tests/test_xml_semantic_extraction_unit.py tests/test_xml_value_conversion_unit.py tests/test_xml_semantic_import_unit.py -v`
+  - result: `11 passed in 20.45s`
+- Parser/PDF/CLI regression verification:
+  `uv run pytest -n auto tests/test_cvn_xml_import_unit.py tests/test_pdf_xml_extraction_unit.py tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `55 passed in 20.45s`
+- MVP workflow verification:
+  `uv run pytest -n auto tests/test_open_cvn_app_mvp_workflow.py -v`
+  - result: `5 passed in 17.88s`
+- Full-suite verification:
+  `uv run pytest -n auto tests`
+  - result: `477 passed in 985.71s (0:16:25)`
+
 ## Status
 
-- Status: planned
+- Status: completed

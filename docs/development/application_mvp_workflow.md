@@ -256,8 +256,8 @@ uv run pytest -n auto tests
 - The store is local, single-user SQLite storage.
 - Field-level edits are not supported; derived versions use section or entry
   include/exclude selection.
-- CVN XML import remains trace-only for plausible XML and does not perform full
-  semantic XML-to-domain mapping.
+- CVN XML import is semantic partial for recognized `CvnItem` records and does
+  not perform complete semantic XML-to-domain mapping for every CVN edge case.
 - LLM-assisted PDF import is opt-in, provider-dependent, and never bypasses local
   Open CVN JSON validation.
 - PDF generation requires an external TeX distribution and is optional.

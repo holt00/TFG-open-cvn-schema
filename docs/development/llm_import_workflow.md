@@ -44,8 +44,10 @@ uv run open-cvn pdf import /path/to/cvn.pdf \
 ```
 
 If embedded XML or XML metadata is found and can be imported, the resulting Open
-CVN JSON is stored. Current CVN XML import is trace-only, so embedded XML imports
-may preserve trace metadata without populating all curriculum sections.
+CVN JSON is stored. Current CVN XML import is semantic partial: recognized
+`CvnItem` records can populate canonical curriculum sections before any LLM
+fallback is considered, while unmapped source data remains preserved in trace,
+extensions, or `curriculum.other[]`.
 
 ## LLM Fallback Import
 

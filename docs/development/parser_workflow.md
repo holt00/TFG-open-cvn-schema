@@ -8,7 +8,7 @@ and validator workflow implemented by issues `#47`, `#48`, and `#49`.
 Use this guide when you need to:
 
 - validate an Open CVN JSON document
-- import direct CVN XML into the current trace-only Open CVN shape
+- import direct CVN XML into the current semantic partial Open CVN shape
 - extract embedded CVN XML from a PDF
 - inspect structured parser errors and trace metadata
 - run parser-focused regression tests
@@ -154,18 +154,23 @@ result_from_bytes = parse_cvn_xml(
 )
 ```
 
-Current XML import behavior is conservative:
+Current XML import behavior is conservative semantic partial import:
 
 - validates XML well-formedness
 - checks for plausible CVN evidence
 - preserves simplified XML paths
 - preserves CVN code-like values when detected
-- returns a trace-only Open CVN document for plausible CVN XML
-- does not perform full semantic XML-to-domain mapping
+- maps recognized `CvnItem` group and field codes into canonical Open CVN
+  curriculum sections using `schemas/open_cvn.schema.json` annotations
+- validates generated Open CVN JSON through `validate_open_cvn_json(...)`
+- preserves unmapped source items in trace/extensions or `curriculum.other[]`
+- does not perform complete semantic XML-to-domain mapping for every CVN edge case
 
-For plausible CVN XML, `data["extensions"]["x-open-cvn.import"]` records
-`mapping_status = "trace_only"`. Treat that as an import diagnostic, not proof
-that all curriculum content was converted.
+For plausible CVN XML, `data["extensions"]["x-open-cvn.xml_import"]` records
+`mapping_status = "semantic_partial"` when at least one item maps. Inputs with
+CVN evidence but no recognized semantic items may still report
+`mapping_status = "trace_only"`. Treat either status as an import diagnostic,
+not proof that all curriculum content was converted.
 
 XML errors use these codes:
 
@@ -201,8 +206,10 @@ PDF handling is extraction-only:
 - stores extraction metadata in `data["extraction"]`
 - leaves XML interpretation to `parse_cvn_xml(...)`
 
-PDF handling does not attempt OCR, page text reconstruction, LLM reconstruction,
-or direct XML-to-domain mapping.
+PDF handling does not attempt OCR or page text reconstruction. When
+`validate_extracted_xml=True`, extracted XML is handed to `parse_cvn_xml(...)`,
+which can now produce semantic partial Open CVN JSON before any configured LLM
+fallback is considered.
 
 PDF errors use these codes:
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CVNRoot xmlns="https://example.test/cvn">
+  <CVNItem code="000.010.000.000">
+    <Field code="000.010.000.020">Ada</Field>
+    <Field code="000.010.000.010">Lovelace Synthetic</Field>
+  </CVNItem>
+</CVNRoot>

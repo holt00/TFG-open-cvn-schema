@@ -43,7 +43,7 @@ Goal:
 | `#46` | Define canonical Open CVN JSON format | Completed | Canonical root, metadata, curriculum sections, entries, trace, extensions, examples, and schema alignment implemented |
 | `#47` | Define unified parser and validator contract | Completed | Public `open_cvn` contract package, structured result/error/trace models, deferred parser signatures, docs, and tests implemented |
 | `#48` | Extract CVN XML from PDF inputs | Completed | Deterministic PDF XML extraction implemented behind `parse_cvn_pdf(...)` with embedded-file and XML metadata support |
-| `#49` | Validate XML and JSON import paths | Completed | JSON Schema plus Pydantic Open CVN JSON validation implemented; CVN XML well-formedness, trace extraction, and trace-only Open CVN mapping implemented |
+| `#49` | Validate XML and JSON import paths | Completed | JSON Schema plus Pydantic Open CVN JSON validation implemented; CVN XML well-formedness, trace extraction, and initial trace-only Open CVN mapping implemented |
 | `#50` | Add tests and documentation for parser workflow | Completed | Parser workflow docs, coverage audit, `pydantic_validation_failure` regression, drift checks, and full-suite verification completed |
 | `#60` | Epic: CV management application | Completed | Local CLI-first MVP completed through issues `#61`-`#69`, including opt-in LLM-assisted PDF import fallback |
 | `#61` | Application MVP scope and CLI shell | Completed | CLI-first prototype shell, command surface, console script, placeholders, and smoke tests implemented |
@@ -55,6 +55,7 @@ Goal:
 | `#67` | PDF generation and preview handoff | Completed | Optional `latexmk`/`pdflatex` compilation, structured missing-compiler behavior, mocked tests, and explicit `--open` preview handoff implemented |
 | `#68` | Application MVP tests and documentation | Completed | End-to-end MVP workflow tests, application user guide, verification, and epic `#60` closure completed |
 | `#69` | LLM-assisted PDF import fallback | Completed | Deterministic-first PDF import, explicit external-LLM opt-in, OpenAI Responses provider adapter, local validation, CLI storage, mocked tests, and workflow docs implemented |
+| `#70` | Semantic CVN XML import to Open CVN JSON | Completed | Runtime schema-backed CVN code mapping, semantic partial XML import, deterministic PDF XML handoff before LLM fallback, synthetic fixtures, tests, and documentation implemented |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 

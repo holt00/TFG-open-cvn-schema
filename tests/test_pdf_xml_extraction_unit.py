@@ -10,7 +10,9 @@ from open_cvn.pdf_xml_extraction import extract_cvn_xml_from_pdf
 
 CVN_XML = """<?xml version="1.0" encoding="UTF-8"?>
 <CVNRoot xmlns="https://example.test/cvn">
-  <CVNCode>000.010.000.000</CVNCode>
+  <CVNItem code="020.010.010.000">
+    <Field code="020.010.010.030">Synthetic Computer Science Degree</Field>
+  </CVNItem>
 </CVNRoot>
 """
 
@@ -117,10 +119,13 @@ def test_parse_cvn_pdf_can_validate_extracted_xml_to_open_cvn_json(tmp_path):
     assert result.source_format == CvnSourceFormat.PDF
     assert result.validation_status == CvnValidationStatus.VALID
     assert result.data is not None
-    assert result.data["extensions"]["x-open-cvn.import"]["mapping_status"] == "trace_only"
+    assert result.data["extensions"]["x-open-cvn.xml_import"]["mapping_status"] == "semantic_partial"
+    assert result.data["curriculum"]["education"][0]["data"]["nombre_del_titulo"]["raw_value"] == (
+        "Synthetic Computer Science Degree"
+    )
     assert result.trace is not None
     assert result.trace.extracted_from == "embedded_file:cvn.xml"
-    assert result.trace.cvn_codes == ("000.010.000.000",)
+    assert result.trace.cvn_codes == ("020.010.010.000", "020.010.010.030")
 
 
 def test_parse_cvn_pdf_does_not_call_llm_when_extracted_xml_validates(tmp_path):

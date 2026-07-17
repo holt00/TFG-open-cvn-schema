@@ -189,9 +189,13 @@ Implemented behavior:
 - rejects mapping inputs as `unsupported_input_format`
 - validates XML well-formedness with `xml.etree.ElementTree`
 - records simplified XML paths and detected CVN code-like values in trace metadata
-- emits a conservative Open CVN JSON document with trace-only import diagnostics
-  for plausible CVN XML
-- does not yet perform full semantic XML-to-domain mapping from real CVN records
+- maps recognized `CvnItem` group and field codes to semantic partial Open CVN
+  JSON sections using `schemas/open_cvn.schema.json` annotations
+- validates generated Open CVN JSON through `validate_open_cvn_json(...)`
+- preserves unmapped CVN source items and fields in trace, import diagnostics, or
+  `curriculum.other[]`
+- does not yet perform complete semantic XML-to-domain mapping for every real CVN
+  source-package edge case
 
 ### JSON
 
@@ -414,19 +418,20 @@ Implemented behavior:
 }
 ```
 
-### Successful Trace-Only CVN XML Import
+### Successful Semantic Partial CVN XML Import
 
 ```json
 {
   "source_format": "cvn_xml",
-  "source_identifier": "minimal_cvn.xml",
+  "source_identifier": "semantic_education.xml",
   "data": {
     "schema_version": "0.1.0",
     "metadata": {
+      "language": "es",
       "source": {
         "format": "cvn_xml",
-        "identifier": "minimal_cvn.xml",
-        "path": "minimal_cvn.xml",
+        "identifier": "semantic_education.xml",
+        "path": "semantic_education.xml",
         "root": "CVNRoot"
       },
       "policy": {
@@ -436,7 +441,24 @@ Implemented behavior:
     },
     "curriculum": {
       "identity": {},
-      "education": [],
+      "education": [
+        {
+          "id": "education-020-010-010-000-001",
+          "type": "education.estudiosde1y2ciclo_020_010_010_000",
+          "data": {
+            "nombre_del_titulo": {
+              "label": "Synthetic Computer Science Degree",
+              "raw_value": "Synthetic Computer Science Degree",
+              "source": "CVN_TITLE_B"
+            }
+          },
+          "trace": {
+            "cvn_codes": ["020.010.010.000"],
+            "xml_paths": ["CVNRoot/CVNItem[1]"],
+            "confidence": "medium"
+          }
+        }
+      ],
       "research": [],
       "professional_experience": [],
       "achievements": [],
@@ -444,9 +466,19 @@ Implemented behavior:
     },
     "extensions": {
       "x-open-cvn.import": {
-        "cvn_codes": ["000.010.000.000"],
+        "cvn_codes": ["020.010.010.000", "020.010.010.030"],
         "xml_paths": ["CVNRoot", "CVNRoot/CVNItem[1]"],
-        "mapping_status": "trace_only"
+        "mapping_status": "semantic_partial"
+      },
+      "x-open-cvn.xml_import": {
+        "mapping_status": "semantic_partial",
+        "items_seen": 1,
+        "items_mapped": 1,
+        "items_unmapped": 0,
+        "fields_seen": 1,
+        "fields_mapped": 1,
+        "fields_unmapped": 0,
+        "unmapped_codes": []
       }
     }
   },
@@ -455,10 +487,10 @@ Implemented behavior:
   "errors": [],
   "trace": {
     "source_format": "cvn_xml",
-    "source_identifier": "minimal_cvn.xml",
-    "source_path": "minimal_cvn.xml",
+    "source_identifier": "semantic_education.xml",
+    "source_path": "semantic_education.xml",
     "extracted_from": null,
-    "cvn_codes": ["000.010.000.000"],
+    "cvn_codes": ["020.010.010.000", "020.010.010.030"],
     "xml_paths": ["CVNRoot", "CVNRoot/CVNItem[1]"],
     "schema_version": null,
     "policy_name": null,

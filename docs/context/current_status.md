@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-15
+- Last updated: 2026-07-17
 
 ## Completed Or Stabilized Work
 
@@ -647,11 +647,12 @@
 - `parse_cvn_xml(...)` now accepts path, inline XML string, and XML bytes inputs
 - CVN XML import performs well-formedness checks, CVN plausibility checks, XML path
   trace extraction, and CVN code-like trace extraction
-- plausible CVN XML currently maps to a conservative Open CVN trace-only document
-  with import diagnostics under `extensions["x-open-cvn.import"]`
-- full semantic XML-to-domain mapping remains a documented limitation because the
-  runtime importer does not yet have enough curated mapping behavior for arbitrary
-  CVN XML records
+- plausible CVN XML now maps recognized `CvnItem` group and field codes into a
+  semantic partial Open CVN document with import diagnostics under
+  `extensions["x-open-cvn.xml_import"]`
+- complete semantic XML-to-domain mapping remains a documented limitation because
+  arbitrary CVN XML records and rare source-package edge cases are not yet fully
+  covered
 - synthetic JSON and XML fixtures exist under:
   - `tests/fixtures/open_cvn/`
   - `tests/fixtures/cvn_xml/`
@@ -672,7 +673,7 @@
 - the guide documents:
   - public `open_cvn` parser imports
   - Open CVN JSON parsing and validation
-  - direct CVN XML parsing and trace-only output interpretation
+  - direct CVN XML parsing and semantic partial output interpretation
   - deterministic CVN PDF XML extraction and PDF-to-XML handoff
   - structured parser errors
   - parser trace metadata
@@ -1101,6 +1102,41 @@
   - `uv run pytest -n auto tests`
   - result: `464 passed in 816.22s (0:13:36)`
 
+### Issue `#70`
+
+- the semantic CVN XML import issue is implemented under:
+  - `src/open_cvn/xml_semantic_mapping.py`
+  - `src/open_cvn/xml_semantic_extraction.py`
+  - `src/open_cvn/xml_value_conversion.py`
+  - `src/open_cvn/xml_semantic_import.py`
+  - `src/open_cvn/xml_import.py`
+- `parse_cvn_xml(...)` now uses a runtime mapping index built from
+  `schemas/open_cvn.schema.json` annotations instead of returning only a
+  trace-only empty curriculum for recognized CVN XML
+- recognized `CvnItem` records can populate `curriculum.identity`,
+  `curriculum.education[]`, `curriculum.research[]`, and other canonical Open CVN
+  sections
+- unmapped items and fields are preserved through import diagnostics, trace, or
+  `curriculum.other[]`
+- generated documents are validated through `validate_open_cvn_json(...)` before
+  successful parser results are returned
+- PDF import with embedded compatible XML now gets semantic partial Open CVN JSON
+  before any configured LLM fallback is considered
+- synthetic non-personal XML fixtures and semantic import tests are implemented
+  under `tests/fixtures/cvn_xml/` and `tests/test_xml_semantic_*_unit.py`
+- targeted semantic XML verification passed with:
+  - `uv run pytest -n auto tests/test_xml_semantic_mapping_unit.py tests/test_xml_semantic_extraction_unit.py tests/test_xml_value_conversion_unit.py tests/test_xml_semantic_import_unit.py -v`
+  - result: `11 passed in 20.45s`
+- targeted parser/PDF/CLI verification passed with:
+  - `uv run pytest -n auto tests/test_cvn_xml_import_unit.py tests/test_pdf_xml_extraction_unit.py tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `55 passed in 20.45s`
+- MVP workflow verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_mvp_workflow.py -v`
+  - result: `5 passed in 17.88s`
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `477 passed in 985.71s (0:16:25)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -1112,9 +1148,9 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#68`: issue `#69` LLM-assisted PDF import fallback
-  is completed
-- Epic `#60` has been expanded into issues `#61` through `#69`
+- Next work item after issue `#69`: issue `#70` semantic CVN XML import is
+  implemented
+- Epic `#60` has been expanded into issues `#61` through `#70`
 - MVP direction:
   - CLI-first local prototype
   - SQLite local storage
@@ -1125,7 +1161,8 @@
   - optional PDF generation and preview handoff
   - application MVP tests and user documentation
   - basic opt-in LLM-assisted PDF import fallback
-- Next implementation issue: none currently documented after issue `#69`
+  - semantic partial CVN XML import before LLM fallback
+- Next implementation issue: none currently documented after issue `#70`
 
 ## Blocking Or Relevant Limitations
 
@@ -1141,8 +1178,9 @@
   hotfix `#7` evidence in the normalization-to-semantic handoff
 - wrapper-aware domain attachment requires normalization runs that provide
   `cvn_xsd_path` and `common_xsd_path`; canonical generation provides them
-- issue `#49` XML import is currently trace-only for plausible CVN XML and does
-  not yet perform full semantic XML-to-domain mapping
+- issue `#70` XML import is semantic partial for recognized CVN XML but does not
+  yet perform complete semantic XML-to-domain mapping for every source-package
+  edge case
 - issue `#69` LLM-assisted PDF import is provider-dependent and may produce
   incomplete or hallucinated content, so output is accepted only after local Open
   CVN JSON validation and should be reviewed by the user
