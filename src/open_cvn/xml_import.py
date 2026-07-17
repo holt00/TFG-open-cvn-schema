@@ -6,7 +6,6 @@ from typing import Mapping
 from xml.etree import ElementTree
 
 from open_cvn.import_utils import load_text_input, make_error, make_trace
-from open_cvn.open_cvn_models import OPEN_CVN_SCHEMA_VERSION
 from open_cvn.parser_contract import (
     CvnErrorCode,
     CvnInput,
@@ -15,11 +14,10 @@ from open_cvn.parser_contract import (
     CvnSourceFormat,
     CvnValidationStatus,
 )
+from open_cvn.xml_semantic_import import import_cvn_xml_semantically
 
 
 CVN_CODE_RE = re.compile(r"\b\d{3}\.\d{3}\.\d{3}\.\d{3}\b")
-DEFAULT_POLICY_NAME = "default_cvn_semantic_policy"
-DEFAULT_POLICY_VERSION = "0.1.0"
 
 
 def parse_cvn_xml(source: CvnInput, *, source_identifier: str | None = None) -> CvnParseResult:
@@ -98,13 +96,27 @@ def parse_cvn_xml(source: CvnInput, *, source_identifier: str | None = None) -> 
             trace=trace,
         )
 
-    document = _map_xml_to_open_cvn(
-        source_identifier=loaded.source_identifier,
-        source_path=loaded.source_path,
-        root=root,
-        cvn_codes=cvn_codes,
-        xml_paths=xml_paths,
-    )
+    try:
+        document = import_cvn_xml_semantically(
+            source_identifier=loaded.source_identifier,
+            source_path=loaded.source_path,
+            root=root,
+        )
+    except ValueError as exc:
+        return CvnParseResult(
+            source_format=CvnSourceFormat.CVN_XML,
+            source_identifier=loaded.source_identifier,
+            validation_status=CvnValidationStatus.INVALID,
+            errors=(
+                make_error(
+                    code=CvnErrorCode.XML_SEMANTICALLY_UNMAPPABLE,
+                    message="CVN XML is readable but cannot be mapped to valid Open CVN JSON.",
+                    path=(xml_paths[0],) if xml_paths else (),
+                    details={"error": str(exc)},
+                ),
+            ),
+            trace=trace,
+        )
     return CvnParseResult(
         source_format=CvnSourceFormat.CVN_XML,
         source_identifier=loaded.source_identifier,
@@ -112,46 +124,6 @@ def parse_cvn_xml(source: CvnInput, *, source_identifier: str | None = None) -> 
         validation_status=CvnValidationStatus.VALID,
         trace=trace,
     )
-
-
-def _map_xml_to_open_cvn(
-    *,
-    source_identifier: str | None,
-    source_path: str | None,
-    root: ElementTree.Element,
-    cvn_codes: tuple[str, ...],
-    xml_paths: tuple[str, ...],
-) -> dict[str, object]:
-    return {
-        "schema_version": OPEN_CVN_SCHEMA_VERSION,
-        "metadata": {
-            "source": {
-                "format": CvnSourceFormat.CVN_XML.value,
-                "identifier": source_identifier,
-                "path": source_path,
-                "root": _local_name(root.tag),
-            },
-            "policy": {
-                "name": DEFAULT_POLICY_NAME,
-                "version": DEFAULT_POLICY_VERSION,
-            },
-        },
-        "curriculum": {
-            "identity": {},
-            "education": [],
-            "research": [],
-            "professional_experience": [],
-            "achievements": [],
-            "other": [],
-        },
-        "extensions": {
-            "x-open-cvn.import": {
-                "cvn_codes": list(cvn_codes),
-                "xml_paths": list(xml_paths),
-                "mapping_status": "trace_only",
-            }
-        },
-    }
 
 
 def _xml_paths(root: ElementTree.Element) -> tuple[str, ...]:

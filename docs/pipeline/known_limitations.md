@@ -123,22 +123,32 @@ do not need to rediscover them.
 
 ## Parser And Import Limitations
 
-### CVN XML Import Is Trace-Only For Plausible CVN XML
+### CVN XML Import Is Semantic Partial For Recognized CVN Items
 
 - Confirmed behavior:
-  - issue `#49` can read CVN XML inputs, check XML well-formedness, detect basic
-    CVN evidence, preserve XML paths, and preserve CVN code-like trace values
-  - plausible CVN XML maps to an Open CVN document with empty curriculum sections
-    and import diagnostics under `extensions["x-open-cvn.import"]`
-  - arbitrary CVN XML records are not yet semantically mapped into domain entries
+  - issue `#49` introduced CVN XML input reading, XML well-formedness checks,
+    basic CVN evidence detection, XML path preservation, and CVN code-like trace
+    preservation
+  - issue `#70` maps recognized `CvnItem` group and field codes into Open CVN
+    `identity`, `education`, `research`, `professional_experience`,
+    `achievements`, and `other` sections using `schemas/open_cvn.schema.json`
+    annotations
+  - generated Open CVN JSON is validated through `validate_open_cvn_json(...)`
+    before successful parser results are returned
+  - unmapped CVN items and fields are preserved through trace, import diagnostics,
+    and `curriculum.other[]` where applicable
+  - arbitrary CVN XML records and rare source-package edge cases are not yet fully
+    semantically mapped into domain entries
 - Impact:
-  - XML import now provides structured validation and trace preservation, but it is
-    not yet a full CVN XML-to-Open-CVN semantic converter
-  - downstream consumers should treat `mapping_status = "trace_only"` as an import
-    diagnostic, not as proof that all curriculum content was converted
+  - XML import now provides structured validation, trace preservation, and partial
+    semantic population, but it is not a complete CVN XML-to-Open-CVN converter
+  - downstream consumers should treat `mapping_status = "semantic_partial"` or
+    `mapping_status = "trace_only"` as import diagnostics, not as proof that all
+    curriculum content was converted
 - Expected follow-up:
-  - a later issue should define curated XML-to-domain mapping rules before the
-    importer converts real CVN XML records into populated Open CVN sections
+  - later work should add curated XML-to-domain mapping rules, richer controlled
+    reference label resolution, and broader fixture coverage before treating the
+    importer as a complete real-world CVN XML converter
 
 ### JSON Schema Validation Runs Before Runtime Model Validation
 

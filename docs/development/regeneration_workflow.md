@@ -261,7 +261,7 @@ The implemented tests cover:
 - JSON Schema generation, metadata, enum/open-reference treatment, determinism,
   and CLI output
 - parser contract, deterministic PDF XML extraction, Open CVN JSON validation,
-  trace-only CVN XML import, structured errors, and trace preservation
+  semantic partial CVN XML import, structured errors, and trace preservation
 - source coverage for manual, tree, auxiliary, semantic, and generated artifacts
 
 Tests that regenerate `src/generated/*` use `tests/xsdata_generation_lock.py` so

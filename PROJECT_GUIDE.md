@@ -146,6 +146,8 @@ files in order:
   planned application MVP tests and documentation issue
 - `docs/roadmap/issues/issue-69-llm-assisted-import-spike.md`: planned post-MVP
   LLM import exploration
+- `docs/roadmap/issues/issue-70-semantic-cvn-xml-import-to-open-cvn-json.md`:
+  authoritative record of semantic CVN XML import into Open CVN JSON
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance
