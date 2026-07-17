@@ -6,7 +6,8 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
-from open_cvn import CvnParseIssue, CvnValidationStatus, parse_open_cvn_json
+from open_cvn import CvnParseIssue, CvnParseResult, CvnValidationStatus, parse_cvn_pdf, parse_open_cvn_json
+from open_cvn.llm_import import LlmImportConfig
 from open_cvn_app import __version__
 from open_cvn_app.config import OpenCvnAppConfig
 from open_cvn_app.editing import list_curriculum_entries, list_curriculum_sections
@@ -149,6 +150,49 @@ def build_parser() -> argparse.ArgumentParser:
 
     pdf_parser = subparsers.add_parser("pdf", help="Generate optional PDF artifact.")
     pdf_subparsers = pdf_parser.add_subparsers(dest="pdf_command")
+    pdf_import_parser = pdf_subparsers.add_parser("import", help="Import CVN PDF into local storage.")
+    pdf_import_parser.add_argument("input", help="Input CVN PDF file.")
+    pdf_import_parser.add_argument("--name", help="Stored curriculum display name.")
+    pdf_import_parser.add_argument(
+        "--as-master",
+        action="store_true",
+        help="Assign imported curriculum as the master version.",
+    )
+    pdf_import_parser.add_argument(
+        "--llm-provider",
+        choices=("openai",),
+        help="Enable LLM fallback provider when deterministic XML import fails.",
+    )
+    pdf_import_parser.add_argument(
+        "--llm-model",
+        default="gpt-4.1",
+        help="LLM model for PDF fallback import.",
+    )
+    pdf_import_parser.add_argument("--llm-base-url", help="Optional OpenAI-compatible base URL.")
+    pdf_import_parser.add_argument(
+        "--llm-api-key-env",
+        default="OPENAI_API_KEY",
+        help="Environment variable that contains the provider API key.",
+    )
+    pdf_import_parser.add_argument(
+        "--llm-timeout",
+        type=float,
+        default=60.0,
+        help="LLM provider timeout in seconds.",
+    )
+    pdf_import_parser.add_argument(
+        "--pdf-detail",
+        choices=("low", "high", "auto"),
+        default="low",
+        help="Provider PDF detail level for LLM fallback.",
+    )
+    pdf_import_parser.add_argument(
+        "--allow-external-llm",
+        action="store_true",
+        help="Allow sending PDF contents to the configured external LLM provider.",
+    )
+    _add_store_path_option(pdf_import_parser)
+    pdf_import_parser.set_defaults(handler=_handle_pdf_import)
     pdf_generate_parser = pdf_subparsers.add_parser("generate", help="Generate PDF file.")
     pdf_generate_parser.add_argument("output", help="Output PDF file.")
     pdf_generate_parser.add_argument(
@@ -224,9 +268,30 @@ def _handle_json_import(args: argparse.Namespace) -> AppResult:
     input_path = Path(args.input)
     repository = _repository_from_args(args)
     parse_result = parse_open_cvn_json(input_path, source_identifier=str(input_path))
+    return _store_imported_parse_result(
+        repository=repository,
+        parse_result=parse_result,
+        display_name=args.name or input_path.stem,
+        source_identifier=str(input_path),
+        as_master=args.as_master,
+        import_label="Open CVN JSON",
+        success_source=str(input_path),
+    )
+
+
+def _store_imported_parse_result(
+    *,
+    repository: CurriculumRepository,
+    parse_result: CvnParseResult,
+    display_name: str,
+    source_identifier: str,
+    as_master: bool,
+    import_label: str,
+    success_source: str,
+) -> AppResult:
     if parse_result.validation_status in {CvnValidationStatus.INVALID, CvnValidationStatus.FAILED}:
         return AppResult.failed(
-            "Open CVN JSON import failed.",
+            f"{import_label} import failed.",
             error="\n".join(
                 (
                     f"Validation status: {parse_result.validation_status.value}",
@@ -237,43 +302,44 @@ def _handle_json_import(args: argparse.Namespace) -> AppResult:
         )
     if parse_result.data is None:
         return AppResult.failed(
-            "Open CVN JSON import failed.",
-            error="Parser accepted input but did not return Open CVN JSON data.",
+            f"{import_label} import failed.",
+            error="Parser accepted input but did not return importable Open CVN JSON data.",
         )
 
-    display_name = args.name or input_path.stem
     try:
-        if args.as_master:
+        if as_master:
             try:
                 repository.get_master_version()
             except MasterCurriculumNotFound:
                 pass
             else:
                 return AppResult.failed(
-                    "Open CVN JSON import failed.",
+                    f"{import_label} import failed.",
                     error="A master curriculum version already exists.",
                 )
         record = repository.create_curriculum(
             CurriculumCreate(
                 display_name=display_name,
                 document=parse_result.data,
-                source_identifier=str(input_path),
+                source_identifier=source_identifier,
                 diagnostics=parse_result.warnings,
             )
         )
         master_line = None
-        if args.as_master:
+        if as_master:
             master = repository.assign_master_curriculum(record.id)
             master_line = f"Assigned master curriculum version '{master.name}' with id {master.id}."
     except StorageError as exc:
-        return AppResult.failed("Open CVN JSON import failed.", error=str(exc))
+        return AppResult.failed(f"{import_label} import failed.", error=str(exc))
 
     lines = [
-        f"Imported Open CVN JSON as curriculum '{record.display_name}'.",
+        f"Imported {import_label} as curriculum '{record.display_name}'.",
         f"Curriculum ID: {record.id}",
         f"Validation status: {record.validation_status}",
-        f"Source: {input_path}",
+        f"Source: {success_source}",
     ]
+    if parse_result.trace is not None and parse_result.trace.extracted_from is not None:
+        lines.append(f"Import path: {parse_result.trace.extracted_from}")
     if master_line is not None:
         lines.append(master_line)
     return AppResult.ok("\n".join(lines))
@@ -499,6 +565,45 @@ def _handle_pdf_generate(args: argparse.Namespace) -> AppResult:
     if result.preview_opened:
         lines.append("Preview handoff: opened")
     return AppResult.ok("\n".join(lines))
+
+
+def _handle_pdf_import(args: argparse.Namespace) -> AppResult:
+    input_path = Path(args.input)
+    if args.llm_provider and not args.allow_external_llm:
+        return AppResult.failed(
+            "PDF import failed.",
+            error=(
+                "PDF may contain personal data. Pass --allow-external-llm to send it "
+                "to the configured provider."
+            ),
+        )
+    llm_config = None
+    if args.llm_provider:
+        llm_config = LlmImportConfig(
+            provider=args.llm_provider,
+            model=args.llm_model,
+            base_url=args.llm_base_url,
+            api_key_env=args.llm_api_key_env,
+            timeout_seconds=args.llm_timeout,
+            pdf_detail=args.pdf_detail,
+        )
+    parse_result = parse_cvn_pdf(
+        input_path,
+        source_identifier=str(input_path),
+        validate_extracted_xml=True,
+        allow_llm=args.llm_provider is not None,
+        llm_config=llm_config,
+    )
+    repository = _repository_from_args(args)
+    return _store_imported_parse_result(
+        repository=repository,
+        parse_result=parse_result,
+        display_name=args.name or input_path.stem,
+        source_identifier=str(input_path),
+        as_master=args.as_master,
+        import_label="PDF",
+        success_source=str(input_path),
+    )
 
 
 def _repository_from_args(args: argparse.Namespace) -> CurriculumRepository:

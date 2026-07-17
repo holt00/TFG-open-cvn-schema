@@ -32,13 +32,13 @@ Agents should also read `AGENTS.md` before this file.
   semantic policy, domain generation, conceptual schema, Open CVN JSON format,
   parser/validator contract, CLI shell, local SQLite storage, master/derived
   curriculum versioning, Open CVN JSON application import/export, curriculum
-  editing/selection MVP, LaTeX export, optional PDF generation, and application
-  MVP workflow tests/documentation completed
+  editing/selection MVP, LaTeX export, optional PDF generation, application MVP
+  workflow tests/documentation, and LLM-assisted PDF import fallback completed
 - Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
   `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, `#48`, `#49`, `#50`,
-  `#61`, `#62`, `#63`, `#64`, `#65`, `#66`, `#67`, and `#68`
+  `#61`, `#62`, `#63`, `#64`, `#65`, `#66`, `#67`, `#68`, and `#69`
 - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Next planned issue: `#69`
+- Next planned issue: none currently documented after `#69`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -162,6 +162,8 @@ Agents should also read `AGENTS.md` before this file.
   stored Open CVN master or derived versions to LaTeX
 - `docs/development/pdf_generation_workflow.md`: issue `#67` workflow for optional
   PDF generation and preview handoff from stored curriculum versions
+- `docs/development/llm_import_workflow.md`: issue `#69` workflow for
+  deterministic-first PDF import with opt-in LLM fallback
 - `docs/development/code_style.md`: code style, typing, and documentation rules
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy and
   update protocol

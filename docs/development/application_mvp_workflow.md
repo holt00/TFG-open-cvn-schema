@@ -9,6 +9,7 @@ The MVP proves this path:
 
 ```text
 Open CVN JSON input
+or CVN PDF import
 -> validated local SQLite storage
 -> master curriculum
 -> derived curriculum version
@@ -56,6 +57,36 @@ uv run open-cvn json import examples/open_cvn/research_entry.json \
 
 The import path uses the public Open CVN parser and validator. Invalid JSON is
 rejected before storage.
+
+## Import CVN PDF As Master
+
+Import a PDF using deterministic embedded XML or XML metadata extraction:
+
+```bash
+uv run open-cvn pdf import /path/to/cvn.pdf \
+  --store /tmp/open-cvn-demo.sqlite \
+  --as-master
+```
+
+If deterministic XML import cannot produce importable Open CVN JSON, an external
+LLM fallback can be enabled explicitly:
+
+```bash
+uv run open-cvn pdf import /path/to/cvn.pdf \
+  --store /tmp/open-cvn-demo.sqlite \
+  --as-master \
+  --llm-provider openai \
+  --llm-model gpt-4.1 \
+  --allow-external-llm
+```
+
+The explicit `--allow-external-llm` flag is required because PDF files may
+contain personal data. LLM output is stored only after it validates as Open CVN
+JSON.
+
+More details:
+
+- `docs/development/llm_import_workflow.md`
 
 ## Create A Derived Version
 
@@ -227,6 +258,9 @@ uv run pytest -n auto tests
   include/exclude selection.
 - CVN XML import remains trace-only for plausible XML and does not perform full
   semantic XML-to-domain mapping.
+- LLM-assisted PDF import is opt-in, provider-dependent, and never bypasses local
+  Open CVN JSON validation.
 - PDF generation requires an external TeX distribution and is optional.
 - PDF preview is best-effort and only runs when `--open` is explicitly passed.
-- LLM-assisted reconstruction from arbitrary PDFs is deferred to issue `#69`.
+- LLM-assisted reconstruction from arbitrary PDFs is implemented as a basic issue
+  `#69` MVP fallback, not as a guaranteed complete semantic conversion.

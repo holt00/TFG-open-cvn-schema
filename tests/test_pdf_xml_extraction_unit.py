@@ -1,8 +1,10 @@
 from pathlib import Path
+from typing import Any, Mapping
 
 import pymupdf
 
 from open_cvn import CvnErrorCode, CvnSourceFormat, CvnValidationStatus, parse_cvn_pdf
+from open_cvn.llm_import import LlmImportConfig, LlmImportRequest, LlmProviderResponse
 from open_cvn.pdf_xml_extraction import extract_cvn_xml_from_pdf
 
 
@@ -11,6 +13,34 @@ CVN_XML = """<?xml version="1.0" encoding="UTF-8"?>
   <CVNCode>000.010.000.000</CVNCode>
 </CVNRoot>
 """
+
+VALID_OPEN_CVN_JSON: Mapping[str, Any] = {
+    "schema_version": "0.1.0",
+    "metadata": {
+        "language": "es",
+        "policy": {
+            "name": "default_cvn_semantic_policy",
+            "version": "0.1.0",
+        },
+    },
+    "curriculum": {
+        "identity": {},
+        "education": [],
+        "research": [],
+        "professional_experience": [],
+        "achievements": [],
+        "other": [],
+    },
+}
+
+
+class RecordingProvider:
+    def __init__(self) -> None:
+        self.requests: list[LlmImportRequest] = []
+
+    def extract_open_cvn_json(self, request: LlmImportRequest) -> LlmProviderResponse:
+        self.requests.append(request)
+        return LlmProviderResponse(document=VALID_OPEN_CVN_JSON)
 
 
 def _save_empty_pdf(path: Path) -> None:
@@ -78,6 +108,38 @@ def test_parse_cvn_pdf_returns_extracted_xml_result(tmp_path):
     assert result.trace.extracted_from == "embedded_file:cvn.xml"
 
 
+def test_parse_cvn_pdf_can_validate_extracted_xml_to_open_cvn_json(tmp_path):
+    pdf_path = tmp_path / "cvn.pdf"
+    _save_pdf_with_embedded_xml(pdf_path)
+
+    result = parse_cvn_pdf(pdf_path, validate_extracted_xml=True)
+
+    assert result.source_format == CvnSourceFormat.PDF
+    assert result.validation_status == CvnValidationStatus.VALID
+    assert result.data is not None
+    assert result.data["extensions"]["x-open-cvn.import"]["mapping_status"] == "trace_only"
+    assert result.trace is not None
+    assert result.trace.extracted_from == "embedded_file:cvn.xml"
+    assert result.trace.cvn_codes == ("000.010.000.000",)
+
+
+def test_parse_cvn_pdf_does_not_call_llm_when_extracted_xml_validates(tmp_path):
+    pdf_path = tmp_path / "cvn.pdf"
+    _save_pdf_with_embedded_xml(pdf_path)
+    provider = RecordingProvider()
+
+    result = parse_cvn_pdf(
+        pdf_path,
+        validate_extracted_xml=True,
+        allow_llm=True,
+        llm_config=LlmImportConfig(provider="mock", model="mock-model"),
+        llm_provider=provider,
+    )
+
+    assert result.validation_status == CvnValidationStatus.VALID
+    assert provider.requests == []
+
+
 def test_parse_cvn_pdf_without_xml_returns_structured_failure(tmp_path):
     pdf_path = tmp_path / "no-xml.pdf"
     _save_empty_pdf(pdf_path)
@@ -88,6 +150,38 @@ def test_parse_cvn_pdf_without_xml_returns_structured_failure(tmp_path):
     assert result.errors[0].code == CvnErrorCode.PDF_WITHOUT_EXTRACTABLE_XML
     assert result.errors[0].details["embedded_file_count"] == 0
     assert result.errors[0].details["candidate_count"] == 0
+
+
+def test_parse_cvn_pdf_llm_enabled_without_config_returns_structured_failure(tmp_path):
+    pdf_path = tmp_path / "no-xml.pdf"
+    _save_empty_pdf(pdf_path)
+
+    result = parse_cvn_pdf(pdf_path, allow_llm=True)
+
+    assert result.validation_status == CvnValidationStatus.FAILED
+    assert result.errors[0].code == CvnErrorCode.LLM_IMPORT_DISABLED
+
+
+def test_parse_cvn_pdf_uses_llm_fallback_when_no_xml_is_available(tmp_path):
+    pdf_path = tmp_path / "no-xml.pdf"
+    _save_empty_pdf(pdf_path)
+    provider = RecordingProvider()
+
+    result = parse_cvn_pdf(
+        pdf_path,
+        allow_llm=True,
+        llm_config=LlmImportConfig(provider="mock", model="mock-model"),
+        llm_provider=provider,
+    )
+
+    assert result.validation_status == CvnValidationStatus.VALID
+    assert result.trace is not None
+    assert result.trace.extracted_from == "llm_fallback"
+    assert result.data is not None
+    assert result.data["extensions"]["x-open-cvn.llm_import"]["fallback_reason"] == (
+        "pdf_without_extractable_xml"
+    )
+    assert len(provider.requests) == 1
 
 
 def test_parse_cvn_pdf_unreadable_input_returns_structured_failure():
