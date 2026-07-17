@@ -182,6 +182,8 @@ files in order:
   exporting stored Open CVN master or derived versions to LaTeX
 - `docs/development/pdf_generation_workflow.md`: issue `#67` user workflow for
   optional PDF generation and preview handoff from stored curriculum versions
+- `docs/development/llm_import_workflow.md`: issue `#69` user workflow for
+  deterministic-first PDF import with opt-in LLM fallback
 - `docs/development/code_style.md`: code style, typing, and conventions
 - `docs/documentation/documentation_conventions.md`: documentation taxonomy,
   cross-linking rules, and update protocol
