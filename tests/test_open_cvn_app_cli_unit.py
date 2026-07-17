@@ -5,7 +5,16 @@ from pathlib import Path
 
 import pytest
 
-from open_cvn import CvnValidationStatus, validate_open_cvn_json
+from open_cvn import (
+    CvnErrorCode,
+    CvnIssueSeverity,
+    CvnParseIssue,
+    CvnParseResult,
+    CvnParseTrace,
+    CvnSourceFormat,
+    CvnValidationStatus,
+    validate_open_cvn_json,
+)
 import open_cvn_app.cli as cli_module
 from open_cvn_app import __version__
 from open_cvn_app.cli import build_parser, run
@@ -146,6 +155,218 @@ def test_json_import_reports_malformed_json(capsys: pytest.CaptureFixture[str], 
     assert "Validation status: failed" in captured.err
     assert "invalid_json" in captured.err
     assert CurriculumRepository(store_path).list_curricula() == ()
+
+
+def test_pdf_import_stores_valid_pdf_parse_result(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    input_path = tmp_path / "cv.pdf"
+    input_path.write_bytes(b"%PDF synthetic")
+    document = json.loads((FIXTURES_DIR / "valid_minimal.json").read_text(encoding="utf-8"))
+
+    def parse_pdf(source, **kwargs):
+        assert source == input_path
+        assert kwargs["validate_extracted_xml"] is True
+        assert kwargs["allow_llm"] is False
+        return CvnParseResult(
+            source_format=CvnSourceFormat.PDF,
+            source_identifier=str(input_path),
+            data=document,
+            validation_status=CvnValidationStatus.VALID,
+            trace=CvnParseTrace(
+                source_format=CvnSourceFormat.PDF,
+                source_identifier=str(input_path),
+                source_path=str(input_path),
+                extracted_from="embedded_file:cvn.xml",
+            ),
+        )
+
+    monkeypatch.setattr(cli_module, "parse_cvn_pdf", parse_pdf)
+
+    exit_code = run([
+        "pdf",
+        "import",
+        str(input_path),
+        "--store",
+        str(store_path),
+        "--name",
+        "PDF CV",
+        "--as-master",
+    ])
+
+    output = capsys.readouterr().out
+    repository = CurriculumRepository(store_path)
+    assert exit_code == 0
+    assert "Imported PDF as curriculum 'PDF CV'." in output
+    assert "Import path: embedded_file:cvn.xml" in output
+    assert "Assigned master curriculum version 'master'" in output
+    assert len(repository.list_curricula()) == 1
+    assert len(repository.list_versions()) == 1
+
+
+def test_pdf_import_requires_explicit_external_llm_opt_in(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    input_path = tmp_path / "cv.pdf"
+    input_path.write_bytes(b"%PDF synthetic")
+    called = False
+
+    def parse_pdf(source, **kwargs):
+        nonlocal called
+        called = True
+        raise AssertionError("parse_cvn_pdf should not run before privacy opt-in")
+
+    monkeypatch.setattr(cli_module, "parse_cvn_pdf", parse_pdf)
+
+    exit_code = run([
+        "pdf",
+        "import",
+        str(input_path),
+        "--store",
+        str(store_path),
+        "--llm-provider",
+        "openai",
+    ])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert called is False
+    assert "PDF may contain personal data" in captured.err
+    assert CurriculumRepository(store_path).list_curricula() == ()
+
+
+def test_pdf_import_passes_llm_options_after_privacy_opt_in(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    input_path = tmp_path / "cv.pdf"
+    input_path.write_bytes(b"%PDF synthetic")
+    document = json.loads((FIXTURES_DIR / "valid_minimal.json").read_text(encoding="utf-8"))
+
+    def parse_pdf(source, **kwargs):
+        assert kwargs["allow_llm"] is True
+        assert kwargs["llm_config"].provider == "openai"
+        assert kwargs["llm_config"].model == "gpt-test"
+        assert kwargs["llm_config"].base_url == "https://api.test/v1"
+        assert kwargs["llm_config"].api_key_env == "TEST_OPENAI_KEY"
+        assert kwargs["llm_config"].timeout_seconds == 3.5
+        assert kwargs["llm_config"].pdf_detail == "high"
+        return CvnParseResult(
+            source_format=CvnSourceFormat.PDF,
+            source_identifier=str(input_path),
+            data=document,
+            validation_status=CvnValidationStatus.VALID,
+            trace=CvnParseTrace(
+                source_format=CvnSourceFormat.PDF,
+                source_identifier=str(input_path),
+                source_path=str(input_path),
+                extracted_from="llm_fallback",
+            ),
+        )
+
+    monkeypatch.setattr(cli_module, "parse_cvn_pdf", parse_pdf)
+
+    exit_code = run([
+        "pdf",
+        "import",
+        str(input_path),
+        "--store",
+        str(store_path),
+        "--llm-provider",
+        "openai",
+        "--llm-model",
+        "gpt-test",
+        "--llm-base-url",
+        "https://api.test/v1",
+        "--llm-api-key-env",
+        "TEST_OPENAI_KEY",
+        "--llm-timeout",
+        "3.5",
+        "--pdf-detail",
+        "high",
+        "--allow-external-llm",
+    ])
+
+    output = capsys.readouterr().out
+    assert exit_code == 0
+    assert "Import path: llm_fallback" in output
+    assert len(CurriculumRepository(store_path).list_curricula()) == 1
+
+
+def test_pdf_import_failure_leaves_store_empty(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    input_path = tmp_path / "cv.pdf"
+    input_path.write_bytes(b"%PDF synthetic")
+
+    def parse_pdf(source, **kwargs):
+        return CvnParseResult(
+            source_format=CvnSourceFormat.PDF,
+            source_identifier=str(input_path),
+            validation_status=CvnValidationStatus.INVALID,
+            errors=(
+                CvnParseIssue(
+                    code=CvnErrorCode.LLM_OUTPUT_VALIDATION_FAILURE,
+                    severity=CvnIssueSeverity.ERROR,
+                    message="LLM-produced Open CVN JSON failed local validation.",
+                ),
+            ),
+        )
+
+    monkeypatch.setattr(cli_module, "parse_cvn_pdf", parse_pdf)
+
+    exit_code = run(["pdf", "import", str(input_path), "--store", str(store_path)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "PDF import failed." in captured.err
+    assert "llm_output_validation_failure" in captured.err
+    assert CurriculumRepository(store_path).list_curricula() == ()
+
+
+def test_pdf_import_reports_duplicate_master_without_storage_pollution(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+):
+    store_path, curriculum = _create_store_with_curriculum(tmp_path)
+    repository = CurriculumRepository(store_path)
+    repository.assign_master_curriculum(curriculum.id)
+    input_path = tmp_path / "cv.pdf"
+    input_path.write_bytes(b"%PDF synthetic")
+    document = json.loads((FIXTURES_DIR / "valid_minimal.json").read_text(encoding="utf-8"))
+
+    def parse_pdf(source, **kwargs):
+        return CvnParseResult(
+            source_format=CvnSourceFormat.PDF,
+            source_identifier=str(input_path),
+            data=document,
+            validation_status=CvnValidationStatus.VALID,
+        )
+
+    monkeypatch.setattr(cli_module, "parse_cvn_pdf", parse_pdf)
+
+    exit_code = run(["pdf", "import", str(input_path), "--store", str(store_path), "--as-master"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "A master curriculum version already exists." in captured.err
+    assert len(repository.list_curricula()) == 1
 
 
 def test_json_export_writes_revalidatable_master_document(capsys: pytest.CaptureFixture[str], tmp_path):

@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-13
+- Last updated: 2026-07-15
 
 ## Completed Or Stabilized Work
 
@@ -689,6 +689,7 @@
 - JSON Schema and PlantUML drift checks passed against temporary regenerated
   outputs under `/tmp/opencode`
 - no new durable limitations were found
+
 - targeted parser workflow verification passed with:
   `uv run pytest -n auto tests/test_parser_validator_contract_unit.py tests/test_pdf_xml_extraction_unit.py tests/test_open_cvn_json_import_unit.py tests/test_cvn_xml_import_unit.py -v`
 - targeted parser workflow verification result:
@@ -1045,7 +1046,7 @@
   MVP guide
 - issue `#60` is now closed as a local CLI-first application MVP through completed
   issues `#61` through `#68`
-- issue `#69` remains post-MVP exploratory LLM-assisted import work
+- issue `#69` later added the basic opt-in LLM-assisted PDF import fallback
 - targeted MVP workflow verification passed with:
   - `uv run pytest -n auto tests/test_open_cvn_app_mvp_workflow.py -v`
   - result: `3 passed in 27.66s`
@@ -1061,6 +1062,45 @@
   - result: `442 passed in 359.41s (0:05:59)`
 - no new durable limitations were found
 
+### Issue `#69`
+
+- the LLM-assisted PDF import issue is implemented as a basic MVP fallback under:
+  - `src/open_cvn/llm_import.py`
+  - `src/open_cvn/llm_providers.py`
+  - `src/open_cvn/parser_contract.py`
+  - `src/open_cvn_app/cli.py`
+- `parse_cvn_pdf(...)` preserves the existing deterministic extraction behavior by
+  default
+- opt-in PDF import can now validate extracted XML through the existing CVN XML
+  import path before considering LLM fallback
+- LLM fallback is available only when explicitly enabled and configured
+- the application CLI now exposes:
+  - `open-cvn pdf import INPUT [--store PATH] [--name NAME] [--as-master]`
+  - optional LLM fallback flags including `--llm-provider openai` and
+    `--allow-external-llm`
+- external LLM calls require explicit user consent through `--allow-external-llm`
+  because PDF files may contain personal data
+- the OpenAI Responses provider is implemented with standard-library HTTP support,
+  base64 PDF input, and schema-constrained JSON response instructions
+- LLM-produced JSON must validate through `validate_open_cvn_json(...)` before
+  storage
+- LLM provenance is stored under `extensions["x-open-cvn.llm_import"]`
+- invalid, malformed, or provider-failed LLM output returns structured parser
+  errors and leaves SQLite storage unchanged
+- workflow documentation now exists at:
+  - `docs/development/llm_import_workflow.md`
+- issue `#69` tests include mocked provider coverage, deterministic-first PDF
+  orchestration, CLI import behavior, privacy gating, and MVP workflow tests
+- targeted LLM/PDF/parser/CLI verification passed with:
+  - `uv run pytest -n auto tests/test_llm_import_unit.py tests/test_llm_providers_unit.py tests/test_pdf_xml_extraction_unit.py tests/test_parser_validator_contract_unit.py tests/test_open_cvn_app_cli_unit.py -v`
+  - result: `70 passed in 7.69s`
+- MVP workflow verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_app_mvp_workflow.py -v`
+  - result: `5 passed in 5.26s`
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `464 passed in 816.22s (0:13:36)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -1072,7 +1112,8 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#68`: issue `#69` LLM-assisted import spike
+- Next work item after issue `#68`: issue `#69` LLM-assisted PDF import fallback
+  is completed
 - Epic `#60` has been expanded into issues `#61` through `#69`
 - MVP direction:
   - CLI-first local prototype
@@ -1083,8 +1124,8 @@
   - LaTeX export
   - optional PDF generation and preview handoff
   - application MVP tests and user documentation
-  - post-MVP LLM-assisted import spike
-- Next implementation issue: `#69` LLM-assisted import spike
+  - basic opt-in LLM-assisted PDF import fallback
+- Next implementation issue: none currently documented after issue `#69`
 
 ## Blocking Or Relevant Limitations
 
@@ -1102,6 +1143,9 @@
   `cvn_xsd_path` and `common_xsd_path`; canonical generation provides them
 - issue `#49` XML import is currently trace-only for plausible CVN XML and does
   not yet perform full semantic XML-to-domain mapping
+- issue `#69` LLM-assisted PDF import is provider-dependent and may produce
+  incomplete or hallucinated content, so output is accepted only after local Open
+  CVN JSON validation and should be reviewed by the user
 
 All of these are documented in:
 
@@ -1167,23 +1211,24 @@ Then continue with these supporting files as needed:
 5. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 6. `docs/development/regeneration_workflow.md`
 7. `docs/development/parser_workflow.md`
-8. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
-9. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
-10. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
-11. `docs/pipeline/known_limitations.md`
-12. `docs/pipeline/parser_validator_contract.md`
-13. `docs/roadmap/hotfixes/`
-14. `docs/cvn_source_package_auxiliary_artifacts.md`
-15. `docs/cvn_source_package_annex_table_coverage.md`
-16. `docs/cvn_annex_priority_table_families.md`
-17. `docs/cvn_annex_table_families_batch3.md`
-18. `docs/cvn_annex_table_families_batch4.md`
-19. `docs/cvn_annex_table_families_batch5.md`
-20. `docs/cvn_annex_table_families_batch6.md`
-21. `docs/cvn_annex_table_families_batch7.md`
-22. `docs/cvn_annex_table_families_batch8.md`
-23. `docs/cvn_serialization_patterns_reference.md`
-24. `docs/cvn_field_reference_traceability.md`
-25. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
-26. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
-27. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+8. `docs/development/llm_import_workflow.md`
+9. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
+10. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
+11. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
+12. `docs/pipeline/known_limitations.md`
+13. `docs/pipeline/parser_validator_contract.md`
+14. `docs/roadmap/hotfixes/`
+15. `docs/cvn_source_package_auxiliary_artifacts.md`
+16. `docs/cvn_source_package_annex_table_coverage.md`
+17. `docs/cvn_annex_priority_table_families.md`
+18. `docs/cvn_annex_table_families_batch3.md`
+19. `docs/cvn_annex_table_families_batch4.md`
+20. `docs/cvn_annex_table_families_batch5.md`
+21. `docs/cvn_annex_table_families_batch6.md`
+22. `docs/cvn_annex_table_families_batch7.md`
+23. `docs/cvn_annex_table_families_batch8.md`
+24. `docs/cvn_serialization_patterns_reference.md`
+25. `docs/cvn_field_reference_traceability.md`
+26. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+27. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+28. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`

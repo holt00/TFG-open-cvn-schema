@@ -154,6 +154,28 @@ do not need to rediscover them.
   - later validator UX work may add grouped multi-layer diagnostics if users need
     schema and runtime errors in the same result
 
+### LLM-Assisted PDF Import Is Best-Effort And Provider-Dependent
+
+- Confirmed behavior:
+  - issue `#69` adds an opt-in LLM fallback for PDF import when deterministic XML
+    extraction is absent, incompatible, or not validatable
+  - the fallback currently supports an OpenAI Responses-style provider adapter and
+    uses mocked providers in automated tests
+  - provider output is accepted only after local `validate_open_cvn_json(...)`
+    validation succeeds
+  - provenance is recorded under `extensions["x-open-cvn.llm_import"]`
+- Impact:
+  - JSON validity and schema validation do not prove that every extracted CV fact
+    is complete or semantically correct
+  - provider behavior, PDF visual quality, model capability, prompt adherence, and
+    token limits can affect extracted content
+  - users should review LLM-assisted imports before relying on them
+- Expected follow-up:
+  - future work may compare LLM output against deterministic XML imports when both
+    are available
+  - future work may add richer confidence/provenance fields or human review flows
+    before treating LLM-assisted data as authoritative
+
 ## Conceptual Extraction Limitations
 
 ### Conceptual Relationships Require Curation
