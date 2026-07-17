@@ -17,6 +17,18 @@ def test_parse_cvn_xml_accepts_path_input():
     assert "000.010.000.000" in result.trace.cvn_codes
 
 
+def test_parse_cvn_xml_populates_semantic_partial_document():
+    result = parse_cvn_xml(FIXTURES / "semantic_education.xml")
+
+    assert result.validation_status == CvnValidationStatus.VALID
+    assert result.data is not None
+    assert result.data["extensions"]["x-open-cvn.xml_import"]["mapping_status"] == "semantic_partial"
+    assert result.data["curriculum"]["education"]
+    assert result.data["curriculum"]["education"][0]["data"]["nombre_del_titulo"]["raw_value"] == (
+        "Synthetic Computer Science Degree"
+    )
+
+
 def test_parse_cvn_xml_accepts_inline_xml_string():
     payload = (FIXTURES / "minimal_cvn.xml").read_text(encoding="utf-8")
 

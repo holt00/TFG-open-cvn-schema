@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import pytest
+import pymupdf
 
 from open_cvn import (
     CvnErrorCode,
@@ -24,6 +25,13 @@ from open_cvn_app.storage import CurriculumCreate, CurriculumRepository, initial
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures" / "open_cvn"
 EXAMPLES_DIR = Path(__file__).parent.parent / "examples" / "open_cvn"
+SEMANTIC_CVN_XML = """<?xml version="1.0" encoding="UTF-8"?>
+<CVNRoot xmlns="https://example.test/cvn">
+  <CVNItem code="020.010.010.000">
+    <Field code="020.010.010.030">Synthetic Computer Science Degree</Field>
+  </CVNItem>
+</CVNRoot>
+"""
 
 
 def _create_store_with_curriculum(tmp_path):
@@ -33,6 +41,14 @@ def _create_store_with_curriculum(tmp_path):
     document = json.loads((FIXTURES_DIR / "valid_minimal.json").read_text(encoding="utf-8"))
     curriculum = repository.create_curriculum(CurriculumCreate(display_name="Master CV", document=document))
     return store_path, curriculum
+
+
+def _save_pdf_with_embedded_xml(path: Path, xml_text: str = SEMANTIC_CVN_XML) -> None:
+    document = pymupdf.open()
+    document.new_page()
+    document.embfile_add("cvn.xml", xml_text.encode("utf-8"), filename="cvn.xml")
+    document.save(path)
+    document.close()
 
 
 def test_cli_help_contains_program_and_command_groups(capsys: pytest.CaptureFixture[str]):
@@ -206,6 +222,36 @@ def test_pdf_import_stores_valid_pdf_parse_result(
     assert "Assigned master curriculum version 'master'" in output
     assert len(repository.list_curricula()) == 1
     assert len(repository.list_versions()) == 1
+
+
+def test_pdf_import_stores_semantic_embedded_xml_without_llm(capsys: pytest.CaptureFixture[str], tmp_path: Path):
+    store_path = tmp_path / "open-cvn.sqlite"
+    initialize_store(store_path)
+    input_path = tmp_path / "cv.pdf"
+    _save_pdf_with_embedded_xml(input_path)
+
+    exit_code = run([
+        "pdf",
+        "import",
+        str(input_path),
+        "--store",
+        str(store_path),
+        "--name",
+        "Semantic PDF CV",
+    ])
+
+    output = capsys.readouterr().out
+    repository = CurriculumRepository(store_path)
+    curricula = repository.list_curricula()
+    stored = repository.get_curriculum(curricula[0].id)
+    assert exit_code == 0
+    assert "Imported PDF as curriculum 'Semantic PDF CV'." in output
+    assert "Import path: embedded_file:cvn.xml" in output
+    assert len(curricula) == 1
+    assert stored is not None
+    assert stored.document["curriculum"]["education"][0]["data"]["nombre_del_titulo"]["raw_value"] == (
+        "Synthetic Computer Science Degree"
+    )
 
 
 def test_pdf_import_requires_explicit_external_llm_opt_in(
