@@ -27,6 +27,12 @@ The conceptual inventory remains the semantic source of truth for:
 The generated JSON Schema remains the validation artifact. It must reflect this
 format before issue `#49` relies on it for Open CVN JSON import.
 
+The structural packages under `src/generated/` are not the source of truth for
+this public JSON contract. They remain an interoperability layer for official CVN
+XML/XSD artifacts. Weaknesses inherited from structural generation, such as loose
+`xs:choice` handling or generated `object` attributes, must not be interpreted as
+permission to weaken the Open CVN JSON root shape.
+
 ## Root Object
 
 Every Open CVN JSON document is an object with these canonical root fields:

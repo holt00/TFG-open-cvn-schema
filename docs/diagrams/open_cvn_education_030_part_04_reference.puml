@@ -7,11 +7,11 @@ top to bottom direction
 hide empty members
 
 package "CVN Education Reference - Section 030 Part 4" as area_education_030_part_04_reference {
-class "PublicacionNombre030090000330" as entity_education_publicacionnombre030090000330_030_090_000_330 <<entity>> {
+class "PublicacionNombre" as entity_education_publicacionnombre030090000330_030_090_000_330 <<entity>> {
   publicacion_nombre : text <<optional, single>> [CVN: 030.090.000.330]
 }
 
-class "PublicacionTitulo030070000080" as entity_education_publicaciontitulo030070000080_030_070_000_080 <<entity>> {
+class "PublicacionTitulo" as entity_education_publicaciontitulo030070000080_030_070_000_080 <<entity>> {
   publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 030.070.000.130]
   publicacion_deposito_legal : text <<optional, single>> [CVN: 030.070.000.180]
   publicacion_direccion_electronica : text <<optional, single>> [CVN: 030.070.000.160]

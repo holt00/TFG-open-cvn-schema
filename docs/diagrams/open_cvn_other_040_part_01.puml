@@ -1,0 +1,118 @@
+@startuml
+title Open CVN - Other CVN Concepts - Section 040 Part 1
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "Other CVN Concepts - Section 040 Part 1" as area_other_040_part_01 {
+class "ActividadDeAtencionDeSaludEnOtrosPaisesExtranjeros" as entity_other_actividaddeatenciondesaludenotrospaisesextranjeros_040_060_000_000 <<entity>> {
+  actividad_de_atencion_de_salud_en_otros_paises_extranjeros : text <<optional, repeated>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  duracion_de_la_experiencia : duration_like <<optional, single>>
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  entidad_financiadora : value_object<EntityNameType> <<optional, single>>
+  .. +10 more attributes ..
+}
+
+class "ActividadEnCooperacionPracticandoLaAtencionDeSaludEnPaisesEnDesarrollo" as entity_other_actividadencooperacionpracticandolaatenciondesaludenpaisesendesarrollo_040_040_000_000 <<entity>> {
+  actividad_en_cooperacion_practicando_la_atencion_de_salud_en_paises_en_desarrollo : text <<optional, repeated>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  duracion_de_la_experiencia : duration_like <<optional, single>>
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  entidad_financiadora_de_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  .. +10 more attributes ..
+}
+
+class "ActividadEnCooperacionSanitariaEnPaisesEnDesarrollo" as entity_other_actividadencooperacionsanitariaenpaisesendesarrollo_040_050_000_000 <<entity>> {
+  actividad_en_cooperacion_sanitaria_en_paises_en_desarrollo : text <<optional, repeated>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  duracion_de_la_experiencia : duration_like <<optional, single>>
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  entidad_financiadora : value_object<EntityNameType> <<optional, single>>
+  .. +10 more attributes ..
+}
+
+class "ActividadSanitariaEnInstitucionesDeLaUe" as entity_other_actividadsanitariaeninstitucionesdelaue_040_010_000_000 <<entity>> {
+  actividad_sanitaria_en_instituciones_de_la_ue : text <<optional, repeated>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  duracion_de_la_experiencia : duration_like <<optional, single>>
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>>
+  fecha_de_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>>
+  institucion_de_la_ue_de_la_que_depende_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  .. +5 more attributes ..
+}
+
+class "ActividadSanitariaEnLaOms" as entity_other_actividadsanitariaenlaoms_040_020_000_000 <<entity>> {
+  actividad_sanitaria_en_la_oms : text <<optional, repeated>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  departamento_de_la_oms_del_que_dependio_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  duracion_de_la_experiencia : duration_like <<optional, single>>
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>>
+  fecha_de_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>>
+  .. +5 more attributes ..
+}
+
+class "ActividadSanitariaEnOrganizacionesInternacionalesIntergubernamentales" as entity_other_actividadsanitariaenorganizacionesinternacionalesintergubernamentales_040_030_000_000 <<entity>> {
+  actividad_sanitaria_en_organizaciones_internacionales_intergubernamentales : text <<optional, repeated>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  duracion_de_la_experiencia : duration_like <<optional, single>>
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>>
+  fecha_de_inicio_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>>
+  organismo_internacional_departamento : value_object<EntityNameType> <<optional, single>>
+  .. +6 more attributes ..
+}
+
+class "ActividadSanitariaEnPaisesExtranjeros" as entity_other_actividadsanitariaenpaisesextranjeros_040_070_000_000 <<entity>> {
+  actividad_sanitaria_en_paises_extranjeros : text <<optional, repeated>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  duracion_de_la_experiencia : duration_like <<optional, single>>
+  entidad_donde_realizo_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  entidad_financiadora : value_object<EntityNameType> <<optional, single>>
+  .. +10 more attributes ..
+}
+
+class "CongresosCursosYSeminariosOrientadosALaAtencionDeSalud" as entity_other_congresoscursosyseminariosorientadosalaatenciondesalud_040_130_000_000 <<entity>> {
+  ambito_del_evento : controlled_reference <<optional, single>>
+  ambito_del_evento_otros : text <<optional, single>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  congresos_cursos_y_seminarios_orientados_a_la_atencion_de_salud : text <<optional, repeated>>
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  .. +12 more attributes ..
+}
+
+class "CursosYSeminariosImpartidosOrientadosALaMejoraDeLaAtencionDeSaludParaProfesionalesSanitarios" as entity_other_cursosyseminariosimpartidosorientadosalamejoradelaatenciondesaludparaprofesionalessanitarios_040_090_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_organizadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  cursos_y_seminarios_impartidos_orientados_a_la_mejora_de_la_atencion_de_salud_para_profesionales_sanitarios : text <<optional, repeated>>
+  entidad_de_realizacion : value_object<EntityNameType> <<optional, single>>
+  entidad_responsable_de_la_formacion : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<optional, single>>
+  .. +15 more attributes ..
+}
+
+}
+
+@enduml

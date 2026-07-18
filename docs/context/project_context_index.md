@@ -33,13 +33,14 @@ Agents should also read `AGENTS.md` before this file.
   parser/validator contract, CLI shell, local SQLite storage, master/derived
   curriculum versioning, Open CVN JSON application import/export, curriculum
   editing/selection MVP, LaTeX export, optional PDF generation, application MVP
-  workflow tests/documentation, LLM-assisted PDF import fallback, and semantic
-  partial CVN XML import completed
+  workflow tests/documentation, LLM-assisted PDF import fallback, semantic
+  partial CVN XML import, and issue `#71` limitations hardening in progress
 - Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
   `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, `#48`, `#49`, `#50`,
-  `#61`, `#62`, `#63`, `#64`, `#65`, `#66`, `#67`, `#68`, `#69`, and `#70`
+  `#61`, `#62`, `#63`, `#64`, `#65`, `#66`, `#67`, `#68`, `#69`, `#70`,
+  and `#71`
 - Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Next planned issue: none currently documented after `#70`
+- Current implementation issue: `#71` limitations hardening and documentation
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -130,6 +131,8 @@ Agents should also read `AGENTS.md` before this file.
   LLM import exploration
 - `docs/roadmap/issues/issue-70-semantic-cvn-xml-import-to-open-cvn-json.md`:
   implementation record for semantic CVN XML import into Open CVN JSON
+- `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`:
+  implementation record for limitations hardening and documentation
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

@@ -43,6 +43,7 @@ def test_contract_error_codes_cover_issue_47_cases():
         "invalid_json",
         "json_schema_validation_failure",
         "pydantic_validation_failure",
+        "semantic_validation_warning",
     }
 
 

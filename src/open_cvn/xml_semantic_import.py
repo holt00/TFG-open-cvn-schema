@@ -65,6 +65,7 @@ def import_cvn_xml_semantically(
 
         if entity.domain_area_id == "identity":
             curriculum["identity"].update(data)
+            section_counts["identity"] += 1
         else:
             section = _section_name(entity)
             section_counts[section] += 1
@@ -109,6 +110,10 @@ def import_cvn_xml_semantically(
                 "fields_seen": counters["fields_seen"],
                 "fields_mapped": counters["fields_mapped"],
                 "fields_unmapped": counters["fields_unmapped"],
+                "item_mapping_coverage": _coverage(counters["items_mapped"], counters["items_seen"]),
+                "field_mapping_coverage": _coverage(counters["fields_mapped"], counters["fields_seen"]),
+                "mapped_sections": sorted(section_counts),
+                "section_counts": dict(sorted(section_counts.items())),
                 "unmapped_codes": unmapped_codes,
             },
         },
@@ -159,6 +164,12 @@ def _section_name(entity: XmlEntityMapping) -> str:
 
 def _entry_id(section: str, code: str, number: int) -> str:
     return f"{section}-{code.replace('.', '-')}-{number:03d}"
+
+
+def _coverage(mapped: int, seen: int) -> float:
+    if seen == 0:
+        return 0.0
+    return round(mapped / seen, 4)
 
 
 def _local_name(tag: object) -> str:

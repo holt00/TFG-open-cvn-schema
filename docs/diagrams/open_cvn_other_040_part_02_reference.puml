@@ -132,7 +132,7 @@ controlled references:
 - ISO_3166 (code_list, enum=ineligible, items=312)
 end note
 
-class "OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior040140000000" as entity_other_otrasactividadesmeritosnoincluidosenlarelacionanterior040140000000_040_140_000_000 <<entity>> {
+class "OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior" as entity_other_otrasactividadesmeritosnoincluidosenlarelacionanterior040140000000_040_140_000_000 <<entity>> {
   ciudad_de_la_entidad_de_realizacion : text <<optional, single>> [CVN: 040.140.000.060]
   ciudad_de_la_entidad_financiadora : text <<optional, single>> [CVN: 040.140.000.190]
   comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>> [CVN: 040.140.000.040]

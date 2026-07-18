@@ -7,7 +7,7 @@ top to bottom direction
 hide empty members
 
 package "CVN Education Reference - Section 030 Part 3" as area_education_030_part_03_reference {
-class "OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior030100000000" as entity_education_otrasactividadesmeritosnoincluidosenlarelacionanterior030100000000_030_100_000_000 <<entity>> {
+class "OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior" as entity_education_otrasactividadesmeritosnoincluidosenlarelacionanterior030100000000_030_100_000_000 <<entity>> {
   ciudad_de_realizacion_de_la_actividad : text <<optional, single>> [CVN: 030.100.000.060]
   comunidad_autonoma_region_de_realizacion_de_la_actividad : controlled_reference <<optional, single>> [CVN: 030.100.000.040]
   descripcion_de_la_actividad : text <<optional, single>> [CVN: 030.100.000.010]
@@ -105,7 +105,7 @@ controlled references:
 - ISO_3166 (code_list, enum=ineligible, items=312)
 end note
 
-class "PublicacionNombre030070000190" as entity_education_publicacionnombre030070000190_030_070_000_190 <<entity>> {
+class "PublicacionNombre" as entity_education_publicacionnombre030070000190_030_070_000_190 <<entity>> {
   publicacion_nombre : text <<optional, single>> [CVN: 030.070.000.190]
 }
 

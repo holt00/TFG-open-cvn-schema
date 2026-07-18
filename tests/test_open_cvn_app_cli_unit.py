@@ -20,6 +20,7 @@ import open_cvn_app.cli as cli_module
 from open_cvn_app import __version__
 from open_cvn_app.cli import build_parser, run
 from open_cvn_app.pdf import CompilerRunDiagnostic, PdfCompilationError, PdfGenerationResult, PdfGenerationUnavailable
+from open_cvn_app.pdf import PdfEnvironmentDiagnostic
 from open_cvn_app.storage import CurriculumCreate, CurriculumRepository, initialize_store
 
 
@@ -722,6 +723,50 @@ def test_pdf_generate_reports_missing_compiler(capsys: pytest.CaptureFixture[str
     assert "No supported TeX compiler found" in captured.err
 
 
+def test_pdf_doctor_reports_available_engine(capsys: pytest.CaptureFixture[str], monkeypatch, tmp_path):
+    diagnostic = PdfEnvironmentDiagnostic(
+        managed_cache_path=tmp_path / "tectonic",
+        managed_tectonic=str(tmp_path / "tectonic" / "tectonic"),
+        system_tectonic=None,
+        latexmk=None,
+        pdflatex=None,
+        selected_engine="managed tectonic",
+        selected_executable=str(tmp_path / "tectonic" / "tectonic"),
+        managed_download_supported=True,
+    )
+
+    monkeypatch.setattr(cli_module, "diagnose_pdf_environment", lambda: diagnostic)
+
+    exit_code = run(["pdf", "doctor"])
+
+    output = capsys.readouterr().out
+    assert exit_code == 0
+    assert "PDF generation environment:" in output
+    assert "Selected engine: managed tectonic" in output
+
+
+def test_pdf_doctor_reports_missing_engine(capsys: pytest.CaptureFixture[str], monkeypatch, tmp_path):
+    diagnostic = PdfEnvironmentDiagnostic(
+        managed_cache_path=tmp_path / "tectonic",
+        managed_tectonic=None,
+        system_tectonic=None,
+        latexmk=None,
+        pdflatex=None,
+        selected_engine=None,
+        selected_executable=None,
+        managed_download_supported=True,
+    )
+
+    monkeypatch.setattr(cli_module, "diagnose_pdf_environment", lambda: diagnostic)
+
+    exit_code = run(["pdf", "doctor"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "PDF generation unavailable." in captured.err
+    assert "run open-cvn pdf generate to download managed Tectonic" in captured.err
+
+
 def test_pdf_generate_writes_master_pdf(capsys: pytest.CaptureFixture[str], monkeypatch, tmp_path):
     store_path, curriculum = _create_store_with_curriculum(tmp_path)
     repository = CurriculumRepository(store_path)
@@ -752,7 +797,14 @@ def test_pdf_generate_writes_master_pdf(capsys: pytest.CaptureFixture[str], monk
     assert "Generated PDF version 'master'" in output
     assert "Validation status: valid" in output
     assert "Compiler: latexmk" in output
-    assert calls == [{"version": "master", "output_path": str(output_path), "open_pdf": False}]
+    assert calls == [
+        {
+            "version": "master",
+            "output_path": str(output_path),
+            "open_pdf": False,
+            "allow_managed_tectonic_download": True,
+        }
+    ]
 
 
 def test_pdf_generate_writes_materialized_derived_pdf(capsys: pytest.CaptureFixture[str], monkeypatch, tmp_path):

@@ -16,6 +16,7 @@ from open_cvn_app.pdf import (
     PdfCompilationError,
     PdfGenerationUnavailable,
     PdfPreviewError,
+    diagnose_pdf_environment,
     format_compilation_diagnostics,
     generate_pdf_document,
 )
@@ -203,6 +204,8 @@ def build_parser() -> argparse.ArgumentParser:
     _add_store_path_option(pdf_generate_parser)
     _add_version_option(pdf_generate_parser)
     pdf_generate_parser.set_defaults(handler=_handle_pdf_generate)
+    pdf_doctor_parser = pdf_subparsers.add_parser("doctor", help="Check PDF generation engine availability.")
+    pdf_doctor_parser.set_defaults(handler=_handle_pdf_doctor)
 
     return parser
 
@@ -543,6 +546,7 @@ def _handle_pdf_generate(args: argparse.Namespace) -> AppResult:
             version=args.version_name,
             output_path=args.output,
             open_pdf=args.open,
+            allow_managed_tectonic_download=True,
         )
     except StorageError as exc:
         return AppResult.failed("PDF generation failed.", error=str(exc))
@@ -565,6 +569,32 @@ def _handle_pdf_generate(args: argparse.Namespace) -> AppResult:
     if result.preview_opened:
         lines.append("Preview handoff: opened")
     return AppResult.ok("\n".join(lines))
+
+
+def _handle_pdf_doctor(args: argparse.Namespace) -> AppResult:
+    diagnostic = diagnose_pdf_environment()
+    lines = [
+        "PDF generation environment:",
+        f"Managed Tectonic cache: {diagnostic.managed_cache_path}",
+        f"Managed Tectonic: {diagnostic.managed_tectonic or '-'}",
+        f"System tectonic: {diagnostic.system_tectonic or '-'}",
+        f"latexmk: {diagnostic.latexmk or '-'}",
+        f"pdflatex: {diagnostic.pdflatex or '-'}",
+        f"Managed download supported: {diagnostic.managed_download_supported}",
+    ]
+    if diagnostic.selected_engine:
+        lines.extend(
+            (
+                f"Selected engine: {diagnostic.selected_engine}",
+                f"Selected executable: {diagnostic.selected_executable}",
+                "Next action: run open-cvn pdf generate.",
+            )
+        )
+        return AppResult.ok("\n".join(lines))
+    lines.append(
+        "Next action: run open-cvn pdf generate to download managed Tectonic, or install tectonic, latexmk, or pdflatex."
+    )
+    return AppResult.failed("PDF generation unavailable.", error="\n".join(lines))
 
 
 def _handle_pdf_import(args: argparse.Namespace) -> AppResult:

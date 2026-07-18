@@ -24,12 +24,17 @@ def test_semantic_import_populates_identity():
 def test_semantic_import_populates_education_entry_and_validates():
     document = _import_fixture("semantic_education.xml")
     validation = validate_open_cvn_json(document, source_identifier="semantic_education.xml")
+    diagnostic = document["extensions"]["x-open-cvn.xml_import"]
 
     assert validation.validation_status == CvnValidationStatus.VALID
     entry = document["curriculum"]["education"][0]
     assert entry["id"] == "education-020-010-010-000-001"
     assert entry["type"].startswith("education.")
     assert entry["data"]["nombre_del_titulo"]["raw_value"] == "Synthetic Computer Science Degree"
+    assert diagnostic["mapped_sections"] == ["education"]
+    assert diagnostic["section_counts"] == {"education": 1}
+    assert diagnostic["item_mapping_coverage"] == 1.0
+    assert diagnostic["field_mapping_coverage"] == 1.0
 
 
 def test_semantic_import_populates_research_entry():
@@ -48,4 +53,6 @@ def test_semantic_import_preserves_unmapped_item():
 
     assert diagnostic["mapping_status"] == "trace_only"
     assert diagnostic["items_unmapped"] == 1
+    assert diagnostic["mapped_sections"] == []
+    assert diagnostic["item_mapping_coverage"] == 0.0
     assert document["curriculum"]["other"][0]["type"] == "other.unmapped_cvn_item"

@@ -224,6 +224,8 @@ def _attach_llm_provenance(
         "fallback_reason": fallback_reason,
         "provider_metadata": dict(provider_metadata),
         "validation": "local_open_cvn_json",
+        "review_required": True,
+        "authoritative": False,
     }
     result["extensions"] = extensions
     return result
