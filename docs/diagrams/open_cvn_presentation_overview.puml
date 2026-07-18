@@ -1,0 +1,50 @@
+@startuml
+title Open CVN Presentation Overview
+
+skinparam classAttributeIconSize 0
+top to bottom direction
+hide empty members
+
+package "Open CVN Runtime Shape" as presentation_root {
+class "Open CVN Document" as presentation_document <<document>>
+class "Metadata" as presentation_metadata <<metadata>>
+class "Curriculum" as presentation_curriculum <<curriculum>>
+class "Extensions" as presentation_extensions <<extensions>>
+}
+
+package "Curriculum Areas" as presentation_areas {
+class "CVN Achievements" as presentation_area_achievements <<area>> {
+  entities : 2
+}
+class "CVN Education" as presentation_area_education <<area>> {
+  entities : 30
+}
+class "CVN Identity" as presentation_area_identity <<area>> {
+  entities : 1
+}
+class "Other CVN Concepts" as presentation_area_other <<area>> {
+  entities : 20
+}
+class "CVN Professional Experience" as presentation_area_professional_experience <<area>> {
+  entities : 3
+}
+class "CVN Research" as presentation_area_research <<area>> {
+  entities : 47
+}
+}
+
+presentation_document *-- presentation_metadata : metadata
+presentation_document *-- presentation_curriculum : curriculum
+presentation_document o-- presentation_extensions : extensions
+presentation_curriculum *-- presentation_area_achievements
+presentation_curriculum *-- presentation_area_education
+presentation_curriculum *-- presentation_area_identity
+presentation_curriculum *-- presentation_area_other
+presentation_curriculum *-- presentation_area_professional_experience
+presentation_curriculum *-- presentation_area_research
+
+note bottom
+Presentation view: compact overview for slides and memoria figures.
+Detailed readable/reference diagrams remain canonical for trace inspection.
+end note
+@enduml

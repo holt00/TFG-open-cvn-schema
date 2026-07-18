@@ -5,6 +5,29 @@
 This document records known limitations of the current pipeline so later issues
 do not need to rediscover them.
 
+## Limitation Classification Matrix
+
+| Limitation | Category | Impact | Current Handling | Follow-Up Action | Blocker Status |
+| --- | --- | --- | --- | --- | --- |
+| `xs:choice` is not enforced as mutual exclusivity in generated structural bindings | `generated_binding_limitation` | Generated bindings can accept XML states invalid under the source XSD | Confined to structural interoperability; semantic/domain layers avoid treating generated bindings as the public Open CVN contract | Keep documentation and regression coverage; do not manually patch `src/generated/` | Accepted limitation, not MVP blocker |
+| Wrapper type evidence requires XSD-enriched normalization | `generated_binding_limitation` | Custom normalization callers without XSD paths cannot attach wrapper-aware field shapes | Canonical generation provides `CVN.xsd` and `Common.xsd`; no-XSD behavior remains supported | Document boundary and keep enriched/no-XSD regression tests | Accepted limitation, not MVP blocker |
+| Generated list defaults do not enforce every `minOccurs` cardinality | `generated_binding_limitation` | Structural object construction can accept empty lists where XSD expects values | Structural layer preserves generated behavior; Open CVN runtime models define the public JSON contract | Keep semantic cardinality policy outside generated bindings | Accepted limitation, not MVP blocker |
+| Some generated attributes are typed as `object` | `generated_binding_limitation` | Weaker structural validation and poorer ergonomics | Avoid leaking weak generated types into Open CVN public models | Confirm boundary during issue `#71` | Accepted limitation, not MVP blocker |
+| XML helper wrapper types are less ergonomic than primitives | `generated_binding_limitation` | Structural XML fidelity is usable but delicate for direct application code | Domain-facing wrapper components exist for canonical generation | Keep wrapper guidance and avoid direct generated-wrapper UX promises | Accepted limitation, not MVP blocker |
+| `tree_model` requires `--unnest-classes` xsdata override | `generated_binding_limitation` | Structural generation is reproducible but target-specific | Documented runner behavior | Keep workflow documentation aligned | Accepted limitation, not MVP blocker |
+| JSON Schema cannot express every CVN semantic rule | `runtime_validation_gap` | Schema-valid JSON can still miss curated semantic expectations | JSON Schema runs before Pydantic runtime validation; trace annotations preserve evidence | Evaluate conservative semantic warnings in issue `#71` | Not blocker if warnings remain clear |
+| CVN XML import is semantic partial for recognized CVN items | `runtime_validation_gap` | XML import is not a complete official CVN XML-to-Open-CVN converter | Diagnostics preserve mapped/unmapped counts, trace, and fallback `other` entries | Improve documentation and add metrics only where useful | Accepted MVP constraint, not blocker |
+| JSON Schema validation runs before runtime model validation | `documentation_gap` | Users may see schema errors before Pydantic errors for the same payload | Structured parser errors expose layer-specific codes | Document validation order clearly | Accepted UX limitation, not blocker |
+| LLM-assisted PDF import is best-effort and provider-dependent | `runtime_validation_gap` | Schema-valid LLM output may be incomplete or factually wrong | External LLM use is opt-in, locally validated, and records provenance | Strengthen documentation and provenance if needed | Accepted MVP constraint, not blocker |
+| Conceptual relationships require curation | `future_research` | Generated metadata cannot prove a full CVN ontology | Conceptual extraction emits conservative relationships only | Add curated rules only with stronger evidence | Not blocker |
+| Domain-area diagrams can be verbose | `documentation_gap` | Large diagrams are difficult to use in slides or compact review contexts | Readable/reference split exists; PNGs are derived review artifacts | Use PNG audit from issue `#71` to add presentation views and split large readable diagrams | Not blocker |
+| `CVNTreeModel.xml` diverges from `CVNTreeModel_v1.0.xsd` | `source_package_limitation` | Generated tree-model binding cannot fully parse canonical XML through the XSD alone | Normalization treats XML as source evidence and records mismatch | Preserve explicit documentation; do not hide mismatch | External constraint, not project bug |
+| Auxiliary catalog families preserve historical packaging drift | `source_package_limitation` | Automated resolution cannot rely on filenames or schema locations alone | Repository-aware path mapping and auxiliary documentation | Keep links to source-package docs | External constraint, not project bug |
+| `CVN_AGENCY_C` remains unresolved from the source package alone | `source_package_limitation` | Cannot promote this reference to a strict resolved enum/catalog from current evidence | Preserved as unresolved/manual-only reference | Revisit only if stronger official evidence appears | External constraint, not project bug |
+| `Subtype_Spa.xml` lacks a direct table-family bridge | `source_package_limitation` | Subtype-backed families cannot be strictly bridged per table family | Classify as subtype-backed but enum-ineligible | Revisit only if reliable bridge evidence appears | External constraint, not project bug |
+| Strict enum eligibility is evidence-backed but conservative | `future_research` | Some compact tables remain review-required instead of strict enums | Dynamic evidence controls eligibility; weak cases stay open | Add versioned overrides only with curated evidence | Not blocker |
+| PDF generation depends on a TeX engine | `runtime_validation_gap` | A Python-only install cannot compile PDFs unless a usable engine is available | Current implementation discovers local `latexmk` or `pdflatex` | Issue `#71` should add managed Tectonic discovery/cache/download where practical, plus `pdf doctor` | Actionable hardening item |
+
 ## Structural Binding Limitations
 
 ### `xs:choice` Is Not Enforced As Mutual Exclusivity
@@ -164,6 +187,23 @@ do not need to rediscover them.
   - later validator UX work may add grouped multi-layer diagnostics if users need
     schema and runtime errors in the same result
 
+### Open CVN Semantic Validation Is Warning-Oriented
+
+- Confirmed behavior:
+  - issue `#71` adds conservative semantic warnings after generated JSON Schema
+    validation and Pydantic runtime validation pass
+  - current checks warn about entry `type` prefixes that do not match their
+    curriculum section, trace values that do not look like CVN codes, and
+    controlled-reference-like objects that carry provenance without `code`,
+    `label`, `raw_value`, or `uri`
+- Impact:
+  - accepted documents can return `valid_with_warnings` when they are structurally
+    valid but semantically suspicious
+  - unusual but valid future data is not rejected by these checks
+- Expected follow-up:
+  - promote a warning to a hard failure only if the rule becomes part of the
+    documented public Open CVN contract
+
 ### LLM-Assisted PDF Import Is Best-Effort And Provider-Dependent
 
 - Confirmed behavior:
@@ -185,6 +225,23 @@ do not need to rediscover them.
     are available
   - future work may add richer confidence/provenance fields or human review flows
     before treating LLM-assisted data as authoritative
+
+### PDF Generation Uses Managed Tectonic When Available
+
+- Confirmed behavior:
+  - issue `#71` adds managed Tectonic discovery before system TeX engines
+  - compiler discovery order is managed `tectonic`, system `tectonic`, `latexmk`,
+    then `pdflatex`
+  - the managed executable is cached under the Open CVN cache directory and can be
+    diagnosed with `open-cvn pdf doctor`
+- Impact:
+  - typical Python application use no longer depends exclusively on a separately
+    installed TeX distribution
+  - first-use managed download still requires platform support and network access;
+    offline environments need a cached managed executable or a system TeX engine
+- Expected follow-up:
+  - keep download URLs, version pins, and checksums current when upgrading the
+    managed Tectonic version
 
 ## Conceptual Extraction Limitations
 
@@ -292,6 +349,9 @@ do not need to rediscover them.
   - issue `#14` defines semantic policy for side-package references
   - issue `#15` should decide which of these auxiliary artifacts become domain
     sources versus support registries
+  - issue `#71` classifies this as an external source-package constraint and
+    links readers to `docs/cvn_source_package_auxiliary_artifacts.md` for the
+    preserved package layout and drift details
 
 ### Some Annex-I Table References Remain Unresolved From The Package Alone
 
@@ -305,6 +365,9 @@ do not need to rediscover them.
   - issue `#14` defines open versus closed treatment for unresolved tables
   - issue `#15` should preserve such cases as explicit external or manual-only
     references unless stronger evidence is introduced
+  - issue `#71` keeps this as a `source_package_limitation`; tooling must not hide
+    it behind a lossy conversion or promote it to a strict enum without stronger
+    official evidence
 
 ### `Subtype_Spa.xml` Does Not Provide A Direct Table-Family Bridge
 
@@ -322,6 +385,9 @@ do not need to rediscover them.
     bridge evidence exists
   - later maintenance work may add a stricter bridge only if reliable evidence
     is introduced from the preserved source package
+  - issue `#71` records this as an evidence limitation, not an implementation
+    oversight, because the preserved subtype XML is not keyed by table-family
+    names
 
 ### Strict Enum Eligibility Is Evidence-Backed But Conservative
 

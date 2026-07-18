@@ -27,6 +27,7 @@ from open_cvn.parser_contract import (
     CvnSourceFormat,
     CvnValidationStatus,
 )
+from open_cvn.semantic_validation import validate_open_cvn_semantics
 
 
 def parse_open_cvn_json(source: CvnInput, *, source_identifier: str | None = None) -> CvnParseResult:
@@ -131,11 +132,15 @@ def validate_open_cvn_json(
             trace=trace,
         )
 
-    warnings = _version_warnings(open_cvn_document.schema_version)
+    normalized_document = open_cvn_document.model_dump(mode="json", exclude_none=True)
+    warnings = (
+        *_version_warnings(open_cvn_document.schema_version),
+        *validate_open_cvn_semantics(normalized_document),
+    )
     return CvnParseResult(
         source_format=CvnSourceFormat.OPEN_CVN_JSON,
         source_identifier=source_identifier,
-        data=open_cvn_document.model_dump(mode="json", exclude_none=True),
+        data=normalized_document,
         validation_status=(
             CvnValidationStatus.VALID_WITH_WARNINGS if warnings else CvnValidationStatus.VALID
         ),

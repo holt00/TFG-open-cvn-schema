@@ -12,7 +12,7 @@ structures as the final domain model.
 ## Canonical Sources
 
 The versioned `.puml` files are the canonical diagram artifacts. They now exist
-in two complementary styles:
+in three complementary styles:
 
 - readable views:
   - `open_cvn_conceptual_overview.puml`: compact overview for humans
@@ -47,11 +47,22 @@ in two complementary styles:
   - `open_cvn_other_reference.puml`
   - `open_cvn_other_040_reference.puml`
   - `open_cvn_other_no_tree_reference.puml`
+- presentation views:
+  - `open_cvn_presentation_overview.puml`: compact high-level figure for slides,
+    the TFG memory, or quick orientation
 
-Readable views prioritize navigation and presentation. Reference views preserve
-the fuller vocabulary and attribute inventory needed for detailed inspection,
-but large or vocabulary-heavy reference areas now use compact index diagrams that
-point to split detailed reference section files.
+Readable views prioritize navigation. Reference views preserve the fuller
+vocabulary and attribute inventory needed for detailed inspection. Presentation
+views intentionally omit attributes and most trace details so they can fit into a
+single human-facing figure. Large or vocabulary-heavy reference areas use compact
+index diagrams that point to split detailed reference section files.
+
+Issue `#71` reviewed the rendered PNG artifacts and identified oversized rendered
+views such as `open_cvn_research_060.png` (`3660 x 1571`),
+`open_cvn_other_040.png` (`3062 x 1065`), and `open_cvn_education_030.png`
+(`3033 x 1318`). Large readable sections should therefore be split in the same
+spirit as large reference sections, while presentation views should stay compact
+enough for documentation figures.
 
 For the largest reference sections, the section-level reference diagram may also
 be an index instead of a full-detail canvas. In those cases, open the listed
@@ -114,6 +125,8 @@ When reviewing regenerated diagrams, check:
 - readable views avoid large vocabulary fan-out and keep big areas split into
   smaller subdiagrams
 - reference views keep fuller vocabulary and trace detail for auditability
+- presentation views stay compact and do not try to replace readable/reference
+  diagrams
 - detailed reference chunks use local `controlled references` notes rather than
   global vocabulary nodes
 - representative attributes preserve CVN code trace

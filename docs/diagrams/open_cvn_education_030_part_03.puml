@@ -1,0 +1,26 @@
+@startuml
+title Open CVN - CVN Education - Section 030 Part 3
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Education - Section 030 Part 3" as area_education_030_part_03 {
+class "TituloDeLaSubespecialidad" as entity_education_titulodelasubespecialidad_030_020_000_030 <<entity>> {
+  titulo_de_la_subespecialidad : text <<optional, single>>
+}
+
+class "TutoriasAcademicasDeEstudiantes" as entity_education_tutoriasacademicasdeestudiantes_030_050_000_000 <<entity>> {
+  ciudad_de_la_tutoria : text <<optional, single>>
+  comunidad_autonoma_region_de_la_tutoria : controlled_reference <<optional, single>>
+  entidad_donde_se_ejerce_la_tutoria : value_object<EntityNameType> <<optional, single>>
+  entidad_donde_se_ejerce_la_tutoria_tipo : value_object<EntityTypeType> <<optional, single>>
+  entidad_donde_se_presta_la_tutoria_tipo_otros : text <<optional, single>>
+  explicacion_narrativa_de_la_tutorizacion : text <<optional, single>>
+  frecuencia_de_la_actividad : decimal_number <<optional, single>>
+  nombre_del_programa : controlled_reference <<optional, single>>
+  .. +6 more attributes ..
+}
+
+}
+
+@enduml

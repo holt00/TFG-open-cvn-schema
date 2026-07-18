@@ -22,19 +22,19 @@ controlled references:
 - CVN_CATEGORY_A (hierarchical_code_list, enum=ineligible, items=547)
 end note
 
-class "PublicacionNombre060010020370" as entity_research_publicacionnombre060010020370_060_010_020_370 <<entity>> {
+class "PublicacionNombre" as entity_research_publicacionnombre060010020370_060_010_020_370 <<entity>> {
   publicacion_nombre : text <<optional, single>> [CVN: 060.010.020.370]
 }
 
-class "PublicacionNombre060010030350" as entity_research_publicacionnombre060010030350_060_010_030_350 <<entity>> {
+class "PublicacionNombre" as entity_research_publicacionnombre060010030350_060_010_030_350 <<entity>> {
   publicacion_nombre : text <<optional, single>> [CVN: 060.010.030.350]
 }
 
-class "PublicacionNombre060010040360" as entity_research_publicacionnombre060010040360_060_010_040_360 <<entity>> {
+class "PublicacionNombre" as entity_research_publicacionnombre060010040360_060_010_040_360 <<entity>> {
   publicacion_nombre : text <<optional, single>> [CVN: 060.010.040.360]
 }
 
-class "PublicacionTipo060010030190" as entity_research_publicaciontipo060010030190_060_010_030_190 <<entity>> {
+class "PublicacionTipo" as entity_research_publicaciontipo060010030190_060_010_030_190 <<entity>> {
   autor_de_correspondencia : boolean <<optional, single>> [CVN: 060.010.030.390]
   identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 060.010.030.400]
   publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 060.010.030.250]
@@ -60,7 +60,7 @@ controlled references:
 - ISO_3166 (code_list, enum=ineligible, items=312)
 end note
 
-class "PublicacionTipo060010040200" as entity_research_publicaciontipo060010040200_060_010_040_200 <<entity>> {
+class "PublicacionTipo" as entity_research_publicaciontipo060010040200_060_010_040_200 <<entity>> {
   autor_de_correspondencia : boolean <<optional, single>> [CVN: 060.010.040.390]
   identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 060.010.040.400]
   publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 060.010.040.260]

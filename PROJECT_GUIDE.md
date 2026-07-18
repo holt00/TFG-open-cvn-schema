@@ -148,6 +148,9 @@ files in order:
   LLM import exploration
 - `docs/roadmap/issues/issue-70-semantic-cvn-xml-import-to-open-cvn-json.md`:
   authoritative record of semantic CVN XML import into Open CVN JSON
+- `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`:
+  authoritative record of limitations hardening, documentation, PDF engine, and
+  diagram usability work
 - `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`: maintenance
   record for the runner logging convention update
 - `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`: maintenance

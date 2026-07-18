@@ -172,6 +172,18 @@ CVN evidence but no recognized semantic items may still report
 `mapping_status = "trace_only"`. Treat either status as an import diagnostic,
 not proof that all curriculum content was converted.
 
+The XML import diagnostic object is also the place to inspect coverage. Current
+fields include:
+
+- `items_seen`, `items_mapped`, and `items_unmapped`
+- `fields_seen`, `fields_mapped`, and `fields_unmapped`
+- `item_mapping_coverage` and `field_mapping_coverage` ratios
+- `mapped_sections` and `section_counts`
+- `unmapped_codes`
+
+These fields make semantic partial import measurable. They do not mean the XML
+importer is a complete converter for every official CVN XML edge case.
+
 XML errors use these codes:
 
 - `invalid_xml`: XML is malformed

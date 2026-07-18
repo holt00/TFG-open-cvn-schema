@@ -1,0 +1,113 @@
+@startuml
+title Open CVN - Other CVN Concepts - Section 040 Part 2
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "Other CVN Concepts - Section 040 Part 2" as area_other_040_part_02 {
+class "NODeISBNISSN" as entity_other_nodeisbnissn_040_090_000_230 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  identificador_de_publicacion_digital : text <<optional, repeated>>
+  n_o_de_isbn_issn : text <<optional, repeated>>
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  publicacion_deposito_legal : text <<optional, single>>
+  publicacion_direccion_electronica : text <<optional, single>>
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>>
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  .. +8 more attributes ..
+}
+
+class "OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior" as entity_other_otrasactividadesmeritosnoincluidosenlarelacionanterior040140000000_040_140_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  entidad_de_concesion_del_merito : value_object<EntityNameType> <<optional, single>>
+  entidad_de_la_experiencia : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion_de_la_experiencia : value_object<FlexibleDatesType> <<optional, single>>
+  fecha_de_la_concesion : value_object<FlexibleDatesType> <<optional, single>>
+  .. +9 more attributes ..
+}
+
+class "ProtocolosYOtrosMaterialesDeAtencionDeSalud" as entity_other_protocolosyotrosmaterialesdeatenciondesalud_040_100_000_000 <<entity>> {
+  autores_as_p_o_de_firma_nombres : text <<optional, repeated>>
+  fecha_de_elaboracion : value_object<FlexibleDatesType> <<optional, single>>
+  nombre_del_protocolo_material : text <<optional, single>>
+  posicion_del_de_la_solicitante_sobre_el_total : decimal_number <<optional, single>>
+  protocolos_y_otros_materiales_de_atencion_de_salud : text <<optional, repeated>>
+  publicacion_titulo : text <<optional, single>>
+  tipologia : controlled_reference <<optional, single>>
+  tipologia_otros : text <<optional, single>>
+}
+
+class "ProyectosDeInnovacionSanitaria" as entity_other_proyectosdeinnovacionsanitaria_040_110_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  duracion : duration_like <<optional, single>>
+  entidad_de_realizacion : value_object<EntityNameType> <<optional, single>>
+  entidad_financiadora : value_object<EntityNameType> <<optional, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>>
+  .. +19 more attributes ..
+}
+
+class "ProyectosParaLaPlanificacionMejoraDeLaSanidad" as entity_other_proyectosparalaplanificacionmejoradelasanidad_040_120_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  duracion : duration_like <<optional, single>>
+  entidad_de_realizacion : value_object<EntityNameType> <<optional, single>>
+  entidad_financiadora : value_object<EntityNameType> <<optional, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<optional, single>>
+  .. +17 more attributes ..
+}
+
+class "PublicacionNombre" as entity_other_publicacionnombre040090000380_040_090_000_380 <<entity>> {
+  publicacion_nombre : text <<optional, single>>
+}
+
+class "PublicacionNombre" as entity_other_publicacionnombre040100000180_040_100_000_180 <<entity>> {
+  publicacion_nombre : text <<optional, single>>
+}
+
+class "PublicacionTitulo" as entity_other_publicaciontitulo040100000070_040_100_000_070 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  identificador_de_publicacion_digital : text <<optional, repeated>>
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  publicacion_deposito_legal : text <<optional, single>>
+  publicacion_direccion_electronica : text <<optional, single>>
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>>
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  publicacion_isbn_issn : text <<optional, repeated>>
+  .. +7 more attributes ..
+}
+
+class "PublicacionTitulo" as entity_other_publicaciontitulo040130000180_040_130_000_180 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  identificador_de_publicacion_digital : text <<optional, repeated>>
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  publicacion_deposito_legal : text <<optional, single>>
+  publicacion_direccion_electronica : text <<optional, single>>
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>>
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  publicacion_isbn_issn : text <<optional, repeated>>
+  .. +7 more attributes ..
+}
+
+class "TutoriasSupervisionDeActividadesDeAtencionDeSalud" as entity_other_tutoriassupervisiondeactividadesdeatenciondesalud_040_080_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion_de_la_tutoria : text <<optional, single>>
+  ciudad_de_la_entidad_organizadora_de_la_que_depende_el_programa : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion_de_la_tutoria : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora_de_la_que_depende_el_programa : controlled_reference <<optional, single>>
+  descripcion_del_programa : text <<optional, single>>
+  entidad_donde_realizo_la_tutoria : value_object<EntityNameType> <<optional, single>>
+  entidad_organizadora_de_la_que_depende_el_programa : value_object<EntityNameType> <<optional, single>>
+  frecuencia_de_la_actividad : decimal_number <<optional, single>>
+  .. +11 more attributes ..
+}
+
+}
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+title Open CVN - CVN Research - Section 060 Part 4
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Research - Section 060 Part 4" as area_research_060_part_04 {
+class "Soporte" as entity_research_soporte_060_010_010_070 <<entity>> {
+  publicacion_nombre : text <<optional, single>>
+  soporte : controlled_reference <<optional, single>>
+}
+
+class "TrabajosPresentadosEnCongresosNacionalesOInternacionales" as entity_research_trabajospresentadosencongresosnacionalesointernacionales_060_010_020_000 <<entity>> {
+  autores_as_p_o_de_firma : text <<optional, repeated>>
+  ciudad_de_la_entidad_organizadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  forma_de_contribucion : controlled_reference <<optional, single>>
+  fuente_de_citas : controlled_reference <<optional, repeated>>
+  fuente_de_citas_otros : text <<optional, repeated>>
+  intervencion_por : controlled_reference <<optional, single>>
+  intervencion_por_otros : text <<optional, single>>
+  .. +11 more attributes ..
+}
+
+class "TrabajosPresentadosEnJornadasSeminariosTalleresDeTrabajoYOCursosNacionalesOInternacionales" as entity_research_trabajospresentadosenjornadasseminariostalleresdetrabajoyocursosnacionalesointernacionales_060_010_030_000 <<entity>> {
+  autores_as_p_o_de_firma : text <<optional, repeated>>
+  ciudad_de_la_entidad_organizadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  fuente_de_citas : controlled_reference <<optional, repeated>>
+  fuente_de_citas_otros : text <<optional, repeated>>
+  intervencion_por : controlled_reference <<optional, single>>
+  localizacion_nombre_del_evento : text <<optional, single>>
+  numero_de_citas : decimal_number <<optional, repeated>>
+  .. +8 more attributes ..
+}
+
+}
+
+@enduml

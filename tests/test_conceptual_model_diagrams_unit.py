@@ -156,6 +156,7 @@ def test_render_conceptual_model_diagrams_is_deterministic_and_agnostic():
     assert "BaseCvnDomainModel" not in combined
     assert "Field(" not in combined
     assert "open_cvn_identity_reference.puml" in {artifact.filename for artifact in first}
+    assert "open_cvn_presentation_overview.puml" in {artifact.filename for artifact in first}
 
 
 def test_write_conceptual_model_diagrams_writes_all_artifacts(tmp_path: Path):
@@ -171,6 +172,7 @@ def test_write_conceptual_model_diagrams_writes_all_artifacts(tmp_path: Path):
         "open_cvn_core_reference.puml",
         "open_cvn_identity.puml",
         "open_cvn_identity_reference.puml",
+        "open_cvn_presentation_overview.puml",
     ]
     assert all(path.exists() for path in written_paths)
     assert (tmp_path / "open_cvn_identity.puml").read_text(encoding="utf-8").startswith("@startuml")

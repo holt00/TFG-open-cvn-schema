@@ -11,6 +11,8 @@ from open_cvn_app.pdf import (
     PdfCompilationError,
     PdfGenerationUnavailable,
     PdfPreviewError,
+    cached_managed_tectonic_path,
+    diagnose_pdf_environment,
     discover_tex_compiler,
     format_compilation_diagnostics,
     generate_pdf_document,
@@ -31,6 +33,37 @@ def _repository_with_master(tmp_path: Path, document_path: Path | None = None) -
     curriculum = repository.create_curriculum(CurriculumCreate(display_name="Master CV", document=document))
     repository.assign_master_curriculum(curriculum.id)
     return repository
+
+
+def test_discover_tex_compiler_prefers_cached_managed_tectonic(tmp_path):
+    executable = tmp_path / "tectonic"
+    executable.write_text("#!/bin/sh\n", encoding="utf-8")
+    executable.chmod(0o755)
+
+    compiler = discover_tex_compiler(lookup=lambda name: "/usr/bin/latexmk", managed_cache_dir=tmp_path)
+
+    assert compiler.name == "tectonic"
+    assert compiler.executable == str(executable)
+    assert compiler.managed is True
+
+
+def test_discover_tex_compiler_can_download_managed_tectonic(tmp_path):
+    def downloader(cache_dir: Path) -> Path:
+        executable = cache_dir / "tectonic"
+        executable.write_text("#!/bin/sh\n", encoding="utf-8")
+        executable.chmod(0o755)
+        return executable
+
+    compiler = discover_tex_compiler(
+        lookup=lambda name: None,
+        managed_cache_dir=tmp_path,
+        allow_managed_download=True,
+        managed_downloader=downloader,
+    )
+
+    assert compiler.name == "tectonic"
+    assert compiler.executable == str(tmp_path / "tectonic")
+    assert compiler.managed is True
 
 
 def test_discover_tex_compiler_prefers_latexmk():
@@ -57,7 +90,26 @@ def test_discover_tex_compiler_reports_missing_compiler():
     with pytest.raises(PdfGenerationUnavailable, match="No supported TeX compiler found") as exc_info:
         discover_tex_compiler(lookup=lambda name: None)
 
-    assert exc_info.value.searched_compilers == ("latexmk", "pdflatex")
+    assert exc_info.value.searched_compilers == ("tectonic", "latexmk", "pdflatex")
+
+
+def test_cached_managed_tectonic_ignores_non_executable(tmp_path):
+    executable = tmp_path / "tectonic"
+    executable.write_text("not executable", encoding="utf-8")
+
+    assert cached_managed_tectonic_path(tmp_path) is None
+
+
+def test_diagnose_pdf_environment_reports_selected_engine(tmp_path):
+    executable = tmp_path / "tectonic"
+    executable.write_text("#!/bin/sh\n", encoding="utf-8")
+    executable.chmod(0o755)
+
+    diagnostic = diagnose_pdf_environment(lookup=lambda name: "/usr/bin/latexmk", managed_cache_dir=tmp_path)
+
+    assert diagnostic.managed_tectonic == str(executable)
+    assert diagnostic.selected_engine == "managed tectonic"
+    assert diagnostic.selected_executable == str(executable)
 
 
 def test_generate_pdf_document_with_latexmk_copies_expected_pdf(tmp_path):
@@ -90,6 +142,41 @@ def test_generate_pdf_document_with_latexmk_copies_expected_pdf(tmp_path):
     assert len(calls) == 1
     assert calls[0][1:5] == ("-pdf", "-interaction=nonstopmode", "-halt-on-error", "-outdir")
     assert environments[0]["SOURCE_DATE_EPOCH"] == "0"
+
+
+def test_generate_pdf_document_with_tectonic_copies_expected_pdf(tmp_path):
+    repository = _repository_with_master(tmp_path)
+    output_path = tmp_path / "cv.pdf"
+    calls: list[tuple[str, ...]] = []
+    cache_dir = tmp_path / "tectonic-cache"
+
+    def downloader(cache_dir: Path) -> Path:
+        executable = cache_dir / "tectonic"
+        executable.write_text("#!/bin/sh\n", encoding="utf-8")
+        executable.chmod(0o755)
+        return executable
+
+    def runner(command: tuple[str, ...], **kwargs: Any) -> subprocess.CompletedProcess[str]:
+        calls.append(command)
+        tex_path = Path(command[1])
+        (Path(kwargs["cwd"]) / f"{tex_path.stem}.pdf").write_bytes(b"%PDF-1.4\n")
+        return subprocess.CompletedProcess(command, 0, stdout="ok", stderr="")
+
+    result = generate_pdf_document(
+        repository,
+        version="master",
+        output_path=output_path,
+        compiler_lookup=lambda name: None,
+        runner=runner,
+        allow_managed_tectonic_download=True,
+        managed_cache_dir=cache_dir,
+        managed_downloader=downloader,
+    )
+
+    assert result.compiler_name == "tectonic"
+    assert output_path.read_bytes() == b"%PDF-1.4\n"
+    assert calls[0][0] == str(cache_dir / "tectonic")
+    assert calls[0][2] == "--outdir"
 
 
 def test_generate_pdf_document_with_pdflatex_runs_two_passes(tmp_path):
