@@ -1,0 +1,112 @@
+@startuml
+title Open CVN - CVN Education - Section 030 Part 2
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Education - Section 030 Part 2" as area_education_030_part_02 {
+class "FormacionSanitariaEspecializadaImpartida" as entity_education_formacionsanitariaespecializadaimpartida_030_020_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_formacion_impartida : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_donde_ha_impartido_la_formacion : controlled_reference <<optional, single>>
+  departamento : value_object<EntityNameType> <<optional, single>>
+  duracion : duration_like <<optional, single>>
+  entidad_donde_se_llevo_a_cabo : value_object<EntityNameType> <<optional, single>>
+  entidad_que_expide_el_titulo : value_object<EntityNameType> <<optional, single>>
+  .. +17 more attributes ..
+}
+
+class "ISBNISSNPublicacion" as entity_education_isbnissnpublicacion_030_060_000_190 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  identificador_de_publicacion_digital : text <<optional, repeated>>
+  isbn_issn_publicacion : text <<optional, repeated>>
+  tipo_de_identificador_de_publicacion_digital : controlled_reference <<optional, repeated>>
+  tipo_de_identificador_de_publicacion_digital_otros : text <<optional, repeated>>
+}
+
+class "MaterialYOtrasPublicacionesDocentesODeCaracterPedagogico" as entity_education_materialyotraspublicacionesdocentesodecaracterpedagogico_030_070_000_000 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  autores_as_p_o_de_firma_nombres : text <<optional, repeated>>
+  explicacion_narrativa_del_material_elaborado : text <<optional, single>>
+  fecha_de_elaboracion : value_object<FlexibleDatesType> <<optional, single>>
+  grado_de_contribucion : controlled_reference <<required, single>>
+  identificador_de_publicacion_digital : text <<optional, repeated>>
+  material_y_otras_publicaciones_docentes_o_de_caracter_pedagogico : text <<optional, repeated>>
+  nombre_del_material : text <<optional, single>>
+  .. +7 more attributes ..
+}
+
+class "OtrasActividadesMeritosNoIncluidosEnLaRelacionAnterior" as entity_education_otrasactividadesmeritosnoincluidosenlarelacionanterior030100000000_030_100_000_000 <<entity>> {
+  ciudad_de_realizacion_de_la_actividad : text <<optional, single>>
+  comunidad_autonoma_region_de_realizacion_de_la_actividad : controlled_reference <<optional, single>>
+  descripcion_de_la_actividad : text <<optional, single>>
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion_de_la_actividad : value_object<FlexibleDatesType> <<optional, single>>
+  otras_actividades_meritos_no_incluidos_en_la_relacion_anterior : text <<optional, repeated>>
+  pais_de_realizacion_de_la_actividad : controlled_reference <<optional, single>>
+  palabras_clave : controlled_reference <<optional, repeated>>
+  .. +2 more attributes ..
+}
+
+class "OtrosMeritosDeDocencia" as entity_education_otrosmeritosdedocencia_030_100_010_000 <<entity>> {
+  otros_meritos_de_docencia_030_100_010_000 : text <<optional, single>>
+  otros_meritos_de_docencia_030_100_010_010 : text <<optional, single>>
+}
+
+class "PluralidadInterdisciplinariedadYComplejidadDocente" as entity_education_pluralidadinterdisciplinariedadycomplejidaddocente_030_120_000_000 <<entity>> {
+  pluralidad_interdisciplinariedad_y_complejidad_docente_030_120_000_000 : text <<optional, single>>
+  pluralidad_interdisciplinariedad_y_complejidad_docente_030_120_000_010 : text <<optional, single>>
+}
+
+class "ProyectosDeInnovacionDocente" as entity_education_proyectosdeinnovaciondocente_030_080_000_000 <<entity>> {
+  ambito_del_proyecto : controlled_reference <<required, single>>
+  ambito_del_proyecto_otros : text <<optional, single>>
+  aportacion_del_titular_al_proyecto : text <<optional, single>>
+  ciudad_de_realizacion : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  duracion_de_la_participacion : duration_like <<optional, single>>
+  entidad_es_participante_s : value_object<EntityNameType> <<optional, repeated>>
+  entidad_financiadora : value_object<EntityNameType> <<optional, single>>
+  .. +18 more attributes ..
+}
+
+class "PublicacionISBNISSN" as entity_education_publicacionisbnissn_030_090_000_220 <<entity>> {
+  autor_de_correspondencia : boolean <<optional, single>>
+  identificador_de_publicacion_digital : text <<optional, repeated>>
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  publicacion_deposito_legal : text <<optional, single>>
+  publicacion_direccion_electronica : text <<optional, single>>
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>>
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  publicacion_isbn_issn : text <<optional, repeated>>
+  .. +8 more attributes ..
+}
+
+class "PublicacionNombre" as entity_education_publicacionnombre030070000190_030_070_000_190 <<entity>> {
+  publicacion_nombre : text <<optional, single>>
+}
+
+class "PublicacionNombre" as entity_education_publicacionnombre030090000330_030_090_000_330 <<entity>> {
+  publicacion_nombre : text <<optional, single>>
+}
+
+class "PublicacionTitulo" as entity_education_publicaciontitulo030070000080_030_070_000_080 <<entity>> {
+  publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>>
+  publicacion_deposito_legal : text <<optional, single>>
+  publicacion_direccion_electronica : text <<optional, single>>
+  publicacion_editorial : value_object<EntityNameType> <<optional, single>>
+  publicacion_fecha : value_object<FlexibleDatesType> <<optional, single>>
+  publicacion_isbn_issn : text <<optional, repeated>>
+  publicacion_nombre : text <<optional, single>>
+  publicacion_pagina_inicial_final : text <<optional, single>>
+  .. +3 more attributes ..
+}
+
+class "TitulacionUniversitaria" as entity_education_titulacionuniversitaria_030_010_000_020 <<entity>> {
+  titulacion_universitaria : controlled_reference <<optional, single>>
+}
+
+}
+
+@enduml

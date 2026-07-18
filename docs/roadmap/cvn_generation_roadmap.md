@@ -56,6 +56,7 @@ Goal:
 | `#68` | Application MVP tests and documentation | Completed | End-to-end MVP workflow tests, application user guide, verification, and epic `#60` closure completed |
 | `#69` | LLM-assisted PDF import fallback | Completed | Deterministic-first PDF import, explicit external-LLM opt-in, OpenAI Responses provider adapter, local validation, CLI storage, mocked tests, and workflow docs implemented |
 | `#70` | Semantic CVN XML import to Open CVN JSON | Completed | Runtime schema-backed CVN code mapping, semantic partial XML import, deterministic PDF XML handoff before LLM fallback, synthetic fixtures, tests, and documentation implemented |
+| `#71` | Limitations hardening and documentation | Completed | Limitation classification, semantic warnings, XML coverage diagnostics, managed Tectonic PDF engine, PDF doctor, LLM provenance, diagram usability hardening, and full-suite verification completed |
 
 Corrective planning after hotfixes `#4`, `#5`, and `#6`:
 
@@ -523,3 +524,5 @@ Authoritative records:
 - `docs/roadmap/issues/issue-67-pdf-generation-and-preview-handoff.md`
 - `docs/roadmap/issues/issue-68-application-mvp-tests-and-documentation.md`
 - `docs/roadmap/issues/issue-69-llm-assisted-import-spike.md`
+- `docs/roadmap/issues/issue-70-semantic-cvn-xml-import-to-open-cvn-json.md`
+- `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`

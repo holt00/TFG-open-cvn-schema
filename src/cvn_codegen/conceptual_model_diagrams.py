@@ -1,5 +1,6 @@
 import argparse
 import logging
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -28,7 +29,10 @@ LARGE_AREA_ATTRIBUTE_THRESHOLD = 80
 LARGE_REFERENCE_VOCABULARY_PAIR_THRESHOLD = 12
 LARGE_REFERENCE_SECTION_ENTITY_THRESHOLD = 6
 LARGE_REFERENCE_SECTION_ATTRIBUTE_THRESHOLD = 120
+LARGE_READABLE_SECTION_ENTITY_THRESHOLD = 12
+LARGE_READABLE_SECTION_ATTRIBUTE_THRESHOLD = 160
 OVERVIEW_SAMPLE_LIMIT = 3
+CODE_SUFFIX_PATTERN = re.compile(r"^(?P<label>.*?)(?P<code>\d{12})$")
 DEPENDENCY_COLORS = (
     "#1f77b4",
     "#ff7f0e",
@@ -64,7 +68,7 @@ def render_conceptual_model_diagrams(
     inventory: ConceptualModelInventory,
 ) -> tuple[DiagramArtifact, ...]:
     """Render readable and reference PlantUML diagrams from a conceptual inventory."""
-    artifacts = [render_overview_diagram(inventory)]
+    artifacts = [render_overview_diagram(inventory), render_presentation_overview_diagram(inventory)]
     for area in sorted(inventory.domain_areas, key=lambda item: item.area_id):
         artifacts.extend(render_readable_area_diagrams(inventory, area))
     artifacts.append(render_reference_overview_diagram(inventory))
@@ -130,6 +134,60 @@ def render_overview_diagram(inventory: ConceptualModelInventory) -> DiagramArtif
     )
 
 
+def render_presentation_overview_diagram(inventory: ConceptualModelInventory) -> DiagramArtifact:
+    """Render compact presentation-oriented overview without attributes."""
+    lines = build_header("Open CVN Presentation Overview")
+    lines.extend(
+        [
+            "skinparam classAttributeIconSize 0",
+            "top to bottom direction",
+            "hide empty members",
+            "",
+            'package "Open CVN Runtime Shape" as presentation_root {',
+            'class "Open CVN Document" as presentation_document <<document>>',
+            'class "Metadata" as presentation_metadata <<metadata>>',
+            'class "Curriculum" as presentation_curriculum <<curriculum>>',
+            'class "Extensions" as presentation_extensions <<extensions>>',
+            "}",
+            "",
+            'package "Curriculum Areas" as presentation_areas {',
+        ]
+    )
+    for area in sorted(inventory.domain_areas, key=lambda item: item.area_id):
+        if area.area_id == "core":
+            continue
+        lines.append(
+            f'class "{escape_text(area.name)}" as presentation_area_{normalize_alias(area.area_id)} <<area>> {{'
+        )
+        lines.append(f"  entities : {len(area.entities)}")
+        lines.append("}")
+    lines.extend(
+        [
+            "}",
+            "",
+            "presentation_document *-- presentation_metadata : metadata",
+            "presentation_document *-- presentation_curriculum : curriculum",
+            "presentation_document o-- presentation_extensions : extensions",
+        ]
+    )
+    for area in sorted(inventory.domain_areas, key=lambda item: item.area_id):
+        if area.area_id != "core":
+            lines.append(f"presentation_curriculum *-- presentation_area_{normalize_alias(area.area_id)}")
+    lines.extend(
+        [
+            "",
+            "note bottom",
+            "Presentation view: compact overview for slides and memoria figures.",
+            "Detailed readable/reference diagrams remain canonical for trace inspection.",
+            "end note",
+            "@enduml",
+        ]
+    )
+    return DiagramArtifact(
+        filename="open_cvn_presentation_overview.puml",
+        title="Open CVN Presentation Overview",
+        content="\n".join(lines) + "\n",
+    )
 def render_readable_area_diagrams(
     inventory: ConceptualModelInventory,
     area: ConceptualDomainArea,
@@ -139,10 +197,22 @@ def render_readable_area_diagrams(
         return (render_domain_area_diagram(inventory, area),)
     sections = build_readable_sections(area)
     artifacts = [render_large_area_index_diagram(area, sections)]
-    artifacts.extend(
-        render_readable_section_diagram(inventory, area, section)
-        for section in sections
-    )
+    for section in sections:
+        artifacts.extend(render_readable_section_artifacts(inventory, area, section))
+    return tuple(artifacts)
+
+
+def render_readable_section_artifacts(
+    inventory: ConceptualModelInventory,
+    area: ConceptualDomainArea,
+    section: ReadableSection,
+) -> tuple[DiagramArtifact, ...]:
+    """Render one readable section, splitting oversized sections into chunks."""
+    if not requires_split_readable_section(section):
+        return (render_readable_section_diagram(inventory, area, section),)
+    chunks = split_readable_section(section)
+    artifacts = [render_readable_subsection_index_diagram(area, section, chunks)]
+    artifacts.extend(render_readable_section_diagram(inventory, area, chunk) for chunk in chunks)
     return tuple(artifacts)
 
 
@@ -211,6 +281,40 @@ def render_readable_section_diagram(
         package_alias=f"{area_alias(area.area_id)}_{normalize_alias(section.key)}",
         entities=section.entities,
         attribute_limit=READABLE_ATTRIBUTE_LIMIT,
+    )
+
+
+def render_readable_subsection_index_diagram(
+    area: ConceptualDomainArea,
+    section: ReadableSection,
+    chunks: tuple[ReadableSection, ...],
+) -> DiagramArtifact:
+    """Render compact index for oversized readable sections."""
+    lines = build_header(f"Open CVN - {area.name} - {section.title}")
+    lines.extend(
+        [
+            "skinparam classAttributeIconSize 0",
+            "hide empty members",
+            "",
+            f'package "{escape_text(area.name)} - {section.title}" as readable_section_{normalize_alias(section.key)}_index {{',
+        ]
+    )
+    for chunk in chunks:
+        lines.extend(render_section_summary_block(chunk))
+        lines.append("")
+    lines.append("}")
+    lines.append("")
+    lines.append("note bottom")
+    lines.append(f"Readable subsection index for {escape_text(section.title)}")
+    lines.append("Detailed subsection files:")
+    for chunk in chunks:
+        lines.append(f"- {escape_text(chunk.filename)}")
+    lines.append("end note")
+    lines.append("@enduml")
+    return DiagramArtifact(
+        filename=section.filename,
+        title=f"Open CVN - {area.name} - {section.title}",
+        content="\n".join(lines) + "\n",
     )
 
 
@@ -607,6 +711,54 @@ def requires_split_reference_section(section: ReadableSection) -> bool:
     )
 
 
+def requires_split_readable_section(section: ReadableSection) -> bool:
+    """Return whether one readable section still needs deeper splitting."""
+    entity_count = len(section.entities)
+    attribute_count = sum(len(entity.attributes) for entity in section.entities)
+    return (
+        entity_count > LARGE_READABLE_SECTION_ENTITY_THRESHOLD
+        or attribute_count > LARGE_READABLE_SECTION_ATTRIBUTE_THRESHOLD
+    )
+
+
+def split_readable_section(section: ReadableSection) -> tuple[ReadableSection, ...]:
+    """Split one oversized readable section into smaller deterministic chunks."""
+    chunks: list[ReadableSection] = []
+    current_entities: list[ConceptualEntity] = []
+    current_attribute_count = 0
+    part_number = 1
+    for entity in section.entities:
+        entity_attribute_count = len(entity.attributes)
+        if current_entities and (
+            len(current_entities) >= LARGE_READABLE_SECTION_ENTITY_THRESHOLD
+            or current_attribute_count + entity_attribute_count > LARGE_READABLE_SECTION_ATTRIBUTE_THRESHOLD
+        ):
+            chunks.append(build_readable_chunk(section, tuple(current_entities), part_number))
+            current_entities = []
+            current_attribute_count = 0
+            part_number += 1
+        current_entities.append(entity)
+        current_attribute_count += entity_attribute_count
+    if current_entities:
+        chunks.append(build_readable_chunk(section, tuple(current_entities), part_number))
+    return tuple(chunks)
+
+
+def build_readable_chunk(
+    section: ReadableSection,
+    entities: tuple[ConceptualEntity, ...],
+    part_number: int,
+) -> ReadableSection:
+    """Build one chunked readable subsection descriptor."""
+    chunk_key = f"{section.key}_part_{part_number:02d}"
+    return ReadableSection(
+        key=chunk_key,
+        title=f"{section.title} Part {part_number}",
+        filename=f"{section.filename.removesuffix('.puml')}_part_{part_number:02d}.puml",
+        entities=entities,
+    )
+
+
 def split_reference_section(section: ReadableSection) -> tuple[ReadableSection, ...]:
     """Split one oversized reference section into smaller deterministic chunks."""
     chunks: list[ReadableSection] = []
@@ -754,10 +906,21 @@ def render_entity_declaration(
 ) -> str:
     """Render a PlantUML class declaration for one conceptual entity."""
     alias = entity_alias(entity.entity_id)
-    name = escape_text(entity.name)
+    name = escape_text(display_entity_name(entity))
     if not include_attributes:
         return f'class "{name}" as {alias} <<{stereotype}>>'
     return f'class "{name}" as {alias} <<{stereotype}>> {{'
+
+
+def display_entity_name(entity: ConceptualEntity) -> str:
+    """Return a readable entity label while preserving stable aliases elsewhere."""
+    match = CODE_SUFFIX_PATTERN.match(entity.name)
+    if match is None:
+        return entity.name
+    label = match.group("label")
+    if not label:
+        return entity.name
+    return label
 
 
 def render_external_entity_declaration(entity: ConceptualEntity) -> str:

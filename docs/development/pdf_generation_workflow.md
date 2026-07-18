@@ -64,28 +64,64 @@ directory.
 
 The discovery order is:
 
-1. `latexmk`
-2. `pdflatex`
+1. managed `tectonic` cached by Open CVN
+2. system `tectonic`
+3. `latexmk`
+4. `pdflatex`
 
-`latexmk` is preferred because it automates multi-pass LaTeX compilation.
-`pdflatex` is used as a fallback and runs two passes for basic references.
+`tectonic` is preferred because it is distributed as a single executable and can
+be cached by the Python application. When no cached managed executable is
+available, `open-cvn pdf generate` may download the pinned Tectonic release for
+the current platform and store it under:
+
+```text
+~/.cache/open-cvn/tectonic/<version>/
+```
+
+Set `OPEN_CVN_TECTONIC_CACHE` to override the managed cache directory.
+
+If managed Tectonic is unavailable, the application falls back to system
+executables. `latexmk` automates multi-pass LaTeX compilation. `pdflatex` is used
+as a final fallback and runs two passes for basic references.
 
 The project does not install TeX as a Python dependency. Install a TeX
-distribution separately, for example TeX Live, MiKTeX, or MacTeX, and ensure
-`latexmk` or `pdflatex` is on `PATH`.
+distribution separately, for example TeX Live, MiKTeX, or MacTeX, only if the
+managed or system `tectonic` route is not suitable for your environment.
+
+## PDF Doctor
+
+Check local PDF generation readiness without compiling a document:
+
+```bash
+uv run open-cvn pdf doctor
+```
+
+The command reports:
+
+- managed Tectonic cache path
+- cached managed Tectonic executable, if present
+- system `tectonic`, `latexmk`, and `pdflatex` discovery
+- selected engine
+- whether managed Tectonic download is supported on the current platform
+- next recommended action
+
+`pdf doctor` does not download Tectonic by itself. `pdf generate` performs the
+managed download when it needs a managed engine and no cached executable exists.
 
 ## Missing Compiler Behavior
 
-When no supported compiler is installed, the command fails with structured output
+When no supported engine is available and managed Tectonic cannot be downloaded or
+is not supported for the platform, the command fails with structured output
 similar to:
 
 ```text
 PDF generation unavailable.
-No supported TeX compiler found. Install one of: latexmk, pdflatex.
+No supported TeX compiler found. Install one of: tectonic, latexmk, pdflatex.
 ```
 
-This is expected behavior for environments without TeX. It should not break the
-rest of the application workflow or automated tests.
+This is expected behavior for offline or unsupported environments without a
+cached managed engine or local TeX executable. It should not break the rest of
+the application workflow or automated tests.
 
 ## Compiler Failure Diagnostics
 
@@ -114,5 +150,7 @@ Limitations:
 ## Verification
 
 Issue `#67` tests mock compiler discovery, compiler success, compiler failure,
-timeouts, missing compiler behavior, and preview handoff. A local TeX installation
-is not required for automated verification.
+timeouts, missing compiler behavior, and preview handoff. Issue `#71` adds mocked
+coverage for managed Tectonic cache/download behavior and `pdf doctor`. A local
+TeX installation and real network access are not required for automated
+verification.

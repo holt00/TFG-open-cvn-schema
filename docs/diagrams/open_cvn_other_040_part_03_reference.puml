@@ -86,15 +86,15 @@ controlled references:
 - ISO_3166 (code_list, enum=ineligible, items=312)
 end note
 
-class "PublicacionNombre040090000380" as entity_other_publicacionnombre040090000380_040_090_000_380 <<entity>> {
+class "PublicacionNombre" as entity_other_publicacionnombre040090000380_040_090_000_380 <<entity>> {
   publicacion_nombre : text <<optional, single>> [CVN: 040.090.000.380]
 }
 
-class "PublicacionNombre040100000180" as entity_other_publicacionnombre040100000180_040_100_000_180 <<entity>> {
+class "PublicacionNombre" as entity_other_publicacionnombre040100000180_040_100_000_180 <<entity>> {
   publicacion_nombre : text <<optional, single>> [CVN: 040.100.000.180]
 }
 
-class "PublicacionTitulo040100000070" as entity_other_publicaciontitulo040100000070_040_100_000_070 <<entity>> {
+class "PublicacionTitulo" as entity_other_publicaciontitulo040100000070_040_100_000_070 <<entity>> {
   autor_de_correspondencia : boolean <<optional, single>> [CVN: 040.100.000.190]
   identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 040.100.000.200]
   publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 040.100.000.120]
@@ -118,7 +118,7 @@ controlled references:
 - ISO_3166 (code_list, enum=ineligible, items=312)
 end note
 
-class "PublicacionTitulo040130000180" as entity_other_publicaciontitulo040130000180_040_130_000_180 <<entity>> {
+class "PublicacionTitulo" as entity_other_publicaciontitulo040130000180_040_130_000_180 <<entity>> {
   autor_de_correspondencia : boolean <<optional, single>> [CVN: 040.130.000.330]
   identificador_de_publicacion_digital : text <<optional, repeated>> [CVN: 040.130.000.340]
   publicacion_comunidad_autonoma_region : controlled_reference <<optional, single>> [CVN: 040.130.000.240]

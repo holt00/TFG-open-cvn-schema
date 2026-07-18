@@ -48,6 +48,7 @@ class CvnErrorCode(str, Enum):
     INVALID_JSON = "invalid_json"
     JSON_SCHEMA_VALIDATION_FAILURE = "json_schema_validation_failure"
     PYDANTIC_VALIDATION_FAILURE = "pydantic_validation_failure"
+    SEMANTIC_VALIDATION_WARNING = "semantic_validation_warning"
 
 
 class CvnParseIssue(BaseModel):

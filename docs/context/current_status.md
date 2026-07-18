@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-17
+- Last updated: 2026-07-18
 
 ## Completed Or Stabilized Work
 
@@ -1137,6 +1137,31 @@
   - `uv run pytest -n auto tests`
   - result: `477 passed in 985.71s (0:16:25)`
 
+### Issue `#71`
+
+- the limitations hardening and documentation issue is implemented
+- completed hardening areas include:
+  - classified limitation matrix in `docs/pipeline/known_limitations.md`
+  - explicit boundary between generated structural bindings and the Open CVN JSON
+    runtime contract
+  - conservative Open CVN semantic warnings after JSON Schema and Pydantic
+    validation
+  - XML semantic partial import coverage diagnostics
+  - managed Tectonic PDF engine discovery/cache/download strategy
+  - `open-cvn pdf doctor` environment diagnostics
+  - explicit LLM provenance fields marking assisted imports as review-required and
+    non-authoritative
+  - diagram PNG audit, split readable diagram output, and a compact presentation
+    overview diagram
+- issue `#71` must not modify `docs/memoria/` or manually edit `src/generated/`
+  and this constraint was preserved
+- targeted issue `#71` verification passed with:
+  - `uv run pytest -n auto tests/test_open_cvn_semantic_validation_unit.py tests/test_open_cvn_json_import_unit.py tests/test_parser_validator_contract_unit.py tests/test_xml_semantic_import_unit.py tests/test_cvn_xml_import_unit.py tests/test_open_cvn_app_pdf_unit.py tests/test_open_cvn_app_cli_unit.py tests/test_llm_import_unit.py tests/test_llm_providers_unit.py tests/test_conceptual_model_diagrams_unit.py tests/test_generation_pipeline_conceptual_diagrams.py -v`
+  - result: `108 passed in 69.88s (0:01:09)`
+- full-suite verification passed with:
+  - `uv run pytest -n auto tests`
+  - result: `488 passed in 845.43s (0:14:05)`
+
 ## Current Technical Baseline
 
 - Build backend: `setuptools`
@@ -1148,8 +1173,8 @@
 
 ## Next Planned Work
 
-- Next work item after issue `#69`: issue `#70` semantic CVN XML import is
-  implemented
+- Next work item after issue `#70`: issue `#71` limitations hardening and
+  documentation is completed
 - Epic `#60` has been expanded into issues `#61` through `#70`
 - MVP direction:
   - CLI-first local prototype
@@ -1162,7 +1187,7 @@
   - application MVP tests and user documentation
   - basic opt-in LLM-assisted PDF import fallback
   - semantic partial CVN XML import before LLM fallback
-- Next implementation issue: none currently documented after issue `#70`
+- Current implementation issue: none selected after issue `#71` completion
 
 ## Blocking Or Relevant Limitations
 
@@ -1250,23 +1275,24 @@ Then continue with these supporting files as needed:
 6. `docs/development/regeneration_workflow.md`
 7. `docs/development/parser_workflow.md`
 8. `docs/development/llm_import_workflow.md`
-9. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
-10. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
-11. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
-12. `docs/pipeline/known_limitations.md`
-13. `docs/pipeline/parser_validator_contract.md`
-14. `docs/roadmap/hotfixes/`
-15. `docs/cvn_source_package_auxiliary_artifacts.md`
-16. `docs/cvn_source_package_annex_table_coverage.md`
-17. `docs/cvn_annex_priority_table_families.md`
-18. `docs/cvn_annex_table_families_batch3.md`
-19. `docs/cvn_annex_table_families_batch4.md`
-20. `docs/cvn_annex_table_families_batch5.md`
-21. `docs/cvn_annex_table_families_batch6.md`
-22. `docs/cvn_annex_table_families_batch7.md`
-23. `docs/cvn_annex_table_families_batch8.md`
-24. `docs/cvn_serialization_patterns_reference.md`
-25. `docs/cvn_field_reference_traceability.md`
-26. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
-27. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
-28. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+9. `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`
+10. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
+11. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
+12. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
+13. `docs/pipeline/known_limitations.md`
+14. `docs/pipeline/parser_validator_contract.md`
+15. `docs/roadmap/hotfixes/`
+16. `docs/cvn_source_package_auxiliary_artifacts.md`
+17. `docs/cvn_source_package_annex_table_coverage.md`
+18. `docs/cvn_annex_priority_table_families.md`
+19. `docs/cvn_annex_table_families_batch3.md`
+20. `docs/cvn_annex_table_families_batch4.md`
+21. `docs/cvn_annex_table_families_batch5.md`
+22. `docs/cvn_annex_table_families_batch6.md`
+23. `docs/cvn_annex_table_families_batch7.md`
+24. `docs/cvn_annex_table_families_batch8.md`
+25. `docs/cvn_serialization_patterns_reference.md`
+26. `docs/cvn_field_reference_traceability.md`
+27. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+28. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+29. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`

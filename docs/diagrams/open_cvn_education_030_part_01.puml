@@ -1,0 +1,86 @@
+@startuml
+title Open CVN - CVN Education - Section 030 Part 1
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Education - Section 030 Part 1" as area_education_030_part_01 {
+class "AportacionesMasRelevantesDeSuCvDeDocencia" as entity_education_aportacionesmasrelevantesdesucvdedocencia_030_110_000_000 <<entity>> {
+  aportaciones_mas_relevantes_de_su_cv_de_docencia : text <<optional, repeated>>
+  ciudad_de_realizacion_de_la_actividad : text <<optional, single>>
+  comunidad_autonoma_region_de_realizacion_de_la_actividad : controlled_reference <<optional, single>>
+  descripcion : text <<optional, single>>
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  fecha_de_finalizacion_de_la_actividad : value_object<FlexibleDatesType> <<optional, single>>
+  pais_de_realizacion_de_la_actividad : controlled_reference <<optional, single>>
+  palabras_clave : controlled_reference <<optional, repeated>>
+  .. +2 more attributes ..
+}
+
+class "CodirectorADeTesis" as entity_education_codirectoradetesis_030_040_000_180 <<entity>> {
+  codirector_a_de_tesis : text <<optional, repeated>>
+}
+
+class "CursosYSeminariosImpartidos" as entity_education_cursosyseminariosimpartidos_030_060_000_000 <<entity>> {
+  ciudad_entidad_organizadora : text <<optional, single>>
+  comunidad_autonoma_region_entidad_organizadora : controlled_reference <<optional, single>>
+  cursos_y_seminarios_impartidos : text <<optional, repeated>>
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  fecha_de_imparticion : value_object<FlexibleDatesType> <<optional, single>>
+  horas_impartidas : decimal_number <<optional, single>>
+  idioma_en_que_se_impartio : controlled_reference <<optional, single>>
+  isbn_issn_publicacion : text <<optional, repeated>>
+  .. +11 more attributes ..
+}
+
+class "DireccionDeTesisDoctoralesYOTrabajosFinDeEstudios" as entity_education_direcciondetesisdoctoralesyotrabajosfindeestudios_030_040_000_000 <<entity>> {
+  alumno_a : text <<optional, single>>
+  calificacion_obtenida : text <<optional, single>>
+  ciudad_de_la_direccion_td : text <<optional, single>>
+  codirector_a_de_tesis : text <<optional, repeated>>
+  comunidad_autonoma_region_de_la_direccion_td : controlled_reference <<optional, single>>
+  direccion_de_tesis_doctorales_y_o_trabajos_fin_de_estudios : text <<optional, repeated>>
+  doctorado_europeo_internacional : boolean <<required, single>>
+  entidad_de_la_direccion_td : value_object<EntityNameType> <<required, single>>
+  .. +12 more attributes ..
+}
+
+class "EventosConIntervencionesOrientadasALaFormacionDocente" as entity_education_eventosconintervencionesorientadasalaformaciondocente_030_090_000_000 <<entity>> {
+  ciudad_de_celebracion : text <<optional, single>>
+  ciudad_de_la_entidad_organizadora : text <<optional, single>>
+  comunidad_autonoma_region_de_celebracion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_organizadora : controlled_reference <<optional, single>>
+  entidad_organizadora : value_object<EntityNameType> <<optional, single>>
+  eventos_con_intervenciones_orientadas_a_la_formacion_docente : text <<optional, repeated>>
+  fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>>
+  fecha_de_inicio : value_object<FlexibleDatesType> <<required, single>>
+  .. +15 more attributes ..
+}
+
+class "FormacionAcademicaImpartida" as entity_education_formacionacademicaimpartida_030_010_000_000 <<entity>> {
+  categoria_profesional_del_de_la_solicitante_en_el_momento_en_el_que_desempeno_la_docencia_senalada : text <<optional, single>>
+  ciudad_de_la_entidad_de_evaluacion : text <<optional, single>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  ciudad_de_la_entidad_financiadora : text <<optional, single>>
+  competencias_relacionadas_con_la_asignatura_impartida : text <<optional, single>>
+  comunidad_autonoma_region_de_entidad_de_evaluacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_financiadora : controlled_reference <<optional, single>>
+  .. +40 more attributes ..
+}
+
+class "FormacionSanitariaEnIDYOPosformacionSanitariaEspecializadaEnIDImpartida" as entity_education_formacionsanitariaenidyoposformacionsanitariaespecializadaenidimpartida_030_030_000_000 <<entity>> {
+  ciudad_de_la_entidad_de_la_realizacion : text <<optional, single>>
+  ciudad_de_la_formacion_impartida : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  comunidad_autonoma_region_donde_ha_impartido_la_formacion : controlled_reference <<optional, single>>
+  departamento : value_object<EntityNameType> <<optional, single>>
+  destinatarios_as_en_palabras_clave : controlled_reference <<optional, repeated>>
+  duracion : duration_like <<optional, single>>
+  entidad_de_la_que_depende_el_programa : value_object<EntityNameType> <<optional, single>>
+  .. +14 more attributes ..
+}
+
+}
+
+@enduml

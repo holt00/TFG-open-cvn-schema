@@ -1,0 +1,39 @@
+@startuml
+title Open CVN - CVN Research - Section 050 Part 2
+
+skinparam classAttributeIconSize 0
+hide circle
+
+package "CVN Research - Section 050 Part 2" as area_research_050_part_02 {
+class "ProyectosDeIDIFinanciadosEnConvocatoriasCompetitivasDeAdministracionesOEntidadesPublicasYPrivadas" as entity_research_proyectosdeidifinanciadosenconvocatoriascompetitivasdeadministracionesoentidadespublicasyprivadas_050_020_010_000 <<entity>> {
+  ambito_del_proyecto : controlled_reference <<optional, single>>
+  ambito_del_proyecto_otros : text <<optional, single>>
+  calidad_en_que_ha_participado_otros : text <<optional, single>>
+  ciudad_de_la_entidad_de_realizacion : text <<optional, single>>
+  codigo_de_proyecto_segun_la_entidad_financiadora : text <<optional, single>>
+  comunidad_autonoma_region_de_la_entidad_de_realizacion : controlled_reference <<optional, single>>
+  duracion_del_proyecto : duration_like <<optional, single>>
+  entidad_donde_se_desarrolla : value_object<EntityNameType> <<required, single>>
+  .. +27 more attributes ..
+}
+
+class "ResultadosDerivadosDeActividadesEspecializadasYDeTransferenciaNoIncluidosEnApartadosAnteriores" as entity_research_resultadosderivadosdeactividadesespecializadasydetransferencianoincluidosenapartadosanteriores_050_030_020_000 <<entity>> {
+  ambito_de_la_actividad : controlled_reference <<optional, single>>
+  ambito_de_la_actividad_otros : text <<optional, single>>
+  calidad_en_que_ha_participado_otros : text <<optional, single>>
+  clave_de_actividad_convenios_de_colaboracion : boolean <<optional, single>>
+  clave_de_actividad_participacion_como_experto_a_tecnologico_a_en_labores_de_supervision_asesoria_evaluacion_o_peritaje : boolean <<optional, single>>
+  clave_de_actividad_participacion_en_la_generacion_de_empresas_spin_off_basadas_en_resultados_de_i_d_i : boolean <<optional, single>>
+  clave_de_actividad_puesta_en_marcha_de_nuevas_tecnicas_o_procedimientos_operacion_y_mantenimiento_de_grandes_instalaciones_o_equipamientos_complejos : boolean <<optional, single>>
+  clave_de_actividad_realizacion_de_servicios_tecnologicos_maduros_homologacion_calibracion_analisis_u_otros : boolean <<optional, single>>
+  .. +15 more attributes ..
+}
+
+class "TransferenciaEIntercambioDeConocimiento" as entity_research_transferenciaeintercambiodeconocimiento_050_040_000_000 <<entity>> {
+  transferencia_e_intercambio_de_conocimiento_050_040_000_000 : text <<optional, single>>
+  transferencia_e_intercambio_de_conocimiento_050_040_000_010 : text <<optional, single>>
+}
+
+}
+
+@enduml

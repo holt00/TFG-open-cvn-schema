@@ -81,6 +81,8 @@ def test_import_pdf_with_llm_validates_and_attaches_provenance(tmp_path: Path):
         "fallback_reason": "pdf_without_extractable_xml",
         "provider_metadata": {"mock": True, "tokens": 12},
         "validation": "local_open_cvn_json",
+        "review_required": True,
+        "authoritative": False,
     }
     assert result.trace is not None
     assert result.trace.extracted_from == "llm_fallback"

@@ -94,9 +94,15 @@ LLM-assisted imports add provenance under:
 extensions["x-open-cvn.llm_import"]
 ```
 
-Recorded fields include provider, model, fallback reason, provider metadata, and
-the validation marker. Raw prompts, raw PDF contents, API keys, and full provider
-responses are not stored by default.
+Recorded fields include provider, model, fallback reason, provider metadata, the
+validation marker, `review_required: true`, and `authoritative: false`. Raw
+prompts, raw PDF contents, API keys, and full provider responses are not stored
+by default.
+
+Local Open CVN JSON validation proves only that the provider output matches the
+current structural/runtime contract. It does not prove factual completeness,
+absence of hallucinated content, or semantic equivalence with the original PDF.
+Users must review LLM-assisted imports before relying on them.
 
 ## Failure Behavior
 

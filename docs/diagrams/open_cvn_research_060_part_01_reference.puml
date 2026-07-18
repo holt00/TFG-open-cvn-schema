@@ -76,7 +76,7 @@ controlled references:
 - ISO_3166 (code_list, enum=ineligible, items=312)
 end note
 
-class "AmbitoDelEvento060010030070" as entity_research_ambitodelevento060010030070_060_010_030_070 <<entity>> {
+class "AmbitoDelEvento" as entity_research_ambitodelevento060010030070_060_010_030_070 <<entity>> {
   ambito_del_evento : controlled_reference <<optional, single>> [CVN: 060.010.030.050]
   ambito_del_evento_otros : text <<optional, single>> [CVN: 060.010.030.060]
   fecha_de_finalizacion : value_object<FlexibleDatesType> <<required, single>> [CVN: 060.010.030.370]
@@ -98,7 +98,7 @@ controlled references:
 - ISO_3166 (code_list, enum=ineligible, items=312)
 end note
 
-class "AmbitoDelEvento060010040080" as entity_research_ambitodelevento060010040080_060_010_040_080 <<entity>> {
+class "AmbitoDelEvento" as entity_research_ambitodelevento060010040080_060_010_040_080 <<entity>> {
   ambito_del_evento : controlled_reference <<optional, single>> [CVN: 060.010.040.060]
   ambito_del_evento_otros : text <<optional, single>> [CVN: 060.010.040.070]
   localizacion_ciudad : text <<optional, single>> [CVN: 060.010.040.160]

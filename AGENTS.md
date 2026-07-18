@@ -95,6 +95,8 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/issues/issue-69-llm-assisted-import-spike.md`
 - issue `#70`:
   `docs/roadmap/issues/issue-70-semantic-cvn-xml-import-to-open-cvn-json.md`
+- issue `#71`:
+  `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`
 - hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
 - hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
 - hotfix `#3`:
