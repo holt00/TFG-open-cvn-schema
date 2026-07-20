@@ -69,6 +69,9 @@ files in order:
 
 - `docs/context/project_context_index.md`: documentation index and reading map
 - `docs/context/current_status.md`: latest implementation state and next steps
+- `docs/reporte_proceso_desarrollo_tfg.md`: narrative report of the TFG
+  development process, initial research, key decisions, implementation flow, and
+  limitations
 
 ### Architecture And Limits
 
@@ -195,6 +198,9 @@ files in order:
 
 ### Source Package Analysis
 
+- `docs/reporte_proceso_desarrollo_tfg.md`: consolidated process report for
+  explaining the TFG development, including the initial research in
+  `docs/research/` and the later implementation phases
 - `docs/informe_estructura_cvnxml_v1.4.3.md`: detailed analysis of the core CVN
   package structure and usage
 - `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the
