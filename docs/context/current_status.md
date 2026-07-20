@@ -6,6 +6,16 @@
 
 ## Completed Or Stabilized Work
 
+### TFG Development Process Report
+
+- a consolidated narrative report now exists at:
+  - `docs/reporte_proceso_desarrollo_tfg.md`
+- the report summarizes the initial research from `docs/research/`, the CVN
+  source-package analysis, key architecture decisions, implementation flow,
+  verification strategy, and documented limitations
+- the report is intended as a tutor-facing explanation of how the TFG was
+  investigated and developed end to end
+
 ### Issue `#11`
 
 - Repository structure for the CVN generation pipeline is in place
@@ -1268,31 +1278,32 @@ Read the standard entry points first:
 Then continue with these supporting files as needed:
 
 1. `docs/roadmap/cvn_generation_roadmap.md`
-2. `docs/roadmap/issues/issue-11-project-infrastructure.md`
-3. `docs/roadmap/issues/issue-12-structural-bindings.md`
-4. `docs/roadmap/issues/issue-13-normalization.md`
-5. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
-6. `docs/development/regeneration_workflow.md`
-7. `docs/development/parser_workflow.md`
-8. `docs/development/llm_import_workflow.md`
-9. `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`
-10. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
-11. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
-12. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
-13. `docs/pipeline/known_limitations.md`
-14. `docs/pipeline/parser_validator_contract.md`
-15. `docs/roadmap/hotfixes/`
-16. `docs/cvn_source_package_auxiliary_artifacts.md`
-17. `docs/cvn_source_package_annex_table_coverage.md`
-18. `docs/cvn_annex_priority_table_families.md`
-19. `docs/cvn_annex_table_families_batch3.md`
-20. `docs/cvn_annex_table_families_batch4.md`
-21. `docs/cvn_annex_table_families_batch5.md`
-22. `docs/cvn_annex_table_families_batch6.md`
-23. `docs/cvn_annex_table_families_batch7.md`
-24. `docs/cvn_annex_table_families_batch8.md`
-25. `docs/cvn_serialization_patterns_reference.md`
-26. `docs/cvn_field_reference_traceability.md`
-27. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
-28. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
-29. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+2. `docs/reporte_proceso_desarrollo_tfg.md`
+3. `docs/roadmap/issues/issue-11-project-infrastructure.md`
+4. `docs/roadmap/issues/issue-12-structural-bindings.md`
+5. `docs/roadmap/issues/issue-13-normalization.md`
+6. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
+7. `docs/development/regeneration_workflow.md`
+8. `docs/development/parser_workflow.md`
+9. `docs/development/llm_import_workflow.md`
+10. `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`
+11. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
+12. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
+13. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
+14. `docs/pipeline/known_limitations.md`
+15. `docs/pipeline/parser_validator_contract.md`
+16. `docs/roadmap/hotfixes/`
+17. `docs/cvn_source_package_auxiliary_artifacts.md`
+18. `docs/cvn_source_package_annex_table_coverage.md`
+19. `docs/cvn_annex_priority_table_families.md`
+20. `docs/cvn_annex_table_families_batch3.md`
+21. `docs/cvn_annex_table_families_batch4.md`
+22. `docs/cvn_annex_table_families_batch5.md`
+23. `docs/cvn_annex_table_families_batch6.md`
+24. `docs/cvn_annex_table_families_batch7.md`
+25. `docs/cvn_annex_table_families_batch8.md`
+26. `docs/cvn_serialization_patterns_reference.md`
+27. `docs/cvn_field_reference_traceability.md`
+28. `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+29. `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+30. `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`

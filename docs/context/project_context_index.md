@@ -50,6 +50,9 @@ Agents should also read `AGENTS.md` before this file.
 - `README.md`: repository overview for humans
 - `PROJECT_GUIDE.md`: human-oriented project entry point
 - `AGENTS.md`: operational rules for agents and pointer map
+- `docs/reporte_proceso_desarrollo_tfg.md`: consolidated TFG development process
+  report, including initial research, key technical decisions, implementation
+  flow, and limitations
 - `docs/context/current_status.md`: current project state and next actions
 
 ### Architecture And Pipeline
@@ -177,6 +180,9 @@ Agents should also read `AGENTS.md` before this file.
 
 ### Supporting Background Material
 
+- `docs/reporte_proceso_desarrollo_tfg.md`: narrative report for explaining the
+  full TFG process to a tutor, from `docs/research/` state-of-the-art analysis to
+  the implemented Open CVN pipeline and CLI application
 - `docs/informe_estructura_cvnxml_v1.4.3.md`: structural analysis background
 - `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the
   auxiliary `Entity`, `ReferenceTables/Subtypes`, and `Thesaurus` families in
