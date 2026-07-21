@@ -1,0 +1,11 @@
+\xpginauxfiletrue 
+\selectlanguage *{spanish}
+\contentsline {chapter}{\numberline {1}Introduccion, motivacion y objetivos}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Contexto}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Motivacion}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objetivos}{1}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Alcance del proyecto}{2}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Competencias desarrolladas}{2}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Contribuciones}{3}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Estructura de la memoria}{3}{section.1.7}%
+\contentsfinish 

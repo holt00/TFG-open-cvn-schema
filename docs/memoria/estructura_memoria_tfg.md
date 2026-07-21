@@ -38,6 +38,16 @@ documentacion oficial, resultados verificables o anexos.
   reales del sistema.
 - La bibliografia debe anotarse durante la redaccion del estado del arte y de los
   capitulos tecnicos, no al final.
+- Cada capitulo principal debe redactarse en un fichero LaTeX independiente bajo
+  `docs/memoria/chapters/`. El fichero principal `docs/memoria/TFG.tex` solo debe
+  incluir los capitulos que esten siendo redactados o ya esten completos.
+- Cuando un capitulo necesite una fuente bibliografica que no exista todavia en
+  `docs/memoria/bib/ref.bib`, debe identificarse de forma explicita antes de
+  consolidar la redaccion. No deben dejarse afirmaciones tecnicas relevantes sin
+  cita si dependen de informacion externa al propio proyecto.
+- La bibliografia del documento de investigacion inicial puede reutilizarse como
+  punto de partida, pero las entradas deben revisarse y adaptarse al fichero
+  bibliografico final de la memoria antes de citarlas.
 
 ## Enfoque academico del TFG
 
@@ -76,6 +86,19 @@ La memoria tendra un maximo de ocho capitulos principales:
 
 Despues del capitulo 8 se reservara espacio para anexos y bibliografia.
 
+Los ficheros LaTeX previstos para los capitulos son:
+
+| Capitulo | Fichero |
+|---|---|
+| 1. Introduccion, motivacion y objetivos | `docs/memoria/chapters/ch1.tex` |
+| 2. Antecedentes y estado del arte | `docs/memoria/chapters/ch2.tex` |
+| 3. Analisis del ecosistema CVN y propuesta de solucion | `docs/memoria/chapters/ch3.tex` |
+| 4. Metodologia, herramientas y arquitectura general | `docs/memoria/chapters/ch4.tex` |
+| 5. Implementacion del pipeline de generacion y normalizacion | `docs/memoria/chapters/ch5.tex` |
+| 6. Formato Open CVN, validacion y herramienta de gestion | `docs/memoria/chapters/ch6.tex` |
+| 7. Evaluacion, resultados y discusion | `docs/memoria/chapters/ch7.tex` |
+| 8. Conclusiones, competencias y trabajo futuro | `docs/memoria/chapters/ch8.tex` |
+
 ## Convencion de estado de capitulos
 
 Cada capitulo debe incluir un identificador de estado inmediatamente debajo del
@@ -99,7 +122,7 @@ Estado inicial:
 
 | Capitulo | Estado |
 |---|---|
-| 1. Introduccion, motivacion y objetivos | `PENDIENTE` |
+| 1. Introduccion, motivacion y objetivos | `EN_PROCESO` |
 | 2. Antecedentes y estado del arte | `PENDIENTE` |
 | 3. Analisis del ecosistema CVN y propuesta de solucion | `PENDIENTE` |
 | 4. Metodologia, herramientas y arquitectura general | `PENDIENTE` |
@@ -110,7 +133,7 @@ Estado inicial:
 
 ## Capitulo 1: Introduccion, motivacion y objetivos
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
 
 ### Objetivo del capitulo
 

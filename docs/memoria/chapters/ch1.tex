@@ -1,9 +1,262 @@
-\chapter{Aspecto}
-\lipsum[1-5]
-\section{Primera sección}
-\lipsum[1-5]
-\section{Segunda sección}
-\lipsum[1-5]
-\subsection{Subsección}
-\lipsum[1-6]
+\chapter{Introduccion, motivacion y objetivos}
+\label{cap:introduccion}
 
+Este capitulo presenta el contexto, la motivacion y los objetivos del Trabajo Fin
+de Grado. En primer lugar, se introduce el problema de la representacion y gestion
+automatizada de curriculos academicos e investigadores en Espana. A continuacion,
+se delimita el alcance del proyecto y se formulan el objetivo general y los
+objetivos especificos. Finalmente, se describen las competencias de Computacion
+trabajadas, las contribuciones principales y la organizacion del resto de la
+memoria.
+
+\section{Contexto}
+\label{sec:introduccion_contexto}
+
+La actividad academica e investigadora genera informacion curricular heterogenea:
+formacion, experiencia profesional, publicaciones, proyectos, contratos,
+estancias, direccion de trabajos, transferencia, meritos docentes y otros tipos
+de actividad que deben representarse de forma estructurada. Esta informacion se
+utiliza en convocatorias publicas, procesos de evaluacion, solicitudes de ayudas,
+acreditaciones, portales institucionales y sistemas internos de gestion de la
+investigacion. Por ello, no basta con disponer de un documento visualmente
+correcto; tambien es necesario que los datos sean procesables, validables y
+transformables por sistemas informaticos.
+
+En Espana, el Curriculum Vitae Normalizado (CVN) se ha consolidado como una norma
+de referencia para presentar informacion curricular de investigadores. La propia
+FECYT define CVN como una norma estandar que establece un formato comun de
+presentacion de los datos curriculares y que facilita la interoperabilidad con
+bases de datos institucionales~\cite{cvn_web}. Esta orientacion convierte a CVN
+en un punto de partida natural para cualquier trabajo que pretenda representar
+curriculos academicos en el contexto espanol.
+
+Sin embargo, trabajar computacionalmente con CVN no es equivalente a rellenar o
+visualizar un curriculum. El ecosistema CVN esta formado por esquemas XML,
+manuales estructurados, modelos auxiliares, tablas de referencia y documentos de
+salida. Estos artefactos contienen informacion valiosa, pero tambien introducen
+dependencias tecnicas que dificultan construir herramientas abiertas, ligeras y
+reproducibles sobre ellos. El reto abordado en este TFG consiste precisamente en
+separar la informacion curricular y su significado de la forma concreta en que el
+XML oficial la serializa.
+
+\section{Motivacion}
+\label{sec:introduccion_motivacion}
+
+La motivacion principal del proyecto es facilitar una representacion computable,
+marco comun, su uso directo como modelo interno de una aplicacion presenta varias
+dificultades practicas: el XML es verboso, los esquemas XSD describen estructura
+pero no siempre capturan todo el significado del dominio, y parte de la semantica
+curricular aparece distribuida entre documentos auxiliares, tablas y manuales.
+
+Desde el punto de vista de Computacion, el problema no se reduce a leer y escribir
+ficheros. Implica analizar un conjunto de fuentes heterogeneas, extraer evidencia
+estructural y semantica, normalizar metadatos, preservar trazabilidad, generar
+modelos de dominio y definir un formato de intercambio que pueda validarse de
+forma automatica. El interes del trabajo reside en construir una arquitectura que
+permita razonar sobre informacion curricular compleja sin quedar acoplada a la
+serializacion XML original.
+
+El proyecto Open CVN nace como respuesta a esta necesidad. Su finalidad es
+proponer una base tecnica que permita representar, validar, transformar,
+almacenar y exportar curriculos academicos partiendo del ecosistema CVN, pero
+introduciendo capas intermedias que separen la estructura oficial, las decisiones
+semanticas y el formato final de intercambio. De este modo, el XML CVN se trata
+como fuente de interoperabilidad y trazabilidad, no como unica forma posible de
+modelar el dominio curricular.
+
+\section{Objetivos}
+\label{sec:introduccion_objetivos}
+
+El objetivo general de este Trabajo Fin de Grado es \textit{disenar e implementar
+una arquitectura computacional abierta para representar, validar, transformar,
+almacenar y exportar curriculos academicos e investigadores tomando el ecosistema
+CVN como fuente de referencia, pero evitando que la serializacion XML oficial
+condicione por completo el modelo interno del sistema}.
+
+Para alcanzar este objetivo general, se plantean los siguientes objetivos
+especificos:
+
+\begin{enumerate}
+  \item Analizar el ecosistema CVN y los artefactos XML/XSD que lo componen,
+  identificando que informacion aporta cada fuente y que limitaciones tecnicas
+  presenta.
+
+  \item Estudiar alternativas de representacion, modelado y validacion de datos
+  curriculares complejos, incluyendo modelos conceptuales, formatos de
+  serializacion y herramientas de generacion de modelos.
+
+  \item Generar una capa estructural reproducible a partir de los XSD oficiales,
+  manteniendo separado el codigo generado de la logica mantenida manualmente.
+
+  \item Normalizar metadatos procedentes de las fuentes oficiales, unificando la
+  informacion funcional y tecnica asociada a los codigos CVN.
+
+  \item Definir reglas semanticas conservadoras que permitan interpretar campos,
+  tipos, tablas de referencia y relaciones sin perder trazabilidad hacia las
+  fuentes originales.
+
+  \item Generar modelos de dominio y artefactos conceptuales que representen la
+  informacion curricular de forma mas cercana al dominio que a la serializacion
+  XML.
+
+  \item Definir un formato Open CVN JSON validable y adecuado para intercambio,
+  almacenamiento y transformacion posterior.
+
+  \item Implementar mecanismos de parseo, validacion, almacenamiento local y
+  exportacion que permitan demostrar el flujo completo desde datos estructurados
+  hasta artefactos finales reutilizables.
+
+  \item Verificar el sistema mediante pruebas automatizadas, comandos
+  reproducibles y flujos de validacion extremo a extremo.
+\end{enumerate}
+
+La Tabla~\ref{tab:objetivos_capitulos} relaciona estos objetivos con los
+capitulos principales en los que se desarrollan.
+
+\begin{table}[htbp]
+  \centering
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.12\textwidth} p{0.58\textwidth} p{0.18\textwidth}}
+    \hline
+    \textbf{Objetivo} & \textbf{Descripcion resumida} & \textbf{Capitulos} \\
+    \hline
+    OE1 & Analisis del ecosistema CVN y sus artefactos oficiales & 2, 3 \\
+    OE2 & Estudio de alternativas de representacion, modelado y validacion & 2 \\
+    OE3 & Generacion estructural reproducible desde XSD & 4, 5 \\
+    OE4 & Normalizacion de metadatos CVN & 5 \\
+    OE5 & Definicion de reglas semanticas trazables & 3, 5 \\
+    OE6 & Generacion de modelos de dominio y artefactos conceptuales & 5 \\
+    OE7 & Definicion del formato Open CVN JSON & 6 \\
+    OE8 & Parser, validador, almacenamiento y exportacion & 6 \\
+    OE9 & Verificacion automatizada y flujos reproducibles & 7 \\
+    \hline
+  \end{tabular}
+  \caption{Relacion entre objetivos especificos y capitulos de la memoria.}
+  \label{tab:objetivos_capitulos}
+\end{table}
+
+\section{Alcance del proyecto}
+\label{sec:introduccion_alcance}
+
+El alcance del proyecto se centra en la construccion de una base computacional
+para trabajar con informacion curricular estructurada. El trabajo incluye el
+analisis del paquete oficial CVN utilizado como fuente, la generacion de bindings
+estructurales, la normalizacion de metadatos, la definicion de reglas semanticas,
+la generacion de modelos de dominio, la definicion de un formato JSON propio y la
+implementacion de herramientas de validacion, almacenamiento y exportacion.
+
+No forma parte del alcance garantizar una conversion completa y sin perdida de
+cualquier curriculum CVN existente. Tampoco se pretende sustituir la norma CVN ni
+la infraestructura oficial asociada. La propuesta debe entenderse como una capa
+abierta y reproducible que facilita trabajar con datos curriculares en contextos
+donde se necesita validacion, transformacion, almacenamiento local o exportacion a
+otros formatos.
+
+La herramienta local desarrollada dentro del proyecto cumple una funcion
+demostrativa y operativa: permite comprobar que el formato y las capas de
+validacion pueden utilizarse en flujos reales de importacion, almacenamiento,
+versionado y exportacion. No obstante, la contribucion principal del TFG es la
+arquitectura de representacion y transformacion, no la interfaz de usuario de la
+herramienta.
+
+\section{Competencias desarrolladas}
+\label{sec:introduccion_competencias}
+
+El desarrollo del proyecto se alinea con competencias propias de la
+intensificacion de Computacion. En particular, se trabajan las siguientes:
+
+\begin{itemize}
+  \item \textbf{[CM3]} Capacidad para evaluar la complejidad computacional de un
+  problema, conocer estrategias algorítmicas que puedan conducir a su resolucion
+  y recomendar, desarrollar e implementar aquella que garantice el mayor
+  rendimiento de acuerdo con los requisitos establecidos.
+
+  \item \textbf{[CM4]} Capacidad para conocer los fundamentos, paradigmas y
+  tecnicas propias de los sistemas inteligentes y analizar, disenar y construir
+  sistemas, servicios y aplicaciones informaticas que utilicen dichas tecnicas en
+  cualquier ambito de aplicacion.
+
+  \item \textbf{[CM5]} Capacidad para adquirir, obtener, formalizar y representar
+  el conocimiento humano en una forma computable para la resolucion de problemas
+  mediante un sistema informatico.
+
+  \item \textbf{[CM7]} Capacidad para conocer y desarrollar tecnicas de
+  aprendizaje computacional y disenar e implementar aplicaciones y sistemas que
+  las utilicen, incluyendo las dedicadas a extraccion automatica de informacion y
+  conocimiento a partir de grandes volumenes de datos.
+\end{itemize}
+
+Estas competencias se reflejan en el analisis de estructuras oficiales complejas,
+la formalizacion de informacion curricular en modelos computables, la generacion
+automatica de artefactos, la definicion de reglas de validacion y la evaluacion
+tecnica del sistema mediante pruebas reproducibles. Su grado de cumplimiento se
+retomara en el capitulo de conclusiones.
+
+\section{Contribuciones}
+\label{sec:introduccion_contribuciones}
+
+Las principales contribuciones del trabajo son las siguientes:
+
+\begin{itemize}
+  \item \textbf{Analisis computacional del ecosistema CVN}: identificacion de las
+  fuentes estructurales, funcionales y auxiliares necesarias para interpretar la
+  informacion curricular representada en CVN.
+
+  \item \textbf{Arquitectura reproducible por capas}: separacion entre bindings
+  generados, normalizacion de metadatos, politica semantica, modelos de dominio,
+  modelo conceptual, formato JSON, validacion y herramienta local.
+
+  \item \textbf{Trazabilidad entre CVN y Open CVN}: conservacion de evidencia
+  sobre codigos, fuentes, rutas y decisiones semanticas para evitar que la
+  transformacion pierda relacion con el estandar original.
+
+  \item \textbf{Formato Open CVN JSON}: definicion de una representacion abierta
+  y validable orientada a intercambio, almacenamiento y exportacion de datos
+  curriculares.
+
+  \item \textbf{Herramientas de validacion y uso}: implementacion de parsers,
+  validadores, almacenamiento local, versionado curricular y exportacion a otros
+  formatos.
+
+  \item \textbf{Verificacion automatizada}: incorporacion de pruebas y flujos
+  reproducibles para evaluar la consistencia de los artefactos generados y el
+  comportamiento de las capas principales del sistema.
+\end{itemize}
+
+\section{Estructura de la memoria}
+\label{sec:introduccion_estructura}
+
+El resto de la memoria se organiza de la siguiente forma:
+
+\begin{itemize}
+  \item \textbf{Capitulo~\ref{cap:antecedentes}: Antecedentes y estado del arte.}
+  Presenta el contexto tecnico y conceptual necesario para entender el problema:
+  CVN, interoperabilidad curricular, modelos relacionados, formatos de
+  serializacion y alternativas de modelado.
+
+  \item \textbf{Capitulo~\ref{cap:analisis_cvn}: Analisis del ecosistema CVN y
+  propuesta de solucion.} Describe las fuentes oficiales utilizadas, sus
+  limitaciones y la propuesta de arquitectura Open CVN.
+
+  \item \textbf{Capitulo~\ref{cap:metodologia_arquitectura}: Metodologia,
+  herramientas y arquitectura general.} Explica el proceso tecnico seguido, las
+  herramientas empleadas y la organizacion por capas del sistema.
+
+  \item \textbf{Capitulo~\ref{cap:pipeline}: Implementacion del pipeline de
+  generacion y normalizacion.} Detalla la generacion estructural, la
+  normalizacion de metadatos, la politica semantica y la generacion de modelos y
+  artefactos.
+
+  \item \textbf{Capitulo~\ref{cap:formato_validacion}: Formato Open CVN,
+  validacion y herramienta de gestion.} Presenta el formato JSON propuesto, los
+  parsers, validadores, almacenamiento local y flujos de exportacion.
+
+  \item \textbf{Capitulo~\ref{cap:evaluacion}: Evaluacion, resultados y
+  discusion.} Describe la estrategia de verificacion, los resultados obtenidos y
+  las garantias reales del sistema.
+
+  \item \textbf{Capitulo~\ref{cap:conclusiones}: Conclusiones, competencias y
+  trabajo futuro.} Resume el grado de cumplimiento de los objetivos, relaciona el
+  trabajo con las competencias desarrolladas, recoge las limitaciones y plantea
+  lineas futuras.
+\end{itemize}
