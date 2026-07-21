@@ -1,164 +1,86 @@
-# Estructura acordada para la memoria del TFG
+# Estructura y trazabilidad de la memoria del TFG
 
 ## Proposito del documento
 
 Este documento recoge la estructura acordada para redactar la memoria del Trabajo
-Fin de Grado del proyecto Open CVN. Su funcion es servir como guia antes de
-empezar la redaccion de los capitulos definitivos en LaTeX.
+Fin de Grado del proyecto Open CVN. Es una guia interna de planificacion y
+trazabilidad, no forma parte del texto final de la memoria.
 
-La propuesta parte de dos fuentes:
+La memoria final debe ser un documento academico autocontenido, profesional y
+preparado para ser evaluado por un tribunal. No debe mencionar que su estructura
+procede de otros trabajos, memorias, guias, conversaciones o documentos de
+orientacion. Cualquier concepto, dato, decision o afirmacion relevante debe estar
+explicado dentro de la propia memoria o respaldado mediante bibliografia,
+documentacion oficial, resultados verificables o anexos.
 
-- la memoria de referencia ubicada en `Mapi_TFG_ESIIAB_UCLM__ESP_/`, usada como
-  ejemplo de memoria de la misma carrera y escuela
-- el estado real del proyecto Open CVN, documentado en el repositorio y en
-  `docs/reporte_proceso_desarrollo_tfg.md`
+## Principios obligatorios de redaccion
 
-La memoria no debe superar los ocho capitulos principales. Despues del ultimo
-capitulo se reservara espacio para anexos, bibliografia y declaracion de uso de
-Inteligencia Artificial.
+- La memoria debe autocontenerse: todo elemento citado, figura, tabla, resultado,
+  comando, decision tecnica o limitacion debe explicarse en el cuerpo del trabajo,
+  en la bibliografia o en los anexos.
+- No deben aparecer referencias a memorias de otros alumnos, guias de consejos,
+  conversaciones, prompts, herramientas de asistencia o criterios informales de
+  redaccion.
+- No deben incluirse menciones a Inteligencia Artificial, herramientas de IA o
+  asistencia automatica salvo que exista una exigencia normativa explicita de la
+  universidad o del tribunal.
+- No deben hacerse suposiciones no justificadas. Las afirmaciones deben apoyarse
+  en evidencia tecnica, documentacion oficial, bibliografia o resultados del
+  propio proyecto.
+- El tono debe ser academico, tecnico y sobrio. La memoria debe presentar el
+  trabajo como una contribucion de Computacion, no como una simple aplicacion de
+  gestion.
+- La aplicacion CLI debe presentarse como una herramienta funcional y demostrador
+  del enfoque, pero la aportacion principal es la arquitectura computacional para
+  representar, validar, transformar y exportar informacion curricular compleja.
+- Las limitaciones deben explicarse de forma profesional. No deben ocultarse, pero
+  deben presentarse como parte del analisis tecnico del dominio y de las garantias
+  reales del sistema.
+- La bibliografia debe anotarse durante la redaccion del estado del arte y de los
+  capitulos tecnicos, no al final.
 
-## Observaciones sobre la memoria de referencia
+## Enfoque academico del TFG
 
-La memoria de referencia de Mapi sigue una estructura academica clasica para un
-TFG de ingenieria:
+El trabajo se encuadra en la intensificacion de Computacion. Por tanto, la
+memoria debe priorizar los siguientes ejes:
 
-1. Introduccion general
-2. Estado del arte
-3. Datos y representacion de la informacion
-4. Arquitectura propuesta
-5. Implementacion
-6. Resultados experimentales
-7. Conclusiones
+- representacion computable de informacion curricular compleja
+- analisis de estructuras XML/XSD y artefactos oficiales heterogeneos
+- generacion automatica de modelos y artefactos a partir de fuentes formales
+- normalizacion y trazabilidad de metadatos
+- separacion entre estructura de serializacion y modelo de dominio
+- validacion formal mediante JSON Schema y modelos Pydantic
+- transformacion entre formatos estructurados
+- definicion de una arquitectura reproducible por capas
+- evaluacion tecnica mediante pruebas automatizadas, verificaciones de
+  consistencia y flujos end-to-end
 
-Ademas, incluye elementos formales antes y despues del cuerpo principal:
+La memoria no debe estar enfocada principalmente como un TFG de Ingenieria del
+Software basado en requisitos de usuario, sprints, usabilidad o producto final.
+Esos elementos pueden aparecer cuando sean utiles, especialmente en anexos o en la
+descripcion de la herramienta, pero no deben desplazar el nucleo computacional del
+trabajo.
 
-- portada
-- segunda portada
-- dedicatoria
-- declaracion de autoria
-- resumen
-- agradecimientos
-- indice general
-- indice de figuras
-- indice de tablas
-- bibliografia
-- declaracion de uso de Inteligencia Artificial
+## Estructura final acordada
 
-La estructura de Mapi no se copiara literalmente, porque el proyecto Open CVN no
-es un trabajo experimental de aprendizaje profundo, sino un trabajo de ingenieria
-de datos, modelado, generacion de artefactos, validacion y aplicacion software.
-Sin embargo, si se seguira su logica narrativa: presentar primero el problema,
-despues el contexto teorico, despues el diseno, despues la implementacion,
-despues la verificacion y finalmente las conclusiones.
+La memoria tendra un maximo de ocho capitulos principales:
 
-## Funcion de cada capitulo en la memoria de referencia
-
-### Capitulo 1: Introduccion general
-
-En la memoria de Mapi, este capitulo cumple varias funciones:
-
-- contextualiza el area de estudio
-- explica la motivacion y el problema que se quiere resolver
-- define el objetivo general y los objetivos especificos
-- relaciona el trabajo con las competencias de la especialidad
-- enumera las contribuciones principales
-- explica la estructura del resto de la memoria
-
-Para Open CVN, este capitulo debe cumplir exactamente esa misma funcion, pero
-centrado en el problema de la representacion, validacion, transformacion,
-almacenamiento y exportacion de curriculos academicos tomando CVN como punto de
-partida.
-
-### Capitulo 2: Estado del arte
-
-En la memoria de Mapi, el estado del arte no se limita a enumerar trabajos
-previos. Tambien introduce los conceptos tecnicos necesarios para entender la
-propuesta posterior. Presenta fundamentos, alternativas, limitaciones del area y
-termina posicionando el trabajo propio dentro de ese contexto.
-
-Para Open CVN, este capitulo debe cubrir CVN, FECYT, interoperabilidad curricular,
-modelos de informacion de investigacion, formatos de serializacion y tecnologias
-de modelado o validacion.
-
-### Capitulo 3: Datos y representacion de la informacion
-
-En la memoria de Mapi, este capitulo define con precision los datos de entrada,
-su origen, su particion, su preprocesamiento y la representacion de salida.
-
-Para Open CVN no hay un dataset experimental equivalente, pero si hay fuentes de
-datos y artefactos oficiales. Por tanto, esta funcion se integrara en el capitulo
-dedicado al analisis del ecosistema CVN y a las decisiones de diseno. Ahi deben
-describirse los XSD, XML, tablas auxiliares, manuales y demas fuentes oficiales
-que alimentan el sistema.
-
-### Capitulo 4: Arquitectura propuesta
-
-En la memoria de Mapi, este capitulo explica la arquitectura conceptual del
-sistema antes de hablar de implementacion concreta. Describe componentes,
-relaciones, parametros, flujo de datos y decisiones de diseno.
-
-Para Open CVN, este papel lo asumira el capitulo de arquitectura general. Debe
-explicar la arquitectura por capas desde el paquete oficial CVN hasta la
-aplicacion CLI local.
-
-### Capitulo 5: Implementacion
-
-En la memoria de Mapi, este capitulo baja la arquitectura a codigo: entorno,
-dependencias, modulos, pipeline, entrenamiento, configuracion experimental,
-
-Para Open CVN, la implementacion se dividira en dos capitulos porque el proyecto
-tiene dos bloques muy diferenciados:
-
-- pipeline de generacion, normalizacion, semantica y modelos
-- formato Open CVN, parser, validador, almacenamiento, CLI y exportacion
-
-### Capitulo 6: Resultados experimentales
-
-En la memoria de Mapi, este capitulo explica como se evalua el sistema, presenta
-resultados, los interpreta, compara experimentos y reconoce limitaciones
-metodologicas.
-
-Para Open CVN, este capitulo se adaptara como verificacion, resultados y
-validaciones, comandos reproducibles, cobertura funcional y garantias reales del
-sistema.
-
-### Capitulo 7: Conclusiones
-
-En la memoria de Mapi, el capitulo final resume el trabajo, enumera
-contribuciones, conecta con competencias, reconoce limitaciones y propone trabajo
-futuro.
-
-Para Open CVN, este capitulo debe cerrar la memoria del mismo modo, destacando el
-valor del proyecto como base abierta, reproducible y trazable para trabajar con
-curriculos academicos en Espana.
-
-## Estructura acordada para Open CVN
-
-La estructura elegida es una adaptacion de la propuesta "Investigacion +
-Ingenieria", limitada a ocho capitulos. Se agrupan el analisis tecnico del
-ecosistema CVN y las decisiones de diseno porque estan estrechamente relacionados:
-las decisiones arquitectonicas del proyecto surgen directamente de las
-limitaciones detectadas en el paquete oficial CVN.
-
-La estructura final acordada es:
-
-1. Introduccion
-2. Investigacion inicial y estado del arte
-3. Analisis del ecosistema CVN y decisiones de diseno
-4. Arquitectura general de Open CVN
+1. Introduccion, motivacion y objetivos
+2. Antecedentes y estado del arte
+3. Analisis del ecosistema CVN y propuesta de solucion
+4. Metodologia, herramientas y arquitectura general
 5. Implementacion del pipeline de generacion y normalizacion
-6. Formato Open CVN, parser, validador y aplicacion local
-7. Verificacion, resultados y discusion
-8. Conclusiones, limitaciones y trabajo futuro
+6. Formato Open CVN, validacion y herramienta de gestion
+7. Evaluacion, resultados y discusion
+8. Conclusiones, competencias y trabajo futuro
 
-Despues del capitulo 8 se incluiran anexos, bibliografia y declaracion de uso de
-Inteligencia Artificial.
+Despues del capitulo 8 se reservara espacio para anexos y bibliografia.
 
 ## Convencion de estado de capitulos
 
 Cada capitulo debe incluir un identificador de estado inmediatamente debajo del
-titulo. Este identificador permite saber rapidamente si el capitulo esta sin
-redactar, en redaccion o terminado.
+titulo en este documento de trazabilidad. Este identificador permite saber si el
+capitulo esta sin redactar, en redaccion o terminado.
 
 Estados permitidos:
 
@@ -173,118 +95,125 @@ Formato obligatorio:
 Estado: PENDIENTE | EN_PROCESO | COMPLETADO
 ```
 
-Estado inicial de la memoria:
+Estado inicial:
 
 | Capitulo | Estado |
 |---|---|
-| 1. Introduccion | `PENDIENTE` |
-| 2. Investigacion inicial y estado del arte | `PENDIENTE` |
-| 3. Analisis del ecosistema CVN y decisiones de diseno | `PENDIENTE` |
-| 4. Arquitectura general de Open CVN | `PENDIENTE` |
+| 1. Introduccion, motivacion y objetivos | `PENDIENTE` |
+| 2. Antecedentes y estado del arte | `PENDIENTE` |
+| 3. Analisis del ecosistema CVN y propuesta de solucion | `PENDIENTE` |
+| 4. Metodologia, herramientas y arquitectura general | `PENDIENTE` |
 | 5. Implementacion del pipeline de generacion y normalizacion | `PENDIENTE` |
-| 6. Formato Open CVN, parser, validador y aplicacion local | `PENDIENTE` |
-| 7. Verificacion, resultados y discusion | `PENDIENTE` |
-| 8. Conclusiones, limitaciones y trabajo futuro | `PENDIENTE` |
+| 6. Formato Open CVN, validacion y herramienta de gestion | `PENDIENTE` |
+| 7. Evaluacion, resultados y discusion | `PENDIENTE` |
+| 8. Conclusiones, competencias y trabajo futuro | `PENDIENTE` |
 
-## Capitulo 1: Introduccion
+## Capitulo 1: Introduccion, motivacion y objetivos
 
 Estado: `PENDIENTE`
 
 ### Objetivo del capitulo
 
 Presentar el problema general, justificar la motivacion del TFG, delimitar el
-alcance del proyecto y explicar que aporta Open CVN.
+alcance del proyecto y establecer los objetivos que se retomaran en las
+conclusiones.
 
 ### Contenido recomendado
 
 - Contexto del CVN como formato normalizado en Espana para representar
   curriculos academicos y de investigacion.
-- Problema de partida: aunque CVN existe, su uso sigue siendo dificil de
-  automatizar, validar, adaptar, almacenar y transformar mediante herramientas
-  abiertas.
-- Motivacion practica: reducir trabajo manual, facilitar interoperabilidad,
-  permitir versiones derivadas de un curriculum y disponer de un formato abierto
-  mas manejable que el XML oficial.
-- Objetivo general: definir una base abierta y reproducible para representar,
-  validar, transformar, almacenar y exportar curriculos tomando CVN como punto de
-  partida.
+- Problema de partida: aunque CVN existe, su uso automatizado sigue siendo
+  complejo por la dependencia del XML oficial, la heterogeneidad de los artefactos
+  asociados, la dificultad de validacion y la necesidad de adaptar curriculos a
+  distintos contextos.
+- Motivacion computacional: representar conocimiento curricular complejo de forma
+  estructurada, validable, transformable y trazable.
+- Objetivo general: disenar e implementar una arquitectura computacional abierta
+  para representar, validar, transformar, almacenar y exportar curriculos
+  academicos tomando CVN como fuente de referencia.
 - Objetivos especificos:
-  - estudiar el formato CVN y sus limitaciones
-  - analizar el paquete oficial XML/XSD y sus fuentes auxiliares
-  - generar bindings estructurales reproducibles desde XSD
-  - normalizar metadatos funcionales y tecnicos
-  - definir reglas semanticas y modelos de dominio
-  - construir un formato Open CVN JSON
-  - generar JSON Schema y artefactos conceptuales
-  - implementar parser, validador y aplicacion CLI local
-  - soportar almacenamiento SQLite, versiones derivadas y exportacion
-  - explorar importacion desde XML, PDF y LLM opcional
-- Competencias del grado trabajadas durante el desarrollo.
-- Contribuciones principales del TFG.
+  - analizar el ecosistema CVN y sus artefactos XML/XSD auxiliares
+  - estudiar alternativas de representacion, modelado y validacion de datos
+    curriculares complejos
+  - generar bindings estructurales reproducibles desde los XSD oficiales
+  - normalizar metadatos funcionales y tecnicos de CVN
+  - definir reglas semanticas conservadoras con trazabilidad hacia las fuentes
+  - generar modelos de dominio y artefactos conceptuales
+  - definir un formato Open CVN JSON validable
+  - implementar parser, validador e importadores deterministas cuando sea posible
+  - construir una herramienta local que demuestre el flujo completo de gestion y
+    exportacion
+  - verificar el sistema mediante pruebas automatizadas y flujos end-to-end
+- Competencias de Computacion cubiertas por el trabajo.
+- Contribuciones principales.
 - Estructura del documento.
 
-### Figuras o tablas recomendadas
+### Elementos recomendados
 
 - Tabla de objetivos especificos y capitulos donde se tratan.
-- Esquema muy simple del flujo general del proyecto.
+- Tabla de competencias y evidencias dentro del proyecto.
+- Esquema general del flujo Open CVN.
 
-## Capitulo 2: Investigacion inicial y estado del arte
+## Capitulo 2: Antecedentes y estado del arte
 
 Estado: `PENDIENTE`
 
 ### Objetivo del capitulo
 
-Demostrar que el proyecto parte de un analisis previo del dominio y de las
-alternativas existentes, y justificar por que se adopta una solucion propia,
-pragmatica y basada en JSON/Python/Pydantic en lugar de copiar CVN-XML o adoptar
-una infraestructura semantica pesada.
+Construir el contexto teorico y tecnico necesario para entender el problema,
+partiendo de lo general hacia lo particular. El capitulo debe terminar
+posicionando la solucion propuesta y justificando por que se adopta una
+arquitectura propia, abierta y validable.
 
 ### Contenido recomendado
 
-- Funcion de CVN y de FECYT en el contexto academico espanol.
-- Funcionamiento practico del CVN PDF con XML embebido.
-- Implicaciones de trabajar con PDF, XML embebido y firma o conformidad oficial.
-- Modelos conceptuales estudiados:
+- Gestion de curriculos academicos e investigadores como problema de
+  representacion de informacion compleja.
+- Funcion de CVN y FECYT en el contexto academico espanol.
+- Papel del XML embebido en documentos CVN PDF y sus implicaciones para el
+  procesamiento automatico.
+- Interoperabilidad curricular y sistemas de informacion de investigacion.
+- Modelos conceptuales y semanticos relacionados:
   - CERIF
   - VIVO
   - ROH
-- Comparacion de formatos de serializacion:
-  - XML
+- Formatos de serializacion y validacion:
+  - XML y XSD
   - JSON
   - JSON Schema
   - JSON-LD
   - YAML
-- Tecnologias de modelado y generacion estudiadas:
+- Tecnologias y enfoques de modelado:
   - LinkML
   - UML/OCL
   - BESSER
   - Pydantic
-- Justificacion de las decisiones:
-  - no copiar directamente CVN-XML como modelo interno
-  - no adoptar una ontologia pesada como nucleo del MVP
-  - usar JSON como formato abierto de intercambio
-  - usar JSON Schema y Pydantic para validacion
-  - mantener trazabilidad hacia CVN
+- Discusion razonada de alternativas:
+  - por que no basta con copiar CVN-XML como modelo interno
+  - por que no se adopta una infraestructura semantica pesada como nucleo del TFG
+  - por que JSON, JSON Schema y Pydantic encajan con los objetivos practicos del
+    proyecto
+  - por que la trazabilidad hacia CVN es necesaria para no perder semantica
 
-### Figuras o tablas recomendadas
+### Elementos recomendados
 
-- Tabla comparativa XML / JSON / JSON-LD / YAML.
-- Tabla comparativa CERIF / VIVO / ROH / Open CVN.
-- Tabla de tecnologias descartadas o usadas parcialmente y motivo.
+- Tabla comparativa de formatos de serializacion y validacion.
+- Tabla comparativa de modelos o enfoques conceptuales.
+- Resumen final que conecte los antecedentes con la propuesta de solucion.
 
-## Capitulo 3: Analisis del ecosistema CVN y decisiones de diseno
+## Capitulo 3: Analisis del ecosistema CVN y propuesta de solucion
 
 Estado: `PENDIENTE`
 
 ### Objetivo del capitulo
 
-Explicar que contiene realmente el paquete oficial CVN, que problemas tecnicos se
-detectaron y como esas observaciones condujeron a las decisiones principales de
-diseno del proyecto.
+Explicar que contiene realmente el ecosistema CVN usado como fuente, que
+limitaciones tecnicas se detectan y como esas limitaciones justifican la
+propuesta Open CVN.
 
 ### Contenido recomendado
 
-- Descripcion del paquete oficial `docs/CvnXML_v1.4.3_2.1_17012025/`.
+- Descripcion del paquete oficial CVN usado como fuente del proyecto.
 - Fuentes principales analizadas:
   - `CVN.xsd`
   - `SpecificationManual.xml`
@@ -296,82 +225,94 @@ diseno del proyecto.
   - `Subtype_Spa.xml`
   - `Entity.xml`
   - `Thesaurus.xml`
-- Papel de cada fuente dentro del proyecto.
-- Problemas encontrados:
-  - `CVNTreeModel.xml` no encaja completamente con su XSD
-  - algunos `xs:choice` no se expresan perfectamente en bindings generados
-  - algunos `minOccurs` no se fuerzan en listas generadas
-  - algunos atributos generados quedan como `object`
-  - no todas las tablas CVN son enums cerrados
-  - referencias no resueltas como `CVN_AGENCY_C`
-  - `Subtype_Spa.xml` no ofrece siempre un puente directo por familia de tabla
-- Decision principal: separar estructura XML oficial, semantica curricular,
-  trazabilidad, modelo conceptual, formato JSON y aplicacion.
-- Principios de diseno:
-  - reproducibilidad desde fuentes oficiales
-  - no editar manualmente codigo generado
-  - trazabilidad desde Open CVN hacia CVN
-  - validacion en varios niveles
-  - politica conservadora ante informacion ambigua
-  - distincion entre conversion determinista, mapeo parcial y ayuda LLM
+- Papel de cada fuente dentro del sistema.
+- Limitaciones y dificultades detectadas:
+  - discrepancias entre XML y XSD en determinados artefactos
+  - estructuras XSD que no se trasladan de forma perfecta a modelos Python
+  - cardinalidades que requieren interpretacion semantica adicional
+  - atributos generados con tipos demasiado genericos
+  - tablas auxiliares que no siempre son enumeraciones cerradas
+  - referencias no resueltas o insuficientemente trazables
+  - separacion insuficiente entre estructura XML y significado curricular
+- Propuesta de solucion:
+  - arquitectura por capas
+  - generacion reproducible desde fuentes oficiales
+  - normalizacion de metadatos
+  - politica semantica conservadora
+  - modelos de dominio y modelo conceptual
+  - formato Open CVN JSON
+  - parser, validador y herramienta local como demostracion del flujo completo
+- Alcance y exclusiones:
+  - que partes se automatizan con garantias
+  - que partes se mantienen como mapeo parcial
+  - que partes quedan documentadas como limitaciones o trabajo futuro
 
-### Figuras o tablas recomendadas
+### Elementos recomendados
 
-- Tabla de fuentes CVN y uso dentro del proyecto.
+- Tabla de fuentes CVN, informacion que aportan y uso dentro del proyecto.
 - Tabla de limitaciones detectadas y respuesta de diseno.
-- Diagrama que muestre por que `CVN.xsd` no debe convertirse directamente en el
-  modelo de dominio final.
+- Diagrama que muestre la separacion entre CVN-XML y el modelo Open CVN.
 
-## Capitulo 4: Arquitectura general de Open CVN
+## Capitulo 4: Metodologia, herramientas y arquitectura general
 
 Estado: `PENDIENTE`
 
 ### Objetivo del capitulo
 
-Presentar la arquitectura conceptual completa del sistema antes de entrar en la
-implementacion concreta.
+Explicar el proceso tecnico seguido, las herramientas empleadas y la arquitectura
+global antes de entrar en los detalles de implementacion.
 
 ### Contenido recomendado
 
-- Vision general de la arquitectura por capas:
+- Metodologia adaptada a un TFG de Computacion:
+  - analisis inicial del dominio y de formatos
+  - exploracion de artefactos oficiales
+  - diseno incremental de capas
+  - implementacion reproducible
+  - verificacion automatizada
+  - documentacion continua de decisiones y limitaciones
+- Herramientas principales:
+  - Python
+  - Pydantic
+  - xsdata
+  - JSON Schema
+  - SQLite
+  - Jinja/LaTeX para exportacion
+  - pytest
+  - Git y GitHub Actions
+- Arquitectura por capas:
 
 ```text
 Paquete oficial CVN
 -> XSD + XML oficiales
 -> bindings estructurales Pydantic
--> normalizacion de SpecificationManual.xml y CVNTreeModel.xml
--> resolucion de catalogos auxiliares
+-> normalizacion de metadatos
+-> resolucion de referencias auxiliares
 -> politica semantica
 -> modelos de dominio Pydantic
 -> modelo conceptual agnostico
--> JSON Schema + diagramas + formato Open CVN JSON
+-> JSON Schema + formato Open CVN JSON
 -> parser y validador
--> aplicacion CLI local
--> SQLite + versiones + exportacion JSON/LaTeX/PDF + importacion PDF/XML/LLM
+-> herramienta local
+-> almacenamiento y exportacion
 ```
 
 - Responsabilidad de cada capa.
-- Separacion entre artefactos generados y logica mantenida a mano.
+- Separacion entre codigo generado y codigo mantenido manualmente.
 - Estructura del repositorio:
-  - `src/generated/`: bindings generados automaticamente
-  - `src/cvn_codegen/`: logica de generacion, normalizacion y semantica
-  - `src/models/cvn/`: modelos de dominio
-  - `schemas/`: JSON Schema
-  - `src/open_cvn/`: parser, validador e importadores
-  - `src/open_cvn_app/`: aplicacion CLI local
-- Contratos entre capas.
-- Razonamiento arquitectonico:
-  - por que se usan bindings generados solo como capa estructural
-  - por que se introduce normalizacion
-  - por que se introduce una politica semantica
-  - por que se crea un modelo conceptual agnostico
-  - por que Open CVN JSON es el contrato final de intercambio
+  - `src/generated/`
+  - `src/cvn_codegen/`
+  - `src/models/cvn/`
+  - `schemas/`
+  - `src/open_cvn/`
+  - `src/open_cvn_app/`
+- Contratos entre capas y razonamiento arquitectonico.
 
-### Figuras o tablas recomendadas
+### Elementos recomendados
 
 - Diagrama principal de arquitectura por capas.
+- Tabla de herramientas y justificacion de uso.
 - Tabla de modulos del repositorio y responsabilidades.
-- Diagrama de flujo desde CVN oficial hasta PDF exportado.
 
 ## Capitulo 5: Implementacion del pipeline de generacion y normalizacion
 
@@ -379,31 +320,19 @@ Estado: `PENDIENTE`
 
 ### Objetivo del capitulo
 
-Describir como se implementa la parte tecnica que transforma el paquete oficial
-CVN en artefactos Python, metadatos normalizados, modelos de dominio, modelo
+Describir como se implementa la parte computacional que transforma fuentes CVN en
+artefactos estructurados, metadatos normalizados, modelos de dominio, modelo
 conceptual, diagramas y JSON Schema.
 
 ### Contenido recomendado
 
-- Entorno de desarrollo y dependencias principales.
 - Generacion estructural con `xsdata`.
-- Runner de generacion:
-  - `src/cvn_codegen/xsdata_runner.py`
-  - comando canonico `uv run python -m cvn_codegen.xsdata_runner all`
-- Paquetes generados:
-  - `src/generated/cvn`
-  - `src/generated/specification_manual`
-  - `src/generated/tree_model`
-  - `src/generated/reference_tables`
-  - `src/generated/subtypes`
-  - `src/generated/entity`
-  - `src/generated/thesaurus`
-- Normalizacion de metadatos:
-  - extraccion de `SpecificationManual.xml`
-  - extraccion de `CVNTreeModel.xml`
-  - union por codigo CVN
-  - preservacion de trazabilidad
-- Resolucion auxiliar:
+- Runner de generacion y comandos reproducibles.
+- Paquetes generados desde XSD.
+- Extraccion desde `SpecificationManual.xml`.
+- Extraccion desde `CVNTreeModel.xml`.
+- Normalizacion por codigo CVN.
+- Resolucion auxiliar mediante:
   - `ReferenceTables.xml`
   - `Subtype_Spa.xml`
   - `Entity.xml`
@@ -419,31 +348,36 @@ conceptual, diagramas y JSON Schema.
   - subtipo
   - referencia no resuelta
 - Generacion de modelos de dominio Pydantic.
-- Modelo conceptual agnostico.
+- Extraccion del modelo conceptual agnostico.
 - Generacion de diagramas y JSON Schema.
+- Mecanismos de trazabilidad desde campo generado hasta fuente CVN.
 
 ### Resultados tecnicos que pueden mencionarse
 
-- `1457` codigos normalizados.
-- `1429` codigos presentes tanto en manual como en tree model.
-- `27` codigos solo en el manual.
-- `1` codigo solo en el tree model.
-- `105` archivos generados bajo `src/models/cvn/generated/`.
+- Numero de codigos normalizados.
+- Numero de codigos presentes en manual y modelo de arbol.
+- Numero de codigos presentes solo en una fuente.
+- Numero de modelos o archivos generados.
+- Casos relevantes de referencias resueltas y no resueltas.
 
-### Figuras o tablas recomendadas
+Estos valores deben comprobarse antes de redactar la version final y no deben
+presentarse si no coinciden con la linea base vigente del repositorio.
+
+### Elementos recomendados
 
 - Tabla de etapas del pipeline, entrada, salida y modulo responsable.
-- Fragmento pequeno de ejemplo de metadato normalizado.
+- Fragmento reducido de metadato normalizado.
 - Diagrama de trazabilidad de un campo desde CVN hasta Open CVN.
 
-## Capitulo 6: Formato Open CVN, parser, validador y aplicacion local
+## Capitulo 6: Formato Open CVN, validacion y herramienta de gestion
 
 Estado: `PENDIENTE`
 
 ### Objetivo del capitulo
 
-Explicar el resultado funcional del proyecto: el formato abierto, la validacion,
-los parsers, la aplicacion local y los flujos de importacion/exportacion.
+Explicar el resultado funcional del proyecto sin desplazar el foco
+computacional: el formato abierto, la validacion, los parsers, los importadores y
+la herramienta local que demuestra el uso del sistema.
 
 ### Contenido recomendado
 
@@ -459,165 +393,131 @@ los parsers, la aplicacion local y los flujos de importacion/exportacion.
 }
 ```
 
-- Organizacion curricular por areas conceptuales en lugar de copiar literalmente
-  la estructura XML CVN.
+- Organizacion curricular por areas conceptuales.
 - JSON Schema:
-  - ubicacion `schemas/open_cvn.schema.json`
-  - uso de JSON Schema Draft 2020-12
-  - extensiones de trazabilidad `x-open-cvn-*`
+  - ubicacion del schema
+  - version de JSON Schema usada
+  - extensiones de trazabilidad
 - Parser y validador:
-  - `parse_open_cvn_json(...)`
-  - `validate_open_cvn_json(...)`
-  - validacion JSON Schema
-  - validacion runtime con Pydantic
+  - lectura de Open CVN JSON
+  - validacion estructural
+  - validacion runtime
   - advertencias semanticas conservadoras
 - Importacion:
   - Open CVN JSON
   - CVN XML con mapeo semantico parcial
-  - CVN PDF mediante XML embebido
-  - fallback LLM opcional para PDFs sin XML extraible o validable
-- Aplicacion CLI local:
-  - comando `open-cvn`
+  - CVN PDF cuando sea posible extraer informacion estructurada
+- Herramienta local:
   - inicializacion de almacenamiento
   - importacion y exportacion
-  - almacenamiento SQLite
+  - SQLite
   - curriculum maestro
   - versiones derivadas
   - seleccion de secciones y entradas
   - exportacion a LaTeX
   - generacion opcional de PDF
-- Seguridad y privacidad:
-  - LLM solo con consentimiento explicito
-  - resultados LLM no autoritativos
-  - validacion obligatoria del resultado importado
+- Alcance funcional y garantias reales de cada flujo.
 
-### Figuras o tablas recomendadas
+### Elementos recomendados
 
 - Esquema de la estructura Open CVN JSON.
-- Diagrama de flujo de importacion PDF/XML/LLM.
-- Tabla de comandos principales de la CLI.
+- Diagrama de flujo de importacion y validacion.
+- Tabla de comandos principales de la herramienta.
 - Ejemplo reducido de curriculum maestro y version derivada.
 
-## Capitulo 7: Verificacion, resultados y discusion
+## Capitulo 7: Evaluacion, resultados y discusion
 
 Estado: `PENDIENTE`
 
 ### Objetivo del capitulo
 
-Demostrar que el sistema se ha validado de forma reproducible y discutir que
-garantias ofrece realmente.
-
-Este capitulo sustituye al capitulo de resultados experimentales de la memoria de
-Mapi. En Open CVN no se deben inventar metricas experimentales de rendimiento si
-no existen; los resultados deben ser resultados de ingenieria: pruebas,
-validaciones, artefactos generados, flujos funcionales y limitaciones verificadas.
+Demostrar que el sistema se ha evaluado de forma reproducible y discutir que
+garantias proporciona. La evaluacion debe ser tecnica y adecuada a Computacion:
+validacion, consistencia, reproducibilidad, cobertura funcional y flujos
+end-to-end.
 
 ### Contenido recomendado
 
-- Estrategia general de verificacion.
+- Diseno de la evaluacion.
+- Niveles de evaluacion:
+  - evaluacion estructural de artefactos generados
+  - evaluacion de normalizacion y trazabilidad
+  - evaluacion de politica semantica
+  - evaluacion de JSON Schema y validacion runtime
+  - evaluacion de parsers e importadores
+  - evaluacion de almacenamiento y versiones
+  - evaluacion de exportacion
+  - evaluacion end-to-end de flujos completos
 - Suite de pruebas automatizadas.
-- Comando principal:
-
-```bash
-uv run pytest -n auto tests
-```
-
-- Ultima linea base documentada:
-
-```text
-488 passed
-```
-
-- Tipos de pruebas:
-  - generacion estructural
-  - importabilidad de bindings
-  - parseo de fuentes oficiales
-  - normalizacion
-  - resolucion de referencias auxiliares
-  - politica semantica
-  - generacion de modelos de dominio
-  - generacion de JSON Schema
-  - parser y validador Open CVN
-  - importacion XML
-  - extraccion PDF
-  - almacenamiento SQLite
-  - CLI
-  - versiones maestras y derivadas
-  - edicion y seleccion
-  - exportacion LaTeX
-  - generacion PDF
-  - fallback LLM
-  - flujos end-to-end
-- GitHub Actions para PRs hacia `main` y `development`.
-- Discusion de resultados:
+- Comando principal de verificacion.
+- Resultados de pruebas con la linea base vigente.
+- Integracion continua si aplica.
+- Discusion:
   - que partes son reproducibles
-  - que partes dependen de inconsistencias del paquete oficial
-  - que garantias proporciona JSON Schema
-  - que garantias proporciona Pydantic
-  - que queda como diagnostico o advertencia
-  - que no debe presentarse como conversion completa
+  - que partes ofrecen garantias fuertes
+  - que partes son parciales
+  - que limitaciones proceden del paquete CVN
+  - que limitaciones proceden del alcance del TFG
+  - que no debe presentarse como conversion completa o validacion semantica total
 
-### Figuras o tablas recomendadas
+### Elementos recomendados
 
 - Tabla de categorias de pruebas y objetivo de cada una.
 - Tabla de comandos de verificacion.
 - Tabla de garantias del sistema frente a limitaciones conocidas.
+- Resumen de resultados verificables.
 
-## Capitulo 8: Conclusiones, limitaciones y trabajo futuro
+## Capitulo 8: Conclusiones, competencias y trabajo futuro
 
 Estado: `PENDIENTE`
 
 ### Objetivo del capitulo
 
-Cerrar la memoria sintetizando el trabajo realizado, las contribuciones, las
-competencias desarrolladas, las limitaciones y las lineas futuras.
+Cerrar la memoria retomando los objetivos del capitulo 1, justificando su grado
+de cumplimiento, relacionando el trabajo con las competencias de Computacion y
+presentando limitaciones y lineas futuras.
 
 ### Contenido recomendado
 
-- Resumen del trabajo:
-  - estudio del ecosistema CVN
-  - diseno de arquitectura por capas
-  - generacion estructural reproducible
-  - normalizacion y politica semantica
-  - modelos de dominio
-  - modelo conceptual
-  - Open CVN JSON
-  - parser, validador y aplicacion local
-  - almacenamiento, versiones y exportacion
+- Cumplimiento del objetivo general.
+- Cumplimiento de cada objetivo especifico en el mismo orden en que se presento
+  en el capitulo 1.
 - Contribuciones principales:
-  - reinterpretacion practica del paquete oficial CVN
+  - analisis computacional del ecosistema CVN
   - separacion entre XML estructural y dominio curricular
+  - arquitectura reproducible por capas
+  - normalizacion y trazabilidad
   - formato JSON abierto y validable
-  - trazabilidad hacia CVN
-  - herramienta local funcional
-  - importacion determinista y fallback LLM controlado
-- Competencias desarrolladas.
+  - parser, validador y herramienta local
+  - evaluacion tecnica mediante pruebas y flujos reproducibles
+- Competencias desarrolladas y evidencia concreta de cada una.
 - Limitaciones:
-  - inconsistencias entre `CVNTreeModel.xml` y su XSD
-  - expresividad limitada de bindings generados
+  - inconsistencias entre artefactos CVN
+  - expresividad limitada de algunos bindings generados
   - referencias auxiliares no resueltas
   - importacion XML semantica parcial
   - JSON Schema no captura toda la semantica del dominio
-  - LLM best-effort y con revision humana obligatoria
   - generacion PDF dependiente de motor TeX
 - Trabajo futuro:
   - completar mapeo semantico XML CVN
   - ampliar validaciones de dominio
   - mejorar cobertura de tablas auxiliares
-  - probar con curriculos reales
-  - construir interfaz grafica
-  - explorar JSON-LD o integracion con modelos semanticos
+  - evaluar con curriculos reales
+  - desarrollar una interfaz grafica si se considera necesario
+  - estudiar extensiones semanticas como JSON-LD
   - integracion con fuentes institucionales
 
-### Figuras o tablas recomendadas
+### Elementos recomendados
 
-- Tabla de contribuciones frente a objetivos iniciales.
+- Tabla de objetivos y grado de cumplimiento.
+- Tabla de competencias y evidencias.
 - Tabla de limitaciones y trabajo futuro asociado.
 
 ## Anexos previstos
 
 Despues del capitulo 8 se reservara espacio para anexos. Los anexos deben incluir
-informacion util pero demasiado extensa para el cuerpo principal.
+informacion util pero demasiado extensa para el cuerpo principal. Los anexos no
+cuentan como capitulos principales.
 
 Anexos recomendados:
 
@@ -625,34 +525,32 @@ Anexos recomendados:
 - Anexo B: estructura completa del formato Open CVN JSON.
 - Anexo C: ejemplo completo de curriculum Open CVN.
 - Anexo D: tablas de trazabilidad entre campos Open CVN y codigos CVN.
-- Anexo E: listado o resumen extendido de pruebas automatizadas.
-- Anexo F: ejemplos de uso de la CLI.
+- Anexo E: resumen extendido de pruebas automatizadas.
+- Anexo F: ejemplos de uso de la herramienta local.
 - Anexo G: limitaciones tecnicas detalladas del paquete oficial CVN.
-- Anexo H: ejemplos de importacion desde XML, PDF y fallback LLM.
+- Anexo H: ejemplos de importacion y exportacion.
+- Anexo I: desarrollo del proyecto por fases tecnicas o issues, si se decide
+  incluir trazabilidad del proceso de desarrollo.
 
-Los anexos no cuentan como capitulos principales y permiten mantener la memoria
-dentro del limite acordado de ocho capitulos.
+## Bibliografia
 
-## Elementos formales finales
+La bibliografia debe incluir exclusivamente fuentes citadas o utilizadas de forma
+efectiva en la memoria. Debe recoger documentacion oficial, articulos, estandares,
+herramientas y trabajos relacionados necesarios para justificar las decisiones del
+TFG.
 
-Despues de los anexos deben incluirse los elementos formales correspondientes:
+Debe evitarse incluir referencias decorativas o no utilizadas en el texto.
 
-- bibliografia
-- declaracion de uso de Inteligencia Artificial
+## Regla final de calidad
 
-La declaracion de uso de IA debe indicar que las herramientas de IA se han usado
-como apoyo en tareas de redaccion, organizacion, revision tecnica o asistencia al
-desarrollo, y que todo el contenido final ha sido revisado y validado por el
-autor, que conserva la responsabilidad completa sobre el trabajo.
+Antes de dar por completado cualquier capitulo, debe comprobarse que:
 
-## Recomendacion de redaccion
-
-La memoria debe mantener un tono academico y tecnico similar al de la memoria de
-referencia, pero evitando presentar el proyecto como una simple herramienta de
-software. La aportacion principal debe formularse como una arquitectura abierta,
-trazable y reproducible para trabajar con curriculos academicos en Espana a
-partir del ecosistema CVN.
-
-Cada capitulo debe empezar con un parrafo introductorio que explique su funcion y
-termine conectando con el capitulo siguiente. Esta tecnica se usa de forma clara
-en la memoria de referencia y ayuda a que la memoria tenga continuidad narrativa.
+- el capitulo puede entenderse sin conocer documentos internos del repositorio
+- las decisiones estan justificadas
+- las figuras y tablas se explican en el texto
+- los resultados son reproducibles o estan claramente delimitados
+- las limitaciones se presentan con precision
+- no aparecen referencias a guias, memorias externas, conversaciones ni fuentes
+  informales
+- no aparecen menciones a herramientas de IA salvo exigencia normativa explicita
+- el capitulo conecta con los objetivos del TFG y con el enfoque de Computacion
