@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-18
+- Last updated: 2026-07-21
 
 ## Completed Or Stabilized Work
 
@@ -15,6 +15,11 @@
   verification strategy, and documented limitations
 - the report is intended as a tutor-facing explanation of how the TFG was
   investigated and developed end to end
+- a final-memory planning and traceability document now exists at:
+  - `docs/memoria/estructura_memoria_tfg.md`
+- the memory planning document records the agreed maximum-eight-chapter
+  structure, expected content per chapter, annex plan, and chapter status markers
+  (`PENDIENTE`, `EN_PROCESO`, `COMPLETADO`)
 
 ### Issue `#11`
 
@@ -1279,18 +1284,19 @@ Then continue with these supporting files as needed:
 
 1. `docs/roadmap/cvn_generation_roadmap.md`
 2. `docs/reporte_proceso_desarrollo_tfg.md`
-3. `docs/roadmap/issues/issue-11-project-infrastructure.md`
-4. `docs/roadmap/issues/issue-12-structural-bindings.md`
-5. `docs/roadmap/issues/issue-13-normalization.md`
-6. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
-7. `docs/development/regeneration_workflow.md`
-8. `docs/development/parser_workflow.md`
-9. `docs/development/llm_import_workflow.md`
-10. `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`
-11. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
-12. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
-13. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
-14. `docs/pipeline/known_limitations.md`
+3. `docs/memoria/estructura_memoria_tfg.md`
+4. `docs/roadmap/issues/issue-11-project-infrastructure.md`
+5. `docs/roadmap/issues/issue-12-structural-bindings.md`
+6. `docs/roadmap/issues/issue-13-normalization.md`
+7. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
+8. `docs/development/regeneration_workflow.md`
+9. `docs/development/parser_workflow.md`
+10. `docs/development/llm_import_workflow.md`
+11. `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`
+12. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
+13. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
+14. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
+15. `docs/pipeline/known_limitations.md`
 15. `docs/pipeline/parser_validator_contract.md`
 16. `docs/roadmap/hotfixes/`
 17. `docs/cvn_source_package_auxiliary_artifacts.md`

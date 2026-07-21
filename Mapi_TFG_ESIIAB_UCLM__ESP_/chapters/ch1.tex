@@ -1,0 +1,98 @@
+\chapter{Introducción General}
+El presente capítulo establece el marco fundacional y la justificación académica de este Trabajo Fin de Grado. Su propósito es proporcionar una visión global del problema abordado, delimitando el alcance del proyecto y definiendo las metas a alcanzar. A lo largo de las siguientes secciones, se contextualiza la transcripción automática de música, se expone la motivación técnica detrás de la optimización de modelos de aprendizaje profundo y se detallan tanto los objetivos principales como las competencias adquiridas. Finalmente, se enumeran las contribuciones científicas y prácticas derivadas de este trabajo y se presenta la estructura organizativa del resto del documento.
+
+
+\section{Contextualización del área de estudio}
+
+Durante la última década, la Inteligencia Artificial y el Procesamiento
+Digital de Señales han transformado profundamente la forma en que los
+sistemas computacionales analizan e interpretan la información multimedia.
+En particular, las arquitecturas de aprendizaje profundo (\textit{Deep Learning}) han supuesto un cambio de paradigma en el análisis de audio, superando las limitaciones de los métodos heurísticos tradicionales y permitiendo extraer patrones complejos a partir de grandes volúmenes de datos acústicos que, hasta entonces, resultaban difíciles de procesar e interpretar de forma automática.
+\\
+\\
+El análisis computacional de la música no solo persigue una comprensión
+más profunda de las estructuras sonoras, sino que habilita aplicaciones
+de alto impacto práctico. Entre ellas destacan la creación de herramientas
+interactivas para la educación musical~\cite{benetos2019automatic},
+el desarrollo de sistemas de acompañamiento automático~\cite{cont2010coupled}, el análisis musicológico a gran escala~\cite{muller2021fundamentals} y la preservación del patrimonio cultural mediante la digitalización de grabaciones
+históricas~\cite{benetos2019automatic}.
+\\[2,5cm]
+La transcripción automática de música (del inglés, \textit{Automatic Music Transcription}, en adelante AMT) aborda el desafío de convertir una señal de audio sin procesar en una representación simbólica estructurada, tal como una partitura o un archivo MIDI. En el caso específico del piano, la complejidad de este proceso se incrementa debido a su inherente naturaleza polifónica. La superposición de notas simultáneas, la variabilidad dinámica (es decir, la intensidad de interpretación), el uso del pedal y la presencia de resonancias armónicas dificultan en gran medida la separación y temporización de los eventos musicales, haciendo de la AMT de piano uno de los problemas abiertos más activos en MIR (del inglés, \textit{Music Information Retrieval}).
+\\
+\\
+El presente Trabajo Fin de Grado propone el diseño y desarrollo de un sistema de AMT especializado en piano, capaz de transformar grabaciones de audio en secuencias de eventos MIDI. A diferencia de los enfoques clásicos, que analizan el audio instante a instante de forma independiente, este proyecto aborda la transcripción como un proceso de traducción en el que el sistema considera la pieza musical en su conjunto, capturando dependencias entre eventos distantes para generar una representación simbólica que codifica de manera integral el tono,
+la duración, la dinámica y los silencios. 
+\\[1,5cm]
+\section{Motivación y planteamiento del problema}
+
+La transcripción de música, en el caso del piano especialmente, presenta desafíos acústicos y musicales únicos que exigen un análisis computacional a largo plazo. Elementos expresivos fundamentales, como el uso del pedal de resonancia (\textit{sustain}), provocan que la estela acústica de las notas se prolongue significativamente en el tiempo, superponiéndose de manera compleja con eventos musicales posteriores. Para modelar correctamente estas dependencias temporales extendidas y desentramar la polifonía, los sistemas automáticos no pueden limitarse a analizar ventanas de audio cortas de forma aislada; requieren comprender un contexto temporal mucho más amplio.
+
+Si bien las arquitecturas previas basadas en Redes Neuronales Convolucionales (CNN) o Recurrentes (RNN) han logrado avances notables en la disciplina MIR, presentan limitaciones inherentes para capturar dependencias a muy largo plazo de manera paralela y eficiente. En este contexto, la creciente disponibilidad de grandes colecciones musicales digitalizadas y el auge de los modelos basados en mecanismos de atención (\textit{transformers}) han impulsado nuevos enfoques en la AMT capaces de integrar dicho contexto extendido.
+
+Sin embargo, los modelos Transformer estándar presentan una limitación práctica importante cuando se aplican al audio continuo: para relacionar cada instante de la pieza con todos los demás, el coste de cálculo y memoria crece de forma cuadrática con la duración de la grabación. En la práctica, esto significa que procesar una pieza de piano de cinco minutos requiere una capacidad de cómputo que resulta prohibitiva incluso con hardware especializado de alto rendimiento.
+\\
+Para abordar este problema, este proyecto parte de una observación clave: no todos los instantes de una pieza musical contienen la misma cantidad de información relevante. Los momentos en que se pulsa una tecla, cambia la armonía o el pedal altera el sonido concentran la mayor parte de la información útil para la transcripción; los silencios y los sonidos sostenidos, en cambio, aportan mucho menos. Aprovechando esta asimetría, el sistema aprende a centrar su atención en los instantes más informativos e ignorar los redundantes, reduciendo el coste computacional sin perder precisión en la transcripción.
+\\[1,5cm]
+\section{Objetivos}
+\label{sec:objetivos}
+
+El objetivo principal de este Trabajo Fin de Grado es \textit{diseñar, implementar y evaluar un sistema de transcripción automática de música para piano polifónico capaz de convertir señales de audio sin procesar en secuencias MIDI, maximizando la fidelidad temporal y dinámica de la transcripción.}
+
+Para alcanzar esta meta global, se plantean los siguientes objetivos específicos, alineados con las fases de desarrollo del proyecto:
+
+\begin{itemize}
+\item \textbf{Diseño del flujo de preprocesamiento:} Implementar un sistema de extracción de características basado en espectrogramas Log-Mel que capture adecuadamente las propiedades acústicas del piano.
+
+\item \textbf{Definición de la representación simbólica:} Establecer un vocabulario basado en \textit{tokens} capaz de codificar de manera integral los eventos musicales (activación y desactivación de notas, desplazamientos temporales y dinámica).
+
+\item \textbf{Desarrollo de la arquitectura neuronal:} Diseñar e implementar un modelo de aprendizaje profundo capaz de generar, paso a paso, la secuencia de eventos MIDI a partir de la representación acústica de la pieza de piano.
+
+\item \textbf{Optimización computacional:} Investigar y adaptar un mecanismo de atención eficiente que permita procesar grabaciones de larga duración sin sacrificar la capacidad del modelo para capturar relaciones musicales entre eventos distantes en el tiempo. 
+
+\item \textbf{Evaluación y validación:} Establecer un marco de evaluación empírico y riguroso utilizando métricas estándar de la disciplina MIR (como el \textit{F1-score}) para evaluar con precisión la detección de inicios (\textit{onsets}), finales (\textit{offsets}) y velocidad de las notas.
+\end{itemize}
+
+\clearpage
+
+El desarrollo del proyecto evidencia la puesta en práctica de las siguientes competencias de la especialidad en Computación:
+
+\begin{itemize}
+    \item \textbf{[CM3]} Capacidad para evaluar la complejidad computacional de un problema, conocer estrategias algorítmicas que puedan conducir a su resolución y recomendar, desarrollar e implementar aquella que garantice el mayor rendimiento de acuerdo con los requisitos establecidos. 
+
+    \item \textbf{[CM4]} Capacidad para conocer los fundamentos, paradigmas y técnicas propias de los sistemas inteligentes y analizar, diseñar y construir sistemas, servicios y aplicaciones informáticas que utilicen dichas técnicas en cualquier ámbito de aplicación.
+
+    \item \textbf{[CM5]} Capacidad para adquirir, obtener, formalizar y representar el conocimiento humano en una forma computable para la resolución de problemas mediante un sistema informático en cualquier ámbito de aplicación, particularmente los relacionados con aspectos de computación, percepción y actuación en ambientes o entornos inteligentes.
+
+
+    \item \textbf{[CM7]} Capacidad para conocer y desarrollar técnicas de aprendizaje computacional y diseñar e implementar aplicaciones y sistemas que las utilicen, incluyendo las dedicadas a extracción automática de información y conocimiento a partir de grandes volúmenes de datos.
+\end{itemize}
+
+\vspace{1,5cm}
+\section{Contribuciones}
+
+Entre las principales contribuciones de este Trabajo Fin de Grado al campo de la transcripción automática de música se encuentran:
+
+\begin{itemize}
+\item \textbf{Modelado integral de la AMT como traducción secuencia a secuencia:} Formulación del problema de transcripción de piano como un proceso de traducción directa entre la señal acústica y una secuencia de eventos musicales discretos, codificando de manera integral el tono, la duración, la dinámica y los silencios.
+
+\item \textbf{Adaptación de atención dispersa al dominio del audio:} Diseño e integración de un mecanismo de atención dispersa, inspirado conceptualmente en el modelo Sparsifiner, adaptado específicamente para procesar representaciones bidimensionales de audio (espectrogramas) con el objetivo de mitigar la complejidad computacional inherente a los Transformers. 
+
+\item \textbf{Implementación y resolución de desafíos de ingeniería:} Desarrollo práctico y optimización del sistema completo utilizando el \textit{framework} PyTorch. Esta contribución incluye la identificación empírica y la resolución de problemas críticos de implementación, tales como la gestión de la coherencia en el vocabulario de \textit{tokens}, la superación de limitaciones estrictas de memoria y la garantía de equidad y consistencia en la evaluación al procesar obras musicales mediante fragmentos (\textit{chunks}).
+\end{itemize}
+
+\section{Estructura de la memoria}
+
+El siguiente trabajo se organiza del siguiente modo: 
+\begin{itemize}
+\item \textbf{Capítulo 2: Estado del arte} Se establece el marco teórico y se revisa la evolución de los sistemas de AMT, los enfoques basados en aprendizaje profundo y los mecanismos de atención eficiente.
+
+\item \textbf{Capítulo 3: Datos y Representación de la Información} Describe el conjunto de datos utilizado y detalla el proceso de representación de entrada y salida. 
+
+\item \textbf{Capítulo 4: Arquitectura Neuronal Propuesta} Profundiza en la arquitectura de red propuesta y en la integración matemática del mecanismo de atención dispersa. 
+
+\item \textbf{Capítulo 5: Implementación} Expone los aspectos clave de la implementación práctica y las decisiones de ingeniería adoptadas. 
+
+\item \textbf{Capítulo 6: Resultados Experimentales} Recoge la metodología experimental, presentando y discutiendo los resultados obtenidos. 
+
+\item \textbf{Capítulo 7: Conclusiones} Sintetiza las conclusiones del proyecto y propone posibles líneas de trabajo futuro.
+\end{itemize}

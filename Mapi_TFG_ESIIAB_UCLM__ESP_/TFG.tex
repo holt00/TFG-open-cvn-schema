@@ -1,0 +1,123 @@
+% !TEX program = xelatex
+% -------------------------------
+% Plantilla del TFG en la ESIIAB-UCLM. Versión 0.0 (Preliminar)
+%
+% Luis de la Ossa
+% 
+% Compilar con XeLaTeX 
+% -------------------------------
+\documentclass[12pt, a4paper]{book}
+
+% -------------------------------
+% Información y opciones del documento. Debe editarse.
+% -------------------------------
+\input{include/opciones}
+
+% -------------------------------
+% Configuración del documento, paquetes, etc. 
+% -------------------------------
+\input{include/configuracion}
+\usepackage{makecell}
+\usepackage{float}
+
+% Documento
+\begin{document}
+
+% -------------------------------
+% Portada y título
+% -------------------------------
+% Fuente  de la portada
+% \setmainfont[Ligatures={NoRequired,NoCommon,NoContextual}]{Calibri}
+\input{elements/portada}
+
+% -------------------------------
+% Fuente del documento.
+% -------------------------------
+% La fuente recomendada es Calibri, pero no está instalada en overleaf:
+%\setmainfont[Ligatures={NoRequired,NoCommon,NoContextual}]{Calibri}
+
+% Para utilizarla aquí, son necesarios los archivos .ttf correspondientes:
+%\setmainfont[
+%			BoldFont=Calibrib.ttf,
+%			ItalicFont=Calibrii.ttf,
+%			BoldItalicFont=Calibriz.ttf
+%		]{Calibri.ttf}
+
+% Por defecto, utiliza una fuente instalada en overleaf. 
+% Éstas son algunas que van bien con la plantilla:
+%\setmainfont{Alegreya Sans} 
+\setmainfont{Carlito}
+%\setmainfont{PT Sans}
+%\setmainfont{Source Sans Pro}
+
+% -------------------------------
+% Preámbulo
+% -------------------------------
+\frontmatter 
+\input{elements/preambulo}
+
+% -------------------------------
+% Índices y tablas
+% -------------------------------
+\tableofcontents	% Índice
+\listoffigures		% Índice de figuras
+\listoftables		% Índice de tablas
+%\listofalgorithms   % Índice de algoritmos (comentar si no los hay)
+%\listofcodes	    % Índice de códigos (comentar si no los hay)
+\cleardoublepage
+
+% -------------------------------
+% Documento
+% -------------------------------
+\mainmatter
+% Estilo de página
+\pagestyle{fancy}
+
+% Introducción
+\input{chapters/ch1} 
+
+% Estado del Arte
+\input{chapters/ch2_estado_arte} 
+
+% Utilidades para anotaciones
+\input{chapters/ch3_datos} 
+
+\input{chapters/ch4_arquitectura}
+
+\input{chapters/ch5_implementacion}
+
+\input{chapters/ch6_resultados}
+
+\input{chapters/ch7_conclusiones}
+
+% -------------------------------
+% Apéndices
+% -------------------------------
+
+\cleardoublepage
+\thispagestyle{empty}
+
+
+% -------------------------------
+% Bibliografía
+% -------------------------------
+\bibliographystyle{apalike}
+\bibliography{bib/ref} 
+\addcontentsline{toc}{chapter}{Referencia bibliográfica} % Añade a la tabla de contenidos
+
+\chapter*{Declaración de uso de Inteligencia Artificial}
+\addcontentsline{toc}{chapter}{Declaración de uso de Inteligencia Artificial}
+
+En la elaboración de este Trabajo Fin de Grado se han empleado herramientas de
+Inteligencia Artificial Generativa como
+apoyo en tareas de redacción académica, análisis de datos experimentales y
+revisión técnica de coherencia entre capítulos de la memoria.
+
+Todo el contenido generado con asistencia de estas herramientas ha sido
+revisado, verificado y, en su caso, corregido por la autora, quien asume la
+responsabilidad completa sobre la exactitud, el contenido y las conclusiones
+del presente trabajo. El diseño experimental, la implementación del sistema,
+la generación de los resultados y su interpretación crítica son responsabilidad
+exclusiva de la autora.
+
+\end{document}

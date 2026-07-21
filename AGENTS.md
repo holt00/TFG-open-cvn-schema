@@ -35,6 +35,8 @@ Every new session should read these files in order before making changes:
 - human project guide: `PROJECT_GUIDE.md`
 - context index: `docs/context/project_context_index.md`
 - current state: `docs/context/current_status.md`
+- TFG memory structure and chapter status traceability:
+  `docs/memoria/estructura_memoria_tfg.md`
 
 ### Architecture And Limits
 

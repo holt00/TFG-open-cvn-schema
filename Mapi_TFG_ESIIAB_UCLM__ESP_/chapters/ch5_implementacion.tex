@@ -1,0 +1,349 @@
+% ============================================================
+%  CAPÍTULO 5 — IMPLEMENTACIÓN
+%  Memoria TFG: Transcripción automática de música de piano
+%  Autor: María Piedad Castex Sierra
+% ============================================================
+
+\chapter{Implementación}
+\label{cap:implementacion}
+
+El presente capítulo describe las decisiones de diseño e ingeniería adoptadas para
+llevar a la práctica la arquitectura definida en el
+Capítulo~\ref{cap:arquitectura}. Se detallan el entorno de ejecución,
+el flujo de procesamiento de datos, el procedimiento de entrenamiento y
+la configuración de los experimentos realizados. Finalmente, se describe
+el sistema de inferencia y evaluación empleado para medir el rendimiento
+del modelo.
+
+% -----------------------------------------------------------
+\section{Entorno de desarrollo}
+\label{sec:entorno}
+% -----------------------------------------------------------
+
+El desarrollo y entrenamiento del sistema se ha llevado a cabo
+íntegramente en Google Colaboratory (\textit{Colab}), un entorno de
+computación en la nube que proporciona acceso gratuito o de bajo coste
+a unidades de procesamiento gráfico (GPU). Los experimentos descritos en este
+capítulo se ejecutaron sobre una GPU NVIDIA T4 con 15\,GB de memoria de
+vídeo (VRAM). Esta restricción de memoria fue el factor determinante para
+adoptar la configuración reducida del modelo ($d = 256$, cuatro capas)
+en lugar de la configuración completa ($d = 512$, seis capas), tal y como
+se discutió en la Sección~\ref{sec:vision_general}.
+
+La Tabla~\ref{tab:stack_tecnologico} recoge las principales dependencias entre librerias software
+del proyecto.
+
+\begin{table}[H]
+      \centering
+      \renewcommand{\arraystretch}{1.2}
+      \begin{tabular}{l l p{7cm}}
+          \hline
+          \textbf{Biblioteca} & \textbf{Versión} & \textbf{Uso} \\
+          \hline
+          Python          & 3.12  & Lenguaje principal. \\
+          PyTorch         & 2.1   & Framework de aprendizaje profundo;
+                                    definición, entrenamiento e inferencia
+                                    del modelo. \\
+          torchaudio      & 2.1   & Procesamiento de tensores de audio. \\
+          librosa         & 0.10  & Extracción del espectrograma Log-Mel. \\
+          pretty\_midi    & 0.2   & Lectura y escritura de archivos MIDI. \\
+          music21         & 9.1   & Exportación a formato MusicXML. \\
+          mir\_eval       & 0.7   & Cálculo de métricas estándar de AMT. \\
+          einops          & 0.7   & Manipulación de tensores en el encoder
+                                    Sparsifiner. \\
+          customtkinter   & 5.2   & Interfaz gráfica de la aplicación. \\
+          pyyaml          & 6.0   & Gestión de configuraciones por
+                                    experimento. \\
+          numpy           & 1.24  & Operaciones numéricas base en todo
+                                    el pipeline de audio y entrenamiento. \\
+          pandas          & 2.1   & Lectura y filtrado de los metadatos
+                                    del dataset MAESTRO (CSV). \\
+          tensorboard     & 2.14  & Seguimiento de métricas de
+                                    entrenamiento y evaluación F1. \\
+          matplotlib      & 3.8   & Visualización de espectrogramas
+                                    y piano rolls. \\
+          \hline
+      \end{tabular}
+      \caption{Stack tecnológico del proyecto.}
+      \label{tab:stack_tecnologico}
+  \end{table}
+
+% -----------------------------------------------------------
+\section{Pipeline de datos}
+\label{sec:pipeline_datos}
+% -----------------------------------------------------------
+
+El flujo de procesamiento de datos transforma los archivos brutos del
+corpus MAESTRO en tensores listos para el entrenamiento. Este flujo se
+implementa en tres módulos independientes: \texttt{AudioProcessor},
+\texttt{MidiProcessor} y \texttt{MaestroDataset}.
+
+\subsection{Procesamiento de audio}
+
+El módulo \texttt{AudioProcessor} encapsula la transformación de la
+señal de audio al espectrograma Log-Mel descrita en la
+Sección~\ref{sec:dominio_acustico}, con los parámetros de la
+Tabla~\ref{tab:parametros_espectrograma}. Adicionalmente, aplica una
+normalización en dos pasos: primero convierte las magnitudes de potencia
+a decibelios mediante \texttt{librosa.power\_to\_db} con referencia al
+máximo de la señal y un rango dinámico de 60\,dB; a continuación,
+reescala los valores del intervalo $[-60,\,0]\,\mathrm{dB}$ al rango
+$[0,\,1]$ de forma lineal. Esta normalización homogeneiza la entrada
+entre piezas de distinta intensidad media y estabiliza la distribución
+de los gradientes durante el entrenamiento.
+
+\subsection{Tokenización MIDI}
+
+El módulo \texttt{MidiProcessor} convierte los archivos MIDI del corpus
+en secuencias de \textit{tokens} discretos siguiendo el vocabulario
+definido en la Sección~\ref{sec:dominio_simbolico}. Los eventos se
+ordenan cronológicamente y, ante empates temporales, los eventos
+\textit{Note-Off} reciben prioridad absoluta sobre los \textit{Note-On},
+previniendo colisiones lógicas en la representación. La cuantización de
+la velocidad proyecta los 128 valores MIDI (0--127) en 32 \textit{bins}
+uniformes, con saturación en el valor máximo para evitar desbordamientos.
+
+\subsection{Carga y empaquetado de datos}
+
+La clase \texttt{MaestroDataset} carga los pares (espectrograma,
+secuencia de \textit{tokens}) a partir del fichero de metadatos
+oficial de MAESTRO, leído con \texttt{pandas} para filtrar y
+asignar cada interpretación a su partición correspondiente
+(\textit{train}, \textit{validation} o \textit{test}).
+Para mantener la viabilidad computacional en el entorno de entrenamiento,
+se aplica una truncación de la secuencia de audio a un máximo de
+\texttt{MAX\_AUDIO\_FRAMES} tramas, y de la secuencia MIDI a un máximo
+de \texttt{MAX\_MIDI\_TOKENS} \textit{tokens}. Los valores concretos de
+estos límites varían entre experimentos y se detallan en la
+Sección~\ref{sec:diseno_experimental}. Las secuencias más cortas que la longitud máxima del lote se rellenan con ceros
+(\textit{padding}) en la función de empaquetado (\texttt{collate\_fn}), requisito
+del sistema de \textit{batching} de PyTorch para construir tensores rectangulares.
+Esto no contradice la capacidad del modelo para tratar secuencias de longitud
+variable: en el decoder, los tokens de relleno quedan enmascarados mediante
+\texttt{tgt\_padding\_mask} para que la atención no los considere, y la función
+de pérdida emplea \texttt{ignore\_index=0} para que no contribuyan al gradiente.
+El encoder de audio no aplica máscara explícita sobre los frames paddeados, lo
+cual es admisible dado que el valor cero en el espectrograma Log-Mel corresponde
+a ausencia de señal.
+
+% -----------------------------------------------------------
+\section{Procedimiento de entrenamiento}
+\label{sec:entrenamiento}
+% -----------------------------------------------------------
+
+\subsection{Estrategia de entrenamiento del decodificador}
+
+Durante el entrenamiento se emplea \textit{teacher forcing} estricto:
+en cada paso, el decodificador recibe como entrada la secuencia de
+\textit{tokens} objetivo desplazada una posición hacia la derecha
+(\texttt{batch\_midi[:, :-1]}), mientras que los \textit{tokens}
+objetivo reales (\texttt{batch\_midi[:, 1:]}) se usan para calcular la
+pérdida. Esta estrategia acelera la convergencia al evitar la
+acumulación de errores propia de la decodificación autorregresiva, a
+costa de introducir una discrepancia entre las condiciones de
+entrenamiento e inferencia conocida como \textit{exposure bias}: en
+inferencia el modelo consume sus propias predicciones, no los
+\textit{tokens} de referencia.
+
+\subsection{Función de pérdida}
+
+La función de pérdida empleada es la entropía cruzada categórica,
+implementada mediante (\texttt{nn.CrossEntropyLoss}) con \texttt{ignore\_index=0}, de modo
+que el \textit{token} de relleno \texttt{<pad>} no contribuye al
+gradiente. No se aplica suavizado de etiquetas (\textit{label smoothing})
+ni ponderación diferencial por clase.
+
+\subsection{Optimización}
+
+El optimizador empleado es AdamW \cite{vaswani2017attention}, con una
+tasa de aprendizaje constante de $\eta = 1 \times 10^{-4}$, factor de
+decaimiento de pesos \texttt{weight\_decay = 0.01} y parámetros de
+momento por defecto ($\beta_1 = 0.9$, $\beta_2 = 0.999$,
+$\varepsilon = 10^{-8}$). No se implementó ningún \textit{scheduler} de
+la tasa de aprendizaje en los experimentos actuales, lo que constituye
+una limitación reconocida que se discute en el
+Capítulo (referencia al cap 7 de conclusiones)~\ref{cap:conclusiones}.
+
+\subsection{Técnicas de estabilización}
+
+Para mejorar la estabilidad numérica del entrenamiento se aplican
+dos mecanismos complementarios. El primero es el recorte de gradientes
+(\textit{gradient clipping}) con norma máxima $\|\nabla\|_{max} = 1.0$,
+que previene explosiones de gradiente características de las arquitecturas
+Transformer en las primeras épocas. El segundo es la precisión mixta
+(\textit{mixed precision training}) mediante \texttt{torch.amp.autocast}
+y \texttt{torch.amp.GradScaler}: los cálculos de propagación hacia
+adelante se realizan en formato \texttt{float16}, reduciendo el consumo
+de memoria y el tiempo de cómputo, mientras que las actualizaciones de
+parámetros se efectúan en \texttt{float32} para mantener la precisión
+numérica.
+
+\subsection{Gestión de checkpoints}
+
+El sistema de entrenamiento guarda el estado completo del modelo
+(\textit{checkpoint}) al final de cada época, incluyendo los pesos del
+modelo, el estado del optimizador y el estado del \texttt{GradScaler}.
+En cada ejecución, el código detecta automáticamente el \textit{checkpoint}
+más reciente disponible y reanuda el entrenamiento desde ese punto,
+lo que permite recuperarse de interrupciones del entorno Colab sin perder
+el progreso acumulado.
+
+% -----------------------------------------------------------
+\section{Diseño experimental}
+\label{sec:diseno_experimental}
+% -----------------------------------------------------------
+
+La restricción de 15\,GB de VRAM de la GPU T4 impone límites estrictos
+sobre el tamaño efectivo del lote y la longitud máxima de las secuencias
+procesables simultáneamente. Para explorar el espacio de configuraciones
+dentro de estas restricciones, se diseñaron tres experimentos con un eje
+de variación diferente cada uno, manteniendo fijo el resto de
+hiperparámetros. En todos los casos se alcanza un lote efectivo de 32
+secuencias mediante distintas combinaciones de tamaño de lote real y
+acumulación de gradientes.
+
+La Tabla~\ref{tab:configuraciones_experimentos} recoge los parámetros
+variables de cada configuración. Los hiperparámetros arquitectónicos
+(Tabla~\ref{tab:hiperparametros_globales}) y los de optimización
+(AdamW, $\eta = 10^{-4}$, \textit{gradient clipping}) son idénticos
+en los tres experimentos.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{l r r r}
+        \hline
+        \textbf{Parámetro}
+            & \textbf{v1\_baseline}
+            & \textbf{exp01}
+            & \textbf{exp02} \\
+        \hline
+        \textit{Eje de variación}
+            & Referencia
+            & Tamaño de datos
+            & Longitud de clip \\
+        Muestras (train / val)
+            & Todo / Todo
+            & 150 / 30
+            & Todo / Todo \\
+        \texttt{MAX\_AUDIO\_FRAMES}
+            & 4\,096
+            & 4\,096
+            & 2\,048 \\
+        \texttt{MAX\_MIDI\_TOKENS}
+            & 1\,500
+            & 1\,500
+            & 750 \\
+        Duración máxima (audio)
+            & $\approx$82\,s
+            & $\approx$82\,s
+            & $\approx$41\,s \\
+        \texttt{BATCH\_SIZE}
+            & 8
+            & 2
+            & 4 \\
+        \texttt{GRAD\_ACCUM\_STEPS}
+            & 4
+            & 16
+            & 8 \\
+        Lote efectivo
+            & 32
+            & 32
+            & 32 \\
+        Épocas configuradas
+            & 80
+            & 1\,000
+            & 1\,000 \\
+        \hline
+    \end{tabular}
+    \caption{Parámetros variables por experimento. El lote efectivo
+    se mantiene constante en 32 en todas las configuraciones mediante
+    distintas combinaciones de \texttt{BATCH\_SIZE} y acumulación de
+    gradientes.}
+    \label{tab:configuraciones_experimentos}
+\end{table}
+
+\begin{itemize}
+    \item \textbf{v1\_baseline} constituye la configuración de referencia: emplea
+    la totalidad del corpus de entrenamiento con clips de hasta 82 segundos. La
+    duración de 80 épocas es reducida respecto a los demás experimentos debido al
+    mayor tiempo por época que implica procesar el corpus completo.
+
+    \item \textbf{exp01\_reduced\_data} reduce drásticamente el volumen de datos
+    a 150 muestras de entrenamiento y 30 de validación. Su objetivo es validar que
+    el modelo es capaz de converger y sobreajustarse a un subconjunto pequeño, lo
+    que actúa como \textit{sanity check} de la implementación antes de escalar al
+    corpus completo.
+
+    \item \textbf{exp02\_short\_clips} mantiene el corpus completo pero reduce a
+    la mitad la longitud máxima de las secuencias (2\,048 tramas de audio y 750
+    tokens MIDI). Esta reducción permite duplicar el tamaño real del lote (de 2 a
+    4 secuencias por paso con \texttt{grad\_accum=8}) dentro de los mismos límites
+    de VRAM, e hipotéticamente facilita el aprendizaje de eventos locales al
+    eliminar del contexto de entrenamiento las secciones de silencio que preceden
+    a muchas piezas.
+\end{itemize}
+
+\clearpage
+% -----------------------------------------------------------
+\section{Sistema de inferencia y evaluación}
+\label{sec:inferencia_evaluacion}
+% -----------------------------------------------------------
+
+\subsection{Estrategias de decodificación}
+
+En inferencia, el sistema soporta dos estrategias de decodificación
+autorregresiva. La primera es la decodificación voraz
+(\textit{greedy decoding}): en cada paso se selecciona el \textit{token}
+con mayor \textit{logit} mediante \texttt{argmax} y se incorpora a la secuencia
+de entrada del siguiente paso. Es determinista y computacionalmente
+eficiente, pero tiende a generar secuencias repetitivas en tareas con
+alta entropía de salida.
+
+La segunda estrategia es el muestreo con temperatura (\textit{temperature
+sampling}): los \textit{logits} se dividen por un factor de temperatura
+$\tau = 0.8$ antes de aplicar \textit{softmax}, y el siguiente
+\textit{token} se muestrea de la distribución resultante mediante
+\texttt{torch.multinomial}. Valores de $\tau < 1$ concentran la
+distribución hacia los \textit{tokens} más probables, reduciendo la
+aleatoriedad respecto al muestreo uniforme. Ambas estrategias se
+detienen al predecir el \textit{token} \texttt{<eos>} (índice 310) o al
+alcanzar la longitud máxima de generación (1\,050 \textit{tokens}).
+
+\subsection{Protocolo de evaluación}
+
+La evaluación cuantitativa del sistema se realiza mediante la biblioteca
+\texttt{mir\_eval}, que implementa las métricas estándar de AMT descritas
+en la Sección~\ref{sec:metricas}. Se calculan tres variantes del
+F1-score a nivel de nota, con las ventanas de tolerancia detalladas en
+la Tabla~\ref{tab:tolerancias_evaluacion}.
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{l l}
+        \hline
+        \textbf{Métrica} & \textbf{Criterio de acierto} \\
+        \hline
+        F1 de \textit{onset}
+            & Tono correcto $+$ \textit{onset} dentro de
+              $\pm 50\,\mathrm{ms}$ \\
+        F1 de \textit{onset} + \textit{offset}
+            & Anterior $+$ \textit{offset} dentro de
+              $\pm 50\,\mathrm{ms}$ o 20\,\% de la duración \\
+        F1 de \textit{onset} + velocidad
+            & Anterior (sin \textit{offset}) $+$ velocidad
+              dentro de $\pm 10\,\%$ \\
+        \hline
+    \end{tabular}
+    \caption{Criterios de acierto para cada variante del F1-score de
+    nivel de nota, implementados con \texttt{mir\_eval}.}
+    \label{tab:tolerancias_evaluacion}
+\end{table}
+
+La evaluación se ejecuta automáticamente sobre el conjunto de validación
+cada 20 épocas durante el entrenamiento, con los resultados registrados
+en TensorBoard para su seguimiento. La evaluación final sobre el conjunto
+de prueba se realiza con el modelo correspondiente al \textit{checkpoint} de menor pérdida de
+validación.
+

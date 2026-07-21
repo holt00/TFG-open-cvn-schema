@@ -1,0 +1,485 @@
+% ============================================================
+%  CAPÍTULO 4 — ARQUITECTURA NEURONAL PROPUESTA
+%  Memoria TFG: Transcripción automática de música de piano
+%  Autor: María Piedad Castex Sierra
+%  Formato: XeLaTeX — mismo estilo que Capítulos 3 y 4
+% ============================================================
+
+\chapter{Arquitectura Neuronal Propuesta}
+\label{cap:arquitectura}
+
+El presente capítulo describe en detalle la arquitectura neuronal diseñada e implementada
+para el sistema de transcripción automática de piano. Partiendo de los fundamentos
+teóricos establecidos en el Capítulo~\ref{cap:estado_del_arte} y de las representaciones
+definidas en el Capítulo~\ref{cap:datos}, se describe la configuración global del modelo,
+la estructura del codificador basado en atención dispersa, el mecanismo de predicción de
+máscara que constituye el núcleo de la contribución técnica de este trabajo, y el
+decodificador autorregresivo que genera la secuencia de \textit{tokens} MIDI. Finalmente,
+se detalla el esquema de codificación posicional adoptado y se justifican las decisiones de
+diseño más relevantes.
+
+% -----------------------------------------------------------
+\section{Visión general del modelo}
+\label{sec:vision_general}
+
+Siguiendo el paradigma de traducción de secuencia a secuencia
+descrito en la Sección~\ref{sec:seq2seq}, el sistema establece
+un mapeo directo entre la representación acústica de la pieza y
+la secuencia simbólica de eventos MIDI. El sistema desarrollado
+en este proyecto, denominado \texttt{Magdalena v1.0}, adopta una
+arquitectura Encoder-Decoder asimétrica: el codificador y el
+decodificador difieren tanto en su estructura interna como en el
+mecanismo de atención que emplean, lo que distingue esta propuesta
+de las implementaciones estándar del Transformer original
+\cite{vaswani2017attention}.
+
+El flujo de procesamiento del modelo puede describirse formalmente como sigue. Dado un
+espectrograma Log-Mel de entrada $\mathbf{X} \in \mathbb{R}^{B \times N_{mels} \times T}$,
+donde $B$ es el tamaño del lote (\textit{batch size}), $N_{mels} = 229$ es el número de
+bandas frecuenciales y $T$ es la longitud temporal de la secuencia, el codificador produce
+una representación latente contextualizada $\mathbf{M} \in \mathbb{R}^{B \times T \times d}$,
+denominada memoria (\textit{memory}), con dimensión de embedding $d = 256$. El
+decodificador consume esta memoria y genera, de forma autorregresiva, la secuencia de logits $\mathbf{L} \in \mathbb{R}^{B \times S \times |\mathcal{V}|}$,
+donde $S$ es la longitud de la secuencia objetivo y $|\mathcal{V}| = 311$ es el tamaño
+del vocabulario definido en la Sección~\ref{sec:dominio_simbolico}. La configuración
+Encoder-Decoder y el mecanismo de autoatención subyacente fueron descritos en detalle
+en la Sección~\ref{sec:transformer}.
+
+La Tabla~\ref{tab:hiperparametros_globales} recoge los hiperparámetros
+del modelo tal y como están configurados en los experimentos realizados.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{l l p{7cm}}
+        \hline
+        \textbf{Hiperparámetro} & \textbf{Valor} & \textbf{Descripción} \\
+        \hline
+        $d$ (\texttt{embed\_dim})
+            & 256\textsuperscript{†}
+            & Dimensión del espacio de \textit{embedding} en todas
+              las capas. \\
+        $H$ (\texttt{nhead})
+            & 4\textsuperscript{†}
+            & Número de cabezas de atención (\textit{multi-head}). \\
+        $L_{enc}$ (\texttt{num\_encoder\_layers})
+            & 4\textsuperscript{†}
+            & Profundidad del codificador (bloques Sparsifiner). \\
+        $L_{dec}$ (\texttt{num\_decoder\_layers})
+            & 4\textsuperscript{†}
+            & Profundidad del decodificador (bloques Transformer
+              estándar). \\
+        $d_{ff}$ (\texttt{dim\_feedforward})
+            & 2048
+            & Dimensión de la red \textit{feed-forward} interna
+              ($8 \times d$). \\
+        $p$ (\texttt{dropout})
+            & 0.1
+            & Tasa de \textit{dropout} aplicada en
+              \textit{embeddings} y atención. \\
+        $T_{train}$ (\texttt{max\_audio\_frames})
+            & 2\,048 -- 4\,096
+            & Longitud máxima de secuencia de audio en
+              entrenamiento (varía por experimento, véase
+              Capítulo~\ref{cap:implementacion}); capacidad máxima
+              del modelo: 70\,000 tramas. \\
+        $r_{attn}$ (\texttt{attn\_keep\_rate})
+            & 0.25
+            & Fracción de conexiones de atención retenidas por
+              Sparsifiner. \\
+        $r_{N}$ (\texttt{reduce\_n\_factor})
+            & 64
+            & Factor de compresión temporal en el predictor de
+              máscara. \\
+        \textit{DropPath} (\texttt{drop\_path\_rate})
+            & 0.0
+            & Regularización de profundidad estocástica
+              implementada pero configurada como inactiva en los
+              experimentos actuales (\texttt{nn.Identity}). \\
+        \hline
+    \end{tabular}
+    \caption{Hiperparámetros del modelo \texttt{Magdalena v1.0}
+    en la configuración experimental. \textsuperscript{†}El código
+    soporta una configuración de mayor capacidad
+    ($d = 512$, $H = 8$, $L_{enc} = L_{dec} = 6$), equivalente
+    al Transformer original \cite{vaswani2017attention}, descartada
+    por las limitaciones de memoria de la GPU disponible
+    (Google Colab, T4 de 15\,GB de VRAM). La configuración
+    reducida mantiene un \textit{batch} efectivo de 32 secuencias
+    en todos los experimentos, alcanzado mediante distintas
+    combinaciones de tamaño de \textit{batch} y acumulación de
+    gradientes según las restricciones de memoria de cada
+    configuración (véase Capítulo~\ref{cap:implementacion}).}
+    \label{tab:hiperparametros_globales}
+\end{table}
+
+% -----------------------------------------------------------
+\section{Codificador con atención dispersa (Sparsifiner)}
+\label{sec:encoder_sparsifiner}
+% -----------------------------------------------------------
+
+El codificador del sistema, implementado en la clase \texttt{AudioSparsifinerEncoder},
+constituye la principal contribución técnica de esta arquitectura. A diferencia del
+codificador estándar del Transformer, que aplica autoatención densa con complejidad
+$\mathcal{O}(T^2)$, el codificador propuesto integra el mecanismo Sparsifiner
+\cite{wei2023sparsifiner}, que aprende a construir de forma dinámica y dependiente de
+la instancia un grafo de conectividad dispersa sobre la secuencia de tramas del
+espectrograma.
+
+\subsection{Proyección de entrada y embedding posicional}
+
+El primer componente del codificador es una capa de proyección lineal
+$\mathbf{W}_{in} \in \mathbb{R}^{N_{mels} \times d}$ que transforma cada trama
+frecuencial del espectrograma —un vector de dimensión $N_{mels} = 229$— en un vector
+de embedding de dimensión $d = 256$. Formalmente, dado el espectrograma de entrada
+$\mathbf{X} \in \mathbb{R}^{B \times N_{mels} \times T}$, se permutan las dimensiones
+frecuencial y temporal para obtener $\mathbf{X}' \in \mathbb{R}^{B \times T \times N_{mels}}$,
+y la proyección se aplica sobre la última dimensión:
+
+\begin{equation}
+    \mathbf{E} = \mathbf{X}' \, \mathbf{W}_{in} + \mathbf{b}_{in} \in \mathbb{R}^{B \times T \times d}
+    \label{eq:proyeccion_entrada}
+\end{equation}
+
+A la representación resultante se le suma un embedding posicional aprendido
+$\mathbf{P} \in \mathbb{R}^{1 \times T_{max} \times d}$, inicializado con distribución
+normal truncada de desviación estándar $\sigma = 0.02$ y recortado dinámicamente a la
+longitud real de la secuencia en cada paso de inferencia:
+
+\begin{equation}
+    \mathbf{Z}^{(0)} = \mathbf{E} + \mathbf{P}_{[:T, :]} \in \mathbb{R}^{B \times T \times d}
+    \label{eq:embedding_posicional_encoder}
+\end{equation}
+
+La elección de un embedding posicional aprendido, en lugar del encoding sinusoidal fijo
+utilizado en el decodificador, está motivada por la naturaleza bidimensional del
+espectrograma: al interpretar las tramas temporales como \textit{tokens} de una
+representación matricial, el modelo puede aprender patrones posicionales específicos del
+dominio acústico que no están bien capturados por funciones periódicas fijas
+\cite{dosovitskiy2021image}.
+
+\subsection{Bloques de atención Sparsifiner}
+\label{subsec:bloques_sparsifiner}
+
+El núcleo del codificador está formado por una pila de $L_{enc} = 4$ bloques Sparsifiner
+idénticos en estructura, implementados en la clase \texttt{Block}. Cada bloque sigue la
+arquitectura Pre-LayerNorm estándar del Transformer \cite{xiong2020layer}, con conexiones
+residuales y una red de propagación hacia adelante (\textit{feed-forward network}, FFN)
+con función de activación GELU \cite{hendrycks2016gaussian}:
+
+\begin{align}
+    \mathbf{Z}'^{(l)} &= \mathbf{Z}^{(l-1)} + \text{DropPath}\!\left(\text{SparseAttn}\!\left(\text{LN}\!\left(\mathbf{Z}^{(l-1)}\right), \boldsymbol{\pi}^{(l-1)}\right)\right) \label{eq:bloque_attn} \\
+    \mathbf{Z}^{(l)}  &= \mathbf{Z}'^{(l)} + \text{DropPath}\!\left(\text{FFN}\!\left(\text{LN}\!\left(\mathbf{Z}'^{(l)}\right)\right)\right) \label{eq:bloque_ffn}
+\end{align}
+
+donde $\boldsymbol{\pi}^{(l-1)} \in \{0,1\}^{B \times (T-1)}$ es la máscara de
+\textit{tokens} activos propagada desde el bloque anterior, $\text{LN}(\cdot)$ denota
+normalización de capa (\textit{Layer Normalization}) \cite{ba2016layer}, y $\text{DropPath}(\cdot)$ es la regularización de profundidad
+estocástica (\textit{Stochastic Depth}) \cite{huang2016deep},
+que descarta bloques residuales completos de forma aleatoria
+durante el entrenamiento para prevenir el sobreajuste. En los
+experimentos actuales esta regularización se mantiene inactiva
+(\texttt{drop\_path\_rate = 0.0}), equivaliendo a la función
+identidad; la arquitectura la soporta de forma nativa para
+experimentos futuros con modelos más profundos.
+La dimensión oculta de la FFN es $d_{ff} = 2048$, lo que supone
+una relación $d_{ff} = 8d$ con la configuración experimental
+($d = 256$). Esta proporción, mayor que la relación $4d$
+convencional del Transformer original \cite{vaswani2017attention},
+compensa parcialmente la reducción de $d$ manteniendo la capacidad
+expresiva de la red de propagación hacia adelante.
+
+% -----------------------------------------------------------
+\section{Mecanismo de predicción de máscara de atención}
+\label{sec:mask_predictor}
+% -----------------------------------------------------------
+
+El componente diferenciador de la arquitectura es el \texttt{MaskPredictor}, un módulo
+auxiliar de bajo coste computacional que, a partir de las representaciones de consulta
+(\textit{query}) y clave (\textit{key}) de la capa de atención, predice qué pares de
+posiciones son suficientemente relevantes para justificar el cómputo de atención completa.
+Este predictor opera en tres fases: compresión de rango, cálculo de atención aproximada
+y generación de la máscara binaria final.
+
+\subsection{Compresión de rango}
+\label{subsec:compresion_rango}
+
+Para calcular el mapa de relevancia entre posiciones sin incurrir en el coste cuadrático
+de la atención completa, el \texttt{MaskPredictor} proyecta las representaciones de
+consulta y clave a un espacio de dimensión reducida mediante dos operaciones de
+compresión independientes y paralelas.
+
+La primera compresión actúa sobre la dimensión de canales: cada cabeza de atención tiene
+dimensión $d_h = d / H = 64$, y se proyecta a una dimensión reducida
+$d_c = d_h / r_c = 32$, donde el factor de reducción de canal es $r_c = 2$:
+
+\begin{align}
+    \tilde{\mathbf{Q}} &= \mathbf{Q} \, \mathbf{W}_{Qc} \in \mathbb{R}^{B \times H \times T \times d_c} \label{eq:q_reducido} \\
+    \tilde{\mathbf{K}} &= \mathbf{K} \, \mathbf{W}_{Kc} \in \mathbb{R}^{B \times H \times T \times d_c} \label{eq:k_reducido}
+\end{align}
+
+La segunda compresión actúa sobre la dimensión temporal: la matriz de claves reducida
+se proyecta sobre un conjunto de $k = \lfloor T / r_N \rfloor$ vectores base aprendidos,
+donde el factor de reducción temporal es $r_N = 64$ (definido en \texttt{transformer.py}).
+Esta proyección se realiza mediante una matriz de parámetros aprendidos
+$\mathbf{P}_N \in \mathbb{R}^{T_{max} \times k}$, recortada dinámicamente a la longitud
+real de la secuencia $T$ en cada paso:
+
+\begin{equation}
+    \hat{\mathbf{K}} = \tilde{\mathbf{K}}^{\top} \, \mathbf{P}_{N[:T,:]} \in \mathbb{R}^{B \times H \times d_c \times k}
+    \label{eq:k_comprimido}
+\end{equation}
+
+El resultado es una representación comprimida de las claves en un espacio latente de
+$k \ll T$ vectores base, cuyo coste de almacenamiento es $\mathcal{O}(T \cdot k)$ en
+lugar de $\mathcal{O}(T^2)$.
+
+\subsection{Cálculo de atención aproximada de bajo rango}
+\label{subsec:cheap_attn}
+
+A partir de las representaciones comprimidas, el predictor calcula una atención
+aproximada (\textit{cheap attention}) mediante la siguiente operación:
+
+\begin{equation}
+    \mathbf{A}_{cheap} = \text{softmax}\!\left(\tilde{\mathbf{Q}} \cdot \hat{\mathbf{K}} \cdot s\right)
+    \in \mathbb{R}^{B \times H \times T \times k}
+    \label{eq:cheap_attn}
+\end{equation}
+
+donde $s = H^{-1/2}$ es el factor de escala estándar. Los coeficientes resultantes
+$\mathbf{A}_{cheap}$ codifican, para cada posición temporal, el grado de afinidad con
+cada uno de los $k$ vectores base del espacio comprimido. Estos coeficientes se utilizan
+para reconstruir una aproximación de la matriz de atención completa $N \times N$ mediante
+la proyección inversa $\mathbf{P}_{N}^{\top}$:
+
+\begin{equation}
+    \hat{\mathbf{A}} = \mathbf{A}_{cheap} \cdot \mathbf{P}_{back}^{\top}
+    \in \mathbb{R}^{B \times H \times T \times T}
+    \label{eq:approx_attn}
+\end{equation}
+
+donde $\mathbf{P}_{back} \in \mathbb{R}^{T_{max} \times k}$ es una segunda matriz de
+proyección aprendida independiente de $\mathbf{P}_N$ (\texttt{share\_inout\_proj=False}),
+que permite una mayor flexibilidad en la reconstrucción.
+
+\subsection{Generación de la máscara binaria de atención}
+\label{subsec:mascara_binaria}
+
+La matriz de atención aproximada $\hat{\mathbf{A}}$ se utiliza para determinar qué
+conexiones merecen ser calculadas con atención completa. Dado un presupuesto de atención
+$b = \lceil r_{attn} \cdot T \rceil$, donde $r_{attn} = 0.25$ es la tasa de retención
+definida en \texttt{transformer.py}, se seleccionan para cada posición de consulta los
+$b$ índices de clave con mayor puntuación aproximada mediante una operación \textit{top-k}:
+
+\begin{equation}
+    \mathcal{I}^{(i)} = \underset{j \in [T]}{\text{top-}b}\;\hat{A}_{ij}
+    \qquad \forall\, i \in [T]
+    \label{eq:topk_selection}
+\end{equation}
+
+A partir de estos índices se construye la máscara binaria de atención
+$\mathbf{M}_{attn} \in \{0,1\}^{B \times H \times T \times T}$, donde
+$M_{attn}^{(i,j)} = 1$ si y solo si $j \in \mathcal{I}^{(i)}$. Esta máscara se
+desconecta del grafo de gradientes (\texttt{.detach\_()}) para que la operación
+\textit{top-k} —no diferenciable— no bloquee la retropropagación. El coste de calcular
+la máscara es $\mathcal{O}(T \cdot k)$, y el coste de aplicarla en la atención completa
+se reduce de $\mathcal{O}(T^2)$ a $\mathcal{O}(T \cdot b) = \mathcal{O}(r_{attn} \cdot T^2)$,
+con $r_{attn} = 0.25$ en este sistema.
+
+Adicionalmente, la implementación introduce un ajuste dinámico del presupuesto
+(\texttt{real\_k = min(self.attn\_budget, N)}), que garantiza la compatibilidad con
+secuencias más cortas que la longitud máxima $T_{max}$ sin requerir relleno hasta dicha
+longitud. Esta es una contribución de ingeniería relevante respecto a la implementación
+original de Sparsifiner, que asumía una longitud de secuencia fija.
+
+\subsection{Atención completa con máscara dispersa}
+\label{subsec:attn_completa_dispersa}
+
+Una vez obtenida la máscara $\mathbf{M}_{attn}$, la capa de atención (\texttt{Attention})
+calcula la matriz de atención estándar sobre las representaciones originales no comprimidas,
+pero fuerza a $-\infty$ las posiciones no seleccionadas por la máscara antes de aplicar
+\textit{softmax}:
+
+\begin{equation}
+    \mathbf{A} = \text{softmax}\!\left(\frac{\mathbf{Q}\mathbf{K}^{\top}}{\sqrt{d_h}}
+    + \log \mathbf{M}_{attn}\right)
+    \in \mathbb{R}^{B \times H \times T \times T}
+    \label{eq:attn_dispersa}
+\end{equation}
+
+donde la suma con $\log \mathbf{M}_{attn}$ implementa el enmascaramiento: las posiciones
+con $M_{attn}^{(i,j)} = 0$ reciben una puntuación de $-\infty$, resultando en un peso de
+atención efectivo de cero tras el \textit{softmax}. Las filas de la matriz resultante que
+corresponden a posiciones completamente enmascaradas —situación posible en secuencias
+con \textit{padding}— son gestionadas mediante \texttt{torch.nan\_to\_num} para
+garantizar la estabilidad numérica. La salida del módulo de atención es finalmente:
+
+\begin{equation}
+    \mathbf{Z}_{attn} = \mathbf{A} \mathbf{V} \mathbf{W}_O
+    \in \mathbb{R}^{B \times T \times d}
+    \label{eq:salida_attn}
+\end{equation}
+
+donde $\mathbf{V}$ son las representaciones de valor y $\mathbf{W}_O \in \mathbb{R}^{d \times d}$
+es la proyección de salida.
+
+% -----------------------------------------------------------
+\section{Decodificador autorregresivo}
+\label{sec:decoder}
+% -----------------------------------------------------------
+
+El decodificador del sistema, implementado en la clase \texttt{MidiDecoder}, adopta la
+arquitectura estándar del decodificador Transformer \cite{vaswani2017attention}, compuesta
+por $L_{dec} = 4$ capas apiladas de tipo \texttt{nn.TransformerDecoderLayer}. A diferencia
+del codificador, el decodificador emplea atención densa estándar, decisión justificada por
+las diferencias fundamentales entre las dos secuencias que procesa: mientras la secuencia
+de audio puede contener decenas de miles de tramas, la secuencia de \textit{tokens} MIDI
+generada tiene una longitud típicamente mucho menor, lo que hace manejable el coste
+cuadrático de la autoatención.
+
+\subsection{Embedding de entrada y codificación posicional}
+
+Cada \textit{token} MIDI de la secuencia objetivo $\mathbf{y} \in \mathbb{Z}^{B \times S}$
+se transforma en un vector de embedding de dimensión $d = 256$ mediante una tabla de
+embeddings aprendida $\mathbf{E}_{tok} \in \mathbb{R}^{|\mathcal{V}| \times d}$, con el
+índice de \textit{padding} (índice 0) inicializado a cero y excluido de la actualización
+de gradientes. El embedding resultante se escala por $\sqrt{d}$ para compensar la
+magnitud del embedding posicional \cite{vaswani2017attention}, y se le suma una
+codificación posicional sinusoidal fija generada mediante la clase
+\texttt{PositionalEncoding}:
+
+\begin{align}
+    PE_{(pos, 2i)}   &= \sin\!\left(\frac{pos}{10000^{2i/d}}\right) \label{eq:pe_sin} \\
+    PE_{(pos, 2i+1)} &= \cos\!\left(\frac{pos}{10000^{2i/d}}\right) \label{eq:pe_cos}
+\end{align}
+
+La implementación utiliza la formulación logarítmicamente estable
+$\exp\!\left(2i \cdot \frac{-\log(10000)}{d}\right)$ para el cálculo del denominador,
+y el \textit{buffer} posicional se registra como parámetro no entrenable con longitud
+máxima $max\_len = 50\,000$ \textit{tokens}, valor suficientemente holgado para cubrir
+las secuencias MIDI más largas del corpus MAESTRO. La codificación posicional sinusoidal
+se ha elegido para el decodificador —en contraposición al embedding posicional aprendido
+del codificador— por su capacidad de generalización a longitudes de secuencia no vistas
+durante el entrenamiento \cite{vaswani2017attention}.
+
+\subsection{Estructura de cada capa del decodificador}
+
+Cada capa del decodificador implementa el flujo de procesamiento canónico en tres
+subcapas:
+
+\paragraph{Autoatención enmascarada (\textit{Masked Self-Attention}).}
+La primera subcapa aplica autoatención multi-cabeza sobre la secuencia de \textit{tokens}
+ya generados, utilizando una máscara triangular inferior (\textit{causal mask}) para
+garantizar la propiedad autorregresiva: la predicción del \textit{token} en la posición
+$t$ solo puede depender de los \textit{tokens} en posiciones $0, 1, \ldots, t-1$. La
+máscara se genera dinámicamente en cada paso de decodificación mediante:
+
+\begin{equation}
+    M_{causal}^{(i,j)} = \begin{cases} 0 & \text{si } j \leq i \\ -\infty & \text{si } j > i \end{cases}
+    \label{eq:mascara_causal}
+\end{equation}
+
+\paragraph{Atención cruzada (\textit{Cross-Attention}).}
+La segunda subcapa aplica atención cruzada entre la secuencia de \textit{tokens} del
+decodificador (actuando como consultas) y la memoria $\mathbf{M}$ producida por el
+codificador (actuando como claves y valores). Este mecanismo es el que permite al
+decodificador acceder al contenido acústico de la pieza en cada paso de generación,
+condicionando la predicción del siguiente \textit{token} MIDI a la representación latente
+completa del espectrograma de entrada.
+
+\paragraph{Red \textit{feed-forward}.}
+La tercera subcapa es una red de propagación hacia adelante de dos capas lineales con
+función de activación ReLU y dimensión oculta $d_{ff} = 2048$, seguida de \textit{dropout}
+con $p = 0.1$.
+
+Todas las subcapas implementan conexiones residuales y normalización de capa
+(\textit{Post-LayerNorm}), siguiendo la implementación estándar de PyTorch \newline
+(\texttt{nn.TransformerDecoderLayer} con \textit{batch\_first=True}).
+
+\subsection{Capa de clasificación y generación}
+
+La salida de la última capa del decodificador,
+$\mathbf{H} \in \mathbb{R}^{B \times S \times d}$, se proyecta a logits sobre el
+vocabulario mediante una capa lineal de salida:
+
+\begin{equation}
+    \mathbf{L} = \mathbf{H} \, \mathbf{W}_{out} + \mathbf{b}_{out}
+    \in \mathbb{R}^{B \times S \times |\mathcal{V}|}
+    \label{eq:logits}
+\end{equation}
+
+donde $\mathbf{W}_{out} \in \mathbb{R}^{d \times |\mathcal{V}|}$ con $|\mathcal{V}| = 311$ (véase Sección~\ref{sec:dominio_simbolico}).
+Durante el entrenamiento, estos logits se utilizan directamente para calcular la función
+de pérdida de entropía cruzada con la secuencia objetivo. Durante el entrenamiento se emplea \textit{teacher forcing}
+estricto: el decodificador recibe como entrada la secuencia de
+\textit{tokens} objetivo desplazada una posición
+(\texttt{batch\_midi[:, :-1]}), lo que acelera la convergencia
+pero introduce una discrepancia entre las condiciones de
+entrenamiento e inferencia (\textit{exposure bias}).
+
+Durante la inferencia el sistema soporta dos estrategias de
+decodificación. La primera es la decodificación voraz
+(\textit{greedy decoding}): en cada paso $t$ se selecciona el
+\textit{token} con mayor logit y se incorpora a la secuencia de
+entrada para el paso siguiente. La segunda es el muestreo con
+temperatura (\textit{temperature sampling}), con
+$\mathit{temperature} = 0.8$, que introduce estocasticidad en
+la selección mediante \texttt{torch.multinomial}, favoreciendo
+la diversidad de las transcripciones generadas. En ambos casos
+el proceso se detiene al predecir el \textit{token}
+\texttt{<eos>} (índice~310) o al alcanzar la longitud máxima
+de generación.
+
+% -----------------------------------------------------------
+\section{Resumen de la arquitectura y flujo de datos}
+\label{sec:resumen_arquitectura}
+% -----------------------------------------------------------
+
+El flujo de datos completo a través del modelo fue introducido esquemáticamente en la Figura~\ref{fig:encoder_decoder} del
+Capítulo~\ref{cap:estado_del_arte}. A nivel de arquitectura global,
+el codificador \newline\texttt{AudioSparsifinerEncoder} ocupa el bloque
+izquierdo del diagrama, produciendo la memoria $\mathbf{M}$ que
+el decodificador consume mediante atención cruzada. El mecanismo
+interno del codificador —proyección de entrada, bloques Sparsifiner
+apilados y predictor de máscara— queda descrito con precisión en
+las ecuaciones de las Secciones~\ref{sec:encoder_sparsifiner}
+y~\ref{sec:mask_predictor}. En síntesis, la arquitectura \texttt{Magdalena v1.0}
+se caracteriza por los siguientes aspectos diferenciales respecto a un Transformer
+estándar:
+
+\begin{itemize}
+    \item \textbf{Codificador asimétrico con atención dispersa:} El codificador aplica
+    atención dispersa instancia-dependiente mediante el mecanismo Sparsifiner, reduciendo
+    el coste de atención efectivo de $\mathcal{O}(T^2)$ a $\mathcal{O}(r_{attn} \cdot T^2)$
+    con $r_{attn} = 0.25$, sin comprometer la capacidad del modelo para capturar
+    dependencias globales seleccionadas dinámicamente.
+
+    \item \textbf{Predicción de máscara de bajo rango:} La selección de conexiones
+    relevantes se realiza mediante una factorización de bajo rango de la matriz de atención
+    con factores de compresión $r_c = 2$ (canal) y $r_N = 64$ (temporal), lo que mantiene
+    el coste del predictor en $\mathcal{O}(T \cdot k)$ con $k = T / r_N \ll T$.
+
+    \item \textbf{Compatibilidad con longitud variable:} La implementación introduce
+    recorte dinámico (\textit{slicing}) de las matrices de proyección del predictor,
+    eliminando la restricción de longitud fija del Sparsifiner original y permitiendo
+    procesar fragmentos de audio de duración arbitraria sin necesidad de \textit{padding}
+    hasta $T_{max}$.
+
+    \item \textbf{Decodificador estándar con atención cruzada:} El decodificador emplea
+    la arquitectura Transformer canónica con autoatención enmascarada y atención cruzada
+    hacia la memoria del codificador, garantizando la coherencia gramatical de la
+    secuencia de \textit{tokens} MIDI generada mediante la máscara causal.
+\end{itemize}
+
+En conjunto, estas decisiones de diseño permiten que
+\texttt{Magdalena v1.0} procese secuencias de audio de hasta
+82 segundos con los recursos de cómputo disponibles, algo
+inviable con un Transformer estándar a igual configuración.
+La reducción de dimensionalidad respecto a la arquitectura
+de referencia ($d = 256$ frente a $d = 512$) es una concesión
+a las limitaciones de hardware que el mecanismo Sparsifiner
+compensa parcialmente al reducir el coste cuadrático de la
+atención. El Capítulo~\ref{cap:implementacion} describe los
+detalles de entrenamiento y la estrategia experimental adoptada
+para validar estas elecciones dentro de las restricciones
+existentes.

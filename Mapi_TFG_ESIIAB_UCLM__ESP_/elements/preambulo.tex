@@ -1,0 +1,162 @@
+% -------------------------------
+% Plantilla del TFG en la ESIIAB-UCLM. Versión 0.0 (Preliminar)
+%
+% Luis de la Ossa
+% 
+% Compilar con XeLaTeX 
+% -------------------------------
+
+
+% -------------------------------
+% Segunda portada
+% -------------------------------
+\cleardoublepage
+\setcounter{page}{1} \null
+
+\begin{textblock*}{3cm}(3cm,2cm) 
+\begin{flushleft}
+\includegraphics[height=2cm]{figs/logouclm.png}
+\end{flushleft}
+\end{textblock*}
+
+
+\begin{textblock*}{2.5cm}(15.95cm,2.45cm) 
+\begin{flushright}
+\includegraphics[height=1.4cm]{figs/euroinf.jpg}
+\end{flushright}
+\end{textblock*}
+
+\begin{textblock*}{2cm}(14cm,2cm)  % Corrige la posición porque la imagen tiene margen
+\begin{flushright}
+\includegraphics[height=2cm]{figs/logoesii.png}
+\end{flushright}
+\end{textblock*}
+
+
+
+\begin{textblock*}{\textwidth}(3cm,8cm) 
+\begin{center}\doublespacing 
+{\fontsize{18pt}{4pt}\selectfont \bft{TRABAJO FIN DE GRADO}}
+
+\medskip
+{\fontsize{18pt}{4pt}\selectfont Grado en Ingeniería Informática}
+
+\medskip
+{\fontsize{16pt}{4pt}\selectfont \espec}
+\end{center}
+\end{textblock*}
+
+
+\begin{textblock*}{\textwidth}(3cm,14cm) 
+\begin{center}\setstretch{2}
+{\fontsize{22pt}{4pt}\selectfont \bft{\titulo}}
+\end{center}
+\end{textblock*}
+
+
+\begin{textblock*}{\textwidth}(3cm,20.5cm) 
+\begin{flushleft}\doublespacing
+{\fontsize{14pt}{4pt}\selectfont \bft{Autor:} \autor}
+
+{\fontsize{14pt}{4pt}\selectfont \bft{Tutores:} \director}
+
+\end{flushleft}
+\end{textblock*}
+
+
+\begin{textblock*}{\linewidth}(3cm,25cm) 
+\begin{flushright}
+{\fontsize{14pt}{4pt}\selectfont \fecha}
+\end{flushright}
+\end{textblock*}
+
+
+% -------------------------------
+% Dedicatoria
+% -------------------------------
+\cleardoublepage
+\thispagestyle{empty}
+
+\vspace*{9cm}  
+\begin{flushright} \em 
+A mi familia, \\
+tanto por sangre como por elección.
+\end{flushright}
+
+
+% -------------------------------
+% Declaración de autoría
+% -------------------------------
+\cleardoublepage
+\thispagestyle{plain}
+\begin{center}
+\Large{\bft{Declaración de autoría}}
+\end{center}
+\vskip1cm
+
+Yo, María Piedad Castex Sierra, con DNI 20514506R, declaro que soy el único autor del trabajo fin de grado titulado ``Transcripción automática de música de piano a
+partitura usando aprendizaje profundo'', que el citado trabajo no infringe las leyes en vigor sobre propiedad intelectual, y que todo el material no original contenido en dicho trabajo está apropiadamente atribuido a sus legítimos autores.
+
+\vspace*{2cm}
+\begin{center}
+Albacete, a \quad \ldots \quad de \quad \ldots \quad de 2026
+
+\vskip3cm
+
+Fdo.: \autor
+\end{center}
+
+
+% -------------------------------
+% Resumen
+% -------------------------------
+\cleardoublepage
+\thispagestyle{plain}
+\begin{center}
+\Large{\bft{Resumen}}
+\end{center}
+\vskip1cm
+
+La transcripción automática de música (\textit{Automatic Music
+Transcription}, AMT) consiste en convertir una señal de audio en una
+representación simbólica estructurada. En el caso del piano
+polifónico, la superposición de notas simultáneas, el uso del pedal
+de resonancia y la amplia gama dinámica del instrumento hacen de esta
+tarea uno de los problemas abiertos más exigentes dentro de la
+Recuperación de Información Musical.
+
+El presente Trabajo Fin de Grado diseña, implementa y evalúa
+\texttt{Magdalena v1.0}, un sistema de AMT para piano que formula el
+problema como una tarea de traducción de secuencia a secuencia. El
+sistema transforma grabaciones de audio en secuencias de
+311~\textit{tokens} que codifican el tono, el inicio, la duración y
+la dinámica de cada evento musical, mediante una arquitectura
+Encoder-Decoder asimétrica: el codificador integra el mecanismo de
+atención dispersa instancia-dependiente Sparsifiner, adaptado al
+dominio del audio de longitud variable; el decodificador emplea la
+arquitectura Transformer canónica con atención cruzada y
+decodificación autorregresiva.
+
+El modelo se entrenó sobre el corpus MAESTRO v3.0.0
+($\approx$200~horas de interpretaciones de piano clásico) en tres
+configuraciones experimentales. La evaluación sobre el conjunto de
+prueba reporta valores de F1 de \textit{onset} de hasta 0.103,
+demostrando la viabilidad de la arquitectura propuesta dentro de las
+restricciones de hardware disponibles.
+
+% -------------------------------
+% Agradecimientos
+% -------------------------------
+\cleardoublepage
+\thispagestyle{plain}
+\begin{center}
+\Large{\bft{Agradecimientos}}
+\end{center}
+\vskip1cm
+Es un grandisimo orgullo para mi cerrar la etapa universitaria con un trabajo como este, pero lo es más haberla pasado y haber conocido a las maravillosos y genuinas personas que tengo la suerte de llamar amigos. Aunque feliz por finalmente conseguir lo que me propuse hace 5 años, no seré capaz de no echar de menos estos años, donde hubo espacio tanto para lo académico como para algunas de las mejores experiencias, historias, amor y risas que me voy a echar en la vida (mencion especial para Carlos, Nuria, Emilio, Curtínez, Libanio y Brahim).
+
+
+Por último, pero no por ello menos importante, gracias a mis padres y mi hermano, que llevan aguantandome desde el glorioso día de mi nacimiento. Sin ellos apoyandome en todo lo que me ha interesado, es muy probable que no estuviese escribiendo esto. Y ahora sé todo lo que me habría perdido. 
+
+
+\textbf{Por ellos y para ellos}, gracias por acompañarme y por hacer del viaje una historia digna de contar.
