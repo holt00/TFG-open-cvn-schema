@@ -163,6 +163,16 @@ específicos:
   puede emplearse en flujos reales de gestión curricular y generación de
   artefactos de salida.
 
+  \item \textbf{Diseñar mecanismos de importación deterministas y asistidos por
+  modelos de lenguaje.} El objetivo consiste en incorporar a Open CVN currículos ya
+  existentes en CVN XML o en CVN PDF, priorizando siempre una vía de extracción
+  determinista y reservando el uso de modelos de lenguaje de gran tamaño (del
+  inglés, \textit{Large Language Models}, en adelante LLM) como alternativa
+  opcional para los casos en que la vía determinista no resulta suficiente. Esta
+  vía asistida debe activarse de forma explícita, mantenerse trazable y quedar
+  sujeta a validación posterior frente al formato Open CVN antes de aceptarse como
+  resultado válido.
+
   \item \textbf{Verificar el sistema mediante pruebas reproducibles.} La
   evaluación se apoya en pruebas automatizadas, comandos documentados y flujos de
   validación extremo a extremo, con el fin de establecer las garantías reales del
@@ -187,7 +197,8 @@ capítulos principales en los que se desarrollan.
     OE6 & Generación de modelos de dominio y artefactos conceptuales & 5 \\
     OE7 & Definición del formato Open CVN JSON & 6 \\
     OE8 & Parser, validador, almacenamiento y exportación & 6 \\
-    OE9 & Verificación automatizada y flujos reproducibles & 7 \\
+    OE9 & Importación determinista y asistida por LLM & 6 \\
+    OE10 & Verificación automatizada y flujos reproducibles & 7 \\
     \hline
   \end{tabular}
   \caption{Relación entre objetivos específicos y capítulos del documento.}
@@ -202,9 +213,19 @@ para trabajar con información curricular estructurada. El trabajo incluye el
 análisis del paquete oficial CVN empleado como fuente, la generación de bindings
 estructurales, la normalización de metadatos, la definición de reglas semánticas,
 la generación de modelos de dominio, la especificación de un formato JSON propio y
-la implementación de herramientas de validación, almacenamiento y exportación.
-Estas tareas se han organizado de forma que cada capa conserve trazabilidad hacia
-las fuentes originales y pueda verificarse mediante procedimientos reproducibles.
+la implementación de herramientas de validación, importación, almacenamiento y
+exportación. Estas tareas se han organizado de forma que cada capa conserve
+trazabilidad hacia las fuentes originales y pueda verificarse mediante
+procedimientos reproducibles.
+
+Dentro del alcance se incluye también la importación de currículos ya existentes
+hacia Open CVN a partir de CVN XML y de CVN PDF. Esta importación se resuelve en
+primer lugar mediante extracción determinista y solo recurre, de forma opcional y
+explícitamente autorizada, a modelos de lenguaje (LLM) cuando la vía determinista
+no permite recuperar información suficiente. El resultado de esta vía asistida no
+se presenta como una validación semántica completa del currículo importado, sino
+como una propuesta que debe superar la validación del formato Open CVN y quedar
+disponible para su revisión antes de considerarse definitiva.
 
 Queda fuera del alcance garantizar una conversión completa y sin pérdida de todos
 los currículos CVN existentes, ya que dicha garantía requeriría cubrir la totalidad
@@ -289,6 +310,12 @@ elementos:
   formatos, lo que permite comprobar la utilidad práctica de la representación
   definida.
 
+  \item \textbf{Importación determinista y asistida por LLM:} se implementan
+  vías de importación desde CVN XML y CVN PDF hacia Open CVN, priorizando la
+  extracción determinista y reservando el uso de modelos de lenguaje de gran
+  tamaño como alternativa opcional, trazable y sujeta a validación posterior para
+  los casos en que la extracción determinista resulta insuficiente.
+
   \item \textbf{Verificación automatizada:} se incorporan pruebas y flujos
   reproducibles para evaluar la consistencia de los artefactos generados y el
   comportamiento de las capas principales del sistema.
@@ -326,8 +353,9 @@ solución desarrollada:
   conceptuales.
 
   \item \textbf{Capítulo 6: Formato Open CVN, validación y herramienta de
-  gestión.} Presenta el formato JSON propuesto, los parsers, validadores,
-  mecanismos de almacenamiento local y flujos de exportación.
+  gestión.} Presenta el formato JSON propuesto, los parsers, validadores, las
+  vías de importación determinista y asistida por LLM, los mecanismos de
+  almacenamiento local y los flujos de exportación.
 
   \item \textbf{Capítulo 7: Evaluación, resultados y discusión.} Describe la
   estrategia de verificación, los resultados obtenidos y las garantías reales que

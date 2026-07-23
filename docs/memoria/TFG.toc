@@ -1,11 +1,22 @@
 \xpginauxfiletrue 
 \selectlanguage *{spanish}
-\contentsline {chapter}{\numberline {1}Introduccion, motivacion y objetivos}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {1}Introducción, motivación y objetivos}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Contexto}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Motivacion}{1}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Objetivos}{1}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Alcance del proyecto}{2}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Competencias desarrolladas}{2}{section.1.5}%
-\contentsline {section}{\numberline {1.6}Contribuciones}{3}{section.1.6}%
-\contentsline {section}{\numberline {1.7}Estructura de la memoria}{3}{section.1.7}%
+\contentsline {section}{\numberline {1.2}Motivación}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objetivos}{3}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Alcance del proyecto}{5}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Competencias desarrolladas}{6}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Contribuciones}{7}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Estructura del documento}{8}{section.1.7}%
+\contentsline {chapter}{\numberline {2}Antecedentes y estado del arte}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Representación de información curricular compleja}{11}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Interoperabilidad curricular y sistemas de información de investigación}{12}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Formatos de serialización y validación}{14}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}XML y XSD}{14}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}JSON y JSON Schema}{15}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}JSON-LD y YAML}{15}{subsection.2.3.3}%
+\contentsline {section}{\numberline {2.4}Modelado conceptual y generación de artefactos}{16}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Síntesis del estado del arte}{18}{section.2.5}%
+\contentsline {chapter}{Referencia bibliográfica}{20}{appendix*.11}%
+\xpginauxfilefalse 
 \contentsfinish 

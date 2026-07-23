@@ -30,9 +30,44 @@ documentacion oficial, resultados verificables o anexos.
 - El tono debe ser academico, tecnico y sobrio. La memoria debe presentar el
   trabajo como una contribucion de Computacion, no como una simple aplicacion de
   gestion.
-- La aplicacion CLI debe presentarse como una herramienta funcional y demostrador
-  del enfoque, pero la aportacion principal es la arquitectura computacional para
-  representar, validar, transformar y exportar informacion curricular compleja.
+- La redacción final debe emplear un lenguaje formal y académico en todo momento.
+  Deben evitarse formulaciones coloquiales, ambiguas o propias de notas de trabajo.
+- Antes de redactar, reescribir, ampliar o revisar contenido LaTeX de los
+  capitulos, debe usarse la skill local `tfg-mapi-style` como guia de calidad de
+  redaccion academica. Esta regla no autoriza copiar literalmente el estilo,
+  formulas o contenido de ningun documento externo; la skill debe emplearse para
+  asimilar criterios de claridad, progresion argumental, formalidad y prudencia
+  tecnica.
+- La memoria debe estar escrita en español correcto, con tildes y grafías
+  normativas. En particular, deben escribirse correctamente términos como
+  `España`, `español`, `también`, `información`, `currículo`, `académico`,
+  `capítulo`, `validación` o `transformación` en el texto LaTeX final.
+- El proyecto LaTeX debe compilarse con soporte explícito de español. La
+  configuración vigente usa XeLaTeX con `polyglossia` y
+  `\setmainlanguage{spanish}` en `docs/memoria/include/configuracion.tex`; esta
+  configuración debe conservarse salvo que se sustituya por una alternativa
+  equivalente y justificada.
+- La fuente principal del documento debe ser portable en TeX Live. La versión
+  vigente usa `TeX Gyre Termes` en `docs/memoria/TFG.tex` para evitar depender de
+  fuentes del sistema no instaladas en todos los entornos.
+- Los conceptos técnicos deben introducirse antes de utilizarse como argumento. En
+  particular, no deben aparecer menciones a XML, XSD, serialización u otros
+  detalles internos de CVN antes de explicar que el CVN tratado por el proyecto no
+  se limita a un documento visual, sino que se apoya en artefactos estructurados.
+- La redaccion no debe presentar XML como la base unica del trabajo. Debe quedar
+  claro que el proyecto se basa en la norma CVN y en su ecosistema de artefactos
+  oficiales; XML es el mecanismo de representacion e intercambio utilizado por CVN
+  para serializar los datos, no el unico objeto conceptual del proyecto.
+- La aplicación CLI debe presentarse como una herramienta funcional y demostrador
+  del enfoque, pero la aportación principal es la arquitectura computacional para
+  representar, validar, transformar y exportar información curricular compleja.
+- La motivación de la memoria debe permanecer alineada con
+  `docs/descripcion_tfg_oficial.txt`: el proyecto responde a la necesidad de
+  definir una representación de bajo nivel que permita crear herramientas abiertas
+  para agilizar la creación, mantenimiento, actualización y adaptación de
+  currículos CVN en el ámbito universitario e investigador. Esta motivación debe
+  aparecer de forma explícita en la introducción y conectarse con la posibilidad
+  de evolución colaborativa del formato.
 - Las limitaciones deben explicarse de forma profesional. No deben ocultarse, pero
   deben presentarse como parte del analisis tecnico del dominio y de las garantias
   reales del sistema.
@@ -123,7 +158,7 @@ Estado inicial:
 | Capitulo | Estado |
 |---|---|
 | 1. Introduccion, motivacion y objetivos | `EN_PROCESO` |
-| 2. Antecedentes y estado del arte | `PENDIENTE` |
+| 2. Antecedentes y estado del arte | `EN_PROCESO` |
 | 3. Analisis del ecosistema CVN y propuesta de solucion | `PENDIENTE` |
 | 4. Metodologia, herramientas y arquitectura general | `PENDIENTE` |
 | 5. Implementacion del pipeline de generacion y normalizacion | `PENDIENTE` |
@@ -134,6 +169,31 @@ Estado inicial:
 ## Capitulo 1: Introduccion, motivacion y objetivos
 
 Estado: `EN_PROCESO`
+
+Estado de redaccion actual: el primer borrador completo del capitulo existe en
+`docs/memoria/chapters/ch1.tex` y esta incluido en `docs/memoria/TFG.tex`. La
+compilacion completa de la memoria con `xelatex`, `bibtex`, `xelatex` y
+`xelatex` genera `docs/memoria/TFG.pdf` sin errores bloqueantes, sin referencias
+indefinidas y sin citas indefinidas. El capitulo permanece en `EN_PROCESO` hasta
+su revisión de contenido. La introducción se ha revisado para aplicar un registro
+formal y académico, corregir grafías españolas en el texto LaTeX, presentar XML,
+XSD y la serialización oficial solo después de explicar que CVN se apoya en
+artefactos estructurados, no solo en un documento visual, y conectar la motivación
+con la necesidad oficial de herramientas abiertas que agilicen la creación,
+mantenimiento, actualización y adaptación de currículos CVN. La configuración de
+fuente del documento usa `TeX Gyre Termes`, disponible en TeX Live, en lugar de
+depender de fuentes externas del sistema. El capitulo tambien se ha reescrito con
+un registro academico mas elaborado, progresivo y prudente, siguiendo las reglas
+internas de estilo `tfg-mapi-style` sin copiar formulas textuales externas. En
+esta revisión se han alineado las competencias citadas con la descripción oficial
+del TFG: `CM1`, `CM2`, `CM5` y `CM6`. Tras una revisión de contenido posterior, el
+capítulo incorpora ahora un objetivo específico, una contribución y menciones
+explícitas en el alcance y en la estructura del documento sobre los mecanismos de
+importación deterministas y asistidos por modelos de lenguaje (LLM), alineados con
+la exigencia normativa explícita de la descripción oficial del TFG y con el
+trabajo ya implementado en las issues `#69` y `#70`. La tabla de objetivos y
+capítulos se ha renumerado en consecuencia (`OE9` importación, `OE10`
+verificación).
 
 ### Objetivo del capitulo
 
@@ -179,7 +239,34 @@ conclusiones.
 
 ## Capitulo 2: Antecedentes y estado del arte
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
+
+Estado de redaccion actual: el primer borrador completo del capitulo existe en
+`docs/memoria/chapters/ch2.tex` y esta incluido en `docs/memoria/TFG.tex`. El
+capitulo se ha redactado con el registro academico definido para el documento,
+usando `tfg-mapi-style` como guia de calidad. Tras revision de alcance, el
+capitulo evita repetir la introduccion general del Capitulo 1 y no desarrolla el
+ecosistema CVN, que queda reservado para el Capitulo 3. CVN se mantiene solo como
+referencia contextual minima dentro del estado del arte. El capitulo se ha
+ampliado con fuentes oficiales y documentacion primaria sobre XML 1.0, XSD 1.1,
+JSON Schema, Pydantic, JSON-LD 1.1, ORCID y RO-Crate, e incorpora una indicacion
+explicita de que UML se usara como notacion principal para representar el esquema
+conceptual. La compilacion completa de la memoria con `xelatex`, `bibtex`,
+`xelatex` y `xelatex` genera `docs/memoria/TFG.pdf` con 40 paginas, sin errores
+bloqueantes, sin referencias indefinidas y sin citas indefinidas. El capitulo
+permanece en `EN_PROCESO` hasta su revision de contenido.
+
+Tras una primera revision de contenido, se depuraron dos entradas bibliograficas
+sin cita real (`w3c_xml`, `json_ld_org`) y se incorporaron dos de los elementos
+recomendados pendientes: una tabla comparativa de modelos de interoperabilidad
+curricular (CERIF, VIVO, ROH) en la seccion de interoperabilidad y una tabla
+comparativa de formatos de serializacion y validacion (XML/XSD, JSON+JSON Schema,
+JSON-LD, YAML) en la seccion correspondiente. El diagrama UML reducido previsto
+para este capitulo se pospone deliberadamente a un capitulo posterior, una vez
+exista el modelo conceptual completo del dominio del que derivarlo. La
+compilacion completa de la memoria con `xelatex`, `bibtex`, `xelatex` y `xelatex`
+tras estos cambios genera `docs/memoria/TFG.pdf` con 42 paginas, sin errores
+bloqueantes, sin referencias indefinidas y sin citas indefinidas.
 
 ### Objetivo del capitulo
 
@@ -192,9 +279,6 @@ arquitectura propia, abierta y validable.
 
 - Gestion de curriculos academicos e investigadores como problema de
   representacion de informacion compleja.
-- Funcion de CVN y FECYT en el contexto academico espanol.
-- Papel del XML embebido en documentos CVN PDF y sus implicaciones para el
-  procesamiento automatico.
 - Interoperabilidad curricular y sistemas de informacion de investigacion.
 - Modelos conceptuales y semanticos relacionados:
   - CERIF
@@ -211,17 +295,20 @@ arquitectura propia, abierta y validable.
   - UML/OCL
   - BESSER
   - Pydantic
+- Uso de UML como notacion principal para representar el esquema conceptual del
+  dominio antes de su materializacion en modelos ejecutables y esquemas de
+  validacion.
 - Discusion razonada de alternativas:
-  - por que no basta con copiar CVN-XML como modelo interno
   - por que no se adopta una infraestructura semantica pesada como nucleo del TFG
   - por que JSON, JSON Schema y Pydantic encajan con los objetivos practicos del
     proyecto
-  - por que la trazabilidad hacia CVN es necesaria para no perder semantica
 
 ### Elementos recomendados
 
 - Tabla comparativa de formatos de serializacion y validacion.
 - Tabla comparativa de modelos o enfoques conceptuales.
+- Diagrama UML reducido que ilustre el papel del modelado conceptual en la
+  solucion.
 - Resumen final que conecte los antecedentes con la propuesta de solucion.
 
 ## Capitulo 3: Analisis del ecosistema CVN y propuesta de solucion
@@ -237,6 +324,7 @@ propuesta Open CVN.
 ### Contenido recomendado
 
 - Descripcion del paquete oficial CVN usado como fuente del proyecto.
+- Funcion de CVN y FECYT en el contexto academico espanol.
 - Fuentes principales analizadas:
   - `CVN.xsd`
   - `SpecificationManual.xml`
@@ -249,6 +337,8 @@ propuesta Open CVN.
   - `Entity.xml`
   - `Thesaurus.xml`
 - Papel de cada fuente dentro del sistema.
+- Papel del XML embebido en documentos CVN PDF y sus implicaciones para el
+  procesamiento automatico cuando exista informacion estructurada reutilizable.
 - Limitaciones y dificultades detectadas:
   - discrepancias entre XML y XSD en determinados artefactos
   - estructuras XSD que no se trasladan de forma perfecta a modelos Python
@@ -258,11 +348,15 @@ propuesta Open CVN.
   - referencias no resueltas o insuficientemente trazables
   - separacion insuficiente entre estructura XML y significado curricular
 - Propuesta de solucion:
+  - por que no basta con copiar CVN-XML como modelo interno
+  - por que la trazabilidad hacia CVN es necesaria para no perder semantica
   - arquitectura por capas
   - generacion reproducible desde fuentes oficiales
   - normalizacion de metadatos
   - politica semantica conservadora
   - modelos de dominio y modelo conceptual
+  - uso de UML para representar el esquema conceptual derivado del analisis del
+    dominio
   - formato Open CVN JSON
   - parser, validador y herramienta local como demostracion del flujo completo
 - Alcance y exclusiones:
@@ -275,6 +369,7 @@ propuesta Open CVN.
 - Tabla de fuentes CVN, informacion que aportan y uso dentro del proyecto.
 - Tabla de limitaciones detectadas y respuesta de diseno.
 - Diagrama que muestre la separacion entre CVN-XML y el modelo Open CVN.
+- Diagrama UML del esquema conceptual o de una parte representativa del dominio.
 
 ## Capitulo 4: Metodologia, herramientas y arquitectura general
 

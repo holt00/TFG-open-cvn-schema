@@ -2,7 +2,7 @@
 
 ## Status Date
 
-- Last updated: 2026-07-21
+- Last updated: 2026-07-22
 
 ## Completed Or Stabilized Work
 
@@ -20,6 +20,51 @@
 - the memory planning document records the agreed maximum-eight-chapter
   structure, expected content per chapter, annex plan, and chapter status markers
   (`PENDIENTE`, `EN_PROCESO`, `COMPLETADO`)
+- the first full draft of memory chapter 1 now exists at:
+  - `docs/memoria/chapters/ch1.tex`
+- the memory root file currently includes chapters 1 and 2 and compiles with the
+  local XeLaTeX/BibTeX workflow using `TeX Gyre Termes`, a TeX Live font, instead
+  of depending on unavailable system fonts such as `Calibri` or `Carlito`
+- latest memory build verification generated `docs/memoria/TFG.pdf` with 40 pages
+  and no blocking LaTeX errors, unresolved references, or unresolved citations;
+  chapters 1 and 2 remain marked `EN_PROCESO` pending content review
+- memory drafting rules now require formal academic Spanish, correct Spanish
+  orthography and accents in final LaTeX text, explicit Spanish support in the
+  LaTeX configuration, and prior explanation of XML/XSD/CVN technical concepts
+  before using them as part of the argumentation
+- chapter 1 has been revised under those rules: the introduction now uses a more
+  formal academic register, corrects Spanish orthography in the LaTeX source, and
+  introduces XML/XSD only after explaining that the CVN source used by the project
+  is supported by structured technical artifacts
+- chapter 1 is also being aligned with `docs/descripcion_tfg_oficial.txt`: the
+  motivation now explicitly mentions the need for an open, extensible, potentially
+  collaborative system that reduces the effort of creating, maintaining, updating,
+  adapting, and reusing CVN-based curricula
+- chapter 1 has now been rewritten in a more developed academic style following
+  the local `tfg-mapi-style` guidance as a writing-quality reference, without
+  copying external wording; the chapter also aligns the listed Computation
+  competences with the official TFG description (`CM1`, `CM2`, `CM5`, `CM6`)
+- the first full draft of memory chapter 2 now exists at:
+  - `docs/memoria/chapters/ch2.tex`
+- chapter 2 covers antecedents and state of the art without repeating the chapter
+  1 introduction: curricular information representation, research-information
+  interoperability models, serialization/validation formats, UML conceptual
+  representation, and model-driven artifact generation references; detailed CVN
+  ecosystem analysis is deferred to chapter 3 and chapter 2 remains marked
+  `EN_PROCESO` pending content review
+- chapter 2 has been strengthened with additional official or primary web sources
+  for XML 1.0, XSD 1.1, JSON Schema, Pydantic, JSON-LD 1.1, ORCID, and RO-Crate;
+  the latest full XeLaTeX/BibTeX build still generates `docs/memoria/TFG.pdf` with
+  40 pages and no unresolved references or citations
+- a content review pass over chapters 1 and 2 removed two uncited bibliography
+  entries (`w3c_xml`, `json_ld_org`) and added a chapter 1 objective, contribution,
+  scope note, and document-structure mention for deterministic and LLM-assisted
+  import (aligned with the official TFG brief and with the already implemented
+  issues `#69` and `#70`); chapter 2 gained the two pending recommended comparative
+  tables (interoperability models CERIF/VIVO/ROH, and serialization/validation
+  formats), while the reduced UML diagram remains deliberately deferred to a later
+  chapter; the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf`
+  with 42 pages and no unresolved references or citations
 
 ### Issue `#11`
 

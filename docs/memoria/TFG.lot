@@ -1,5 +1,11 @@
 \xpginauxfiletrue 
 \addvspace {10\p@ }
 \setforeignlanguage {spanish}
-\contentsline {table}{\numberline {1.1}{\ignorespaces Relacion entre objetivos especificos y capitulos de la memoria.}}{2}{table.caption.8}%
+\contentsline {table}{\numberline {1.1}{\ignorespaces Relación entre objetivos específicos y capítulos del documento.}}{5}{table.caption.8}%
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {2.1}{\ignorespaces Comparativa de modelos de interoperabilidad curricular relacionados con Open CVN.}}{13}{table.caption.9}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {2.2}{\ignorespaces Comparativa de formatos de serialización y validación relevantes para Open CVN.}}{17}{table.caption.10}%
+\xpginauxfilefalse 
 \contentsfinish 
