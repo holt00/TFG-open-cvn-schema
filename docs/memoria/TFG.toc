@@ -17,6 +17,12 @@
 \contentsline {subsection}{\numberline {2.3.3}JSON-LD y YAML}{15}{subsection.2.3.3}%
 \contentsline {section}{\numberline {2.4}Modelado conceptual y generación de artefactos}{17}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Síntesis del estado del arte}{18}{section.2.5}%
-\contentsline {chapter}{Referencia bibliográfica}{22}{appendix*.11}%
+\contentsline {chapter}{\numberline {3}Análisis del ecosistema CVN y propuesta de solución}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}El paquete oficial CVN como fuente del proyecto}{21}{section.3.1}%
+\contentsline {section}{\numberline {3.2}El XML embebido en los documentos CVN}{24}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Limitaciones y dificultades técnicas detectadas}{24}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Propuesta de solución: la arquitectura Open CVN}{27}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Alcance y exclusiones}{29}{section.3.5}%
+\contentsline {chapter}{Referencia bibliográfica}{32}{appendix*.15}%
 \xpginauxfilefalse 
 \contentsfinish 

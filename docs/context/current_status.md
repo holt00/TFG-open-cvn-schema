@@ -65,6 +65,24 @@
   formats), while the reduced UML diagram remains deliberately deferred to a later
   chapter; the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf`
   with 42 pages and no unresolved references or citations
+- a `[section]`-scoped `placeins` float barrier and a `\emergencystretch` typography
+  setting were added to `docs/memoria/include/configuracion.tex` to stop tables and
+  bracketed citations from drifting past section boundaries or overflowing into the
+  page margin
+- the first full draft of memory chapter 3 now exists at:
+  - `docs/memoria/chapters/ch3.tex`
+- chapter 3 covers the CVN ecosystem analysis and the Open CVN solution proposal:
+  the four core package layers plus the three auxiliary families, the embedded
+  PDF/XML source, four categories of detected technical limitations with concrete
+  evidence, the layered Open CVN architecture, and scope/exclusions; it includes
+  two figures (`docs/memoria/figs/open_cvn_source_separation.png`, a
+  memoria-specific PlantUML diagram, and
+  `docs/memoria/figs/open_cvn_presentation_overview.png`, rendered from the
+  existing issue `#44` presentation-view `.puml`) and two comparative tables
+  (CVN sources, and detected limitations vs. design response); the chapter is
+  marked `EN_PROCESO` pending content review
+- the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf` with 54
+  pages and no unresolved references, citations, or overfull boxes
 
 ### Issue `#11`
 

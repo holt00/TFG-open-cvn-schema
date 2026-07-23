@@ -159,7 +159,7 @@ Estado inicial:
 |---|---|
 | 1. Introduccion, motivacion y objetivos | `EN_PROCESO` |
 | 2. Antecedentes y estado del arte | `EN_PROCESO` |
-| 3. Analisis del ecosistema CVN y propuesta de solucion | `PENDIENTE` |
+| 3. Analisis del ecosistema CVN y propuesta de solucion | `EN_PROCESO` |
 | 4. Metodologia, herramientas y arquitectura general | `PENDIENTE` |
 | 5. Implementacion del pipeline de generacion y normalizacion | `PENDIENTE` |
 | 6. Formato Open CVN, validacion y herramienta de gestion | `PENDIENTE` |
@@ -313,7 +313,39 @@ arquitectura propia, abierta y validable.
 
 ## Capitulo 3: Analisis del ecosistema CVN y propuesta de solucion
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
+
+Estado de redaccion actual: el primer borrador completo del capitulo existe en
+`docs/memoria/chapters/ch3.tex` y esta incluido en `docs/memoria/TFG.tex`. El
+capitulo describe las cuatro capas del paquete oficial CVN (manual PDF, manual
+XML, modelo en arbol, XSD) mas las tres familias auxiliares (Entity,
+ReferenceTables/Subtypes, Thesaurus), analiza el XML embebido en los PDF CVN,
+detalla cuatro categorias de limitaciones tecnicas con evidencia concreta
+(discrepancia `<Type>` no declarada en el modelo de arbol, construcciones XSD
+que no se trasladan de forma perfecta a estructuras ejecutables, tablas
+auxiliares no siempre cerradas, referencias sin tabla equivalente y deriva de
+empaquetado), presenta la arquitectura Open CVN por capas y cierra con el
+alcance y las exclusiones. Los identificadores de issues y las rutas del
+repositorio se mantienen fuera del texto final, tal y como exige la regla de
+autocontencion.
+
+El capitulo incorpora dos figuras y dos tablas generadas especificamente para
+la memoria: `docs/memoria/figs/open_cvn_source_separation.png` (diagrama de
+separacion entre el paquete CVN y Open CVN, con fuente PlantUML propia en
+`docs/memoria/figs/open_cvn_source_separation.puml`) y
+`docs/memoria/figs/open_cvn_presentation_overview.png` (vista UML compacta
+renderizada desde el `.puml` de presentacion ya existente en
+`docs/diagrams/open_cvn_presentation_overview.puml`, issue `#44`). Las
+referencias hacia los capitulos 6 y 7, que todavia no existen como ficheros,
+se han escrito como texto literal ("Capitulo 6", "Capitulo 7") en lugar de
+`\ref{}`, siguiendo la misma convencion ya usada en los capitulos 1 y 2 para
+evitar referencias indefinidas.
+
+La compilacion completa de la memoria con `xelatex`, `bibtex`, `xelatex` y
+`xelatex` genera `docs/memoria/TFG.pdf` con 54 paginas, sin errores
+bloqueantes, sin referencias indefinidas, sin citas indefinidas y sin
+`overfull hbox`. El capitulo permanece en `EN_PROCESO` hasta su revision de
+contenido.
 
 ### Objetivo del capitulo
 

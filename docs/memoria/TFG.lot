@@ -7,5 +7,12 @@
 \contentsline {table}{\numberline {2.1}{\ignorespaces Comparativa de modelos de interoperabilidad curricular relacionados con Open CVN.}}{13}{table.caption.9}%
 \setforeignlanguage {spanish}
 \contentsline {table}{\numberline {2.2}{\ignorespaces Comparativa de formatos de serialización y validación relevantes para Open CVN.}}{17}{table.caption.10}%
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Fuentes del paquete oficial CVN analizadas y su uso en el proyecto.}}{23}{table.caption.11}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Limitaciones detectadas en el paquete oficial CVN y respuesta de diseño de Open CVN.}}{26}{table.caption.12}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
 \xpginauxfilefalse 
 \contentsfinish 
