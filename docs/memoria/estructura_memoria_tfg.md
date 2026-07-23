@@ -624,12 +624,112 @@ presentando limitaciones y lineas futuras.
   - desarrollar una interfaz grafica si se considera necesario
   - estudiar extensiones semanticas como JSON-LD
   - integracion con fuentes institucionales
+  - estudiar la incorporacion de restricciones OCL (Object Constraint Language)
+    sobre los diagramas conceptuales para expresar invariantes de dominio no
+    representables en UML puro (ver nota de investigacion mas abajo)
 
 ### Elementos recomendados
 
 - Tabla de objetivos y grado de cumplimiento.
 - Tabla de competencias y evidencias.
 - Tabla de limitaciones y trabajo futuro asociado.
+
+### Nota de investigacion: estudio sobre incorporacion de OCL en los diagramas conceptuales
+
+Esta nota registra los hallazgos de una sesion de analisis (sin modificacion de
+codigo ni de diagramas) que evaluo si anadir restricciones OCL a los diagramas
+PlantUML de `docs/diagrams/` mejoraria su claridad y legibilidad. Se deja aqui
+como base para que un desarrollo futuro del capitulo 8 (o de la propia capa de
+extraccion conceptual) pueda retomarlo sin repetir el analisis.
+
+Estado actual observado en `docs/diagrams/*.puml`:
+
+- Los diagramas ya codifican presencia y cardinalidad por atributo mediante
+  estereotipos (`<<required, single>>`, `<<optional, repeated>>`), tipado
+  conceptual (`value_object<X>`, `controlled_reference`, `date_like`,
+  `duration_like`) y multiplicidades en las composiciones.
+- Las relaciones son deliberadamente conservadoras desde el issue `#43`
+  (`docs/diagrams/README.md`, seccion "Known Scope Limits"): un diagrama de
+  clases UML solo puede expresar estructura, tipo y cardinalidad por atributo
+  aislado, no reglas que combinen varios atributos entre si.
+
+Patrones candidatos a formalizacion OCL, identificados con evidencia concreta
+en los propios `.puml`:
+
+1. Patron "valor controlado + campo `_otros`", el mas frecuente (aparece en
+   casi todas las areas): por ejemplo `modalidad_de_contrato` /
+   `modalidad_de_contrato_otros` y `tipo_de_entidad` / `tipo_de_entidad_otros`
+   en `open_cvn_professional_experience.puml`; `ambito_del_congreso` /
+   `ambito_del_congreso_otros` e `intervencion_por` / `intervencion_por_indicar`
+   en `open_cvn_research_060_part_01.puml`; `tipo_de_identificador_digital_de_autor`
+   / `tipo_de_identificador_digital_de_autor_otros` en `open_cvn_identity.puml`.
+   La regla de dominio implicita es que si el valor controlado seleccionado es
+   "Otros", el campo de texto libre deberia ser obligatorio, algo que hoy no se
+   ve porque ambos campos aparecen como `optional`. Ejemplo de invariante:
+
+   ```
+   context CargosYActividadesDesempenadosConAnterioridad
+   inv OtrosRequeridoSiTipoEsOtros:
+     self.tipo_de_entidad = TipoEntidad::Otros implies
+       self.tipo_de_entidad_otros->notEmpty()
+   ```
+
+2. Rangos de fechas: `fecha_de_inicio` y `fecha_de_finalizacion` aparecen como
+   atributos independientes sin relacion de orden expresada (por ejemplo en
+   `open_cvn_professional_experience.puml` y en `AmbitoDelCongreso` /
+   `AmbitoDelEvento` dentro de `open_cvn_research_060_part_01.puml`).
+   Invariante propuesta:
+
+   ```
+   context CargosYActividadesDesempenadosConAnterioridad
+   inv InicioAntesDeFin:
+     self.fecha_de_inicio <= self.fecha_de_finalizacion
+   ```
+
+3. Colecciones paralelas con cardinalidad implicita compartida: en
+   `EntidadesParticipantes` (`open_cvn_research_060_part_01.puml`) varios
+   atributos `repeated` (ciudad, pais, tipo de entidad por cada entidad
+   participante) deberian mantener longitudes iguales entre si, algo que UML
+   no permite anclar entre dos atributos multivaluados del mismo tipo.
+
+Hallazgo relevante sobre el estado del codigo generado: se comprobo que
+`src/generated` y `src/models/cvn/generated` no contienen ningun
+`@field_validator` ni `@model_validator`; los unicos validadores del proyecto
+estan en `src/open_cvn/parser_contract.py` y `src/open_cvn/open_cvn_models.py`,
+y no cubren estos casos. Es decir, estas reglas no estan implementadas
+actualmente ni en el codigo ni en los diagramas: formalizarlas en OCL supondria
+documentar conocimiento de dominio nuevo, inferido de la convencion de nombres
+CVN y del XSD, y no transcribir validaciones ya existentes y probadas. Cualquier
+desarrollo futuro debe tratar estas invariantes como propuestas derivadas de
+convencion, no como reglas certificadas, para mantener la misma disciplina
+conservadora que ya aplica el inventario conceptual.
+
+Recomendaciones para que un desarrollo futuro lo aborde correctamente:
+
+- No anadir las invariantes OCL a mano en los ficheros `.puml` existentes,
+  porque son salida determinista regenerada desde `ConceptualModelInventory`
+  (`docs/pipeline/conceptual_model_extraction.md`); escribirlas a mano se
+  perderia en la siguiente regeneracion del generador
+  (`cvn_codegen.conceptual_model_diagrams`).
+- La via correcta es extender el IR conceptual
+  (`src/cvn_codegen/conceptual_model_types.py`) con un nuevo registro, por
+  ejemplo `ConceptualConstraint`, y anadir al extractor
+  (`src/cvn_codegen/conceptual_model_extractor.py`) una heuristica que
+  reconozca los patrones estructurales anteriores (pares campo/`campo_otros`,
+  pares de fechas inicio/fin) en lugar de inventar semantica libre no
+  respaldada por evidencia.
+- Incorporar las invariantes solo en las vistas de referencia (no en las
+  vistas readable ni en la presentation), como bloques de nota junto a cada
+  entidad, siguiendo la convencion ya existente de notas locales de
+  "controlled references" descrita en `docs/diagrams/README.md`.
+- Evitar generar una invariante por cada ocurrencia del patron `_otros` para
+  no agravar el problema de diagramas sobredimensionados ya detectado en el
+  issue `#71` (`docs/diagrams/README.md` documenta PNGs como
+  `open_cvn_research_060.png` a 3660x1571 px); es preferible documentar la
+  regla generica una vez y referenciarla desde cada entidad afectada.
+- Valorar si la ausencia de validadores detectada debe alimentar tambien un
+  hotfix o issue de endurecimiento (hardening) del pipeline de generacion de
+  modelos, y no unicamente la documentacion conceptual.
 
 ## Anexos previstos
 
