@@ -41,6 +41,15 @@
 
 
 % -------------------------------
+% Ajuste de justificación de párrafos
+% -------------------------------
+% Evita que palabras, citas u otros elementos no divisibles (p. ej. "~\cite{...}")
+% se salgan del margen derecho cuando no caben en la línea: en el último recurso,
+% permite estirar ligeramente los espacios en vez de desbordar el texto.
+\setlength{\emergencystretch}{3em}
+
+
+% -------------------------------
 % Esquema de colores
 % -------------------------------
 % Paquete para la definición de colores
@@ -111,7 +120,7 @@
 % Gestión de elementos flotantes
 % -------------------------------
 % Para forzar a que las figuras aparezcan antes del fin de una sección.
-%\usepackage[section]{placeins}
+\usepackage[section]{placeins}
 
 % Gestión de títulos de los elementos flotantes
 \usepackage{caption}
