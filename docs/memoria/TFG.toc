@@ -23,6 +23,15 @@
 \contentsline {section}{\numberline {3.3}Limitaciones y dificultades técnicas detectadas}{24}{section.3.3}%
 \contentsline {section}{\numberline {3.4}Propuesta de solución: la arquitectura Open CVN}{27}{section.3.4}%
 \contentsline {section}{\numberline {3.5}Alcance y exclusiones}{29}{section.3.5}%
-\contentsline {chapter}{Referencia bibliográfica}{32}{appendix*.15}%
+\contentsline {chapter}{\numberline {4}Metodología, herramientas y arquitectura general}{31}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Metodología de trabajo}{31}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Herramientas empleadas}{32}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Arquitectura general por capas}{35}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Fuente oficial CVN}{35}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Generación estructural y normalización}{35}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Dominio, modelo conceptual y formato}{36}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Herramienta local}{37}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}Contratos entre capas y razonamiento arquitectónico}{38}{section.4.4}%
+\contentsline {chapter}{Referencia bibliográfica}{41}{appendix*.18}%
 \xpginauxfilefalse 
 \contentsfinish 

@@ -160,7 +160,7 @@ Estado inicial:
 | 1. Introduccion, motivacion y objetivos | `EN_PROCESO` |
 | 2. Antecedentes y estado del arte | `EN_PROCESO` |
 | 3. Analisis del ecosistema CVN y propuesta de solucion | `EN_PROCESO` |
-| 4. Metodologia, herramientas y arquitectura general | `PENDIENTE` |
+| 4. Metodologia, herramientas y arquitectura general | `EN_PROCESO` |
 | 5. Implementacion del pipeline de generacion y normalizacion | `PENDIENTE` |
 | 6. Formato Open CVN, validacion y herramienta de gestion | `PENDIENTE` |
 | 7. Evaluacion, resultados y discusion | `PENDIENTE` |
@@ -405,7 +405,53 @@ propuesta Open CVN.
 
 ## Capitulo 4: Metodologia, herramientas y arquitectura general
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
+
+Estado de redaccion actual: el primer borrador completo del capitulo existe en
+`docs/memoria/chapters/ch4.tex` y esta incluido en `docs/memoria/TFG.tex`. El
+capitulo describe la metodologia en cinco fases (analisis inicial, exploracion
+de artefactos oficiales, diseno incremental de capas, implementacion
+reproducible, verificacion automatizada) con documentacion continua de
+decisiones y limitaciones como criterio transversal; justifica con cita
+bibliografica cada herramienta empleada (Python, `uv`, `xsdata` + extension
+Pydantic, Pydantic, JSON Schema, SQLite, Jinja, `pytest` + `pytest-xdist`, Git y
+GitHub Actions); presenta la arquitectura general por capas agrupada en cuatro
+bloques con un diagrama PlantUML propio de la memoria y su correspondencia con
+los modulos reales del repositorio; y cierra explicando los contratos entre
+capas y el razonamiento arquitectonico (capa estructural como fidelidad hacia
+el XML oficial, sin limpieza semantica manual sobre codigo generado). A
+diferencia de los capitulos 1-3, este capitulo si nombra explicitamente rutas
+del repositorio (`src/generated/`, `src/cvn_codegen/`, `src/models/cvn/`,
+`schemas/`, `src/open_cvn/`, `src/open_cvn_app/`), porque su contenido
+recomendado lo exige de forma explicita; no se mencionan en cambio numeros de
+issue o hotfix ni documentos internos de planificacion.
+
+Se anadieron seis entradas bibliograficas nuevas a `docs/memoria/bib/ref.bib`
+(`xsdata_docs`, `uv_docs`, `pytest_docs`, `sqlite_docs`, `jinja_docs`,
+`github_actions_docs`), todas citadas en el propio capitulo. El diagrama de
+arquitectura se genero como PlantUML propio de la memoria en
+`docs/memoria/figs/open_cvn_layered_architecture.puml`, renderizado a
+`docs/memoria/figs/open_cvn_layered_architecture.png`. Las referencias a los
+capitulos 5 y 7, que todavia no existen como ficheros, se escribieron como
+texto literal en lugar de `\ref{}`, siguiendo la misma convencion ya usada en
+capitulos anteriores.
+
+La compilacion completa de la memoria con `xelatex`, `bibtex`, `xelatex` y
+`xelatex` genera `docs/memoria/TFG.pdf` con 63 paginas, sin errores
+bloqueantes, sin referencias indefinidas, sin citas indefinidas y sin
+`overfull hbox`. El capitulo permanece en `EN_PROCESO` hasta su revision de
+contenido.
+
+Tras una revision de claridad, la seccion 4.3 (arquitectura general por capas)
+se reestructuro en cuatro subsecciones numeradas (4.3.1 a 4.3.4, una por
+bloque de la figura), cada una con un desglose en lista de las etapas
+concretas que agrupa (entrada, proceso, salida y modulo responsable). Esto
+sustituye los dos parrafos densos originales por una explicacion mas granular
+sin invadir el detalle de implementacion reservado al Capitulo 5. El parrafo
+de transicion hacia la Tabla 4.2 se simplifico para evitar repetir la
+separacion de modulos ya explicada en las subsecciones. La compilacion tras
+este cambio sigue generando `docs/memoria/TFG.pdf` con 63 paginas, sin
+errores, referencias, citas indefinidas ni `overfull hbox`.
 
 ### Objetivo del capitulo
 

@@ -14,5 +14,11 @@
 \contentsline {table}{\numberline {3.2}{\ignorespaces Limitaciones detectadas en el paquete oficial CVN y respuesta de diseño de Open CVN.}}{26}{table.caption.12}%
 \setforeignlanguage {spanish}
 \setforeignlanguage {spanish}
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Herramientas empleadas en el proyecto y justificación de su uso.}}{34}{table.caption.15}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Módulos del repositorio y responsabilidades dentro de la arquitectura Open CVN.}}{37}{table.caption.17}%
 \xpginauxfilefalse 
 \contentsfinish 

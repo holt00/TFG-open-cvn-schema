@@ -83,6 +83,27 @@
   marked `EN_PROCESO` pending content review
 - the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf` with 54
   pages and no unresolved references, citations, or overfull boxes
+- the first full draft of memory chapter 4 now exists at:
+  - `docs/memoria/chapters/ch4.tex`
+- chapter 4 covers the methodology (five phases, with continuous documentation
+  of decisions and limitations as a cross-cutting rule), a tool-justification
+  table citing official documentation for each tool (Python/`uv`, `xsdata` plus
+  its Pydantic extension, Pydantic, JSON Schema, SQLite, Jinja, `pytest` plus
+  `pytest-xdist`, Git and GitHub Actions), the general layered architecture with
+  a new memoria-specific PlantUML figure
+  (`docs/memoria/figs/open_cvn_layered_architecture.png`) grouped into four
+  blocks mapped to real repository modules, a repository-module responsibility
+  table, and a closing section on inter-layer contracts and architectural
+  reasoning; unlike chapters 1-3, this chapter explicitly names repository
+  paths (`src/generated/`, `src/cvn_codegen/`, `src/models/cvn/`, `schemas/`,
+  `src/open_cvn/`, `src/open_cvn_app/`) because its recommended content requires
+  it, while still avoiding issue/hotfix numbers; the chapter is marked
+  `EN_PROCESO` pending content review
+- six new bibliography entries were added to `docs/memoria/bib/ref.bib`
+  (`xsdata_docs`, `uv_docs`, `pytest_docs`, `sqlite_docs`, `jinja_docs`,
+  `github_actions_docs`), all cited in chapter 4
+- the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf` with 63
+  pages and no unresolved references, citations, or overfull boxes
 
 ### Issue `#11`
 

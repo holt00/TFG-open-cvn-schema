@@ -1,5 +1,11 @@
 \begin{thebibliography}{}
 
+\bibitem[{Astral}, 2026]{uv_docs}
+{Astral} (2026).
+\newblock {uv}: An extremely fast python package and project manager.
+\newblock \url{https://docs.astral.sh/uv/}.
+\newblock Accedido: 2026-07-23.
+
 \bibitem[{BESSER}, 2026]{besser_pydantic}
 {BESSER} (2026).
 \newblock Pydantic generator - {BESSER} documentation.
@@ -30,6 +36,12 @@
 \newblock Norma {CVN}.
 \newblock \url{https://cvn.fecyt.es/}.
 \newblock Accedido: 2026-02-16.
+
+\bibitem[{GitHub}, 2026]{github_actions_docs}
+{GitHub} (2026).
+\newblock {GitHub Actions} documentation.
+\newblock \url{https://docs.github.com/en/actions}.
+\newblock Accedido: 2026-07-23.
 
 \bibitem[{JSON Schema}, 2026]{json_schema_overview}
 {JSON Schema} (2026).
@@ -67,6 +79,12 @@
 \newblock \url{https://info.orcid.org/what-is-orcid/}.
 \newblock Accedido: 2026-07-22.
 
+\bibitem[{Pallets Projects}, 2026]{jinja_docs}
+{Pallets Projects} (2026).
+\newblock Jinja documentation.
+\newblock \url{https://jinja.palletsprojects.com/}.
+\newblock Accedido: 2026-07-23.
+
 \bibitem[{Proyecto HERCULES}, 2026]{roh_documentation}
 {Proyecto HERCULES} (2026).
 \newblock Research ontology for hercules ({ROH}).
@@ -79,11 +97,23 @@
 \newblock \url{https://docs.pydantic.dev/latest/}.
 \newblock Accedido: 2026-07-22.
 
+\bibitem[{pytest}, 2026]{pytest_docs}
+{pytest} (2026).
+\newblock pytest documentation.
+\newblock \url{https://docs.pytest.org/en/stable/}.
+\newblock Accedido: 2026-07-23.
+
 \bibitem[{RO-Crate Community}, 2024]{ro_crate}
 {RO-Crate Community} (2024).
 \newblock Research object crate ({RO-Crate}).
 \newblock \url{https://www.researchobject.org/ro-crate/}.
 \newblock Accedido: 2026-07-22.
+
+\bibitem[{SQLite}, 2026]{sqlite_docs}
+{SQLite} (2026).
+\newblock {SQLite} home page.
+\newblock \url{https://www.sqlite.org/index.html}.
+\newblock Accedido: 2026-07-23.
 
 \bibitem[{Universidad de Murcia}, 2026]{hercules_ontologias}
 {Universidad de Murcia} (2026).
@@ -114,6 +144,12 @@
 \newblock {JSON-LD} 1.1: A {JSON}-based serialization for linked data.
 \newblock \url{https://www.w3.org/TR/json-ld11/}.
 \newblock W3C Recommendation, accedido: 2026-07-22.
+
+\bibitem[{xsdata}, 2026]{xsdata_docs}
+{xsdata} (2026).
+\newblock {xsdata} documentation.
+\newblock \url{https://xsdata.readthedocs.io/en/latest/}.
+\newblock Accedido: 2026-07-23.
 
 \bibitem[{YAML.org}, 2026]{yaml_org}
 {YAML.org} (2026).
