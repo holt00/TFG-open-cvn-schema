@@ -32,6 +32,52 @@
 \contentsline {subsection}{\numberline {4.3.3}Dominio, modelo conceptual y formato}{36}{subsection.4.3.3}%
 \contentsline {subsection}{\numberline {4.3.4}Herramienta local}{37}{subsection.4.3.4}%
 \contentsline {section}{\numberline {4.4}Contratos entre capas y razonamiento arquitectónico}{38}{section.4.4}%
-\contentsline {chapter}{Referencia bibliográfica}{41}{appendix*.18}%
+\contentsline {chapter}{\numberline {5}Implementación del pipeline de generación y normalización}{39}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Generación estructural}{39}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Normalización de metadatos por código CVN}{40}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Resolución de referencias auxiliares}{40}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Política semántica}{41}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Formas semánticas reconocidas}{42}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Enumeración cerrada frente a catálogo abierto}{43}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Presencia, nomenclatura y traza}{43}{subsection.5.4.3}%
+\contentsline {section}{\numberline {5.5}Generación de modelos de dominio y del modelo conceptual}{43}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Generación de JSON Schema y trazabilidad}{44}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Síntesis de las etapas del pipeline}{45}{section.5.7}%
+\contentsline {chapter}{\numberline {6}Formato Open CVN, validación y herramienta de gestión}{47}{chapter.6}%
+\contentsline {section}{\numberline {6.1}El formato Open CVN JSON}{47}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Parser y validador}{48}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Importación de currículos existentes}{50}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Herramienta local de gestión}{50}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Alcance funcional y garantías}{53}{section.6.5}%
+\contentsline {chapter}{\numberline {7}Evaluación, resultados y discusión}{55}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Diseño de la evaluación}{55}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Niveles de evaluación}{56}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Comando de verificación y resultados}{57}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Discusión de garantías y limitaciones}{57}{section.7.4}%
+\contentsline {chapter}{\numberline {8}Conclusiones, competencias y trabajo futuro}{61}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Resumen del trabajo}{61}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Cumplimiento de los objetivos}{62}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Contribuciones principales}{63}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Competencias desarrolladas}{64}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Limitaciones y trabajo futuro}{65}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Conclusiones}{67}{section.8.6}%
+\contentsline {chapter}{Referencia bibliográfica}{71}{chapter*.34}%
+\contentsline {chapter}{Declaración de uso de Inteligencia Artificial}{73}{chapter*.35}%
+\contentsline {chapter}{Anexos}{75}{chapter*.36}%
+\contentsline {chapter}{Anexo A: Instalación, entorno y comandos principales}{77}{chapter*.37}%
+\contentsline {section}{\numberline {A.1}Prerrequisitos y configuración del entorno}{77}{section.8.1}%
+\contentsline {section}{\numberline {A.2}Regeneración de artefactos y verificación}{78}{section.8.2}%
+\contentsline {section}{\numberline {A.3}Recorrido completo con la herramienta local}{78}{section.8.3}%
+\contentsline {chapter}{Anexo B: Estructura completa del formato Open CVN JSON}{81}{chapter*.41}%
+\contentsline {section}{\numberline {B.1}Bloque \texttt {metadata}}{81}{section.8.1}%
+\contentsline {section}{\numberline {B.2}Bloque \texttt {curriculum}}{81}{section.8.2}%
+\contentsline {section}{\numberline {B.3}Valores de referencia controlada}{82}{section.8.3}%
+\contentsline {section}{\numberline {B.4}Definiciones del esquema}{83}{section.8.4}%
+\contentsline {chapter}{Anexo C: Desarrollo del proyecto por fases técnicas}{85}{chapter*.44}%
+\contentsline {section}{\numberline {C.1}Fase 1: generación estructural y normalización}{85}{section.8.1}%
+\contentsline {section}{\numberline {C.2}Fase 2: modelo conceptual, formato Open CVN y parser}{86}{section.8.2}%
+\contentsline {section}{\numberline {C.3}Fase 3: aplicación de gestión local}{87}{section.8.3}%
+\contentsline {section}{\numberline {C.4}Correcciones de alcance}{87}{section.8.4}%
+\contentsline {chapter}{Anexo D: Repositorio del proyecto y guía de uso}{89}{chapter*.49}%
 \xpginauxfilefalse 
 \contentsfinish 

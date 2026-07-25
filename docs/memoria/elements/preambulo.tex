@@ -94,11 +94,11 @@ manualmente
 %\end{center}
 %\vskip1cm
 
-Yo, \quad \ldots \quad, con DNI \quad \ldots \quad, declaro que soy el único autor del trabajo fin de grado titulado ``\quad \ldots \quad'', que el citado trabajo no infringe las leyes en vigor sobre propiedad intelectual, y que todo el material no original contenido en dicho trabajo está apropiadamente atribuido a sus legítimos autores.
+Yo, \quad Carlos Martínez Jaén \quad, con DNI \quad 49210989M \quad, declaro que soy el único autor del trabajo fin de grado titulado ``\quad Especificación de formato y desarrollo de herramientas para el procesamiento de currículum vitae en el ámbito académico universitario \quad'', que el citado trabajo no infringe las leyes en vigor sobre propiedad intelectual, y que todo el material no original contenido en dicho trabajo está apropiadamente atribuido a sus legítimos autores.
 
 \vspace*{2cm}
 \begin{center}
-Albacete, a \quad \ldots \quad de \quad \ldots \quad de 20 \ldots
+Albacete, a \quad 25 \quad de \quad Julio \quad de 2026
 
 \vskip3cm
 
@@ -117,7 +117,41 @@ Fdo.: \autor
 %\end{center}
 %\vskip0.5cm
 
-\lipsum[1]
+CVN constituye la norma española de referencia para representar
+información curricular de investigadores, mantenida por la Fundación
+Española para la Ciencia y la Tecnología (FECYT). Sin embargo, la
+existencia de este formato normalizado no elimina el coste de crear,
+mantener y adaptar currículos: su representación XML oficial y la
+herramienta oficial asociada no están pensadas como base directa de
+aplicaciones abiertas y ligeras, y el paquete oficial reúne fuentes
+heterogéneas (manuales, modelos técnicos y tablas auxiliares) cuyo uso
+automatizado exige un análisis previo.
+
+Este Trabajo Fin de Grado presenta Open CVN, una arquitectura
+computacional abierta que separa la interoperabilidad estructural del
+significado curricular sin perder trazabilidad hacia las fuentes
+oficiales. El sistema genera de forma reproducible bindings estructurales
+a partir de los esquemas XSD del ecosistema CVN, normaliza los metadatos
+dispersos entre el manual funcional y el modelo en árbol, aplica una
+política semántica conservadora respaldada por evidencia concreta de cada
+tabla de valores controlados, y deriva de ella un modelo de dominio y un
+modelo conceptual agnóstico. Sobre esa base se define un formato de
+intercambio abierto, Open CVN JSON, junto con un parser, un validador y
+mecanismos de importación desde CVN XML y CVN PDF, con una vía
+determinista prioritaria y un recurso opcional a modelos de lenguaje de
+gran tamaño cuando esta no resulta suficiente. Una herramienta local de
+gestión, de línea de órdenes, demuestra el uso completo de esta
+representación: almacenamiento, versionado de currículos maestro y
+derivados, y exportación a JSON, LaTeX y PDF.
+
+El sistema se evalúa mediante una batería de 488 pruebas automatizadas y
+reproducibles, organizada según las mismas capas de la arquitectura, que
+se ejecuta también en integración continua ante cada contribución
+propuesta. Los resultados confirman garantías fuertes allí donde el
+proceso es determinista (generación estructural, normalización, política
+semántica y validación del formato) y garantías parciales, documentadas
+de forma explícita, en la importación de CVN XML y en la importación
+asistida por modelos de lenguaje.
 
 % -------------------------------
 % Agradecimientos

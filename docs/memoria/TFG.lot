@@ -20,5 +20,49 @@
 \setforeignlanguage {spanish}
 \setforeignlanguage {spanish}
 \contentsline {table}{\numberline {4.2}{\ignorespaces Módulos del repositorio y responsabilidades dentro de la arquitectura Open CVN.}}{37}{table.caption.17}%
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {5.1}{\ignorespaces Resultado de la resolución de referencias auxiliares sobre las entradas normalizadas con tabla asociada.}}{41}{table.caption.19}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {5.2}{\ignorespaces Formas semánticas reconocidas por la política semántica.}}{42}{table.caption.20}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {5.3}{\ignorespaces Etapas del pipeline de generación y normalización, entrada, salida y módulo responsable.}}{46}{table.caption.22}%
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {6.1}{\ignorespaces Comandos principales de la herramienta local de gestión.}}{51}{table.caption.25}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.1}{\ignorespaces Categorías de pruebas automatizadas y objetivo de cada una.}}{56}{table.caption.28}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.2}{\ignorespaces Garantías del sistema frente a limitaciones conocidas.}}{58}{table.caption.30}%
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {8.1}{\ignorespaces Grado de cumplimiento de los objetivos específicos.}}{63}{table.caption.31}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {8.2}{\ignorespaces Competencias de Computación y evidencia concreta de cada una.}}{64}{table.caption.32}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {8.3}{\ignorespaces Limitaciones documentadas y trabajo futuro asociado.}}{67}{table.caption.33}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {B.1}{\ignorespaces Envoltura común de las entradas de las listas curriculares.}}{82}{table.caption.42}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {B.2}{\ignorespaces Distribución de las definiciones del esquema Open CVN JSON por área conceptual.}}{83}{table.caption.43}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {C.1}{\ignorespaces Unidades de trabajo de la Fase 1, agrupadas bajo el epic de automatización de la traducción CVN XML/XSD.}}{86}{table.caption.45}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {C.2}{\ignorespaces Unidades de trabajo de la Fase 2, agrupadas bajo el epic de esquema agnóstico, JSON Schema y parser.}}{86}{table.caption.46}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {C.3}{\ignorespaces Unidades de trabajo de la Fase 3, agrupadas bajo el epic de la aplicación de gestión de currículos.}}{87}{table.caption.47}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {C.4}{\ignorespaces Correcciones de alcance aplicadas durante el desarrollo.}}{88}{table.caption.48}%
 \xpginauxfilefalse 
 \contentsfinish 

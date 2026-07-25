@@ -1,0 +1,160 @@
+\chapter*{Anexo C: Desarrollo del proyecto por fases técnicas}
+\addcontentsline{toc}{chapter}{Anexo C: Desarrollo del proyecto por fases técnicas}
+\label{cap:anexo_desarrollo}
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{C.\arabic{section}}
+\setcounter{table}{0}
+\renewcommand{\thetable}{C.\arabic{table}}
+
+Los capítulos principales de esta memoria describen la arquitectura de Open
+CVN y sus resultados de forma independiente del proceso concreto que llevó a
+construirla. Este anexo es una excepción deliberada a esa regla: su
+propósito específico es documentar la trazabilidad del desarrollo, por lo
+que identifica de forma explícita las unidades de trabajo internas (issues y
+correcciones puntuales) que el repositorio utilizó para planificar y
+registrar cada fase. El desarrollo se organizó en tres fases técnicas
+sucesivas, cada una cerrada con su propia batería de pruebas antes de
+iniciar la siguiente.
+
+\section{Fase 1: generación estructural y normalización}
+\label{sec:anexo_desarrollo_fase1}
+
+Esta fase construyó la base de todo el trabajo posterior: la traducción
+reproducible del paquete oficial CVN a artefactos Python y la normalización
+de sus metadatos dispersos, descritas en las
+Secciones~\ref{sec:pipeline_generacion_estructural}
+y~\ref{sec:pipeline_normalizacion}. La Tabla~\ref{tab:anexo_desarrollo_fase1}
+resume sus unidades de trabajo.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{p{0.1\textwidth} p{0.8\textwidth}}
+    \hline
+    \textbf{Issue} & \textbf{Aportación} \\
+    \hline
+    \#11 & Infraestructura de proyecto para la generación de código \\
+    \#12 & Bindings Pydantic estructurales a partir de los esquemas XSD de CVN \\
+    \#13 & Normalización de los metadatos del manual de especificación y del modelo en árbol \\
+    \#14 & Definición de las reglas de mapeo semántico y de la política de resolución de conflictos \\
+    \#15 & Implementación del generador de modelos de dominio Pydantic \\
+    \#16 & Pruebas automatizadas del pipeline de generación \\
+    \#17 & Documentación y automatización del flujo de trabajo completo \\
+    \#25 & Pipeline de integración continua para la validación de contribuciones \\
+    \hline
+  \end{tabular}
+  \caption{Unidades de trabajo de la Fase 1, agrupadas bajo el epic de automatización de la traducción CVN XML/XSD.}
+  \label{tab:anexo_desarrollo_fase1}
+\end{table}
+
+\section{Fase 2: modelo conceptual, formato Open CVN y parser}
+\label{sec:anexo_desarrollo_fase2}
+
+Esta fase construyó, sobre la base anterior, el modelo conceptual agnóstico,
+el formato de intercambio Open CVN JSON y el parser y validador públicos,
+descritos en las Secciones~\ref{sec:pipeline_modelos_dominio}
+y~\ref{sec:pipeline_json_schema} y en el
+Capítulo~\ref{cap:formato_herramienta}. La
+Tabla~\ref{tab:anexo_desarrollo_fase2} resume sus unidades de trabajo.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{p{0.1\textwidth} p{0.8\textwidth}}
+    \hline
+    \textbf{Issue} & \textbf{Aportación} \\
+    \hline
+    \#42 & Investigación de opciones para derivar diagramas UML de los modelos Pydantic \\
+    \#43 & Definición de la capa de extracción del modelo conceptual agnóstico \\
+    \#44 & Generación de diagramas UML o asimilables a UML \\
+    \#45 & Generación de JSON Schema a partir de los modelos de dominio \\
+    \#46 & Definición del formato canónico Open CVN JSON \\
+    \#47 & Definición del contrato unificado de parser y validador \\
+    \#48 & Extracción de XML embebido desde CVN PDF \\
+    \#49 & Validación de la importación de XML y JSON \\
+    \#50 & Pruebas y documentación del flujo de trabajo del parser \\
+    \hline
+  \end{tabular}
+  \caption{Unidades de trabajo de la Fase 2, agrupadas bajo el epic de esquema agnóstico, JSON Schema y parser.}
+  \label{tab:anexo_desarrollo_fase2}
+\end{table}
+
+\section{Fase 3: aplicación de gestión local}
+\label{sec:anexo_desarrollo_fase3}
+
+Esta fase construyó la herramienta local de línea de órdenes que demuestra
+el uso completo de Open CVN, descrita en la
+Sección~\ref{sec:formato_herramienta_local}, incluyendo los mecanismos de
+importación semántica y asistida por modelos de lenguaje que se evalúan con
+garantías parciales en el Capítulo~\ref{cap:evaluacion}. La
+Tabla~\ref{tab:anexo_desarrollo_fase3} resume sus unidades de trabajo.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{p{0.1\textwidth} p{0.8\textwidth}}
+    \hline
+    \textbf{Issue} & \textbf{Aportación} \\
+    \hline
+    \#61 & Definición del alcance del MVP de la aplicación y de la interfaz de línea de órdenes \\
+    \#62 & Implementación del almacenamiento local con SQLite \\
+    \#63 & Implementación de versiones maestra y derivadas del currículo \\
+    \#64 & Implementación del flujo de importación y exportación de Open CVN JSON \\
+    \#65 & Implementación de la edición y selección de currículo en el MVP \\
+    \#66 & Implementación de la exportación a LaTeX desde Open CVN \\
+    \#67 & Implementación de la generación de PDF y de la entrega de la vista previa \\
+    \#68 & Pruebas y documentación del MVP de la aplicación \\
+    \#69 & Spike de importación de PDF asistida por modelos de lenguaje \\
+    \#70 & Importación semántica de CVN XML a Open CVN JSON \\
+    \#71 & Endurecimiento de limitaciones y documentación \\
+    \hline
+  \end{tabular}
+  \caption{Unidades de trabajo de la Fase 3, agrupadas bajo el epic de la aplicación de gestión de currículos.}
+  \label{tab:anexo_desarrollo_fase3}
+\end{table}
+
+\section{Correcciones de alcance}
+\label{sec:anexo_desarrollo_hotfixes}
+
+Además de las tres fases planificadas, el desarrollo registró ocho
+correcciones puntuales de alcance, aplicadas cuando la implementación reveló
+que una fuente auxiliar del paquete oficial CVN (tablas de referencia,
+catálogos, convenciones del manual funcional) no encajaba con la
+planificación inicial. Estas correcciones no añaden funcionalidad nueva:
+ajustan decisiones previas a la vista de evidencia concreta encontrada
+durante la implementación, y se documentan aquí porque forman parte
+legítima de la trazabilidad del proceso. La
+Tabla~\ref{tab:anexo_desarrollo_hotfixes} las resume.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{p{0.14\textwidth} p{0.76\textwidth}}
+    \hline
+    \textbf{Corrección} & \textbf{Motivo} \\
+    \hline
+    \#1 & Actualización de la convención de registro del runner de generación \\
+    \#2 & Alineación del punto de entrada humano del proyecto con el protocolo de actualización de documentación \\
+    \#3 & Ampliación de la documentación del paquete fuente oficial de CVN \\
+    \#4 & Corrección del alcance estructural para artefactos auxiliares del paquete fuente \\
+    \#5 & Capa de resolución de normalización para fuentes de referencia auxiliares \\
+    \#6 & Realineación de la planificación para la integración semántica de catálogos auxiliares \\
+    \#7 & Evaluación dinámica de la elegibilidad de enumeración en tablas de referencia \\
+    \#8 & Trazabilidad de tipos envoltorio en el traspaso de datos normalizados \\
+    \hline
+  \end{tabular}
+  \caption{Correcciones de alcance aplicadas durante el desarrollo.}
+  \label{tab:anexo_desarrollo_hotfixes}
+\end{table}
+
+La concentración de correcciones en torno a las fuentes auxiliares del
+paquete oficial CVN (tablas de referencia y catálogos) no es casual: es la
+misma tensión entre heterogeneidad documental y necesidad de trazabilidad
+que motiva la política semántica conservadora descrita en la
+Sección~\ref{sec:pipeline_politica_semantica}, y confirma en la práctica que
+esa cautela de diseño estaba justificada.

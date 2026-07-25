@@ -1,0 +1,56 @@
+\chapter*{Anexo D: Repositorio del proyecto y guía de uso}
+\addcontentsline{toc}{chapter}{Anexo D: Repositorio del proyecto y guía de uso}
+\label{cap:anexo_repositorio}
+
+El código fuente completo de Open CVN, junto con esta misma memoria, está
+disponible públicamente en el siguiente repositorio:
+
+\begin{center}
+\url{https://github.com/holt00/TFG-open-cvn-schema}
+\end{center}
+
+Este anexo describe la organización general del repositorio y ofrece una
+guía de orientación para quien quiera consultarlo o ejecutarlo, sin repetir
+el detalle de comandos ya recogido en el Anexo A.
+
+\section*{Estructura del repositorio}
+
+El repositorio se organiza en un pequeño número de directorios de nivel
+superior, cada uno con una responsabilidad clara:
+
+\begin{itemize}
+  \item \path{src/}: código fuente del proyecto, organizado según la
+  arquitectura por capas descrita en el Capítulo~\ref{cap:metodologia}:
+  bindings estructurales generados, lógica de generación y normalización
+  mantenida a mano, modelos de dominio, el contrato público de análisis y
+  validación, y la herramienta local de gestión.
+
+  \item \path{schemas/}: artefacto JSON Schema canónico del formato Open CVN,
+  detallado en el Anexo B.
+
+  \item \path{examples/}: documentos Open CVN JSON de ejemplo, citados a lo
+  largo de esta memoria.
+
+  \item \path{tests/}: batería de pruebas automatizadas evaluada en el
+  Capítulo~\ref{cap:evaluacion}.
+
+  \item \path{docs/}: documentación técnica del proyecto, organizada por
+  tema (arquitectura, pipeline, formato, desarrollo) y el registro de
+  planificación por issues y correcciones puntuales resumido en el Anexo C.
+  El propio código fuente de esta memoria se encuentra en
+  \path{docs/memoria/}.
+\end{itemize}
+
+\section*{Cómo orientarse en el repositorio}
+
+Para quien no haya seguido el desarrollo del proyecto, el punto de entrada
+recomendado es el fichero \path{README.md} en la raíz del repositorio, que
+resume el objetivo del proyecto y su alcance actual. El fichero
+\path{PROJECT_GUIDE.md} amplía esa descripción con un mapa completo de la
+documentación técnica disponible bajo \path{docs/}, incluida la
+correspondencia entre cada capítulo de esta memoria y su documentación
+técnica de referencia en el repositorio.
+
+Para preparar el entorno, regenerar los artefactos y ejecutar la batería de
+pruebas o la herramienta local, el Anexo A recoge los comandos exactos y un
+recorrido completo de ejemplo.

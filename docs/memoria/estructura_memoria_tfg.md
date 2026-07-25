@@ -161,10 +161,10 @@ Estado inicial:
 | 2. Antecedentes y estado del arte | `EN_PROCESO` |
 | 3. Analisis del ecosistema CVN y propuesta de solucion | `EN_PROCESO` |
 | 4. Metodologia, herramientas y arquitectura general | `EN_PROCESO` |
-| 5. Implementacion del pipeline de generacion y normalizacion | `PENDIENTE` |
-| 6. Formato Open CVN, validacion y herramienta de gestion | `PENDIENTE` |
-| 7. Evaluacion, resultados y discusion | `PENDIENTE` |
-| 8. Conclusiones, competencias y trabajo futuro | `PENDIENTE` |
+| 5. Implementacion del pipeline de generacion y normalizacion | `EN_PROCESO` |
+| 6. Formato Open CVN, validacion y herramienta de gestion | `EN_PROCESO` |
+| 7. Evaluacion, resultados y discusion | `EN_PROCESO` |
+| 8. Conclusiones, competencias y trabajo futuro | `EN_PROCESO` |
 
 ## Capitulo 1: Introduccion, motivacion y objetivos
 
@@ -344,8 +344,15 @@ evitar referencias indefinidas.
 La compilacion completa de la memoria con `xelatex`, `bibtex`, `xelatex` y
 `xelatex` genera `docs/memoria/TFG.pdf` con 54 paginas, sin errores
 bloqueantes, sin referencias indefinidas, sin citas indefinidas y sin
-`overfull hbox`. El capitulo permanece en `EN_PROCESO` hasta su revision de
-contenido.
+`overfull hbox`.
+
+En una revision de claridad de todo el documento (identica a la aplicada en
+5.4, 6.5 y 7.1/7.4), la seccion 3.5 (alcance y exclusiones) se reescribio: los
+tres parrafos, cada uno una enumeracion corrida de 2 a 5 elementos, se
+convirtieron en tres listas independientes (automatizado con garantias /
+mapeo parcial / limitaciones documentadas), cada una con su frase de apertura
+y las frases de cierre originales intactas. El capitulo permanece en
+`EN_PROCESO` hasta su revision de contenido.
 
 ### Objetivo del capitulo
 
@@ -512,7 +519,71 @@ Paquete oficial CVN
 
 ## Capitulo 5: Implementacion del pipeline de generacion y normalizacion
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
+
+Estado de redaccion actual: el primer borrador completo del capitulo existe en
+`docs/memoria/chapters/ch5.tex` y esta incluido en `docs/memoria/TFG.tex`. El
+capitulo desarrolla, etapa a etapa, el pipeline ya presentado a nivel
+arquitectonico en el capitulo 4: generacion estructural (con el runner y el
+override de `tree_model` ya documentado como limitacion en el capitulo 3),
+normalizacion por codigo CVN, resolucion de referencias auxiliares, politica
+semantica (nueve formas semanticas base), generacion de modelos de dominio y
+del modelo conceptual, y generacion de JSON Schema con el mecanismo de
+trazabilidad `x-open-cvn-*`.
+
+Todas las cifras presentadas se verificaron directamente contra el paquete
+oficial vigente en el repositorio antes de redactarlas (no se reutilizaron sin
+comprobar los valores ya citados en `docs/context/current_status.md`):
+`1457` entradas normalizadas totales, `27` codigos solo en el manual, `1` solo
+en el arbol, `1429` en ambas fuentes, `33` discrepancias registradas; de las
+1457 entradas, `557` declaran una tabla de referencia en el manual (desglosadas
+en 9 categorias de evidencia de resolucion que suman 557, con exactamente `1`
+referencia no resuelta, el caso ya documentado de `CVN_AGENCY_C` en el codigo
+`060.010.000.030`) y `900` no declaran tabla; la generacion de dominio produce
+`105` archivos; el JSON Schema generado contiene `182` definiciones, de las
+cuales `74` son vocabularios controlados.
+
+El capitulo incluye los tres elementos recomendados: una tabla de resultados
+de resolucion auxiliar, un fragmento de codigo reducido (entorno `code` del
+documento) con el metadato normalizado simplificado del campo de sexo
+(codigo `000.010.000.030`, tabla `CVN_SEX_A`), una figura de trazabilidad
+completa de ese mismo campo desde `SpecificationManual.xml`/`CVNTreeModel.xml`
+hasta su definicion final en el JSON Schema Open CVN (PlantUML propio en
+`docs/memoria/figs/open_cvn_field_traceability.puml`), y una tabla de sintesis
+de las ocho etapas del pipeline con entrada, salida y modulo responsable.
+
+La compilacion completa de la memoria con `xelatex`, `bibtex`, `xelatex` y
+`xelatex` genera `docs/memoria/TFG.pdf` con 69 paginas, sin errores
+bloqueantes, sin referencias indefinidas, sin citas indefinidas y sin
+`overfull hbox` relevante (solo un desbordamiento de 2pt en una linea de
+titulo, imperceptible).
+
+Tras una revision de claridad, la seccion 5.4 (politica semantica) se
+reescribio: ahora abre explicando por que hace falta una etapa de decision
+semantica (los XSD no distinguen texto libre de valores controlados), se
+divide en tres subsecciones (5.4.1 formas semanticas reconocidas, con una
+tabla de las 9 formas y un ejemplo real verificado para cada una; 5.4.2
+enumeracion cerrada frente a catalogo abierto, con el contraste verificado
+entre `CVN_SEX_A` -2 valores, elegible- y `CVN_ENTITY_TYPE` -17 valores pero
+con delegado y etiqueta duplicada, ineligible-, mostrando que el tamano de la
+tabla no es el criterio; 5.4.3 presencia, nomenclatura y traza). El ejemplo de
+`CVN_ENTITY_TYPE` se verifico en vivo contra el paquete oficial (codigo
+`010.010.000.040`, evidencia con `has_delegate=True`) antes de redactarlo. La
+compilacion tras este cambio genera `docs/memoria/TFG.pdf` con 71 paginas,
+sin errores, referencias o citas indefinidas (los mismos dos desbordamientos
+menores de menos de 2pt persisten, imperceptibles).
+
+La seccion 5.5 (generacion de modelos de dominio y del modelo conceptual)
+tambien se reescribio para aclarar, sin alargarla en exceso, que la etapa
+produce dos artefactos con proposito distinto y no uno: los modelos de
+dominio Pydantic (implementacion en Python, con el desglose verificado de los
+105 archivos: 101 modulos por concepto curricular, un modulo de campos solo
+del manual, un modulo de nodos del arbol sin item, y un modulo de 13
+enumeraciones) y, por separado, el modelo conceptual agnostico que reutiliza
+esa misma informacion sin volver a leer XML/XSD. El cierre de la seccion
+retoma el ejemplo del campo de sexo (entidad conceptual `Person`, area
+`identity`) para enlazarlo con su aparicion final en la seccion de JSON
+Schema. El capitulo permanece en `EN_PROCESO` hasta su revision de contenido.
 
 ### Objetivo del capitulo
 
@@ -567,7 +638,101 @@ presentarse si no coinciden con la linea base vigente del repositorio.
 
 ## Capitulo 6: Formato Open CVN, validacion y herramienta de gestion
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
+
+Estado de redaccion actual: el primer borrador completo del capitulo existe en
+`docs/memoria/chapters/ch6.tex` y esta incluido en `docs/memoria/TFG.tex`. El
+capitulo cubre la estructura raiz de Open CVN JSON, la forma comun de las
+referencias controladas (reutilizando el ejemplo de sexo/`CVN_SEX_A` ya usado
+en el capitulo 5), el contrato de parser/validador (cinco estados de
+validacion, avisos semanticos conservadores), la importacion desde JSON/XML/PDF
+(incluyendo el fallback LLM opcional, presentado como parte constitutiva del
+sistema y no como asistencia de redaccion, igual que en el capitulo 1), y la
+herramienta local (modelo maestro/version derivada, comandos principales).
+Cierra con una seccion explicita de alcance y garantias que distingue lo
+determinista de lo parcial, preparando la evaluacion del capitulo 7.
+
+Incluye los cuatro elementos recomendados: un fragmento de codigo con la
+estructura raiz minima; un diagrama de flujo de importacion/validacion nuevo,
+propio de la memoria, en `docs/memoria/figs/open_cvn_import_validation_flow.puml`;
+una tabla de comandos principales de la herramienta; y dos fragmentos de
+codigo con un curriculum maestro reducido (identidad + una entrada de
+investigacion) y su version derivada tras excluir esa entrada, con la
+extension `x-open-cvn.versioning` verificada contra la forma real emitida por
+`storage.py`. Los ejemplos JSON reutilizan los ficheros reales de
+`examples/open_cvn/` (`identity.json`, `research_entry.json`) en lugar de
+inventar datos nuevos.
+
+Al escribir este capitulo se completaron tambien tres referencias cruzadas
+pendientes: las menciones literales "Capitulo 6" en los capitulos 3 y 5 se
+convirtieron a `\ref{cap:formato_herramienta}` ahora que la etiqueta existe,
+siguiendo la convencion ya establecida de usar texto literal solo mientras el
+capitulo de destino no existe.
+
+La compilacion completa de la memoria con `xelatex`, `bibtex`, `xelatex` y
+`xelatex` genera `docs/memoria/TFG.pdf` con 79 paginas, sin errores
+bloqueantes, sin referencias indefinidas, sin citas indefinidas y sin
+`overfull hbox` relevante (mismos desbordamientos triviales <2pt en lineas de
+titulo).
+
+Se detecto que el Codigo 6.1 (estructura raiz minima) se desplazaba al inicio
+de la pagina siguiente mientras el parrafo que lo introducia continuaba
+fluyendo en la pagina actual, partiendo visualmente una misma frase ("...las
+rutas XML de los" / "que procede.") con el flotante intercalado entre ambas
+mitades. Se corrigio anadiendo `\usepackage{float}` en
+`docs/memoria/include/configuracion.tex` (tras `newfloat`) y cambiando el
+especificador de ese `code` concreto de `[htbp]` a `[H]`, que fuerza la
+posicion exacta y evita que un flotante corto adelante al parrafo que lo
+sigue en el texto.
+
+El mismo patron reaparecio, mas severo, al final de la seccion 6.4: la Tabla
+6.1 (comandos) y los Codigos 6.2 y 6.3 (curriculum maestro/version derivada)
+se desplazaban por delante de la frase final de la seccion, partiendola en
+dos mitades separadas por los tres flotantes. El especificador `[H]` (via
+`\usepackage{float}`) resolvio el corte de frase en los cuatro flotantes,
+pero a costa de huecos en blanco muy visibles cuando un flotante no cabia
+entero en el resto de la pagina.
+
+La solucion final combina dos cambios y revierte `[H]` a `[htbp]` en los
+cuatro flotantes:
+
+- reordenacion del texto para que ningun parrafo sensible quede *despues* de
+  un flotante dentro de la misma seccion: en la seccion 6.1, el Codigo 6.1
+  se movio al final (tras explicar raiz, areas curriculares y referencias
+  controladas); en la seccion 6.4, el parrafo de cierre sobre trazabilidad de
+  versiones derivadas se fusiono con el parrafo que introduce los Codigos 6.2
+  y 6.3, y la Tabla 6.1 se desplazo tambien al final de la seccion, justo
+  antes de los codigos
+- compactacion de los flotantes de la seccion 6.4: la Tabla 6.1 paso a
+  `\arraystretch{1.1}` con columnas reequilibradas (menos filas partidas en
+  dos lineas) y los Codigos 6.2/6.3 pasaron de `\small` a `\footnotesize`,
+  con lo que ahora caben juntos en una sola pagina sin hueco relevante
+
+Con ningun parrafo colgando tras un flotante, `[htbp]` ya no puede partir
+ninguna frase, y al no forzarse `[H]` tampoco aparecen huecos en blanco
+grandes: como mucho queda el margen inferior normal de una pagina cuando el
+siguiente flotante no cabe entero, algo habitual y no distinguible de
+cualquier otro salto de pagina del documento. La compilacion final genera
+`docs/memoria/TFG.pdf` con 79 paginas, sin errores, referencias o citas
+indefinidas (mismos desbordamientos triviales <2pt de antes).
+
+La seccion 6.5 (alcance funcional y garantias) tambien se reescribio para
+mayor claridad: el parrafo unico original mezclaba los cuatro flujos
+(validacion Open CVN JSON, importacion XML, importacion asistida por LLM,
+generacion de PDF) en una sola frase larga por cada uno. Ahora abre con una
+frase que anticipa que los cuatro flujos se situan en puntos distintos entre
+garantia determinista y aproximacion parcial, y desarrolla cada flujo como
+un item en negrita independiente, explicando en cada caso el porque de su
+nivel de garantia (determinismo verificable, mapeo creciente sobre casos
+cubiertos, dependencia de un proveedor externo con validacion previa
+obligatoria, dependencia de un motor LaTeX sin bloquear el resto de flujos).
+
+En la misma revision de claridad documento-completo que afecto a 3.5, el
+parrafo de apertura de 6.1 (los cuatro campos raiz de Open CVN JSON:
+`schema_version`, `metadata`, `curriculum`, `extensions`, enumerados dentro
+de una sola frase con punto y coma) se convirtio en una lista de 4 items, uno
+por campo. El capitulo permanece en `EN_PROCESO` hasta su revision de
+contenido.
 
 ### Objetivo del capitulo
 
@@ -623,7 +788,64 @@ la herramienta local que demuestra el uso del sistema.
 
 ## Capitulo 7: Evaluacion, resultados y discusion
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
+
+Estado de redaccion actual: el primer borrador completo del capitulo existe en
+`docs/memoria/chapters/ch7.tex` y esta incluido en `docs/memoria/TFG.tex`. El
+capitulo organiza la evaluacion en ocho niveles alineados con las capas de la
+arquitectura del capitulo 4 (artefactos generados, normalizacion y
+trazabilidad, politica semantica, JSON Schema y validacion runtime, parsers e
+importadores, almacenamiento y versiones, exportacion, flujos de extremo a
+extremo), presenta el comando unico de verificacion, y cierra con una
+discusion que distingue explicitamente las limitaciones que proceden del
+paquete oficial CVN de las que proceden de una decision deliberada de alcance
+del TFG, evitando presentar el sistema como una conversion completa o una
+validacion semantica total.
+
+Todas las cifras se verificaron ejecutando la bateria completa antes de
+redactarlas, no reutilizando numeros de sesiones anteriores: se lanzo
+`uv run pytest -n auto tests` en segundo plano y se registro con precision su
+categorizacion (mediante `--collect-only -q` por subconjuntos de ficheros de
+test, sumando exactamente 488, igual al total real) y su resultado final:
+`488 passed in 692.80s (0:11:32)`. La categorizacion en 8 niveles se
+distribuye como: artefactos generados 146 (estructural 38 + modelos de
+dominio/conceptual/diagramas 108), normalizacion y trazabilidad 90, politica
+semantica 76, JSON Schema y validacion runtime 25, parsers e importadores 63,
+almacenamiento y versiones 25, exportacion 19, extremo a extremo 44.
+
+El capitulo incluye los cuatro elementos recomendados: tabla de categorias de
+pruebas con objetivo y numero de pruebas por nivel; codigo con el comando
+principal de verificacion; tabla de garantias del sistema frente a
+limitaciones conocidas (distinguiendo origen paquete CVN vs. origen alcance
+TFG); y un resumen de resultados verificables integrado en el cierre del
+capitulo. Ningun flotante quedo con parrafo sensible detras (misma leccion
+aplicada en el capitulo 6), por lo que no fue necesario forzar `[H]` en
+ningun caso.
+
+La compilacion completa de la memoria con `xelatex`, `bibtex`, `xelatex` y
+`xelatex` genera `docs/memoria/TFG.pdf` con 85 paginas, sin errores
+bloqueantes, sin referencias indefinidas, sin citas indefinidas y sin
+`overfull hbox` relevante (mismos desbordamientos triviales <4pt en lineas de
+titulo/codigo).
+
+La seccion 7.1 tambien se reviso para mayor claridad: la frase que enumeraba
+los ocho niveles de evaluacion dentro de un unico parrafo corrido se
+convirtio en una lista con un item en negrita por nivel (etiqueta +
+responsabilidad concreta que verifica), siguiendo el mismo patron ya aplicado
+en 5.4 y 6.5.
+
+La seccion 7.4 (discusion de garantias y limitaciones) tenia el mismo
+problema en sus dos parrafos centrales: las tres limitaciones de origen
+paquete CVN y las cuatro de origen alcance TFG estaban enumeradas dentro de
+frases largas y corridas. Se convirtieron en dos listas independientes (una
+por origen de la limitacion), cada item con etiqueta en negrita y una frase
+breve de explicacion, manteniendo las frases de apertura y cierre de cada
+parrafo para no perder la transicion argumental hacia la Tabla 7.2. Se
+comprobo que ningun flotante quedo con parrafo sensible detras tras el
+cambio (misma cautela que en el capitulo 6). La compilacion final genera
+`docs/memoria/TFG.pdf` con 87 paginas, sin errores, referencias o citas
+indefinidas (mismos desbordamientos triviales <4pt de antes). El capitulo
+permanece en `EN_PROCESO` hasta su revision de contenido.
 
 ### Objetivo del capitulo
 
@@ -665,7 +887,114 @@ end-to-end.
 
 ## Capitulo 8: Conclusiones, competencias y trabajo futuro
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
+
+Estado de redaccion actual: el primer borrador completo del capitulo existe en
+`docs/memoria/chapters/ch8.tex` y esta incluido en `docs/memoria/TFG.tex`,
+como ultimo capitulo del cuerpo principal antes de anexos y bibliografia. El
+capitulo retoma con `\ref{}` (no texto literal) todos los capitulos
+anteriores, ya que al ser el capitulo final no quedan referencias hacia
+adelante pendientes. Cubre, en orden: cumplimiento del objetivo general y de
+los diez objetivos especificos del capitulo 1 (Tabla 8.1, con `OE9`
+marcado como "cumplido con garantias parciales" y el resto "cumplido",
+coherente con la discusion de garantias del capitulo 7); las siete
+contribuciones anunciadas en el capitulo 1, ahora presentadas como
+demostradas con referencia al capitulo donde cada una se evidencia; las
+cuatro competencias `CM1/CM2/CM5/CM6` con evidencia concreta (Tabla 8.2),
+cerrando la promesa explicita que el propio capitulo 1 dejo pendiente;
+y limitaciones con su trabajo futuro asociado (Tabla 8.3), incluyendo una
+explicacion algo mas extensa y autocontenida (sin rutas de repositorio ni
+numeros de issue) sobre la posible incorporacion futura de restricciones OCL,
+con dos patrones ilustrativos genericos (valor controlado + campo "otros"
+condicionalmente obligatorio; orden entre fecha de inicio y fecha de fin) en
+lugar de citar los ficheros `.puml` o modulos internos reales que motivaron
+esta nota en el documento de planificacion. Cierra con un parrafo final que
+sintetiza la conclusion del TFG completo.
+
+Durante la redaccion se detecto y corrigio, antes de dar el capitulo por
+terminado, el mismo patron de flotante-adelantandose-a-parrafo ya visto en
+los capitulos 6 y 7: la Tabla 8.1 se desplazaba por delante del parrafo sobre
+`OE9` que la seguia en el texto, partiendo una frase. Se corrigio moviendo
+ese parrafo antes de la tabla (en vez de forzar `[H]`), dejando la tabla
+como ultimo elemento de la seccion 8.1, igual que ya son las Tablas 8.2 y
+8.3 dentro de sus respectivas secciones.
+
+La compilacion completa de la memoria con `xelatex`, `bibtex`, `xelatex` y
+`xelatex` genera `docs/memoria/TFG.pdf` con 93 paginas, sin errores
+bloqueantes, sin referencias indefinidas, sin citas indefinidas y sin
+`overfull hbox` nuevos (mismos desbordamientos triviales <4pt ya presentes en
+capitulos anteriores).
+
+Se detecto que el capitulo carecia de una seccion final de conclusiones
+propiamente dicha: el cierre quedaba reducido a un unico parrafo al final de
+la seccion 8.4 (limitaciones y trabajo futuro), sin seccion propia. Se anadio
+la seccion 8.5 "Conclusiones", que sintetiza el trabajo completo retomando,
+con `\ref{}` a cada capitulo correspondiente, el problema de partida, la
+arquitectura construida capa a capa, el cumplimiento del objetivo general
+apoyado en la evidencia reproducible del capitulo 7, el balance entre
+limitaciones documentadas y conclusion general, y un cierre final que
+posiciona la arquitectura por capas (no el formato JSON ni la herramienta
+local) como la aportacion principal del TFG. El parrafo de cierre que antes
+vivia al final de 8.4 se traslado y amplio dentro de esta nueva seccion. La
+compilacion tras este cambio sigue generando `docs/memoria/TFG.pdf` con 93
+paginas, sin errores, referencias o citas indefinidas.
+
+A peticion del usuario, se comparo el capitulo de conclusiones de una
+memoria TFG de referencia local (usada como base de la skill de estilo
+`tfg-mapi-style`, nunca citada ni copiada literalmente en el texto final)
+para identificar diferencias de contenido y de formato. Cambios aplicados
+como resultado:
+
+- se anadio una nueva seccion inicial 8.1 "Resumen del trabajo", ausente
+  hasta ahora, con tres etiquetas en negrita en linea ("Problema y
+  motivacion.", "Arquitectura desarrollada.", "Resultados.") en lugar de
+  subsecciones, siguiendo el mismo patron de la memoria de referencia para
+  sintetizar el trabajo antes de entrar en el detalle objetivo por objetivo
+- la seccion de contribuciones (ahora 8.3) se reescribio de una lista
+  `itemize` con una frase por item a parrafos narrativos con transiciones
+  ordinales ("La primera es...", "La segunda es...", ... "La septima y
+  ultima es..."), igual que la memoria de referencia trata sus
+  contribuciones, conservando el mismo contenido y las mismas referencias a
+  capitulos
+- las secciones de limitaciones y trabajo futuro no se modificaron porque ya
+  coincidian en formato (listas `itemize` con etiqueta en negrita) con la
+  memoria de referencia
+- la tabla de competencias (ahora Tabla 8.2) se mantuvo, porque la propia
+  guia de la memoria (`estructura_memoria_tfg.md`) exige explicitamente una
+  "Tabla de competencias y evidencias" como elemento recomendado, aunque la
+  memoria de referencia use parrafos narrativos en su lugar
+- se recorto el primer parrafo de la seccion 8.6 "Conclusiones" para
+  eliminar la redundancia con la nueva seccion 8.1, dejando que la seccion
+  de cierre se centre en la valoracion final en lugar de repetir el resumen
+
+Las secciones del capitulo quedan renumeradas: 8.1 Resumen del trabajo, 8.2
+Cumplimiento de los objetivos, 8.3 Contribuciones principales, 8.4
+Competencias desarrolladas, 8.5 Limitaciones y trabajo futuro, 8.6
+Conclusiones. La compilacion final genera `docs/memoria/TFG.pdf` con 93
+paginas, sin errores, referencias o citas indefinidas (mismos
+desbordamientos triviales <4pt de antes).
+
+Se detecto que la seccion 8.5 (limitaciones y trabajo futuro) se apoyaba
+casi por completo en una tabla de celdas de una frase, sin la explicacion
+previa en prosa que si tienen las tablas equivalentes de los capitulos 3 y
+7 (unicamente la restriccion OCL tenia parrafo propio). Se desarrollo un
+parrafo explicativo para cada una de las seis limitaciones (que es, por que
+existe -paquete oficial vs. alcance del TFG- y que trabajo futuro se deriva,
+con referencia cruzada al capitulo donde se documento originalmente), y la
+tabla se desplazo al final de la seccion como resumen de referencia rapida
+en vez de ser el vehiculo principal de la explicacion. Esto tambien resolvio
+por diseño cualquier riesgo de que la tabla se adelantara a un parrafo
+sensible, porque ya no queda texto explicativo despues de ella dentro de la
+seccion.
+
+La compilacion tras este cambio genera `docs/memoria/TFG.pdf` con 95
+paginas, sin errores, referencias o citas indefinidas (mismos
+desbordamientos triviales <4pt de antes).
+
+El capitulo permanece en `EN_PROCESO` hasta su revision de contenido. Con
+este capitulo queda completo el cuerpo principal de los ocho capitulos
+acordados; quedan pendientes los anexos y la revision final de contenido de
+todos los capitulos.
 
 ### Objetivo del capitulo
 
@@ -811,22 +1140,64 @@ Recomendaciones para que un desarrollo futuro lo aborde correctamente:
 
 ## Anexos previstos
 
-Despues del capitulo 8 se reservara espacio para anexos. Los anexos deben incluir
+Despues del capitulo 8 se reserva espacio para anexos. Los anexos deben incluir
 informacion util pero demasiado extensa para el cuerpo principal. Los anexos no
 cuentan como capitulos principales.
 
-Anexos recomendados:
+Estado actual: cuatro anexos redactados, con titulo y numeracion manual
+("Anexo A: ...", no la numeracion automatica `\appendix`/"Apendice" de
+LaTeX), situados al final del documento tras la bibliografia y la
+declaracion de uso de IA, precedidos por una pagina de anuncio
+`\chapter*{Anexos}` con entrada propia en el indice:
 
-- Anexo A: instalacion, entorno y comandos principales.
-- Anexo B: estructura completa del formato Open CVN JSON.
-- Anexo C: ejemplo completo de curriculum Open CVN.
-- Anexo D: tablas de trazabilidad entre campos Open CVN y codigos CVN.
-- Anexo E: resumen extendido de pruebas automatizadas.
-- Anexo F: ejemplos de uso de la herramienta local.
-- Anexo G: limitaciones tecnicas detalladas del paquete oficial CVN.
-- Anexo H: ejemplos de importacion y exportacion.
-- Anexo I: desarrollo del proyecto por fases tecnicas o issues, si se decide
-  incluir trazabilidad del proceso de desarrollo.
+- Anexo A (`docs/memoria/chapters/anexo_a.tex`): instalacion, entorno y
+  comandos principales. Corresponde al "Anexo A" de la lista original.
+- Anexo B (`docs/memoria/chapters/anexo_b.tex`): estructura completa del
+  formato Open CVN JSON. Corresponde al "Anexo B" de la lista original.
+- Anexo C (`docs/memoria/chapters/anexo_i.tex`): desarrollo del proyecto
+  por fases tecnicas, con trazabilidad explicita a issues y hotfixes.
+  Corresponde al "Anexo I" de la lista original; es la unica excepcion
+  documentada a la regla de autocontencion, porque su proposito especifico es
+  registrar la trazabilidad del proceso de desarrollo.
+- Anexo D (`docs/memoria/chapters/anexo_d.tex`): enlace al repositorio
+  (`https://github.com/holt00/TFG-open-cvn-schema`) y guia de orientacion
+  sobre su estructura y punto de entrada. No incluye imagenes.
+
+No se incluye el "Anexo C: ejemplo completo de curriculum Open CVN" de la
+lista original porque no se dispone de un curriculum real para ese fin.
+
+Anexos restantes de la lista original, no redactados por ahora (pendientes,
+no descartados):
+
+- Anexo: tablas de trazabilidad entre campos Open CVN y codigos CVN.
+- Anexo: resumen extendido de pruebas automatizadas.
+- Anexo: ejemplos de uso de la herramienta local.
+- Anexo: limitaciones tecnicas detalladas del paquete oficial CVN.
+- Anexo: ejemplos de importacion y exportacion.
+
+Se evaluo tambien anadir un anexo con los diagramas UML principales del
+modelo conceptual Open CVN; se descarto por ahora porque varios diagramas
+generados son demasiado grandes para una pagina legible (vease
+`docs/diagrams/README.md`) y porque ya existe una vista UML compacta en la
+Figura del Capitulo 3.
+
+## Declaracion de uso de Inteligencia Artificial
+
+Anadida en `TFG.tex`, despues de la bibliografia y antes de `\end{document}`,
+como `\chapter*{}` con entrada en el indice, siguiendo la ubicacion adoptada
+por la tesis de referencia usada para estilo. Declara el uso de modelos de
+OpenAI y de Anthropic como apoyo en busqueda de documentacion tecnica,
+redaccion academica y revision de coherencia entre capitulos, y establece que
+todo resultado generado por IA generativa ha sido revisado por el autor y que
+el resto de aspectos del trabajo son responsabilidad exclusiva suya.
+
+## Erratas corregidas en el titulo oficial
+
+El macro `\titulo` en `docs/memoria/include/opciones.tex` contenia dos
+erratas ("curriculumn vitae" y "el ambito academico") que se propagaban a
+portada, segunda portada y declaracion de autoria. Corregidas en el macro y,
+por separado, en el texto literal de la declaracion de autoria en
+`docs/memoria/elements/preambulo.tex`, que no usa el macro.
 
 ## Bibliografia
 

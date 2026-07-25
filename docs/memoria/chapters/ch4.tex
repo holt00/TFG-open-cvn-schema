@@ -8,7 +8,8 @@ esas limitaciones. El presente capítulo desciende un nivel de concreción:
 describe el proceso de trabajo seguido durante el desarrollo, justifica la
 selección de herramientas empleadas y detalla la arquitectura general del
 sistema, incluida la organización del repositorio que la materializa. Los
-detalles de implementación de cada capa se reservan para el Capítulo 5.
+detalles de implementación de cada capa se reservan para el
+Capítulo~\ref{cap:pipeline}.
 
 \section{Metodología de trabajo}
 \label{sec:metodologia_proceso}
@@ -30,9 +31,9 @@ absorber esas limitaciones sin perder trazabilidad hacia las fuentes
 oficiales. La cuarta fase implementó dicha arquitectura de forma reproducible,
 generando de manera automática los artefactos estructurales, los metadatos
 normalizados, los modelos de dominio y el formato Open CVN JSON, como se
-describe en el Capítulo 5. La quinta fase verificó el sistema mediante
-pruebas automatizadas y flujos completos de extremo a extremo, cuyos
-resultados se discuten en el Capítulo 7.
+describe en el Capítulo~\ref{cap:pipeline}. La quinta fase verificó el
+sistema mediante pruebas automatizadas y flujos completos de extremo a
+extremo, cuyos resultados se discuten en el Capítulo~\ref{cap:evaluacion}.
 
 Estas cinco fases no se ejecutaron de forma estrictamente secuencial. Cada
 limitación detectada durante la exploración del paquete oficial obligó, en la
@@ -145,8 +146,8 @@ concretas. Los apartados siguientes describen esa secuencia bloque a bloque,
 indicando para cada etapa qué recibe, qué produce y qué módulo del repositorio
 la implementa. El detalle interno de cómo se implementa cada etapa, incluidos
 los algoritmos y los resultados numéricos de su ejecución, se reserva para el
-Capítulo 5; este apartado se limita a establecer el mapa general de
-responsabilidades entre etapas.
+Capítulo~\ref{cap:pipeline}; este apartado se limita a establecer el mapa
+general de responsabilidades entre etapas.
 
 \subsection{Fuente oficial CVN}
 \label{sec:metodologia_arquitectura_fuente}
@@ -207,8 +208,8 @@ representaciones que ya no dependen de la estructura concreta del XML de CVN:
 
   \item \textbf{Modelo conceptual agnóstico.} A partir de los modelos de
   dominio y de las decisiones de normalización y política semántica que los
-  originaron, esta etapa construye el inventario conceptual presentado en el
-  Capítulo~\ref{cap:ecosistema_cvn}, ya independiente de la serialización XML.
+  originaron, esta etapa construye el inventario conceptual detallado en el
+  Capítulo~\ref{cap:pipeline}, ya independiente de la serialización XML.
 
   \item \textbf{JSON Schema y formato Open CVN JSON.} A partir del modelo
   conceptual se genera el artefacto JSON Schema, almacenado en
@@ -293,7 +294,8 @@ En conjunto, esta arquitectura por capas materializa de forma concreta la
 propuesta presentada en el Capítulo~\ref{cap:ecosistema_cvn}: conserva
 trazabilidad hacia el paquete oficial CVN en cada etapa, mantiene separadas la
 interoperabilidad estructural y la semántica de dominio, y permite verificar de
-forma independiente cada capa mediante pruebas automatizadas. El Capítulo 5
-describe en detalle cómo se implementa cada una de estas capas, desde la
+forma independiente cada capa mediante pruebas automatizadas. El
+Capítulo~\ref{cap:pipeline} describe en detalle cómo se implementa cada una
+de estas capas, desde la
 generación estructural hasta la extracción del modelo conceptual y la
 generación de diagramas y JSON Schema.

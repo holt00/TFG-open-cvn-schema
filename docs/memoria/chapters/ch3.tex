@@ -96,7 +96,7 @@ currículos previamente generados por la herramienta oficial puede intentar, en
 primer lugar, recuperar y validar ese XML embebido, y solo recurrir a mecanismos
 menos deterministas cuando dicha extracción no sea posible. Este trabajo adopta
 precisamente ese criterio de prioridad, cuyo desarrollo funcional completo se
-presenta en el Capítulo 6.
+presenta en el Capítulo~\ref{cap:formato_herramienta}.
 
 \section{Limitaciones y dificultades técnicas detectadas}
 \label{sec:ecosistema_limitaciones}
@@ -217,7 +217,7 @@ catálogo abierto, referencia a una entidad, término de tesauro o referencia no
 resuelta, entre otros casos. El resultado de esta política alimenta un modelo
 conceptual de dominio que ya no depende de la estructura concreta del XML
 CVN, y que constituye la base a partir de la cual se deriva finalmente el
-formato Open CVN JSON descrito en el Capítulo 6.
+formato Open CVN JSON descrito en el Capítulo~\ref{cap:formato_herramienta}.
 
 Este modelo conceptual se representa mediante diagramas de clases UML, tal y
 como se anticipó en el Capítulo~\ref{cap:estado_arte}. La
@@ -227,7 +227,8 @@ currículo y un espacio de extensión, y en la que ese bloque de currículo se
 subdivide en áreas conceptuales del dominio académico e investigador. Los
 nombres de clase de esta vista coinciden deliberadamente con las claves
 técnicas del formato Open CVN JSON, de modo que la figura sirva también como
-puente directo hacia la estructura raíz que se detalla en el Capítulo 6.
+puente directo hacia la estructura raíz que se detalla en el
+Capítulo~\ref{cap:formato_herramienta}.
 
 \begin{figure}[htbp]
   \centering
@@ -251,27 +252,53 @@ representación, normalización y trazabilidad descrita en este apartado.
 El análisis anterior permite delimitar con precisión qué garantías ofrece
 realmente la arquitectura Open CVN frente al ecosistema CVN del que parte.
 
-Se automatizan con garantías reproducibles la generación de la capa
-estructural desde los esquemas oficiales, la normalización de metadatos por
-código CVN a partir del manual y del modelo en árbol, la resolución de
-referencias auxiliares cuando existe evidencia suficiente en el paquete, la
-aplicación de la política semántica conservadora y la generación del modelo
-conceptual y del formato Open CVN JSON a partir de dicho modelo.
+Se automatizan con garantías reproducibles los siguientes elementos:
 
-Se mantienen como mapeo parcial, y así deben entenderse, la interpretación de
-tablas auxiliares sin evidencia suficiente para una enumeración cerrada, que
-permanecen documentadas como abiertas o pendientes de revisión, y la
-incorporación de currículos CVN ya existentes en formato XML, que se resuelve
-mediante un mapeo semántico de los elementos reconocidos del documento en
-lugar de una conversión completa y garantizada de cualquier XML CVN posible.
+\begin{itemize}
+  \item La generación de la capa estructural desde los esquemas oficiales.
 
-Quedan documentadas explícitamente como limitaciones o trabajo futuro las
-referencias del manual sin tabla equivalente clara en el resto del paquete, la
-deriva de empaquetado entre familias auxiliares, y la ausencia de una garantía
-formal de que el modelo conceptual capture la totalidad de las reglas de
-negocio implícitas en el manual funcional. Ninguna de estas exclusiones se
-oculta: todas ellas se retoman de forma explícita en la discusión de garantías
-del Capítulo 7.
+  \item La normalización de metadatos por código CVN a partir del manual y
+  del modelo en árbol.
+
+  \item La resolución de referencias auxiliares cuando existe evidencia
+  suficiente en el paquete.
+
+  \item La aplicación de la política semántica conservadora.
+
+  \item La generación del modelo conceptual y del formato Open CVN JSON a
+  partir de dicho modelo.
+\end{itemize}
+
+Se mantienen como mapeo parcial, y así deben entenderse, los siguientes
+elementos:
+
+\begin{itemize}
+  \item La interpretación de tablas auxiliares sin evidencia suficiente para
+  una enumeración cerrada, que permanecen documentadas como abiertas o
+  pendientes de revisión.
+
+  \item La incorporación de currículos CVN ya existentes en formato XML, que
+  se resuelve mediante un mapeo semántico de los elementos reconocidos del
+  documento en lugar de una conversión completa y garantizada de cualquier
+  XML CVN posible.
+\end{itemize}
+
+Quedan documentadas explícitamente como limitaciones o trabajo futuro:
+
+\begin{itemize}
+  \item Las referencias del manual sin tabla equivalente clara en el resto
+  del paquete.
+
+  \item La deriva de empaquetado entre familias auxiliares.
+
+  \item La ausencia de una garantía formal de que el modelo conceptual
+  capture la totalidad de las reglas de negocio implícitas en el manual
+  funcional.
+\end{itemize}
+
+Ninguna de estas exclusiones se oculta: todas ellas se retoman de forma
+explícita en la discusión de garantías del
+Capítulo~\ref{cap:evaluacion}.
 
 En conjunto, el análisis realizado en este capítulo justifica por qué Open CVN
 no se limita a reproducir la estructura XML de CVN, sino que introduce una

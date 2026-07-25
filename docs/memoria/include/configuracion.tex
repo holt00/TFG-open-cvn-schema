@@ -277,6 +277,10 @@
 % gestionar los títulos manera similar en ambos casos, y similar al resto
 % de elementos flotantes.
 \usepackage{newfloat}
+% Permite el especificador [H] (posición exacta) para evitar que un
+% flotante corto se desplace por delante del párrafo que lo sigue en el
+% texto, lo que puede partir visualmente una frase entre dos páginas.
+\usepackage{float}
 
 \DeclareFloatingEnvironment[ % Algoritmos
   listname = {Índice de algoritmos},

@@ -67,29 +67,57 @@
 \input{chapters/ch2}
 \input{chapters/ch3}
 \input{chapters/ch4}
+\input{chapters/ch5}
+\input{chapters/ch6}
+\input{chapters/ch7}
+\input{chapters/ch8}
 
 % Capitulos pendientes de redaccion.
 % Se incorporaran cuando su contenido este preparado.
-% \input{chapters/ch5}
-% \input{chapters/ch6}
-% \input{chapters/ch7}
-% \input{chapters/ch8}
-
-% -------------------------------
-% Apéndices
-% -------------------------------
-\appendix
-% Los anexos se incorporaran al cerrar los capitulos principales.
-
-\cleardoublepage
-\thispagestyle{empty}
-
 
 % -------------------------------
 % Bibliografía
 % -------------------------------
+\cleardoublepage
 \bibliographystyle{apalike}
-\bibliography{bib/ref} 
+\bibliography{bib/ref}
 \addcontentsline{toc}{chapter}{Referencia bibliográfica} % Añade a la tabla de contenidos
+
+% -------------------------------
+% Declaración de uso de Inteligencia Artificial
+% -------------------------------
+\cleardoublepage
+\chapter*{Declaración de uso de Inteligencia Artificial}
+\addcontentsline{toc}{chapter}{Declaración de uso de Inteligencia Artificial}
+
+En la elaboración de este Trabajo Fin de Grado se han empleado modelos de
+Inteligencia Artificial Generativa de OpenAI y de Anthropic como apoyo en la
+búsqueda de documentación técnica de las herramientas y tecnologías
+utilizadas, en la redacción académica de la memoria y en la revisión de la
+coherencia entre sus capítulos.
+
+Todo resultado generado por un modelo de Inteligencia Artificial Generativa
+ha sido revisado y, en caso de ser necesario, corregido por el autor. El
+resto de aspectos del trabajo, incluyendo el diseño de la arquitectura, la
+implementación del sistema, la generación de los resultados y su
+interpretación, son responsabilidad exclusiva del autor.
+
+% -------------------------------
+% Anexos
+% -------------------------------
+\cleardoublepage
+\chapter*{Anexos}
+\addcontentsline{toc}{chapter}{Anexos}
+
+Los siguientes anexos recogen información de referencia complementaria al
+cuerpo principal de la memoria: demasiado extensa para incluirse en los
+capítulos anteriores, pero necesaria para reproducir el entorno de trabajo,
+consultar el detalle del formato Open CVN JSON, trazar el desarrollo del
+proyecto por fases técnicas y acceder al repositorio del código fuente.
+
+\input{chapters/anexo_a}
+\input{chapters/anexo_b}
+\input{chapters/anexo_i}
+\input{chapters/anexo_d}
 
 \end{document}
