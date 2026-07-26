@@ -1,0 +1,160 @@
+\begin{thebibliography}{}
+
+\bibitem[{Astral}, 2026]{uv_docs}
+{Astral} (2026).
+\newblock {uv}: An extremely fast python package and project manager.
+\newblock \url{https://docs.astral.sh/uv/}.
+\newblock Accedido: 2026-07-23.
+
+\bibitem[{BESSER}, 2026]{besser_pydantic}
+{BESSER} (2026).
+\newblock Pydantic generator - {BESSER} documentation.
+\newblock
+  \url{https://besser.readthedocs.io/en/latest/generators/pydantic.html}.
+\newblock Accedido: 2026-02-25.
+
+\bibitem[{Deusto HERCULES}, 2026a]{cvn_github}
+{Deusto HERCULES} (2026a).
+\newblock {CVN}.
+\newblock \url{https://github.com/deustohercules/CVN}.
+\newblock Accedido: 2026-02-16.
+
+\bibitem[{Deusto HERCULES}, 2026b]{roh_github}
+{Deusto HERCULES} (2026b).
+\newblock {ROH-1}.
+\newblock \url{https://github.com/deustohercules/ROH-1}.
+\newblock Accedido: 2026-02-16.
+
+\bibitem[{euroCRIS}, 2026]{eurocris_cerif}
+{euroCRIS} (2026).
+\newblock Main features of {CERIF}.
+\newblock \url{https://eurocris.org/services/main-features-cerif}.
+\newblock Accedido: 2026-02-16.
+
+\bibitem[{FECYT}, 2026]{cvn_web}
+{FECYT} (2026).
+\newblock Norma {CVN}.
+\newblock \url{https://cvn.fecyt.es/}.
+\newblock Accedido: 2026-02-16.
+
+\bibitem[{GitHub}, 2026]{github_actions_docs}
+{GitHub} (2026).
+\newblock {GitHub Actions} documentation.
+\newblock \url{https://docs.github.com/en/actions}.
+\newblock Accedido: 2026-07-23.
+
+\bibitem[{JSON Schema}, 2026]{json_schema_overview}
+{JSON Schema} (2026).
+\newblock What is {JSON Schema}?
+\newblock \url{https://json-schema.org/overview/what-is-jsonschema}.
+\newblock Accedido: 2026-07-22.
+
+\bibitem[{JSON.org}, 2026]{json_org_es}
+{JSON.org} (2026).
+\newblock Introduccion a {JSON}.
+\newblock \url{https://json.org/json-es.html}.
+\newblock Accedido: 2026-02-19.
+
+\bibitem[{LinkML}, 2026]{linkml_io}
+{LinkML} (2026).
+\newblock Linked data modeling language ({LinkML}).
+\newblock \url{https://linkml.io/}.
+\newblock Accedido: 2026-02-23.
+
+\bibitem[{Object Management Group}, 2026a]{omg_ocl}
+{Object Management Group} (2026a).
+\newblock Object constraint language ({OCL}).
+\newblock \url{https://www.omg.org/spec/OCL/}.
+\newblock Accedido: 2026-02-25.
+
+\bibitem[{Object Management Group}, 2026b]{omg_uml}
+{Object Management Group} (2026b).
+\newblock Unified modeling language ({UML}).
+\newblock \url{https://www.omg.org/uml/}.
+\newblock Accedido: 2026-02-25.
+
+\bibitem[{ORCID}, 2026]{orcid_about}
+{ORCID} (2026).
+\newblock About {ORCID}.
+\newblock \url{https://info.orcid.org/what-is-orcid/}.
+\newblock Accedido: 2026-07-22.
+
+\bibitem[{Pallets Projects}, 2026]{jinja_docs}
+{Pallets Projects} (2026).
+\newblock Jinja documentation.
+\newblock \url{https://jinja.palletsprojects.com/}.
+\newblock Accedido: 2026-07-23.
+
+\bibitem[{Proyecto HERCULES}, 2026]{roh_documentation}
+{Proyecto HERCULES} (2026).
+\newblock Research ontology for hercules ({ROH}).
+\newblock \url{https://deustohercules.github.io/roh/roh/index.html}.
+\newblock Accedido: 2026-02-16.
+
+\bibitem[{Pydantic}, 2026]{pydantic_docs}
+{Pydantic} (2026).
+\newblock Pydantic documentation.
+\newblock \url{https://docs.pydantic.dev/latest/}.
+\newblock Accedido: 2026-07-22.
+
+\bibitem[{pytest}, 2026]{pytest_docs}
+{pytest} (2026).
+\newblock pytest documentation.
+\newblock \url{https://docs.pytest.org/en/stable/}.
+\newblock Accedido: 2026-07-23.
+
+\bibitem[{RO-Crate Community}, 2024]{ro_crate}
+{RO-Crate Community} (2024).
+\newblock Research object crate ({RO-Crate}).
+\newblock \url{https://www.researchobject.org/ro-crate/}.
+\newblock Accedido: 2026-07-22.
+
+\bibitem[{SQLite}, 2026]{sqlite_docs}
+{SQLite} (2026).
+\newblock {SQLite} home page.
+\newblock \url{https://www.sqlite.org/index.html}.
+\newblock Accedido: 2026-07-23.
+
+\bibitem[{Universidad de Murcia}, 2026]{hercules_ontologias}
+{Universidad de Murcia} (2026).
+\newblock Ontologias - proyecto {HERCULES}.
+\newblock \url{https://www.um.es/web/hercules/ontologias}.
+\newblock Accedido: 2026-02-16.
+
+\bibitem[{VIVO Project}, 2026]{vivo_project}
+{VIVO Project} (2026).
+\newblock {VIVO}: Connect, share, discover.
+\newblock \url{https://www.vivoweb.org/}.
+\newblock Accedido: 2026-02-16.
+
+\bibitem[{World Wide Web Consortium}, 2008]{w3c_xml_10}
+{World Wide Web Consortium} (2008).
+\newblock Extensible markup language ({XML}) 1.0 (fifth edition).
+\newblock \url{https://www.w3.org/TR/xml/}.
+\newblock W3C Recommendation, accedido: 2026-07-22.
+
+\bibitem[{World Wide Web Consortium}, 2012]{w3c_xsd_11}
+{World Wide Web Consortium} (2012).
+\newblock {W3C XML Schema Definition Language} ({XSD}) 1.1 part 1: Structures.
+\newblock \url{https://www.w3.org/TR/xmlschema11-1/}.
+\newblock W3C Recommendation, accedido: 2026-07-22.
+
+\bibitem[{World Wide Web Consortium}, 2020]{w3c_json_ld_11}
+{World Wide Web Consortium} (2020).
+\newblock {JSON-LD} 1.1: A {JSON}-based serialization for linked data.
+\newblock \url{https://www.w3.org/TR/json-ld11/}.
+\newblock W3C Recommendation, accedido: 2026-07-22.
+
+\bibitem[{xsdata}, 2026]{xsdata_docs}
+{xsdata} (2026).
+\newblock {xsdata} documentation.
+\newblock \url{https://xsdata.readthedocs.io/en/latest/}.
+\newblock Accedido: 2026-07-23.
+
+\bibitem[{YAML.org}, 2026]{yaml_org}
+{YAML.org} (2026).
+\newblock {YAML} ain't markup language.
+\newblock \url{https://yaml.org/}.
+\newblock Accedido: 2026-02-23.
+
+\end{thebibliography}

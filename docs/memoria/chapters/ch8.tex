@@ -1,0 +1,334 @@
+\chapter{Conclusiones, competencias y trabajo futuro}
+\label{cap:conclusiones}
+
+El Capítulo~\ref{cap:introduccion} planteó el problema de partida, la
+motivación del trabajo y un objetivo general acompañado de diez objetivos
+específicos. Los capítulos intermedios han desarrollado, capa a capa, la
+arquitectura Open CVN que responde a ese planteamiento, y el
+Capítulo~\ref{cap:evaluacion} ha aportado evidencia reproducible de su
+comportamiento. El presente capítulo cierra el documento retomando esos
+objetivos para valorar su grado de cumplimiento, relacionando el trabajo
+realizado con las competencias de Computación implicadas, y señalando las
+limitaciones y líneas de trabajo futuro que se derivan de todo lo anterior.
+
+\section{Resumen del trabajo}
+\label{sec:conclusiones_resumen}
+
+\textbf{Problema y motivación.} CVN proporciona a España una norma
+consolidada para representar currículos académicos e investigadores, pero
+su uso automatizado sigue siendo costoso: su representación XML oficial y
+la herramienta asociada no se diseñaron como base directa de aplicaciones
+abiertas y ligeras, tal y como se planteó en el
+Capítulo~\ref{cap:introduccion} y se analizó con evidencia técnica concreta
+en el Capítulo~\ref{cap:ecosistema_cvn}.
+
+\textbf{Arquitectura desarrollada.} Frente a ese problema, este trabajo
+construye Open CVN: una arquitectura por capas, presentada en el
+Capítulo~\ref{cap:metodologia}, que separa el paquete oficial CVN, los
+metadatos normalizados, la política semántica, los modelos de dominio, el
+modelo conceptual y el formato Open CVN JSON. El
+Capítulo~\ref{cap:pipeline} implementa la generación estructural, la
+normalización y la política semántica que alimentan esa arquitectura, y el
+Capítulo~\ref{cap:formato_herramienta} completa el recorrido con el
+formato Open CVN JSON, su parser, su validador y una herramienta local que
+demuestra su uso.
+
+\textbf{Resultados.} El Capítulo~\ref{cap:evaluacion} evalúa esta
+arquitectura con una batería de 488 pruebas automatizadas y reproducibles,
+organizada en ocho niveles alineados con la propia arquitectura, sin
+ningún fallo en su última ejecución. Los resultados confirman garantías
+fuertes allí donde el proceso es determinista (generación estructural,
+normalización, política semántica y validación del formato Open CVN JSON)
+y garantías parciales, documentadas de forma explícita, donde el propio
+dominio o el alcance del trabajo lo exigen (importación de CVN XML e
+importación asistida por LLM).
+
+\section{Cumplimiento de los objetivos}
+\label{sec:conclusiones_objetivos}
+
+El objetivo general planteado en el Capítulo~\ref{cap:introduccion} consistía
+en diseñar e implementar una arquitectura computacional abierta capaz de
+representar, validar, transformar, almacenar y exportar currículos
+académicos e investigadores a partir de CVN, sin que la representación XML
+oficial ni la herramienta oficial condicionaran por completo el modelo
+interno del sistema. Este objetivo se considera cumplido: la arquitectura
+por capas presentada en el Capítulo~\ref{cap:metodologia} e implementada en
+los Capítulos~\ref{cap:pipeline} y~\ref{cap:formato_herramienta} separa de
+forma explícita el paquete oficial CVN, los metadatos normalizados, el
+modelo conceptual y el formato Open CVN JSON, y la evaluación del
+Capítulo~\ref{cap:evaluacion} confirma que esa separación funciona de forma
+reproducible.
+
+Únicamente uno de los objetivos específicos se cumple con garantías
+parciales, y de forma deliberada: la importación desde CVN XML es, por
+diseño, un mapeo semántico parcial y creciente, y la importación asistida
+por LLM es opcional y no se considera autoritativa sin revisión, tal y como
+se discutió con evidencia en el Capítulo~\ref{cap:evaluacion}. El resto de
+objetivos se apoya en mecanismos deterministas que la batería de pruebas
+verifica de forma reproducible. La Tabla~\ref{tab:conclusiones_objetivos}
+detalla el grado de cumplimiento de cada objetivo específico, en el mismo
+orden en que se presentaron en el Capítulo~\ref{cap:introduccion}.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{p{0.06\textwidth} p{0.52\textwidth} p{0.3\textwidth}}
+    \hline
+    \textbf{Obj.} & \textbf{Descripción resumida} & \textbf{Grado de cumplimiento} \\
+    \hline
+    OE1 & Análisis del ecosistema CVN y sus artefactos oficiales & Cumplido \\
+    OE2 & Estudio de alternativas de representación, modelado y validación & Cumplido \\
+    OE3 & Generación estructural reproducible desde XSD & Cumplido \\
+    OE4 & Normalización de metadatos CVN & Cumplido \\
+    OE5 & Definición de reglas semánticas trazables & Cumplido \\
+    OE6 & Generación de modelos de dominio y artefactos conceptuales & Cumplido \\
+    OE7 & Definición del formato Open CVN JSON & Cumplido \\
+    OE8 & Parser, validador, almacenamiento y exportación & Cumplido \\
+    OE9 & Importación determinista y asistida por LLM & Cumplido con garantías parciales \\
+    OE10 & Verificación automatizada y flujos reproducibles & Cumplido \\
+    \hline
+  \end{tabular}
+  \caption{Grado de cumplimiento de los objetivos específicos.}
+  \label{tab:conclusiones_objetivos}
+\end{table}
+
+\section{Contribuciones principales}
+\label{sec:conclusiones_contribuciones}
+
+Las contribuciones anunciadas en el Capítulo~\ref{cap:introduccion} quedan
+demostradas, con evidencia concreta, a lo largo del documento.
+
+La primera es el \textbf{análisis computacional del ecosistema CVN}: el
+Capítulo~\ref{cap:ecosistema_cvn} documenta con evidencia concreta las
+cuatro capas del paquete oficial y sus tres familias auxiliares, junto con
+las limitaciones técnicas detectadas, en lugar de asumir que dicho paquete
+puede tratarse como una fuente homogénea y sin fricciones.
+
+La segunda es la \textbf{arquitectura reproducible por capas} presentada en
+el Capítulo~\ref{cap:metodologia} e implementada en el
+Capítulo~\ref{cap:pipeline}: la separación entre bindings generados,
+normalización, política semántica, modelos de dominio, modelo conceptual,
+formato JSON y herramienta local evita que una única representación
+concentre todas las responsabilidades del sistema.
+
+La tercera es la \textbf{trazabilidad entre CVN y Open CVN}: el
+Capítulo~\ref{cap:pipeline} presenta un mecanismo concreto de trazabilidad,
+con anotaciones no validantes y un recorrido completo y verificable desde
+un código CVN hasta su definición final en el formato de salida.
+
+La cuarta es el propio \textbf{formato Open CVN JSON}, cuya estructura raíz,
+organización por áreas conceptuales y forma común de las referencias
+controladas se definen en el Capítulo~\ref{cap:formato_herramienta}.
+
+La quinta son las \textbf{herramientas de validación y uso}: el parser, el
+validador y la herramienta local de gestión, con su modelo de currículo
+maestro y versiones derivadas, descritos en el mismo
+Capítulo~\ref{cap:formato_herramienta}.
+
+La sexta es la \textbf{importación determinista y asistida por LLM}: las
+vías de importación desde CVN XML y CVN PDF, con el fallback opcional por
+LLM sujeto a validación posterior, presentadas también en el
+Capítulo~\ref{cap:formato_herramienta}.
+
+La séptima y última es la \textbf{verificación automatizada}: la batería
+de 488 pruebas automatizadas, organizada en ocho niveles alineados con la
+arquitectura, documentada con resultados reproducibles en el
+Capítulo~\ref{cap:evaluacion}.
+
+Estas contribuciones no sustituyen al ecosistema CVN oficial, sino que
+proponen una capa complementaria que facilita su tratamiento computacional
+en contextos donde son necesarias la validación formal, la transformación
+entre formatos y la gestión automatizada de currículos.
+
+\section{Competencias desarrolladas}
+\label{sec:conclusiones_competencias}
+
+El Capítulo~\ref{cap:introduccion} identificó cuatro competencias de la
+intensificación de Computación trabajadas en este proyecto y anunció que su
+grado de cumplimiento se retomaría en las conclusiones. La
+Tabla~\ref{tab:conclusiones_competencias} recoge esa evidencia concreta.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.09\textwidth} p{0.83\textwidth}}
+    \hline
+    \textbf{Comp.} & \textbf{Evidencia concreta} \\
+    \hline
+    CM1 & El diseño de la arquitectura por capas del
+    Capítulo~\ref{cap:metodologia} y la definición del formato Open CVN JSON
+    del Capítulo~\ref{cap:formato_herramienta} como artefactos técnicos
+    nuevos derivados de un análisis conceptual del dominio curricular. \\
+    CM2 & El procesamiento léxico, sintáctico y semántico de los esquemas y
+    documentos CVN a lo largo del pipeline del
+    Capítulo~\ref{cap:pipeline}: generación estructural desde XSD,
+    normalización de metadatos y política semántica que interpreta
+    y traduce dicha estructura. \\
+    CM5 & La formalización del conocimiento curricular contenido en el
+    paquete oficial CVN en un modelo conceptual computable y validable,
+    desarrollada en los Capítulos~\ref{cap:ecosistema_cvn}
+    a~\ref{cap:formato_herramienta}. \\
+    CM6 & La herramienta local de gestión del
+    Capítulo~\ref{cap:formato_herramienta}, que presenta información
+    curricular compleja y permite seleccionar, versionar y exportar
+    secciones concretas de un currículo mediante una interfaz de línea de
+    órdenes. \\
+    \hline
+  \end{tabular}
+  \caption{Competencias de Computación y evidencia concreta de cada una.}
+  \label{tab:conclusiones_competencias}
+\end{table}
+
+\section{Limitaciones y trabajo futuro}
+\label{sec:conclusiones_limitaciones}
+
+Los capítulos anteriores han documentado limitaciones concretas en distintos
+puntos del sistema, sin ocultarlas ni presentarlas como defectos de
+implementación cuando, en realidad, proceden del propio paquete oficial o de
+una decisión deliberada de alcance, tal y como ya se distinguió en el
+Capítulo~\ref{cap:evaluacion}. Esta sección retoma cada una de ellas con el
+detalle suficiente para justificar la línea de trabajo futuro que le
+corresponde, antes de consolidarlas en una tabla de referencia rápida.
+
+La primera limitación son las \textbf{inconsistencias entre artefactos del
+paquete oficial CVN}, como la discrepancia puntual entre el XML canónico del
+modelo en árbol y su esquema de validación, o la deriva de empaquetado entre
+las familias auxiliares descrita en el Capítulo~\ref{cap:ecosistema_cvn}.
+Esta limitación no es atribuible al sistema desarrollado, sino al propio
+material fuente, por lo que el trabajo futuro correspondiente no puede
+consistir en corregirla, sino en revisarla si el paquete oficial se
+actualiza y documentar cualquier discrepancia nueva con el mismo criterio de
+evidencia ya aplicado.
+
+La segunda es la \textbf{expresividad limitada de algunos bindings
+estructurales generados}: construcciones como el mecanismo \textit{choice}
+de XSD, que no siempre se traduce en una exclusión mutua real, o los
+atributos generados con un tipo demasiado genérico, tal y como se analizó en
+el Capítulo~\ref{cap:ecosistema_cvn}. Estas limitaciones se confinan de
+forma deliberada a la capa estructural generada y no se propagan al formato
+Open CVN JSON, pero el trabajo futuro puede ampliar las validaciones de
+dominio que compensan esta pérdida de expresividad fuera de dicha capa.
+
+La tercera son las \textbf{referencias auxiliares no resueltas con el
+paquete actual}, de las que el caso de \texttt{CVN\_AGENCY\_C} es el
+ejemplo verificado en el Capítulo~\ref{cap:pipeline}: una tabla citada por
+el manual sin equivalente localizable en el resto del paquete. El sistema
+conserva esta referencia como no resuelta en lugar de forzar una
+interpretación no justificada, y el trabajo futuro solo puede mejorar la
+cobertura de tablas auxiliares si aparece evidencia oficial adicional que
+hoy no existe.
+
+La cuarta es la \textbf{importación de CVN XML semánticamente parcial}: un
+mapeo creciente sobre los casos ya cubiertos, y no un conversor completo de
+cualquier documento CVN XML real, según se discutió con evidencia en el
+Capítulo~\ref{cap:evaluacion}. A diferencia de las dos limitaciones
+anteriores, esta sí admite una línea de trabajo futuro directa y
+sustancial: completar el mapeo semántico sobre más casos reales y evaluar
+el sistema con currículos reales, en lugar de únicamente con los ejemplos
+sintéticos empleados en este trabajo.
+
+La quinta es que el \textbf{JSON Schema no puede expresar invariantes entre
+atributos}, porque un esquema de validación declarativo, igual que un
+diagrama de clases UML, solo puede describir la estructura, el tipo y la
+cardinalidad de un atributo aislado, no reglas que combinen varios atributos
+entre sí. El modelo conceptual actual ya contiene, sin formalizar, patrones
+de este tipo: un campo de valor controlado seguido de un campo de texto
+libre para el caso ``otros'', donde la regla de negocio implícita exige que
+ese texto libre sea obligatorio únicamente cuando se elige dicha opción; o
+un par de fechas de inicio y de fin dentro de una misma entidad, donde se
+espera que la primera preceda a la segunda. Ninguna de estas reglas está
+implementada actualmente ni en los modelos generados ni en los diagramas
+conceptuales, por lo que el trabajo futuro correspondiente, estudiar la
+incorporación de restricciones OCL sobre el modelo conceptual, constituiría
+una extensión deliberada de dicho modelo, y no la transcripción de una
+validación ya existente.
+
+La sexta y última es la \textbf{generación de PDF dependiente de un motor
+LaTeX externo}, ya señalada en el Capítulo~\ref{cap:formato_herramienta}:
+la exportación aprovecha una cadena de herramientas LaTeX ya madura en
+lugar de reimplementar un renderizador de PDF propio, a costa de exigir
+dicho motor en el entorno de ejecución. El trabajo futuro puede explorar
+mecanismos de generación adicionales que reduzcan esta dependencia sin
+renunciar a la calidad tipográfica de la exportación actual.
+
+Además de estas seis líneas, ligadas cada una a una limitación concreta, el
+trabajo admite otras extensiones de alcance no derivadas de una limitación
+específica, sino de una ampliación natural del sistema desarrollado:
+desarrollar una interfaz gráfica si se considera necesaria más allá de la
+herramienta de línea de órdenes actual, estudiar extensiones semánticas
+como JSON-LD para facilitar la integración con datos enlazados, e
+investigar la integración con fuentes institucionales de información
+curricular.
+
+La Tabla~\ref{tab:conclusiones_limitaciones} consolida, a modo de
+referencia rápida, las seis limitaciones ya explicadas junto con la línea
+de trabajo futuro que se deriva de cada una.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.43\textwidth} p{0.43\textwidth}}
+    \hline
+    \textbf{Limitación} & \textbf{Trabajo futuro asociado} \\
+    \hline
+    Inconsistencias entre artefactos del paquete oficial CVN (discrepancia
+    XML/XSD, deriva de empaquetado) & Revisar estas inconsistencias si el
+    paquete oficial se actualiza, documentando cualquier discrepancia nueva
+    con el mismo criterio de evidencia \\
+    Expresividad limitada de algunos bindings estructurales generados
+    (\textit{choice} sin exclusión mutua, tipos genéricos) & Ampliar las
+    validaciones de dominio fuera de la capa estructural generada \\
+    Referencias auxiliares no resueltas con el paquete actual & Mejorar la
+    cobertura de tablas auxiliares si aparece evidencia oficial adicional \\
+    Importación de CVN XML semánticamente parcial & Completar el mapeo
+    semántico sobre más casos reales y evaluar el sistema con currículos
+    reales \\
+    JSON Schema sin capacidad de expresar invariantes entre atributos &
+    Estudiar la incorporación de restricciones OCL sobre el modelo
+    conceptual \\
+    Generación de PDF dependiente de un motor LaTeX externo & Explorar
+    mecanismos de generación adicionales que reduzcan esta dependencia \\
+    \hline
+  \end{tabular}
+  \caption{Limitaciones documentadas y trabajo futuro asociado.}
+  \label{tab:conclusiones_limitaciones}
+\end{table}
+
+\section{Conclusiones}
+\label{sec:conclusiones_finales}
+
+El resumen, el cumplimiento de objetivos y las contribuciones ya
+presentados en este capítulo permiten cerrar el documento con una
+valoración conjunta, en lugar de con la simple repetición de lo ya
+expuesto. El objetivo general se considera cumplido y, con él, los diez
+objetivos
+específicos que lo desarrollaban, con la única salvedad deliberada de la
+importación asistida por LLM, cuyo carácter opcional y no autoritativo es
+una decisión de diseño y no una carencia. Esta conclusión no se apoya en
+una afirmación sin respaldo: el Capítulo~\ref{cap:evaluacion} la sostiene
+con una batería de 488 pruebas automatizadas y reproducibles, organizada
+según las mismas capas que estructuran el documento, lo que permite
+sostener que las garantías descritas no son solo argumentativas, sino
+verificables por cualquier persona que ejecute el mismo comando sobre el
+mismo repositorio.
+
+Las limitaciones recogidas en este capítulo no comprometen esta conclusión:
+delimitan, con precisión y sin ocultamiento, hasta dónde llega la propuesta
+actual y qué preguntas quedan abiertas para su continuación. Algunas de
+ellas son inherentes al propio paquete oficial CVN y quedan fuera del
+control del sistema desarrollado; otras son decisiones deliberadas de
+alcance, propias de un Trabajo Fin de Grado y no de un producto cerrado. En
+ambos casos, el sistema las documenta en lugar de disimularlas, lo que
+constituye en sí mismo una forma de rigor técnico.
+
+En conjunto, este trabajo demuestra que es posible construir, a partir del
+ecosistema CVN, una arquitectura computacional abierta que separa la
+interoperabilidad estructural del significado curricular, conserva
+trazabilidad verificable hacia sus fuentes oficiales y ofrece garantías
+reproducibles allí donde el proceso es determinista. Esa arquitectura, más
+que el formato JSON o la herramienta local que la demuestran, es la
+aportación principal de este Trabajo Fin de Grado a la intensificación de
+Computación en la que se enmarca.

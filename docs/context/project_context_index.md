@@ -53,6 +53,8 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/reporte_proceso_desarrollo_tfg.md`: consolidated TFG development process
   report, including initial research, key technical decisions, implementation
   flow, and limitations
+- `docs/memoria/estructura_memoria_tfg.md`: agreed final-memory structure and
+  per-chapter drafting status traceability
 - `docs/context/current_status.md`: current project state and next actions
 
 ### Architecture And Pipeline
@@ -183,6 +185,9 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/reporte_proceso_desarrollo_tfg.md`: narrative report for explaining the
   full TFG process to a tutor, from `docs/research/` state-of-the-art analysis to
   the implemented Open CVN pipeline and CLI application
+- `docs/memoria/estructura_memoria_tfg.md`: planning and traceability document
+  for drafting the final TFG memory, with the agreed eight-chapter structure,
+  chapter content guidance, annex plan, and status markers
 - `docs/informe_estructura_cvnxml_v1.4.3.md`: structural analysis background
 - `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the
   auxiliary `Entity`, `ReferenceTables/Subtypes`, and `Thesaurus` families in
