@@ -90,8 +90,10 @@ según el tipo de evidencia de resolución obtenida.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Resultado de la resolución de referencias auxiliares sobre las entradas normalizadas con tabla asociada.}
+  \label{tab:pipeline_resolucion_auxiliar}
   \begin{tabular}{p{0.5\textwidth} r}
     \hline
     \textbf{Tipo de evidencia de resolución} & \textbf{Entradas} \\
@@ -109,8 +111,6 @@ según el tipo de evidencia de resolución obtenida.
     \textbf{Total con tabla de referencia} & \textbf{557} \\
     \hline
   \end{tabular}
-  \caption{Resultado de la resolución de referencias auxiliares sobre las entradas normalizadas con tabla asociada.}
-  \label{tab:pipeline_resolucion_auxiliar}
 \end{table}
 
 Estos resultados confirman con evidencia concreta dos afirmaciones ya
@@ -146,8 +146,10 @@ las describe junto con un ejemplo real tomado del paquete oficial CVN.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Formas semánticas reconocidas por la política semántica.}
+  \label{tab:pipeline_formas_semanticas}
   \begin{tabular}{p{0.22\textwidth} p{0.4\textwidth} p{0.3\textwidth}}
     \hline
     \textbf{Forma semántica} & \textbf{Qué representa} & \textbf{Ejemplo} \\
@@ -163,8 +165,6 @@ las describe junto con un ejemplo real tomado del paquete oficial CVN.
     Referencia no resuelta & La tabla declarada en el manual no tiene equivalente localizable en el resto del paquete & Fuente de índice H (tabla \texttt{CVN\_AGENCY\_C}) \\
     \hline
   \end{tabular}
-  \caption{Formas semánticas reconocidas por la política semántica.}
-  \label{tab:pipeline_formas_semanticas}
 \end{table}
 
 Las tres primeras formas se asignan directamente a los campos que no
@@ -284,8 +284,10 @@ en el Capítulo~\ref{cap:metodologia}.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Etapas del pipeline de generación y normalización, entrada, salida y módulo responsable.}
+  \label{tab:pipeline_etapas}
   \begin{tabular}{p{0.17\textwidth} p{0.24\textwidth} p{0.24\textwidth} p{0.20\textwidth}}
     \hline
     \textbf{Etapa} & \textbf{Entrada} & \textbf{Salida} & \textbf{Módulo} \\
@@ -300,8 +302,6 @@ en el Capítulo~\ref{cap:metodologia}.
     Generación de JSON Schema & Inventario conceptual & Esquema Open CVN JSON & \path{schemas/} \\
     \hline
   \end{tabular}
-  \caption{Etapas del pipeline de generación y normalización, entrada, salida y módulo responsable.}
-  \label{tab:pipeline_etapas}
 \end{table}
 
 En conjunto, este pipeline demuestra que la trazabilidad hacia CVN exigida en

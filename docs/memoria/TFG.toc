@@ -3,9 +3,9 @@
 \contentsline {chapter}{\numberline {1}Introducción, motivación y objetivos}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Contexto}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Motivación}{2}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Objetivos}{3}{section.1.3}%
+\contentsline {section}{\numberline {1.3}Objetivos}{4}{section.1.3}%
 \contentsline {section}{\numberline {1.4}Alcance del proyecto}{5}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Competencias desarrolladas}{6}{section.1.5}%
+\contentsline {section}{\numberline {1.5}Competencias desarrolladas}{7}{section.1.5}%
 \contentsline {section}{\numberline {1.6}Contribuciones}{7}{section.1.6}%
 \contentsline {section}{\numberline {1.7}Estructura del documento}{8}{section.1.7}%
 \contentsline {chapter}{\numberline {2}Antecedentes y estado del arte}{11}{chapter.2}%
@@ -13,71 +13,71 @@
 \contentsline {section}{\numberline {2.2}Interoperabilidad curricular y sistemas de información de investigación}{12}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Formatos de serialización y validación}{14}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}XML y XSD}{14}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}JSON y JSON Schema}{15}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.2}JSON y JSON Schema}{14}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}JSON-LD y YAML}{15}{subsection.2.3.3}%
 \contentsline {section}{\numberline {2.4}Modelado conceptual y generación de artefactos}{17}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Síntesis del estado del arte}{18}{section.2.5}%
-\contentsline {chapter}{\numberline {3}Análisis del ecosistema CVN y propuesta de solución}{21}{chapter.3}%
-\contentsline {section}{\numberline {3.1}El paquete oficial CVN como fuente del proyecto}{21}{section.3.1}%
-\contentsline {section}{\numberline {3.2}El XML embebido en los documentos CVN}{24}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Limitaciones y dificultades técnicas detectadas}{24}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Propuesta de solución: la arquitectura Open CVN}{27}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Alcance y exclusiones}{29}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Metodología, herramientas y arquitectura general}{31}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Metodología de trabajo}{31}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Herramientas empleadas}{32}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Arquitectura general por capas}{35}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Fuente oficial CVN}{35}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Generación estructural y normalización}{35}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Dominio, modelo conceptual y formato}{36}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Herramienta local}{37}{subsection.4.3.4}%
-\contentsline {section}{\numberline {4.4}Contratos entre capas y razonamiento arquitectónico}{38}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Implementación del pipeline de generación y normalización}{39}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Generación estructural}{39}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Normalización de metadatos por código CVN}{40}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Resolución de referencias auxiliares}{40}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Política semántica}{41}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Formas semánticas reconocidas}{42}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Enumeración cerrada frente a catálogo abierto}{43}{subsection.5.4.2}%
-\contentsline {subsection}{\numberline {5.4.3}Presencia, nomenclatura y traza}{43}{subsection.5.4.3}%
-\contentsline {section}{\numberline {5.5}Generación de modelos de dominio y del modelo conceptual}{43}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Generación de JSON Schema y trazabilidad}{44}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Síntesis de las etapas del pipeline}{45}{section.5.7}%
-\contentsline {chapter}{\numberline {6}Formato Open CVN, validación y herramienta de gestión}{47}{chapter.6}%
-\contentsline {section}{\numberline {6.1}El formato Open CVN JSON}{47}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Parser y validador}{48}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Importación de currículos existentes}{50}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Herramienta local de gestión}{50}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Alcance funcional y garantías}{53}{section.6.5}%
-\contentsline {chapter}{\numberline {7}Evaluación, resultados y discusión}{55}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Diseño de la evaluación}{55}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Niveles de evaluación}{56}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Comando de verificación y resultados}{57}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Discusión de garantías y limitaciones}{57}{section.7.4}%
-\contentsline {chapter}{\numberline {8}Conclusiones, competencias y trabajo futuro}{61}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Resumen del trabajo}{61}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Cumplimiento de los objetivos}{62}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Contribuciones principales}{63}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Competencias desarrolladas}{64}{section.8.4}%
-\contentsline {section}{\numberline {8.5}Limitaciones y trabajo futuro}{65}{section.8.5}%
-\contentsline {section}{\numberline {8.6}Conclusiones}{67}{section.8.6}%
-\contentsline {chapter}{Referencia bibliográfica}{71}{chapter*.34}%
-\contentsline {chapter}{Declaración de uso de Inteligencia Artificial}{73}{chapter*.35}%
-\contentsline {chapter}{Anexos}{75}{chapter*.36}%
-\contentsline {chapter}{Anexo A: Instalación, entorno y comandos principales}{77}{chapter*.37}%
-\contentsline {section}{\numberline {A.1}Prerrequisitos y configuración del entorno}{77}{section.8.1}%
-\contentsline {section}{\numberline {A.2}Regeneración de artefactos y verificación}{78}{section.8.2}%
-\contentsline {section}{\numberline {A.3}Recorrido completo con la herramienta local}{78}{section.8.3}%
-\contentsline {chapter}{Anexo B: Estructura completa del formato Open CVN JSON}{81}{chapter*.41}%
-\contentsline {section}{\numberline {B.1}Bloque \texttt {metadata}}{81}{section.8.1}%
-\contentsline {section}{\numberline {B.2}Bloque \texttt {curriculum}}{81}{section.8.2}%
-\contentsline {section}{\numberline {B.3}Valores de referencia controlada}{82}{section.8.3}%
-\contentsline {section}{\numberline {B.4}Definiciones del esquema}{83}{section.8.4}%
-\contentsline {chapter}{Anexo C: Desarrollo del proyecto por fases técnicas}{85}{chapter*.44}%
-\contentsline {section}{\numberline {C.1}Fase 1: generación estructural y normalización}{85}{section.8.1}%
-\contentsline {section}{\numberline {C.2}Fase 2: modelo conceptual, formato Open CVN y parser}{86}{section.8.2}%
-\contentsline {section}{\numberline {C.3}Fase 3: aplicación de gestión local}{87}{section.8.3}%
-\contentsline {section}{\numberline {C.4}Correcciones de alcance}{87}{section.8.4}%
-\contentsline {chapter}{Anexo D: Repositorio del proyecto y guía de uso}{89}{chapter*.49}%
+\contentsline {chapter}{\numberline {3}Análisis del ecosistema CVN y propuesta de solución}{19}{chapter.3}%
+\contentsline {section}{\numberline {3.1}El paquete oficial CVN como fuente del proyecto}{19}{section.3.1}%
+\contentsline {section}{\numberline {3.2}El XML embebido en los documentos CVN}{21}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Limitaciones y dificultades técnicas detectadas}{22}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Propuesta de solución: la arquitectura Open CVN}{24}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Alcance y exclusiones}{25}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Metodología, herramientas y arquitectura general}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Metodología de trabajo}{27}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Herramientas empleadas}{28}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Arquitectura general por capas}{29}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Fuente oficial CVN}{31}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Generación estructural y normalización}{31}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Dominio, modelo conceptual y formato}{32}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Herramienta local}{32}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}Contratos entre capas y razonamiento arquitectónico}{33}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Implementación del pipeline de generación y normalización}{35}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Generación estructural}{35}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Normalización de metadatos por código CVN}{36}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Resolución de referencias auxiliares}{36}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Política semántica}{37}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Formas semánticas reconocidas}{38}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Enumeración cerrada frente a catálogo abierto}{39}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Presencia, nomenclatura y traza}{39}{subsection.5.4.3}%
+\contentsline {section}{\numberline {5.5}Generación de modelos de dominio y del modelo conceptual}{39}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Generación de JSON Schema y trazabilidad}{40}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Síntesis de las etapas del pipeline}{41}{section.5.7}%
+\contentsline {chapter}{\numberline {6}Formato Open CVN, validación y herramienta de gestión}{43}{chapter.6}%
+\contentsline {section}{\numberline {6.1}El formato Open CVN JSON}{43}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Parser y validador}{44}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Importación de currículos existentes}{46}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Herramienta local de gestión}{46}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Alcance funcional y garantías}{47}{section.6.5}%
+\contentsline {chapter}{\numberline {7}Evaluación, resultados y discusión}{51}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Diseño de la evaluación}{51}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Niveles de evaluación}{52}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Comando de verificación y resultados}{52}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Discusión de garantías y limitaciones}{53}{section.7.4}%
+\contentsline {chapter}{\numberline {8}Conclusiones, competencias y trabajo futuro}{55}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Resumen del trabajo}{55}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Cumplimiento de los objetivos}{56}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Contribuciones principales}{57}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Competencias desarrolladas}{58}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Limitaciones y trabajo futuro}{58}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Conclusiones}{60}{section.8.6}%
+\contentsline {chapter}{Referencia bibliográfica}{65}{chapter*.34}%
+\contentsline {chapter}{Declaración de uso de Inteligencia Artificial}{67}{chapter*.35}%
+\contentsline {chapter}{Anexos}{69}{chapter*.36}%
+\contentsline {chapter}{Anexo A: Instalación, entorno y comandos principales}{71}{chapter*.37}%
+\contentsline {section}{\numberline {A.1}Prerrequisitos y configuración del entorno}{71}{section.8.1}%
+\contentsline {section}{\numberline {A.2}Regeneración de artefactos y verificación}{71}{section.8.2}%
+\contentsline {section}{\numberline {A.3}Recorrido completo con la herramienta local}{72}{section.8.3}%
+\contentsline {chapter}{Anexo B: Estructura completa del formato Open CVN JSON}{75}{chapter*.41}%
+\contentsline {section}{\numberline {B.1}Bloque \texttt {metadata}}{75}{section.8.1}%
+\contentsline {section}{\numberline {B.2}Bloque \texttt {curriculum}}{75}{section.8.2}%
+\contentsline {section}{\numberline {B.3}Valores de referencia controlada}{76}{section.8.3}%
+\contentsline {section}{\numberline {B.4}Definiciones del esquema}{77}{section.8.4}%
+\contentsline {chapter}{Anexo C: Desarrollo del proyecto por fases técnicas}{79}{chapter*.44}%
+\contentsline {section}{\numberline {C.1}Fase 1: generación estructural y normalización}{79}{section.8.1}%
+\contentsline {section}{\numberline {C.2}Fase 2: modelo conceptual, formato Open CVN y parser}{79}{section.8.2}%
+\contentsline {section}{\numberline {C.3}Fase 3: aplicación de gestión local}{81}{section.8.3}%
+\contentsline {section}{\numberline {C.4}Correcciones de alcance}{81}{section.8.4}%
+\contentsline {chapter}{Anexo D: Repositorio del proyecto y guía de uso}{83}{chapter*.49}%
 \xpginauxfilefalse 
 \contentsfinish 

@@ -87,8 +87,10 @@ la limitación que presenta cada uno frente al objetivo de Open CVN.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Comparativa de modelos de interoperabilidad curricular relacionados con Open CVN.}
+  \label{tab:estado_arte_modelos_interoperabilidad}
   \begin{tabular}{p{0.08\textwidth} p{0.26\textwidth} p{0.26\textwidth} p{0.26\textwidth}}
     \hline
     \textbf{Modelo} & \textbf{Enfoque de representación} & \textbf{Fortaleza principal} & \textbf{Limitación frente a Open CVN} \\
@@ -98,8 +100,6 @@ la limitación que presenta cada uno frente al objetivo de Open CVN.
     ROH & Ontología del ámbito universitario e investigador español (proyecto HERCULES) & Proximidad al dominio CVN español y artefactos de importación ya existentes & Orientación ontológica y dependencia de tecnologías de Web Semántica \\
     \hline
   \end{tabular}
-  \caption{Comparativa de modelos de interoperabilidad curricular relacionados con Open CVN.}
-  \label{tab:estado_arte_modelos_interoperabilidad}
 \end{table}
 
 En conjunto, CERIF, VIVO y ROH muestran que la información investigadora puede
@@ -142,9 +142,7 @@ Esto permite comprobar si un documento respeta una estructura determinada y
 facilita la interoperabilidad entre sistemas que comparten la misma definición.
 Además, el uso de XSD proporciona una fuente formal a partir de la cual pueden
 generarse artefactos estructurales, como clases de datos o bindings de acceso
-programático.
-
-No obstante, XML también presenta limitaciones cuando se utiliza como base directa
+programático. No obstante, XML también presenta limitaciones cuando se utiliza como base directa
 de una herramienta de gestión. Su sintaxis es más verbosa que la de formatos más
 ligeros, el procesamiento suele requerir bibliotecas específicas y la estructura
 del documento no siempre coincide con el modelo conceptual más adecuado para una
@@ -204,9 +202,8 @@ evolución hacia datos enlazados~\cite{w3c_json_ld_11}. Su principal aportación
 consiste en permitir que un documento JSON pueda interpretarse también como parte
 de un grafo de conocimiento, asociando claves del documento con identificadores
 semánticos. Esta característica lo convierte en una opción interesante cuando se
-busca compatibilidad con tecnologías RDF u ontologías.
-
-Sin embargo, la incorporación de semántica enlazada también aumenta la complejidad
+busca compatibilidad con tecnologías RDF u ontologías. Sin embargo, la
+incorporación de semántica enlazada también aumenta la complejidad
 del sistema. Para un proyecto cuyo objetivo principal es definir una
 representación curricular abierta, validable y manejable mediante herramientas
 Python, JSON-LD puede resultar más expresivo de lo necesario en una primera
@@ -227,8 +224,10 @@ de estos formatos desempeña dentro de Open CVN.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Comparativa de formatos de serialización y validación relevantes para Open CVN.}
+  \label{tab:estado_arte_formatos_serializacion}
   \begin{tabular}{p{0.13\textwidth} p{0.24\textwidth} p{0.22\textwidth} p{0.24\textwidth}}
     \hline
     \textbf{Formato} & \textbf{Función principal} & \textbf{Validación asociada} & \textbf{Papel en Open CVN} \\
@@ -239,8 +238,6 @@ de estos formatos desempeña dentro de Open CVN.
     YAML & Formato legible orientado a configuración y definición de esquemas & Depende de la herramienta que lo consume (por ejemplo, LinkML) & Referencia en herramientas de modelado; no se emplea como formato de intercambio final \\
     \hline
   \end{tabular}
-  \caption{Comparativa de formatos de serialización y validación relevantes para Open CVN.}
-  \label{tab:estado_arte_formatos_serializacion}
 \end{table}
 
 \section{Modelado conceptual y generación de artefactos}

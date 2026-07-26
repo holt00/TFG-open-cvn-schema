@@ -43,6 +43,44 @@ y garantías parciales, documentadas de forma explícita, donde el propio
 dominio o el alcance del trabajo lo exigen (importación de CVN XML e
 importación asistida por LLM).
 
+\textbf{Visión original y su alcance.} La motivación de este trabajo,
+presentada en el Capítulo~\ref{cap:introduccion}, se planteó originalmente
+en cuatro pasos orientados al uso final. La Tabla~\ref{tab:conclusiones_vision}
+retoma cada uno de ellos y valora en qué medida Open CVN se ha acercado a
+él.
+
+\begin{table}[htbp]
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{1.45}
+  \caption{Visión original del proyecto y grado de alcance logrado por Open CVN.}
+  \label{tab:conclusiones_vision}
+  \begin{tabular}{p{0.34\textwidth} p{0.54\textwidth}}
+    \hline
+    \textbf{Paso de la visión original} & \textbf{Alcance logrado} \\
+    \hline
+    Disponer de una especificación de currículo abierta &
+    Cumplido: el formato Open CVN JSON y su JSON Schema definen esa
+    especificación de forma validable \\
+    Poder construir almacenes de currículos abiertos, con una forma
+    definida de leer y escribir en ellos &
+    Cumplido parcialmente: el parser, el validador y el almacenamiento
+    local de la herramienta de gestión lo demuestran, pero como una
+    aplicación de un único usuario, no como una infraestructura de
+    almacenes abiertos compartidos entre aplicaciones \\
+    Poder generar, a partir de un currículo en esa especificación,
+    currículos adaptados a necesidades concretas &
+    Cumplido: mediante la exportación a LaTeX y PDF y la selección de
+    secciones y entradas entre el currículo maestro y sus versiones
+    derivadas \\
+    Poder importar a la especificación currículos ya existentes &
+    Cumplido con garantías parciales y explícitamente documentadas:
+    importación determinista desde CVN XML y CVN PDF, con recurso
+    opcional a modelos de lenguaje de gran tamaño \\
+    \hline
+  \end{tabular}
+\end{table}
+
 \section{Cumplimiento de los objetivos}
 \label{sec:conclusiones_objetivos}
 
@@ -71,8 +109,10 @@ orden en que se presentaron en el Capítulo~\ref{cap:introduccion}.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.15}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.5}
+  \caption{Grado de cumplimiento de los objetivos específicos.}
+  \label{tab:conclusiones_objetivos}
   \begin{tabular}{p{0.06\textwidth} p{0.52\textwidth} p{0.3\textwidth}}
     \hline
     \textbf{Obj.} & \textbf{Descripción resumida} & \textbf{Grado de cumplimiento} \\
@@ -89,8 +129,6 @@ orden en que se presentaron en el Capítulo~\ref{cap:introduccion}.
     OE10 & Verificación automatizada y flujos reproducibles & Cumplido \\
     \hline
   \end{tabular}
-  \caption{Grado de cumplimiento de los objetivos específicos.}
-  \label{tab:conclusiones_objetivos}
 \end{table}
 
 \section{Contribuciones principales}
@@ -151,8 +189,10 @@ Tabla~\ref{tab:conclusiones_competencias} recoge esa evidencia concreta.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Competencias de Computación y evidencia concreta de cada una.}
+  \label{tab:conclusiones_competencias}
   \begin{tabular}{p{0.09\textwidth} p{0.83\textwidth}}
     \hline
     \textbf{Comp.} & \textbf{Evidencia concreta} \\
@@ -177,8 +217,6 @@ Tabla~\ref{tab:conclusiones_competencias} recoge esa evidencia concreta.
     órdenes. \\
     \hline
   \end{tabular}
-  \caption{Competencias de Computación y evidencia concreta de cada una.}
-  \label{tab:conclusiones_competencias}
 \end{table}
 
 \section{Limitaciones y trabajo futuro}
@@ -268,8 +306,10 @@ de trabajo futuro que se deriva de cada una.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Limitaciones documentadas y trabajo futuro asociado.}
+  \label{tab:conclusiones_limitaciones}
   \begin{tabular}{p{0.43\textwidth} p{0.43\textwidth}}
     \hline
     \textbf{Limitación} & \textbf{Trabajo futuro asociado} \\
@@ -293,8 +333,6 @@ de trabajo futuro que se deriva de cada una.
     mecanismos de generación adicionales que reduzcan esta dependencia \\
     \hline
   \end{tabular}
-  \caption{Limitaciones documentadas y trabajo futuro asociado.}
-  \label{tab:conclusiones_limitaciones}
 \end{table}
 
 \section{Conclusiones}

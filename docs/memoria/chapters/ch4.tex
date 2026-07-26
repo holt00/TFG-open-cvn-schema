@@ -104,8 +104,10 @@ su papel principal y la justificación de su uso dentro del proyecto.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Herramientas empleadas en el proyecto y justificación de su uso.}
+  \label{tab:metodologia_herramientas}
   \begin{tabular}{p{0.22\textwidth} p{0.34\textwidth} p{0.32\textwidth}}
     \hline
     \textbf{Herramienta} & \textbf{Papel en el proyecto} & \textbf{Justificación} \\
@@ -120,8 +122,6 @@ su papel principal y la justificación de su uso dentro del proyecto.
     Git + GitHub Actions & Control de versiones e integración continua & Verifica automáticamente cada contribución antes de integrarse \\
     \hline
   \end{tabular}
-  \caption{Herramientas empleadas en el proyecto y justificación de su uso.}
-  \label{tab:metodologia_herramientas}
 \end{table}
 
 \section{Arquitectura general por capas}
@@ -209,7 +209,15 @@ representaciones que ya no dependen de la estructura concreta del XML de CVN:
   \item \textbf{Modelo conceptual agnóstico.} A partir de los modelos de
   dominio y de las decisiones de normalización y política semántica que los
   originaron, esta etapa construye el inventario conceptual detallado en el
-  Capítulo~\ref{cap:pipeline}, ya independiente de la serialización XML.
+  Capítulo~\ref{cap:pipeline}, ya independiente de la serialización XML. Es
+  precisamente este modelo conceptual, y no los modelos de dominio en
+  Python ni el formato Open CVN JSON, el que se representa mediante
+  diagramas de clases UML, tal y como se justificó en el
+  Capítulo~\ref{cap:estado_arte} y se ilustró de forma compacta en la
+  Figura~\ref{fig:ecosistema_uml_overview} del
+  Capítulo~\ref{cap:ecosistema_cvn}: UML actúa como notación intermedia de
+  este bloque, entre la política semántica que lo alimenta y los artefactos
+  técnicos (JSON Schema, formato Open CVN JSON) que se derivan de él.
 
   \item \textbf{JSON Schema y formato Open CVN JSON.} A partir del modelo
   conceptual se genera el artefacto JSON Schema, almacenado en
@@ -243,8 +251,10 @@ corresponde dentro de la arquitectura Open CVN.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Módulos del repositorio y responsabilidades dentro de la arquitectura Open CVN.}
+  \label{tab:metodologia_modulos}
   \begin{tabular}{p{0.24\textwidth} p{0.64\textwidth}}
     \hline
     \textbf{Módulo} & \textbf{Responsabilidad} \\
@@ -257,8 +267,6 @@ corresponde dentro de la arquitectura Open CVN.
     \texttt{src/open\_cvn\_app/} & Herramienta local: interfaz de línea de órdenes, almacenamiento SQLite, versionado, edición de selección y exportación a LaTeX y PDF \\
     \hline
   \end{tabular}
-  \caption{Módulos del repositorio y responsabilidades dentro de la arquitectura Open CVN.}
-  \label{tab:metodologia_modulos}
 \end{table}
 
 \section{Contratos entre capas y razonamiento arquitectónico}

@@ -78,6 +78,34 @@ necesidad está directamente relacionada con la posibilidad de desarrollar
 herramientas abiertas para la creación, actualización y adaptación de currículos,
 tal y como se plantea en la descripción oficial del Trabajo Fin de Grado.
 
+Antes de entrar en el detalle técnico, conviene explicar esta motivación en
+los mismos términos de uso final con los que se planteó originalmente el
+proyecto. La idea de partida era avanzar hacia una situación en la que:
+
+\begin{itemize}
+  \item \textbf{Existiera una especificación abierta de currículo}, que
+  sirviera de referencia común independiente de cualquier herramienta
+  concreta.
+
+  \item \textbf{Pudieran existir almacenes de currículos abiertos}
+  construidos sobre esa especificación, con una forma bien definida de leer
+  y escribir en ellos.
+
+  \item \textbf{Pudieran desarrollarse herramientas de lectura y formato}
+  capaces de generar, a partir de un currículo expresado en esa
+  especificación, currículos adaptados a necesidades concretas.
+
+  \item \textbf{Pudieran desarrollarse herramientas de importación}
+  capaces de incorporar a esa especificación currículos ya existentes,
+  creados con la herramienta oficial de FECYT.
+\end{itemize}
+
+Los objetivos específicos de la Sección~\ref{sec:introduccion_objetivos} y la
+arquitectura Open CVN presentada en el resto del documento traducen estos
+cuatro pasos en tareas concretas de Computación, y el
+Capítulo~\ref{cap:conclusiones} retoma esta misma motivación para valorar en
+qué medida se ha alcanzado.
+
 Desde el punto de vista técnico, el uso directo de los artefactos oficiales de CVN
 como modelo interno presenta varias dificultades. Los esquemas XSD proporcionan
 una descripción estructural precisa de la representación XML, pero no siempre
@@ -121,10 +149,8 @@ almacenar y exportar currículos académicos e investigadores tomando CVN como n
 y ecosistema de referencia, pero evitando que su representación XML o la
 herramienta oficial asociada condicionen por completo el modelo interno del
 sistema, con el fin de facilitar el desarrollo de herramientas abiertas para la
-gestión automatizada de currículos}.
-
-Para alcanzar esta meta global se han definido los siguientes objetivos
-específicos:
+gestión automatizada de currículos}. Para alcanzar esta meta global se han
+definido los siguientes objetivos específicos:
 
 \begin{enumerate}
   \item \textbf{Analizar el ecosistema CVN y sus artefactos oficiales.} Este
@@ -184,7 +210,10 @@ capítulos principales en los que se desarrollan.
 
 \begin{table}[htbp]
   \centering
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Relación entre objetivos específicos y capítulos del documento.}
+  \label{tab:objetivos_capitulos}
   \begin{tabular}{p{0.12\textwidth} p{0.58\textwidth} p{0.18\textwidth}}
     \hline
     \textbf{Objetivo} & \textbf{Descripción resumida} & \textbf{Capítulos} \\
@@ -201,8 +230,6 @@ capítulos principales en los que se desarrollan.
     OE10 & Verificación automatizada y flujos reproducibles & 7 \\
     \hline
   \end{tabular}
-  \caption{Relación entre objetivos específicos y capítulos del documento.}
-  \label{tab:objetivos_capitulos}
 \end{table}
 
 \section{Alcance del proyecto}

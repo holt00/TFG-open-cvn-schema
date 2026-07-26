@@ -51,8 +51,10 @@ proyecto.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Fuentes del paquete oficial CVN analizadas y su uso en el proyecto.}
+  \label{tab:ecosistema_fuentes}
   \begin{tabular}{p{0.24\textwidth} p{0.34\textwidth} p{0.30\textwidth}}
     \hline
     \textbf{Fuente} & \textbf{Información que aporta} & \textbf{Uso dentro del proyecto} \\
@@ -66,8 +68,6 @@ proyecto.
     Tesauro multilingüe & Vocabulario jerárquico de materias y palabras clave & Resolución de referencias de tipo tesauro \\
     \hline
   \end{tabular}
-  \caption{Fuentes del paquete oficial CVN analizadas y su uso en el proyecto.}
-  \label{tab:ecosistema_fuentes}
 \end{table}
 
 Estas fuentes no son intercambiables entre sí. El manual en PDF y su versión
@@ -77,6 +77,26 @@ serializa} ese mismo campo dentro de un documento XML concreto. Esta distinción
 introducida aquí de forma descriptiva, es la que justifica más adelante por qué
 la propuesta Open CVN separa explícitamente el análisis semántico del dominio de
 su representación técnica en XML.
+
+El paquete oficial descrito en esta sección no se obtuvo de una única vez. Se
+solicitó directamente a FECYT el conjunto de artefactos técnicos del
+ecosistema CVN, y la primera entrega recibida contenía únicamente el núcleo
+mínimo de codificación: el manual de especificaciones, su versión
+estructurada en XML, el modelo en árbol y los esquemas XSD centrales. El
+desarrollo del proyecto comenzó sobre esa base. Al avanzar en la
+normalización de metadatos descrita en el Capítulo~\ref{cap:pipeline}, sin
+embargo, aparecieron de forma sistemática referencias del manual hacia
+tablas de valores controlados que no tenían ningún artefacto correspondiente
+en el paquete recibido. Comunicado este problema a FECYT, la fundación
+confirmó que se trataba de una omisión en el envío inicial y remitió una
+segunda entrega con las tres familias auxiliares ya presentadas: el catálogo
+de entidades, las tablas de referencia y subtipos, y el tesauro
+multilingüe. Esta circunstancia, más allá de la anécdota, tiene una
+consecuencia directa sobre el diseño del sistema: ninguna etapa del pipeline
+asume que el paquete oficial es completo o estable de antemano, sino que
+cada referencia se resuelve con evidencia explícita precisamente porque, en
+la práctica, el propio proceso de obtención del paquete ya demostró que
+dicha evidencia puede llegar de forma incompleta o en momentos distintos.
 
 \section{El XML embebido en los documentos CVN}
 \label{sec:ecosistema_pdf_embebido}
@@ -154,8 +174,10 @@ arquitectura Open CVN.
 
 \begin{table}[htbp]
   \centering
-  \small
-  \renewcommand{\arraystretch}{1.2}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.55}
+  \caption{Limitaciones detectadas en el paquete oficial CVN y respuesta de diseño de Open CVN.}
+  \label{tab:ecosistema_limitaciones}
   \begin{tabular}{p{0.44\textwidth} p{0.44\textwidth}}
     \hline
     \textbf{Limitación detectada} & \textbf{Respuesta de diseño} \\
@@ -167,8 +189,6 @@ arquitectura Open CVN.
     Separación insuficiente entre estructura XML y significado curricular & Introducir capas intermedias explícitas de normalización, política semántica y modelo conceptual antes de definir el formato final \\
     \hline
   \end{tabular}
-  \caption{Limitaciones detectadas en el paquete oficial CVN y respuesta de diseño de Open CVN.}
-  \label{tab:ecosistema_limitaciones}
 \end{table}
 
 Ninguna de estas limitaciones invalida la norma CVN ni el paquete distribuido

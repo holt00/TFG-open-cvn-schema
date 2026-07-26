@@ -16,7 +16,7 @@ package "Generacion y normalizacion\n(src/generated/, src/cvn_codegen/)" as p_ca
 }
 
 package "Dominio y formato\n(src/models/cvn/, schemas/, src/open_cvn/)" as p_capa2 {
-  [Modelos de dominio\nModelo conceptual agnostico\nJSON Schema + Open CVN JSON\nParser y validador] as capa2
+  [Modelos de dominio\nModelo conceptual agnostico\n(notacion UML)\nJSON Schema + Open CVN JSON\nParser y validador] as capa2
 }
 
 package "Herramienta local\n(src/open_cvn_app/)" as p_app {

@@ -48,6 +48,22 @@
 % permite estirar ligeramente los espacios en vez de desbordar el texto.
 \setlength{\emergencystretch}{3em}
 
+% Penaliza fuertemente las líneas viudas (última línea de un párrafo sola al
+% principio de página) y huérfanas (primera línea de un párrafo sola al final
+% de página), para que LaTeX prefiera romper la página en otro punto.
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+% Por defecto, book estira el interlineado y el espacio alrededor de
+% titulos y flotantes para que cada pagina llegue exactamente al margen
+% inferior (flushbottom), lo que en paginas con pocos elementos (p. ej. una
+% tabla seguida de un titulo de seccion) deja huecos verticales muy
+% grandes en mitad de la pagina. \raggedbottom permite que las paginas
+% terminen de forma natural, dejando el hueco sobrante al final en lugar
+% de repartirlo de forma artificial entre los elementos.
+\raggedbottom
+
 
 % -------------------------------
 % Esquema de colores
@@ -119,8 +135,12 @@
 % -------------------------------
 % Gestión de elementos flotantes
 % -------------------------------
-% Para forzar a que las figuras aparezcan antes del fin de una sección.
-\usepackage[section]{placeins}
+% Barrera de flotantes solo a nivel de capitulo: evita que una tabla o
+% figura se cuele en un capitulo distinto al que pertenece, pero permite
+% que el algoritmo de colocacion la mueva libremente entre secciones de un
+% mismo capitulo en lugar de forzar un salto de pagina con hueco en blanco
+% justo al final de la seccion que la referencia.
+\usepackage{placeins}
 
 % Gestión de títulos de los elementos flotantes
 \usepackage{caption}
@@ -132,10 +152,14 @@
 \captionsetup{labelfont={tema, bf}}     % Estilo
 \captionsetup{font=normalsize}          % Tamaño
 \captionsetup{width=.9\linewidth}       % Anchura del título
- % Distancia de la figura al texto.
-\setlength{\intextsep}{1cm} 
-\setlength{\textfloatsep}{1cm}         
-       
+ % Distancia de la figura al texto. Se deja algo de elasticidad
+ % (plus/minus) para que LaTeX pueda comprimir este espacio cuando un
+ % flotante queda seguido de un titulo de seccion, en lugar de acumular
+ % siempre 1cm fijo por encima y por debajo y dejar un hueco en blanco
+ % innecesariamente grande.
+\setlength{\intextsep}{16pt plus 4pt minus 6pt}
+\setlength{\textfloatsep}{16pt plus 4pt minus 6pt}
+
 
 % -------------------------------
 % Utilidades para tablas
