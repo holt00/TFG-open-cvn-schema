@@ -1,0 +1,125 @@
+\chapter*{Anexo A: Instalación, entorno y comandos principales}
+\addcontentsline{toc}{chapter}{Anexo A: Instalación, entorno y comandos principales}
+\label{cap:anexo_instalacion}
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{A.\arabic{section}}
+\setcounter{code}{0}
+\renewcommand{\thecode}{A.\arabic{code}}
+
+Este anexo recoge, de forma reproducible, los pasos necesarios para preparar
+el entorno de desarrollo, regenerar los artefactos derivados del paquete
+oficial CVN y ejecutar la herramienta local de gestión descrita en el
+Capítulo~\ref{cap:formato_herramienta}. No introduce ninguna decisión de
+diseño nueva: es una referencia operativa que complementa, con la sintaxis
+exacta de los comandos, la Tabla~\ref{tab:formato_comandos}.
+
+\section{Prerrequisitos y configuración del entorno}
+\label{sec:anexo_instalacion_entorno}
+
+El proyecto requiere \texttt{uv} como gestor de entorno y dependencias, y
+Python 3.14. El Código~\ref{cod:anexo_entorno} resume la secuencia completa
+de preparación: fijar la versión de Python, sincronizar los grupos de
+dependencias necesarios e instalar el proyecto en modo editable, requisito
+para que el código bajo \texttt{src/} sea importable durante la ejecución de
+pruebas y de la herramienta local.
+
+\begin{code}[htbp]
+\begin{lstlisting}[language=bash, basicstyle=\footnotesize\ttfamily, breaklines=true]
+# Fijar la version de Python del proyecto (opcional si ya esta activa)
+uv python pin 3.14
+
+# Sincronizar dependencias de generacion estructural y de pruebas
+uv sync --group codegen --group testing
+
+# Instalar el proyecto en modo editable
+uv pip install -e .
+
+# Verificar que la herramienta local esta disponible
+uv run open-cvn --help
+\end{lstlisting}
+\caption{Preparación del entorno de desarrollo.}
+\label{cod:anexo_entorno}
+\end{code}
+
+El grupo de dependencias \texttt{codegen} incluye \texttt{xsdata} y
+\texttt{xsdata-pydantic}, empleados por la generación estructural descrita en
+la Sección~\ref{sec:pipeline_generacion_estructural}; el grupo
+\texttt{testing} incluye \texttt{pytest} y \texttt{pytest-xdist}, empleados
+por la batería de pruebas evaluada en el Capítulo~\ref{cap:evaluacion}.
+
+\section{Regeneración de artefactos y verificación}
+\label{sec:anexo_instalacion_regeneracion}
+
+Los artefactos generados bajo \texttt{src/generated/} no se editan a mano:
+se regeneran a partir de los esquemas XSD oficiales cuando estos cambian. El
+Código~\ref{cod:anexo_regeneracion} recoge el comando que regenera los tres
+objetivos estructurales (paquete CVN, manual de especificación y modelo en
+árbol) y la verificación completa mediante la batería de pruebas
+automatizadas, la misma que documenta el Capítulo~\ref{cap:evaluacion}.
+
+\begin{code}[htbp]
+\begin{lstlisting}[language=bash, basicstyle=\footnotesize\ttfamily, breaklines=true]
+# Regenerar los tres objetivos estructurales
+uv run python -m cvn_codegen.xsdata_runner all
+
+# Ejecutar la bateria completa de pruebas en paralelo
+uv run pytest -n auto tests
+\end{lstlisting}
+\caption{Regeneración de artefactos estructurales y verificación por pruebas.}
+\label{cod:anexo_regeneracion}
+\end{code}
+
+\section{Recorrido completo con la herramienta local}
+\label{sec:anexo_instalacion_recorrido}
+
+El Código~\ref{cod:anexo_recorrido} muestra un recorrido de extremo a
+extremo con la herramienta local \texttt{open-cvn}: inicialización de un
+almacén local, importación de un documento Open CVN JSON como currículo
+maestro, creación de una versión derivada, exploración y exclusión de una
+entrada, y exportación a Open CVN JSON y a LaTeX. Cada subcomando se
+corresponde con una fila de la Tabla~\ref{tab:formato_comandos}.
+
+\begin{code}[htbp]
+\begin{lstlisting}[language=bash, basicstyle=\footnotesize\ttfamily, breaklines=true]
+STORE=/tmp/open-cvn-demo.sqlite
+
+# 1. Inicializar el almacen local
+uv run open-cvn store init --path $STORE
+
+# 2. Importar un documento Open CVN JSON como maestro
+uv run open-cvn json import examples/open_cvn/research_entry.json \
+  --store $STORE --as-master
+
+# 3. Crear una version derivada
+uv run open-cvn versions derive public --store $STORE
+
+# 4. Explorar las secciones de la version derivada
+uv run open-cvn versions sections public --store $STORE
+
+# 5. Excluir una entrada concreta de la version derivada
+uv run open-cvn versions exclude public /curriculum/research/0 \
+  --store $STORE
+
+# 6. Exportar la version derivada a Open CVN JSON
+uv run open-cvn json export /tmp/public.json \
+  --store $STORE --version public
+
+# 7. Exportar la version derivada a LaTeX
+uv run open-cvn latex export /tmp/public.tex \
+  --store $STORE --version public
+\end{lstlisting}
+\caption{Recorrido completo de importación, versionado y exportación con la herramienta local.}
+\label{cod:anexo_recorrido}
+\end{code}
+
+La generación de PDF a partir de la exportación LaTeX, mediante
+\texttt{open-cvn pdf generate}, es opcional y depende de que exista un motor
+LaTeX disponible en el sistema (\texttt{latexmk} o \texttt{pdflatex}); en su
+ausencia, la herramienta lo reporta de forma explícita en lugar de fallar de
+forma silenciosa. La importación de currículos desde PDF mediante modelos de
+lenguaje de gran tamaño exige, además, activar explícitamente el indicador
+\texttt{--allow-external-llm}, precisamente porque un PDF puede contener
+datos personales; este mecanismo se describe con más detalle en la
+Sección~\ref{sec:formato_importacion} y en la
+Sección~\ref{sec:evaluacion_discusion}.

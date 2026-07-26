@@ -77,6 +77,8 @@ Para obtener el contexto del proyecto y el estado real de implementacion, leer:
   `docs/context/current_status.md`
 - reporte del proceso de desarrollo del TFG:
   `docs/reporte_proceso_desarrollo_tfg.md`
+- estructura y trazabilidad de la memoria del TFG:
+  `docs/memoria/estructura_memoria_tfg.md`
 - arquitectura del pipeline:
   `docs/pipeline/cvn_pydantic_generation_pipeline.md`
 - roadmap completo:

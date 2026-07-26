@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+skinparam componentStyle rectangle
+skinparam backgroundColor white
+skinparam defaultFontName DejaVu Sans
+
+package "Paquete oficial CVN" as cvn_pkg {
+  [CVN.xsd\nCommon.xsd\nAuxTable.xsd\nISOUtilities.xsd] as xsd
+  [SpecificationManual.xml] as manual_xml
+  [CVNTreeModel.xml] as tree_xml
+  [ReferenceTables.xml\nSubtype_Spa.xml\nEntity.xml\nThesaurus.xml] as aux_xml
+}
+
+package "Open CVN" as open_cvn_pkg {
+  [Metadatos normalizados\npor código CVN] as normalized
+  [Política semántica\nconservadora] as semantic
+  [Modelo conceptual\nOpen CVN] as conceptual
+  [Formato Open CVN JSON] as json
+}
+
+xsd --> normalized : generación\nreproducible
+manual_xml --> normalized
+tree_xml --> normalized
+aux_xml --> normalized : resolución de\nreferencias auxiliares
+normalized --> semantic
+semantic --> conceptual
+conceptual --> json
+
+note bottom of json
+El formato Open CVN JSON no sustituye
+al paquete CVN oficial: cada campo
+conserva trazabilidad hacia sus fuentes.
+end note
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+top to bottom direction
+skinparam componentStyle rectangle
+skinparam backgroundColor white
+skinparam defaultFontName DejaVu Sans
+skinparam ranksep 20
+skinparam nodesep 30
+
+[SpecificationManual.xml\ncodigo 000.010.000.030\ncampo "Sexo", tabla CVN_SEX_A] as manual
+[CVNTreeModel.xml\nruta: Identification /\nPersonalIdentification / Gender] as tree
+[Metadatos normalizados\npor codigo CVN] as normalized
+[ReferenceTables.xml\nCVN_SEX_A: 2 valores\n(Hombre, Mujer)] as reftable
+[Resolucion de referencias +\npolitica semantica\nenum compacto, elegible] as policy
+[Open CVN JSON Schema\nidentity.person.sexo ->\nvocabularies.cvn_sex_a] as schema
+
+manual --> normalized
+tree --> normalized
+normalized --> policy
+reftable --> policy : evidencia de tabla
+policy --> schema
+
+note right of schema
+Cada definicion conserva trazas
+x-open-cvn-code, x-open-cvn-source-reference
+y x-open-cvn-xml-paths.
+end note
+@enduml

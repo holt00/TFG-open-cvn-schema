@@ -41,6 +41,15 @@
 
 
 % -------------------------------
+% Ajuste de justificación de párrafos
+% -------------------------------
+% Evita que palabras, citas u otros elementos no divisibles (p. ej. "~\cite{...}")
+% se salgan del margen derecho cuando no caben en la línea: en el último recurso,
+% permite estirar ligeramente los espacios en vez de desbordar el texto.
+\setlength{\emergencystretch}{3em}
+
+
+% -------------------------------
 % Esquema de colores
 % -------------------------------
 % Paquete para la definición de colores
@@ -111,7 +120,7 @@
 % Gestión de elementos flotantes
 % -------------------------------
 % Para forzar a que las figuras aparezcan antes del fin de una sección.
-%\usepackage[section]{placeins}
+\usepackage[section]{placeins}
 
 % Gestión de títulos de los elementos flotantes
 \usepackage{caption}
@@ -268,6 +277,10 @@
 % gestionar los títulos manera similar en ambos casos, y similar al resto
 % de elementos flotantes.
 \usepackage{newfloat}
+% Permite el especificador [H] (posición exacta) para evitar que un
+% flotante corto se desplace por delante del párrafo que lo sigue en el
+% texto, lo que puede partir visualmente una frase entre dos páginas.
+\usepackage{float}
 
 \DeclareFloatingEnvironment[ % Algoritmos
   listname = {Índice de algoritmos},

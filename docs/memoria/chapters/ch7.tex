@@ -1,0 +1,194 @@
+\chapter{Evaluación, resultados y discusión}
+\label{cap:evaluacion}
+
+Los capítulos anteriores han presentado la arquitectura Open CVN, su
+implementación por capas y el resultado funcional que ofrece a quien la
+utiliza. El presente capítulo cierra ese recorrido con una pregunta distinta:
+qué evidencia respalda, de forma reproducible, cada una de las afirmaciones
+técnicas realizadas hasta ahora. La evaluación no se limita a comprobar que
+el sistema se ejecuta sin errores, sino que verifica, capa a capa, que cada
+contrato descrito en los capítulos anteriores se cumple sobre el paquete
+oficial CVN y sobre los artefactos que de él se derivan.
+
+\section{Diseño de la evaluación}
+\label{sec:evaluacion_diseno}
+
+La evaluación se apoya en una batería de pruebas automatizadas organizada
+según las mismas capas de la arquitectura presentada en el
+Capítulo~\ref{cap:metodologia}, en lugar de tratarse como un bloque
+monolítico. Cada nivel de evaluación comprueba una responsabilidad concreta:
+
+\begin{itemize}
+  \item \textbf{Generación estructural:} produce artefactos íntegros e
+  importables.
+
+  \item \textbf{Normalización y resolución de referencias auxiliares:}
+  mantienen la trazabilidad esperada.
+
+  \item \textbf{Política semántica:} aplica sus reglas de forma consistente
+  con la evidencia disponible.
+
+  \item \textbf{JSON Schema generado:} valida correctamente documentos
+  válidos e inválidos.
+
+  \item \textbf{Parsers e importadores:} cumplen su contrato público.
+
+  \item \textbf{Almacenamiento y versionado:} preservan la integridad de los
+  datos.
+
+  \item \textbf{Exportación:} produce artefactos deterministas.
+
+  \item \textbf{Flujos completos de la herramienta:} funcionan de extremo a
+  extremo.
+\end{itemize}
+
+Esta batería se ejecuta localmente durante el desarrollo y, además, de forma
+automática en cada contribución propuesta sobre las ramas principales del
+repositorio mediante integración continua, de modo que ninguna
+funcionalidad nueva se incorpora sin que el conjunto completo de garantías ya
+verificadas siga cumpliéndose.
+
+\section{Niveles de evaluación}
+\label{sec:evaluacion_niveles}
+
+La Tabla~\ref{tab:evaluacion_categorias} resume los ocho niveles de
+evaluación considerados, el objetivo de cada uno y el número de pruebas
+automatizadas que lo cubren actualmente.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{p{0.27\textwidth} p{0.57\textwidth} r}
+    \hline
+    \textbf{Nivel de evaluación} & \textbf{Objetivo} & \textbf{Pruebas} \\
+    \hline
+    Artefactos generados & Bindings estructurales, modelos de dominio, modelo conceptual y diagramas íntegros e importables & 146 \\
+    Normalización y trazabilidad & Unificación manual/árbol por código CVN y resolución de referencias auxiliares correctas & 90 \\
+    Política semántica & Formas semánticas y elegibilidad de enumeración consistentes con la evidencia disponible & 76 \\
+    JSON Schema y validación runtime & Validación estructural y en tiempo de ejecución de documentos válidos e inválidos & 25 \\
+    Parsers e importadores & Contrato público de análisis, importación JSON/XML/PDF y casos de error & 63 \\
+    Almacenamiento y versiones & Persistencia SQLite, currículo maestro y versiones derivadas & 25 \\
+    Exportación & Generación determinista de LaTeX y PDF & 19 \\
+    Flujos de extremo a extremo & Pipeline completo y flujo completo de la herramienta local & 44 \\
+    \hline
+    \textbf{Total} & & \textbf{488} \\
+    \hline
+  \end{tabular}
+  \caption{Categorías de pruebas automatizadas y objetivo de cada una.}
+  \label{tab:evaluacion_categorias}
+\end{table}
+
+Esta organización por niveles permite además delimitar responsabilidades:
+una regresión detectada en el nivel de política semántica, por ejemplo, se
+diagnostica sin necesidad de examinar la herramienta local o los mecanismos
+de exportación, porque cada nivel verifica un contrato independiente de los
+demás.
+
+\section{Comando de verificación y resultados}
+\label{sec:evaluacion_comando}
+
+La verificación completa del sistema se ejecuta con un único comando:
+
+\begin{code}[htbp]
+\begin{lstlisting}[language=, basicstyle=\small\ttfamily, breaklines=true]
+uv run pytest -n auto tests
+\end{lstlisting}
+\caption{Comando principal de verificación del sistema.}
+\label{cod:evaluacion_comando}
+\end{code}
+
+Este comando ejecuta en paralelo las 488 pruebas de la Tabla~\ref{tab:evaluacion_categorias}
+sobre el paquete oficial CVN vigente en el repositorio, sin datos simulados
+ni resultados precalculados. La ejecución más reciente sobre esta versión
+del documento superó las 488 pruebas sin ningún fallo, en 692,80 segundos
+(11 minutos y 32 segundos) de ejecución paralela. El mismo comando es el que
+ejecuta la integración continua ante cualquier contribución propuesta sobre
+las ramas principales del repositorio, por lo que el resultado no depende
+del entorno de quien lo ejecuta.
+
+\section{Discusión de garantías y limitaciones}
+\label{sec:evaluacion_discusion}
+
+Superar la batería de pruebas certifica que el sistema se comporta según lo
+descrito en los capítulos anteriores, pero no todas las partes del sistema
+ofrecen el mismo tipo de garantía. Conviene distinguir, en particular, las
+limitaciones que proceden del propio paquete oficial CVN de las que
+proceden de una decisión deliberada de alcance de este Trabajo Fin de Grado.
+
+Las limitaciones que proceden del paquete oficial no son atribuibles al
+sistema desarrollado, sino a inconsistencias o a la propia naturaleza del
+material fuente:
+
+\begin{itemize}
+  \item \textbf{Discrepancia XML/XSD del modelo en árbol.} El XML canónico y
+  su esquema de validación no coinciden por completo, tal y como se
+  documentó en el Capítulo~\ref{cap:ecosistema_cvn}.
+
+  \item \textbf{Referencia \texttt{CVN\_AGENCY\_C} sin resolver.} El paquete
+  no ofrece una tabla equivalente localizable para esta referencia del
+  manual.
+
+  \item \textbf{Deriva de empaquetado entre familias auxiliares.} Obliga a
+  un mapeo consciente del paquete en lugar de un convenio de nombres fijo.
+\end{itemize}
+
+El sistema no oculta estas circunstancias: las registra explícitamente y las
+trata mediante evidencia en lugar de forzar una interpretación no
+justificada.
+
+Las limitaciones que proceden del alcance del propio trabajo son, en cambio,
+decisiones deliberadas que delimitan hasta dónde llega la propuesta actual:
+
+\begin{itemize}
+  \item \textbf{Importación de CVN XML.} Es un mapeo semántico parcial y
+  creciente, no un conversor completo de cualquier documento CVN XML real.
+
+  \item \textbf{JSON Schema generado.} No puede expresar toda regla
+  semántica del dominio ni todas las relaciones conceptuales curadas.
+
+  \item \textbf{Importación asistida por LLM.} Es opcional, y su resultado
+  no se considera autoritativo hasta que se revisa.
+
+  \item \textbf{Generación de PDF.} Depende de la disponibilidad de un motor
+  LaTeX en el entorno de ejecución.
+\end{itemize}
+
+La Tabla~\ref{tab:evaluacion_garantias} resume estas garantías junto con la
+limitación conocida que las acompaña.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{p{0.4\textwidth} p{0.44\textwidth}}
+    \hline
+    \textbf{Garantía verificada} & \textbf{Limitación conocida asociada} \\
+    \hline
+    Generación estructural reproducible desde los esquemas XSD oficiales & Algunas construcciones XSD (\textit{choice}, cardinalidades mínimas) no se preservan de forma estricta en los bindings generados \\
+    Normalización y resolución de referencias auxiliares con evidencia trazable & Una referencia del paquete analizado permanece sin resolver (\texttt{CVN\_AGENCY\_C}) \\
+    Política semántica evaluada a partir de evidencia concreta, no de listas fijas & Algunas tablas compactas quedan como revisión pendiente en lugar de enumeración cerrada o catálogo abierto definitivo \\
+    Validación estructural y en tiempo de ejecución determinista del formato Open CVN JSON & El JSON Schema no puede expresar toda relación conceptual curada ni toda regla semántica del dominio \\
+    Importación de CVN XML con trazabilidad y diagnóstico explícito & Mapeo semántico parcial, creciente sobre los casos ya cubiertos; no es un conversor completo \\
+    Importación asistida por LLM opcional y validada antes de almacenarse & Depende de un proveedor externo; el resultado no es autoritativo sin revisión \\
+    Exportación determinista a LaTeX y PDF & La generación de PDF depende de un motor LaTeX disponible en el entorno \\
+    \hline
+  \end{tabular}
+  \caption{Garantías del sistema frente a limitaciones conocidas.}
+  \label{tab:evaluacion_garantias}
+\end{table}
+
+En conjunto, el sistema desarrollado ofrece garantías fuertes y
+reproducibles allí donde el proceso es determinista: la generación
+estructural, la normalización, la resolución de referencias con evidencia
+concreta, la política semántica y la validación del formato Open CVN JSON.
+Ofrece garantías parciales y explícitamente documentadas allí donde el
+propio dominio o el alcance del trabajo lo exigen: la importación de CVN
+XML, la importación asistida por LLM y la generación de PDF. Ninguno de
+estos resultados debe interpretarse como una conversión completa del
+ecosistema CVN ni como una validación semántica total del dominio
+curricular; ambas interpretaciones excederían lo que la evidencia reunida en
+este capítulo permite afirmar. El Capítulo~\ref{cap:conclusiones} retoma esta distinción para
+valorar el grado de cumplimiento de los objetivos planteados en el
+Capítulo~\ref{cap:introduccion} y para señalar las líneas de trabajo futuro
+que se derivan de las limitaciones aquí documentadas.

@@ -1,0 +1,40 @@
+@startuml
+skinparam backgroundColor white
+skinparam defaultFontName DejaVu Sans
+skinparam activityFontSize 12
+skinparam ranksep 12
+
+start
+:Entrada (Open CVN JSON, CVN XML o CVN PDF);
+switch (formato de entrada)
+case ( CVN PDF )
+  :Extraer XML embebido o de metadatos;
+  if (¿XML extraido?) then (si)
+  else (no)
+    if (¿LLM autorizado explicitamente?) then (si)
+      :Fallback LLM opcional (proveedor externo);
+    else (no)
+      :pdf_without_extractable_xml;
+      stop
+    endif
+  endif
+case ( CVN XML )
+  :Comprobar buena formacion del XML;
+  :Mapeo semantico parcial a Open CVN JSON;
+case ( Open CVN JSON )
+  :Analizar el documento JSON;
+endswitch
+:Validar contra el JSON Schema de Open CVN;
+:Validar los modelos Pydantic en tiempo de ejecucion;
+:Aplicar advertencias semanticas conservadoras;
+if (¿Errores?) then (si)
+  :invalid / failed;
+else (no)
+  if (¿Avisos?) then (si)
+    :valid_with_warnings;
+  else (no)
+    :valid;
+  endif
+endif
+stop
+@enduml

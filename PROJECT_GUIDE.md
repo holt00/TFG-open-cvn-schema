@@ -72,6 +72,8 @@ files in order:
 - `docs/reporte_proceso_desarrollo_tfg.md`: narrative report of the TFG
   development process, initial research, key decisions, implementation flow, and
   limitations
+- `docs/memoria/estructura_memoria_tfg.md`: agreed memory structure and chapter
+  status traceability for drafting the final TFG report
 
 ### Architecture And Limits
 
@@ -201,6 +203,9 @@ files in order:
 - `docs/reporte_proceso_desarrollo_tfg.md`: consolidated process report for
   explaining the TFG development, including the initial research in
   `docs/research/` and the later implementation phases
+- `docs/memoria/estructura_memoria_tfg.md`: planning and traceability document
+  for the final TFG memory, including the eight-chapter structure, expected
+  content, annexes, and per-chapter drafting status
 - `docs/informe_estructura_cvnxml_v1.4.3.md`: detailed analysis of the core CVN
   package structure and usage
 - `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the

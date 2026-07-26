@@ -2,9 +2,90 @@
 
 ## Status Date
 
-- Last updated: 2026-07-18
+- Last updated: 2026-07-25 (appendix restructure and em-dash cleanup)
+
+### TFG Memory: Appendix Restructure, Anexo D, And Em-Dash Cleanup
+
+- removed every em dash ("—") from the memoria (`ch8.tex`, the three
+  appendix files, `preambulo.tex`, and the AI declaration in `TFG.tex`),
+  replacing each with parentheses, commas, or a colon depending on context
+- moved the appendices to the actual end of the document: they now follow
+  the bibliography and the "Declaración de uso de Inteligencia Artificial"
+  chapter, instead of sitting between the main chapters and the
+  bibliography
+- added an "Anexos" announcement page (`\chapter*{Anexos}` with a TOC
+  entry) right before the first appendix
+- switched all four appendices from LaTeX's automatic `\appendix`
+  lettering (which rendered as "Apéndice A") to manual `\chapter*{Anexo A:
+  ...}` headings with explicit `\addcontentsline` entries, so the TOC and
+  running heads show "Anexo A: ...", "Anexo B: ...", etc. literally; fixed
+  the one internal cross-reference (`anexo_b.tex` pointing at Anexo A) that
+  relied on `\ref` to a starred chapter, which would have resolved to the
+  wrong number
+- wrote a new `docs/memoria/chapters/anexo_d.tex` ("Anexo D: Repositorio
+  del proyecto y guía de uso"): the public repository link
+  (`https://github.com/holt00/TFG-open-cvn-schema`), the top-level
+  directory layout (`src/`, `schemas/`, `examples/`, `tests/`, `docs/`),
+  and where to start reading (`README.md`, `PROJECT_GUIDE.md`); no images
+- decided not to add a UML-diagrams appendix for now: several generated
+  diagrams are too large for a legible page (see `docs/diagrams/README.md`)
+  and a compact UML overview already exists in the Chapter 3 figure
+- full rebuild verified clean: no undefined references or citations, no
+  overfull hboxes beyond a single sub-pixel case; `docs/memoria/TFG.pdf`
+  now spans 114 pages, with TOC order bibliography -> AI declaration ->
+  Anexos -> Anexo A -> B -> C -> D confirmed via `pdftotext`
+- fixed a follow-up numbering bug: because the appendices use `\chapter*`
+  (for the literal "Anexo A: ..." heading text), their `\section`,
+  `\table`, and `code` float counters kept inheriting chapter 8's numbers
+  instead of resetting, so appendix sections/tables/listings rendered as
+  "8.x" and collided with chapter 8's own `Tabla 8.1`-`8.3`; fixed by
+  manually resetting `section`/`table`/`code` counters to 0 and redefining
+  `\thesection`/`\thetable`/`\thecode` to `A.\arabic{...}` (and `B.`, `C.`)
+  at the top of each appendix file, so numbering is now independent per
+  appendix and letter-prefixed (`A.1`-`A.3`, `Código A.1`-`A.3` in Anexo A;
+  `B.1`-`B.4`, `Tabla B.1`-`B.2` in Anexo B; `C.1`-`C.4`, `Tabla C.1`-`C.4`
+  in Anexo C), verified via `pdftotext`
 
 ## Completed Or Stabilized Work
+
+### TFG Memory: AI Declaration, Appendices, And Chapter Proofreading Pass
+
+- `TFG.tex` now includes a `Declaración de uso de Inteligencia Artificial`
+  chapter after the bibliography, declaring the use of OpenAI and Anthropic
+  models for technical documentation search, academic writing support, and
+  chapter-coherence review, with all generative output reviewed by the
+  author and every other aspect of the work stated as the author's exclusive
+  responsibility
+- three appendices were written and wired into the `\appendix` block of
+  `TFG.tex`, letter-assigned automatically as Apéndice A/B/C:
+  - `docs/memoria/chapters/anexo_a.tex`: installation, environment, and main
+    commands (corresponds to the planning document's "Anexo A")
+  - `docs/memoria/chapters/anexo_b.tex`: full Open CVN JSON format structure,
+    verified against `schemas/open_cvn.schema.json` (corresponds to "Anexo B")
+  - `docs/memoria/chapters/anexo_i.tex`: development by technical phases,
+    with explicit issue/hotfix traceability tables (corresponds to "Anexo
+    I"); this is a deliberate, documented exception to the self-containment
+    rule, since its purpose is exactly to record development traceability
+  - the original "Anexo C" (a full real curriculum example) was not written:
+    no real curriculum is available for this purpose
+- fixed two title typos ("curriculumn vitae" -> "currículum vitae",
+  "el ambito académico" -> "el ámbito académico") in the `\titulo` macro in
+  `docs/memoria/include/opciones.tex`, plus the same literal text duplicated
+  in the "Declaración de autoría" in `docs/memoria/elements/preambulo.tex`
+- performed a full proofreading pass over chapters 1-8: fixed a grammar
+  error in `ch6.tex` ("se extrae y seguido" -> "se extrae y sigue"), and
+  replaced several stale literal `Capítulo N` mentions with `\ref{}`
+  cross-references in `ch3.tex`, `ch4.tex`, `ch6.tex`, and `ch7.tex` (these
+  had been left as literal numbers before the referenced chapters existed);
+  also corrected one cross-reference in `ch4.tex` that pointed the
+  conceptual-model-inventory mention at chapter 3 instead of chapter 5,
+  where that inventory is actually detailed
+- full XeLaTeX + BibTeX rebuild verified clean: no undefined references, no
+  undefined citations, no overfull hboxes beyond pre-existing sub-pixel
+  cases; `docs/memoria/TFG.pdf` now spans 109 pages
+- see `docs/memoria/estructura_memoria_tfg.md` for the updated appendix
+  status table and the new "Declaración de uso de Inteligencia Artificial"
+  and "Erratas corregidas en el título oficial" sections
 
 ### TFG Development Process Report
 
@@ -15,6 +96,253 @@
   verification strategy, and documented limitations
 - the report is intended as a tutor-facing explanation of how the TFG was
   investigated and developed end to end
+- a final-memory planning and traceability document now exists at:
+  - `docs/memoria/estructura_memoria_tfg.md`
+- the memory planning document records the agreed maximum-eight-chapter
+  structure, expected content per chapter, annex plan, and chapter status markers
+  (`PENDIENTE`, `EN_PROCESO`, `COMPLETADO`)
+- the first full draft of memory chapter 1 now exists at:
+  - `docs/memoria/chapters/ch1.tex`
+- the memory root file currently includes chapters 1 and 2 and compiles with the
+  local XeLaTeX/BibTeX workflow using `TeX Gyre Termes`, a TeX Live font, instead
+  of depending on unavailable system fonts such as `Calibri` or `Carlito`
+- latest memory build verification generated `docs/memoria/TFG.pdf` with 40 pages
+  and no blocking LaTeX errors, unresolved references, or unresolved citations;
+  chapters 1 and 2 remain marked `EN_PROCESO` pending content review
+- memory drafting rules now require formal academic Spanish, correct Spanish
+  orthography and accents in final LaTeX text, explicit Spanish support in the
+  LaTeX configuration, and prior explanation of XML/XSD/CVN technical concepts
+  before using them as part of the argumentation
+- chapter 1 has been revised under those rules: the introduction now uses a more
+  formal academic register, corrects Spanish orthography in the LaTeX source, and
+  introduces XML/XSD only after explaining that the CVN source used by the project
+  is supported by structured technical artifacts
+- chapter 1 is also being aligned with `docs/descripcion_tfg_oficial.txt`: the
+  motivation now explicitly mentions the need for an open, extensible, potentially
+  collaborative system that reduces the effort of creating, maintaining, updating,
+  adapting, and reusing CVN-based curricula
+- chapter 1 has now been rewritten in a more developed academic style following
+  the local `tfg-mapi-style` guidance as a writing-quality reference, without
+  copying external wording; the chapter also aligns the listed Computation
+  competences with the official TFG description (`CM1`, `CM2`, `CM5`, `CM6`)
+- the first full draft of memory chapter 2 now exists at:
+  - `docs/memoria/chapters/ch2.tex`
+- chapter 2 covers antecedents and state of the art without repeating the chapter
+  1 introduction: curricular information representation, research-information
+  interoperability models, serialization/validation formats, UML conceptual
+  representation, and model-driven artifact generation references; detailed CVN
+  ecosystem analysis is deferred to chapter 3 and chapter 2 remains marked
+  `EN_PROCESO` pending content review
+- chapter 2 has been strengthened with additional official or primary web sources
+  for XML 1.0, XSD 1.1, JSON Schema, Pydantic, JSON-LD 1.1, ORCID, and RO-Crate;
+  the latest full XeLaTeX/BibTeX build still generates `docs/memoria/TFG.pdf` with
+  40 pages and no unresolved references or citations
+- a content review pass over chapters 1 and 2 removed two uncited bibliography
+  entries (`w3c_xml`, `json_ld_org`) and added a chapter 1 objective, contribution,
+  scope note, and document-structure mention for deterministic and LLM-assisted
+  import (aligned with the official TFG brief and with the already implemented
+  issues `#69` and `#70`); chapter 2 gained the two pending recommended comparative
+  tables (interoperability models CERIF/VIVO/ROH, and serialization/validation
+  formats), while the reduced UML diagram remains deliberately deferred to a later
+  chapter; the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf`
+  with 42 pages and no unresolved references or citations
+- a `[section]`-scoped `placeins` float barrier and a `\emergencystretch` typography
+  setting were added to `docs/memoria/include/configuracion.tex` to stop tables and
+  bracketed citations from drifting past section boundaries or overflowing into the
+  page margin
+- the first full draft of memory chapter 3 now exists at:
+  - `docs/memoria/chapters/ch3.tex`
+- chapter 3 covers the CVN ecosystem analysis and the Open CVN solution proposal:
+  the four core package layers plus the three auxiliary families, the embedded
+  PDF/XML source, four categories of detected technical limitations with concrete
+  evidence, the layered Open CVN architecture, and scope/exclusions; it includes
+  two figures (`docs/memoria/figs/open_cvn_source_separation.png`, a
+  memoria-specific PlantUML diagram, and
+  `docs/memoria/figs/open_cvn_presentation_overview.png`, rendered from the
+  existing issue `#44` presentation-view `.puml`) and two comparative tables
+  (CVN sources, and detected limitations vs. design response); the chapter is
+  marked `EN_PROCESO` pending content review
+- the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf` with 54
+  pages and no unresolved references, citations, or overfull boxes
+- the first full draft of memory chapter 4 now exists at:
+  - `docs/memoria/chapters/ch4.tex`
+- chapter 4 covers the methodology (five phases, with continuous documentation
+  of decisions and limitations as a cross-cutting rule), a tool-justification
+  table citing official documentation for each tool (Python/`uv`, `xsdata` plus
+  its Pydantic extension, Pydantic, JSON Schema, SQLite, Jinja, `pytest` plus
+  `pytest-xdist`, Git and GitHub Actions), the general layered architecture with
+  a new memoria-specific PlantUML figure
+  (`docs/memoria/figs/open_cvn_layered_architecture.png`) grouped into four
+  blocks mapped to real repository modules, a repository-module responsibility
+  table, and a closing section on inter-layer contracts and architectural
+  reasoning; unlike chapters 1-3, this chapter explicitly names repository
+  paths (`src/generated/`, `src/cvn_codegen/`, `src/models/cvn/`, `schemas/`,
+  `src/open_cvn/`, `src/open_cvn_app/`) because its recommended content requires
+  it, while still avoiding issue/hotfix numbers; the chapter is marked
+  `EN_PROCESO` pending content review
+- six new bibliography entries were added to `docs/memoria/bib/ref.bib`
+  (`xsdata_docs`, `uv_docs`, `pytest_docs`, `sqlite_docs`, `jinja_docs`,
+  `github_actions_docs`), all cited in chapter 4
+- the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf` with 63
+  pages and no unresolved references, citations, or overfull boxes
+- the first full draft of memory chapter 5 now exists at:
+  - `docs/memoria/chapters/ch5.tex`
+- chapter 5 walks through the generation/normalization pipeline stage by stage
+  (structural generation, normalization, auxiliary reference resolution,
+  semantic policy, domain model and conceptual model generation, JSON Schema
+  generation and traceability) and closes with a pipeline-stage summary table
+- every figure quoted in chapter 5 was re-verified directly against the live
+  canonical package before writing, not copied from prior documentation:
+  `1457` total normalized codes, `27` manual-only, `1` tree-only, `1429`
+  overlapping, `33` recorded mismatches; of the 1457 entries, `557` declare a
+  manual reference table (broken into 9 resolution-evidence categories summing
+  to 557, with exactly `1` unresolved case, `CVN_AGENCY_C` at code
+  `060.010.000.030`) and `900` do not; domain generation still emits `105`
+  files; the generated JSON Schema contains `182` `$defs`, `74` of them
+  controlled vocabularies
+- the chapter includes a reduced normalized-metadata code listing and a new
+  memoria-specific PlantUML traceability figure
+  (`docs/memoria/figs/open_cvn_field_traceability.png`) that follows the CVN
+  sex field (code `000.010.000.030`) from `SpecificationManual.xml` and
+  `CVNTreeModel.xml` through auxiliary reference resolution and semantic
+  policy to its final `x-open-cvn-*`-annotated JSON Schema definition; the
+  chapter is marked `EN_PROCESO` pending content review
+- the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf` with 69
+  pages and no unresolved references, citations, or overfull boxes worth
+  reporting (one 2pt caption-line overfull remains, imperceptible in print)
+- section 5.4 (semantic policy) and section 5.5 (domain/conceptual model
+  generation) were later rewritten for clarity at the user's request: 5.4 now
+  opens with the motivation for the stage, splits into three subsections
+  (recognized semantic shapes as a table, the closed-enum-vs-open-catalog
+  decision contrasting a live-verified `CVN_ENTITY_TYPE` example against
+  `CVN_SEX_A`, and presence/naming/trace), and 5.5 now clearly separates the
+  domain-model artifact from the conceptual-model artifact instead of
+  conflating them, with a verified breakdown of the 105 generated files
+- the first full draft of memory chapter 6 now exists at:
+  - `docs/memoria/chapters/ch6.tex`
+- chapter 6 covers the Open CVN JSON root shape, the shared controlled-reference
+  object shape (reusing the sex/`CVN_SEX_A` example from chapter 5), the
+  parser/validator contract (five validation states, conservative semantic
+  warnings), import from JSON/XML/PDF (including the opt-in LLM fallback,
+  framed as constitutive of the system per the official brief, not as writing
+  assistance), and the local management tool (master/derived-version model,
+  main CLI commands), closing with an explicit scope/guarantees section that
+  sets up chapter 7's evaluation
+- the chapter includes all four recommended elements: a minimal Open CVN JSON
+  root-shape code listing, a new memoria-specific PlantUML import/validation
+  flow diagram (`docs/memoria/figs/open_cvn_import_validation_flow.png`), a
+  main-commands table, and a reduced master-curriculum/derived-version code
+  listing pair built from the real `examples/open_cvn/identity.json` and
+  `research_entry.json` fixtures plus a `x-open-cvn.versioning` extension shape
+  verified directly against `src/open_cvn_app/storage.py`
+- while writing chapter 6, three lingering literal "Capítulo 6" forward
+  references in chapters 3 and 5 were converted to `\ref{cap:formato_herramienta}`
+  now that the label exists, per the established literal-text-until-it-exists
+  convention
+- the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf` with 79
+  pages and no unresolved references or citations (only the same class of
+  imperceptible <2pt caption-line overfulls); chapter 6 is marked `EN_PROCESO`
+  pending content review
+- chapter 6 was later revised twice more: float placement was fixed by
+  reordering prose so no sensitive paragraph ever sits after a float within a
+  section (rather than forcing `[H]`, which fixed split sentences but produced
+  large blank gaps), combined with compacting the commands table and the two
+  master/derived code listings; and section 6.5 (scope and guarantees) was
+  restructured from one dense paragraph into a labeled itemized list, one
+  entry per flow (JSON validation, XML import, LLM-assisted import, PDF
+  generation), each explaining why its guarantee level holds
+- the first full draft of memory chapter 7 now exists at:
+  - `docs/memoria/chapters/ch7.tex`
+- chapter 7 organizes evaluation into eight levels aligned with the chapter 4
+  architecture layers, presents the single verification command, and closes
+  with a discussion that explicitly separates limitations originating from
+  the official CVN package from limitations originating from a deliberate TFG
+  scope decision, stating plainly that the system is not a complete
+  conversion or a total semantic validation
+- every number in chapter 7 was verified by actually running the full suite
+  during this session (not reused from earlier records): `uv run pytest -n
+  auto tests` was launched and monitored to completion, giving
+  `488 passed in 692.80s (0:11:32)`; the 8-level breakdown (146/90/76/25/63/
+  25/19/44, summing to 488) was obtained via `--collect-only -q` on each
+  category's file subset before the full run finished
+- the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf` with 85
+  pages and no unresolved references or citations; chapter 7 is marked
+  `EN_PROCESO` pending content review
+- section 7.1 and both central paragraphs of section 7.4 were then rewritten:
+  the run-on sentence naming all eight evaluation levels became a bulleted
+  list, and the two run-on paragraphs listing CVN-package-origin vs.
+  TFG-scope-origin limitations became two separate bulleted lists, following
+  the same pattern already used in 5.4 and 6.5
+- a full-document sweep then searched chapters 1-7 for other paragraph-hidden
+  enumerations (long runs of parallel "que X, que Y" clauses or semicolon-
+  separated items with substantial per-item content); two more instances were
+  found and converted to bulleted lists: chapter 3 section 3.5 (scope and
+  exclusions, three paragraphs each enumerating 2-5 items) and chapter 6
+  section 6.1's opening paragraph (the four Open CVN JSON root fields); other
+  long paragraphs and short noun-phrase lists (e.g. the five-phase
+  methodology narrative in chapter 4, tool lists in chapter 4/5) were left as
+  prose because they read clearly as sequential narrative or short inline
+  lists, not as disguised dense enumerations
+- the latest full XeLaTeX/BibTeX build after this sweep generates
+  `docs/memoria/TFG.pdf` with 87 pages and no unresolved references or
+  citations
+- the first full draft of memory chapter 8 now exists at:
+  - `docs/memoria/chapters/ch8.tex`
+- chapter 8 is the last main-body chapter (before appendices and the
+  bibliography) and closes the memoria: it revisits the general objective and
+  all ten chapter-1 specific objectives with a fulfillment table (`OE9`
+  marked "cumplido con garantías parciales", the rest "cumplido", consistent
+  with chapter 7's guarantees discussion), restates the seven announced
+  contributions now as demonstrated with a chapter cross-reference each,
+  closes the explicit promise chapter 1 made to justify the four CM1/CM2/
+  CM5/CM6 competencies with concrete evidence, and consolidates limitations
+  with associated future work in a table, including a self-contained
+  (no repo paths, no issue numbers) explanation of a possible future OCL
+  extension with two generic illustrative patterns (controlled-value-plus-
+  "other" conditional obligation; start/end date ordering) instead of citing
+  the internal `.puml`/module names from the planning document's research
+  note
+- while drafting, the same float-outruns-paragraph pattern from chapters 6
+  and 7 recurred once (the objectives table drifted ahead of the paragraph
+  about `OE9` that followed it, splitting a sentence); fixed the same way as
+  before, by moving that paragraph ahead of the table instead of forcing
+  `[H]`, so all three chapter-8 tables are now the last element of their
+  section
+- the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf` with
+  93 pages and no unresolved references or citations; chapter 8 is marked
+  `EN_PROCESO` pending content review; all eight main chapters now exist in
+  draft form, with only appendices and a final content review remaining
+- chapter 8 was then revised twice more at the user's request:
+  - the "Resumen del trabajo" section (8.1) was added, absent until then,
+    after comparing the chapter against the conclusions chapter of a local
+    gitignored reference thesis (`Mapi_TFG_ESIIAB_UCLM__ESP_/`, the basis of
+    the `tfg-mapi-style` skill, never cited or copied verbatim) to check for
+    format and content gaps; the contributions section (now 8.3) was also
+    converted from a terse bulleted list to ordinal narrative paragraphs to
+    match that reference chapter's format; the closing "Conclusiones"
+    section (now 8.6) was trimmed to remove the recap it now duplicated with
+    8.1
+  - section 8.5 (limitations and future work) was expanded because its
+    six-row table alone did not explain each limitation adequately (unlike
+    the equivalent tables in chapters 3 and 7, which are preceded by full
+    explanatory paragraphs); a paragraph was written for each of the six
+    limitations (what it is, whether it originates from the official
+    package or from deliberate TFG scope, and the future work it implies,
+    cross-referenced to the chapter where it was first documented), and the
+    summary table was moved to the end of the section as a quick-reference
+    recap rather than the primary explanation
+  - the memoria-wide sections are renumbered: 8.1 Resumen del trabajo, 8.2
+    Cumplimiento de los objetivos, 8.3 Contribuciones principales, 8.4
+    Competencias desarrolladas, 8.5 Limitaciones y trabajo futuro, 8.6
+    Conclusiones
+  - the latest full XeLaTeX/BibTeX build generates `docs/memoria/TFG.pdf`
+    with 95 pages and no unresolved references or citations
+- the preamble "Resumen" (abstract) at `docs/memoria/elements/preambulo.tex`,
+  previously `\lipsum` placeholder text, was replaced with a three-paragraph
+  abstract (problem/motivation, system built, evaluation results) written to
+  match the length and structure of the reference thesis's own abstract; the
+  "Agradecimientos" placeholder was intentionally left untouched since it is
+  a personal section for the author to write herself
 
 ### Issue `#11`
 
@@ -1279,18 +1607,19 @@ Then continue with these supporting files as needed:
 
 1. `docs/roadmap/cvn_generation_roadmap.md`
 2. `docs/reporte_proceso_desarrollo_tfg.md`
-3. `docs/roadmap/issues/issue-11-project-infrastructure.md`
-4. `docs/roadmap/issues/issue-12-structural-bindings.md`
-5. `docs/roadmap/issues/issue-13-normalization.md`
-6. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
-7. `docs/development/regeneration_workflow.md`
-8. `docs/development/parser_workflow.md`
-9. `docs/development/llm_import_workflow.md`
-10. `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`
-11. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
-12. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
-13. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
-14. `docs/pipeline/known_limitations.md`
+3. `docs/memoria/estructura_memoria_tfg.md`
+4. `docs/roadmap/issues/issue-11-project-infrastructure.md`
+5. `docs/roadmap/issues/issue-12-structural-bindings.md`
+6. `docs/roadmap/issues/issue-13-normalization.md`
+7. `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
+8. `docs/development/regeneration_workflow.md`
+9. `docs/development/parser_workflow.md`
+10. `docs/development/llm_import_workflow.md`
+11. `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`
+12. `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
+13. `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
+14. `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
+15. `docs/pipeline/known_limitations.md`
 15. `docs/pipeline/parser_validator_contract.md`
 16. `docs/roadmap/hotfixes/`
 17. `docs/cvn_source_package_auxiliary_artifacts.md`

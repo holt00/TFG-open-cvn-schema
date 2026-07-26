@@ -1,0 +1,148 @@
+\chapter*{Anexo B: Estructura completa del formato Open CVN JSON}
+\addcontentsline{toc}{chapter}{Anexo B: Estructura completa del formato Open CVN JSON}
+\label{cap:anexo_formato_json}
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{B.\arabic{section}}
+\setcounter{table}{0}
+\renewcommand{\thetable}{B.\arabic{table}}
+
+La Sección~\ref{sec:formato_json} introdujo la estructura raíz del formato
+Open CVN JSON y su forma común para valores de referencia controlada. Este
+anexo completa esa descripción con el detalle de cada bloque, tal como está
+declarado en el artefacto canónico \texttt{schemas/open\_cvn.schema.json}
+generado por el pipeline descrito en el
+Capítulo~\ref{cap:pipeline}. El objetivo es ofrecer una referencia legible
+por personas de la forma del formato, no sustituir el esquema JSON como
+fuente de verdad para la validación automática.
+
+\section{Bloque \texttt{metadata}}
+\label{sec:anexo_formato_metadata}
+
+El bloque \texttt{metadata} describe el documento, no su contenido
+curricular, y contiene tres campos:
+
+\begin{itemize}
+  \item \texttt{language}: idioma del contenido curricular, expresado como
+  código de idioma.
+
+  \item \texttt{policy}: objeto con \texttt{name} y \texttt{version}, que
+  identifica la política semántica aplicada durante la generación del
+  documento, en el sentido descrito en la
+  Sección~\ref{sec:pipeline_politica_semantica}.
+
+  \item \texttt{source}: objeto con \texttt{format}, que identifica el
+  origen del documento cuando procede de un proceso de importación.
+\end{itemize}
+
+\section{Bloque \texttt{curriculum}}
+\label{sec:anexo_formato_curriculum}
+
+El bloque \texttt{curriculum} organiza la información por área conceptual.
+El campo \texttt{identity} es un único objeto que describe a la persona
+titular del currículo; a diferencia del resto de campos, el esquema
+canónico lo declara como un objeto abierto, sin una lista cerrada de
+propiedades, porque la identidad agrupa datos de naturaleza heterogénea
+(nombre, identificadores oficiales, sexo administrativo, trazas) que no
+comparten una única forma repetida.
+
+Los cinco campos restantes son listas de entradas repetidas:
+\texttt{education}, \texttt{research}, \texttt{professional\_experience},
+\texttt{achievements} y \texttt{other}. Cada entrada de estas listas
+comparte una misma envoltura, resumida en la
+Tabla~\ref{tab:anexo_formato_entrada}.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{p{0.22\textwidth} p{0.68\textwidth}}
+    \hline
+    \textbf{Campo} & \textbf{Contenido} \\
+    \hline
+    \texttt{id} & Identificador local opcional de la entrada dentro del documento \\
+    \texttt{type} & Identificador conceptual estable del tipo de entrada, independiente del código CVN de origen \\
+    \texttt{data} & Objeto con los campos propios de la entrada, según su \texttt{type} \\
+    \texttt{extensions} & Objeto opcional para metadatos específicos de una herramienta o proyecto concreto \\
+    \texttt{trace} & Bloque opcional de trazabilidad hacia el paquete oficial CVN \\
+    \hline
+  \end{tabular}
+  \caption{Envoltura común de las entradas de las listas curriculares.}
+  \label{tab:anexo_formato_entrada}
+\end{table}
+
+Cuando está presente, el bloque \texttt{trace} puede incluir los códigos CVN
+de origen (\texttt{cvn\_codes}), las rutas XML de las que procede
+(\texttt{xml\_paths}), el nivel de confianza de la extracción
+(\texttt{confidence}), y campos adicionales de apoyo a la trazabilidad
+técnica: forma del dominio, tabla de referencia del manual funcional,
+tipo de referencia semántica, patrón de serialización, y los artefactos y
+ficheros de origen concretos. Este mismo mecanismo de trazabilidad es el
+que permite, en la dirección inversa, relacionar cada campo del formato
+Open CVN con el código CVN del que procede, tal como se describe en la
+Sección~\ref{sec:pipeline_normalizacion}.
+
+\section{Valores de referencia controlada}
+\label{sec:anexo_formato_valores}
+
+Los campos que remiten a una tabla de valores controlados comparten la
+forma introducida en la Sección~\ref{sec:formato_json}: un objeto con
+\texttt{code}, \texttt{label}, \texttt{source} y, cuando procede,
+\texttt{raw\_value} o \texttt{uri}. El esquema canónico distingue dos
+tratamientos posibles para esta forma, ya contrastados con evidencia
+concreta en la Sección~\ref{sec:pipeline_politica_semantica}:
+
+\begin{itemize}
+  \item cuando la tabla de valores está cerrada y tiene evidencia
+  suficiente, el campo \texttt{code} se emite como una enumeración cerrada
+  en el esquema, como ocurre con \texttt{CVN\_SEX\_A};
+
+  \item cuando la tabla no reúne evidencia suficiente para cerrarla sin
+  perder valores válidos, el campo \texttt{code} permanece abierto, como
+  ocurre con \texttt{CVN\_ENTITY\_TYPE}.
+\end{itemize}
+
+\section{Definiciones del esquema}
+\label{sec:anexo_formato_definiciones}
+
+El esquema canónico declara sus definiciones reutilizables bajo
+\texttt{\$defs}. La Tabla~\ref{tab:anexo_formato_defs} resume su
+distribución por área conceptual, verificada directamente sobre el
+artefacto generado.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{p{0.42\textwidth} p{0.15\textwidth} p{0.33\textwidth}}
+    \hline
+    \textbf{Área} & \textbf{Definiciones} & \textbf{Contenido} \\
+    \hline
+    \texttt{education} & 30 & formación académica e impartida \\
+    \texttt{research} & 47 & actividad investigadora \\
+    \texttt{professional\_experience} & 3 & experiencia profesional \\
+    \texttt{achievements} & 2 & méritos y reconocimientos \\
+    \texttt{other} & 20 & entradas sin área conceptual específica \\
+    \texttt{identity} & 1 & identidad de la persona titular \\
+    \texttt{core} & 1 & forma raíz del currículo \\
+    vocabularios & 74 & valores de referencia controlada \\
+    \hline
+    \textbf{Total} & \textbf{182} & \\
+    \hline
+  \end{tabular}
+  \caption{Distribución de las definiciones del esquema Open CVN JSON por área conceptual.}
+  \label{tab:anexo_formato_defs}
+\end{table}
+
+Cada definición conserva, cuando existe evidencia, una traza no validante
+hacia su origen mediante extensiones \texttt{x-open-cvn-*}: código CVN de
+origen, rutas XML, forma del dominio conceptual, elegibilidad como
+enumeración, referencia de origen y nivel de confianza. Estas extensiones
+no participan en la validación JSON Schema en sentido estricto, pero
+permiten auditar cada definición hasta su fuente oficial, en línea con el
+principio de trazabilidad que atraviesa todo el trabajo.
+
+Los artefactos citados en este anexo, el esquema canónico
+\path{schemas/open_cvn.schema.json} y los documentos de ejemplo bajo
+\path{examples/open_cvn/}, son reproducibles a partir del código fuente
+del proyecto siguiendo el procedimiento descrito en el Anexo A.

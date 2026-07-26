@@ -1,0 +1,18 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {code}{\numberline {5.1}{\ignorespaces Fragmento reducido del metadato normalizado del campo de sexo.}}{40}{code.caption.18}%
+\addvspace {10\p@ }
+\contentsline {code}{\numberline {6.1}{\ignorespaces Estructura raíz mínima de un documento Open CVN JSON.}}{48}{code.caption.23}%
+\contentsline {code}{\numberline {6.2}{\ignorespaces Currículo maestro reducido, con una entrada de investigación.}}{52}{code.caption.26}%
+\contentsline {code}{\numberline {6.3}{\ignorespaces Versión derivada ``publica'' del mismo currículo, con la entrada de investigación excluida.}}{52}{code.caption.27}%
+\addvspace {10\p@ }
+\contentsline {code}{\numberline {7.1}{\ignorespaces Comando principal de verificación del sistema.}}{57}{code.caption.29}%
+\addvspace {10\p@ }
+\contentsline {code}{\numberline {A.1}{\ignorespaces Preparación del entorno de desarrollo.}}{78}{code.caption.38}%
+\contentsline {code}{\numberline {A.2}{\ignorespaces Regeneración de artefactos estructurales y verificación por pruebas.}}{78}{code.caption.39}%
+\contentsline {code}{\numberline {A.3}{\ignorespaces Recorrido completo de importación, versionado y exportación con la herramienta local.}}{79}{code.caption.40}%
+\contentsfinish 
+\contentsfinish 

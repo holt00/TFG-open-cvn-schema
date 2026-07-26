@@ -1,253 +1,315 @@
-\chapter{Algunos elementos}
+\chapter{Antecedentes y estado del arte}
+\label{cap:estado_arte}
 
-En este capítulo se describen algunas particularidades de la plantilla, y se proporcionan algunos ejemplos con elementos de uso frecuente. No se comentan aspectos comunes relacionados con el uso de \LaTeX, ya que existe gran cantidad de información al respecto.
+El presente capítulo recoge los antecedentes técnicos que sustentan el trabajo:
+interoperabilidad de información investigadora, formatos de serialización,
+mecanismos de validación y técnicas de modelado conceptual. Su finalidad es
+comparar alternativas y justificar las decisiones tecnológicas que se utilizarán en
+los capítulos posteriores, sin desarrollar todavía el análisis específico del
+dominio CVN. Ese análisis se reserva para el capítulo siguiente,
+donde se estudiarán sus artefactos oficiales, sus limitaciones y la propuesta Open
+CVN construida a partir de ellos.
 
-\section{Configuración}
-La configuración es muy sencilla. Al margen de la adaptación particular que pueda hacerse, la elaboración de un documento solamente requiere información relativa al autor, título y tutores. Ésta ha de configurarse en el archivo \verb+include\opciones.tex+.  \\
+\section{Representación de información curricular compleja}
+\label{sec:estado_arte_representacion_curricular}
 
-Además, en el archivo \verb+include\colores.tex+ puede configurarse el color \verb+tema+, utilizado en títulos, elementos flotantes y, opcionalmente, tablas y negritas. Por defecto, se recomienda ponerlo a \verb+{0,0,0}+  (negro). Pueden escribirse \bft{negritas con el color configurado} con el comando \verb+\bft{texto}+. \\
+La información curricular académica e investigadora constituye un dominio de datos
+heterogéneo, con entidades, relaciones, restricciones y niveles de detalle que no
+encajan bien en una representación plana. Desde una perspectiva computacional,
+esta circunstancia obliga a diferenciar el modelo conceptual del dominio, la
+serialización utilizada para intercambiar datos y las herramientas que permiten
+procesarlos. Esta separación será una idea recurrente en el resto del documento,
+porque permite razonar sobre el significado de los datos sin confundirlo con el
+formato concreto en el que se almacenan o transmiten.
 
-Por último, en el archivo principal se pueden configurar las fuentes utilizadas en la portada, preámbulo y documento.
+En España, CVN proporciona una referencia normalizada para la presentación de
+información curricular de investigadores y favorece la interoperabilidad con bases
+de datos institucionales~\cite{cvn_web}. En este capítulo se menciona únicamente
+como punto de conexión con el dominio de aplicación. La descripción de sus
+fuentes, de su representación técnica y de sus limitaciones se reserva para el
+capítulo siguiente, con el fin de no anticipar el análisis que corresponde a la
+propuesta de solución.
 
-\section{Colores}
+\section{Interoperabilidad curricular y sistemas de información de investigación}
+\label{sec:estado_arte_interoperabilidad}
 
+La gestión de información curricular no es un problema exclusivo de CVN. En el
+ámbito académico internacional existen diferentes iniciativas orientadas a mejorar
+la interoperabilidad entre sistemas de información de investigación. Estos
+sistemas, conocidos habitualmente como \textit{Current Research Information
+Systems} (CRIS), integran datos sobre investigadores, organizaciones, proyectos,
+publicaciones, financiación, resultados científicos y otros elementos relevantes
+para la actividad investigadora.
 
-En el archivo \verb+include\colores.tex+ se predefinen algunos colores. También varios comandos para utilizar negritas con ellos. En concreto, se proporcionan cinco: Con el comando \verb+\bfa{texto}+ se pueden poner las cosas en negrita \bfa{azul}. Con el comando \verb+\bfr{texto}+ se pueden poner las cosas en negrita \bfr{rojo}.Con el comando \verb+\bfn{texto}+ se pueden poner las cosas en negrita \bfn{naranja}. Con el comando \verb+\bfv{texto}+ se pueden poner las cosas en negrita \bfv{verde}. Con el comando \verb+\bfm{texto}+ se pueden poner las cosas en negrita \bfm{mostaza}. \\
+La interoperabilidad en este dominio no depende solo de compartir documentos, sino
+también de poder identificar de forma estable a las personas, organizaciones,
+resultados y relaciones descritas. ORCID, por ejemplo, proporciona identificadores
+persistentes para investigadores y mecanismos de conexión entre dichos
+identificadores, contribuciones y afiliaciones~\cite{orcid_about}. En una línea
+complementaria, RO-Crate propone un enfoque ligero para empaquetar datos de
+investigación junto con sus metadatos~\cite{ro_crate}. Estas iniciativas no
+resuelven por sí mismas la representación completa de un currículo CVN, pero
+muestran la importancia de combinar datos estructurados, metadatos explícitos e
+identificadores reutilizables.
 
-\begin{itemize}
-\item [\hmarkr] No es conveniente usar los colores salvo en alguna ocasión puntual. Por ejemplo, si el color del tema es {\bf negro} o \bfa{azul} se puede utilizar el \bfr{rojo} para alguna advertencia.
-\end{itemize}
+Uno de los modelos más representativos en este ámbito es CERIF, mantenido por
+euroCRIS. CERIF se presenta como un formato europeo para la gestión, intercambio y
+almacenamiento de información de investigación, con especial atención a la
+interoperabilidad entre sistemas CRIS~\cite{eurocris_cerif}. Su principal ventaja
+reside en la riqueza de su modelo, que permite representar entidades, relaciones y
+dimensiones temporales con un alto grado de precisión. Esta expresividad resulta
+adecuada para infraestructuras institucionales complejas, aunque también introduce
+un nivel de abstracción y complejidad que puede ser excesivo cuando el objetivo es
+definir una representación ligera y directamente procesable de currículos.
 
-\section{Listas y enumeraciones}
+Otra aproximación relevante es VIVO, una plataforma orientada a conectar,
+compartir y descubrir información sobre investigación mediante tecnologías de Web
+Semántica~\cite{vivo_project}. Frente a modelos más tabulares o documentales,
+VIVO se apoya en grafos y ontologías para describir investigadores, publicaciones,
+organizaciones y relaciones académicas. Esta orientación facilita la publicación
+de datos enlazados y la integración con vocabularios semánticos, pero exige una
+infraestructura conceptual y tecnológica más compleja que la requerida por una
+herramienta local de gestión curricular.
 
-El entorno \textit{itemize} usa, por defecto, el color del tema. Los símbolos utilizados para marcar los items están pre-definidos en el archivo de configuración, y pueden cambiarse. También es posible seleccionar, mediante \verb+\item[símbolo]+ el símbolo específico para cada línea. Esta lista muestra los símbolos por defecto:
+En el contexto español destaca también el proyecto HERCULES y, dentro de él, la
+Research Ontology for Hercules (ROH). La red de ontologías HERCULES persigue la
+representación semántica de información de investigación en el sistema
+universitario español~\cite{hercules_ontologias,roh_documentation}. Además, parte
+de su ecosistema se ha relacionado con CVN mediante código y artefactos públicos
+orientados a la importación de información curricular~\cite{roh_github,cvn_github}.
+Esta proximidad al dominio español convierte a ROH en una referencia relevante,
+aunque su orientación ontológica y su dependencia de tecnologías de Web Semántica
+hacen que no sea la opción más sencilla para el alcance de este trabajo.
 
-\begin{itemize}
-\item Primer ítem
-\begin{itemize}
-\item Primer ítem en el segundo nivel
-\item Otro ítem en el segundo nivel
-\begin{itemize}
-\item Ítem en el tercer nivel
-\end{itemize}
-\end{itemize}
-\item Segundo ítem
-\item Tercer ítem \\
-\end{itemize}
+La Tabla~\ref{tab:estado_arte_modelos_interoperabilidad} resume estos tres
+enfoques atendiendo al tipo de representación empleada, su principal fortaleza y
+la limitación que presenta cada uno frente al objetivo de Open CVN.
 
-En esta se usan algunos caracteres especiales predefinidos para marcar los ítems. Existen comandos para mostrar algunos de estos caracteres con los colores azul, rojo y el color del tema.
-
-\begin{itemize}
-\item[\vmarka] \verb+\vmarka+ : ``v'' representa el símbolo, y ``a'' el color
-\item[\xmarkr] \verb+\xmarkr+
-\item[\lmarkt] \verb+\lmarkt+ : el color ``t'' corresponde al tema.
-\item[\hmarkt] \verb+\hmarkt+ 
-\item[\fmarkt] \verb+\fmarkt+ \\
-\end{itemize}
-
-Las enumeraciones también están preconfiguradas en el archivo de configuración:
-
-\begin{enumerate}
-\item Esto es una enumeración
-\item Con algunos elementos adicionales
-\item Que se pueden quitar
-\end{enumerate}
-
-Pueden ser modificadas, como en el siguiente ejemplo.
-
-\begin{enumerate}[labelindent=\parindent ,leftmargin=*,label=\mbox{\bft{[Re \arabic*]}}]
-\setcounter{enumi}{7}
-\item Esto es una enumeración
-\item Sin elementos
-\item Adicionales
-\end{enumerate}
-
-
-\section{Elementos flotantes}
-
-En el archivo de \verb+include\configuracion+ existen varios parámetros que se fijan en la configuración para figuras y tablas, pero se pueden alterar de manera ocasional (y excepcional) al maquetar el documento. La mayoría son relativos al título, y se pueden cambiar a través de las funcionalidades que proporciona el paquete \verb+caption+. Cuando se cambian para un elemento particular \bft{es buena práctica restaurar el valor original}, para que el documento tenga un aspecto uniforme.
-
-\begin{verbatim}
-% Títulos
-\DeclareCaptionFont{tema}{\color{tema}} % Color
-\captionsetup{labelfont={tema, bf}}     % Estilo
-\captionsetup{font=normalsize}          % Tamaño
-\captionsetup{width=.9\linewidth}       % Anchura del título
- % Distancia de la figura al texto.
-\setlength{\intextsep}{1cm} 
-\setlength{\textfloatsep}{1cm}         
-\end{verbatim}
-
-\subsection{Tablas}
-Las tablas se hacen de modo normal, aunque se ha añadido la capacidad utilizar celdas que ocupen múltiples filas, colores en los encabezados, y anchuras fijas. Se recomienda mirar el código fuente de la tabla \ref{tab:mod1}.\\
-
-Con respecto al color de los encabezados, es conveniente utilizar el mismo en todo el documento. Una opción con respecto al fondo del encabezado es utilizar el mismo que el del texto pero con transparencia. \\
-
-
-
-% --------------------------------------------------
-% Esto es para poner colores en las asignaturas
-% en el ejemplo concreto
-\newcommand{\bi}{\bfn{ES}/\bfr{EN}}
-\newcommand{\esp}{\bfn{ES}}
-\newcommand{\eng}{\bfr{EN}}
-% --------------------------------------------------
-
-\begin{table}[h]\footnotesize
-\renewcommand{\arraystretch}{1.3} % Altura
-\begin{center}
-\begin{tabular}{|L{2.5cm}| L{3cm}| C{6cm} c | c |} % Tres primeras con anchura predefinida
-\hline 
-
-\rowcolor{tema!10} % Color con transparencia correspondiente
-\hline
-\bft{Módulo I} & \bft{Materia} & \multicolumn{2}{|c|}{\bft{Asignatura}}& \bft{ECTS} \\ \hline 
-\multirow{9}{2.5cm}{Formación Básica (60 ECTS)} & % Aquí se indica que esta ocupa nueve filas.
-\multirow{4}{3cm}{Fundamentos Matemáticos de la Informática} & 
-Álgebra y Matemática Discreta & \esp  & 6 \\ \cline{3-5} 
-& & Cálculo y Métodos Numéricos & \bi  & 6 \\ \cline{3-5} 
-& & Estadística & \bi  & 6 \\ \cline{3-5}
-& & Lógica& \esp  & 6 \\ \cline{2-5}
-& Fundamentos Físicos de la Informática & Fundamentos Físicos de la Informática & \bi  & 6 \\ \cline{2-5}
-& \multirow{2}{3cm}{Ingeniería de Computadores} & 
-Estructura de Computadores & \esp  & 6 \\ \cline{3-5} 
-& & Tecnología de Computadores & \esp  & 6 \\ \cline{2-5} 
-& \multirow{2}{3cm}{Programación} & 
-Fundamentos de Programación I & \esp  & 6 \\ \cline{3-5} 
-& & Fundamentos de Programación II & \bi  & 6 \\ \cline{2-5}
-%& \makecell[cl]{Gestión de las \\ Organizaciones} & Fundamentos de Gestión Empresarial & \esp  & 6 \\ \hline 
-& Gestión de las \mbox{Organizaciones} & Fundamentos de Gestión Empresarial & \esp  & 6 \\ \hline 
-\end{tabular}
-\end{center}
-\caption[Asignaturas del Módulo I]{Asignaturas del Módulo I.}
-\label{tab:mod1}
-\renewcommand{\arraystretch}{1} 
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.08\textwidth} p{0.26\textwidth} p{0.26\textwidth} p{0.26\textwidth}}
+    \hline
+    \textbf{Modelo} & \textbf{Enfoque de representación} & \textbf{Fortaleza principal} & \textbf{Limitación frente a Open CVN} \\
+    \hline
+    CERIF & Modelo europeo orientado a entidades y relaciones para sistemas CRIS & Alta expresividad para relaciones institucionales y dimensiones temporales & Complejidad y coste de adopción elevados para una representación ligera \\
+    VIVO & Grafos y ontologías de Web Semántica & Publicación de datos enlazados e integración con vocabularios semánticos & Requiere infraestructura RDF/ontológica no necesaria para el alcance del TFG \\
+    ROH & Ontología del ámbito universitario e investigador español (proyecto HERCULES) & Proximidad al dominio CVN español y artefactos de importación ya existentes & Orientación ontológica y dependencia de tecnologías de Web Semántica \\
+    \hline
+  \end{tabular}
+  \caption{Comparativa de modelos de interoperabilidad curricular relacionados con Open CVN.}
+  \label{tab:estado_arte_modelos_interoperabilidad}
 \end{table}
 
-\subsection{Figuras}
+En conjunto, CERIF, VIVO y ROH muestran que la información investigadora puede
+modelarse con niveles elevados de riqueza semántica. No obstante, también ponen
+de manifiesto una tensión habitual entre expresividad e implementabilidad. Cuanto
+más completo y semánticamente rico es un modelo, mayor suele ser el coste de
+adopción, mantenimiento, consulta y validación. Para Open CVN, esta observación
+resulta determinante: el objetivo no es competir con infraestructuras CRIS ni con
+ontologías de investigación completas, sino definir una representación curricular
+abierta, validable y suficientemente expresiva para el ámbito del TFG.
 
-Con respecto a las figuras, a veces es utilizar un texto descriptivo demasiado ancho puede ser antiestético. Por ejemplo en la \ref{fig:esiiabI} el rótulo ocupa toda la línea\footnote{Por defecto, ocupa el 90\%, que es el valor por defecto en la configuración, pero se ha cambiado para que se vea mejor el efecto.}. En la figura \ref{fig:esiiabII} se corrige este efecto con:
+\section{Formatos de serialización y validación}
+\label{sec:estado_arte_serializacion}
 
-\begin{verbatim}
-\begin{figure}[b] 
-\captionsetup{width=0.8\linewidth}
-...
-\end{verbatim}
+La elección de un formato de serialización condiciona la forma en que los datos se
+almacenan, intercambian y procesan. Sin embargo, un formato de serialización no
+equivale por sí mismo a un modelo conceptual. Un mismo dominio puede representarse
+en XML, JSON, YAML u otros formatos, siempre que exista una definición clara de
+las entidades, atributos, relaciones y restricciones que deben preservarse. Por
+ello, en este trabajo los formatos se analizan como mecanismos técnicos, no como
+la única fuente de significado del sistema.
 
-Después, se restaura el valor original de la configuración:
-\begin{verbatim}
-...
-\captionsetup{width=0.9\linewidth}
-\end{figure}
-\end{verbatim}
+\subsection{XML y XSD}
+\label{subsec:estado_arte_xml_xsd}
 
+Extensible Markup Language (XML) es un lenguaje de marcado definido por el World
+Wide Web Consortium y ampliamente utilizado para representar documentos y datos
+estructurados. La recomendación XML 1.0 lo define como un perfil de SGML diseñado
+para facilitar el intercambio y procesamiento de documentos en la Web, con
+atención explícita a la interoperabilidad y a la facilidad de implementación de
+procesadores~\cite{w3c_xml_10}. XSD se define, a su vez, como un lenguaje para
+describir la estructura y restringir el contenido de documentos XML, aunque la
+propia especificación reconoce que algunas aplicaciones pueden necesitar
+validaciones adicionales no expresables únicamente mediante el
+esquema~\cite{w3c_xsd_11}.
 
-\begin{figure}[p] 
-\captionsetup{width=1\linewidth}
-\begin{center}
-\includegraphics[width=10cm]{figs/esiiab.png}
-\end{center}
-\caption[Escuela Superior de Ingeniería Informática I]{Escuela Superior de Ingeniería Informática. Esto es un texto descriptivo algo más largo que puede producir un efecto feo.}
-\label{fig:esiiabI}
-\end{figure}
+La principal ventaja de XML en este contexto es su capacidad para representar
+estructuras jerárquicas complejas y asociarlas a esquemas de validación robustos.
+Esto permite comprobar si un documento respeta una estructura determinada y
+facilita la interoperabilidad entre sistemas que comparten la misma definición.
+Además, el uso de XSD proporciona una fuente formal a partir de la cual pueden
+generarse artefactos estructurales, como clases de datos o bindings de acceso
+programático.
 
+No obstante, XML también presenta limitaciones cuando se utiliza como base directa
+de una herramienta de gestión. Su sintaxis es más verbosa que la de formatos más
+ligeros, el procesamiento suele requerir bibliotecas específicas y la estructura
+del documento no siempre coincide con el modelo conceptual más adecuado para una
+aplicación. Por tanto, XML puede ser una fuente técnica fundamental en sistemas de
+intercambio estructurado, pero no constituye por sí solo el modelo completo del
+dominio representado.
 
+\subsection{JSON y JSON Schema}
+\label{subsec:estado_arte_json_schema}
 
-\begin{figure}[p] 
-\captionsetup{width=0.8\linewidth}
-\begin{center}
-\includegraphics[width=10cm]{figs/esiiab.png}
-\end{center}
-\caption[Escuela Superior de Ingeniería Informática II]{Escuela Superior de Ingeniería Informática. Esto es un texto descriptivo algo más largo que puede producir un efecto feo.}
-\label{fig:esiiabII}
-\captionsetup{width=0.9\linewidth}
-\end{figure}
+JavaScript Object Notation (JSON) es un formato ligero de intercambio de datos
+basado en estructuras de pares clave-valor y listas ordenadas~\cite{json_org_es}.
+Su sencillez sintáctica, su integración directa con lenguajes de programación y
+su uso extendido en servicios web lo convierten en una alternativa adecuada para
+representaciones orientadas al procesamiento automático. En Python, por ejemplo,
+un documento JSON puede mapearse de forma natural a diccionarios, listas y tipos
+primitivos, lo que simplifica su manipulación en aplicaciones.
 
-Se incluye el paquete \verb+subfigure+ para la inclusión de figuras con varias imágenes o gráficas, como la que muestra la figura \ref{fig:subfiguras}.
-\begin{figure}[htb]
-\begin{center}
-\begin{subfigure}[b]{0.4\linewidth}
-\begin{center}
-\includegraphics[width=0.9\linewidth]{figs/esiiab.png}
-\caption{Fotografía de la izquierda}\label{fig:esiiabIII}
-\end{center}
-\end{subfigure} 
-\begin{subfigure}[b]{0.4\linewidth}
-\begin{center}
-\includegraphics[width=0.9\linewidth]{figs/esiiab.png}
-\caption{Fotografía de la drecha}\label{fig:esiiabIV}
-\end{center}
-\end{subfigure} 
-\end{center}
-\caption[Ejemplo de subfiguras]{Ejemplo de inclusión de subfiguras}
-\label{fig:subfiguras}
-\end{figure}
+La principal dificultad de JSON es que, por sí solo, no define restricciones
+estructurales ni semánticas. Para resolver esta limitación se utiliza JSON Schema,
+un vocabulario que permite describir la estructura esperada de documentos JSON,
+incluyendo tipos, campos obligatorios, restricciones de valores y composición de
+objetos. La documentación de JSON Schema lo presenta como un lenguaje declarativo
+para definir estructura y restricciones de datos JSON, cuya validación requiere
+comprobar una instancia contra un esquema mediante herramientas específicas
+~\cite{json_schema_overview}. De este modo, JSON puede combinarse con un mecanismo
+de validación formal similar en propósito a XSD, aunque con una sintaxis más
+cercana a los formatos habituales de intercambio de datos en aplicaciones
+modernas.
 
+En el ecosistema Python, Pydantic complementa esta aproximación al permitir definir
+modelos mediante anotaciones de tipo, validar datos de entrada, serializar
+estructuras y emitir JSON Schema a partir de los modelos~\cite{pydantic_docs}.
+Esta combinación resulta especialmente adecuada para un proyecto que necesita
+mantener correspondencia entre un formato de intercambio, reglas de validación y
+objetos manipulables desde código. Al mismo tiempo, obliga a distinguir entre la
+validación sintáctica o estructural, que puede comprobarse de forma automática, y
+las reglas semánticas del dominio, que requieren análisis adicional de las fuentes
+CVN.
 
+Para el contexto de Open CVN, JSON resulta especialmente adecuado como formato
+final de intercambio y almacenamiento porque permite construir documentos
+legibles, validables y compatibles con herramientas habituales de desarrollo.
+Esta elección no implica renunciar a una referencia normativa del dominio. Al
+contrario, el objetivo consiste en derivar una representación JSON trazable a
+partir de fuentes oficiales, preservando la relación entre los datos, sus reglas y
+su interpretación curricular.
 
-\section{Algoritmos y código}
+\subsection{JSON-LD y YAML}
+\label{subsec:estado_arte_jsonld_yaml}
 
-Con respecto a los algoritmos (pseudocódigo) y código pueden implementarse, respectivamente, mediante el uso de los paquetes \verb+algorithmic+ y \verb+listings+. Pueden configurarse ambos entornos el archivo \verb+include\configuracion+. Por otra parte, se han definido dos entornos flotantes, denominados \verb+algorithm+ y \verb+code+ para encapsular y mostrar ambos tipos de elemento de manera uniforme.\\
+JSON for Linking Data (JSON-LD) extiende JSON para facilitar la representación de
+datos enlazados mediante contextos semánticos. La recomendación JSON-LD 1.1 lo
+define como una serialización basada en JSON para \textit{Linked Data}, pensada
+para integrarse con sistemas que ya utilizan JSON y facilitar un camino de
+evolución hacia datos enlazados~\cite{w3c_json_ld_11}. Su principal aportación
+consiste en permitir que un documento JSON pueda interpretarse también como parte
+de un grafo de conocimiento, asociando claves del documento con identificadores
+semánticos. Esta característica lo convierte en una opción interesante cuando se
+busca compatibilidad con tecnologías RDF u ontologías.
 
+Sin embargo, la incorporación de semántica enlazada también aumenta la complejidad
+del sistema. Para un proyecto cuyo objetivo principal es definir una
+representación curricular abierta, validable y manejable mediante herramientas
+Python, JSON-LD puede resultar más expresivo de lo necesario en una primera
+aproximación. Su interés se mantiene como posible línea de evolución futura, en
+especial si Open CVN necesitara integrarse con ontologías como ROH o con
+infraestructuras de datos enlazados.
 
-El algoritmo \ref{alg:search} muestra un ejemplo de pseudocódigo. Se han añadido dos comandos, \verb+\va{variable}+ para distinguir las \va{variables}, y \verb+\fu{funcion}+ para distinguir las \fu{Funciones}. \\
+YAML, por su parte, es un formato orientado a la legibilidad humana y empleado con
+frecuencia en configuración y definición de esquemas~\cite{yaml_org}. Su sintaxis
+compacta facilita la lectura manual, aunque puede introducir ambigüedades y
+requiere parsers específicos. En el contexto de este trabajo, YAML resulta
+relevante principalmente por su uso en herramientas de modelado como LinkML, pero
+no se adopta como formato final de intercambio curricular.
 
+La Tabla~\ref{tab:estado_arte_formatos_serializacion} recoge, a modo de síntesis,
+la función principal, el mecanismo de validación asociado y el papel que cada uno
+de estos formatos desempeña dentro de Open CVN.
 
+\begin{table}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.13\textwidth} p{0.24\textwidth} p{0.22\textwidth} p{0.24\textwidth}}
+    \hline
+    \textbf{Formato} & \textbf{Función principal} & \textbf{Validación asociada} & \textbf{Papel en Open CVN} \\
+    \hline
+    XML + XSD & Representación jerárquica de documentos y datos estructurados & Esquema XSD & Fuente estructural oficial de CVN; no se adopta como formato final de intercambio \\
+    JSON + JSON Schema & Intercambio ligero de datos orientado a aplicaciones & JSON Schema, con apoyo de Pydantic en Python & Formato final de intercambio, almacenamiento y validación de Open CVN \\
+    JSON-LD & Extensión de JSON para datos enlazados semánticamente & Contextos JSON-LD y vocabularios semánticos & Línea de evolución futura; no se adopta en la versión actual \\
+    YAML & Formato legible orientado a configuración y definición de esquemas & Depende de la herramienta que lo consume (por ejemplo, LinkML) & Referencia en herramientas de modelado; no se emplea como formato de intercambio final \\
+    \hline
+  \end{tabular}
+  \caption{Comparativa de formatos de serialización y validación relevantes para Open CVN.}
+  \label{tab:estado_arte_formatos_serializacion}
+\end{table}
 
-\begin{algorithm}[b]
-\begin{algorithmic}[1]
- 	\Function{Tree-Search}{ }
- 	\State \va{open} $\leftarrow$ \Call{CreateNode}{\fu{Initial-State}} \Comment{Creates the root}
-	\While {\va{open} $\neq \emptyset$}
-		\State \va{node} $\leftarrow$ \Call{Extract}{\va{open}}
-		\If {\Call{TestGoal}{\va{node.STATE}}}
-			\State \Return \Call{RecoverPath}{\va{node}} \Comment{Solution found}
-		\EndIf		
-				
-		\State \va{successors} $\leftarrow$ \Call{Expand}{\va{node}}
-		\ForAll {\va{successor} \bft{en} \va{successors}} \Comment{Processes each successor }
-			\State  \Call{Insert}{\va{successor, open}}
-		\EndFor	
-	\EndWhile
-	\State \Return failure \Comment{No solution have been found}
- 	\EndFunction
-\end{algorithmic}
-\caption{Tree-Search exploration}
-\label{alg:search}
-\end{algorithm}
+\section{Modelado conceptual y generación de artefactos}
+\label{sec:estado_arte_modelado}
 
-Por último, el listado \ref{alg:code} muestra el código del algoritmo \ref{alg:search} en \textit{Python}. El paquete \verb+listings+  contiene multitud de opciones para el manejo de distintos lenguajes y para personalización.
+La separación entre modelo conceptual y formato de serialización conduce a la
+necesidad de utilizar técnicas de modelado que permitan describir el dominio de
+forma independiente de una tecnología concreta. En este sentido, Unified Modeling
+Language (UML) constituye una referencia ampliamente utilizada para especificar,
+visualizar y documentar sistemas mediante clases, atributos, relaciones,
+jerarquías y multiplicidades~\cite{omg_uml}. Su utilidad en este trabajo reside
+en la posibilidad de representar conceptos curriculares y sus relaciones sin
+depender inicialmente de XML, JSON u otro formato de intercambio.
 
-\begin{code}
-\begin{lstlisting}
+Por este motivo, UML se utilizará como notación principal para representar el
+esquema conceptual derivado del análisis del dominio. En particular, los diagramas
+de clases permiten expresar entidades curriculares, atributos, asociaciones y
+multiplicidades en un nivel intermedio entre la descripción normativa de CVN y los
+artefactos técnicos generados posteriormente. Esta representación no sustituye a
+los modelos ejecutables ni a los esquemas de validación, pero proporciona una vista
+comprensible y tecnológicamente independiente del esquema que se desea obtener.
 
-def search(initial):
-	open = [initial]
-	while open:
-		node = open.pop()
-		if testGoal(node):
-			return recoverPath(node)
-		successors = expand(node)
-		for succesor in successors:
-			open.append(succesor)
-	return failure
-		
-\end{lstlisting}
-\caption{Ejemplo de código en Python}
-\label{alg:code}
-\end{code}
+Cuando el modelo requiere restricciones más precisas que las expresables mediante
+clases y relaciones, Object Constraint Language (OCL) permite definir condiciones
+formales sobre modelos UML~\cite{omg_ocl}. Estas restricciones pueden utilizarse
+para especificar reglas de validez, cardinalidad o consistencia que no siempre
+quedan reflejadas de forma natural en un diagrama estructural. Aunque este trabajo
+no se basa exclusivamente en UML/OCL como fuente de generación final, estos
+conceptos resultan relevantes para justificar la separación entre estructura,
+semántica y validación.
 
+En esta línea, existen herramientas que permiten generar artefactos técnicos a
+partir de modelos. BESSER, por ejemplo, proporciona un generador de modelos
+Pydantic a partir de especificaciones de modelado~\cite{besser_pydantic}. Este
+tipo de enfoque muestra una tendencia importante: definir el dominio en un nivel
+conceptual o declarativo y obtener después clases, validadores o esquemas de forma
+automática. La arquitectura de Open CVN adopta esta idea general de generación y
+trazabilidad, aunque la adapta a las fuentes disponibles en el ecosistema CVN y a
+las necesidades concretas del proyecto.
 
-\section{Bibliografía}
+Otra herramienta relacionada es LinkML, un lenguaje de modelado orientado a datos
+estructurados que permite definir esquemas de forma declarativa y generar
+artefactos en distintos formatos~\cite{linkml_io}. LinkML resulta especialmente
+interesante por su capacidad para actuar como puente entre modelos, esquemas JSON,
+documentación y tecnologías de datos enlazados. No obstante, para el alcance de
+este TFG, su adopción completa introduciría una capa adicional de complejidad que
+no resulta imprescindible. Por ello, se considera como referencia conceptual, pero
+no como dependencia central de la solución desarrollada.
 
-Esto es una cita \cite{RUSSELL} y esto otra \cite{AlphaZero}. La bibliografía se gestiona con bibtex y un estilo predefinido. No se han hecho modificaciones de momento.
+\section{Síntesis del estado del arte}
+\label{sec:estado_arte_sintesis}
 
-\section{Notación matemática}
+El análisis realizado permite extraer varias conclusiones relevantes para el
+desarrollo de una representación curricular abierta. En primer lugar, los modelos
+relacionados con información de investigación, como CERIF, VIVO o ROH, muestran
+soluciones expresivas y semánticamente ricas, aunque su complejidad puede resultar
+desproporcionada para una herramienta abierta y ligera de gestión curricular. En
+segundo lugar, los formatos de serialización deben entenderse como mecanismos de
+intercambio y almacenamiento, no como sustitutos del modelo conceptual. En tercer
+lugar, UML ofrece una notación adecuada para representar el esquema conceptual de
+forma comprensible antes de materializarlo en modelos ejecutables o esquemas de
+validación.
 
-Utiliza las fuentes por defecto del tema, aunque también se pueden cambiar.
-
-
-\[
-J(\theta)=\frac{1}{2m}\left[ \sum_{i=1}^m\left(h_\theta(x^{(i)})-y^{(i)}\right)^2 + \lambda \sum_{j=1}^n \theta_j^2 \right], \mbox{ } \lambda >0
-\]
-
+Estas observaciones justifican la necesidad de una arquitectura propia que separe
+modelo conceptual, serialización y validación, preserve trazabilidad hacia las
+fuentes oficiales del dominio y genere una representación final más adecuada para
+validación, almacenamiento y exportación. De este modo, el estado del arte no
+conduce a adoptar sin modificaciones una ontología completa ni a reproducir
+directamente una estructura de intercambio existente, sino a proponer una solución
+intermedia: suficientemente formal para ser validable, suficientemente trazable
+para conservar el significado curricular y suficientemente ligera para servir como
+base de herramientas abiertas.
