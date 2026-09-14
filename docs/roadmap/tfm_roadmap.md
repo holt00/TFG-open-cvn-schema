@@ -49,27 +49,42 @@ Same rules as the TFG roadmap, carried forward:
 
 ## Epic Scope
 
-**Not yet defined.** The TFM objective, scope, and technical direction have
-not been agreed with the user yet. A placeholder epic record exists at
-`docs/roadmap/issues/issue-TBD-epic-tfm.md` so the expected document exists
-and is linked from here, but its content is intentionally left as `TBD`.
+**Defined.** Epic: "Diseño de una arquitectura lakehouse escalable para la
+integración y análisis de información curricular académica." Full detail,
+including the technology stack decision record, data-source strategy, phased
+plan, scope cut list, and the repository standards that apply, is in
+`docs/roadmap/issues/issue-TBD-epic-tfm.md`. That document is self-contained;
+read it before starting any implementation.
 
-Do not invent TFM scope, objectives, or a technical plan ahead of the user
-defining them. When the epic is defined:
+In one paragraph: a self-hosted Kubernetes (k3s) lakehouse ingesting CVN
+(synthetic, schema-valid, ORCID-seeded) and ORCID (real, via API for
+enrichment and a filtered bulk-file subset for volume) data into MinIO,
+organized bronze/silver/gold with Iceberg (Hadoop catalog), processed with
+Spark (`spark-submit`, no Operator) orchestrated by Airflow, with entity
+resolution across sources, 2-3 gold-layer indicators materialized to
+PostgreSQL and shown in Superset, and one bounded Spark performance
+benchmark. Hard constraints: 6 ECTS (half the TFG's 12), 20 days including
+the memoria (deadline computed in the epic document), ~120-140 available
+hours, 50-page memoria maximum, written as living Markdown converted to
+LaTeX at the end, the same way the TFG was documented.
 
-1. fill in `docs/roadmap/issues/issue-TBD-epic-tfm.md` with the real epic
-   content (Summary, Original Goal, Original Plan, Integration Checkpoints)
-2. rename it to `docs/roadmap/issues/issue-<n>-epic-tfm-<slug>.md` once a real
-   GitHub issue number is assigned
-3. add the "Issue Status Overview" table to this file, mirroring the format
-   used in `docs/roadmap/cvn_generation_roadmap.md`
-4. update this file's cross-references accordingly
+Filename remains `issue-TBD-epic-tfm.md` pending a real GitHub issue number.
+When one is filed:
+
+1. rename it to `docs/roadmap/issues/issue-<n>-epic-tfm-<slug>.md`
+2. update every cross-reference to the current filename (this file,
+   `docs/context/tfm_current_status.md`, and the repository entry points)
+3. update the "Issue Status Overview" table below from `TBD` to the real
+   number
+4. as each phase from the epic's "Original Plan" begins, file it as its own
+   numbered child issue and add a row for it below, the same pattern the TFG
+   used (epic `#8` with child issues `#11`-`#17` etc.)
 
 ## Issue Status Overview
 
 | Issue | Title | Status | Notes |
 | --- | --- | --- | --- |
-| `TBD` | Epic: TFM scope (placeholder) | Not defined | See `docs/roadmap/issues/issue-TBD-epic-tfm.md`; content pending the user's definition of the TFM objective |
+| `TBD` | Epic: TFM lakehouse platform for curricular data integration and analysis | Planned | See `docs/roadmap/issues/issue-TBD-epic-tfm.md`; scope and stack defined, implementation not started |
 
 ## Required Companion Documents
 

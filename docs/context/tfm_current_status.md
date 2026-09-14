@@ -74,16 +74,61 @@ Known, documented limitations of that foundation are tracked in
 
 ### What The TFM Adds
 
-The TFM scope has not been defined yet. A placeholder epic exists at
-`docs/roadmap/issues/issue-TBD-epic-tfm.md` and will be filled in, numbered,
-and expanded once the TFM objective is agreed with the user. Until then, this
-file records only repository-reorientation work, not TFM feature work.
+The TFM scope is now defined: a self-hosted Kubernetes lakehouse ingesting
+CVN (synthetic) and ORCID (real) data, processed distributedly with Spark
+under Iceberg/MinIO, orchestrated by Airflow, with entity resolution and a
+small set of research indicators surfaced in Superset. Full detail,
+including the technology stack decision record and rationale, the data
+strategy and its privacy reasoning, the phased plan, the scope cut list, and
+the repository standards that apply, is in
+`docs/roadmap/issues/issue-TBD-epic-tfm.md`. That document is written to be
+self-contained; read it in full before starting implementation rather than
+relying on this summary.
+
+Key constraints, restated because they are easy to lose sight of mid-
+implementation: 6 ECTS (half the TFG's 12, so scope must be proportionally
+smaller), 20 days total including the memoria, ~120-140 available hours,
+50-page memoria maximum written as living Markdown converted to LaTeX at the
+end.
 
 ## Status Date
 
-- Last updated: 2026-09-14 (repository reoriented from TFG to TFM)
+- Last updated: 2026-09-14 (TFM epic defined)
 
 ## Entries
+
+### TFM Epic Defined: Lakehouse Platform Scope, Stack, And Constraints
+
+- the TFM epic was fully defined in a planning conversation with the user
+  and written up at `docs/roadmap/issues/issue-TBD-epic-tfm.md`; see that
+  document for complete detail, this entry only indexes the outcome
+- confirmed hard constraints: 6 ECTS (vs the TFG's 12), 20 days total
+  including the memoria (epic defined 2026-09-14, target completion
+  ~2026-10-04), ~120-140 available hours (most days 5-6h, some full days),
+  memoria capped at 50 pages, written as living Markdown converted to LaTeX
+  at the end (same method as the TFG)
+- confirmed technology stack: Kubernetes (k3s, local cluster only for now),
+  MinIO, Apache Iceberg with a Hadoop path-based catalog (no Hive
+  Metastore/REST catalog/Nessie for now), Apache Spark via `spark-submit`
+  (no Spark Operator), Apache Airflow (`KubernetesExecutor`) for
+  orchestration, PostgreSQL as the Superset-facing store for materialized
+  gold-layer tables, Apache Superset for BI; Trino, Prometheus/Grafana, and
+  Terraform/cloud deployment explicitly deferred to documented future work
+- confirmed data strategy: ORCID via its Public API (targeted enrichment/
+  fusion lookups) plus a filtered subset of its annual Public Data File bulk
+  dump (real volume); CVN via schema-valid synthetic generation seeded from
+  real ORCID fields, explicitly instead of sourcing real CVN documents at
+  volume, due to a privacy/consent concern raised and accepted during
+  planning (completed CVNs are personal data with no legitimate public bulk
+  source, unlike ORCID profiles)
+- confirmed phased plan (0: cluster/infra, 1: Iceberg+Spark wiring, 2:
+  ingestion, 3: transform, 4: BI+benchmark, 5: hardening, 6: memoria
+  assembly) and an explicit scope priority/cut list, decided in advance so
+  time-pressure decisions do not need to be made from scratch later
+- the TFM roadmap (`docs/roadmap/tfm_roadmap.md`) and this file's "What The
+  TFM Adds" section were updated to reflect the defined epic
+- no implementation has started; the next step is filing the first child
+  issue (Phase 0: cluster + core infra) once work actually begins
 
 ### Repository Reorientation: TFG Closed, TFM Started
 
