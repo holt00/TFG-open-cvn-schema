@@ -44,12 +44,16 @@ Agents should also read `AGENTS.md` before this file.
   The memoria is written, signed, and defended.
 - TFG documented issues: `#11`-`#17`, `#25`, `#42`-`#50`, `#60`-`#71`
 - TFG documented hotfix records: `#1`-`#8`
-- TFM status: active, epic defined. See
+- TFM status: active, epic defined and broken down into filed child issues
+  `#90`-`#103`. See
   `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md` (GitHub
-  issue `#89`); no child issues filed yet.
-- Latest hotfix record: `#9`, the TFG-closure/TFM-reorientation transition
-  itself (`docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`)
-- Current implementation issue: none yet; awaiting TFM scope definition
+  issue `#89`) and `docs/roadmap/tfm/tfm_roadmap.md`'s "Issue Status
+  Overview" for the full list with dependencies.
+- Latest hotfix records: `#9` (TFG closure/TFM reorientation) and `#10`
+  (TFG/TFM documentation folder separation), both under
+  `docs/roadmap/tfm/hotfixes/`
+- Current implementation issue: none yet; all TFM issues are `Planned`,
+  starting with `#90`
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -97,6 +101,9 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`: TFM epic
   (GitHub issue `#89`); also explains the inherited TFG architecture for a
   reader new to the project
+- issues `#90`-`#103`: the epic's phases broken down into filed child
+  issues, listed with dependencies in `docs/roadmap/tfm/tfm_roadmap.md`'s
+  "Issue Status Overview"
 - `docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`:
   record of the TFG closure and TFM reorientation itself
 - `docs/roadmap/tfg/cvn_generation_roadmap.md`: closed TFG roadmap, issue `#8`

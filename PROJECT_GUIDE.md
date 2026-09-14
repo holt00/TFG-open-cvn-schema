@@ -98,8 +98,7 @@ files in order:
   instead
 - Do not invent or expand TFM scope beyond what the TFM epic
   (`docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`, GitHub
-  issue `#89`) defines; file each phase as its own child issue when work on
-  it actually starts
+  issue `#89`) and its filed child issues `#90`-`#103` define
 
 ## Documentation Map
 
@@ -151,6 +150,9 @@ files in order:
 - `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`: TFM epic
   (GitHub issue `#89`), also explains the inherited TFG architecture for a
   reader new to the project
+- issues `#90`-`#103`: the epic's phases broken down into filed child
+  issues, listed with dependencies in `docs/roadmap/tfm/tfm_roadmap.md`'s
+  "Issue Status Overview"
 - `docs/roadmap/tfg/cvn_generation_roadmap.md`: closed TFG roadmap, issue `#8`
   through issue `#71`, all completed
 - `docs/roadmap/tfg/issues/issue-08-epic-cvn-automation.md`: epic summary and

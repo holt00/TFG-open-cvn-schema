@@ -59,8 +59,9 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/tfm/tfm_roadmap.md`, not in their TFG counterparts
 - Do not invent or expand TFM scope beyond what is defined in the TFM epic
   (`docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`, GitHub
-  issue `#89`); file each phase as its own child issue when work on it
-  actually starts, rather than pre-deciding details the epic left open
+  issue `#89`) and its filed child issues `#90`-`#103`
+  (`docs/roadmap/tfm/tfm_roadmap.md`), rather than pre-deciding details the
+  epic and its issues left open
 
 ## Documentation Map
 
@@ -88,6 +89,26 @@ Every new session should read these files in order before making changes:
 - roadmap overview (TFM, active): `docs/roadmap/tfm/tfm_roadmap.md`
 - epic (TFM, defined, GitHub issue `#89`):
   `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`
+- issue `#90`: `docs/roadmap/tfm/issues/issue-90-k3s-cluster-bring-up.md`
+- issue `#91`: `docs/roadmap/tfm/issues/issue-91-core-services-deployment.md`
+- issue `#92`: `docs/roadmap/tfm/issues/issue-92-iceberg-catalog-on-minio.md`
+- issue `#93`:
+  `docs/roadmap/tfm/issues/issue-93-spark-job-execution-from-airflow.md`
+- issue `#94`: `docs/roadmap/tfm/issues/issue-94-orcid-api-client.md`
+- issue `#95`:
+  `docs/roadmap/tfm/issues/issue-95-orcid-bulk-data-file-pipeline.md`
+- issue `#96`: `docs/roadmap/tfm/issues/issue-96-synthetic-cvn-generator.md`
+- issue `#97`:
+  `docs/roadmap/tfm/issues/issue-97-bronze-landing-and-ingest-validate-dag.md`
+- issue `#98`:
+  `docs/roadmap/tfm/issues/issue-98-bronze-to-silver-validation-and-entity-resolution.md`
+- issue `#99`:
+  `docs/roadmap/tfm/issues/issue-99-silver-to-gold-indicators-and-transform-publish-dag.md`
+- issue `#100`: `docs/roadmap/tfm/issues/issue-100-superset-dashboard.md`
+- issue `#101`:
+  `docs/roadmap/tfm/issues/issue-101-spark-performance-benchmark.md`
+- issue `#102`: `docs/roadmap/tfm/issues/issue-102-hardening.md`
+- issue `#103`: `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md`
 - roadmap overview (TFG, closed): `docs/roadmap/tfg/cvn_generation_roadmap.md`
 - epic summary (TFG): `docs/roadmap/tfg/issues/issue-08-epic-cvn-automation.md`
 - issue `#11`: `docs/roadmap/tfg/issues/issue-11-project-infrastructure.md`

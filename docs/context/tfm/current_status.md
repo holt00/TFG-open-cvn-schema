@@ -93,9 +93,36 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-14 (TFG/TFM documentation folders separated)
+- Last updated: 2026-09-14 (epic broken down into 14 filed child issues, `#90`-`#103`)
 
 ## Entries
+
+### Epic Broken Down Into 14 Filed Child Issues (#90-#103)
+
+- the epic's seven phases were broken down in a planning conversation with
+  the user into 14 issue-sized, independently-buildable deliverables (some
+  phases split into multiple issues where they bundled more than one major
+  task, e.g. phase 2's three data sources plus DAG wiring became four
+  issues)
+- all 14 were filed as real GitHub issues, `#90` through `#103`, and written
+  up as full issue documents under `docs/roadmap/tfm/issues/`, each
+  following the same mandatory-section contract as the TFG issues
+- `docs/roadmap/tfm/tfm_roadmap.md`'s "Issue Status Overview" now lists all
+  15 TFM issues (`#89` epic plus `#90`-`#103`) with their epic phase and
+  dependencies
+- the epic (`docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`)
+  was updated: its phase table now names the real child issue numbers per
+  phase instead of describing phases abstractly, and its "Impact On Future
+  Issues" section reflects that all child issues are now filed rather than
+  pending
+- the repository entry-point files (`AGENTS.md`, `PROJECT_GUIDE.md`,
+  `docs/context/project_context_index.md`) were updated to list the new
+  issues and to stop saying scope/child issues were still pending
+- execution order: `#90`/`#91` (infra) -> `#92`/`#93` (Iceberg+Spark) ->
+  `#94`-`#97` (ingestion) -> `#98`/`#99` (transform) -> `#100`/`#101`
+  (BI+benchmark) -> `#102` (hardening) -> `#103` (memoria, written
+  throughout but assembled at the end)
+- no implementation has started; every issue is `Planned`
 
 ### TFG/TFM Documentation Folders Physically Separated
 

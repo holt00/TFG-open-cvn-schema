@@ -244,21 +244,26 @@ with a working, smoke-tested increment, not a partial one; if a phase
 overruns, consult the "Scope Priority / Cut List" below before extending the
 timeline.
 
-| Phase | Days (of 20) | Goal | Key deliverables |
+| Phase | Days (of 20) | Goal | Child issues |
 | --- | --- | --- | --- |
-| 0. Cluster + core infra | 1-2 | k3s running; core services deployed | k3s up; MinIO, PostgreSQL, Airflow deployed via Helm; each reachable/smoke-tested; `docs/pipeline/tfm_lakehouse_architecture.md` started; daily entries begin in `docs/context/tfm/current_status.md` |
-| 1. Iceberg + Spark wiring | 3-4 | Prove the lakehouse's core mechanism works | Hadoop catalog on MinIO configured; `spark-submit` from Airflow proven; a test Iceberg table written and read back end-to-end |
-| 2. Ingestion | 5-7 | Real + synthetic data landing in bronze with provenance | ORCID API client; ORCID bulk-file downloader/filter; synthetic CVN generator (schema-valid, ORCID-seeded); bronze landing zone in MinIO with source/ingestion-date partitioning and provenance metadata; Airflow DAG `ingest_validate` wired end-to-end |
-| 3. Transform | 8-11 | Bronze -> silver -> gold, with dedup | `bronze_to_silver.py`: validation (via reused `open_cvn` contract) + normalization + entity resolution/dedup by ORCID iD (fallback: normalized name/affiliation); `silver_to_gold.py`: 2-3 indicators (candidates: publications per researcher per year, co-authorship/collaboration pairs, career trajectory/affiliation timeline; finalize the exact 2-3 during this phase); gold published to Iceberg and materialized to PostgreSQL; Airflow DAG `transform_publish` wired end-to-end |
-| 4. BI + benchmark | 12-14 | Visible indicators + one performance result | Superset deployed, connected to PostgreSQL, 2-3 charts; one benchmark (Spark executor count vs. bronze->silver runtime at 2-3 synthetic data scales), captured from Spark job logs / History Server |
-| 5. Hardening | 15-16 | Reduce risk of a broken demo | Bug/error-handling buffer; a reproducibility quickstart doc (how to stand the whole thing up from scratch) |
-| 6. Memoria assembly | throughout, concentrated 16-20 | 50-page memoria, defensible | Convert the running Markdown log (this epic, its child issues, `tfm_current_status.md`) into the LaTeX memoria, following the TFG's structure/skeleton pattern |
+| 0. Cluster + core infra | 1-2 | k3s running; core services deployed | `#90` k3s cluster bring-up; `#91` core services deployment (MinIO, PostgreSQL, Airflow) |
+| 1. Iceberg + Spark wiring | 3-4 | Prove the lakehouse's core mechanism works | `#92` Iceberg catalog on MinIO; `#93` Spark job execution from Airflow |
+| 2. Ingestion | 5-7 | Real + synthetic data landing in bronze with provenance | `#94` ORCID API client; `#95` ORCID bulk data file pipeline; `#96` synthetic CVN generator; `#97` bronze landing & `ingest_validate` DAG |
+| 3. Transform | 8-11 | Bronze -> silver -> gold, with dedup | `#98` bronze -> silver: validation & entity resolution; `#99` silver -> gold: indicators & `transform_publish` DAG |
+| 4. BI + benchmark | 12-14 | Visible indicators + one performance result | `#100` Superset dashboard; `#101` Spark performance benchmark |
+| 5. Hardening | 15-16 | Reduce risk of a broken demo | `#102` hardening |
+| 6. Memoria assembly | throughout, concentrated 16-20 | 50-page memoria, defensible | `#103` memoria assembly |
 
-Each phase above is expected to become its own numbered child issue under
-this epic once work on it starts (the same pattern the TFG used: epic
-`#8` with child issues `#11`-`#17` etc.). Do not pre-file all of them now;
-file each child issue when that phase actually begins, using the real next
-available GitHub issue number at that time.
+Every phase above has been broken down and filed as its own numbered child
+issue, `#90` through `#103` (the same pattern the TFG used: epic `#8` with
+child issues `#11`-`#17` etc.), each with the full mandatory-section
+contract. See `docs/roadmap/tfm/tfm_roadmap.md`'s "Issue Status Overview"
+for the complete list with dependencies, and the individual issue files
+under `docs/roadmap/tfm/issues/` for full detail per issue. Phases were
+broken down further than the table above where a phase bundled multiple
+independently-buildable deliverables (e.g. phase 2's three data sources plus
+the DAG wiring became four separate issues, `#94`-`#97`); see each issue's
+own "Original Plan" for what it individually covers.
 
 ## Scope Priority / Cut List
 
@@ -379,11 +384,10 @@ work rather than silently omitted:
 
 ## Impact On Future Issues
 
-Each phase in "Original Plan" is expected to become its own numbered child
-issue once work on it begins, filed with the real next available GitHub
-issue number at that time (not pre-assigned here). The "Scope Priority / Cut
-List" section governs what each child issue may drop if the time budget is
-at risk.
+Every phase has been broken down and filed as child issues `#90` through
+`#103` (see "Original Plan" above and `docs/roadmap/tfm/tfm_roadmap.md`).
+The "Scope Priority / Cut List" section governs what each child issue may
+drop if the time budget is at risk.
 
 ## Status
 
