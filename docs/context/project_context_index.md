@@ -12,7 +12,7 @@ Agents should also read `AGENTS.md` before this file.
 
 1. `PROJECT_GUIDE.md`
 2. `docs/context/project_context_index.md`
-3. `docs/context/current_status.md`
+3. `docs/context/tfm_current_status.md` (active TFM state)
 4. `docs/roadmap/issues/<current-issue>.md`
 5. Supporting documents linked from the current issue file
 
@@ -21,26 +21,32 @@ Agents should also read `AGENTS.md` before this file.
 1. `AGENTS.md`
 2. `PROJECT_GUIDE.md`
 3. `docs/context/project_context_index.md`
-4. `docs/context/current_status.md`
+4. `docs/context/tfm_current_status.md` (active TFM state)
 5. `docs/roadmap/issues/<current-issue>.md`
 6. Supporting documents linked from the current issue file
 
 ## Current Project Snapshot
 
 - Project: open CVN schema and tooling for Spanish academic CV processing
-- Current pipeline stage: structural generation, metadata normalization,
-  semantic policy, domain generation, conceptual schema, Open CVN JSON format,
-  parser/validator contract, CLI shell, local SQLite storage, master/derived
-  curriculum versioning, Open CVN JSON application import/export, curriculum
-  editing/selection MVP, LaTeX export, optional PDF generation, application MVP
-  workflow tests/documentation, LLM-assisted PDF import fallback, semantic
-  partial CVN XML import, and issue `#71` limitations hardening in progress
-- Last documented issues: `#11`, `#12`, `#13`, `#14`, `#15`, `#16`, `#17`,
-  `#25`, `#42`, `#43`, `#44`, `#45`, `#46`, `#47`, `#48`, `#49`, `#50`,
-  `#61`, `#62`, `#63`, `#64`, `#65`, `#66`, `#67`, `#68`, `#69`, `#70`,
-  and `#71`
-- Latest documented hotfix records: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`
-- Current implementation issue: `#71` limitations hardening and documentation
+- Repository holds two successive academic projects: a completed TFG
+  (Trabajo de Fin de Grado) and a TFM (Trabajo de Fin de Master) now being
+  built on top of it. See `docs/context/tfm_current_status.md` for what the
+  TFG delivered and how it works.
+- TFG status: closed. Issues `#11`-`#71` all completed, covering structural
+  generation, metadata normalization, semantic policy, domain generation,
+  conceptual schema, Open CVN JSON format, parser/validator contract, the
+  local CLI application (SQLite storage, master/derived curriculum
+  versioning, JSON import/export, curriculum editing/selection, LaTeX
+  export, optional PDF generation), LLM-assisted PDF import fallback,
+  semantic partial CVN XML import, and issue `#71` limitations hardening.
+  The memoria is written, signed, and defended.
+- TFG documented issues: `#11`-`#17`, `#25`, `#42`-`#50`, `#60`-`#71`
+- TFG documented hotfix records: `#1`-`#8`
+- TFM status: active, scope not yet defined. Placeholder epic at
+  `docs/roadmap/issues/issue-TBD-epic-tfm.md`.
+- Latest hotfix record: `#9`, the TFG-closure/TFM-reorientation transition
+  itself (`docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`)
+- Current implementation issue: none yet; awaiting TFM scope definition
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -53,9 +59,12 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/reporte_proceso_desarrollo_tfg.md`: consolidated TFG development process
   report, including initial research, key technical decisions, implementation
   flow, and limitations
-- `docs/memoria/estructura_memoria_tfg.md`: agreed final-memory structure and
-  per-chapter drafting status traceability
-- `docs/context/current_status.md`: current project state and next actions
+- `docs/memoria/estructura_memoria_tfg.md`: TFG final-memory structure and
+  per-chapter status, now completed
+- `docs/context/tfm_current_status.md`: active TFM project state, next
+  actions, and a summary of how the inherited TFG foundation works
+- `docs/context/current_status.md`: closed TFG implementation log, historical
+  only
 
 ### Architecture And Pipeline
 
@@ -81,8 +90,13 @@ Agents should also read `AGENTS.md` before this file.
 
 ### Roadmap And Issue History
 
-- `docs/roadmap/cvn_generation_roadmap.md`: roadmap from issue `#8` through
-  `#17`
+- `docs/roadmap/tfm_roadmap.md`: active TFM roadmap; epic not yet defined
+- `docs/roadmap/issues/issue-TBD-epic-tfm.md`: TFM epic placeholder; also
+  explains the inherited TFG architecture for a reader new to the project
+- `docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`:
+  record of the TFG closure and TFM reorientation itself
+- `docs/roadmap/cvn_generation_roadmap.md`: closed TFG roadmap, issue `#8`
+  through `#71`, all completed
 - `docs/roadmap/issues/issue-08-epic-cvn-automation.md`: epic summary and
   checkpoints
 - `docs/roadmap/issues/issue-11-project-infrastructure.md`: full record of
@@ -277,12 +291,20 @@ Each issue document records:
 
 When starting a new session:
 
-1. Read `docs/context/current_status.md`
-2. Read the last completed issue document
-3. Read the next issue document from the roadmap
-4. Review `docs/pipeline/known_limitations.md`
+1. Read `docs/context/tfm_current_status.md` (active TFM state; it also
+   summarizes how the inherited TFG foundation works)
+2. If the TFM epic (`docs/roadmap/issues/issue-TBD-epic-tfm.md`) is still a
+   placeholder, stop and get it defined with the user; do not invent scope
+3. Once real TFM issues exist, read the last completed one and the next one
+   from `docs/roadmap/tfm_roadmap.md`
+4. Review `docs/pipeline/known_limitations.md` for inherited TFG limitations
 5. Review `docs/development/regeneration_workflow.md` when the work touches
    generated artifacts or pipeline verification
 6. Review `docs/development/parser_workflow.md` when the work touches the public
    parser or validator workflow
 7. Only then start implementation work
+
+For deep historical context on how the TFG was actually built, read
+`docs/context/current_status.md` and the TFG issue documents under
+`docs/roadmap/issues/` (`#11`-`#71`); closed, but authoritative for the
+foundation the TFM builds on.

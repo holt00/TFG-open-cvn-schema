@@ -1,5 +1,23 @@
 # Estructura y trazabilidad de la memoria del TFG
 
+## Estado global: TFG cerrado
+
+La memoria del TFG (`docs/memoria/TFG.pdf` / `TFG_signed.pdf`) esta terminada,
+firmada y defendida. Los ocho capitulos y los cuatro anexos redactados estan
+marcados `COMPLETADO` en este documento. Este fichero se conserva como
+registro historico de planificacion y trazabilidad del TFG y no debe
+modificarse salvo para corregir una errata puntual detectada despues del
+cierre.
+
+El trabajo que continua a partir de aqui es el TFM (Trabajo de Fin de Master),
+que se construye sobre la base tecnica entregada por el TFG (el pipeline de
+generacion, el formato Open CVN JSON, el contrato de parser/validador y la
+aplicacion CLI descritos en `docs/pipeline/` y `docs/development/`). La
+planificacion y trazabilidad del TFM vive en un documento equivalente propio
+cuando esa redaccion comience; mientras tanto, el estado y la hoja de ruta
+activos del proyecto estan en `docs/context/tfm_current_status.md` y
+`docs/roadmap/tfm_roadmap.md`.
+
 ## Proposito del documento
 
 Este documento recoge la estructura acordada para redactar la memoria del Trabajo
@@ -168,7 +186,7 @@ Estado inicial:
 
 ## Capitulo 1: Introduccion, motivacion y objetivos
 
-Estado: `EN_PROCESO`
+Estado: `COMPLETADO`
 
 Estado de redaccion actual: el primer borrador completo del capitulo existe en
 `docs/memoria/chapters/ch1.tex` y esta incluido en `docs/memoria/TFG.tex`. La
@@ -239,7 +257,7 @@ conclusiones.
 
 ## Capitulo 2: Antecedentes y estado del arte
 
-Estado: `EN_PROCESO`
+Estado: `COMPLETADO`
 
 Estado de redaccion actual: el primer borrador completo del capitulo existe en
 `docs/memoria/chapters/ch2.tex` y esta incluido en `docs/memoria/TFG.tex`. El
@@ -313,7 +331,7 @@ arquitectura propia, abierta y validable.
 
 ## Capitulo 3: Analisis del ecosistema CVN y propuesta de solucion
 
-Estado: `EN_PROCESO`
+Estado: `COMPLETADO`
 
 Estado de redaccion actual: el primer borrador completo del capitulo existe en
 `docs/memoria/chapters/ch3.tex` y esta incluido en `docs/memoria/TFG.tex`. El
@@ -412,7 +430,7 @@ propuesta Open CVN.
 
 ## Capitulo 4: Metodologia, herramientas y arquitectura general
 
-Estado: `EN_PROCESO`
+Estado: `COMPLETADO`
 
 Estado de redaccion actual: el primer borrador completo del capitulo existe en
 `docs/memoria/chapters/ch4.tex` y esta incluido en `docs/memoria/TFG.tex`. El
@@ -519,7 +537,7 @@ Paquete oficial CVN
 
 ## Capitulo 5: Implementacion del pipeline de generacion y normalizacion
 
-Estado: `EN_PROCESO`
+Estado: `COMPLETADO`
 
 Estado de redaccion actual: el primer borrador completo del capitulo existe en
 `docs/memoria/chapters/ch5.tex` y esta incluido en `docs/memoria/TFG.tex`. El
@@ -638,7 +656,7 @@ presentarse si no coinciden con la linea base vigente del repositorio.
 
 ## Capitulo 6: Formato Open CVN, validacion y herramienta de gestion
 
-Estado: `EN_PROCESO`
+Estado: `COMPLETADO`
 
 Estado de redaccion actual: el primer borrador completo del capitulo existe en
 `docs/memoria/chapters/ch6.tex` y esta incluido en `docs/memoria/TFG.tex`. El
@@ -788,7 +806,7 @@ la herramienta local que demuestra el uso del sistema.
 
 ## Capitulo 7: Evaluacion, resultados y discusion
 
-Estado: `EN_PROCESO`
+Estado: `COMPLETADO`
 
 Estado de redaccion actual: el primer borrador completo del capitulo existe en
 `docs/memoria/chapters/ch7.tex` y esta incluido en `docs/memoria/TFG.tex`. El
@@ -887,7 +905,7 @@ end-to-end.
 
 ## Capitulo 8: Conclusiones, competencias y trabajo futuro
 
-Estado: `EN_PROCESO`
+Estado: `COMPLETADO`
 
 Estado de redaccion actual: el primer borrador completo del capitulo existe en
 `docs/memoria/chapters/ch8.tex` y esta incluido en `docs/memoria/TFG.tex`,

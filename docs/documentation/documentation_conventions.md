@@ -17,7 +17,9 @@ sessions must update it.
 ### Persistent Context
 
 - `docs/context/project_context_index.md`: single documentation entry point
-- `docs/context/current_status.md`: current implementation state
+- `docs/context/tfm_current_status.md`: active TFM implementation state
+- `docs/context/current_status.md`: closed TFG implementation state
+  (`#11`-`#71`), historical only, no new entries
 
 ### Architecture
 
@@ -28,8 +30,13 @@ sessions must update it.
 
 ### Roadmap And Execution History
 
-- `docs/roadmap/cvn_generation_roadmap.md`: roadmap across issues
-- `docs/roadmap/issues/*.md`: per-issue history and implementation record
+- `docs/roadmap/tfm_roadmap.md`: active TFM roadmap across issues
+- `docs/roadmap/cvn_generation_roadmap.md`: closed TFG roadmap across issues
+  `#8`-`#71`, historical only, no new rows
+- `docs/roadmap/issues/*.md`: per-issue history and implementation record,
+  both TFG (`#11`-`#71`) and TFM once defined
+- `docs/roadmap/hotfixes/*.md`: maintenance and corrective records, both TFG
+  (`#1`-`#8`) and ongoing
 
 ### Development Reference
 
@@ -61,14 +68,22 @@ Every issue file under `docs/roadmap/issues/` must include these sections:
 
 ## Mandatory Update Protocol After Each Issue
 
-At the end of every issue session, update at minimum:
+At the end of every TFM issue session, update at minimum:
 
 1. the issue file itself
-2. `docs/context/current_status.md`
+2. `docs/context/tfm_current_status.md` (never the closed
+   `docs/context/current_status.md`)
 3. `docs/pipeline/known_limitations.md` when a new limitation appears
-4. `docs/roadmap/cvn_generation_roadmap.md` when issue state changes
+4. `docs/roadmap/tfm_roadmap.md` when issue state changes (never the closed
+   `docs/roadmap/cvn_generation_roadmap.md`)
 5. `PROJECT_GUIDE.md` when the repository entry guidance, documentation map,
    contributor reading order, or human-facing project orientation changes
+
+The TFG's own closed documents (`docs/context/current_status.md`,
+`docs/roadmap/cvn_generation_roadmap.md`, TFG issue files `#11`-`#71`, TFG
+hotfix files `#1`-`#8`) are not touched by this protocol; see
+`docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md` for
+why they were frozen in place instead of moved.
 
 Update `AGENTS.md` only if:
 
@@ -88,8 +103,13 @@ Update `AGENTS.md` only if:
 
 ## Naming Conventions
 
-- roadmap overview: `docs/roadmap/cvn_generation_roadmap.md`
+- roadmap overview: `docs/roadmap/<project>_roadmap.md` (TFG:
+  `cvn_generation_roadmap.md`, closed; TFM: `tfm_roadmap.md`, active)
 - issue files: `docs/roadmap/issues/issue-<number>-<slug>.md`
+- placeholder epic exception: an epic not yet filed as a real GitHub issue may
+  use `issue-TBD-<slug>.md` instead of a number; it must be renamed to the
+  real numbered filename, and every reference to it updated, once the issue
+  is actually filed
 - ADRs: `docs/adr/000N-<slug>.md`
 - context files: `docs/context/<name>.md`
 
