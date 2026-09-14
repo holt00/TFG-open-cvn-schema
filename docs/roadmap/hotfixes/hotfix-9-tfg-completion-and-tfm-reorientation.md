@@ -52,7 +52,7 @@ breaking a reference in one of them. Instead, this hotfix:
 - adds new, separate active files for the TFM instead of repurposing the TFG
   ones: `docs/context/tfm_current_status.md` and
   `docs/roadmap/tfm_roadmap.md`
-- adds a placeholder epic at `docs/roadmap/issues/issue-TBD-epic-tfm.md`,
+- adds a placeholder epic at `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`,
   using `TBD` instead of a number since no TFM epic has been filed as a real
   GitHub issue yet (documented as a deliberate naming-convention deviation
   inside that file itself)
@@ -83,7 +83,7 @@ breaking a reference in one of them. Instead, this hotfix:
   forward the same roadmap rules as the TFG roadmap, explicitly stating the
   epic is not yet defined, and explaining how to promote the placeholder epic
   once it is
-- created `docs/roadmap/issues/issue-TBD-epic-tfm.md`: the placeholder epic,
+- created `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`: the placeholder epic,
   with all standard issue-document sections present but marked `TBD` or "not
   applicable yet" per the mandatory section list in
   `docs/documentation/documentation_conventions.md`, plus a
@@ -123,7 +123,7 @@ breaking a reference in one of them. Instead, this hotfix:
 ## Known Limitations
 
 - the TFM epic is intentionally left undefined; `docs/roadmap/tfm_roadmap.md`
-  and `docs/roadmap/issues/issue-TBD-epic-tfm.md` have no real scope yet and
+  and `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` have no real scope yet and
   must not be treated as a plan
 - because the TFG roadmap/status files were frozen in place rather than
   moved, the repository now has two parallel "current status" files
@@ -137,7 +137,7 @@ breaking a reference in one of them. Instead, this hotfix:
 
 ## Impact On Future Issues
 
-- once the TFM objective is defined, `docs/roadmap/issues/issue-TBD-epic-tfm.md`
+- once the TFM objective is defined, `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`
   must be filled in and renamed to a real numbered issue file, and
   `docs/roadmap/tfm_roadmap.md`'s "Issue Status Overview" table must be
   populated the same way `docs/roadmap/cvn_generation_roadmap.md` was
@@ -152,6 +152,23 @@ breaking a reference in one of them. Instead, this hotfix:
   `docs/context/tfm_current_status.md` and `docs/roadmap/tfm_roadmap.md` as
   the files to update after TFM work; the TFG equivalents should not receive
   new entries
+
+## Update: Epic Defined And Numbered
+
+Two things this hotfix originally left open have since happened, in later
+work on the same branch, and are noted here rather than silently rewriting
+the narrative above:
+
+- the TFM epic's scope, technology stack, data strategy, phased plan, and
+  applicable standards were defined with the user (see
+  `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`)
+- that epic was filed as GitHub issue `#89`, and the file (originally
+  `issue-TBD-epic-tfm.md`) was renamed to
+  `issue-89-epic-tfm-lakehouse-platform.md`, with every cross-reference to it
+  updated across the repository
+
+References above to the epic as a scope-less "placeholder" reflect this
+hotfix's state at the time it was written, not the current state.
 
 ## Status
 

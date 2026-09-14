@@ -42,8 +42,9 @@ Agents should also read `AGENTS.md` before this file.
   The memoria is written, signed, and defended.
 - TFG documented issues: `#11`-`#17`, `#25`, `#42`-`#50`, `#60`-`#71`
 - TFG documented hotfix records: `#1`-`#8`
-- TFM status: active, scope not yet defined. Placeholder epic at
-  `docs/roadmap/issues/issue-TBD-epic-tfm.md`.
+- TFM status: active, epic defined. See
+  `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` (GitHub
+  issue `#89`); no child issues filed yet.
 - Latest hotfix record: `#9`, the TFG-closure/TFM-reorientation transition
   itself (`docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`)
 - Current implementation issue: none yet; awaiting TFM scope definition
@@ -90,9 +91,10 @@ Agents should also read `AGENTS.md` before this file.
 
 ### Roadmap And Issue History
 
-- `docs/roadmap/tfm_roadmap.md`: active TFM roadmap; epic not yet defined
-- `docs/roadmap/issues/issue-TBD-epic-tfm.md`: TFM epic placeholder; also
-  explains the inherited TFG architecture for a reader new to the project
+- `docs/roadmap/tfm_roadmap.md`: active TFM roadmap
+- `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`: TFM epic
+  (GitHub issue `#89`); also explains the inherited TFG architecture for a
+  reader new to the project
 - `docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`:
   record of the TFG closure and TFM reorientation itself
 - `docs/roadmap/cvn_generation_roadmap.md`: closed TFG roadmap, issue `#8`
@@ -293,8 +295,8 @@ When starting a new session:
 
 1. Read `docs/context/tfm_current_status.md` (active TFM state; it also
    summarizes how the inherited TFG foundation works)
-2. If the TFM epic (`docs/roadmap/issues/issue-TBD-epic-tfm.md`) is still a
-   placeholder, stop and get it defined with the user; do not invent scope
+2. Read the TFM epic (`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`,
+   GitHub issue `#89`) in full; do not invent scope beyond what it defines
 3. Once real TFM issues exist, read the last completed one and the next one
    from `docs/roadmap/tfm_roadmap.md`
 4. Review `docs/pipeline/known_limitations.md` for inherited TFG limitations

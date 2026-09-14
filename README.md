@@ -51,10 +51,13 @@ desarrollo (issues `#11` a `#71`) esta cerrado y archivado en
 ## El TFM (En Marcha)
 
 El TFM se construye sobre esa base ya entregada, no la sustituye ni la repite.
-Su alcance concreto todavia no esta definido; el epic placeholder vive en
-`docs/roadmap/issues/issue-TBD-epic-tfm.md` a la espera de esa definicion. El
-estado activo del proyecto a partir de ahora esta en
-`docs/context/tfm_current_status.md` y `docs/roadmap/tfm_roadmap.md`.
+Su alcance esta definido en el epic
+`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` (issue de
+GitHub `#89`): una plataforma lakehouse autoalojada sobre Kubernetes para
+datos curriculares (MinIO, Iceberg, Spark, Airflow, PostgreSQL, Superset),
+con ingesta de CVN sintetico y datos reales de ORCID. El estado activo del
+proyecto esta en `docs/context/tfm_current_status.md` y
+`docs/roadmap/tfm_roadmap.md`.
 
 ## Punto De Entrada
 
@@ -72,8 +75,8 @@ Para obtener el contexto del proyecto y el estado real de implementacion, leer:
 - indice de contexto del proyecto: `docs/context/project_context_index.md`
 - estado actual del proyecto: `docs/context/tfm_current_status.md`
 - roadmap activo: `docs/roadmap/tfm_roadmap.md`
-- epic del TFM (placeholder, sin definir):
-  `docs/roadmap/issues/issue-TBD-epic-tfm.md`
+- epic del TFM (definido, issue de GitHub `#89`):
+  `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`
 - guia de contribucion y setup: `CONTRIBUTING.md`
 
 ### TFG (cerrado, base sobre la que se construye el TFM)

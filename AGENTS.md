@@ -16,11 +16,12 @@ anything, know which one you are in:
   `docs/roadmap/cvn_generation_roadmap.md`, status log
   `docs/context/current_status.md`, and the signed/defended memoria under
   `docs/memoria/`. Do not add new entries to the TFG status log or roadmap.
-- the TFM is active but its scope is not yet defined: roadmap
+- the TFM is active and its epic is defined: roadmap
   `docs/roadmap/tfm_roadmap.md`, status log
-  `docs/context/tfm_current_status.md`, placeholder epic
-  `docs/roadmap/issues/issue-TBD-epic-tfm.md`. Do not invent TFM scope; wait
-  for the user to define it.
+  `docs/context/tfm_current_status.md`, epic
+  `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` (GitHub issue
+  `#89`). Do not invent scope beyond what that epic defines; child issues per
+  phase are filed as work on them starts.
 
 Full detail on this split, including why the TFG files were frozen in place
 rather than moved, is in
@@ -56,9 +57,10 @@ Every new session should read these files in order before making changes:
   hotfix files `#1`-`#8`) except to fix a factual error found after closure
 - Log TFM work in `docs/context/tfm_current_status.md` and
   `docs/roadmap/tfm_roadmap.md`, not in their TFG counterparts
-- Do not invent or expand TFM scope on your own initiative; the TFM epic
-  (`docs/roadmap/issues/issue-TBD-epic-tfm.md`) is a deliberate placeholder
-  until the user defines it
+- Do not invent or expand TFM scope beyond what is defined in the TFM epic
+  (`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`, GitHub
+  issue `#89`); file each phase as its own child issue when work on it
+  actually starts, rather than pre-deciding details the epic left open
 
 ## Documentation Map
 
@@ -84,8 +86,8 @@ Every new session should read these files in order before making changes:
 ### Roadmap And Issue Records
 
 - roadmap overview (TFM, active): `docs/roadmap/tfm_roadmap.md`
-- epic (TFM, placeholder, not yet defined):
-  `docs/roadmap/issues/issue-TBD-epic-tfm.md`
+- epic (TFM, defined, GitHub issue `#89`):
+  `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`
 - roadmap overview (TFG, closed): `docs/roadmap/cvn_generation_roadmap.md`
 - epic summary (TFG): `docs/roadmap/issues/issue-08-epic-cvn-automation.md`
 - issue `#11`: `docs/roadmap/issues/issue-11-project-infrastructure.md`

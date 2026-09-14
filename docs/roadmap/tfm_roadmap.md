@@ -53,7 +53,7 @@ Same rules as the TFG roadmap, carried forward:
 integración y análisis de información curricular académica." Full detail,
 including the technology stack decision record, data-source strategy, phased
 plan, scope cut list, and the repository standards that apply, is in
-`docs/roadmap/issues/issue-TBD-epic-tfm.md`. That document is self-contained;
+`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`. That document is self-contained;
 read it before starting any implementation.
 
 In one paragraph: a self-hosted Kubernetes (k3s) lakehouse ingesting CVN
@@ -68,23 +68,21 @@ the memoria (deadline computed in the epic document), ~120-140 available
 hours, 50-page memoria maximum, written as living Markdown converted to
 LaTeX at the end, the same way the TFG was documented.
 
-Filename remains `issue-TBD-epic-tfm.md` pending a real GitHub issue number.
-When one is filed:
+Filed as GitHub issue `#89`; the file is named
+`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` and every
+cross-reference to it (this file, `docs/context/tfm_current_status.md`, and
+the repository entry points) uses that name.
 
-1. rename it to `docs/roadmap/issues/issue-<n>-epic-tfm-<slug>.md`
-2. update every cross-reference to the current filename (this file,
-   `docs/context/tfm_current_status.md`, and the repository entry points)
-3. update the "Issue Status Overview" table below from `TBD` to the real
-   number
-4. as each phase from the epic's "Original Plan" begins, file it as its own
-   numbered child issue and add a row for it below, the same pattern the TFG
-   used (epic `#8` with child issues `#11`-`#17` etc.)
+As each phase from the epic's "Original Plan" begins, file it as its own
+numbered child issue (the real next available GitHub issue number at that
+time) and add a row for it below, the same pattern the TFG used (epic `#8`
+with child issues `#11`-`#17` etc.).
 
 ## Issue Status Overview
 
 | Issue | Title | Status | Notes |
 | --- | --- | --- | --- |
-| `TBD` | Epic: TFM lakehouse platform for curricular data integration and analysis | Planned | See `docs/roadmap/issues/issue-TBD-epic-tfm.md`; scope and stack defined, implementation not started |
+| `#89` | Epic: TFM lakehouse platform for curricular data integration and analysis | Planned | See `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`; scope and stack defined, implementation not started |
 
 ## Required Companion Documents
 

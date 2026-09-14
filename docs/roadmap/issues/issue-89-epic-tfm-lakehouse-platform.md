@@ -1,15 +1,15 @@
-# Issue TBD - Epic: TFM Lakehouse Platform For Curricular Data Integration And Analysis
+# Issue 89 - Epic: TFM Lakehouse Platform For Curricular Data Integration And Analysis
 
 ## Filename And Numbering Note
 
-This document intentionally uses `TBD` instead of a real issue number. No
-GitHub issue has been filed for the TFM epic yet. This is a deliberate,
+This document previously used `issue-TBD-epic-tfm.md` as a placeholder
+filename while no GitHub issue existed for the TFM epic (a deliberate,
 recorded deviation from the repository's normal issue-file naming convention
-(`docs/roadmap/issues/issue-<number>-<slug>.md`, see
-`docs/documentation/documentation_conventions.md`). Once a real GitHub issue
-is filed, rename this file to
-`docs/roadmap/issues/issue-<n>-epic-tfm-lakehouse-platform.md` and update
-every cross-reference to the current filename, currently in
+`docs/roadmap/issues/issue-<number>-<slug>.md`, see
+`docs/documentation/documentation_conventions.md`). GitHub issue `#89` has
+now been filed for the TFM epic, and this file was renamed to
+`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` accordingly,
+with every cross-reference updated in
 `docs/roadmap/tfm_roadmap.md`, `docs/context/tfm_current_status.md`, and the
 repository entry-point files (`README.md`, `PROJECT_GUIDE.md`, `AGENTS.md`,
 `docs/context/project_context_index.md`).
@@ -387,6 +387,6 @@ at risk.
 ## Status
 
 `Planned`. Scope, stack, data strategy, phased plan, and standards are
-defined and agreed with the user. Filename remains `issue-TBD-epic-tfm.md`
-pending a real GitHub issue number; rename and update cross-references once
-filed. No implementation has started.
+defined and agreed with the user. Filed as GitHub issue `#89`; this file and
+every cross-reference to it use the real number. No implementation has
+started.

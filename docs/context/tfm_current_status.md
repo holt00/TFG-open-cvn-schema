@@ -81,7 +81,7 @@ small set of research indicators surfaced in Superset. Full detail,
 including the technology stack decision record and rationale, the data
 strategy and its privacy reasoning, the phased plan, the scope cut list, and
 the repository standards that apply, is in
-`docs/roadmap/issues/issue-TBD-epic-tfm.md`. That document is written to be
+`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`. That document is written to be
 self-contained; read it in full before starting implementation rather than
 relying on this summary.
 
@@ -93,14 +93,28 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-14 (TFM epic defined)
+- Last updated: 2026-09-14 (TFM epic filed as issue #89)
 
 ## Entries
+
+### TFM Epic Filed As GitHub Issue #89
+
+- the TFM epic was filed on GitHub as issue `#89`
+- `docs/roadmap/issues/issue-TBD-epic-tfm.md` was renamed to
+  `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`, and every
+  reference to it across the repository was updated to the real number:
+  `AGENTS.md`, `PROJECT_GUIDE.md`, `README.md`,
+  `docs/context/project_context_index.md`, this file,
+  `docs/roadmap/tfm_roadmap.md`, and
+  `docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`
+- stale "placeholder / not yet defined" language describing the epic was
+  corrected wherever it had been left over from before the epic was defined,
+  to avoid contradicting the epic's own now-defined content
 
 ### TFM Epic Defined: Lakehouse Platform Scope, Stack, And Constraints
 
 - the TFM epic was fully defined in a planning conversation with the user
-  and written up at `docs/roadmap/issues/issue-TBD-epic-tfm.md`; see that
+  and written up at `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`; see that
   document for complete detail, this entry only indexes the outcome
 - confirmed hard constraints: 6 ECTS (vs the TFG's 12), 20 days total
   including the memoria (epic defined 2026-09-14, target completion
@@ -152,7 +166,7 @@ end.
   replacing them:
   - `docs/context/tfm_current_status.md` (this file)
   - `docs/roadmap/tfm_roadmap.md`
-  - `docs/roadmap/issues/issue-TBD-epic-tfm.md` (placeholder epic, content
+  - `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` (placeholder epic, content
     intentionally not yet defined)
 - the repository entry-point and documentation-contract files were updated to
   point new sessions at the TFM files first, while still describing the TFG

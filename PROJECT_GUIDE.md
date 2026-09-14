@@ -57,10 +57,12 @@ history, but do not add new entries to them.
 ## Current Technical Scope: The TFM
 
 The TFM builds on top of that finished foundation rather than starting over.
-Its concrete scope has not been defined yet; a placeholder epic exists at
-`docs/roadmap/issues/issue-TBD-epic-tfm.md` pending that definition with the
-user. Until it is defined, treat the repository as "TFG-complete, TFM scope
-pending" rather than assuming any particular next technical direction.
+Its scope is defined in the epic at
+`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` (GitHub issue
+`#89`): a self-hosted Kubernetes lakehouse for curricular data (MinIO,
+Iceberg, Spark, Airflow, PostgreSQL, Superset), ingesting synthetic CVN and
+real ORCID data. That document is self-contained; read it before starting
+any implementation rather than relying on this summary.
 
 ## Recommended Reading Order For Humans
 
@@ -93,8 +95,10 @@ files in order:
   after closure; TFM work is logged in
   `docs/context/tfm_current_status.md` and `docs/roadmap/tfm_roadmap.md`
   instead
-- Do not invent or expand TFM scope on your own initiative; the TFM epic is a
-  deliberate placeholder until the user defines it
+- Do not invent or expand TFM scope beyond what the TFM epic
+  (`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`, GitHub
+  issue `#89`) defines; file each phase as its own child issue when work on
+  it actually starts
 
 ## Documentation Map
 
@@ -142,9 +146,10 @@ files in order:
 
 ### Roadmap And Issue History
 
-- `docs/roadmap/tfm_roadmap.md`: active TFM roadmap; epic not yet defined
-- `docs/roadmap/issues/issue-TBD-epic-tfm.md`: TFM epic placeholder, also
-  explains the inherited TFG architecture for a reader new to the project
+- `docs/roadmap/tfm_roadmap.md`: active TFM roadmap
+- `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`: TFM epic
+  (GitHub issue `#89`), also explains the inherited TFG architecture for a
+  reader new to the project
 - `docs/roadmap/cvn_generation_roadmap.md`: closed TFG roadmap, issue `#8`
   through issue `#71`, all completed
 - `docs/roadmap/issues/issue-08-epic-cvn-automation.md`: epic summary and
@@ -325,8 +330,9 @@ When resuming the repository after time away:
 
 1. read `docs/context/tfm_current_status.md` for the active TFM state (it
    also summarizes how the inherited TFG foundation works)
-2. if the TFM epic is still a placeholder, stop and get it defined with the
-   user before planning implementation; do not invent scope
+2. read the TFM epic (`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`,
+   GitHub issue `#89`) in full before planning implementation; do not invent
+   scope beyond what it defines
 3. once real TFM issues exist, read the last completed one and the next one
    from `docs/roadmap/tfm_roadmap.md`
 4. review `docs/pipeline/known_limitations.md` for inherited TFG limitations
