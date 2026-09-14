@@ -13,19 +13,19 @@ This repository holds a completed TFG (Trabajo de Fin de Grado) and a TFM
 anything, know which one you are in:
 
 - the TFG is closed: issues `#11`-`#71`, hotfixes `#1`-`#8`, roadmap
-  `docs/roadmap/cvn_generation_roadmap.md`, status log
-  `docs/context/current_status.md`, and the signed/defended memoria under
+  `docs/roadmap/tfg/cvn_generation_roadmap.md`, status log
+  `docs/context/tfg/current_status.md`, and the signed/defended memoria under
   `docs/memoria/`. Do not add new entries to the TFG status log or roadmap.
 - the TFM is active and its epic is defined: roadmap
-  `docs/roadmap/tfm_roadmap.md`, status log
-  `docs/context/tfm_current_status.md`, epic
-  `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` (GitHub issue
+  `docs/roadmap/tfm/tfm_roadmap.md`, status log
+  `docs/context/tfm/current_status.md`, epic
+  `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md` (GitHub issue
   `#89`). Do not invent scope beyond what that epic defines; child issues per
   phase are filed as work on them starts.
 
 Full detail on this split, including why the TFG files were frozen in place
 rather than moved, is in
-`docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`.
+`docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`.
 
 ## Mandatory Reading Order
 
@@ -34,11 +34,11 @@ Every new session should read these files in order before making changes:
 1. `AGENTS.md`
 2. `PROJECT_GUIDE.md`
 3. `docs/context/project_context_index.md`
-4. `docs/context/tfm_current_status.md` (active TFM state; also explains how
+4. `docs/context/tfm/current_status.md` (active TFM state; also explains how
    the inherited TFG foundation works)
-5. The relevant issue document under `docs/roadmap/issues/` (a TFM issue once
-   defined, or a TFG issue `#11`-`#71` when the task requires understanding
-   the existing foundation)
+5. The relevant issue document under `docs/roadmap/tfm/issues/` (TFM, active)
+   or `docs/roadmap/tfg/issues/` (TFG, `#11`-`#71`, when the task requires
+   understanding the existing foundation)
 
 ## Repository-Specific Rules
 
@@ -52,13 +52,13 @@ Every new session should read these files in order before making changes:
   document for that issue
 - Update persistent documentation in the same session as the code change
 - Do not edit or add new entries to the closed TFG documents
-  (`docs/context/current_status.md`,
-  `docs/roadmap/cvn_generation_roadmap.md`, TFG issue files `#11`-`#71`, TFG
+  (`docs/context/tfg/current_status.md`,
+  `docs/roadmap/tfg/cvn_generation_roadmap.md`, TFG issue files `#11`-`#71`, TFG
   hotfix files `#1`-`#8`) except to fix a factual error found after closure
-- Log TFM work in `docs/context/tfm_current_status.md` and
-  `docs/roadmap/tfm_roadmap.md`, not in their TFG counterparts
+- Log TFM work in `docs/context/tfm/current_status.md` and
+  `docs/roadmap/tfm/tfm_roadmap.md`, not in their TFG counterparts
 - Do not invent or expand TFM scope beyond what is defined in the TFM epic
-  (`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`, GitHub
+  (`docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`, GitHub
   issue `#89`); file each phase as its own child issue when work on it
   actually starts, rather than pre-deciding details the epic left open
 
@@ -68,8 +68,8 @@ Every new session should read these files in order before making changes:
 
 - human project guide: `PROJECT_GUIDE.md`
 - context index: `docs/context/project_context_index.md`
-- current state (TFM, active): `docs/context/tfm_current_status.md`
-- current state (TFG, closed): `docs/context/current_status.md`
+- current state (TFM, active): `docs/context/tfm/current_status.md`
+- current state (TFG, closed): `docs/context/tfg/current_status.md`
 - TFG memory structure and chapter status traceability (completed):
   `docs/memoria/estructura_memoria_tfg.md`
 
@@ -85,74 +85,74 @@ Every new session should read these files in order before making changes:
 
 ### Roadmap And Issue Records
 
-- roadmap overview (TFM, active): `docs/roadmap/tfm_roadmap.md`
+- roadmap overview (TFM, active): `docs/roadmap/tfm/tfm_roadmap.md`
 - epic (TFM, defined, GitHub issue `#89`):
-  `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`
-- roadmap overview (TFG, closed): `docs/roadmap/cvn_generation_roadmap.md`
-- epic summary (TFG): `docs/roadmap/issues/issue-08-epic-cvn-automation.md`
-- issue `#11`: `docs/roadmap/issues/issue-11-project-infrastructure.md`
-- issue `#12`: `docs/roadmap/issues/issue-12-structural-bindings.md`
-- issue `#13`: `docs/roadmap/issues/issue-13-normalization.md`
-- issue `#14`: `docs/roadmap/issues/issue-14-semantic-mapping-rules.md`
-- issue `#15`: `docs/roadmap/issues/issue-15-domain-model-generator.md`
-- issue `#16`: `docs/roadmap/issues/issue-16-generation-pipeline-tests.md`
-- issue `#17`: `docs/roadmap/issues/issue-17-workflow-documentation.md`
+  `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`
+- roadmap overview (TFG, closed): `docs/roadmap/tfg/cvn_generation_roadmap.md`
+- epic summary (TFG): `docs/roadmap/tfg/issues/issue-08-epic-cvn-automation.md`
+- issue `#11`: `docs/roadmap/tfg/issues/issue-11-project-infrastructure.md`
+- issue `#12`: `docs/roadmap/tfg/issues/issue-12-structural-bindings.md`
+- issue `#13`: `docs/roadmap/tfg/issues/issue-13-normalization.md`
+- issue `#14`: `docs/roadmap/tfg/issues/issue-14-semantic-mapping-rules.md`
+- issue `#15`: `docs/roadmap/tfg/issues/issue-15-domain-model-generator.md`
+- issue `#16`: `docs/roadmap/tfg/issues/issue-16-generation-pipeline-tests.md`
+- issue `#17`: `docs/roadmap/tfg/issues/issue-17-workflow-documentation.md`
 - issue `#25`:
-  `docs/roadmap/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
+  `docs/roadmap/tfg/issues/issue-25-github-actions-ci-pipeline-for-pr-testing-on-main-and-development.md`
 - issue `#43`:
-  `docs/roadmap/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`
+  `docs/roadmap/tfg/issues/issue-43-agnostic-conceptual-model-extraction-layer.md`
 - issue `#45`:
-  `docs/roadmap/issues/issue-45-generate-json-schema-from-domain-models.md`
+  `docs/roadmap/tfg/issues/issue-45-generate-json-schema-from-domain-models.md`
 - issue `#46`:
-  `docs/roadmap/issues/issue-46-define-canonical-open-cvn-json-format.md`
+  `docs/roadmap/tfg/issues/issue-46-define-canonical-open-cvn-json-format.md`
 - issue `#47`:
-  `docs/roadmap/issues/issue-47-unified-parser-validator-contract.md`
+  `docs/roadmap/tfg/issues/issue-47-unified-parser-validator-contract.md`
 - issue `#48`:
-  `docs/roadmap/issues/issue-48-cvn-pdf-xml-extraction.md`
+  `docs/roadmap/tfg/issues/issue-48-cvn-pdf-xml-extraction.md`
 - issue `#49`:
-  `docs/roadmap/issues/issue-49-xml-json-import-validation.md`
+  `docs/roadmap/tfg/issues/issue-49-xml-json-import-validation.md`
 - issue `#50`:
-  `docs/roadmap/issues/issue-50-parser-workflow-tests-and-documentation.md`
+  `docs/roadmap/tfg/issues/issue-50-parser-workflow-tests-and-documentation.md`
 - issue `#60`:
-  `docs/roadmap/issues/issue-60-epic-cv-management-application.md`
+  `docs/roadmap/tfg/issues/issue-60-epic-cv-management-application.md`
 - issue `#61`:
-  `docs/roadmap/issues/issue-61-application-mvp-scope-and-cli-shell.md`
+  `docs/roadmap/tfg/issues/issue-61-application-mvp-scope-and-cli-shell.md`
 - issue `#62`:
-  `docs/roadmap/issues/issue-62-local-storage-sqlite-repository.md`
+  `docs/roadmap/tfg/issues/issue-62-local-storage-sqlite-repository.md`
 - issue `#63`:
-  `docs/roadmap/issues/issue-63-master-and-derived-curriculum-versions.md`
+  `docs/roadmap/tfg/issues/issue-63-master-and-derived-curriculum-versions.md`
 - issue `#64`:
-  `docs/roadmap/issues/issue-64-open-cvn-json-import-export-workflow.md`
+  `docs/roadmap/tfg/issues/issue-64-open-cvn-json-import-export-workflow.md`
 - issue `#65`:
-  `docs/roadmap/issues/issue-65-curriculum-editing-and-selection-mvp.md`
+  `docs/roadmap/tfg/issues/issue-65-curriculum-editing-and-selection-mvp.md`
 - issue `#66`:
-  `docs/roadmap/issues/issue-66-latex-export-from-open-cvn.md`
+  `docs/roadmap/tfg/issues/issue-66-latex-export-from-open-cvn.md`
 - issue `#67`:
-  `docs/roadmap/issues/issue-67-pdf-generation-and-preview-handoff.md`
+  `docs/roadmap/tfg/issues/issue-67-pdf-generation-and-preview-handoff.md`
 - issue `#68`:
-  `docs/roadmap/issues/issue-68-application-mvp-tests-and-documentation.md`
+  `docs/roadmap/tfg/issues/issue-68-application-mvp-tests-and-documentation.md`
 - issue `#69`:
-  `docs/roadmap/issues/issue-69-llm-assisted-import-spike.md`
+  `docs/roadmap/tfg/issues/issue-69-llm-assisted-import-spike.md`
 - issue `#70`:
-  `docs/roadmap/issues/issue-70-semantic-cvn-xml-import-to-open-cvn-json.md`
+  `docs/roadmap/tfg/issues/issue-70-semantic-cvn-xml-import-to-open-cvn-json.md`
 - issue `#71`:
-  `docs/roadmap/issues/issue-71-limitations-hardening-and-documentation.md`
-- hotfix `#1`: `docs/roadmap/hotfixes/hotfix-1-runner-logging-convention.md`
-- hotfix `#2`: `docs/roadmap/hotfixes/hotfix-2-human-project-entrypoint.md`
+  `docs/roadmap/tfg/issues/issue-71-limitations-hardening-and-documentation.md`
+- hotfix `#1`: `docs/roadmap/tfg/hotfixes/hotfix-1-runner-logging-convention.md`
+- hotfix `#2`: `docs/roadmap/tfg/hotfixes/hotfix-2-human-project-entrypoint.md`
 - hotfix `#3`:
-  `docs/roadmap/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`
+  `docs/roadmap/tfg/hotfixes/hotfix-3-cvn-source-package-documentation-expansion.md`
 - hotfix `#4`:
-  `docs/roadmap/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
+  `docs/roadmap/tfg/hotfixes/hotfix-4-structural-scope-correction-for-auxiliary-source-package-artifacts.md`
 - hotfix `#5`:
-  `docs/roadmap/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
+  `docs/roadmap/tfg/hotfixes/hotfix-5-normalization-resolution-layer-for-auxiliary-reference-sources.md`
 - hotfix `#6`:
-  `docs/roadmap/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
+  `docs/roadmap/tfg/hotfixes/hotfix-6-roadmap-realignment-for-auxiliary-catalog-semantic-integration.md`
 - hotfix `#7`:
-  `docs/roadmap/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
+  `docs/roadmap/tfg/hotfixes/hotfix-7-dynamic-reference-table-enum-eligibility-evaluation.md`
 - hotfix `#8`:
-  `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
+  `docs/roadmap/tfg/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
 - hotfix `#9`:
-  `docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`
+  `docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`
 
 ### Development Reference
 
@@ -172,12 +172,12 @@ Every new session should read these files in order before making changes:
 
 At the end of any TFM issue implementation, update:
 
-1. the issue document under `docs/roadmap/issues/`
-2. `docs/context/tfm_current_status.md` (the active status log; do not add
-   entries to the closed `docs/context/current_status.md`)
+1. the issue document under `docs/roadmap/tfm/issues/`
+2. `docs/context/tfm/current_status.md` (the active status log; do not add
+   entries to the closed `docs/context/tfg/current_status.md`)
 3. `docs/pipeline/known_limitations.md` if a new limitation was found
-4. `docs/roadmap/tfm_roadmap.md` if the issue status changed (do not edit the
-   closed `docs/roadmap/cvn_generation_roadmap.md`)
+4. `docs/roadmap/tfm/tfm_roadmap.md` if the issue status changed (do not edit the
+   closed `docs/roadmap/tfg/cvn_generation_roadmap.md`)
 5. `PROJECT_GUIDE.md` when the human-facing project entry guidance, document
    map, contributor reading order, or repository orientation changes
 

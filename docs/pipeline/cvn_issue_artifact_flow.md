@@ -208,5 +208,5 @@ To understand the current pipeline state quickly:
 
 1. read `docs/pipeline/cvn_pydantic_generation_pipeline.md`
 2. read this file for artifact-to-issue mapping
-3. read `docs/roadmap/issues/issue-13-normalization.md`
+3. read `docs/roadmap/tfg/issues/issue-13-normalization.md`
 4. read `docs/pipeline/known_limitations.md`

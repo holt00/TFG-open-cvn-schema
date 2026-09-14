@@ -45,19 +45,19 @@ mismo repositorio, un pipeline completo por capas:
 La memoria del TFG esta escrita, firmada y defendida
 (`docs/memoria/TFG.pdf` / `TFG_signed.pdf`). El registro completo de su
 desarrollo (issues `#11` a `#71`) esta cerrado y archivado en
-`docs/context/current_status.md` y
-`docs/roadmap/cvn_generation_roadmap.md`; no se anaden nuevas entradas ahi.
+`docs/context/tfg/current_status.md` y
+`docs/roadmap/tfg/cvn_generation_roadmap.md`; no se anaden nuevas entradas ahi.
 
 ## El TFM (En Marcha)
 
 El TFM se construye sobre esa base ya entregada, no la sustituye ni la repite.
 Su alcance esta definido en el epic
-`docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md` (issue de
+`docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md` (issue de
 GitHub `#89`): una plataforma lakehouse autoalojada sobre Kubernetes para
 datos curriculares (MinIO, Iceberg, Spark, Airflow, PostgreSQL, Superset),
 con ingesta de CVN sintetico y datos reales de ORCID. El estado activo del
-proyecto esta en `docs/context/tfm_current_status.md` y
-`docs/roadmap/tfm_roadmap.md`.
+proyecto esta en `docs/context/tfm/current_status.md` y
+`docs/roadmap/tfm/tfm_roadmap.md`.
 
 ## Punto De Entrada
 
@@ -65,7 +65,7 @@ Para obtener el contexto del proyecto y el estado real de implementacion, leer:
 
 1. `PROJECT_GUIDE.md`
 2. `docs/context/project_context_index.md`
-3. `docs/context/tfm_current_status.md` (estado activo, TFM)
+3. `docs/context/tfm/current_status.md` (estado activo, TFM)
 
 ## Documentos Clave
 
@@ -73,19 +73,19 @@ Para obtener el contexto del proyecto y el estado real de implementacion, leer:
 
 - guia principal del proyecto: `PROJECT_GUIDE.md`
 - indice de contexto del proyecto: `docs/context/project_context_index.md`
-- estado actual del proyecto: `docs/context/tfm_current_status.md`
-- roadmap activo: `docs/roadmap/tfm_roadmap.md`
+- estado actual del proyecto: `docs/context/tfm/current_status.md`
+- roadmap activo: `docs/roadmap/tfm/tfm_roadmap.md`
 - epic del TFM (definido, issue de GitHub `#89`):
-  `docs/roadmap/issues/issue-89-epic-tfm-lakehouse-platform.md`
+  `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`
 - guia de contribucion y setup: `CONTRIBUTING.md`
 
 ### TFG (cerrado, base sobre la que se construye el TFM)
 
 - arquitectura del pipeline heredado:
   `docs/pipeline/cvn_pydantic_generation_pipeline.md`
-- roadmap completo del TFG (cerrado): `docs/roadmap/cvn_generation_roadmap.md`
+- roadmap completo del TFG (cerrado): `docs/roadmap/tfg/cvn_generation_roadmap.md`
 - registro de estado completo del TFG (cerrado):
-  `docs/context/current_status.md`
+  `docs/context/tfg/current_status.md`
 - reporte del proceso de desarrollo del TFG:
   `docs/reporte_proceso_desarrollo_tfg.md`
 - estructura y trazabilidad de la memoria del TFG (completada):

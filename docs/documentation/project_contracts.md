@@ -16,19 +16,23 @@ Before making changes, read the project entry documents in this order:
 1. `AGENTS.md`
 2. `PROJECT_GUIDE.md`
 3. `docs/context/project_context_index.md`
-4. `docs/context/tfm_current_status.md` (active TFM state; also summarizes
+4. `docs/context/tfm/current_status.md` (active TFM state; also summarizes
    how the inherited, closed TFG foundation in
-   `docs/context/current_status.md` works)
-5. The relevant issue document under `docs/roadmap/issues/`
+   `docs/context/tfg/current_status.md` works)
+5. The relevant issue document under `docs/roadmap/tfm/issues/` (TFM) or
+   `docs/roadmap/tfg/issues/` (TFG, historical)
 
 Human contributors may start from `README.md` and `PROJECT_GUIDE.md`, but
 implementation work must still use the persistent context files.
 
 This repository holds a closed TFG (Trabajo de Fin de Grado) and an active
-TFM (Trabajo de Fin de Master) built on top of it. See
-`docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md` for
-the split and why the TFG's own documents were frozen in place instead of
-moved.
+TFM (Trabajo de Fin de Master) built on top of it, with their documentation
+physically separated into `docs/roadmap/tfg/` / `docs/context/tfg/` (closed)
+and `docs/roadmap/tfm/` / `docs/context/tfm/` (active). See
+`docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`
+for the original TFG closure and
+`docs/roadmap/tfm/hotfixes/hotfix-10-tfg-tfm-documentation-folder-separation.md`
+for the folder separation.
 
 ## Documentation Source Of Truth Contract
 
@@ -44,9 +48,9 @@ Required entry files:
 Required persistent context files:
 
 - `docs/context/project_context_index.md`: documentation index and reading map
-- `docs/context/tfm_current_status.md`: active TFM implementation state and
+- `docs/context/tfm/current_status.md`: active TFM implementation state and
   next steps
-- `docs/context/current_status.md`: closed TFG implementation state
+- `docs/context/tfg/current_status.md`: closed TFG implementation state
   (`#11`-`#71`), historical only
 
 Required architecture files:
@@ -59,11 +63,15 @@ Required architecture files:
 
 Required roadmap files:
 
-- `docs/roadmap/tfm_roadmap.md`: active TFM roadmap overview
-- `docs/roadmap/cvn_generation_roadmap.md`: closed TFG roadmap overview,
+- `docs/roadmap/tfm/tfm_roadmap.md`: active TFM roadmap overview
+- `docs/roadmap/tfm/issues/*.md`: TFM per-issue execution records
+- `docs/roadmap/tfm/hotfixes/*.md`: TFM maintenance and corrective records
+- `docs/roadmap/tfg/cvn_generation_roadmap.md`: closed TFG roadmap overview,
   historical only
-- `docs/roadmap/issues/*.md`: per-issue execution records
-- `docs/roadmap/hotfixes/*.md`: maintenance and corrective records
+- `docs/roadmap/tfg/issues/*.md`: closed TFG per-issue execution records,
+  historical only
+- `docs/roadmap/tfg/hotfixes/*.md`: closed TFG maintenance and corrective
+  records, historical only
 
 ## Documentation Update Contract
 
@@ -72,12 +80,12 @@ session.
 
 At minimum, update:
 
-1. The relevant issue document under `docs/roadmap/issues/`
-2. `docs/context/tfm_current_status.md` (never the closed
-   `docs/context/current_status.md`)
+1. The relevant issue document under `docs/roadmap/tfm/issues/`
+2. `docs/context/tfm/current_status.md` (never the closed
+   `docs/context/tfg/current_status.md`)
 3. `docs/pipeline/known_limitations.md` if a new limitation was discovered
-4. `docs/roadmap/tfm_roadmap.md` if roadmap state changed (never the closed
-   `docs/roadmap/cvn_generation_roadmap.md`)
+4. `docs/roadmap/tfm/tfm_roadmap.md` if roadmap state changed (never the closed
+   `docs/roadmap/tfg/cvn_generation_roadmap.md`)
 5. `PROJECT_GUIDE.md` if the human-facing entry guidance, document map,
    contributor reading order, or repository orientation changed
 

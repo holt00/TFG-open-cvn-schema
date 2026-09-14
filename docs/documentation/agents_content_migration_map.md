@@ -22,10 +22,10 @@ that mapping manually.
 | Observed Structural Characteristics | `docs/pipeline/cvn_pydantic_generation_pipeline.md` |
 | Observed Metadata Coverage | `docs/pipeline/cvn_pydantic_generation_pipeline.md` |
 | Observed Reference-Table Situation | `docs/pipeline/cvn_pydantic_generation_pipeline.md` |
-| Issue #8 epic description | `docs/roadmap/cvn_generation_roadmap.md` and `docs/roadmap/issues/issue-08-epic-cvn-automation.md` |
-| Issue #11 detail | `docs/roadmap/issues/issue-11-project-infrastructure.md` |
-| Issue #12 detail | `docs/roadmap/issues/issue-12-structural-bindings.md` |
-| Issues #13-#17 detail | `docs/roadmap/issues/issue-13-normalization.md` through `issue-17-workflow-documentation.md` |
+| Issue #8 epic description | `docs/roadmap/tfg/cvn_generation_roadmap.md` and `docs/roadmap/tfg/issues/issue-08-epic-cvn-automation.md` |
+| Issue #11 detail | `docs/roadmap/tfg/issues/issue-11-project-infrastructure.md` |
+| Issue #12 detail | `docs/roadmap/tfg/issues/issue-12-structural-bindings.md` |
+| Issues #13-#17 detail | `docs/roadmap/tfg/issues/issue-13-normalization.md` through `issue-17-workflow-documentation.md` |
 | Agent-specific operational rules | `AGENTS.md` |
 
 ## Resulting Rule

@@ -15,8 +15,8 @@ generacion, el formato Open CVN JSON, el contrato de parser/validador y la
 aplicacion CLI descritos en `docs/pipeline/` y `docs/development/`). La
 planificacion y trazabilidad del TFM vive en un documento equivalente propio
 cuando esa redaccion comience; mientras tanto, el estado y la hoja de ruta
-activos del proyecto estan en `docs/context/tfm_current_status.md` y
-`docs/roadmap/tfm_roadmap.md`.
+activos del proyecto estan en `docs/context/tfm/current_status.md` y
+`docs/roadmap/tfm/tfm_roadmap.md`.
 
 ## Proposito del documento
 
@@ -551,7 +551,7 @@ trazabilidad `x-open-cvn-*`.
 
 Todas las cifras presentadas se verificaron directamente contra el paquete
 oficial vigente en el repositorio antes de redactarlas (no se reutilizaron sin
-comprobar los valores ya citados en `docs/context/current_status.md`):
+comprobar los valores ya citados en `docs/context/tfg/current_status.md`):
 `1457` entradas normalizadas totales, `27` codigos solo en el manual, `1` solo
 en el arbol, `1429` en ambas fuentes, `33` discrepancias registradas; de las
 1457 entradas, `557` declaran una tabla de referencia en el manual (desglosadas
