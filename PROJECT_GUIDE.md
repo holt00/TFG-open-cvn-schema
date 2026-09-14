@@ -9,29 +9,58 @@ and maintainers.
 
 ## What This Repository Is
 
-This repository contains a Trabajo de Fin de Grado focused on defining an open
-data schema for representing academic and research CVs in Spain, taking the
-CVN format as the starting point.
+This repository contains two successive academic projects on the same
+system: a Trabajo de Fin de Grado (TFG), now finished, defended, and
+delivered, and a Trabajo de Fin de Master (TFM) that is starting now on top
+of it. Both are focused on defining an open data schema for representing
+academic and research CVs in Spain, taking the CVN format as the starting
+point.
 
 The long-term goal is not only to mirror the official CVN package, but to make
 curriculum data easier to validate, transform, store, and export through open
 tooling.
 
-## Current Technical Scope
+## What The TFG Already Built (Closed Foundation)
 
-The repository is currently centered on the generation pipeline that turns the
-official CVN XML/XSD package into reproducible Python artifacts.
+The TFG delivered a complete, working system in this repository, not just a
+partial technical base. In order, it built:
 
-Current and planned layers are:
+1. structural Pydantic bindings generated directly from the official CVN
+   XML/XSD package (`src/generated/`)
+2. a normalization layer that cross-indexes metadata from the official
+   supporting XML documents by CVN code, resolved against auxiliary
+   reference catalogs (`src/cvn_codegen/normalization.py`)
+3. a semantic policy layer that recovers deterministic domain meaning
+   (typing, naming, enum eligibility, overrides) from the normalized
+   structural layer (`src/cvn_codegen/semantic_policy.py`)
+4. domain-oriented Pydantic models generated over that normalized metadata
+   (`src/cvn_codegen/domain_model_generator.py`,
+   output in `src/models/cvn/generated/`)
+5. an agnostic conceptual model layer feeding generated PlantUML diagrams
+   and a generated JSON Schema (`docs/diagrams/`,
+   `schemas/open_cvn.schema.json`)
+6. the canonical Open CVN JSON document format and a unified
+   parser/validator contract supporting PDF, XML, and JSON import
+   (`src/open_cvn/`)
+7. a local CLI CV management application on top of all of the above: SQLite
+   storage, master/derived curriculum versions, LaTeX/PDF export, and an
+   opt-in, deterministic-first LLM-assisted PDF import fallback
+   (`src/open_cvn_app/`)
+8. the TFG memoria itself, written, signed, and defended
+   (`docs/memoria/TFG.pdf` / `TFG_signed.pdf`)
 
-1. structural bindings generated from the official CVN XML/XSD package
-2. normalized metadata extracted from the official supporting XML documents
-3. semantic mapping rules that recover domain meaning from the structural layer
-4. domain-oriented Pydantic models built over normalized metadata
+The full TFG issue-by-issue record (`#11` through `#71`) is closed and
+archived at `docs/roadmap/cvn_generation_roadmap.md` and
+`docs/context/current_status.md`. Those files are frozen: read them for
+history, but do not add new entries to them.
 
-This means the repository is currently implementing the technical foundation
-for the future parser, validator, JSON-oriented schema, and downstream export
-work. It is not yet the full end-user CV tooling envisioned by the TFG.
+## Current Technical Scope: The TFM
+
+The TFM builds on top of that finished foundation rather than starting over.
+Its concrete scope has not been defined yet; a placeholder epic exists at
+`docs/roadmap/issues/issue-TBD-epic-tfm.md` pending that definition with the
+user. Until it is defined, treat the repository as "TFG-complete, TFM scope
+pending" rather than assuming any particular next technical direction.
 
 ## Recommended Reading Order For Humans
 
@@ -40,8 +69,10 @@ files in order:
 
 1. `PROJECT_GUIDE.md`
 2. `docs/context/project_context_index.md`
-3. `docs/context/current_status.md`
-4. the relevant issue document under `docs/roadmap/issues/`
+3. `docs/context/tfm_current_status.md` (active TFM status; read
+   `docs/context/current_status.md` separately for the closed TFG history)
+4. the relevant issue document under `docs/roadmap/issues/` (TFM issues once
+   defined; TFG issues `#11`-`#71` for historical foundation context)
 5. supporting architecture or limitation documents linked from that issue
 
 ## Repository Rules And Conventions
@@ -55,6 +86,15 @@ files in order:
 - Record implementation deviations from the original issue plan in the issue
   document for that issue
 - Update persistent documentation in the same session as the code change
+- Do not edit or add new entries to the closed TFG documents
+  (`docs/context/current_status.md`,
+  `docs/roadmap/cvn_generation_roadmap.md`, the TFG issue files `#11`-`#71`,
+  and the TFG hotfix files `#1`-`#8`) except to fix a factual error found
+  after closure; TFM work is logged in
+  `docs/context/tfm_current_status.md` and `docs/roadmap/tfm_roadmap.md`
+  instead
+- Do not invent or expand TFM scope on your own initiative; the TFM epic is a
+  deliberate placeholder until the user defines it
 
 ## Documentation Map
 
@@ -68,7 +108,10 @@ files in order:
 ### Current State And Context
 
 - `docs/context/project_context_index.md`: documentation index and reading map
-- `docs/context/current_status.md`: latest implementation state and next steps
+- `docs/context/tfm_current_status.md`: active TFM implementation state and
+  next steps; also explains how the inherited TFG foundation works
+- `docs/context/current_status.md`: closed TFG implementation log (`#11`-`#71`);
+  historical only, no new entries
 - `docs/reporte_proceso_desarrollo_tfg.md`: narrative report of the TFG
   development process, initial research, key decisions, implementation flow, and
   limitations
@@ -99,8 +142,11 @@ files in order:
 
 ### Roadmap And Issue History
 
-- `docs/roadmap/cvn_generation_roadmap.md`: roadmap from issue `#8` through
-  issue `#17`
+- `docs/roadmap/tfm_roadmap.md`: active TFM roadmap; epic not yet defined
+- `docs/roadmap/issues/issue-TBD-epic-tfm.md`: TFM epic placeholder, also
+  explains the inherited TFG architecture for a reader new to the project
+- `docs/roadmap/cvn_generation_roadmap.md`: closed TFG roadmap, issue `#8`
+  through issue `#71`, all completed
 - `docs/roadmap/issues/issue-08-epic-cvn-automation.md`: epic summary and
   checkpoints
 - `docs/roadmap/issues/issue-11-project-infrastructure.md`: authoritative
@@ -178,6 +224,9 @@ files in order:
 - `docs/roadmap/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`:
   implemented corrective handoff for exposing wrapper type evidence to semantic
   and domain generation stages without raw structural rediscovery
+- `docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`:
+  implemented record of closing out the TFG documentation and creating the
+  active TFM documentation set alongside it
 
 ### Development Reference
 
@@ -274,8 +323,16 @@ Each issue document under `docs/roadmap/issues/` records:
 
 When resuming the repository after time away:
 
-1. read `docs/context/current_status.md`
-2. read the last completed issue document
-3. read the next issue document from the roadmap
-4. review `docs/pipeline/known_limitations.md`
+1. read `docs/context/tfm_current_status.md` for the active TFM state (it
+   also summarizes how the inherited TFG foundation works)
+2. if the TFM epic is still a placeholder, stop and get it defined with the
+   user before planning implementation; do not invent scope
+3. once real TFM issues exist, read the last completed one and the next one
+   from `docs/roadmap/tfm_roadmap.md`
+4. review `docs/pipeline/known_limitations.md` for inherited TFG limitations
 5. only then start implementation work
+
+For deep historical context on how the TFG was actually built, read
+`docs/context/current_status.md` and the TFG issue documents under
+`docs/roadmap/issues/` (`#11`-`#71`); they are closed but remain the
+authoritative record of the foundation the TFM builds on.

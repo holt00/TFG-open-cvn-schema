@@ -1,4 +1,16 @@
-# CVN Generation Roadmap
+# CVN Generation Roadmap (TFG, Closed)
+
+## TFG Closure Notice
+
+This is the complete TFG (Trabajo de Fin de Grado) roadmap: every issue listed
+below, `#8` through `#71`, is `Completed`. The TFG is finished and its memoria
+is written, signed, and defended. This file is frozen as the historical
+roadmap record and is kept at this exact path because many issue and hotfix
+documents already reference it here; do not add new issue rows to it.
+
+The TFM (Trabajo de Fin de Master) continues on top of this completed
+foundation. Its active, currently-open roadmap is
+`docs/roadmap/tfm_roadmap.md`.
 
 ## Purpose
 
