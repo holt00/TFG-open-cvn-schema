@@ -1,4 +1,30 @@
-# Current Status
+# Current Status (TFG, Closed)
+
+## TFG Closure Notice
+
+This file is the complete implementation log of the TFG (Trabajo de Fin de
+Grado): every issue and hotfix from `#11` through `#71`, plus the TFG memoria
+drafting sessions. The TFG is finished, its memoria is written, signed, and
+defended (`docs/memoria/TFG.pdf`, `docs/memoria/estructura_memoria_tfg.md`),
+and this log is now frozen as a historical record. It is kept in place,
+unmoved, because dozens of existing issue and hotfix documents already
+reference it by this exact path.
+
+Work now continues as the TFM (Trabajo de Fin de Master), which builds on top
+of the TFG deliverables recorded below: the CVN XML/XSD-to-Pydantic
+generation pipeline (structural bindings, normalization, semantic policy,
+domain models), the conceptual model extraction layer and diagrams, the
+generated JSON Schema and canonical Open CVN JSON format, the unified
+parser/validator contract with PDF/XML/JSON import paths (including
+deterministic-first, opt-in-LLM-fallback import), and the local CLI
+application (SQLite storage, master/derived curriculum versions, LaTeX/PDF
+export). See `docs/pipeline/cvn_pydantic_generation_pipeline.md` and
+`docs/development/regeneration_workflow.md` for how that TFG foundation
+actually works.
+
+The active status log for TFM work is `docs/context/tfm_current_status.md`.
+Do not add new entries below this notice; append new TFM entries to that file
+instead.
 
 ## Status Date
 

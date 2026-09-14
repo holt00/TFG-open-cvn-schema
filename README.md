@@ -2,10 +2,12 @@
 
 ## Descripcion
 
-Este repositorio contiene un Trabajo de Fin de Grado orientado a definir un
-esquema de datos abierto para la representacion de curriculos en el ambito
-universitario y de investigacion en Espana, tomando como punto de partida el
-formato CVN.
+Este repositorio contiene dos trabajos academicos sucesivos sobre el mismo
+proyecto: un Trabajo de Fin de Grado (TFG), ya terminado, defendido y
+entregado, y un Trabajo de Fin de Master (TFM) que se esta construyendo ahora
+sobre esa base. Ambos giran en torno a definir un esquema de datos abierto
+para la representacion de curriculos en el ambito universitario y de
+investigacion en Espana, tomando como punto de partida el formato CVN.
 
 El problema de partida es que, aunque el CVN existe como formato normalizado,
 la elaboracion, mantenimiento y adaptacion de curriculos a distintos contextos
@@ -13,51 +15,46 @@ sigue consumiendo mucho tiempo y dificulta el desarrollo de herramientas
 abiertas interoperables. Una de las causas es la ausencia de una definicion de
 bajo nivel suficientemente clara para representar y procesar estos datos.
 
-## Objetivo Del Proyecto
+## El TFG (Terminado)
 
-El objetivo general del TFG es definir un esquema de datos que permita la
-gestion automatizada de curriculos academicos y de investigacion en Espana.
+El TFG definio un esquema de datos que permite la gestion automatizada de
+curriculos academicos y de investigacion en Espana, construyendo, en este
+mismo repositorio, un pipeline completo por capas:
 
-Ese objetivo se descompone en varias lineas de trabajo:
+1. bindings Pydantic estructurales generados directamente desde el paquete
+   oficial CVN XML/XSD (`src/generated/`)
+2. una capa de normalizacion que indexa cada campo por su codigo CVN y lo
+   resuelve contra los catalogos de referencia auxiliares
+   (`src/cvn_codegen/normalization.py`)
+3. una capa de politica semantica que traduce esa evidencia normalizada en
+   decisiones deterministas de tipado y nomenclatura
+   (`src/cvn_codegen/semantic_policy.py`)
+4. un generador de modelos de dominio final, consumibles a mano
+   (`src/cvn_codegen/domain_model_generator.py`, salida en
+   `src/models/cvn/generated/`)
+5. una capa de modelo conceptual agnostica usada para generar diagramas
+   UML-like y un JSON Schema (`src/cvn_codegen/conceptual_model_extractor.py`,
+   `docs/diagrams/`, `schemas/open_cvn.schema.json`)
+6. un formato canonico "Open CVN JSON" con un contrato unificado de
+   parser/validador que soporta importacion desde PDF, XML y JSON
+   (`src/open_cvn/`)
+7. una aplicacion CLI local sobre todo lo anterior, con almacenamiento SQLite,
+   versiones de curriculo maestras/derivadas, exportacion a LaTeX/PDF, e
+   importacion opcional asistida por LLM (`src/open_cvn_app/`)
 
-1. estudiar el formato CVN actual y analizar sus limitaciones
-2. proponer un formato de bajo nivel agnostico respecto al formato final de
-   representacion
-3. definir un esquema final basado en JSON, apto para ficheros de texto y bases
-   de datos NoSQL
-4. desarrollar una aplicacion en Python para lectura y validacion de curriculos
-   utilizando Pydantic
-5. desarrollar herramientas de almacenamiento local y exportacion a LaTeX
-6. explorar el uso de LLM para importar curriculos generados por herramientas
-   externas como la aplicacion de la FECYT
+La memoria del TFG esta escrita, firmada y defendida
+(`docs/memoria/TFG.pdf` / `TFG_signed.pdf`). El registro completo de su
+desarrollo (issues `#11` a `#71`) esta cerrado y archivado en
+`docs/context/current_status.md` y
+`docs/roadmap/cvn_generation_roadmap.md`; no se anaden nuevas entradas ahi.
 
-## Alcance Actual Del Repositorio
+## El TFM (En Marcha)
 
-La infraestructura que actualmente se esta construyendo para generar modelos
-Pydantic es solo una parte del proyecto total. En esta fase, el foco del
-repositorio esta en sentar la base tecnica del pipeline que permitira:
-
-1. traducir los artefactos oficiales CVN XML/XSD a bindings estructurales
-   Pydantic
-2. normalizar la metadata funcional y tecnica del paquete oficial
-3. generar mas adelante modelos de dominio reutilizables y un esquema final mas
-   limpio
-
-Esta base es necesaria para el parser/validador en Python, pero no agota el TFG:
-todavia quedan por delante la definicion del modelo final, la capa JSON, la
-exportacion a LaTeX, y la futura exploracion de una herramienta de importacion
-basada en LLM.
-
-## Direccion Tecnica Actual
-
-El repositorio sigue una arquitectura de dos capas:
-
-1. bindings estructurales generados a partir del paquete oficial CVN
-2. modelos semanticos y de dominio que se generaran sobre metadata normalizada
-
-La arquitectura, el estado actual y el roadmap se documentan en el propio
-repositorio para que futuras sesiones no dependan de reconstruir el contexto a
-partir del chat o de issues externos.
+El TFM se construye sobre esa base ya entregada, no la sustituye ni la repite.
+Su alcance concreto todavia no esta definido; el epic placeholder vive en
+`docs/roadmap/issues/issue-TBD-epic-tfm.md` a la espera de esa definicion. El
+estado activo del proyecto a partir de ahora esta en
+`docs/context/tfm_current_status.md` y `docs/roadmap/tfm_roadmap.md`.
 
 ## Punto De Entrada
 
@@ -65,24 +62,30 @@ Para obtener el contexto del proyecto y el estado real de implementacion, leer:
 
 1. `PROJECT_GUIDE.md`
 2. `docs/context/project_context_index.md`
-3. `docs/context/current_status.md`
+3. `docs/context/tfm_current_status.md` (estado activo, TFM)
 
 ## Documentos Clave
 
-- guia principal del proyecto:
-  `PROJECT_GUIDE.md`
-- indice de contexto del proyecto:
-  `docs/context/project_context_index.md`
-- estado actual del proyecto:
+### TFM (activo)
+
+- guia principal del proyecto: `PROJECT_GUIDE.md`
+- indice de contexto del proyecto: `docs/context/project_context_index.md`
+- estado actual del proyecto: `docs/context/tfm_current_status.md`
+- roadmap activo: `docs/roadmap/tfm_roadmap.md`
+- epic del TFM (placeholder, sin definir):
+  `docs/roadmap/issues/issue-TBD-epic-tfm.md`
+- guia de contribucion y setup: `CONTRIBUTING.md`
+
+### TFG (cerrado, base sobre la que se construye el TFM)
+
+- arquitectura del pipeline heredado:
+  `docs/pipeline/cvn_pydantic_generation_pipeline.md`
+- roadmap completo del TFG (cerrado): `docs/roadmap/cvn_generation_roadmap.md`
+- registro de estado completo del TFG (cerrado):
   `docs/context/current_status.md`
 - reporte del proceso de desarrollo del TFG:
   `docs/reporte_proceso_desarrollo_tfg.md`
-- estructura y trazabilidad de la memoria del TFG:
+- estructura y trazabilidad de la memoria del TFG (completada):
   `docs/memoria/estructura_memoria_tfg.md`
-- arquitectura del pipeline:
-  `docs/pipeline/cvn_pydantic_generation_pipeline.md`
-- roadmap completo:
-  `docs/roadmap/cvn_generation_roadmap.md`
-- guia de contribucion y setup:
-  `CONTRIBUTING.md`
+- limitaciones conocidas heredadas: `docs/pipeline/known_limitations.md`
 
