@@ -93,9 +93,39 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-14 (epic broken down into 14 filed child issues, `#90`-`#103`)
+- Last updated: 2026-09-15 (issue `#90`, k3s cluster bring-up, completed)
 
 ## Entries
+
+### Issue #90 Completed: k3s Cluster Bring-Up
+
+- first TFM implementation issue completed; branch
+  `issue-90-k3s-cluster-bring-up`
+- local k3s `v1.36.4+k3s1` installed on the WSL2 development machine as a
+  systemd service (`--flannel-backend=host-gw`, chosen to avoid a known
+  VXLAN/UDP issue under WSL2's virtualized networking rather than the
+  default flannel backend); dedicated `tfm-lakehouse` namespace created;
+  Helm v4.3.0 installed and the official `apache-airflow` and `superset`
+  chart repositories added; a smoke-test pod ran to completion in the
+  namespace
+- key finding for future issues: the epic's own wording assumed a classic
+  `helm repo add bitnami ...` step for MinIO/PostgreSQL, but
+  `charts.bitnami.com` is OCI-only as of 2025 — issue `#91` must pull
+  those charts by OCI reference instead
+  (`oci://registry-1.docker.io/bitnamicharts/<chart>`), pinned to an exact
+  version; documented in `infra/k3s/README.md` and the issue file
+- repository layout for infra work established: `infra/README.md`,
+  `infra/k3s/README.md` (full install/access notes, reproducible), and
+  `infra/helm-values/` (empty, for issue `#91` onward); no Terraform, per
+  the epic's local-only decision
+- full detail, including the kubeconfig write-permission workaround
+  (root-owned `/etc/rancher/k3s/k3s.yaml` copied to `~/.kube/config`) and
+  every task/subtask performed, is in
+  `docs/roadmap/tfm/issues/issue-90-k3s-cluster-bring-up.md`
+- `docs/roadmap/tfm/tfm_roadmap.md`'s status row for `#90` updated to
+  `Completed`
+- next: issue `#91` (Core Services Deployment — MinIO, PostgreSQL,
+  Airflow), which depends on this issue
 
 ### Epic Broken Down Into 14 Filed Child Issues (#90-#103)
 
