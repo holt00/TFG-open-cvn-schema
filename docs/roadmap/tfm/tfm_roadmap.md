@@ -85,7 +85,7 @@ to work out of sequence (per the Roadmap Rules above).
 | --- | --- | --- | --- |
 | `#89` | Epic: TFM lakehouse platform for curricular data integration and analysis | Planned | See `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`; scope and stack defined, implementation not started |
 | `#90` | k3s cluster bring-up | Completed | `docs/roadmap/tfm/issues/issue-90-k3s-cluster-bring-up.md`; epic phase 0 |
-| `#91` | Core services deployment (MinIO, PostgreSQL, Airflow) | Planned | `docs/roadmap/tfm/issues/issue-91-core-services-deployment.md`; epic phase 0; depends on `#90` |
+| `#91` | Core services deployment (MinIO, PostgreSQL, Airflow) | Completed | `docs/roadmap/tfm/issues/issue-91-core-services-deployment.md`; epic phase 0; depends on `#90` |
 | `#92` | Iceberg catalog on MinIO | Planned | `docs/roadmap/tfm/issues/issue-92-iceberg-catalog-on-minio.md`; epic phase 1; depends on `#91` |
 | `#93` | Spark job execution from Airflow | Planned | `docs/roadmap/tfm/issues/issue-93-spark-job-execution-from-airflow.md`; epic phase 1; depends on `#90`, `#91`, `#92` |
 | `#94` | ORCID API client | Planned | `docs/roadmap/tfm/issues/issue-94-orcid-api-client.md`; epic phase 2 |

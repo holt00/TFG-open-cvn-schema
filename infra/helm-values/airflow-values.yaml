@@ -1,0 +1,28 @@
+# Airflow Helm values for the TFM lakehouse platform (issue #91).
+#
+# Chart: apache-airflow/airflow, pinned version 1.22.0 (app version 3.2.2).
+# Repo already added in issue #90.
+#
+# Unlike MinIO/PostgreSQL, no image override is needed here: this is the
+# official, actively maintained chart, and its own embedded PostgreSQL
+# metadata-DB subchart already defaults to a working bitnamilegacy image
+# pin upstream (verified by reading the chart's default values).
+#
+# Task 0 decisions applied:
+# - KubernetesExecutor (per the epic's stack decision)
+# - Airflow keeps its own default embedded PostgreSQL subchart for
+#   metadata (zero custom external-DB wiring); the dedicated PostgreSQL
+#   instance from postgresql-values.yaml is for the future gold-layer
+#   tables only, unrelated to this DB
+# - DAG delivery via a persistent volume, not gitSync (no sidecar
+#   container, no git credentials/network dependency to debug)
+# core.load_examples already defaults to 'False' in this chart; not
+# repeated here.
+
+executor: "KubernetesExecutor"
+
+dags:
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClassName: local-path

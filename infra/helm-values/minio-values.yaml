@@ -1,0 +1,50 @@
+# MinIO Helm values for the TFM lakehouse platform (issue #91).
+#
+# Chart: oci://registry-1.docker.io/bitnamicharts/minio, pinned version 17.0.21
+# (last version published before the Bitnami catalog cutover of
+# 2025-09-29; see docs/roadmap/tfm/issues/issue-91-core-services-deployment.md,
+# "Task 0 - Decisions Locked").
+#
+# Image sourcing: the chart's own default image references
+# (docker.io/bitnami/minio, docker.io/bitnami/minio-client) are no longer
+# guaranteed to resolve post-cutover, so both are pinned explicitly to the
+# frozen but still-public docker.io/bitnamilegacy registry, verified
+# pullable anonymously at plan time (2026-09-15).
+
+mode: standalone
+
+image:
+  registry: docker.io
+  repository: bitnamilegacy/minio
+  tag: 2025.7.23-debian-12-r5
+
+clientImage:
+  registry: docker.io
+  repository: bitnamilegacy/minio-client
+  tag: 2025.7.21-debian-12-r3
+
+# The chart runs the console/object-browser UI as a separate deployment
+# with its own image reference; missed on the first pass (ImagePullBackOff
+# against docker.io/bitnami/minio-object-browser), pinned here too.
+console:
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/minio-object-browser
+    tag: 2.0.2-debian-12-r4
+
+auth:
+  existingSecret: minio-root-credentials
+  rootUserSecretKey: root-user
+  rootPasswordSecretKey: root-password
+
+# Single bucket with bronze/silver/gold prefixes (Task 0 decision), matching
+# the Iceberg warehouse path convention issue #92 will build on.
+defaultBuckets: "lakehouse"
+
+persistence:
+  enabled: true
+  storageClass: local-path
+  size: 8Gi
+
+service:
+  type: ClusterIP

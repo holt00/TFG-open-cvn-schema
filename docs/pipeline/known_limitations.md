@@ -27,6 +27,7 @@ do not need to rediscover them.
 | `Subtype_Spa.xml` lacks a direct table-family bridge | `source_package_limitation` | Subtype-backed families cannot be strictly bridged per table family | Classify as subtype-backed but enum-ineligible | Revisit only if reliable bridge evidence appears | External constraint, not project bug |
 | Strict enum eligibility is evidence-backed but conservative | `future_research` | Some compact tables remain review-required instead of strict enums | Dynamic evidence controls eligibility; weak cases stay open | Add versioned overrides only with curated evidence | Not blocker |
 | PDF generation depends on a TeX engine | `runtime_validation_gap` | A Python-only install cannot compile PDFs unless a usable engine is available | Current implementation discovers local `latexmk` or `pdflatex` | Issue `#71` should add managed Tectonic discovery/cache/download where practical, plus `pdf doctor` | Actionable hardening item |
+| Bitnami-sourced Helm chart images are pinned to the frozen `bitnamilegacy` registry | `infra_supply_chain_limitation` | MinIO and the dedicated PostgreSQL instance receive no further security patches; upstream MinIO/Bitnami distribution both restructured in 2025-2026 | Every affected image reference pinned to an explicit, verified-pullable `bitnamilegacy` tag rather than a chart default | Re-evaluate (paid Bitnami Secure Images, self-built image, or alternative) before any deployment beyond the local dev cluster | Accepted limitation for a local-only TFM cluster, not a blocker |
 
 ## Structural Binding Limitations
 
@@ -411,6 +412,39 @@ do not need to rediscover them.
     re-inspecting `ReferenceTables.xml`
   - future explicit overrides, if any, must remain versioned `OverrideRule` data
     rather than hidden table-name branches
+
+## Infrastructure Limitations (TFM)
+
+### Bitnami-Sourced Images Pinned To The Frozen `bitnamilegacy` Registry
+
+- discovered during issue `#91` (Core Services Deployment)
+- Broadcom's "Bitnami Secure Images" transition (effective 2025-08-28,
+  catalog cutover 2025-09-29) shrank Bitnami's free Helm chart/image
+  catalog; every image a pre-cutover chart version references may no
+  longer resolve, and non-latest tags on `docker.io/bitnami/*` are being
+  removed over time
+- affected here: the MinIO chart (`oci://registry-1.docker.io/bitnamicharts/minio`,
+  including its separate console/object-browser image, easy to miss) and
+  the dedicated PostgreSQL chart
+  (`oci://registry-1.docker.io/bitnamicharts/postgresql`) deployed in
+  issue `#91`
+- current handling: every affected image reference is pinned to an
+  explicit `docker.io/bitnamilegacy/<image>:<tag>`, verified pullable
+  anonymously (Docker Hub API tag listing + a `registry-1.docker.io`
+  bearer-token manifest check) before use; see
+  `infra/helm-values/README.md` for the exact tags and verification
+  commands used
+- independent confirmation: MinIO's own upstream distribution changed too
+  (official `minio/minio`/`minio/mc` images pulled from Docker Hub October
+  2025, GitHub repo archived February 2026), and the official
+  `apache-airflow/airflow` chart's own embedded metadata-Postgres subchart
+  already defaults to a `bitnamilegacy/postgresql` pin upstream,
+  independently corroborating this as the maintained community path
+  rather than an issue-specific workaround
+- expected follow-up: not required for the TFM's local-only cluster scope;
+  re-evaluate before any deployment beyond the local dev machine (a paid
+  Bitnami Secure Images subscription, self-built images, or an alternative
+  distribution)
 
 ## Documentation Rule
 

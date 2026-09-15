@@ -1,0 +1,38 @@
+# PostgreSQL Helm values for the TFM lakehouse platform (issue #91).
+#
+# Chart: oci://registry-1.docker.io/bitnamicharts/postgresql, pinned version
+# 18.11.3 (see docs/roadmap/tfm/issues/issue-91-core-services-deployment.md,
+# "Task 0 - Decisions Locked").
+#
+# This is a DEDICATED instance for the future gold-layer database (issues
+# #99/#100), not Airflow's metadata database. Airflow keeps the Helm
+# chart's own default embedded PostgreSQL subchart for its metadata DB
+# instead of wiring to this instance, to avoid custom external-DB wiring
+# (Task 0 decision: separate instances is the safer/easier-to-debug option
+# for a local single-node cluster).
+#
+# Image sourcing: pinned to the frozen but still-public docker.io/bitnamilegacy
+# registry, verified pullable anonymously at plan time (2026-09-15), same
+# reasoning as minio-values.yaml. volumePermissions and metrics are disabled
+# by default in this chart, so no other image references need pinning.
+
+image:
+  registry: docker.io
+  repository: bitnamilegacy/postgresql
+  tag: 17.6.0-debian-12-r4
+
+architecture: standalone
+
+auth:
+  existingSecret: postgresql-gold-credentials
+  secretKeys:
+    adminPasswordKey: postgres-password
+    userPasswordKey: password
+  username: gold
+  database: gold
+
+primary:
+  persistence:
+    enabled: true
+    storageClass: local-path
+    size: 8Gi

@@ -93,9 +93,53 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-15 (issue `#90`, k3s cluster bring-up, completed)
+- Last updated: 2026-09-15 (issue `#91`, core services deployment,
+  completed)
 
 ## Entries
+
+### Issue #91 Completed: Core Services Deployment (MinIO, PostgreSQL, Airflow)
+
+- second TFM implementation issue completed; branch
+  `issue-91-core-services-deployment`
+- MinIO, a dedicated PostgreSQL instance, and Airflow (`KubernetesExecutor`)
+  Helm-installed into the `tfm-lakehouse` namespace from issue `#90`, using
+  values files under `infra/helm-values/`
+  (`minio-values.yaml`, `postgresql-values.yaml`, `airflow-values.yaml`,
+  `README.md`)
+- every open decision the epic left for this issue was locked in the issue
+  document's "Task 0 - Decisions Locked" before implementation, choosing
+  the safest/easiest-to-debug option at each fork: one MinIO bucket
+  (`lakehouse`) with `bronze`/`silver`/`gold` prefixes; a PostgreSQL
+  instance dedicated to the future `gold` database, kept separate from
+  Airflow's own embedded metadata Postgres (avoids custom external-DB
+  wiring); Airflow DAGs delivered via a persistence-backed volume rather
+  than `gitSync` (no sidecar/credentials to debug)
+- major finding: the Bitnami Helm/image free catalog changed materially in
+  2025-2026 (Broadcom's "Bitnami Secure Images" transition, MinIO's own
+  Docker Hub images pulled in October 2025, MinIO's GitHub repo archived
+  February 2026). Every Bitnami-chart image reference for MinIO and
+  PostgreSQL — including MinIO's separate console/object-browser image,
+  easy to miss — is pinned explicitly to the frozen but still-public
+  `docker.io/bitnamilegacy` registry, with each tag verified pullable
+  against the live registry before use rather than assumed; recorded as a
+  new limitation in `docs/pipeline/known_limitations.md`
+  ("Infrastructure Limitations (TFM)")
+- second finding relevant to later DAG work (`#97`/`#99`): Airflow 3's
+  `scheduler` pod does not mount the DAGs persistence volume (only
+  `dag-processor`/`api-server` do), and newly parsed DAGs default to
+  `is_paused=True` even for a manually triggered run; both confirmed with
+  a throwaway smoke-test DAG that was deleted after verifying
+  `KubernetesExecutor` spawns, runs, and completes a real task pod
+  end-to-end
+- full detail, including every pinned chart/image version, the exact
+  install/verify commands, and the complete adjustments/findings record,
+  is in
+  `docs/roadmap/tfm/issues/issue-91-core-services-deployment.md`
+- `docs/roadmap/tfm/tfm_roadmap.md`'s status row for `#91` updated to
+  `Completed`
+- next: issue `#92` (Iceberg Catalog On MinIO), which depends on this
+  issue's `lakehouse` bucket
 
 ### Issue #90 Completed: k3s Cluster Bring-Up
 
