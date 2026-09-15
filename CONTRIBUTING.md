@@ -7,20 +7,25 @@ sessions can resume quickly without reconstructing prior decisions from issue
 threads or agent prompts.
 
 This repository contains a completed TFG (Trabajo de Fin de Grado) and a TFM
-(Trabajo de Fin de Master) now being built on top of it in the same codebase.
-See `README.md` and `PROJECT_GUIDE.md` for what each one covers, and
-`docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md` for
-how the split was made.
+(Trabajo de Fin de Master) now being built on top of it, with their
+documentation physically separated into `docs/roadmap/tfg/`/`docs/context/tfg/`
+(closed) and `docs/roadmap/tfm/`/`docs/context/tfm/` (active). See
+`README.md` and `PROJECT_GUIDE.md` for what each one covers, and
+`docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`
+and
+`docs/roadmap/tfm/hotfixes/hotfix-10-tfg-tfm-documentation-folder-separation.md`
+for how the split was made.
 
 Before starting any implementation work, read these files in order:
 
 1. `PROJECT_GUIDE.md`
 2. `docs/context/project_context_index.md`
-3. `docs/context/tfm_current_status.md` (active TFM state; the closed TFG log
-   is `docs/context/current_status.md`, kept for historical reference)
-4. The issue file you are going to work on under `docs/roadmap/issues/` (a
-   TFM issue once the TFM epic is defined, or a TFG issue `#11`-`#71` when
-   you need to understand the existing foundation)
+3. `docs/context/tfm/current_status.md` (active TFM state; the closed TFG log
+   is `docs/context/tfg/current_status.md`, kept for historical reference)
+4. The issue file you are going to work on under `docs/roadmap/tfm/issues/`
+   (TFM, active — the epic is `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`)
+   or `docs/roadmap/tfg/issues/` (TFG, `#11`-`#71`, when you need to
+   understand the existing foundation)
 
 ## Development Setup
 
@@ -96,12 +101,12 @@ until the test suite passes.
 Every issue that changes the repository must update documentation in the same
 session. For TFM work, at minimum, update:
 
-1. The issue document under `docs/roadmap/issues/`
-2. `docs/context/tfm_current_status.md` (do not add entries to the closed
-   `docs/context/current_status.md`)
+1. The issue document under `docs/roadmap/tfm/issues/`
+2. `docs/context/tfm/current_status.md` (do not add entries to the closed
+   `docs/context/tfg/current_status.md`)
 3. `docs/pipeline/known_limitations.md` if a new limitation was discovered
-4. `docs/roadmap/tfm_roadmap.md` if the roadmap state changed (do not edit
-   the closed `docs/roadmap/cvn_generation_roadmap.md`)
+4. `docs/roadmap/tfm/tfm_roadmap.md` if the roadmap state changed (do not edit
+   the closed `docs/roadmap/tfg/cvn_generation_roadmap.md`)
 5. `PROJECT_GUIDE.md` when the human-facing project entry guidance,
    documentation map, contributor reading order, or repository orientation
    changes

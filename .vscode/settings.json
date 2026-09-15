@@ -1,3 +1,6 @@
 {
-  "latex-workshop.chktex.path": "/home/carlos/.local/bin/chktex"
+  "latex-workshop.chktex.path": "/home/carlos/.local/bin/chktex",
+  "files.watcherExclude": {
+    "**/target/**": true
+  }
 }
