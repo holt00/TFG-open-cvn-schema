@@ -244,6 +244,8 @@ files in order:
   infrastructure manifests and Helm values
 - `infra/k3s/README.md`: local k3s cluster bring-up (issue `#90`) —
   install, WSL2 prerequisite, kubectl access, namespace, Helm repos
+- `infra/helm-values/README.md`: MinIO/PostgreSQL/Airflow Helm values
+  overview, credential handling, and install/verify commands (issue `#91`)
 - `infra/helm-values/`: per-service Helm values, added starting with issue
   `#91`
 

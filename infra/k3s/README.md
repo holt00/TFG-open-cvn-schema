@@ -58,9 +58,16 @@ MinIO and PostgreSQL (issue `#91`) are **not** added via a classic
 Pull those charts by OCI reference instead, pinned to an exact version:
 
 ```bash
-helm show chart oci://registry-1.docker.io/bitnamicharts/minio --version <pin>
-helm show chart oci://registry-1.docker.io/bitnamicharts/postgresql --version <pin>
+helm show chart oci://registry-1.docker.io/bitnamicharts/minio --version 17.0.21
+helm show chart oci://registry-1.docker.io/bitnamicharts/postgresql --version 18.11.3
 ```
+
+Both chart versions above, plus every image tag referenced in
+`infra/helm-values/`, were the ones actually installed in issue `#91`. See
+`infra/helm-values/README.md` for the full install/verify commands and why
+the images are pinned to the frozen `docker.io/bitnamilegacy` registry
+rather than the chart defaults (Bitnami's free-catalog changes,
+2025-2026).
 
 ## Verification performed
 
