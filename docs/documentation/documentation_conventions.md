@@ -17,8 +17,8 @@ sessions must update it.
 ### Persistent Context
 
 - `docs/context/project_context_index.md`: single documentation entry point
-- `docs/context/tfm_current_status.md`: active TFM implementation state
-- `docs/context/current_status.md`: closed TFG implementation state
+- `docs/context/tfm/current_status.md`: active TFM implementation state
+- `docs/context/tfg/current_status.md`: closed TFG implementation state
   (`#11`-`#71`), historical only, no new entries
 
 ### Architecture
@@ -30,13 +30,20 @@ sessions must update it.
 
 ### Roadmap And Execution History
 
-- `docs/roadmap/tfm_roadmap.md`: active TFM roadmap across issues
-- `docs/roadmap/cvn_generation_roadmap.md`: closed TFG roadmap across issues
-  `#8`-`#71`, historical only, no new rows
-- `docs/roadmap/issues/*.md`: per-issue history and implementation record,
-  both TFG (`#11`-`#71`) and TFM once defined
-- `docs/roadmap/hotfixes/*.md`: maintenance and corrective records, both TFG
-  (`#1`-`#8`) and ongoing
+TFG and TFM documentation live in separate folders, per
+`docs/roadmap/tfm/hotfixes/hotfix-10-tfg-tfm-documentation-folder-separation.md`:
+
+- `docs/roadmap/tfm/tfm_roadmap.md`: active TFM roadmap
+- `docs/roadmap/tfm/issues/*.md`: TFM per-issue history and implementation
+  records (currently issue `#89`, the epic)
+- `docs/roadmap/tfm/hotfixes/*.md`: TFM maintenance and corrective records
+  (currently hotfix `#9` onward)
+- `docs/roadmap/tfg/cvn_generation_roadmap.md`: closed TFG roadmap across
+  issues `#8`-`#71`, historical only, no new rows
+- `docs/roadmap/tfg/issues/*.md`: closed TFG per-issue history
+  (`#11`-`#71`), historical only, no new files
+- `docs/roadmap/tfg/hotfixes/*.md`: closed TFG maintenance records
+  (`#1`-`#8`), historical only, no new files
 
 ### Development Reference
 
@@ -53,7 +60,7 @@ sessions must update it.
 
 ## Mandatory Sections For Issue Documents
 
-Every issue file under `docs/roadmap/issues/` must include these sections:
+Every issue file under `docs/roadmap/tfg/issues/` must include these sections:
 
 1. `Summary`
 2. `Original Goal`
@@ -71,19 +78,21 @@ Every issue file under `docs/roadmap/issues/` must include these sections:
 At the end of every TFM issue session, update at minimum:
 
 1. the issue file itself
-2. `docs/context/tfm_current_status.md` (never the closed
-   `docs/context/current_status.md`)
+2. `docs/context/tfm/current_status.md` (never the closed
+   `docs/context/tfg/current_status.md`)
 3. `docs/pipeline/known_limitations.md` when a new limitation appears
-4. `docs/roadmap/tfm_roadmap.md` when issue state changes (never the closed
-   `docs/roadmap/cvn_generation_roadmap.md`)
+4. `docs/roadmap/tfm/tfm_roadmap.md` when issue state changes (never the closed
+   `docs/roadmap/tfg/cvn_generation_roadmap.md`)
 5. `PROJECT_GUIDE.md` when the repository entry guidance, documentation map,
    contributor reading order, or human-facing project orientation changes
 
-The TFG's own closed documents (`docs/context/current_status.md`,
-`docs/roadmap/cvn_generation_roadmap.md`, TFG issue files `#11`-`#71`, TFG
-hotfix files `#1`-`#8`) are not touched by this protocol; see
-`docs/roadmap/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md` for
-why they were frozen in place instead of moved.
+The TFG's own closed documents, all under `docs/context/tfg/` and
+`docs/roadmap/tfg/`, are not touched by this protocol. See
+`docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`
+for the original TFG closure, and
+`docs/roadmap/tfm/hotfixes/hotfix-10-tfg-tfm-documentation-folder-separation.md`
+for why TFG and TFM documentation now live in separate `tfg/`/`tfm/`
+subfolders.
 
 Update `AGENTS.md` only if:
 
@@ -103,15 +112,22 @@ Update `AGENTS.md` only if:
 
 ## Naming Conventions
 
-- roadmap overview: `docs/roadmap/<project>_roadmap.md` (TFG:
-  `cvn_generation_roadmap.md`, closed; TFM: `tfm_roadmap.md`, active)
-- issue files: `docs/roadmap/issues/issue-<number>-<slug>.md`
+TFG and TFM documentation are separated by folder, not by filename prefix:
+
+- roadmap overview: `docs/roadmap/<tfg|tfm>/<project>_roadmap.md` (TFG:
+  `docs/roadmap/tfg/cvn_generation_roadmap.md`, closed; TFM:
+  `docs/roadmap/tfm/tfm_roadmap.md`, active)
+- issue files: `docs/roadmap/<tfg|tfm>/issues/issue-<number>-<slug>.md`
+- hotfix files: `docs/roadmap/<tfg|tfm>/hotfixes/hotfix-<number>-<slug>.md`;
+  numbering is a single continuous sequence shared across both folders
+  (TFG used `#1`-`#8`; TFM continues from `#9`)
 - placeholder epic exception: an epic not yet filed as a real GitHub issue may
   use `issue-TBD-<slug>.md` instead of a number; it must be renamed to the
   real numbered filename, and every reference to it updated, once the issue
   is actually filed
 - ADRs: `docs/adr/000N-<slug>.md`
-- context files: `docs/context/<name>.md`
+- status logs: `docs/context/<tfg|tfm>/current_status.md`
+- other context files (not TFG/TFM-specific): `docs/context/<name>.md`
 
 ## Cross-Linking Rules
 
