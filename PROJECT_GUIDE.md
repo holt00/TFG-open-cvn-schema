@@ -85,6 +85,8 @@ files in order:
 - Do not edit `src/generated/` manually
 - Keep hand-maintained pipeline logic in `src/cvn_codegen/`
 - Keep future semantic or domain models in `src/models/cvn/`
+- Keep TFM infrastructure manifests and Helm values under `infra/` (started
+  in issue `#90`; see `infra/README.md`)
 - Follow issue order unless there is a deliberate reason to work out of order
 - Record implementation deviations from the original issue plan in the issue
   document for that issue
@@ -235,6 +237,15 @@ files in order:
 - `docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`:
   implemented record of closing out the TFG documentation and creating the
   active TFM documentation set alongside it
+
+### Infrastructure (TFM)
+
+- `infra/README.md`: orientation for the TFM lakehouse's Kubernetes
+  infrastructure manifests and Helm values
+- `infra/k3s/README.md`: local k3s cluster bring-up (issue `#90`) —
+  install, WSL2 prerequisite, kubectl access, namespace, Helm repos
+- `infra/helm-values/`: per-service Helm values, added starting with issue
+  `#91`
 
 ### Development Reference
 
