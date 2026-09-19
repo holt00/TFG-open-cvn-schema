@@ -210,3 +210,12 @@ __marimo__/
 .agents/
 
 Mapi_TFG_ESIIAB_UCLM__ESP_
+
+# TFG memoria PDFs (purged from git history, kept locally only)
+docs/memoria/TFG.pdf
+docs/memoria/TFG_signed.pdf
+docs/defensa/presentacion_tfg.pdf
+
+# TFM bulk data working directories (large downloaded/filtered datasets,
+# kept locally only; issue #95's ORCID bulk data file pipeline)
+data/

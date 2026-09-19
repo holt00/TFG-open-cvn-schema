@@ -93,10 +93,178 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-15 (issue `#91`, core services deployment,
-  completed)
+- Last updated: 2026-09-19 (issue `#95`, ORCID bulk data file pipeline,
+  completed — 301,763 Spain-affiliated records filtered from the 26.08M-record
+  ORCID 2025 summaries file)
 
 ## Entries
+
+### Issue #95 Completed: ORCID Bulk Data File Pipeline
+
+- sixth TFM implementation issue completed; branch
+  `issue-95-orcid-bulk-data-file-pipeline`
+- verified the current official location before coding: the ORCID 2025
+  Public Data File is on Figshare (12 files, 221.41 GiB / 237.73 GB); only
+  the 46.33 GB `ORCID_2025_10_summaries.tar.gz` is used, since its
+  employment/education entries carry the country needed for the filter and
+  the activities files add nothing this issue needs
+- filter: an employment or education entry whose organization country is
+  `ES`, on the path confirmed against real entries
+  (`employment-summary`/`education-summary` -> `common:organization` ->
+  `common:address` -> `common:country`)
+- new package `src/tfm_lakehouse/orcid_bulk/`:
+  `fetch_orcid_bulk_subset` (HTTP streaming) and
+  `fetch_orcid_bulk_subset_from_local_file`, sharing one tar-walk/filter
+  core, with MD5 verification against Figshare's checksum
+- the archive was downloaded manually (faster connection) into the
+  git-ignored `data/orcid_bulk/raw/`; the first streaming attempt projected
+  ~7 h at ~1.8 MB/s and was cancelled
+- three findings while running on the real file, all fixed before the final
+  run and detailed in the issue document: XML parsing, not download or
+  gunzip, dominated runtime, so a byte-level prefilter was added (~7x,
+  identical matches on a 100k sample); `tarfile` streaming leaked memory
+  linearly (4.7 GB at 6.4M entries, would have exhausted 16 GB), fixed by
+  clearing `TarFile.members`; and per-file writes on `/mnt/e` were I/O-bound,
+  so matches are written from an 8-thread pool (gunzip itself cannot be
+  parallelized)
+- result: 26,078,951 records scanned, 301,763 matched (1.157%) in 81.6 min,
+  MD5 verified, 301,763 files on disk equal to the match count; output in
+  `data/orcid_bulk/filtered/` as `<3-digit>/<iD>.xml`
+- tests: `tests/test_orcid_bulk_pipeline_unit.py` (7 passed, no network) and
+  `tests/test_orcid_bulk_pipeline_live_smoke.py` (skipped by default; passes
+  with `ORCID_LIVE_TEST=1` against the real file's first 2,000 entries)
+- new limitation recorded in `docs/pipeline/known_limitations.md`
+  (point-in-time snapshot, "any ES affiliation" semantics, prefilter
+  serialization assumption, checksum checked after writing)
+- `docs/roadmap/tfm/tfm_roadmap.md`'s status row for `#95` updated to
+  `Completed`
+- next: issue `#96` (Synthetic CVN Generator), which can seed from
+  `data/orcid_bulk/filtered/`; issue `#97` should consider packing the
+  300k small files instead of landing them one by one
+
+### Issue #94 Completed: ORCID API Client
+
+- fifth TFM implementation issue completed; branch
+  `issue-94-orcid-api-client`
+- original plan assumed a free, individually-registrable ORCID Public API
+  client (`client_id`/`client_secret`, OAuth2 client-credentials); the
+  actual registration form asks for the app to be described as a tool for
+  a registered ORCID member organization, which a personal TFM project does
+  not fit, blocking that path (this contradicts ORCID's own documentation,
+  which says individuals can hold Public API credentials independent of
+  membership -- the discrepancy was not chased further)
+- pivoted to the ORCID Public API's anonymous (unauthenticated) tier
+  instead: `pub.orcid.org/v3.0/{orcid-id}/{record,works,employments,
+  educations}` answers plain `GET` requests with no token and no
+  `client_id`, capped at 25k reads/day / 12 req/s per IP rather than 100k
+  reads/day per registered `client_id` -- acceptable given issues `#96`/
+  `#97` only need low-volume, per-iD lookups, not registry crawling
+- new package `src/tfm_lakehouse/orcid_client/` (`client.py`,
+  `exceptions.py`): ORCID iD checksum validation (ISO 7064 MOD 11-2),
+  `OrcidClient` with `get_record`/`get_works`/`get_employments`/
+  `get_educations`, typed errors (`OrcidValidationError`,
+  `OrcidNotFoundError`, `OrcidApiError`), bounded 429 retry with backoff;
+  no typed response models added, since `#96`/`#97` haven't defined which
+  fields they need yet
+- `requests>=2.32` added to `pyproject.toml`
+- verified against the real, unauthenticated ORCID API, not just mocks: a
+  credential-less lookup of the public "Josiah Carberry" ORCID demo record
+  (`0000-0002-1825-0097`) returned the expected identifier field; 12 mocked
+  unit tests cover checksum/404/500/429-retry behavior; full detail in
+  `docs/roadmap/tfm/issues/issue-94-orcid-api-client.md`
+- `docs/roadmap/tfm/tfm_roadmap.md`'s status row for `#94` updated to
+  `Completed`
+
+### Issue #93 Completed: Spark Job Execution From Airflow
+
+- fourth TFM implementation issue completed; branch
+  `issue-93-spark-job-execution-from-airflow`
+- built a custom Spark image (`tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0`)
+  from Spark's own `bin/docker-image-tool.sh` PySpark base plus a thin
+  custom `Dockerfile` layer (`infra/spark-conf/Dockerfile`) adding the
+  three jars issue `#92` pinned, and loaded it into k3s's containerd
+  directly (`docker save | sudo k3s ctr images import -`, no registry in
+  this cluster)
+- added RBAC (`infra/spark-conf/spark-rbac.yaml`: `ServiceAccount spark`,
+  namespaced `Role`, `RoleBinding`) so the Spark driver can create/clean up
+  its own executor pods/services/configmaps/PVCs
+- wrote a minimal Airflow DAG (`dags/issue93_spark_iceberg_smoke_test.py`,
+  `KubernetesPodOperator`) that runs `spark-submit --master k8s://... --deploy-mode client`
+  from inside the cluster, and a trivial PySpark job
+  (`src/tfm_lakehouse/jobs/iceberg_smoke_test.py`) that writes and reads
+  back an Iceberg table through issue `#92`'s catalog
+- three of issue `#92`'s locked decisions turned out to need correction
+  once actually run: the `fs.s3a.aws.credentials.provider` class name
+  (`org.apache.hadoop.fs.s3a.EnvironmentVariableCredentialsProvider`) does
+  not exist in `hadoop-aws:3.3.4` at all -- corrected to the real class,
+  `com.amazonaws.auth.EnvironmentVariableCredentialsProvider`, from
+  `aws-java-sdk-bundle`; `spark.kubernetes.driver.*` pod-spec properties
+  (credentials, service account) are silent no-ops in `client` deploy
+  mode and had to move to the `KubernetesPodOperator` pod spec directly;
+  and the RBAC `Role` needed `deletecollection`, a verb distinct from
+  `delete`, for Spark's own bulk cleanup on shutdown. Full detail,
+  including two more debugging findings (entrypoint/passwd handling for
+  arbitrary UIDs, and the bundled-Hadoop-version check that confirmed no
+  jar-pin revision was needed), is in
+  `docs/roadmap/tfm/issues/issue-93-spark-job-execution-from-airflow.md`
+- verified end to end, not just via the job's own internal read-back: a
+  separate throwaway pod, unrelated to the job run, independently queried
+  the written table through the same catalog config and got back the
+  exact two rows written (`INDEPENDENT_VERIFY_ROW_COUNT=2`)
+- this is also issue `#92`'s own missing end-to-end proof, left pending
+  when that issue closed; `docs/roadmap/tfm/issues/issue-92-iceberg-catalog-on-minio.md`'s
+  `Verification`/`Status` are updated to `Completed` as a result, and the
+  corresponding `docs/pipeline/known_limitations.md` entry is resolved
+- `docs/roadmap/tfm/tfm_roadmap.md`'s status rows for `#93` **and** `#92`
+  updated to `Completed`
+- next: issue `#94` (ORCID API client), first issue of epic phase 2
+
+### Issue #92 In Progress: Iceberg Catalog On MinIO
+
+- third TFM implementation issue started; branch
+  `issue-92-iceberg-catalog-on-minio`
+- resolved a circular dependency the epic's own planning left unresolved:
+  issue `#92`'s original plan deferred jar-version pinning to "the Spark
+  version chosen in issue `#93`", while issue `#93`'s own plan expected to
+  inherit "the Iceberg/S3A dependencies from issue `#92`" — neither issue
+  actually picked a Spark version. Fixed by locking the full version set
+  here instead: Spark `3.5.9`, `iceberg-spark-runtime-3.5_2.12:1.11.0`,
+  `hadoop-aws:3.3.4`, `aws-java-sdk-bundle:1.12.262`, chosen for mutual
+  classpath compatibility (matching the Hadoop client jars Spark 3.5.x
+  bundles), not just recency
+- locked a catalog/warehouse design not spelled out in the epic: one
+  Iceberg Hadoop catalog (`spark.sql.catalog.lakehouse`) rooted at
+  `s3a://lakehouse/warehouse` — deliberately a different prefix from the
+  raw `lakehouse/bronze|silver|gold` file-landing prefixes issue `#91`
+  created, so Iceberg's own namespace/table directories never mix with
+  raw landed files — with `bronze`/`silver`/`gold` as Iceberg namespaces
+  inside that one catalog rather than three separate catalogs
+  (`lakehouse.bronze.<table>`, etc.)
+- new `infra/spark-conf/` directory added: `iceberg-catalog.conf` (the
+  Spark properties file issue `#93`'s `spark-submit` calls will consume)
+  and `README.md` (pinned versions, verified download URLs, and the
+  credentials-via-`EnvironmentVariableCredentialsProvider` wiring issue
+  `#93` must do against the existing `minio-root-credentials` secret from
+  issue `#91` — no new secret, nothing committed)
+- verified this session, not just researched: the
+  `s3a://lakehouse/warehouse` path is writable (`mc pipe`/`ls`/`rm`
+  round-trip via a throwaway pod); all four pinned artifacts resolve
+  (`curl -I`, HTTP 200 each) for the Spark tarball, Iceberg runtime jar,
+  `hadoop-aws`, and `aws-java-sdk-bundle`; and the `hadoop-aws`/
+  `aws-java-sdk-bundle` version pairing directly from
+  `hadoop-project-3.3.4.pom`'s `aws-java-sdk.version` property, not a
+  secondary source
+- deliberately **not** marked `Completed`: this issue's own scope stops at
+  a verified, ready-to-consume catalog configuration; the actual proof
+  that Spark can create a namespace/table through it and read it back
+  requires a Spark image and `spark-submit` wiring, which is issue `#93`'s
+  deliverable. Full detail in
+  `docs/roadmap/tfm/issues/issue-92-iceberg-catalog-on-minio.md`
+- `docs/roadmap/tfm/tfm_roadmap.md`'s status row for `#92` updated to
+  `In Progress`
+- next: issue `#93` (Spark Job Execution From Airflow), which consumes
+  `infra/spark-conf/iceberg-catalog.conf` directly and supplies this
+  issue's missing end-to-end proof
 
 ### Issue #91 Completed: Core Services Deployment (MinIO, PostgreSQL, Airflow)
 

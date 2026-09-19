@@ -1,0 +1,41 @@
+# RBAC for the Spark driver running spark-submit --master k8s://... in
+# client deploy mode (issue #93, Task 0/2). The driver pod uses this
+# ServiceAccount to create/watch/delete its own executor pods and the
+# headless service Spark uses for driver<->executor communication, all
+# scoped to the tfm-lakehouse namespace (a namespaced Role is sufficient
+# since the driver never touches resources outside its own namespace).
+#
+# "deletecollection" is required in addition to "delete" (found during
+# issue #93, Task 8): on shutdown, the driver bulk-deletes its own
+# executor pods/configmaps/services/PVCs by label selector, which is a
+# distinct RBAC verb from deleting a single named resource.
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spark
+  namespace: tfm-lakehouse
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: spark-driver-role
+  namespace: tfm-lakehouse
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps", "persistentvolumeclaims"]
+    verbs: ["create", "get", "list", "watch", "delete", "deletecollection"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: spark-driver-role-binding
+  namespace: tfm-lakehouse
+subjects:
+  - kind: ServiceAccount
+    name: spark
+    namespace: tfm-lakehouse
+roleRef:
+  kind: Role
+  name: spark-driver-role
+  apiGroup: rbac.authorization.k8s.io

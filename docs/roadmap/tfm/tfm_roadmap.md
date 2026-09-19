@@ -86,10 +86,10 @@ to work out of sequence (per the Roadmap Rules above).
 | `#89` | Epic: TFM lakehouse platform for curricular data integration and analysis | Planned | See `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`; scope and stack defined, implementation not started |
 | `#90` | k3s cluster bring-up | Completed | `docs/roadmap/tfm/issues/issue-90-k3s-cluster-bring-up.md`; epic phase 0 |
 | `#91` | Core services deployment (MinIO, PostgreSQL, Airflow) | Completed | `docs/roadmap/tfm/issues/issue-91-core-services-deployment.md`; epic phase 0; depends on `#90` |
-| `#92` | Iceberg catalog on MinIO | Planned | `docs/roadmap/tfm/issues/issue-92-iceberg-catalog-on-minio.md`; epic phase 1; depends on `#91` |
-| `#93` | Spark job execution from Airflow | Planned | `docs/roadmap/tfm/issues/issue-93-spark-job-execution-from-airflow.md`; epic phase 1; depends on `#90`, `#91`, `#92` |
-| `#94` | ORCID API client | Planned | `docs/roadmap/tfm/issues/issue-94-orcid-api-client.md`; epic phase 2 |
-| `#95` | ORCID bulk data file pipeline | Planned | `docs/roadmap/tfm/issues/issue-95-orcid-bulk-data-file-pipeline.md`; epic phase 2 |
+| `#92` | Iceberg catalog on MinIO | Completed | `docs/roadmap/tfm/issues/issue-92-iceberg-catalog-on-minio.md`; epic phase 1; depends on `#91`; end-to-end proof supplied by `#93` |
+| `#93` | Spark job execution from Airflow | Completed | `docs/roadmap/tfm/issues/issue-93-spark-job-execution-from-airflow.md`; epic phase 1; depends on `#90`, `#91`, `#92` |
+| `#94` | ORCID API client | Completed | `docs/roadmap/tfm/issues/issue-94-orcid-api-client.md`; epic phase 2 |
+| `#95` | ORCID bulk data file pipeline | Completed | `docs/roadmap/tfm/issues/issue-95-orcid-bulk-data-file-pipeline.md`; epic phase 2 |
 | `#96` | Synthetic CVN generator | Planned | `docs/roadmap/tfm/issues/issue-96-synthetic-cvn-generator.md`; epic phase 2; depends on `#94`/`#95` |
 | `#97` | Bronze landing & `ingest_validate` DAG | Planned | `docs/roadmap/tfm/issues/issue-97-bronze-landing-and-ingest-validate-dag.md`; epic phase 2; depends on `#90`, `#91`, `#93`, `#94`, `#95`, `#96` |
 | `#98` | Bronze -> silver: validation & entity resolution | Planned | `docs/roadmap/tfm/issues/issue-98-bronze-to-silver-validation-and-entity-resolution.md`; epic phase 3; depends on `#92`, `#93`, `#97` |

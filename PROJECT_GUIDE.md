@@ -87,6 +87,9 @@ files in order:
 - Keep future semantic or domain models in `src/models/cvn/`
 - Keep TFM infrastructure manifests and Helm values under `infra/` (started
   in issue `#90`; see `infra/README.md`)
+- Keep TFM Spark/PySpark job code under `src/tfm_lakehouse/` (started in
+  issue `#93`) and Airflow DAG sources under `dags/` (also started in
+  issue `#93`), separate from `infra/`'s deployment config
 - Follow issue order unless there is a deliberate reason to work out of order
 - Record implementation deviations from the original issue plan in the issue
   document for that issue
@@ -248,6 +251,26 @@ files in order:
   overview, credential handling, and install/verify commands (issue `#91`)
 - `infra/helm-values/`: per-service Helm values, added starting with issue
   `#91`
+- `infra/spark-conf/README.md`: Iceberg Hadoop-catalog/S3A configuration
+  overview, credential wiring, pinned Spark/Iceberg/hadoop-aws/
+  aws-java-sdk-bundle versions (issue `#92`), and the custom Spark image
+  build/import and driver RBAC setup (issue `#93`)
+- `infra/spark-conf/`: Spark/Iceberg catalog properties files (issue `#92`),
+  plus the Spark image `Dockerfile` and driver RBAC manifest
+  `spark-rbac.yaml` (issue `#93`)
+- `src/tfm_lakehouse/jobs/`: hand-maintained PySpark job code for the TFM
+  lakehouse, starting with the issue `#93` Iceberg smoke test
+- `src/tfm_lakehouse/orcid_client/`: ORCID Public API client (issue `#94`),
+  using the anonymous/unauthenticated tier rather than a registered
+  `client_id` -- see the issue document for why
+- `src/tfm_lakehouse/orcid_bulk/`: ORCID bulk data file pipeline (issue
+  `#95`) -- streams and country-filters the ORCID Public Data File's
+  record-summaries into a working subset for bronze landing; output lands
+  in the git-ignored `data/orcid_bulk/filtered/` working directory, not in
+  version control
+- `dags/`: Airflow DAG sources for the TFM lakehouse, starting with the
+  issue `#93` Spark-from-Airflow smoke-test DAG; delivered to the
+  `dag-processor` pod's DAGs PVC, not git-synced (issue `#91`'s decision)
 
 ### Development Reference
 

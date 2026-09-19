@@ -28,6 +28,9 @@ do not need to rediscover them.
 | Strict enum eligibility is evidence-backed but conservative | `future_research` | Some compact tables remain review-required instead of strict enums | Dynamic evidence controls eligibility; weak cases stay open | Add versioned overrides only with curated evidence | Not blocker |
 | PDF generation depends on a TeX engine | `runtime_validation_gap` | A Python-only install cannot compile PDFs unless a usable engine is available | Current implementation discovers local `latexmk` or `pdflatex` | Issue `#71` should add managed Tectonic discovery/cache/download where practical, plus `pdf doctor` | Actionable hardening item |
 | Bitnami-sourced Helm chart images are pinned to the frozen `bitnamilegacy` registry | `infra_supply_chain_limitation` | MinIO and the dedicated PostgreSQL instance receive no further security patches; upstream MinIO/Bitnami distribution both restructured in 2025-2026 | Every affected image reference pinned to an explicit, verified-pullable `bitnamilegacy` tag rather than a chart default | Re-evaluate (paid Bitnami Secure Images, self-built image, or alternative) before any deployment beyond the local dev cluster | Accepted limitation for a local-only TFM cluster, not a blocker |
+| `spark.kubernetes.driver.*` pod-spec properties are no-ops in `client` deploy mode | `infra_gotcha` | Driver-side credentials/service-account config silently does nothing; `spark-submit` neither errors nor warns | Driver pod-spec config (credentials, service account) set directly on the submitting pod's own spec (the `KubernetesPodOperator` pod, in Airflow's case) instead | Apply the same pattern in issues `#97`/`#99`; do not set `spark.kubernetes.driver.*` pod-spec properties expecting them to affect a `client`-mode driver | Resolved for issue `#93`'s job; a standing gotcha for any future `client`-mode Spark-on-k8s job |
+| RBAC `deletecollection` is a separate verb from `delete` | `infra_gotcha` | A `Role` granting `delete` but not `deletecollection` lets a Spark driver create pods but not clean them up on shutdown via its own label-selector bulk delete | `infra/spark-conf/spark-rbac.yaml`'s `Role` grants both, plus `persistentvolumeclaims` alongside `pods`/`services`/`configmaps` | Grant `deletecollection` on the same resources in any future namespaced `Role` for a Spark driver | Resolved for issue `#93` |
+| ORCID registered Public API client registration is blocked for a non-member individual project | `external_api_limitation` | Cannot use the OAuth2 client-credentials tier (100k reads/day per `client_id`); stuck on the anonymous tier's lower cap | `src/tfm_lakehouse/orcid_client/` uses `pub.orcid.org`'s anonymous, unauthenticated tier (25k reads/day, 12 req/s per IP) instead | Re-check registration eligibility, or a university-sponsored Member API key, only if a later issue needs sustained volume beyond the anonymous cap | Accepted limitation for issues `#94`/`#96`/`#97`'s per-iD lookup scope, not a blocker |
 
 ## Structural Binding Limitations
 
@@ -445,6 +448,132 @@ do not need to rediscover them.
   re-evaluate before any deployment beyond the local dev machine (a paid
   Bitnami Secure Images subscription, self-built images, or an alternative
   distribution)
+
+### Iceberg Hadoop-Catalog Configuration Is Pinned And Now Proven End-To-End (Resolved)
+
+- discovered during issue `#92` (Iceberg Catalog On MinIO); resolved during
+  issue `#93` (Spark Job Execution From Airflow)
+- issue `#92`'s own original plan deferred jar-version pinning to "the
+  Spark version chosen in issue `#93`", while issue `#93`'s own plan
+  expected to inherit "the Iceberg/S3A dependencies from issue `#92`" —
+  neither issue had actually picked a Spark version, a circular dependency
+  resolved by locking the full version set (Spark `3.5.9`,
+  `iceberg-spark-runtime-3.5_2.12:1.11.0`, `hadoop-aws:3.3.4`,
+  `aws-java-sdk-bundle:1.12.262`) inside issue `#92` itself
+- both items this entry originally left open are now resolved:
+  1. issue `#93` unpacked the real `spark-3.5.9-bin-hadoop3.tgz` and
+     confirmed it bundles Hadoop `3.3.4` client jars exactly
+     (`hadoop-client-api-3.3.4.jar`, `hadoop-client-runtime-3.3.4.jar`) —
+     no jar-pin revision was needed
+  2. issue `#93` built a Spark image, ran a real job through
+     `infra/spark-conf/iceberg-catalog.conf` via Airflow, and independently
+     re-queried the written table from a separate pod, confirming the
+     catalog genuinely works end to end (see that issue's Verification
+     section for the full detail, including `ICEBERG_SMOKE_TEST_ROW_COUNT=2`
+     and the independent `INDEPENDENT_VERIFY_ROW_COUNT=2` re-query)
+- one correction surfaced along the way: the `fs.s3a.aws.credentials.provider`
+  class name issue `#92` locked
+  (`org.apache.hadoop.fs.s3a.EnvironmentVariableCredentialsProvider`) does
+  not exist anywhere in `hadoop-aws:3.3.4`; corrected to the real class,
+  `com.amazonaws.auth.EnvironmentVariableCredentialsProvider`, shipped in
+  `aws-java-sdk-bundle`
+- both issue `#92` and issue `#93` are now `Completed`
+
+### `spark.kubernetes.driver.*` Pod-Spec Properties Are No-Ops In `client` Deploy Mode
+
+- discovered during issue `#93` (Spark Job Execution From Airflow)
+- confirmed behavior: this cluster's `client` deploy-mode choice (the
+  submitting pod itself becomes the Spark driver) means Spark never builds
+  a driver pod spec of its own -- that only happens in `cluster` mode. Any
+  `spark.kubernetes.driver.*` property that configures a *pod spec*
+  (`secretKeyRef`, `authenticate.driver.serviceAccountName`, and likely
+  others in that family) is therefore silently ignored for the driver;
+  `spark-submit` neither errors nor warns
+- impact: a job can appear correctly configured (properties file has the
+  right keys) while the driver actually runs with none of that
+  configuration applied, discovered only when something the driver needs
+  (AWS credentials, in issue `#93`'s case) turns out missing at runtime
+- current handling: driver-side pod-spec config is set directly on the
+  submitting pod's own spec instead -- in Airflow's case, on the
+  `KubernetesPodOperator`'s `env_vars`/`service_account_name` in the DAG
+  file, not via `infra/spark-conf/iceberg-catalog.conf`. Executor-side
+  `spark.kubernetes.executor.*` properties are unaffected by this and work
+  normally, since Spark always creates executor pods itself regardless of
+  driver deploy mode
+- expected follow-up: issues `#97`/`#99` (also `client`-mode jobs from
+  Airflow, per the epic's stack decision) must apply the same pattern, not
+  rediscover this
+
+### RBAC `deletecollection` Is A Separate Verb From `delete`
+
+- discovered during issue `#93` (Spark Job Execution From Airflow)
+- confirmed behavior: on shutdown, a Spark driver bulk-deletes its own
+  executor pods, services, configmaps, and PVCs by label selector, which
+  Kubernetes RBAC treats as the `deletecollection` verb -- distinct from
+  `delete`, which only covers deleting a single named resource
+- impact: a `Role` granting `create`/`get`/`list`/`watch`/`delete` but not
+  `deletecollection` lets the driver create and run executors successfully,
+  but its own cleanup step then fails with `Forbidden`, and the driver pod
+  ends in `Error` even though the actual job succeeded -- easy to
+  misdiagnose as a job failure rather than a cleanup-permission gap
+- current handling: `infra/spark-conf/spark-rbac.yaml`'s `Role` grants
+  `deletecollection` alongside `delete` on `pods`/`services`/`configmaps`/
+  `persistentvolumeclaims`
+- expected follow-up: grant `deletecollection` on the same resources in any
+  future namespaced `Role` written for a Spark driver (issues `#97`/`#99`)
+
+### ORCID Registered Public API Client Registration Is Blocked For A Non-Member Individual Project
+
+- discovered during issue `#94` (ORCID API Client)
+- the original plan assumed a free, individually-registrable ORCID Public
+  API client (`client_id`/`client_secret`, OAuth2 client-credentials,
+  `/read-public` scope). Checking the actual registration form
+  (`orcid.org` -> Developer Tools -> register a public API client) showed
+  it asks for the app to be described as a tool used by a registered ORCID
+  member organization; a personal TFM project does not fit that
+  description
+- this contradicts ORCID's own documentation, which states individuals can
+  hold Public API credentials independent of membership; the discrepancy
+  was observed on the live form but not resolved against ORCID's written
+  policy, since the anonymous tier makes it moot for this issue's scope
+- current handling: `src/tfm_lakehouse/orcid_client/` calls
+  `pub.orcid.org/v3.0/{orcid-id}/{record,works,employments,educations}`
+  unauthenticated, with no `client_id` or OAuth token. This is documented
+  ORCID behavior (the token only raises the rate limit; it is not required
+  for access) and was verified against the real API, not just mocks
+- impact: capped at 25k reads/day and 12 requests/second per IP address,
+  versus 100k reads/day per `client_id` on the registered tier
+- expected follow-up: not required for issues `#94`, `#96`, or `#97` as
+  currently scoped, since all three are low-volume, per-iD lookups rather
+  than whole-registry crawling (issue `#95`'s bulk data file already
+  covers that case, also without needing a key); re-evaluate registered-
+  client registration or a university-sponsored Member API key only if a
+  later issue needs sustained volume beyond the anonymous cap
+
+### ORCID Bulk Subset Is A Point-In-Time, Country-Affiliation Snapshot With Serialization Assumptions
+
+- discovered during issue `#95` (ORCID Bulk Data File Pipeline)
+- the subset comes from the ORCID 2025 Public Data File
+  (`ORCID_2025_10_summaries.tar.gz`), which ORCID publishes once a year; it
+  is a frozen October 2025 snapshot, not a live view, and later profile
+  changes are only visible through issue `#94`'s per-iD API client
+- membership means "has at least one employment or education entry whose
+  organization country is `ES`" (any date, including past or student
+  entries), not "currently affiliated with a Spanish institution" and not
+  "Spanish researcher". Records with no public affiliation, or whose
+  affiliations are all outside Spain, are excluded even if the person works
+  in Spain
+- the byte-level prefilter assumes ORCID serializes the country as
+  `<common:country>XX</common:country>`. This held for every entry
+  inspected and for a 100k-entry sample compared against a full-parse run
+  (identical matches), but it is an assumption about the file's formatting,
+  not a documented guarantee; a future edition that changed the serialization
+  would under-match silently
+- the MD5 check runs after the single streaming pass, so a mismatch raises
+  after the filtered files were already written; the output directory must
+  then be treated as invalid and regenerated
+- expected follow-up: none required for the TFM's scope; re-run against the
+  next annual file if fresher data is ever needed
 
 ## Documentation Rule
 
