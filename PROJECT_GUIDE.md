@@ -268,6 +268,11 @@ files in order:
   record-summaries into a working subset for bronze landing; output lands
   in the git-ignored `data/orcid_bulk/filtered/` working directory, not in
   version control
+- `src/tfm_lakehouse/synthetic_cvn/`: synthetic CVN generator (issue `#96`)
+  -- builds schema-valid Open CVN JSON curricula seeded with real public
+  fields from the issue `#95` ORCID subset, validates each one, and writes
+  sharded JSON Lines plus a ground-truth manifest to the git-ignored
+  `data/synthetic_cvn/` working directory, not to version control
 - `dags/`: Airflow DAG sources for the TFM lakehouse, starting with the
   issue `#93` Spark-from-Airflow smoke-test DAG; delivered to the
   `dag-processor` pod's DAGs PVC, not git-synced (issue `#91`'s decision)

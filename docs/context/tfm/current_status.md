@@ -93,11 +93,52 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-19 (issue `#95`, ORCID bulk data file pipeline,
-  completed — 301,763 Spain-affiliated records filtered from the 26.08M-record
-  ORCID 2025 summaries file)
+- Last updated: 2026-09-19 (issue `#96`, synthetic CVN generator, completed —
+  10,000 schema-valid documents generated from the `#95` ORCID subset in 169 s)
 
 ## Entries
+
+### Issue #96 Completed: Synthetic CVN Generator
+
+- seventh TFM implementation issue completed; branch
+  `issue-96-synthetic-cvn-generator`, created from `origin/development`
+- new package `src/tfm_lakehouse/synthetic_cvn/`:
+  `generate_synthetic_cvn(SyntheticCvnConfig(...))` builds Open CVN JSON
+  curricula seeded with the real public name, affiliations, and works of the
+  issue `#95` ORCID subset (four entity types: identity, degree/doctorate
+  education, professional positions, scientific publications), validates
+  each one, and writes sharded JSON Lines plus a ground-truth manifest to the
+  git-ignored `data/synthetic_cvn/`. No new dependency (standard-library
+  `random`, not Faker, whose Python 3.14 support could not be confirmed)
+- key finding: the document JSON Schema leaves `identity` and every entry's
+  `data` free-form, so `validate_open_cvn_json` alone accepts invented fields.
+  Each entity's own `$defs` schema is strict, and the generator's validation
+  layer applies it. That layer discarded 179 of the first 200 documents on
+  the first real run and exposed two builder bugs, which were fixed. Also:
+  `FlexibleDateValue` is string-typed in the schema but integer-typed in the
+  XML importer (a pre-existing TFG inconsistency, recorded as a limitation,
+  TFG code untouched)
+- ORCID linkage for issue `#98`: a configurable share of documents carries the
+  seed's ORCID iD (`identificador_digital_de_autor`, type code `140`); the
+  rest keep a varied name and unchanged affiliations. `manifest.jsonl` is the
+  ground truth
+- performance was I/O-bound on seed files (~16 documents/s, disk wait), so
+  seed files are prefetched by a thread pool with a separate random stream
+  for draws: 10,000 real-seeded documents in 169 s (~59 documents/s), 0
+  invalid, 8.3 KB each
+- privacy handling: only public name/affiliation/work fields are read;
+  identity filler is invented (`000` phones, `@example.invalid` emails, no
+  DNI, no nationality); each document carries `metadata.source.synthetic =
+  true`. Three new limitation sections in `docs/pipeline/known_limitations.md`
+- tests: `tests/test_synthetic_cvn_generator_unit.py` (23 passed, no network)
+  and `tests/test_synthetic_cvn_local_smoke.py` (runs against the local
+  `#95` subset, skipped when absent)
+- `docs/roadmap/tfm/tfm_roadmap.md`'s status row for `#96` updated to
+  `Completed`; full detail in
+  `docs/roadmap/tfm/issues/issue-96-synthetic-cvn-generator.md`
+- next: issue `#97` (Bronze Landing & `ingest_validate` DAG), which calls
+  `generate_synthetic_cvn` and should land the JSON Lines shards, not one
+  object per document
 
 ### Issue #95 Completed: ORCID Bulk Data File Pipeline
 

@@ -575,6 +575,75 @@ do not need to rediscover them.
 - expected follow-up: none required for the TFM's scope; re-run against the
   next annual file if fresher data is ever needed
 
+### Synthetic CVN Documents Combine Real Public ORCID Data With Invented Personal Data
+
+- discovered during issue `#96` (Synthetic CVN Generator)
+- each synthetic curriculum is seeded from a real ORCID record: the real
+  name, affiliations, publication titles/years/DOIs are reused. Everything
+  else about the person is invented (sex, birth date, phone, email,
+  contract type, working hours, job duties), independently of the real
+  person. The ORCID Public Data File is CC0, but ORCID states that the
+  privacy and publicity rights of the people in it remain, so the generator
+  only reads public name/affiliation/work fields (never biography, emails,
+  or URLs), uses phone numbers in a non-existent `000` range and
+  `@example.invalid` addresses, omits DNI and nationality entirely, and marks
+  every document with `metadata.source.synthetic = true`
+- consequence: a document can show a real, named researcher with invented
+  attributes. It is acceptable inside this private lakehouse and the
+  git-ignored `data/` directory, but the output should not be published or
+  presented as real CVN data
+- unlinked documents (no ORCID iD) still carry the seed's real publication
+  titles and DOIs, so they stay linkable to the seed by content
+- the linked/unlinked split (`orcid_link_ratio`) and the sidecar manifest
+  are ground truth for issue `#98`'s entity-resolution checks, not
+  something a real CVN corpus would provide
+
+### Synthetic CVN Coverage Is Deliberately Narrow
+
+- discovered during issue `#96`
+- only four entity types are generated (`identity.person`, degree and
+  doctorate education, past and current professional positions, scientific
+  publications); the other ~100 schema entity types stay empty
+- ORCID work types without a faithful `CVN_PUBLICATION_A` equivalent
+  (conference papers, preprints, working papers, theses, ...) become
+  `OTHERS` with the ORCID type kept in `tipo_de_produccion_otros`
+- ORCID summaries carry no co-author lists, so a publication's author list
+  contains only the curriculum owner
+- degree and doctorate names are controlled references to the large open
+  tables `CVN_TITLE_B`/`CVN_TITLE_C`; the generator writes the free-text
+  label and `raw_value` without a `code`, because ORCID's text cannot be
+  matched to a table code without inventing one
+- only Spanish organizations receive an `ISO_3166` country reference (code
+  `724`, verified); other countries are omitted because ORCID gives ISO
+  alpha-2 codes and the CVN table uses numeric ones, and that mapping was
+  not verified
+- variation between documents seeded from the same ORCID record (only when
+  the pool is exhausted) comes from the publication subset, the invented
+  filler, and name variants; employments and education are identical.
+  Publication years are never altered, since that would falsify real data
+
+### Open CVN JSON Schema Does Not Enforce Entity Shapes, And Disagrees With The XML Importer On Dates
+
+- discovered during issue `#96`
+- `schemas/open_cvn.schema.json` declares `curriculum.identity` and every
+  entry's `data` as free-form objects, so `validate_open_cvn_json(...)`
+  accepts invented field names and missing required fields. Each entity's
+  own `$defs` schema is strict (`additionalProperties: false` plus required
+  fields) but is never applied by the TFG's validation path. Issue `#96`
+  applies it in its own validation layer
+  (`src/tfm_lakehouse/synthetic_cvn/validation.py`); issue `#98`'s CVN-side
+  validation should do the same if it needs real conformity
+- `FlexibleDateValue` declares `year`/`month`/`day` as strings, but the XML
+  semantic importer (`open_cvn.xml_value_conversion._flexible_date`) emits
+  integers. Both pass the document schema; only the per-entity check would
+  flag the importer's output. The synthetic generator follows the schema
+  (strings)
+- the schema also requires some fields that have no sensible value, e.g.
+  `titulo_homologado_fecha_de_homologacion` on doctorates (required, not
+  nullable); the generator emits an empty date object
+- TFG code was not modified; if `#98` ingests both real-importer and
+  synthetic documents it must accept both date representations
+
 ## Documentation Rule
 
 Whenever a new limitation is discovered, add it here and reference the issue
