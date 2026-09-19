@@ -1,0 +1,7 @@
+# Keep the Docker build context small: data/ holds the ~46 GB ORCID archive and
+# the 300k-file subset (issue #95), which must never be sent to the daemon.
+data/
+.git/
+.venv/
+docs/
+**/__pycache__/

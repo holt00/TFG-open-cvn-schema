@@ -91,7 +91,7 @@ to work out of sequence (per the Roadmap Rules above).
 | `#94` | ORCID API client | Completed | `docs/roadmap/tfm/issues/issue-94-orcid-api-client.md`; epic phase 2 |
 | `#95` | ORCID bulk data file pipeline | Completed | `docs/roadmap/tfm/issues/issue-95-orcid-bulk-data-file-pipeline.md`; epic phase 2 |
 | `#96` | Synthetic CVN generator | Completed | `docs/roadmap/tfm/issues/issue-96-synthetic-cvn-generator.md`; epic phase 2; depends on `#94`/`#95` |
-| `#97` | Bronze landing & `ingest_validate` DAG | Planned | `docs/roadmap/tfm/issues/issue-97-bronze-landing-and-ingest-validate-dag.md`; epic phase 2; depends on `#90`, `#91`, `#93`, `#94`, `#95`, `#96` |
+| `#97` | Bronze landing & `ingest_validate` DAG | Completed | `docs/roadmap/tfm/issues/issue-97-bronze-landing-and-ingest-validate-dag.md`; epic phase 2; depends on `#90`, `#91`, `#93`, `#94`, `#95`, `#96` |
 | `#98` | Bronze -> silver: validation & entity resolution | Planned | `docs/roadmap/tfm/issues/issue-98-bronze-to-silver-validation-and-entity-resolution.md`; epic phase 3; depends on `#92`, `#93`, `#97` |
 | `#99` | Silver -> gold: indicators & `transform_publish` DAG | Planned | `docs/roadmap/tfm/issues/issue-99-silver-to-gold-indicators-and-transform-publish-dag.md`; epic phase 3; depends on `#98` |
 | `#100` | Superset dashboard | Planned | `docs/roadmap/tfm/issues/issue-100-superset-dashboard.md`; epic phase 4; depends on `#91`, `#99` |

@@ -87,9 +87,10 @@ files in order:
 - Keep future semantic or domain models in `src/models/cvn/`
 - Keep TFM infrastructure manifests and Helm values under `infra/` (started
   in issue `#90`; see `infra/README.md`)
-- Keep TFM Spark/PySpark job code under `src/tfm_lakehouse/` (started in
-  issue `#93`) and Airflow DAG sources under `dags/` (also started in
-  issue `#93`), separate from `infra/`'s deployment config
+- Keep TFM Spark/PySpark job code and ingestion logic under
+  `src/tfm_lakehouse/` (started in issue `#93`) and Airflow DAG sources under
+  `dags/` (also started in issue `#93`), separate from `infra/`'s deployment
+  config
 - Follow issue order unless there is a deliberate reason to work out of order
 - Record implementation deviations from the original issue plan in the issue
   document for that issue
@@ -273,9 +274,17 @@ files in order:
   fields from the issue `#95` ORCID subset, validates each one, and writes
   sharded JSON Lines plus a ground-truth manifest to the git-ignored
   `data/synthetic_cvn/` working directory, not to version control
-- `dags/`: Airflow DAG sources for the TFM lakehouse, starting with the
-  issue `#93` Spark-from-Airflow smoke-test DAG; delivered to the
-  `dag-processor` pod's DAGs PVC, not git-synced (issue `#91`'s decision)
+- `src/tfm_lakehouse/bronze/`: bronze landing (issue `#97`) -- the landing-time
+  checks, the provenance envelope, the MinIO writer (Hive-style
+  `source=`/`ingestion_date=`/`run_id=` layout, rejected records under
+  `bronze/_rejected/`), and the task entry points run by the
+  `ingest_validate` DAG
+- `infra/ingest/README.md`: the ingestion image (Python 3.14 plus
+  dependencies) the `ingest_validate` DAG's pods run (issue `#97`)
+- `dags/`: Airflow DAG sources for the TFM lakehouse: the issue `#93`
+  Spark-from-Airflow smoke-test DAG and the issue `#97` `ingest_validate`
+  ingestion DAG; delivered to the `dag-processor` pod's DAGs PVC, not
+  git-synced (issue `#91`'s decision)
 
 ### Development Reference
 

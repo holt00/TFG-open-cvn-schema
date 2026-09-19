@@ -31,6 +31,11 @@ do not need to rediscover them.
 | `spark.kubernetes.driver.*` pod-spec properties are no-ops in `client` deploy mode | `infra_gotcha` | Driver-side credentials/service-account config silently does nothing; `spark-submit` neither errors nor warns | Driver pod-spec config (credentials, service account) set directly on the submitting pod's own spec (the `KubernetesPodOperator` pod, in Airflow's case) instead | Apply the same pattern in issues `#97`/`#99`; do not set `spark.kubernetes.driver.*` pod-spec properties expecting them to affect a `client`-mode driver | Resolved for issue `#93`'s job; a standing gotcha for any future `client`-mode Spark-on-k8s job |
 | RBAC `deletecollection` is a separate verb from `delete` | `infra_gotcha` | A `Role` granting `delete` but not `deletecollection` lets a Spark driver create pods but not clean them up on shutdown via its own label-selector bulk delete | `infra/spark-conf/spark-rbac.yaml`'s `Role` grants both, plus `persistentvolumeclaims` alongside `pods`/`services`/`configmaps` | Grant `deletecollection` on the same resources in any future namespaced `Role` for a Spark driver | Resolved for issue `#93` |
 | ORCID registered Public API client registration is blocked for a non-member individual project | `external_api_limitation` | Cannot use the OAuth2 client-credentials tier (100k reads/day per `client_id`); stuck on the anonymous tier's lower cap | `src/tfm_lakehouse/orcid_client/` uses `pub.orcid.org`'s anonymous, unauthenticated tier (25k reads/day, 12 req/s per IP) instead | Re-check registration eligibility, or a university-sponsored Member API key, only if a later issue needs sustained volume beyond the anonymous cap | Accepted limitation for issues `#94`/`#96`/`#97`'s per-iD lookup scope, not a blocker |
+| The `ingest_validate` DAG mounts code and data from the repository checkout with hostPath | `infra_limitation` | The DAG only works on a single-node k3s that shares a disk with the checkout, and `REPO_ROOT` in the DAG file is an absolute path of this machine | Chosen deliberately (issue `#97`, D2): code edits need no image rebuild and no `sudo` import; verified working on `/mnt/e` | Bake the code into the image, or pack the subset into MinIO first, before any multi-node or cloud deployment | Accepted for the local-only TFM cluster, not a blocker |
+| Only a capped, deterministic sample of the ORCID bulk subset is landed into bronze by default | `data_scope_limitation` | The 301,763-record subset is roughly 42 GB of XML (estimate); the default DAG run lands the first 20,000 records in bucket order (2.7 GB), not a random sample | `bulk_max_records` DAG parameter (0 lands all); the snapshot lands once, and the cap is part of the snapshot id | Land everything (about 1 hour and 40 GB, extrapolated) if `#101`'s benchmark needs the volume | Default confirmed by the user, not a blocker |
+| Reading all of `bronze/` as one Spark dataset mixes payload types | `reader_gotcha` | `payload` is an XML string for ORCID bulk and a JSON object for the other sources, so `spark.read.json("bronze/")` collapses it to `string` | Each source has its own `source=<name>` path; `_manifest.json` and `_rejected/` are skipped by Spark readers | Issue `#98` reads each source separately | Standing gotcha for `#98` |
+| The Airflow api-server can be killed by its own liveness probe under load | `infra_fragility` | Every task starting during the restart fails with `Connection refused` from the executor's worker pod, before any task code runs; the failed worker pods stay in `Error` | Re-trigger with a new run id and delete the leftover worker pods | Relax the probe (`timeout`, `failureThreshold`) or size the pod in issue `#102` | Observed once in issue `#97`, not a blocker |
+| Unpausing a cron-scheduled Airflow 3 DAG creates the latest missed run at once | `infra_gotcha` | The `ingest_validate` DAG ran its 00:00 schedule the moment it was unpaused at 15:52 UTC | Know it before unpausing; the DAG is idempotent per run id | Unpause just before the scheduled time when an immediate run is unwanted | Standing gotcha for `#99`'s DAG |
 
 ## Structural Binding Limitations
 
@@ -643,6 +648,75 @@ do not need to rediscover them.
   nullable); the generator emits an empty date object
 - TFG code was not modified; if `#98` ingests both real-importer and
   synthetic documents it must accept both date representations
+
+### The `ingest_validate` DAG Depends On hostPath And A Manually Imported Image
+
+- discovered during issue `#97` (Bronze Landing & `ingest_validate` DAG)
+- the DAG's pods mount `src/`, `schemas/` and `data/` from the repository
+  checkout with `hostPath`, so it only works on a single-node k3s running on the
+  machine that holds the checkout, and `REPO_ROOT` in `dags/ingest_validate.py` is
+  an absolute path of this machine
+- the image `tfm-lakehouse/ingest:py3.14` must be imported into k3s by hand
+  (`docker save ... | sudo k3s ctr images import -`, which needs `sudo`) whenever
+  `pyproject.toml` or `uv.lock` change; code changes need no rebuild
+- `validate_open_cvn_json` and the issue `#96` validation layer resolve
+  `schemas/open_cvn.schema.json` relative to the repository root, so any pod that
+  runs them must mount `schemas/` next to `src/`
+- expected follow-up: replace hostPath before any deployment beyond the local dev
+  cluster
+
+### Only A Capped, Deterministic Sample Of The ORCID Bulk Subset Is Landed By Default
+
+- discovered during issue `#97`
+- the ORCID XML averages 137 KB per record (median 44 KB) on a 500-file sample, so
+  the whole subset is roughly 42 GB (an estimate); MinIO's PVC is 8 Gi
+  (`local-path` does not enforce it) and a daily schedule would re-land the same
+  static file every day
+- the DAG lands the bulk snapshot once per snapshot and cap, and by default only
+  the first 20,000 records in bucket-then-name order; that is a deterministic,
+  not a random, sample. 531 of them (2.66%) fail the landing check, all for a
+  missing public name
+- the 20,000 default was confirmed by the user; it is a demo-sized choice, not a requirement
+- expected follow-up: land everything (`bulk_max_records=0`) if issue `#101` needs
+  the volume
+
+### Reading Bronze As One Dataset Mixes Payload Types
+
+- discovered during issue `#97`
+- `spark.read.json("bronze/")` returns all sources but infers `payload` as
+  `string`, because ORCID bulk payloads are XML strings and the other sources are
+  JSON objects; a read of one source (`bronze/source=<name>/`) keeps the natural
+  type
+- Spark reads every part file under `bronze/` whether or not the partition has a
+  manifest, which is why a failed landing removes its landed shards instead of
+  relying on the manifest's absence
+- the same synthetic document can appear in several `ingestion_date` partitions
+  (fixed seed plus a daily schedule); it keeps the same `record_id`
+- expected follow-up: issue `#98` reads each source separately and deduplicates on
+  `record_id`
+
+### The Airflow api-server Can Be Killed By Its Own Liveness Probe
+
+- discovered during issue `#97`
+- its liveness probe (`timeout=5s`, five failures) killed the container (exit code
+  137) at the moment the first DAG run started, and the executor's worker pods got
+  `Connection refused` from `http://airflow-api-server:8080/execution/`; both runs
+  then failed before any task started. The pod already had 4 restarts when the
+  issue began
+- failed executor worker pods are not deleted by Airflow and had to be removed by
+  hand; a re-trigger with a new run id passed
+- expected follow-up: issue `#102` (hardening) should relax the probe or give the
+  pod resources
+
+### Unpausing A Cron-Scheduled Airflow 3 DAG Creates The Latest Missed Run At Once
+
+- discovered during issue `#97`
+- Airflow 3 runs a cron schedule at the cron time (the logical date is the trigger
+  time), and with `catchup=False` the scheduler creates the latest missed run, so
+  unpausing `ingest_validate` at 15:52 UTC fired the run for 00:00 that day
+  immediately
+- harmless for this DAG (idempotent per run id, bulk source skipped after the first
+  landing); issue `#99`'s DAG should account for it
 
 ## Documentation Rule
 

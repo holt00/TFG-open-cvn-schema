@@ -14,11 +14,15 @@ Infrastructure manifests and Helm values for the TFM lakehouse platform
   RBAC manifest (`spark-rbac.yaml`, issue `#93`) — see `spark-conf/README.md`
   for the catalog/warehouse layout, the pinned Spark/Iceberg/hadoop-aws/
   aws-java-sdk-bundle versions, and the image build/import commands
+- `ingest/`: `Dockerfile` and README for the `tfm-lakehouse/ingest` image that
+  runs the `ingest_validate` DAG's tasks (issue `#97`): Python 3.14 plus the
+  project dependencies only; the code, schema and data are mounted from the
+  checkout with hostPath — see `ingest/README.md`
 
 This directory targets a single local k3s cluster only, per the epic's
 scope decision; there is no Terraform/multi-node/cloud tooling here.
 
 Airflow DAG sources are tracked separately under `dags/` at the repo root
-(delivered to the `dag-processor` pod's DAGs PVC — see issue `#93`), not
+(delivered to the `dag-processor` pod's DAGs PVC — see issues `#93` and `#97`), not
 under `infra/`, since they are pipeline code rather than deployment
 config.

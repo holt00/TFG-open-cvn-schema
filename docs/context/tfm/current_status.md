@@ -93,10 +93,61 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-19 (issue `#96`, synthetic CVN generator, completed —
-  10,000 schema-valid documents generated from the `#95` ORCID subset in 169 s)
+- Last updated: 2026-09-19 (issue `#97`, bronze landing and `ingest_validate`
+  DAG, completed — the DAG ran through its pods and landed both sources into
+  MinIO bronze with provenance)
 
 ## Entries
+
+### Issue #97 Completed: Bronze Landing & `ingest_validate` DAG
+
+- eighth TFM implementation issue completed; branch
+  `issue-97-bronze-landing-and-ingest-validate-dag`, created from
+  `origin/development`. Closes epic phase 2 (ingestion)
+- planned first and every decision recorded with its reason in the issue
+  document (Task 0, D1-D13): one pod per task on a new image, code and data
+  mounted from the checkout with hostPath, bronze as raw JSON Lines under the
+  `bronze/` prefix with a per-record provenance envelope, a landing check that
+  sends failures to `bronze/_rejected/` and fails the task above 5%
+- key finding while planning: Airflow's Python is 3.13.13 and the repository
+  requires `>=3.14`, so `tfm_lakehouse` cannot run in Airflow's workers; the tasks
+  run in a `python:3.14-slim` image (`infra/ingest/`, 158 MB), imported into k3s
+  by the user with `sudo`
+- new package `src/tfm_lakehouse/bronze/` (`envelope`, `checks`, `landing`,
+  `tasks`) and `dags/ingest_validate.py` (four `KubernetesPodOperator` tasks,
+  `@daily`, eight params); `boto3` added to `pyproject.toml`; a root
+  `.dockerignore` keeps the ~46 GB `data/` out of Docker builds
+- verified twice on the real data: from the host, and through the DAG's own pods.
+  The default run took about 9 minutes and left in MinIO 19,469 landed and 531
+  rejected ORCID bulk records (2.66%, all for missing public names), 1,000
+  synthetic CVN and 200 real ORCID API records, with the 12 provenance fields on
+  every record, 0 duplicates and one manifest per source. A second run skipped the
+  bulk source as designed. No task pod was left behind
+- the independent Spark read (issue `#93`'s image) found a real defect: Spark reads
+  every part file under `bronze/` regardless of the manifest, so a run that failed
+  the threshold had left 1,949 valid records visible. A failed landing now removes
+  its landed shards. It also showed that reading all of `bronze/` collapses
+  `payload` to `string`, so issue `#98` must read each source separately
+- the whole ORCID bulk subset is roughly 42 GB of XML (estimate), so the bulk source
+  is landed once per snapshot and capped at 20,000 records by default
+  (`bulk_max_records`, 0 lands all). The 20,000 default was proposed here and
+  confirmed by the user
+- two things that went differently from the plan: unpausing the DAG created the
+  cron run for 00:00 that day immediately (Airflow 3 runs at the cron time; the
+  plan had assumed midnight), and the Airflow api-server was killed by its own
+  liveness probe at that moment, failing that run and the first manual one before
+  any task started (a pre-existing fragility of issue `#91`'s deployment). A
+  re-trigger passed
+- tests: `tests/test_bronze_landing_unit.py` and
+  `tests/test_bronze_tasks_unit.py` (46 tests, no network); full suite
+  `uv run pytest -n auto tests`: 577 passed, 2 skipped
+- new entries in `docs/pipeline/known_limitations.md`;
+  `docs/roadmap/tfm/tfm_roadmap.md`'s status row for `#97` updated to `Completed`;
+  full detail in
+  `docs/roadmap/tfm/issues/issue-97-bronze-landing-and-ingest-validate-dag.md`
+- the DAG is left unpaused; its next scheduled run is 2026-09-20 00:00 UTC
+- next: issue `#98` (bronze to silver: validation and entity resolution), reading
+  each bronze source separately and deduplicating on `record_id`
 
 ### Issue #96 Completed: Synthetic CVN Generator
 
