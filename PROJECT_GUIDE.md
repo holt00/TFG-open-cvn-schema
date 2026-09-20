@@ -279,12 +279,25 @@ files in order:
   `source=`/`ingestion_date=`/`run_id=` layout, rejected records under
   `bronze/_rejected/`), and the task entry points run by the
   `ingest_validate` DAG
+- `src/tfm_lakehouse/silver/` and `src/tfm_lakehouse/spark_jobs/`: bronze -> silver
+  (issue `#98`) -- per-source validation and normalization into a common shape
+  (CVN documents through the repository's own parser contract plus entity-level
+  schemas, ORCID bulk XML and API JSON), deterministic entity resolution (same ORCID
+  iD, then name and affiliation), the evaluation of that resolution against the
+  synthetic generator's ground truth, and the Spark job that writes the six
+  `lakehouse.silver` Iceberg tables. Spark-side code runs on the Spark image's Python
+  3.10, so it must stay 3.10 compatible
+- `src/tfm_lakehouse/cvn_validation.py`: entity-level validation of Open CVN JSON
+  documents, shared by the synthetic generator (issue `#96`) and the silver job
+- `infra/spark-conf/Dockerfile.silver`: the Spark image with pydantic, jsonschema
+  and requests that the silver job needs (issue `#98`)
 - `infra/ingest/README.md`: the ingestion image (Python 3.14 plus
   dependencies) the `ingest_validate` DAG's pods run (issue `#97`)
 - `dags/`: Airflow DAG sources for the TFM lakehouse: the issue `#93`
   Spark-from-Airflow smoke-test DAG and the issue `#97` `ingest_validate`
-  ingestion DAG; delivered to the `dag-processor` pod's DAGs PVC, not
-  git-synced (issue `#91`'s decision)
+  ingestion DAG and the issue `#98` `issue98_bronze_to_silver` manual DAG (provisional,
+  issue `#99` absorbs it into `transform_publish`); delivered to the `dag-processor`
+  pod's DAGs PVC, not git-synced (issue `#91`'s decision)
 
 ### Development Reference
 

@@ -93,11 +93,66 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-19 (issue `#97`, bronze landing and `ingest_validate`
-  DAG, completed — the DAG ran through its pods and landed both sources into
-  MinIO bronze with provenance)
+- Last updated: 2026-09-20 (issue `#98`, bronze to silver: validation and entity
+  resolution, completed — the job ran through the DAG's pods on the real bronze and
+  wrote the six `lakehouse.silver` Iceberg tables)
 
 ## Entries
+
+### Issue #98 Completed: Bronze -> Silver, Validation & Entity Resolution
+
+- ninth TFM implementation issue completed; branch
+  `issue-98-bronze-to-silver-validation-and-entity-resolution`, created from
+  `origin/development`. First issue of epic phase 3, the HA01 centerpiece
+- planned first and every decision recorded with its reason in the issue document
+  (Task 0, D1-D13): one Spark job on the Spark image extended with pydantic, jsonschema
+  and requests; three-layer CVN validation reusing `parser_contract`; ORCID rule-based
+  checks; a common shape; deterministic entity resolution (same ORCID iD, then
+  name and affiliation); silver rebuilt in full on every run
+- key finding while planning: the Spark image runs **Python 3.10** and PySpark 3.5 does
+  not support 3.14, so the repository's own code has to run on 3.10; a spike showed
+  `validate_open_cvn_json` does with the libraries added, and the Spark-side code was kept
+  3.10 compatible (tests guard it). `uv.lock` cannot be pinned as it stands (its
+  `rpds-py` needs Python >=3.11)
+- new packages `src/tfm_lakehouse/silver/`, `src/tfm_lakehouse/spark_jobs/` and
+  `src/tfm_lakehouse/cvn_validation.py` (promoted from `#96`'s validation, which still
+  passes its tests); `infra/spark-conf/Dockerfile.silver`; `dags/issue98_bronze_to_silver.py`
+  (manual trigger, provisional until `#99`); the user imported the image into k3s with `sudo`
+- verified on the real data through the DAG's pods: counts equal `#97`'s manifests exactly
+  (19,469 bulk, 1,000 CVN, 200 API); 15 of 15 independent integrity checks; injected invalid
+  records rejected with the right rules; rebuilds identical (per-snapshot content digests);
+  no pod left behind
+- **entity resolution measured against the generator's ground truth**: with 10,000 CVNs
+  (a run with `seed=43` that stays in bronze), rule R1 places 7,098 of 7,098 declaring
+  documents in their entity; rule R2 reaches **precision 95.8% and recall 74.2%** on 186
+  evaluable documents. The plan's 99% precision target was **not met**: the first run gave
+  90.8%, the analysis found one weak-evidence combination (a relaxed given name and a
+  shortened family name at once, wrong 8 of 8 times), which was forbidden at no cost in
+  correct merges; the remaining 6 false merges are namesakes with one shared
+  organization. Recall is at its data ceiling (47 of 186 have no affiliation). Each link's
+  `evidence` carries `name_match` and `shared_organizations` so `#99` can be stricter
+- other findings: an organization-similarity threshold cannot separate a campus suffix from
+  a different institution (0.60 against 0.67), so equality is the default and the sweep shows
+  no gain below it; Spark's 200 default shuffle partitions made the job 4 times slower
+  (225 s against 55 s with 16); the first run of a session is 2.5 times slower
+- the evaluation itself was corrected during the issue (a match through another CVN that
+  declares the same iD is a counterpart); the Spark tests now run the container as the host
+  uid so pytest can clean up its temporary files
+- tests: new `tests/test_silver_*` files and three Spark tests that run in the Spark image
+  (skipped without Docker and the image); full suite `uv run pytest -n auto tests`:
+  753 passed, 2 skipped (577 at the end of `#97`). One earlier attempt hit an intermittent collection error in a TFG test (a race between xdist workers over the in-place regeneration of `src/generated/`, unrelated to this issue; the file passes alone and the repeat was clean)
+- five new sections in `docs/pipeline/known_limitations.md`;
+  `docs/roadmap/tfm/tfm_roadmap.md`'s status row for `#98` updated to `Completed`;
+  full detail in
+  `docs/roadmap/tfm/issues/issue-98-bronze-to-silver-validation-and-entity-resolution.md`
+- state left in the cluster: bronze holds `#97`'s run plus the `e2e98-big` partition;
+  `lakehouse.silver` holds the last rebuild (30,868 person records, 29,767 entities);
+  the `issue98_bronze_to_silver` DAG is unpaused (no schedule); the `ingest_validate`
+  DAG's scheduled run of 2026-09-20 00:00 UTC succeeded and added a partition that silver has
+  not read yet (the next rebuild deduplicates it)
+- next: issue `#99` (silver to gold: indicators and the `transform_publish` DAG), which
+  absorbs this job's launcher, reads `lakehouse.silver`, and should deduplicate
+  publications per entity before counting
 
 ### Issue #97 Completed: Bronze Landing & `ingest_validate` DAG
 

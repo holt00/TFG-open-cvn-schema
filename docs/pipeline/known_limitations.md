@@ -36,6 +36,11 @@ do not need to rediscover them.
 | Reading all of `bronze/` as one Spark dataset mixes payload types | `reader_gotcha` | `payload` is an XML string for ORCID bulk and a JSON object for the other sources, so `spark.read.json("bronze/")` collapses it to `string` | Each source has its own `source=<name>` path; `_manifest.json` and `_rejected/` are skipped by Spark readers | Issue `#98` reads each source separately | Standing gotcha for `#98` |
 | The Airflow api-server can be killed by its own liveness probe under load | `infra_fragility` | Every task starting during the restart fails with `Connection refused` from the executor's worker pod, before any task code runs; the failed worker pods stay in `Error` | Re-trigger with a new run id and delete the leftover worker pods | Relax the probe (`timeout`, `failureThreshold`) or size the pod in issue `#102` | Observed once in issue `#97`, not a blocker |
 | Unpausing a cron-scheduled Airflow 3 DAG creates the latest missed run at once | `infra_gotcha` | The `ingest_validate` DAG ran its 00:00 schedule the moment it was unpaused at 15:52 UTC | Know it before unpausing; the DAG is idempotent per run id | Unpause just before the scheduled time when an immediate run is unwanted | Standing gotcha for `#99`'s DAG |
+| The bronze -> silver job runs on the Spark image's Python 3.10, not the repository's 3.14 | `infra_limitation` | The repository's own code must stay Python 3.10 compatible, and the job's dependencies are not exactly `uv.lock`'s (`rpds-py 2026.6.3` needs Python >=3.11); PySpark cannot run on the host, so DataFrame code is verified in the image | `ast.parse(feature_version=(3, 10))` test plus forbidden-name checks; pins in `requirements-silver.txt`; Spark tests run in the image and skip without Docker | Revisit when the Spark image moves to a Spark/Python pair that supports a newer Python | Accepted, not a blocker |
+| Entity resolution is deterministic and deliberately conservative | `resolution_quality_limitation` | Rule R2 (name and affiliation) measured precision 95.8% and recall 74.2% at 10,000 documents, below the plan's 99% precision target; recall is capped by CVNs with no affiliation; a person with two ORCID iDs is two entities | Unique-candidate rule, at most one name relaxation, organizations equal after normalization; each link's `evidence` carries `name_match` and `shared_organizations` | `#99` may filter weak merges (for example two shared organizations, which were 78 of 78 correct); no ML per the epic | Accepted, target not met, not a blocker |
+| Silver extracts only the entity types the synthetic generator produces | `data_scope_limitation` | Other CVN sections are validated but not extracted; only Spain's numeric country code is mapped to `ES`; ORCID work summaries carry no authors | Four CVN entity types (identity, professional experience, education, publications) plus ORCID affiliations and works | Extend the extractors only if `#99`'s indicators need more | Not a blocker |
+| Silver is rebuilt in full on every run | `scalability_limitation` | No incremental processing; adequate at 20,000 bulk records but not for the whole ORCID subset (about 42 GB) | `createOrReplace` of six tables from a deterministic function of bronze; identical input gives identical content | Measure runtime and scaling in `#101` | Not a blocker |
+| Resolution quality is measured only against the synthetic generator's ground truth | `measurement_limitation` | Figures are optimistic for real curricula (four name variants only, seed iD as the only notion of "same person"); few documents have a counterpart at the default landing (16 of 288 at 1,000 documents, 186 at 10,000) | `evaluation.py` reports evaluable documents, false merges and recall by variant | None for this TFM | Not a blocker |
 
 ## Structural Binding Limitations
 
@@ -717,6 +722,113 @@ do not need to rediscover them.
   immediately
 - harmless for this DAG (idempotent per run id, bulk source skipped after the first
   landing); issue `#99`'s DAG should account for it
+
+### The Bronze -> Silver Job Runs On The Spark Image's Python 3.10, Not The Repository's 3.14
+
+- discovered during issue `#98` (Bronze -> Silver)
+- the Spark image runs Python 3.10.12 and PySpark 3.5 requires driver and executors
+  to share a minor version (and does not support 3.14), while the repository
+  requires `>=3.14`. The job therefore runs the repository's own code
+  (`src/open_cvn/`, `src/tfm_lakehouse/`) on 3.10, which works because that code
+  happens to be 3.10 compatible; a test parses the Spark-side modules with
+  `ast.parse(feature_version=(3, 10))` and forbids `tomllib`, `datetime.UTC`,
+  `StrEnum` and any import of `tfm_lakehouse.bronze`, but it cannot catch a
+  standard-library name added after 3.10
+- `infra/spark-conf/requirements-silver.txt` pins the three direct dependencies
+  to `uv.lock`'s versions but the transitive ones to what pip resolves for
+  Python 3.10, because `uv.lock`'s `rpds-py 2026.6.3` requires Python >=3.11; the
+  validation is therefore not run on exactly the locked dependency set
+- PySpark is not a project dependency and cannot be installed on the host, so the
+  DataFrame code is verified by running it in the Spark image
+  (`tests/test_silver_*_spark.py`, skipped without Docker and the image, hence
+  not in CI)
+- the silver image must be imported into k3s by hand with `sudo` when
+  `requirements-silver.txt` changes
+- expected follow-up: revisit when the Spark image moves to a Spark/Python
+  combination that supports a newer Python
+
+### Entity Resolution Is Deterministic And Deliberately Conservative
+
+- discovered during issue `#98`
+- rule R1 (same ORCID iD) is exact; rule R2 (name and affiliation, for records
+  without an iD) merges only when exactly one entity qualifies, so ambiguous records
+  stay split. A wrong merge would corrupt every downstream indicator; a missed one
+  only splits an entity
+- organizations must be equal after normalization (case, accents, stop words,
+  appended URLs, word order). Measured on real names, no partial-similarity
+  threshold separates the same institution with a campus suffix (Jaccard 0.60 and
+  0.40) from two different institutions (0.67, `Universitat de València` against
+  `Universitat Politècnica de València`), so partial matches are off by default;
+  translations of one institution (`University of the Basque Country` against
+  `Universidad del País Vasco`, 0.00) are not matched
+- records without an iD are never merged with each other, and a record without
+  an affiliation cannot be matched by name alone
+- name compatibility covers equal names, a dropped second surname, a leading
+  initial, and an initial spelled out later (`Ana M` against `Ana María`, found in
+  the real data), but **not both a relaxed given name and a shortened family name at
+  once** (measured: 8 of 8 such merges joined different people); a dropped given name,
+  transliterations and nicknames are not covered
+- measured at scale (issue `#98`, Task 8.5, 10,000 synthetic CVNs, 186 documents
+  with a counterpart in silver): rule R1 places 7,098 of 7,098 declaring documents in
+  their entity; rule R2 reaches **precision 95.8% and recall 74.2%** (138 correct and 6
+  false merges of 144). The precision target of 99% set in the plan was **not met**: the
+  6 false merges are different people with the same name and one shared organization,
+  indistinguishable with this evidence. Every merge with two or more shared
+  organizations was correct (78 of 78) but demanding it for all merges cuts recall to
+  41.9%; each link's `evidence` carries `name_match` and `shared_organizations` so a
+  consumer can choose that trade-off
+- recall is capped by the data: documents with no affiliation cannot be matched by
+  name alone (47 of the 186 evaluable ones, ceiling 74.7%)
+- a person with two ORCID iDs (duplicate profiles exist) is treated as two entities by
+  rule R1 and may be merged with one of them by rule R2
+- an iD-merged CVN whose name matches none of the ORCID records sharing its iD is
+  kept in the entity and flagged `name_conflict`
+- no probabilistic or ML resolution, per the epic
+- expected follow-up: none required; future work if recall matters more than
+  precision
+
+### Silver Extracts Only The Entity Types The Synthetic Generator Produces
+
+- discovered during issue `#98`
+- CVN extraction reads identity, professional experience, education (degrees and
+  doctorates) and scientific publications, the four entity types issue `#96`
+  generates; other CVN sections are validated but not extracted, and a real CV's
+  other publication or affiliation entity types would be ignored
+- CVN countries are numeric ISO 3166 codes and only Spain (`724`) is mapped to
+  `ES`; the others stay null (country is not used for matching)
+- a CVN declaring several distinct ORCID iDs keeps the first and records a warning
+- ORCID works are one per work group (the summaries of a group are the same work
+  reported by several sources); ORCID work summaries carry no author list, so
+  `authors` is empty for them
+- expected follow-up: extend the extractors only if issue `#99`'s indicators need
+  more
+
+### Silver Is Rebuilt In Full On Every Run
+
+- discovered during issue `#98`
+- each run reads the current bronze, deduplicates on `record_id` (latest
+  `landed_at`, then `ingestion_run_id`) and replaces the six silver tables
+  (`createOrReplace`); there is no incremental processing, and Iceberg keeps the
+  previous snapshots but nothing exposes them yet
+- adequate at this volume (20,000 bulk records); it does not scale to the whole
+  ORCID subset (about 42 GB) without incremental processing
+- expected follow-up: issue `#101` measures the runtime and the scaling
+
+### Resolution Quality Is Measured Only Against The Synthetic Generator's Ground Truth
+
+- discovered during issue `#98`
+- precision and recall are computed against the manifest of the synthetic CVN
+  generator, whose name variants are exactly the four issue `#96` produces
+  (accents stripped, given name reduced to an initial, family name upper-cased, only the
+  first surname); real-world variation is broader, so the figures are optimistic for
+  real curricula
+- only documents whose seed iD is carried by another record in silver can be
+  evaluated: seeds are drawn uniformly from the 301,763-record subset while bronze
+  holds a capped sample, so at the default 1,000 documents only 16 of 288 were
+  evaluable (all 16 correct) and it took a 10,000-document run to reach 186; the seed
+  iD is also the only notion of "same person", so two profiles of one person count as
+  a false merge
+- expected follow-up: none for this TFM
 
 ## Documentation Rule
 

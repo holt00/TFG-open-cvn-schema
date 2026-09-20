@@ -144,3 +144,45 @@ sudo k3s ctr images ls | grep tfm-lakehouse/spark-py
 Referenced from `iceberg-catalog.conf` via
 `spark.kubernetes.container.image` with `pullPolicy=IfNotPresent`, so
 `spark-submit` never tries to pull it from a registry.
+
+## Silver image: repository code on the Spark Python (issue #98)
+
+The bronze -> silver job reuses the repository's own code
+(`src/open_cvn/parser_contract.py`, `src/tfm_lakehouse/`), which needs
+`pydantic`, `jsonschema` and `requests`. The image above has none of them, and
+it runs Python **3.10.12** while the repository requires `>=3.14`. PySpark 3.5
+requires driver and executors to run the same Python minor version and does
+not support 3.14, so the job runs on the image's 3.10 with those three
+libraries added, and the code it imports stays compatible with 3.10 (no
+`datetime.UTC`, `StrEnum`, `tomllib`; a test parses the Spark-side modules
+with `ast.parse(feature_version=(3, 10))`).
+
+`Dockerfile.silver` layers `requirements-silver.txt` on the issue `#93` image
+and does nothing else:
+
+```bash
+# from the repo root
+docker build -f infra/spark-conf/Dockerfile.silver \
+  -t tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-silver .
+
+# no registry in this cluster: load it into k3s's containerd (needs sudo)
+docker save tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-silver | sudo k3s ctr images import -
+sudo k3s ctr images ls | grep spark-py
+```
+
+- The three direct dependencies equal `uv.lock`. The transitive ones are the
+  versions pip resolves for Python 3.10, because `uv.lock`'s `rpds-py 2026.6.3`
+  requires Python >=3.11.
+- The code (`src/`) and the JSON Schema (`schemas/`) are **not** in the image.
+  The job mounts them from the repository checkout with hostPath on the driver
+  pod and, through `spark.kubernetes.executor.volumes.hostPath.*`, on every
+  executor, with `PYTHONPATH=/repo/src` (driver: pod `env`; executors:
+  `spark.executorEnv.PYTHONPATH`). Code changes need no rebuild. Like issue
+  `#97`'s ingest pods, this is only valid because k3s is a single node on the
+  machine that holds the checkout.
+- `iceberg-catalog.conf` still names the issue `#93` image in
+  `spark.kubernetes.container.image`. The silver job's launcher overrides it
+  with `--conf spark.kubernetes.container.image=...-silver`; without the
+  override the executors would start without the three libraries. The `#93`
+  DAG is untouched.
+- Rebuild and re-import only when `requirements-silver.txt` changes.

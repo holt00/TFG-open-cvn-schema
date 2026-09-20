@@ -1,0 +1,22 @@
+# Spark image with the Python dependencies of the issue #98 bronze -> silver job.
+# Build context is the repo root:
+#   docker build -f infra/spark-conf/Dockerfile.silver \
+#     -t tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-silver .
+#
+# Layered on the issue #93 image (Iceberg/S3A jars, catalog properties). Adds
+# only pydantic, jsonschema and requests, so the repository's own code
+# (src/open_cvn/, src/tfm_lakehouse/) runs on the image's Python 3.10, which
+# PySpark 3.5 requires driver and executors to share. The code and the JSON
+# Schema are NOT baked in: the job mounts src/ and schemas/ from the repository
+# checkout with hostPath (issue #98, decision D1), so editing code needs no
+# rebuild and no `k3s ctr images import`.
+
+FROM tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0
+
+USER root
+
+COPY infra/spark-conf/requirements-silver.txt /tmp/requirements-silver.txt
+RUN pip install --no-cache-dir -r /tmp/requirements-silver.txt \
+ && rm /tmp/requirements-silver.txt
+
+USER 185
