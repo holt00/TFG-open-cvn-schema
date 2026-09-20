@@ -12,10 +12,11 @@ from pathlib import Path
 import pytest
 
 SRC = Path(__file__).resolve().parents[1] / "src"
-# Everything the bronze -> silver job imports, directly or transitively.
+# Everything the bronze -> silver and silver -> gold jobs import, directly or transitively.
 SPARK_SIDE = [
     *sorted((SRC / "open_cvn").glob("*.py")),
     *sorted((SRC / "tfm_lakehouse" / "silver").glob("*.py")),
+    *sorted((SRC / "tfm_lakehouse" / "gold").glob("*.py")),
     *sorted((SRC / "tfm_lakehouse" / "orcid_client").glob("*.py")),
     *sorted((SRC / "tfm_lakehouse" / "spark_jobs").glob("*.py")),
     SRC / "tfm_lakehouse" / "__init__.py",
@@ -36,8 +37,8 @@ def test_spark_side_modules_parse_as_python_3_10(path):
     ast.parse(path.read_text(encoding="utf-8"), filename=str(path), feature_version=(3, 10))
 
 
-@pytest.mark.parametrize("path", [p for p in SPARK_SIDE if "silver" in p.parts or p.name == "cvn_validation.py"], ids=_id)
-def test_silver_modules_avoid_names_newer_than_python_3_10(path):
+@pytest.mark.parametrize("path", [p for p in SPARK_SIDE if "silver" in p.parts or "gold" in p.parts or p.name == "cvn_validation.py"], ids=_id)
+def test_silver_and_gold_modules_avoid_names_newer_than_python_3_10(path):
     tree = ast.parse(path.read_text(encoding="utf-8"))
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):

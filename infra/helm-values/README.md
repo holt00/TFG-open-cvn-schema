@@ -98,6 +98,15 @@ kubectl run postgresql-client-test --rm -i --restart='Never' -n tfm-lakehouse \
   --env PGPASSWORD="$POSTGRES_PASSWORD" \
   --command -- psql --host postgresql -U gold -d gold -p 5432 -c '\l'
 
+# PostgreSQL after issue #99: the five published gold tables (schema gold).
+# The publish job swaps tables in one transaction, so a read never sees a missing or
+# half-loaded table; `gold.gold_run` says which run and silver snapshots they came from
+kubectl run postgresql-client-test --rm -i --restart='Never' -n tfm-lakehouse \
+  --image docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r4 \
+  --env PGPASSWORD="$POSTGRES_PASSWORD" \
+  --command -- psql --host postgresql -U gold -d gold -p 5432 \
+  -c '\dt gold.*' -c 'select run_id, computed_at, entities from gold.gold_run'
+
 # Airflow: scheduler DB health + API server UI
 kubectl -n tfm-lakehouse exec deploy/airflow-scheduler -c scheduler -- airflow db check
 kubectl port-forward -n tfm-lakehouse svc/airflow-api-server 8080:8080

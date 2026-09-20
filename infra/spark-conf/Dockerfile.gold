@@ -1,0 +1,22 @@
+# Spark image for the issue #99 gold jobs: the silver image plus the PostgreSQL
+# JDBC driver. Build context is the repo root:
+#   docker build -f infra/spark-conf/Dockerfile.gold \
+#     -t tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-gold .
+#
+# Layered on the issue #98 silver image (Python 3.10 with pydantic, jsonschema
+# and requests, plus the Iceberg/S3A jars). Adds only postgresql-42.7.13.jar
+# (latest release on Maven Central when this issue was planned), in
+# /opt/spark/jars so it is on the JVM's system classpath: the publish job also
+# opens a plain java.sql.DriverManager connection to run the table swap in one
+# transaction, and DriverManager does not see drivers added with --jars only
+# (issue #99, Task 1.4). The code and the schema are NOT baked in; the jobs
+# mount src/ and schemas/ from the checkout with hostPath, as in issue #98.
+
+FROM tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-silver
+
+USER root
+
+RUN curl -fSL -o /opt/spark/jars/postgresql-42.7.13.jar \
+      https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.13/postgresql-42.7.13.jar
+
+USER 185

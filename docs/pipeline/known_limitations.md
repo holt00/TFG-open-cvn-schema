@@ -41,6 +41,11 @@ do not need to rediscover them.
 | Silver extracts only the entity types the synthetic generator produces | `data_scope_limitation` | Other CVN sections are validated but not extracted; only Spain's numeric country code is mapped to `ES`; ORCID work summaries carry no authors | Four CVN entity types (identity, professional experience, education, publications) plus ORCID affiliations and works | Extend the extractors only if `#99`'s indicators need more | Not a blocker |
 | Silver is rebuilt in full on every run | `scalability_limitation` | No incremental processing; adequate at 20,000 bulk records but not for the whole ORCID subset (about 42 GB) | `createOrReplace` of six tables from a deterministic function of bronze; identical input gives identical content | Measure runtime and scaling in `#101` | Not a blocker |
 | Resolution quality is measured only against the synthetic generator's ground truth | `measurement_limitation` | Figures are optimistic for real curricula (four name variants only, seed iD as the only notion of "same person"); few documents have a counterpart at the default landing (16 of 288 at 1,000 documents, 186 at 10,000) | `evaluation.py` reports evaluable documents, false merges and recall by variant | None for this TFM | Not a blocker |
+| The collaboration indicator is a DOI-only lower bound | `indicator_validity_limitation` | Silver has no co-author entities, so `collaboration_pairs` links two entities only when both report the same DOI; 25 of 9,540 pairs (0.26%) are one person seen twice (rule-R2 misses) | `has_cvn_member` separates the 5,092 real-data-only pairs; a DOI reported by more than 200 entities is skipped and counted | None for this TFM; author-name resolution would need its own stage | Not a blocker |
+| Gold deduplicates publications only within each kind of key | `indicator_validity_limitation` | A work with a DOI in one record and none in another counts twice; 1.2% of works have no usable year and are excluded from the per-year indicator only | Key is the DOI, else a hash of title and year; the exclusions are counted in `gold_run` | None required | Not a blocker |
+| Career figures are lower bounds from known years | `data_scope_limitation` | 18% of affiliations have no start year and 33% no end year; a stay is never extended to today, so `career_span_years` is a lower bound and can be null | Employment stays only, known years only; records of one stay are merged by organization and start year | None for this TFM | Not a blocker |
+| Gold is rebuilt in full and PostgreSQL keeps only the latest publish | `scalability_limitation` | No incremental processing and no history in PostgreSQL; the JDBC write options carry the password to the executors | `createOrReplace` of five tables; staging tables and one atomic swap; `gold_run` records the silver snapshots read | `#101` measures runtime; `#102` reviews credential handling | Not a blocker |
+| Gold indicators inherit entity-resolution errors | `resolution_quality_limitation` | A false rule-R2 merge mixes two people's publications; measured effect of undoing the 75 single-organization R2 merges: entities +0.25%, distinct publications +0.07%, per-year rows +0.13%, collaboration pairs +0.58% | Indicators use all links; `entity_link.evidence` allows a stricter filter without a re-run | None for this TFM | Not a blocker |
 
 ## Structural Binding Limitations
 
@@ -801,7 +806,7 @@ do not need to rediscover them.
   reported by several sources); ORCID work summaries carry no author list, so
   `authors` is empty for them
 - expected follow-up: extend the extractors only if issue `#99`'s indicators need
-  more
+  more (they did not)
 
 ### Silver Is Rebuilt In Full On Every Run
 
@@ -828,6 +833,79 @@ do not need to rediscover them.
   evaluable (all 16 correct) and it took a 10,000-document run to reach 186; the seed
   iD is also the only notion of "same person", so two profiles of one person count as
   a false merge
+- expected follow-up: none for this TFM
+
+### The Collaboration Indicator Is A DOI-Only Lower Bound
+
+- discovered during issue `#99`
+- silver has no co-author entities (ORCID work summaries carry no author list, and a CVN's
+  `authors` are name strings), so `gold.collaboration_pairs` links two entities only when
+  both report the same DOI; collaborations on works without a DOI, or reported by only one
+  of the two people, are missed
+- a person whose CVN was not merged with their ORCID record (rule R2 recall is 74.2%, issue
+  `#98`) reports the same DOIs as their own ORCID entity and appears as a collaboration with
+  themselves: measured on the real silver against the generator's ground truth, 25 of 9,540
+  pairs (0.26%); a production run has no ground truth to remove them. `has_cvn_member` lets
+  a consumer keep only pairs of real ORCID data (5,092 of the 9,540)
+- a DOI reported by more entities than `--max-entities-per-doi` (default 200) is left out
+  of the pairs to bound the cost; it is counted in `gold_run` (none on the current data,
+  the maximum is 14 entities per DOI)
+- expected follow-up: none for this TFM; author-name resolution over CVN `authors` would need
+  its own entity-resolution stage
+
+### Gold Deduplicates Publications Only Within Each Kind Of Key
+
+- discovered during issue `#99`
+- a work is identified by its DOI when it has one, otherwise by a hash of its normalized
+  title and year; the same work reported with a DOI by one record and without by another
+  of the same entity counts twice, and a work whose copies disagree on the year counts once
+  per year in the title-keyed case
+- a publication year is usable only between 1900 and the run's year plus one (`--max-year`);
+  works outside it (1.2% have no year, 16 more are out of range in the current silver) are
+  real works in `dim_researcher` and the pairs but are excluded from
+  `publications_per_researcher_year`; the run counts them in
+  `gold_run.publications_without_year`
+- the fused records of one entity inflate a naive count by 5.1% on the current silver (27,483
+  of 543,879 rows); this is why the deduplication exists
+- expected follow-up: none required
+
+### Career Figures Are Lower Bounds From Known Years
+
+- discovered during issue `#99`
+- 18% of the silver affiliations have no start year and 33% no end year (ongoing or unknown);
+  `dim_researcher.career_*` use employment stays with known years only and never extend a stay
+  to today, so `career_span_years` is a lower bound and is null when no employment has a start
+  year; a stay whose records disagree on the end year takes the latest one
+- `affiliation_timeline` merges an entity's records by organization and start year; the same
+  institution written differently in two records (a campus suffix, a translation) stays two
+  organizations, for the reason issue `#98` recorded for entity resolution
+- end years reach 2036 in the source data (planned end dates) and are kept as reported
+- expected follow-up: none for this TFM
+
+### Gold Is Rebuilt In Full And Only The Latest Publish Is In PostgreSQL
+
+- discovered during issue `#99`
+- each run recomputes every gold table from the current silver (`createOrReplace`) and the
+  publish replaces the PostgreSQL tables through staging tables and one transaction; Iceberg
+  keeps the previous gold snapshots (and `gold_run` records the silver snapshot ids each run
+  read), but PostgreSQL holds only the latest, and nothing exposes the history to Superset
+- the PostgreSQL password reaches the executors that write over JDBC inside the write's
+  options rather than through an environment variable; Spark redacts `password` options in
+  its plans, but an operator with access to the driver's configuration should assume the
+  password is visible there (acceptable for a local, non-exposed cluster)
+- expected follow-up: `#102` (hardening) for credential handling; `#101` measures the runtime
+
+### Gold Indicators Inherit Entity-Resolution Errors
+
+- discovered during issue `#99`
+- every indicator is computed over all entity links, so a false rule-R2 merge (precision 95.8%, issue
+  `#98`) puts two people's publications and affiliations under one researcher; `entity_link.evidence`
+  carries `name_match` and `shared_organizations`, so a stricter reading needs no re-run of silver
+- measured on the real silver: undoing the 75 of 164 R2 merges that rest on a single shared organization
+  changes entities by +0.25%, distinct publications by +0.07%, per-year rows by +0.13% and collaboration
+  pairs by +0.58% (38 of the 55 new pairs are the split record paired with the entity it was taken from);
+  the indicators are insensitive to R2's precision at this scale, so the default was not changed
+- the measurement covers only the merges this data contains; another sample would give other counts
 - expected follow-up: none for this TFM
 
 ## Documentation Rule

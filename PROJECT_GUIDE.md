@@ -287,16 +287,26 @@ files in order:
   synthetic generator's ground truth, and the Spark job that writes the six
   `lakehouse.silver` Iceberg tables. Spark-side code runs on the Spark image's Python
   3.10, so it must stay 3.10 compatible
+- `src/tfm_lakehouse/gold/` and the two jobs `spark_jobs/silver_to_gold.py` and
+  `spark_jobs/publish_gold_to_postgres.py`: silver -> gold (issue `#99`) -- the research
+  indicators (publications per researcher per year, affiliation timeline, collaboration
+  pairs) plus the researcher dimension and a per-run provenance row, written to the
+  `lakehouse.gold` Iceberg tables and then published to the dedicated PostgreSQL through
+  staging tables and one atomic swap, so Superset (issue `#100`) never sees a missing or
+  half-loaded table. Spark-side code runs on Python 3.10, like silver
 - `src/tfm_lakehouse/cvn_validation.py`: entity-level validation of Open CVN JSON
   documents, shared by the synthetic generator (issue `#96`) and the silver job
 - `infra/spark-conf/Dockerfile.silver`: the Spark image with pydantic, jsonschema
   and requests that the silver job needs (issue `#98`)
+- `infra/spark-conf/Dockerfile.gold`: the silver image plus the PostgreSQL JDBC driver
+  that the publish job needs (issue `#99`)
 - `infra/ingest/README.md`: the ingestion image (Python 3.14 plus
   dependencies) the `ingest_validate` DAG's pods run (issue `#97`)
 - `dags/`: Airflow DAG sources for the TFM lakehouse: the issue `#93`
   Spark-from-Airflow smoke-test DAG and the issue `#97` `ingest_validate`
-  ingestion DAG and the issue `#98` `issue98_bronze_to_silver` manual DAG (provisional,
-  issue `#99` absorbs it into `transform_publish`); delivered to the `dag-processor`
+  ingestion DAG and the issue `#99` `transform_publish` DAG (`bronze_to_silver >> silver_to_gold >>
+  publish_gold_to_postgres`, manual trigger; it absorbs issue `#98`'s provisional
+  `issue98_bronze_to_silver` DAG); delivered to the `dag-processor`
   pod's DAGs PVC, not git-synced (issue `#91`'s decision)
 
 ### Development Reference

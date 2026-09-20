@@ -22,11 +22,15 @@ Infrastructure manifests and Helm values for the TFM lakehouse platform
   Spark image extended with pydantic, jsonschema and requests, so the
   bronze -> silver job (issue `#98`) can run the repository's own code on the
   Spark image's Python 3.10 — see `spark-conf/README.md`, "Silver image"
+- `spark-conf/Dockerfile.gold`: the silver image plus the PostgreSQL JDBC driver,
+  so the job that publishes gold to the dedicated PostgreSQL (issue `#99`) can
+  write over JDBC and swap tables in one transaction — see
+  `spark-conf/README.md`, "Gold image"
 
 This directory targets a single local k3s cluster only, per the epic's
 scope decision; there is no Terraform/multi-node/cloud tooling here.
 
 Airflow DAG sources are tracked separately under `dags/` at the repo root
-(delivered to the `dag-processor` pod's DAGs PVC — see issues `#93`, `#97` and `#98`), not
+(delivered to the `dag-processor` pod's DAGs PVC — see issues `#93`, `#97`, `#98` and `#99`), not
 under `infra/`, since they are pipeline code rather than deployment
 config.

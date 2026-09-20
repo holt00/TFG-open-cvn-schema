@@ -186,3 +186,34 @@ sudo k3s ctr images ls | grep spark-py
   override the executors would start without the three libraries. The `#93`
   DAG is untouched.
 - Rebuild and re-import only when `requirements-silver.txt` changes.
+
+## Gold image: PostgreSQL JDBC driver (issue #99)
+
+The silver -> gold job needs nothing new, but the job that publishes gold to the
+dedicated PostgreSQL (`svc/postgresql`, database `gold`) needs the JDBC driver, which
+no earlier image has. `Dockerfile.gold` layers `postgresql-42.7.13.jar` (the latest
+release on Maven Central when the issue was planned) on the silver image and does
+nothing else:
+
+```bash
+# from the repo root
+docker build -f infra/spark-conf/Dockerfile.gold \
+  -t tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-gold .
+
+# no registry in this cluster: load it into k3s's containerd (needs sudo)
+docker save tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-gold | sudo k3s ctr images import -
+sudo k3s ctr images ls | grep spark-py
+```
+
+- The jar sits in `/opt/spark/jars`, on the JVM's system classpath, not only on
+  `--jars`: the publish job opens a plain `java.sql.DriverManager` connection to run
+  its table swap in one transaction, and `DriverManager` does not see a driver that
+  was only added with `--jars` (verified in the issue's Task 1.4 spike).
+- `--packages` was rejected: it downloads from the internet on every run.
+- Credentials: only the launcher pod (the Spark driver) of the publish task gets
+  `PG_PASSWORD`, by `secretKeyRef` on `postgresql-gold-credentials` (key `password`).
+  The executors need no PostgreSQL variable: the password travels inside the JDBC write's
+  options (confirmed on the cluster in issue `#99`'s Task 8). Nothing secret is in git.
+- `iceberg-catalog.conf` is unchanged: each launcher overrides
+  `spark.kubernetes.container.image`, as the silver one does.
+- Rebuild and re-import only when the driver version changes.

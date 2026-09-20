@@ -10,16 +10,27 @@ import subprocess
 from pathlib import Path
 
 IMAGE = "tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-silver"
+# The silver image plus the PostgreSQL JDBC driver (issue #99).
+GOLD_IMAGE = "tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-gold"
+POSTGRES_IMAGE = "postgres:17"
 REPO = Path(__file__).resolve().parents[1]
 
 
-def image_available() -> bool:
+def image_available(image: str = IMAGE) -> bool:
     if shutil.which("docker") is None:
         return False
-    return subprocess.run(["docker", "image", "inspect", IMAGE], capture_output=True).returncode == 0
+    return subprocess.run(["docker", "image", "inspect", image], capture_output=True).returncode == 0
 
 
-def run_in_image(command: list[str], mounts: dict[Path, str], *, timeout: int = 900) -> subprocess.CompletedProcess:
+def run_in_image(
+    command: list[str],
+    mounts: dict[Path, str],
+    *,
+    timeout: int = 900,
+    image: str = IMAGE,
+    network: str | None = None,
+    env: dict[str, str] | None = None,
+) -> subprocess.CompletedProcess:
     """Run ``command`` in the image as the host user, through its entrypoint.
 
     The entrypoint is what registers the arbitrary uid in /etc/passwd; going
@@ -31,13 +42,20 @@ def run_in_image(command: list[str], mounts: dict[Path, str], *, timeout: int = 
 
     Args:
         command: The command and its arguments.
-        mounts: Host directory -> container path. ``src/`` and ``schemas/`` are
-            always mounted read-only at ``/repo``.
+        mounts: Host directory -> container path. ``src/``, ``schemas/`` and
+            ``tests/`` are always mounted read-only at ``/repo``.
         timeout: Seconds before the run is aborted.
+        image: The image to run (``IMAGE`` or ``GOLD_IMAGE``).
+        network: A Docker network to join (the publish test reaches its PostgreSQL by name).
+        env: Extra environment variables of the container.
     """
-    volumes = [f"{REPO / 'src'}:/repo/src:ro", f"{REPO / 'schemas'}:/repo/schemas:ro"]
+    volumes = [f"{REPO / 'src'}:/repo/src:ro", f"{REPO / 'schemas'}:/repo/schemas:ro", f"{REPO / 'tests'}:/repo/tests:ro"]
     volumes += [f"{host}:{container}" for host, container in mounts.items()]
     arguments = ["docker", "run", "--rm", "--user", f"{os.getuid()}:0", "--entrypoint", "/opt/entrypoint.sh", "-e", "HOME=/tmp"]
     for volume in volumes:
         arguments += ["-v", volume]
-    return subprocess.run([*arguments, IMAGE, *command], capture_output=True, text=True, timeout=timeout)
+    if network:
+        arguments += ["--network", network]
+    for name, value in (env or {}).items():
+        arguments += ["-e", f"{name}={value}"]
+    return subprocess.run([*arguments, image, *command], capture_output=True, text=True, timeout=timeout)

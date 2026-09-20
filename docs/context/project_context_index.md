@@ -52,9 +52,10 @@ Agents should also read `AGENTS.md` before this file.
 - Latest hotfix records: `#9` (TFG closure/TFM reorientation) and `#10`
   (TFG/TFM documentation folder separation), both under
   `docs/roadmap/tfm/hotfixes/`
-- Current implementation issue: TFM issues `#90`-`#98` are `Completed`
+- Current implementation issue: TFM issues `#90`-`#99` are `Completed`
   (cluster, core services, Iceberg/Spark, all of epic phase 2, ingestion, and
-  bronze to silver); the next one is `#99` (silver to gold). See
+  all of epic phase 3, bronze to silver to gold); the next one is `#100`
+  (Superset dashboard). See
   `docs/roadmap/tfm/tfm_roadmap.md` for the live status of every issue
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 

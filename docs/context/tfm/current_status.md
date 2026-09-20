@@ -93,11 +93,63 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-20 (issue `#98`, bronze to silver: validation and entity
-  resolution, completed — the job ran through the DAG's pods on the real bronze and
-  wrote the six `lakehouse.silver` Iceberg tables)
+- Last updated: 2026-09-20 (issue `#99`, silver to gold: indicators and the
+  `transform_publish` DAG, completed — two full DAG runs through the pods built the
+  `lakehouse.gold` Iceberg tables and published them to the dedicated PostgreSQL)
 
 ## Entries
+
+### Issue #99 Completed: Silver -> Gold, Indicators & `transform_publish` DAG
+
+- tenth TFM implementation issue completed; branch
+  `issue-99-silver-to-gold-indicators-and-transform-publish-dag`, created from
+  `origin/development`. Closes epic phase 3 (transform)
+- planned first and every decision recorded with its reason in the issue document (Task 0,
+  D1-D11): three indicators (publications per researcher per year, affiliation timeline,
+  collaboration pairs), five gold tables, publish to PostgreSQL through staging tables and one
+  atomic swap, one image for the whole DAG. The user accepted the three decisions put to them
+  (indicators, manual-trigger DAG, the assistant writes files)
+- **new packages and jobs:** `src/tfm_lakehouse/gold/` (definitions and DDL/swap SQL as pure
+  code; DataFrame indicators, native Spark functions only), `spark_jobs/silver_to_gold.py`,
+  `spark_jobs/publish_gold_to_postgres.py`, `infra/spark-conf/Dockerfile.gold` (the silver image plus
+  `postgresql-42.7.13.jar`, imported into k3s by the user with `sudo`) and
+  `dags/transform_publish.py` (`bronze_to_silver >> silver_to_gold >> publish_gold_to_postgres`,
+  manual trigger). The provisional `issue98_bronze_to_silver` DAG was retired
+- **gold tables** (Iceberg `lakehouse.gold`, mirrored 1:1 in PostgreSQL schema `gold`):
+  `dim_researcher` 29,767 rows, `publications_per_researcher_year` 172,861,
+  `affiliation_timeline` 94,431, `collaboration_pairs` 9,540, `gold_run` (provenance: run id and the
+  silver snapshot ids read, plus counts)
+- **spikes settled the design:** the real silver showed fused records inflate a naive publication
+  count by 5.1% (543,879 rows -> 516,396 works), so deduplication per entity is required; the
+  collaboration indicator passed its gate (25 of 9,540 pairs, 0.26%, are one person seen twice; 5,092
+  involve real ORCID data only); JDBC from Spark and a table swap in one transaction through the JVM's
+  `DriverManager` work on the cluster's PostgreSQL. A first figure of the spike (5.6%) was wrong and was
+  caught by an independent recomputation
+- **verified on the real data through the DAG's pods:** two runs of about 10 minutes each; gold
+  recomputed independently in plain Python with 0 mismatches; PostgreSQL rows identical to Iceberg (306,599
+  rows compared); a second run gave identical PostgreSQL content; a publish killed mid-load left the
+  published tables untouched and a retry recovered by itself; no pod left behind. The silver rebuild
+  reproduced `#98`'s resolution evaluation exactly (R2 precision 95.8%, recall 74.2%)
+- **the gold indicators are insensitive to rule R2's false merges:** undoing the 75 single-organization
+  merges moves them by 0.07% to 0.58%
+- **runtimes (input for `#101`):** warm run 219.8 s, 71.3 s and 69.3 s for the three jobs, cold run 280.8 s,
+  73.0 s and 79.2 s
+- two things that differed from the plan: the PostgreSQL password needs no environment variable on the
+  executors (it travels in the JDBC write options), and staging tables are created with explicit DDL
+  instead of letting Spark create them (types, primary keys, `TIMESTAMPTZ`)
+- tests: 45 new (schemas, DAG structure, and 12 that run the real jobs in the gold image against a real
+  PostgreSQL 17 container); full suite `uv run pytest -n auto tests`: 798 passed, 2 skipped (753 at the end
+  of `#98`)
+- five new sections in `docs/pipeline/known_limitations.md` (and rows in its matrix);
+  `docs/roadmap/tfm/tfm_roadmap.md`'s status row for `#99` updated to `Completed`; full detail in
+  `docs/roadmap/tfm/issues/issue-99-silver-to-gold-indicators-and-transform-publish-dag.md`
+- state left in the cluster: `lakehouse.silver` and `lakehouse.gold` hold the rebuild of run `e2e99-2`;
+  the PostgreSQL `gold` schema holds the same content (`gold_run.run_id = e2e99-2`);
+  `transform_publish` is unpaused with no schedule; the `ingest_validate` DAG keeps its daily schedule
+  (its next run adds a partition that the next `transform_publish` run deduplicates)
+- next: issue `#100` (Superset dashboard), which connects to the PostgreSQL `gold` schema; the
+  `Impact On Future Issues` section of the issue document lists the connection facts and the table
+  meanings
 
 ### Issue #98 Completed: Bronze -> Silver, Validation & Entity Resolution
 
