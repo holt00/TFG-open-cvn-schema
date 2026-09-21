@@ -1,0 +1,156 @@
+dashboard_title: TFM lakehouse - research indicators
+description: null
+css: null
+slug: tfm-gold-indicators
+certified_by: null
+certification_details: null
+published: true
+uuid: d5a454ae-ea93-4116-b9a8-e01dfbe330ee
+position:
+  DASHBOARD_VERSION_KEY: v2
+  ROOT_ID:
+    type: ROOT
+    id: ROOT_ID
+    children:
+    - GRID_ID
+  GRID_ID:
+    type: GRID
+    id: GRID_ID
+    children:
+    - ROW-NOTE
+    - ROW-1
+    - ROW-2
+    - ROW-3
+    parents:
+    - ROOT_ID
+  HEADER_ID:
+    id: HEADER_ID
+    type: HEADER
+    meta:
+      text: TFM lakehouse - research indicators
+  ROW-NOTE:
+    type: ROW
+    id: ROW-NOTE
+    children:
+    - MARKDOWN-NOTE
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  MARKDOWN-NOTE:
+    type: MARKDOWN
+    id: MARKDOWN-NOTE
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-NOTE
+    meta:
+      code: '**Research indicators of the TFM lakehouse** (gold layer of issue #99).
+        Real public ORCID records (Spain-affiliated subset) fused with synthetic Open
+        CVN curricula seeded from them; aggregates only, no personal names. Figures
+        describe the bronze the cluster holds, not the whole ORCID registry. I2 is
+        a lower bound: pairs of entities that report the same DOI.'
+      width: 12
+      height: 18
+  ROW-1:
+    type: ROW
+    id: ROW-1
+    children:
+    - CHART-I1
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-I1:
+    type: CHART
+    id: CHART-I1
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-1
+    meta:
+      chartId: 9
+      width: 12
+      height: 50
+      sliceName: I1 - Publications per year
+      uuid: e1afb2c6-fb4b-48d8-91d5-6b869b3599cc
+  ROW-2:
+    type: ROW
+    id: ROW-2
+    children:
+    - CHART-I3
+    - CHART-I2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-I3:
+    type: CHART
+    id: CHART-I3
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-2
+    meta:
+      chartId: 11
+      width: 6
+      height: 50
+      sliceName: I3 - Affiliation stays started per year
+      uuid: 60e1aae3-06d1-431b-8b1d-2ebd8e68be23
+  CHART-I2:
+    type: CHART
+    id: CHART-I2
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-2
+    meta:
+      chartId: 10
+      width: 6
+      height: 50
+      sliceName: I2 - New collaboration pairs per year (real ORCID data)
+      uuid: 81a84c51-8747-4416-abf0-09872b4bd237
+  ROW-3:
+    type: ROW
+    id: ROW-3
+    children:
+    - CHART-PROV
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-PROV:
+    type: CHART
+    id: CHART-PROV
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-3
+    meta:
+      chartId: 12
+      width: 12
+      height: 30
+      sliceName: Provenance - gold run
+      uuid: 0ab7ca49-fe4f-454d-a6f4-0c562f7cfeec
+metadata:
+  refresh_frequency: 0
+  color_scheme: ''
+  label_colors: {}
+  timed_refresh_immune_slices: []
+  expanded_slices: {}
+  shared_label_colors: []
+  map_label_colors: {}
+  color_scheme_domain: []
+  cross_filters_enabled: true
+  native_filter_configuration: []
+theme_uuid: null
+version: 1.0.0

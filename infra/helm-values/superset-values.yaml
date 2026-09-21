@@ -1,0 +1,80 @@
+# Superset Helm values for the TFM lakehouse platform (issue #100).
+#
+# Chart: superset/superset, pinned version 0.22.8 (app version 6.1.0). Repo already added in
+# issue #90. The chart is marked `deprecated: true` upstream (the official path is now the
+# Superset Kubernetes Operator, v1alpha1); it is used anyway on purpose (issue #100, D1): it is
+# what the original plan says, it needs no CRDs, and it bundles PostgreSQL and Redis.
+#
+# Decisions applied (docs/roadmap/tfm/issues/issue-100-superset-dashboard.md, Task 0):
+# - D2 own image with psycopg2 baked in (infra/superset/Dockerfile), imported into k3s by hand, so
+#   pullPolicy is Never
+# - D3 the metadata database is the chart's own PostgreSQL subchart (its own PVC, separate from the
+#   gold PostgreSQL), Redis from the subchart without persistence, one replica of everything
+# - D5 no secret value lives here: SECRET_KEY, the metadata database password and the admin
+#   password come from the Secret `superset-secrets`, created with kubectl before `helm install`
+#   (see infra/helm-values/README.md); the chart's defaults (admin/admin, a known SECRET_KEY,
+#   database password `superset`) are all overridden
+# - the Celery worker is scaled to zero: the dashboard only runs synchronous queries (issue #100,
+#   Task 1.6); Beat, Flower and the websocket server are disabled by the chart's own defaults
+# - the admin user is not created by the chart's init job (that would put its password in the
+#   rendered config and the Helm release); it is created afterwards from the Secret, see the README
+
+image:
+  repository: tfm-lakehouse/superset
+  tag: 6.1.0-pg
+  pullPolicy: Never
+
+# The image's own user (uid 1000), not the chart's default root
+runAsUser: 1000
+
+extraEnvRaw:
+  - name: SUPERSET_SECRET_KEY
+    valueFrom:
+      secretKeyRef:
+        name: superset-secrets
+        key: secret-key
+  # the chart renders DB_PASS from its values (default `superset`) into its own env Secret;
+  # an explicit container env entry wins over that Secret
+  - name: DB_PASS
+    valueFrom:
+      secretKeyRef:
+        name: superset-secrets
+        key: password
+
+init:
+  createAdmin: false
+
+supersetWorker:
+  replicas:
+    enabled: true
+    replicaCount: 0
+
+supersetNode:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 1Gi
+    limits:
+      memory: 2Gi
+
+postgresql:
+  enabled: true
+  auth:
+    existingSecret: superset-secrets
+    secretKeys:
+      adminPasswordKey: postgres-password
+      userPasswordKey: password
+    username: superset
+    database: superset
+  primary:
+    persistence:
+      enabled: true
+      storageClass: local-path
+      size: 2Gi
+
+redis:
+  enabled: true
+  architecture: standalone
+  master:
+    persistence:
+      enabled: false

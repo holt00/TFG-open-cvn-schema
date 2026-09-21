@@ -1,0 +1,41 @@
+slice_name: Provenance - gold run
+description: Which transform_publish run and silver snapshots the figures come from
+  (gold_run).
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  viz_type: table
+  datasource: 12__table
+  metrics: []
+  groupby: []
+  adhoc_filters: []
+  row_limit: 10000
+  query_mode: raw
+  all_columns:
+  - run_id
+  - computed_at
+  - max_year
+  - entities
+  - publications_distinct
+  - collaboration_pairs
+  order_desc: true
+  table_timestamp_format: smart_date
+  page_length: 10
+  include_search: false
+  show_cell_bars: false
+  annotation_layers: []
+query_context: '{"datasource": {"id": 12, "type": "table"}, "force": false, "queries":
+  [{"filters": [], "extras": {"having": "", "where": ""}, "columns": ["run_id", "computed_at",
+  "max_year", "entities", "publications_distinct", "collaboration_pairs"], "metrics":
+  [], "orderby": [], "annotation_layers": [], "row_limit": 10000, "order_desc": true,
+  "url_params": {}, "custom_params": {}, "custom_form_data": {}, "applied_time_extras":
+  {}}], "form_data": {"viz_type": "table", "datasource": "12__table", "metrics": [],
+  "groupby": [], "adhoc_filters": [], "row_limit": 10000, "query_mode": "raw", "all_columns":
+  ["run_id", "computed_at", "max_year", "entities", "publications_distinct", "collaboration_pairs"],
+  "order_desc": true, "table_timestamp_format": "smart_date", "page_length": 10, "include_search":
+  false, "show_cell_bars": false}, "result_format": "json", "result_type": "full"}'
+cache_timeout: null
+uuid: 0ab7ca49-fe4f-454d-a6f4-0c562f7cfeec
+version: 1.0.0
+dataset_uuid: 456d9929-8198-4dd8-b8fd-5b981795ba8a

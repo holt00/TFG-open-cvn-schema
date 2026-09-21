@@ -27,6 +27,14 @@ Infrastructure manifests and Helm values for the TFM lakehouse platform
   write over JDBC and swap tables in one transaction — see
   `spark-conf/README.md`, "Gold image"
 
+- `superset/`: everything the Superset dashboard needs besides its Helm values (issue `#100`): the
+  `Dockerfile` of `tfm-lakehouse/superset:6.1.0-pg` (the lean official image plus `psycopg2`), the SQL of
+  the read-only role `superset_ro` on the gold database, `create_admin.sh`, the versioned dashboard export
+  (`assets/`) with `import_dashboard.py` and its small REST client, and `screenshot_dashboard.py` with the
+  screenshots — see `superset/README.md`
+- `helm-values/superset-values.yaml`: the values of the `superset/superset` chart (pinned 0.22.8; deprecated
+  upstream, see the file's header) — install and verify notes in `helm-values/README.md`
+
 This directory targets a single local k3s cluster only, per the epic's
 scope decision; there is no Terraform/multi-node/cloud tooling here.
 

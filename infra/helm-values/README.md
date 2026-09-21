@@ -107,6 +107,10 @@ kubectl run postgresql-client-test --rm -i --restart='Never' -n tfm-lakehouse \
   --command -- psql --host postgresql -U gold -d gold -p 5432 \
   -c '\dt gold.*' -c 'select run_id, computed_at, entities from gold.gold_run'
 
+# Superset (issue #100): pods, then the UI through a port-forward (admin user: see below)
+kubectl get pods -n tfm-lakehouse -l app.kubernetes.io/instance=superset
+kubectl port-forward -n tfm-lakehouse svc/superset 8088:8088
+
 # Airflow: scheduler DB health + API server UI
 kubectl -n tfm-lakehouse exec deploy/airflow-scheduler -c scheduler -- airflow db check
 kubectl port-forward -n tfm-lakehouse svc/airflow-api-server 8080:8080
@@ -117,3 +121,41 @@ scheduling end to end) is recorded in the issue document's Verification
 section rather than repeated here, since it used a throwaway DAG file that
 was deleted afterward — no DAGs are expected to exist in this deployment
 until issue `#97`.
+
+## Superset (issue #100)
+
+`superset-values.yaml` installs the `superset/superset` chart (pinned to 0.22.8, app 6.1.0; the chart
+is marked deprecated upstream, see the values file header and the issue document for why it is still
+used). It needs the image `tfm-lakehouse/superset:6.1.0-pg` imported into k3s first
+(`infra/superset/README.md`) and two Secrets created ahead of `helm install`, nothing committed:
+
+```bash
+export KUBECONFIG=~/.kube/config
+
+# Superset's own secrets: SECRET_KEY (Superset refuses to start with its default one), the
+# passwords of the chart's metadata PostgreSQL (postgres superuser and the `superset` user) and the
+# admin user's password
+kubectl create secret generic superset-secrets -n tfm-lakehouse \
+  --from-literal=secret-key="$(openssl rand -base64 42)" \
+  --from-literal=postgres-password="$(openssl rand -base64 24 | tr -d '/+=' | cut -c1-32)" \
+  --from-literal=password="$(openssl rand -base64 24 | tr -d '/+=' | cut -c1-32)" \
+  --from-literal=admin-password="$(openssl rand -base64 24 | tr -d '/+=' | cut -c1-24)"
+
+# the read-only role Superset uses on the gold database: infra/superset/README.md
+
+# --timeout 15m: the chart's PostgreSQL takes about 2 minutes to boot the first time and the
+# post-install init Job waits for it, so Helm's default 5 minutes can expire and mark a healthy
+# release `failed` (it did on the first install, issue #100)
+helm install superset superset/superset \
+  --version 0.22.8 \
+  -f infra/helm-values/superset-values.yaml \
+  -n tfm-lakehouse --timeout 15m
+
+# the chart is not asked to create the admin user (that would put its password in the rendered
+# config and in the Helm release); create it from the Secret once the web pod is Ready
+infra/superset/create_admin.sh
+```
+
+The web pod may restart once while the init Job is still creating Superset's metadata tables; it
+recovers by itself. Reach the UI with `kubectl port-forward -n tfm-lakehouse svc/superset 8088:8088`
+and log in as `admin` with the `admin-password` key of `superset-secrets`.

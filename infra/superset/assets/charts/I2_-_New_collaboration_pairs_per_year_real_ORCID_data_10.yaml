@@ -1,0 +1,59 @@
+slice_name: I2 - New collaboration pairs per year (real ORCID data)
+description: 'Pairs of distinct entities that report the same DOI, by the first year
+  they share one (issue #99, indicator I2, a lower bound). Only pairs with no synthetic-CVN
+  member (real ORCID data).'
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_bar
+params:
+  viz_type: echarts_timeseries_bar
+  datasource: 11__table
+  metrics:
+  - expressionType: SQL
+    sqlExpression: COUNT(*)
+    label: Entity pairs
+  groupby: []
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: has_cvn_member
+    operator: ==
+    comparator: false
+    clause: WHERE
+  row_limit: 10000
+  x_axis_force_categorical: true
+  x_axis_sort_asc: true
+  show_legend: false
+  legendType: scroll
+  legendOrientation: top
+  rich_tooltip: true
+  show_value: false
+  y_axis_format: SMART_NUMBER
+  truncateYAxis: false
+  x_axis: first_year
+  stack: null
+  y_axis_title: Entity pairs
+  x_axis_title: First year of a shared publication
+  x_axis_title_margin: 30
+  y_axis_title_margin: 50
+  annotation_layers: []
+query_context: '{"datasource": {"id": 11, "type": "table"}, "force": false, "queries":
+  [{"filters": [{"col": "has_cvn_member", "op": "==", "val": false}], "extras": {"having":
+  "", "where": ""}, "columns": [{"columnType": "BASE_AXIS", "sqlExpression": "first_year",
+  "label": "first_year", "expressionType": "SQL"}], "metrics": [{"expressionType":
+  "SQL", "sqlExpression": "COUNT(*)", "label": "Entity pairs"}], "orderby": [], "annotation_layers":
+  [], "row_limit": 10000, "series_columns": [], "series_limit": 0, "order_desc": true,
+  "url_params": {}, "custom_params": {}, "custom_form_data": {}, "applied_time_extras":
+  {}}], "form_data": {"viz_type": "echarts_timeseries_bar", "datasource": "11__table",
+  "metrics": [{"expressionType": "SQL", "sqlExpression": "COUNT(*)", "label": "Entity
+  pairs"}], "groupby": [], "adhoc_filters": [{"expressionType": "SIMPLE", "subject":
+  "has_cvn_member", "operator": "==", "comparator": false, "clause": "WHERE"}], "row_limit":
+  10000, "x_axis_force_categorical": true, "x_axis_sort_asc": true, "show_legend":
+  false, "legendType": "scroll", "legendOrientation": "top", "rich_tooltip": true,
+  "show_value": false, "y_axis_format": "SMART_NUMBER", "truncateYAxis": false, "x_axis":
+  "first_year", "stack": null, "y_axis_title": "Entity pairs", "x_axis_title": "First
+  year of a shared publication", "x_axis_title_margin": 30, "y_axis_title_margin":
+  50}, "result_format": "json", "result_type": "full"}'
+cache_timeout: null
+uuid: 81a84c51-8747-4416-abf0-09872b4bd237
+version: 1.0.0
+dataset_uuid: 84b76c64-ab7d-4a6b-822f-469825e60aa2

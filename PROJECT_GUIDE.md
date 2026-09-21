@@ -300,6 +300,11 @@ files in order:
   and requests that the silver job needs (issue `#98`)
 - `infra/spark-conf/Dockerfile.gold`: the silver image plus the PostgreSQL JDBC driver
   that the publish job needs (issue `#99`)
+- `infra/superset/` and `infra/helm-values/superset-values.yaml`: the Superset dashboard (issue `#100`) --
+  the image with the PostgreSQL driver, the read-only role `superset_ro` on the gold database, the versioned
+  dashboard export with the script that imports it, and screenshots; Superset reads the PostgreSQL `gold`
+  schema that issue `#99` publishes, shows aggregates only (no personal names) and caches nothing, so a new
+  `transform_publish` run shows up at once
 - `infra/ingest/README.md`: the ingestion image (Python 3.14 plus
   dependencies) the `ingest_validate` DAG's pods run (issue `#97`)
 - `dags/`: Airflow DAG sources for the TFM lakehouse: the issue `#93`

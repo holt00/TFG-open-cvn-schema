@@ -46,6 +46,10 @@ do not need to rediscover them.
 | Career figures are lower bounds from known years | `data_scope_limitation` | 18% of affiliations have no start year and 33% no end year; a stay is never extended to today, so `career_span_years` is a lower bound and can be null | Employment stays only, known years only; records of one stay are merged by organization and start year | None for this TFM | Not a blocker |
 | Gold is rebuilt in full and PostgreSQL keeps only the latest publish | `scalability_limitation` | No incremental processing and no history in PostgreSQL; the JDBC write options carry the password to the executors | `createOrReplace` of five tables; staging tables and one atomic swap; `gold_run` records the silver snapshots read | `#101` measures runtime; `#102` reviews credential handling | Not a blocker |
 | Gold indicators inherit entity-resolution errors | `resolution_quality_limitation` | A false rule-R2 merge mixes two people's publications; measured effect of undoing the 75 single-organization R2 merges: entities +0.25%, distinct publications +0.07%, per-year rows +0.13%, collaboration pairs +0.58% | Indicators use all links; `entity_link.evidence` allows a stricter filter without a re-run | None for this TFM | Not a blocker |
+| Superset is deployed from a Helm chart its maintainers have deprecated | `infra_supply_chain_limitation` | Chart `superset/superset` 0.22.8 (Superset 6.1.0) is marked `deprecated: true` and the official path is now a `v1alpha1` Kubernetes Operator; the chart's PostgreSQL and Redis subcharts run frozen `bitnamilegacy` images | Chart, image and driver versions pinned; own image with `psycopg2` baked in; the dashboard itself is a versioned export, so it survives a change of deployment method | Move to the operator when it leaves `v1alpha1`; hardening is `#102` | Accepted, not a blocker |
+| The Superset deployment is local, single-replica and unhardened | `infra_gotcha` | One replica of each component, no TLS or SSO, reached only through `kubectl port-forward`; Superset's metadata (2 Gi PVC on `local-path`) has no backup; the first `helm install` exceeded Helm's default 5-minute timeout because the chart's PostgreSQL takes about 2 minutes to boot, leaving a healthy release marked `failed`; the image is built on the host and imported by hand | Credentials only in Kubernetes Secrets; `superset_ro` is read-only; install with `--timeout 15m`; the dashboard is rebuilt from `infra/superset/assets/` | `#102` (hardening) | Accepted for a local cluster |
+| The dashboard shows aggregates over a lower-bound indicator and disables its data cache | `indicator_validity_limitation` | Charts leave out publications before 1980 (443), stays with no start year or outside 1970-2026 (16,231 of 94,431) and the collaboration lower bound of `#99`; with `cache_timeout = -1` every view queries PostgreSQL, which is fine for these aggregates and would not scale to large tables; no chart names a person | Each chart's description states what it leaves out; the caching choice is one field of the connection | Re-enable caching with an explicit refresh if the tables grow | Accepted |
+| The Spark-in-Docker tests fail when too many run at once | `test_environment_limitation` | `-n auto` (16 workers) started up to 16 Spark containers together, so runs failed with a 600-900 s `TimeoutExpired` or with `CANNOT_OPEN_SOCKET`; the full suite took 32-33 min with 4-9 failures, also on an idle machine with the cluster stopped | `tests/spark_image.py` lets four containers run at once across the pytest workers (`SPARK_TEST_SLOTS` to change it) and removes the container of an aborted run | None | Resolved in issue `#100`: `uv run pytest -n auto tests` gave 828 passed, 2 skipped in 10 min 15 s in one run |
 
 ## Structural Binding Limitations
 
@@ -907,6 +911,73 @@ do not need to rediscover them.
   the indicators are insensitive to R2's precision at this scale, so the default was not changed
 - the measurement covers only the merges this data contains; another sample would give other counts
 - expected follow-up: none for this TFM
+
+### Superset Is Deployed From A Deprecated Helm Chart
+
+- discovered during issue `#100`
+- the `superset/superset` chart (0.22.8, Superset 6.1.0) has `deprecated: true` in its `Chart.yaml` and the
+  official Kubernetes installation page says it is not recommended for new deployments; the official method
+  is the Apache Superset Kubernetes Operator (`v1alpha1`, v0.2.0 of 2026-08-11, with breaking changes, no
+  bundled PostgreSQL or Redis, custom resources to install)
+- the chart was kept on purpose (the original plan, no CRDs, bundled PostgreSQL and Redis) and pinned; its
+  subcharts run `docker.io/bitnamilegacy` images, the same frozen registry as the `#91` services
+- the official image is a "lean" build with no database driver, so the deployment needs its own image
+  (`tfm-lakehouse/superset:6.1.0-pg`), built on the host and imported into k3s by hand
+- expected follow-up: the operator as future work; `#102` for hardening
+
+### The Superset Deployment Is Local, Single-Replica And Unhardened
+
+- discovered during issue `#100`
+- one replica of the web server, PostgreSQL and Redis, the Celery worker scaled to zero (only synchronous
+  queries are used), no TLS or single sign-on, and access only through `kubectl port-forward`; Superset's
+  metadata lives on a 2 Gi `local-path` volume with no backup, which is why the dashboard is kept as an
+  export under version control
+- the first `helm install` was marked `failed` although every pod was healthy: the chart's PostgreSQL took
+  about two minutes to boot the first time, the post-install Job outlasted Helm's default 5-minute timeout,
+  and the web pod restarted once while the Job was still creating the metadata tables; `helm upgrade
+  --timeout 15m` fixed the status and the documented install command carries the flag
+- the admin password, `SECRET_KEY` and the metadata database password live in the Secret `superset-secrets`;
+  the read-only role's password is in `superset-gold-ro-credentials` and, encrypted with the `SECRET_KEY`, in
+  Superset's own metadata (losing the key loses the stored connection password)
+- expected follow-up: `#102` (hardening)
+
+### The Dashboard Shows Aggregates Over A Lower-Bound Indicator And Disables Its Data Cache
+
+- discovered during issue `#100`
+- each chart states in its description what it leaves out: I1 drops the 443 publications before 1980, I3 the
+  16,231 of 94,431 stays with no start year or outside 1970-2026, and I2 is the DOI-only lower bound of `#99`
+  restricted to pairs with no synthetic-CVN member (5,092 of 9,540); no chart names a person, because
+  `dim_researcher` holds real names from public ORCID records and the screenshots go into a public memoria
+- the chart's generated configuration caches query results for 24 hours, which would hide a new
+  `transform_publish` run, so the connection sets `cache_timeout = -1` and every view queries PostgreSQL; that
+  costs nothing on these aggregates (0.5-0.8 s per chart) and would not scale to large tables
+- what was shown to work on the real cluster: a reader polling the four charts during a full DAG run saw no
+  error and no empty result, and the run id changed in one step; the publish's lock is held for milliseconds
+  and the reader sampled every few seconds, so that shows no sustained window rather than proving none
+- expected follow-up: none for this TFM
+
+### The Spark-In-Docker Tests Fail When Too Many Run At Once
+
+- discovered during issue `#100`
+- `uv run pytest -n auto tests` starts one worker per core (16); the Spark tests of issues `#98` and `#99`
+  (17 tests in three files) each run a JVM and a Python process in Docker, so up to 16 run at the same time. Two
+  failure kinds appear: `subprocess.TimeoutExpired` on the `docker run` (limits of 600 and 900 s), and
+  `PySparkRuntimeError: [CANNOT_OPEN_SOCKET] ... Connection refused` after the JVM's `serve-DataFrame` thread logs
+  `Accept timed out` (the Python process did not connect to the JVM's socket within its timeout, which is what a
+  starved process does); the logs show single Spark stages taking 20-80 s
+- first seen in two runs of the full suite (9 then 4 failures, a different set each time, 32-33 min against 9 min 53
+  s at the end of `#99`), when the cluster's own load (Airflow's probes start a Python interpreter every few seconds)
+  was thought to be the cause; on 2026-09-21, with the cluster stopped and the machine idle, the three Spark files
+  run with `-n auto` failed as well (5 failed, 2 errors, 17 min 22 s), so the concurrency of the Spark containers is
+  the cause and the cluster's load only makes it worse
+- the same 17 tests all pass with `-n 4` (5 min 20 s, idle machine, cluster stopped); earlier reruns with `-n 2` (7
+  cases) and `-n 4` (14 tests) also passed; no assertion ever failed
+- resolved in issue `#100` (decision D14): `tests/spark_image.py` limits the Spark containers that run at once to
+  four across all pytest workers (lock files; `SPARK_TEST_SLOTS` changes the number) and removes the container of a
+  run that is aborted, which a timeout used to leave running; `uv run pytest -n auto tests`, exactly as documented,
+  then gave 828 passed and 2 skipped in 10 min 15 s in a single run on an idle machine with the cluster stopped
+  (32-33 minutes and failures before); six tests in `tests/test_spark_image_slots_unit.py` cover the mechanism
+- if the machine has fewer cores or the Spark image gets heavier, `SPARK_TEST_SLOTS=2` is the first thing to try
 
 ## Documentation Rule
 

@@ -103,6 +103,20 @@ Use `uv run pytest -n auto --durations=20 tests` when investigating slow tests.
 Use plain non-parallel `pytest` only when debugging order-dependent or
 process-isolation failures.
 
+#### Spark tests (Docker)
+
+The TFM's Spark jobs (`src/tfm_lakehouse/spark_jobs/`, issues `#98` and `#99`) are tested by running them in local mode
+inside the project's Spark images, because PySpark cannot be installed on the host's Python 3.14. The tests are
+`tests/test_silver_job_spark.py`, `tests/test_silver_resolution_spark.py` and `tests/test_gold_jobs_spark.py`; they
+share `tests/spark_image.py`. They skip themselves when Docker or the images are missing (build them as described in
+`infra/spark-conf/README.md`), and the gold ones also need the `postgres:17` image.
+
+Each run is a JVM plus a Python process, so `tests/spark_image.py` lets at most four of them run at once across all
+pytest workers (`pytest -n auto` starts one worker per core, and sixteen at once starved each other into timeouts and
+`CANNOT_OPEN_SOCKET` errors, issue `#100`). The number comes from `SPARK_TEST_SLOTS` (default 4; use `2` on a smaller
+machine). A run that is aborted has its container removed. With the cluster stopped and nothing else running, the whole
+suite takes about 10 minutes; with the cluster's own load it can take longer.
+
 ### Parse Smoke Checks
 
 Parse `SpecificationManual.xml`:

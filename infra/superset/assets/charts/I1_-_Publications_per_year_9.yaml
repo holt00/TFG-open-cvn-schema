@@ -1,0 +1,60 @@
+slice_name: I1 - Publications per year
+description: 'Distinct publications per year, deduplicated per researcher entity (issue
+  #99, indicator I1). Years before 1980 (443 publications) are left out of the chart.'
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_bar
+params:
+  viz_type: echarts_timeseries_bar
+  datasource: 13__table
+  metrics:
+  - expressionType: SIMPLE
+    column:
+      column_name: publication_count
+    aggregate: SUM
+    label: Publications
+  groupby: []
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: year
+    operator: '>='
+    comparator: 1980
+    clause: WHERE
+  row_limit: 10000
+  x_axis_force_categorical: true
+  x_axis_sort_asc: true
+  show_legend: false
+  legendType: scroll
+  legendOrientation: top
+  rich_tooltip: true
+  show_value: false
+  y_axis_format: SMART_NUMBER
+  truncateYAxis: false
+  x_axis: year
+  stack: null
+  y_axis_title: Publications
+  x_axis_title: Publication year
+  x_axis_title_margin: 30
+  y_axis_title_margin: 50
+  annotation_layers: []
+query_context: '{"datasource": {"id": 13, "type": "table"}, "force": false, "queries":
+  [{"filters": [{"col": "year", "op": ">=", "val": 1980}], "extras": {"having": "",
+  "where": ""}, "columns": [{"columnType": "BASE_AXIS", "sqlExpression": "year", "label":
+  "year", "expressionType": "SQL"}], "metrics": [{"expressionType": "SIMPLE", "column":
+  {"column_name": "publication_count"}, "aggregate": "SUM", "label": "Publications"}],
+  "orderby": [], "annotation_layers": [], "row_limit": 10000, "series_columns": [],
+  "series_limit": 0, "order_desc": true, "url_params": {}, "custom_params": {}, "custom_form_data":
+  {}, "applied_time_extras": {}}], "form_data": {"viz_type": "echarts_timeseries_bar",
+  "datasource": "13__table", "metrics": [{"expressionType": "SIMPLE", "column": {"column_name":
+  "publication_count"}, "aggregate": "SUM", "label": "Publications"}], "groupby":
+  [], "adhoc_filters": [{"expressionType": "SIMPLE", "subject": "year", "operator":
+  ">=", "comparator": 1980, "clause": "WHERE"}], "row_limit": 10000, "x_axis_force_categorical":
+  true, "x_axis_sort_asc": true, "show_legend": false, "legendType": "scroll", "legendOrientation":
+  "top", "rich_tooltip": true, "show_value": false, "y_axis_format": "SMART_NUMBER",
+  "truncateYAxis": false, "x_axis": "year", "stack": null, "y_axis_title": "Publications",
+  "x_axis_title": "Publication year", "x_axis_title_margin": 30, "y_axis_title_margin":
+  50}, "result_format": "json", "result_type": "full"}'
+cache_timeout: null
+uuid: e1afb2c6-fb4b-48d8-91d5-6b869b3599cc
+version: 1.0.0
+dataset_uuid: c63a3fa8-decc-4215-a23b-6395a83c0c1b

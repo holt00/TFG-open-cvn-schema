@@ -1,0 +1,67 @@
+slice_name: I3 - Affiliation stays started per year
+description: 'Employment and education stays by start year across the entities'' fused
+  records (issue #99, indicator I3). Stays with no start year and stays before 1970
+  are left out.'
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_bar
+params:
+  viz_type: echarts_timeseries_bar
+  datasource: 10__table
+  metrics:
+  - expressionType: SQL
+    sqlExpression: COUNT(*)
+    label: Stays started
+  groupby:
+  - kind
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: start_year
+    operator: '>='
+    comparator: 1970
+    clause: WHERE
+  - expressionType: SIMPLE
+    subject: start_year
+    operator: <=
+    comparator: 2026
+    clause: WHERE
+  row_limit: 10000
+  x_axis_force_categorical: true
+  x_axis_sort_asc: true
+  show_legend: true
+  legendType: scroll
+  legendOrientation: top
+  rich_tooltip: true
+  show_value: false
+  y_axis_format: SMART_NUMBER
+  truncateYAxis: false
+  x_axis: start_year
+  stack: Stack
+  y_axis_title: Stays started
+  x_axis_title: Start year
+  x_axis_title_margin: 30
+  y_axis_title_margin: 50
+  annotation_layers: []
+query_context: '{"datasource": {"id": 10, "type": "table"}, "force": false, "queries":
+  [{"filters": [{"col": "start_year", "op": ">=", "val": 1970}, {"col": "start_year",
+  "op": "<=", "val": 2026}], "extras": {"having": "", "where": ""}, "columns": [{"columnType":
+  "BASE_AXIS", "sqlExpression": "start_year", "label": "start_year", "expressionType":
+  "SQL"}, "kind"], "metrics": [{"expressionType": "SQL", "sqlExpression": "COUNT(*)",
+  "label": "Stays started"}], "orderby": [], "annotation_layers": [], "row_limit":
+  10000, "series_columns": ["kind"], "series_limit": 0, "order_desc": true, "url_params":
+  {}, "custom_params": {}, "custom_form_data": {}, "applied_time_extras": {}}], "form_data":
+  {"viz_type": "echarts_timeseries_bar", "datasource": "10__table", "metrics": [{"expressionType":
+  "SQL", "sqlExpression": "COUNT(*)", "label": "Stays started"}], "groupby": ["kind"],
+  "adhoc_filters": [{"expressionType": "SIMPLE", "subject": "start_year", "operator":
+  ">=", "comparator": 1970, "clause": "WHERE"}, {"expressionType": "SIMPLE", "subject":
+  "start_year", "operator": "<=", "comparator": 2026, "clause": "WHERE"}], "row_limit":
+  10000, "x_axis_force_categorical": true, "x_axis_sort_asc": true, "show_legend":
+  true, "legendType": "scroll", "legendOrientation": "top", "rich_tooltip": true,
+  "show_value": false, "y_axis_format": "SMART_NUMBER", "truncateYAxis": false, "x_axis":
+  "start_year", "stack": "Stack", "y_axis_title": "Stays started", "x_axis_title":
+  "Start year", "x_axis_title_margin": 30, "y_axis_title_margin": 50}, "result_format":
+  "json", "result_type": "full"}'
+cache_timeout: null
+uuid: 60e1aae3-06d1-431b-8b1d-2ebd8e68be23
+version: 1.0.0
+dataset_uuid: cdd7b676-7523-4b5d-a749-9b2a9c4ae83b

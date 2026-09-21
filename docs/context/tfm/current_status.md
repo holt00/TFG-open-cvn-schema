@@ -93,11 +93,57 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-20 (issue `#99`, silver to gold: indicators and the
-  `transform_publish` DAG, completed — two full DAG runs through the pods built the
-  `lakehouse.gold` Iceberg tables and published them to the dedicated PostgreSQL)
+- Last updated: 2026-09-21 (issue `#100`, Superset dashboard, completed: verified end to end on the cluster, and
+  `uv run pytest -n auto tests` green in a single run after capping the concurrent Spark containers of the tests)
 
 ## Entries
+
+### Issue #100 Completed: Superset Dashboard
+
+- eleventh TFM implementation issue completed; branch `issue-100-superset-dashboard`, created from
+  `origin/development` (a `git fetch` was not possible, the local ref already contained `#99`). First issue of
+  epic phase 4
+- planned first and every decision recorded with its reason in the issue document (Task 0, D1-D14); the user
+  accepted the three put to them (Helm chart, three charts plus provenance, the assistant writes the files). Added
+  while working: D10 admin created outside the chart, D11 no data cache, D12 aggregates only and no names, D13
+  regular expressions instead of PyYAML in the tests, D14 a cap of four concurrent Spark containers in the test suite
+- key finding while planning: the `superset/superset` Helm chart is **deprecated** upstream (the official path is
+  now a `v1alpha1` operator) and the official image has **no PostgreSQL driver**; the chart was kept (pinned, no
+  CRDs) with an own image (`tfm-lakehouse/superset:6.1.0-pg`, imported into k3s by the user with `sudo`)
+- **deployed:** Superset 6.1.0 in the `tfm-lakehouse` namespace (web, the chart's own PostgreSQL and Redis, worker
+  at zero, admin created from a Secret), a read-only role `superset_ro` on the gold database whose **default
+  privileges survive `#99`'s drop-and-rename publish**, and the dashboard `tfm-gold-indicators`: publications per
+  year (I1), affiliation stays started per year (I3), new collaboration pairs per year on real ORCID data (I2) and a
+  provenance table from `gold_run`. Aggregates only, no personal names
+- **dashboard as code:** `infra/superset/assets/` is a versioned export; `import_dashboard.py` rebuilds it through
+  the REST API (the CLI cannot pass a database password). Deleting everything and importing from the files gave
+  the same uuid and the same rows in every chart
+- **verified:** every chart equals hand-written SQL in PostgreSQL, row by row; a full `transform_publish` run
+  (`e2e100-1`) while a reader polled the four charts gave 0 errors and 0 empty results in 238 samples, the run id
+  changed in one step and the dashboard showed it without a refresh; privileges survived the recreation of the
+  tables; the dashboard renders in a headless browser (screenshots in `infra/superset/screenshots/`)
+- things that went differently from the plan: the first `helm install` was marked `failed` with every pod healthy
+  (PostgreSQL's first boot outlasted Helm's 5-minute timeout, fixed with `--timeout 15m`); the chart's 24 h data
+  cache would have hidden a new run (disabled on the connection); my first layout lacked the charts' `uuid`, so
+  Superset added a duplicate row (found in the first export, fixed and guarded by a test)
+- tests: 24 new in `tests/test_superset_infra_unit.py`, including a drift guard between the exported dashboard and
+  `gold/schemas.py`, and 6 in `tests/test_spark_image_slots_unit.py`. **`uv run pytest -n auto tests`, as documented,
+  is green in a single run: 828 passed, 2 skipped in 10 min 15 s** (idle machine, cluster stopped). It was not before:
+  two runs on 2026-09-20 had 9 and 4 failures (32-33 min), all `TimeoutExpired` or `CANNOT_OPEN_SOCKET` in the
+  Spark-in-Docker tests, because `-n auto` ran up to 16 Spark containers at once. Cause and fix: `tests/spark_image.py`
+  now lets four run at once across the pytest workers (`SPARK_TEST_SLOTS` changes it) and removes the container of an
+  aborted run (decision D14 in the issue document; this touches the test helper of `#98`/`#99`)
+- three new sections in `docs/pipeline/known_limitations.md` (and rows in its matrix), plus one on the Spark test
+  concurrency (resolved); `docs/roadmap/tfm/tfm_roadmap.md`'s row for `#100` is `Completed`; full detail
+  in `docs/roadmap/tfm/issues/issue-100-superset-dashboard.md`
+- the `transform_publish` run `e2e100-1` timings (548 s, 151 s, 201 s) are **not** usable for `#101`: a browser was
+  being installed during the run
+- state left in the cluster: Helm release `superset` (revision 2), Secrets `superset-secrets` and
+  `superset-gold-ro-credentials`, role `superset_ro`, the dashboard imported in Superset; `lakehouse.silver`,
+  `lakehouse.gold` and the PostgreSQL `gold` schema hold the rebuild of run `e2e100-1`; no throwaway pod remains
+- next: issue `#101` (Spark performance benchmark), which measures `#98`'s and `#99`'s jobs; run it on a quiet machine
+- the cluster was shut down at the end of the session (k3s stopped); start it again with `sudo systemctl start k3s`
+  before any cluster work, and check `kubectl get pods -n tfm-lakehouse` (the Airflow pods restart on their own)
 
 ### Issue #99 Completed: Silver -> Gold, Indicators & `transform_publish` DAG
 

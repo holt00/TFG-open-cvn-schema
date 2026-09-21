@@ -94,7 +94,7 @@ to work out of sequence (per the Roadmap Rules above).
 | `#97` | Bronze landing & `ingest_validate` DAG | Completed | `docs/roadmap/tfm/issues/issue-97-bronze-landing-and-ingest-validate-dag.md`; epic phase 2; depends on `#90`, `#91`, `#93`, `#94`, `#95`, `#96` |
 | `#98` | Bronze -> silver: validation & entity resolution | Completed | `docs/roadmap/tfm/issues/issue-98-bronze-to-silver-validation-and-entity-resolution.md`; epic phase 3; depends on `#92`, `#93`, `#97` |
 | `#99` | Silver -> gold: indicators & `transform_publish` DAG | Completed | `docs/roadmap/tfm/issues/issue-99-silver-to-gold-indicators-and-transform-publish-dag.md`; epic phase 3; depends on `#98` |
-| `#100` | Superset dashboard | Planned | `docs/roadmap/tfm/issues/issue-100-superset-dashboard.md`; epic phase 4; depends on `#91`, `#99` |
+| `#100` | Superset dashboard | Completed | `docs/roadmap/tfm/issues/issue-100-superset-dashboard.md`; epic phase 4; depends on `#91`, `#99` |
 | `#101` | Spark performance benchmark | Planned | `docs/roadmap/tfm/issues/issue-101-spark-performance-benchmark.md`; epic phase 4; depends on `#98` |
 | `#102` | Hardening | Planned | `docs/roadmap/tfm/issues/issue-102-hardening.md`; epic phase 5; depends on `#90`-`#101` |
 | `#103` | Memoria assembly | Planned | `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md`; epic phase 6; closing issue |
