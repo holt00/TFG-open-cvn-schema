@@ -25,6 +25,9 @@ codegen = [
     "xsdata-pydantic>=24.5",
     "xsdata[cli,lxml]>=26.2",
 ]
+dev = [
+    "matplotlib>=3.11.2",
+]
 testing = [
     "pytest>=9.0.2",
     "pytest-xdist>=3.8.0",

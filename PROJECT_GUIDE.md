@@ -305,6 +305,15 @@ files in order:
   dashboard export with the script that imports it, and screenshots; Superset reads the PostgreSQL `gold`
   schema that issue `#99` publishes, shows aggregates only (no personal names) and caches nothing, so a new
   `transform_publish` run shows up at once
+- `src/tfm_lakehouse/benchmark/` and `docs/benchmark/`: the Spark performance benchmark (issue `#101`, completed) --
+  lands three isolated data scales (1x, 2x, 4x) into their own buckets, runs the silver, gold and publish jobs on
+  the cluster with 1, 2 and 4 executors in a randomized, repeated protocol, reads each run's Spark event log,
+  checks that the outputs are identical across executor counts (`spark_jobs/table_digest.py`) and writes the
+  tables and charts of the memoria; nothing of production (`lakehouse.silver`, `lakehouse.gold`, PostgreSQL
+  `gold`, the Superset dashboard) is read or written. `docs/benchmark/README.md` has the reproduction steps;
+  raw run data goes to the git-ignored `data/benchmark/`; results are in `docs/benchmark/results.md` -- the
+  headline finding is that under the fixed per-executor memory sizing, executor count is a reliability lever
+  (a deterministic memory ceiling for the silver job at larger scales) as much as a speed one
 - `infra/ingest/README.md`: the ingestion image (Python 3.14 plus
   dependencies) the `ingest_validate` DAG's pods run (issue `#97`)
 - `dags/`: Airflow DAG sources for the TFM lakehouse: the issue `#93`

@@ -15,6 +15,12 @@
 # registry, verified pullable anonymously at plan time (2026-09-15), same
 # reasoning as minio-values.yaml. volumePermissions and metrics are disabled
 # by default in this chart, so no other image references need pinning.
+#
+# primary.resources: overrides the chart's default resourcesPreset ("nano", a 192Mi memory
+# limit). Found undersized during issue #101's benchmark campaign: publishing the 4x gold
+# scale's staging tables OOMKilled the container outright (exit 137) mid-transaction, twice,
+# even though 1x/2x published fine at 192Mi. The machine has double-digit GB free, so this
+# raises the ceiling with a wide safety margin rather than tuning it to the exact failure size.
 
 image:
   registry: docker.io
@@ -36,3 +42,10 @@ primary:
     enabled: true
     storageClass: local-path
     size: 8Gi
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1536Mi

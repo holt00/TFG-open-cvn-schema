@@ -93,10 +93,84 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-21 (issue `#100`, Superset dashboard, completed: verified end to end on the cluster, and
-  `uv run pytest -n auto tests` green in a single run after capping the concurrent Spark containers of the tests)
+- Last updated: 2026-09-24 (issue `#101`, Spark performance benchmark, completed: 108-run campaign
+  finished on the cluster, correctness verified, results analyzed and documented)
 
 ## Entries
+
+### Issue #101 Completed: Spark Performance Benchmark
+
+- twelfth TFM implementation issue completed; branch `issue-101-spark-performance-benchmark`,
+  created from `origin/development` (which contained `#100`). Second issue of epic phase 4
+- planned first and every decision recorded with its reason in the issue document (Task 0, D1-D21
+  accepted before execution); the three decisions put to the user (D1 the assistant writes files,
+  D2 measure all three jobs not just silver, D3 three scales times executors `{1,2,4}`) were all
+  chosen as offered or, for D2, more broadly than the recommendation
+- **new package** `src/tfm_lakehouse/benchmark/` (`data`, `runner`, `campaign`, `eventlog`,
+  `report`) and `src/tfm_lakehouse/spark_jobs/table_digest.py`; `matplotlib` added as a
+  development dependency; results in `docs/benchmark/` (`results.md`/`.csv`/`.json`, three
+  charts), reproduction steps in `docs/benchmark/README.md`
+- **isolated three-scale campaign:** 1x/2x/4x (each nested in the smaller ones: 20k/40k/80k ORCID
+  bulk records, 11k/22k/44k synthetic CVNs, a fixed 200-record ORCID API sample), landed into
+  their own MinIO buckets and Iceberg namespaces/PostgreSQL schemas, never touching production
+  (`lakehouse.silver`/`.gold`, PostgreSQL `gold`, the `#100` dashboard)
+- **the campaign itself (108 runs: silver/gold/publish x 3 scales x 3 executor counts x 3
+  repetitions, warm-ups and digests) ran from 2026-09-21 22:49 to 2026-09-24 18:16**, almost all
+  of it unattended, and needed nine rounds of the assistant diagnosing and fixing a real incident
+  before it could finish (decisions D22-D29, each with the exact incident, root cause and fix
+  recorded in the issue document): a host suspend producing a false timeout (fixed with a
+  monotonic clock, D22); a real, deterministic executor-memory ceiling at 1 executor for larger
+  scales, which the campaign learned to stop repeating once confirmed (D23, D25, and two further
+  bugs in that same bookkeeping found and fixed, D26/D27/D28); a missing-table crash when a digest
+  or a downstream job read an upstream stage's failed output, fixed by treating a missing table as
+  data (D24) and by an automatic repair run before gold/publish when the upstream output was not
+  valid (D26b, with its own recency-tracking bug fixed as D28); and PostgreSQL's own default Helm
+  chart memory limit (192Mi) OOMKilling the container while publishing the largest scale's gold
+  tables, fixed by raising it (D29, `infra/helm-values/postgresql-values.yaml`)
+- **the host slept or restarted for real six separate times** across the roughly 68 hours the
+  campaign was open; each time the assistant found and cleaned orphaned pods, confirmed MinIO/
+  PostgreSQL/Superset/Airflow state, and resumed the campaign from where it stopped (it is
+  resumable by design: a run recorded `"ok"` is never repeated)
+- **correctness (decision D9), verified:** every `(scale, job)` where more than one executor count
+  actually produced output agrees byte-for-byte on its Iceberg/PostgreSQL content digest --
+  confirmed for `1x`/`2x`/`4x` gold and publish across 1, 2 and 4 executors, and for `1x`/`2x`
+  silver (`4x` silver only ever had one surviving executor count, 4, so nothing to compare it to)
+- **headline finding:** at the fixed per-executor sizing, the number of executors is a
+  *reliability* lever, not only a speed one, once volume grows -- 1 executor is a deterministic
+  memory ceiling for silver from `2x` upward, and at `4x` even 2 executors is one; more executors
+  also do not reliably reduce runtime on this single-node cluster (silver's speedup at `1x` is
+  only 1.63x at 4 executors; gold's efficiency collapses from 1.00 to 0.23 between 1 and 4
+  executors at every scale), with CPU sampling pointing at the shared MinIO object store, not CPU,
+  as the practical limit (not proven, but consistent evidence); the publish job's runtime barely
+  grows with data volume at all (a negative size-up exponent), since it always stages the same
+  small number of already-aggregated gold tables
+- **two report bugs found and fixed while reading the first analysis** (not campaign bugs, both
+  before any figure was trusted): a misleading `correctness_ok=False` caused purely by confirmed-
+  OOM configurations producing no output (fixed by reporting `empty_executors` and `consistent`
+  separately); and all 9 final `4x-publish` runs falsely showing "executor pods left behind"
+  because the leftover check listed every executor pod in the namespace instead of scoping to the
+  run's own Spark application id -- a stale orphan from one unrelated, earlier, independently-
+  failed run got blamed on nine later, unrelated, genuinely successful ones (fixed for future runs,
+  `Cluster.app_id`/scoped `executor_pods`; the nine affected records corrected by hand with the
+  evidence recorded in each)
+- tests: 76 new in `tests/test_benchmark_unit.py` (several reproducing real incidents found while
+  running the campaign) plus 3 in `tests/test_benchmark_digest_spark.py` (Spark image); full suite
+  `uv run pytest -n auto tests`, as documented: 909 passed, 2 skipped in 11 min 40 s, one run
+- new limitations recorded in `docs/pipeline/known_limitations.md` (the fixed-sizing deterministic
+  ceiling, single-node non-CPU-bound scaling, and the PostgreSQL default resource preset, now
+  resolved); `docs/roadmap/tfm/tfm_roadmap.md`'s row for `#101` is `Completed`; full detail,
+  including every decision D1-D29 with its reason and rejected alternative, and the full incident-
+  by-incident record of the campaign, is in
+  `docs/roadmap/tfm/issues/issue-101-spark-performance-benchmark.md`
+- state left in the cluster: the `bench_*` MinIO buckets, Iceberg namespaces and PostgreSQL
+  schemas are dropped; Superset and Airflow are restored to their pre-campaign replica counts and
+  verified healthy (one Airflow log-groomer sidecar container restart-looping on a
+  `DetachedInstanceError`, the pre-existing operational fragility issue `#102` already covers, not
+  introduced by this issue); production `lakehouse.silver`/`.gold`, PostgreSQL `gold` and the
+  `#100` dashboard were never touched by the campaign; k3s left running
+- next: issue `#102` (hardening), which inherits the fixed-sizing memory ceiling as an accepted,
+  documented limitation and the raised PostgreSQL resource limit as a production-relevant change
+  made during this issue
 
 ### Issue #100 Completed: Superset Dashboard
 

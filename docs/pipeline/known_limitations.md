@@ -50,6 +50,9 @@ do not need to rediscover them.
 | The Superset deployment is local, single-replica and unhardened | `infra_gotcha` | One replica of each component, no TLS or SSO, reached only through `kubectl port-forward`; Superset's metadata (2 Gi PVC on `local-path`) has no backup; the first `helm install` exceeded Helm's default 5-minute timeout because the chart's PostgreSQL takes about 2 minutes to boot, leaving a healthy release marked `failed`; the image is built on the host and imported by hand | Credentials only in Kubernetes Secrets; `superset_ro` is read-only; install with `--timeout 15m`; the dashboard is rebuilt from `infra/superset/assets/` | `#102` (hardening) | Accepted for a local cluster |
 | The dashboard shows aggregates over a lower-bound indicator and disables its data cache | `indicator_validity_limitation` | Charts leave out publications before 1980 (443), stays with no start year or outside 1970-2026 (16,231 of 94,431) and the collaboration lower bound of `#99`; with `cache_timeout = -1` every view queries PostgreSQL, which is fine for these aggregates and would not scale to large tables; no chart names a person | Each chart's description states what it leaves out; the caching choice is one field of the connection | Re-enable caching with an explicit refresh if the tables grow | Accepted |
 | The Spark-in-Docker tests fail when too many run at once | `test_environment_limitation` | `-n auto` (16 workers) started up to 16 Spark containers together, so runs failed with a 600-900 s `TimeoutExpired` or with `CANNOT_OPEN_SOCKET`; the full suite took 32-33 min with 4-9 failures, also on an idle machine with the cluster stopped | `tests/spark_image.py` lets four containers run at once across the pytest workers (`SPARK_TEST_SLOTS` to change it) and removes the container of an aborted run | None | Resolved in issue `#100`: `uv run pytest -n auto tests` gave 828 passed, 2 skipped in 10 min 15 s in one run |
+| At the fixed per-executor memory sizing, 1 executor (and, at 4x, also 2) is a deterministic memory ceiling for the silver job past 1x volume | `scalability_limitation` | Every silver attempt at 2x/4x with 1 executor OOM'd (`exit code 52(JVM OOM)`); at 4x, 2 executors also OOM'd on both of its attempts; only 4 executors ever completed 4x silver | The benchmark's campaign detects a configuration with zero successes across at least two attempts and stops repeating it instead of chasing a result that cannot happen (`_confirmed_deterministic_oom`, issue `#101` decision D25) | Raise the per-executor memory ceiling only as a deliberate, separate change; it would break the benchmark's own fixed-sizing comparison | Accepted, not a blocker; documented finding of issue `#101` |
+| More executors do not reliably reduce runtime on this single-node cluster | `scalability_limitation` | Silver's speedup at 1x is 1.50x at 2 executors and only 1.63x at 4 (efficiency 0.75, then 0.41); gold's efficiency collapses from 1.00 to 0.23 between 1 and 4 executors at every scale; CPU sampling shows the node is not CPU-bound (under 33% busy even at 4 executors), consistent with (not proven to be caused by) the shared MinIO object store as the practical limit | Reported as-is in `docs/benchmark/results.md`; not tuned around | A dedicated I/O profiling pass, or a multi-node cluster, would be needed to isolate the exact mechanism | Accepted, not a blocker; documented finding of issue `#101` |
+| PostgreSQL's default Helm chart resource preset was undersized for the gold-layer publish at larger data volume | `infra_sizing_limitation` | The Bitnami chart's `resourcesPreset: "nano"` (a hard 192Mi memory limit) OOMKilled the PostgreSQL container while staging 4x's gold tables, breaking the publish job with a misleading `Connection refused` | `infra/helm-values/postgresql-values.yaml` now sets `primary.resources` explicitly (256Mi/1 core requests, 1536Mi/1 core limits), applied and verified with all schemas and data intact | Revisit the exact limit if a future workload grows past this benchmark's 4x scale | Resolved in issue `#101` (decision D29); the raised limit also benefits production `#99`/`#100` publishes |
 
 ## Structural Binding Limitations
 
@@ -978,6 +981,42 @@ do not need to rediscover them.
   then gave 828 passed and 2 skipped in 10 min 15 s in a single run on an idle machine with the cluster stopped
   (32-33 minutes and failures before); six tests in `tests/test_spark_image_slots_unit.py` cover the mechanism
 - if the machine has fewer cores or the Spark image gets heavier, `SPARK_TEST_SLOTS=2` is the first thing to try
+
+### The Fixed Per-Executor Memory Sizing Is A Deterministic Ceiling For Some Configurations Past 1x
+
+- discovered during issue `#101` (the benchmark campaign)
+- decision D8 fixes executor memory across the whole executor-count grid (1 GiB heap, 1 GiB
+  overhead for silver, 512 MiB for gold/publish) so that only the executor count varies -- this is
+  deliberate (it is the whole point of the comparison), but it means a single executor cannot hold
+  a larger scale's working set alone: every silver attempt at 2x/4x with 1 executor OOM'd
+  (`exit code 52(JVM OOM)`); at 4x, 2 executors turned out to be a ceiling too (both its attempts
+  OOM'd); gold hit the same wall once, at 4x/2 executors
+- `_confirmed_deterministic_oom` (`src/tfm_lakehouse/benchmark/campaign.py`) recognizes a
+  configuration with zero successes across at least two attempts and stops the campaign from
+  repeating it for no new information, while a merely marginal configuration (one that sometimes
+  succeeds, like 2x silver at 2 executors: 2 successes, 1 OOM) keeps its normal three repetitions
+- expected follow-up: none for this TFM; a future increase of the per-executor memory budget would
+  need to be a deliberate change to the pipeline's own sizing (`transform_publish`'s DAG
+  parameters), not something this benchmark should paper over
+
+### PostgreSQL's Default Chart Resource Preset OOMKilled Under The Largest Gold Volume
+
+- discovered during issue `#101` (the benchmark campaign, publishing the 4x gold scale)
+- the `postgresql` Helm chart defaults `primary.resourcesPreset` to `"nano"` (a hard 192Mi memory
+  limit) when `primary.resources` is not set explicitly; issue `#91`'s original values file never
+  overrode it, and 1x/2x's smaller gold tables never exercised the limit
+- staging and swapping 4x's roughly four-times-larger gold tables OOMKilled the PostgreSQL
+  container outright (`kubectl describe pod`: `Reason: OOMKilled, Exit Code: 137`), which surfaced
+  to the publish job as a misleading `Connection to postgresql...svc.cluster.local:5432 refused`,
+  reproduced identically twice before the real cause was found
+- resolved in issue `#101` (decision D29): `infra/helm-values/postgresql-values.yaml` now sets
+  `primary.resources` explicitly (256Mi/1 core requests, 1536Mi/1 core limits, applied with
+  `helm upgrade`); verified the pod restarted healthy with every schema (`gold`, `bench_1x`,
+  `bench_2x`, `bench_4x`) and its data intact, and every 4x publish configuration then completed
+  and agreed byte-for-byte
+- this also benefits production: the `gold` schema `#99`/`#100` publish to shares the same
+  PostgreSQL instance and was previously exposed to the same undersized default as data volume
+  grows
 
 ## Documentation Rule
 
