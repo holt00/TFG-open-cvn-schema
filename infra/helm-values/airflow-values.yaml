@@ -26,3 +26,27 @@ dags:
     enabled: true
     size: 1Gi
     storageClassName: local-path
+
+# Issue #102 (hardening) fix for a finding from issue #97: the api-server's
+# liveness/readiness probes (chart defaults: 5s timeout, 5 failures, no pod
+# resources at all) killed the container (exit code 137) the moment the
+# first DAG run started and the node got busy. With no CPU/memory request
+# set, the api-server had the lowest scheduling priority of any pod on this
+# single-node cluster, so it was starved first under contention. A request
+# (no limit, to avoid trading starvation for a new OOM risk, per the
+# PostgreSQL lesson from issue #101) plus a longer probe timeout give it
+# both a fair CPU share and more headroom before a slow health check is
+# read as a hang.
+apiServer:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+  livenessProbe:
+    timeoutSeconds: 15
+    failureThreshold: 8
+    periodSeconds: 15
+  readinessProbe:
+    timeoutSeconds: 15
+    failureThreshold: 8
+    periodSeconds: 15

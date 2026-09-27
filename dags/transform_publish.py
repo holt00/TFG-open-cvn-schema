@@ -33,6 +33,8 @@ the write's options, so they need no environment variable of their own.
 
 from __future__ import annotations
 
+import os
+
 import pendulum
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
 from airflow.sdk import DAG, Param
@@ -40,8 +42,12 @@ from kubernetes.client import models as k8s
 
 NAMESPACE = "tfm-lakehouse"
 SPARK_IMAGE = "tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-gold"
-# Path of the repository checkout on the machine that runs k3s.
-REPO_ROOT = "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+# Path of the repository checkout on the machine that runs k3s. Override with
+# TFM_REPO_ROOT (set on the dag-processor/scheduler pods, e.g. via a Helm
+# values env entry) on a checkout other than this development machine's;
+# issue #102 found this had to be hand-edited otherwise (see
+# docs/development/tfm_lakehouse_workflow.md, Canonical Prerequisites).
+REPO_ROOT = os.environ.get("TFM_REPO_ROOT", "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema")
 JOBS = "/repo/src/tfm_lakehouse/spark_jobs"
 RUN_DIR = "{{ run_id | replace(':', '_') | replace('+', '_') }}"
 

@@ -326,6 +326,10 @@ files in order:
 ### Development Reference
 
 - `docs/development/setup.md`: environment and execution commands
+- `docs/development/tfm_lakehouse_workflow.md`: issue `#102` from-scratch
+  reproducibility quickstart for the TFM lakehouse platform -- k3s bring-up,
+  core services, the Iceberg/Spark images, both DAGs, and the Superset
+  dashboard
 - `docs/development/regeneration_workflow.md`: complete CVN regeneration and
   verification workflow
 - `docs/development/parser_workflow.md`: contributor guide for using and testing

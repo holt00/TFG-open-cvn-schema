@@ -93,10 +93,94 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-24 (issue `#101`, Spark performance benchmark, completed: 108-run campaign
-  finished on the cluster, correctness verified, results analyzed and documented)
+- Last updated: 2026-09-26 (issue `#102`, hardening, completed: both verification phases passed,
+  including a real bug found and fixed during the fresh-cluster rebuild; the epic's phase 5 is done)
 
 ## Entries
+
+### Issue #102 Completed: Hardening
+
+- thirteenth TFM implementation issue started; branch `issue-102-hardening`, created from
+  `origin/development` (which contained `#101`). First (and only) issue of epic phase 5
+- planned first and every decision recorded with its reason in the issue document (Task 0, D1-D4); D1
+  (assistant does everything possible, notifies on `sudo`/an open decision) was stated directly by the
+  user in this issue's own kickoff instructions rather than asked again; D4 (verification depth) was
+  put to the user, who chose a two-phase gate: validate in place first, then a full fresh rebuild only
+  if that passes clean
+- **Task 1 (fragility audit) found real, live breakage on the cluster at planning time, not
+  hypothetical risk**: `airflow-scheduler` was in `CrashLoopBackOff` at 57 restarts. Root cause,
+  confirmed via logs and a direct DB query (not assumed): upstream apache/airflow issue `#67813`
+  (open, unfixed on Airflow 3.2.2 / `cncf-kubernetes` 10.17.1), a `DetachedInstanceError` crash
+  building a log message for a stale `TaskInstance` row a dead scheduler had left running. `#101`'s own
+  status entry had misidentified the crashing container as the `scheduler-log-groomer` sidecar; it was
+  the `scheduler` container itself. No upstream fix exists; fixed operationally by marking the row
+  `failed` through Airflow's ORM and cleaning three stale pods. The scheduler's very first task
+  dispatch after recovery then reproduced a second, separate known issue live (`#97`'s finding: the
+  api-server killed by its own liveness probe under load, root-caused this time to having **no**
+  resource request at all, so it was starved first under contention) -- fixed in
+  `infra/helm-values/airflow-values.yaml` (a CPU/memory request, relaxed probe timing) and confirmed by
+  two fresh DAG runs (`ingest_validate` 4m20s, `transform_publish` 9m22s) completing cleanly with 0
+  component restarts throughout
+- **Task 3**: `docs/development/tfm_lakehouse_workflow.md` (new), the from-scratch reproducibility
+  quickstart, mirroring `regeneration_workflow.md`'s section shape, built from the actual infra READMEs
+  and DAG source read directly
+- **Task 2 Phase A (validate in place) passed clean**: the document's chart-version pins, file paths,
+  and Secrets all cross-checked against the live cluster; its DAG-trigger steps are exactly what Task
+  1's verification runs already proved. Phase B (tear down k3s, rebuild from nothing following only the
+  document) is gated on Phase A and not yet run -- costly (hours, several `sudo`/interactive
+  checkpoints), the user's call per D4
+- **Task 4**: one real, concrete fix, not a speculative sweep -- writing the quickstart document
+  surfaced that `dags/ingest_validate.py` and `dags/transform_publish.py` both hardcoded `REPO_ROOT` to
+  this machine's exact checkout path with no override, undocumented anywhere. Fixed with a
+  `TFM_REPO_ROOT` environment-variable override (same pattern as the benchmark package's own
+  `BENCH_REPO_ROOT`, issue `#101`), default unchanged, redelivered to the live cluster, no import
+  errors, existing tests still pass
+- **Task 2 Phase B ran, not skipped -- against an isolated k3d cluster, not the real one.** The user
+  asked whether destruction could be avoided ("can we not erase everything and reconstruct it in a
+  temp folder or other folder?"); the assistant proposed three options (destroy-and-rebuild the real
+  cluster; a second bare-metal k3s instance with its own `--data-dir`; k3d) recommending k3d, and the
+  user chose it ("do the best option"). `k3d` installed with no `sudo` (`~/.local/bin`); a cluster
+  pinned to the exact same k3s version as the real one (`v1.36.4+k3s1`) was created with the repository
+  checkout bind-mounted at its own path, so the DAGs' hostPath volumes resolved identically; its own
+  separate kubeconfig never touched `~/.kube/config` or the real cluster
+- the whole quickstart document ran end to end on that isolated cluster: core services (both
+  `scheduler`/`api-server` at `0` restarts immediately, confirming Task 1.3's fix is baked into the
+  values file, not just live-patched), Spark/ingest images (`k3d image import`, no `sudo` needed
+  either), `ingest_validate` (clean), and Superset (installed, dashboard confirmed queryable through
+  its own REST API)
+- **`transform_publish` found a second real bug**: `publish_gold_to_postgres` failed with
+  `password authentication failed for user "gold" ... Role "gold" does not exist`, even though the two
+  jobs before it had already succeeded. Root cause, confirmed via `kubectl logs postgresql-0
+  --previous`: on a genuinely fresh cluster, all core services cold-start and pull images at once, and
+  that contention killed PostgreSQL's very first `initdb` before it ever created the `gold` role; the
+  Bitnami image never retries an interrupted first-boot init on restart. Fixed by deleting the pod and
+  its PVC to force a clean reinitialization; getting the actual failing pod's logs (deleted by default
+  on completion, no log persistence configured) required a temporary, reverted debug edit
+  (`on_finish_action`: `"delete_pod"` -> `"keep_pod"`, delivered only to the isolated cluster)
+- **independent, real-world reconfirmation of Task 1.1's fix**: after Phase B, restarting the real k3s
+  (stopped again by an unrelated host event) brought the scheduler up in the exact same
+  `DetachedInstanceError` `CrashLoopBackOff` as at planning time, with a fresh orphaned task row from a
+  different date. The same documented recovery (mark the row and its `DagRun` failed, delete the
+  orphan pods, force-restart the scheduler) fixed it again immediately, with zero code changes --
+  strong evidence the recovery recipe is genuinely reusable, not a one-off
+- six new/updated entries in `docs/pipeline/known_limitations.md`: the api-server liveness kill (now
+  **Resolved**), the scheduler `DetachedInstanceError` poison pill (**Resolved operationally**, no
+  upstream fix, independently reconfirmed), a crashed scheduler leaving `KubernetesExecutor` worker
+  pods stuck `Unknown` (accepted, documented recovery step), and an interrupted PostgreSQL first boot
+  never creating its application role (accepted upstream behavior, documented recovery step)
+- tests: `uv run pytest -n auto tests`, as documented, run before Phase B (**909 passed, 2 skipped in
+  10m51s**) and again after (the host rebooted mid-run first, unrelated, losing that log; a fresh run
+  once the cluster was confirmed healthy again gave **907 passed, 2 skipped, 2 errors in 10m52s**, both
+  errors the already-documented Spark-in-Docker container-concurrency flakiness, confirmed not a
+  regression by `uv run pytest tests/test_gold_jobs_spark.py -q` alone: **12 passed in 5m31s**)
+- state left in the cluster: the isolated k3d cluster was deleted after Phase B
+  (`k3d cluster delete`); the real cluster is fully healthy (`airflow-scheduler`/`airflow-api-server`
+  both `0` restarts on their current pods) after the independent recovery above; production
+  `lakehouse.silver`/`.gold` and the PostgreSQL `gold` schema hold the rebuild from Task 1's
+  verification runs (`issue102_verify_1`); Superset/Airflow replica counts untouched; k3s left running
+- next: issue `#103` (memoria assembly), which can cite `docs/development/tfm_lakehouse_workflow.md`
+  directly and this issue's findings (the poison pill and its reconfirmation, the api-server
+  starvation, the PostgreSQL init race, the k3d methodology) for the memoria's hardening discussion
 
 ### Issue #101 Completed: Spark Performance Benchmark
 

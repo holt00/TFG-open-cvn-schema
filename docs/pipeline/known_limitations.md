@@ -34,7 +34,9 @@ do not need to rediscover them.
 | The `ingest_validate` DAG mounts code and data from the repository checkout with hostPath | `infra_limitation` | The DAG only works on a single-node k3s that shares a disk with the checkout, and `REPO_ROOT` in the DAG file is an absolute path of this machine | Chosen deliberately (issue `#97`, D2): code edits need no image rebuild and no `sudo` import; verified working on `/mnt/e` | Bake the code into the image, or pack the subset into MinIO first, before any multi-node or cloud deployment | Accepted for the local-only TFM cluster, not a blocker |
 | Only a capped, deterministic sample of the ORCID bulk subset is landed into bronze by default | `data_scope_limitation` | The 301,763-record subset is roughly 42 GB of XML (estimate); the default DAG run lands the first 20,000 records in bucket order (2.7 GB), not a random sample | `bulk_max_records` DAG parameter (0 lands all); the snapshot lands once, and the cap is part of the snapshot id | Land everything (about 1 hour and 40 GB, extrapolated) if `#101`'s benchmark needs the volume | Default confirmed by the user, not a blocker |
 | Reading all of `bronze/` as one Spark dataset mixes payload types | `reader_gotcha` | `payload` is an XML string for ORCID bulk and a JSON object for the other sources, so `spark.read.json("bronze/")` collapses it to `string` | Each source has its own `source=<name>` path; `_manifest.json` and `_rejected/` are skipped by Spark readers | Issue `#98` reads each source separately | Standing gotcha for `#98` |
-| The Airflow api-server can be killed by its own liveness probe under load | `infra_fragility` | Every task starting during the restart fails with `Connection refused` from the executor's worker pod, before any task code runs; the failed worker pods stay in `Error` | Re-trigger with a new run id and delete the leftover worker pods | Relax the probe (`timeout`, `failureThreshold`) or size the pod in issue `#102` | Observed once in issue `#97`, not a blocker |
+| The Airflow api-server can be killed by its own liveness probe under load | `infra_fragility` | Every task starting during the restart fails with `Connection refused` from the executor's worker pod, before any task code runs; the failed worker pods stay in `Error` | `infra/helm-values/airflow-values.yaml` now sets `apiServer.resources.requests` (200m CPU / 512Mi memory, so the pod is no longer the lowest-priority one on the node under contention) and relaxes `livenessProbe`/`readinessProbe` (5s/5-failure -> 15s/8-failure) | None | Resolved in issue `#102`; reproduced live once more moments before the fix landed (a fresh manual `ingest_validate` run failed the same way), then verified fixed by a follow-up run |
+| A scheduler restart can permanently crash-loop on a stale orphaned-task row (`DetachedInstanceError`) | `infra_fragility` | Upstream apache/airflow issue [#67813](https://github.com/apache/airflow/issues/67813) (open, unfixed as of Airflow 3.2.2 / `cncf-kubernetes` 10.17.1, this deployment's exact pins): `adopt_or_reset_orphaned_tasks` crashes building a log message for any `TaskInstance` row left `running`/`queued`/`scheduled` by a scheduler that died mid-task; because the row persists, every restart re-crashes on it deterministically (57 restarts observed) | No upstream fix; the operational workaround is to mark the offending `TaskInstance`/`DagRun` rows `failed` directly through Airflow's ORM (the same mutation the UI's "mark failed" action performs), from a healthy pod, then delete the pod it names as `hostname` if still present | Recognize the signature (`DetachedInstanceError` in `adopt_or_reset_orphaned_tasks`/`reset_tis_message`) quickly if it recurs; re-check for an upstream fix before the next Airflow version bump | Resolved operationally in issue `#102`; will recur on any future scheduler crash mid-task until fixed upstream |
+| A crashed scheduler can leave `KubernetesExecutor` worker pods stuck `Unknown` instead of cleaned up | `infra_gotcha` | Airflow deliberately keeps a *failed* worker pod for debugging (`delete_worker_pods_on_failure` defaults `False`), but a scheduler that crash-loops before ever processing the pod's terminal event never reaches that decision, so the pod sits `Unknown` indefinitely rather than being cleanly marked failed-and-kept | Manual cleanup: `kubectl delete pod` once the underlying `TaskInstance` row is resolved (see the row above) | Check for `Unknown`-state pods after recovering from any scheduler crash-loop; documented as an operational step in the quickstart document | Accepted, not a blocker; found in issue `#102` |
 | Unpausing a cron-scheduled Airflow 3 DAG creates the latest missed run at once | `infra_gotcha` | The `ingest_validate` DAG ran its 00:00 schedule the moment it was unpaused at 15:52 UTC | Know it before unpausing; the DAG is idempotent per run id | Unpause just before the scheduled time when an immediate run is unwanted | Standing gotcha for `#99`'s DAG |
 | The bronze -> silver job runs on the Spark image's Python 3.10, not the repository's 3.14 | `infra_limitation` | The repository's own code must stay Python 3.10 compatible, and the job's dependencies are not exactly `uv.lock`'s (`rpds-py 2026.6.3` needs Python >=3.11); PySpark cannot run on the host, so DataFrame code is verified in the image | `ast.parse(feature_version=(3, 10))` test plus forbidden-name checks; pins in `requirements-silver.txt`; Spark tests run in the image and skip without Docker | Revisit when the Spark image moves to a Spark/Python pair that supports a newer Python | Accepted, not a blocker |
 | Entity resolution is deterministic and deliberately conservative | `resolution_quality_limitation` | Rule R2 (name and affiliation) measured precision 95.8% and recall 74.2% at 10,000 documents, below the plan's 99% precision target; recall is capped by CVNs with no affiliation; a person with two ORCID iDs is two entities | Unique-candidate rule, at most one name relaxation, organizations equal after normalization; each link's `evidence` carries `name_match` and `shared_organizations` | `#99` may filter weak merges (for example two shared organizations, which were 78 of 78 correct); no ML per the epic | Accepted, target not met, not a blocker |
@@ -53,6 +55,7 @@ do not need to rediscover them.
 | At the fixed per-executor memory sizing, 1 executor (and, at 4x, also 2) is a deterministic memory ceiling for the silver job past 1x volume | `scalability_limitation` | Every silver attempt at 2x/4x with 1 executor OOM'd (`exit code 52(JVM OOM)`); at 4x, 2 executors also OOM'd on both of its attempts; only 4 executors ever completed 4x silver | The benchmark's campaign detects a configuration with zero successes across at least two attempts and stops repeating it instead of chasing a result that cannot happen (`_confirmed_deterministic_oom`, issue `#101` decision D25) | Raise the per-executor memory ceiling only as a deliberate, separate change; it would break the benchmark's own fixed-sizing comparison | Accepted, not a blocker; documented finding of issue `#101` |
 | More executors do not reliably reduce runtime on this single-node cluster | `scalability_limitation` | Silver's speedup at 1x is 1.50x at 2 executors and only 1.63x at 4 (efficiency 0.75, then 0.41); gold's efficiency collapses from 1.00 to 0.23 between 1 and 4 executors at every scale; CPU sampling shows the node is not CPU-bound (under 33% busy even at 4 executors), consistent with (not proven to be caused by) the shared MinIO object store as the practical limit | Reported as-is in `docs/benchmark/results.md`; not tuned around | A dedicated I/O profiling pass, or a multi-node cluster, would be needed to isolate the exact mechanism | Accepted, not a blocker; documented finding of issue `#101` |
 | PostgreSQL's default Helm chart resource preset was undersized for the gold-layer publish at larger data volume | `infra_sizing_limitation` | The Bitnami chart's `resourcesPreset: "nano"` (a hard 192Mi memory limit) OOMKilled the PostgreSQL container while staging 4x's gold tables, breaking the publish job with a misleading `Connection refused` | `infra/helm-values/postgresql-values.yaml` now sets `primary.resources` explicitly (256Mi/1 core requests, 1536Mi/1 core limits), applied and verified with all schemas and data intact | Revisit the exact limit if a future workload grows past this benchmark's 4x scale | Resolved in issue `#101` (decision D29); the raised limit also benefits production `#99`/`#100` publishes |
+| An interrupted PostgreSQL first boot never creates the `gold` role, and the container never retries | `infra_fragility` | If the pod is killed/restarted during its very first `initdb` (all core services cold-starting and pulling images at once is enough contention to trigger it), the Bitnami image sees its now-non-empty data directory on restart and serves connections anyway, permanently missing whatever the interrupted run had not yet created; `publish_gold_to_postgres` then fails with `FATAL: password authentication failed for user "gold" ... Role "gold" does not exist`, not a clearly-labeled init error | `kubectl logs postgresql-0 --previous` shows exactly where init stopped; recovery is deleting the pod and its PVC (`data-<postgresql-release>-0`) to force a genuinely clean reinitialization, then re-running whatever failed on it | None; this is upstream Bitnami/PostgreSQL container behavior, not something this repository's config can prevent outright | Found and fixed operationally in issue `#102` (Phase B, an isolated k3d rebuild); recovery step documented in `docs/development/tfm_lakehouse_workflow.md` |
 
 ## Structural Binding Limitations
 
@@ -712,7 +715,7 @@ do not need to rediscover them.
 - expected follow-up: issue `#98` reads each source separately and deduplicates on
   `record_id`
 
-### The Airflow api-server Can Be Killed By Its Own Liveness Probe
+### The Airflow api-server Can Be Killed By Its Own Liveness Probe (Resolved)
 
 - discovered during issue `#97`
 - its liveness probe (`timeout=5s`, five failures) killed the container (exit code
@@ -722,8 +725,73 @@ do not need to rediscover them.
   issue began
 - failed executor worker pods are not deleted by Airflow and had to be removed by
   hand; a re-trigger with a new run id passed
-- expected follow-up: issue `#102` (hardening) should relax the probe or give the
-  pod resources
+- root cause confirmed in issue `#102`: the pod had no `resources` set at all
+  (`{}`), so under contention on this shared single-node cluster it had the lowest
+  CPU scheduling priority of anything running and was starved first, not merely
+  slow to answer its own health check
+- reproduced once more, live, in issue `#102`: right after an unrelated scheduler
+  crash-loop (see the next entry) was fixed and immediately dispatched a task, that
+  task's `ReadTimeout` talking to this same still-unpatched api-server failed the
+  whole `ingest_validate` run, moments before the fix below was applied
+- fixed in `infra/helm-values/airflow-values.yaml`: `apiServer.resources.requests`
+  (200m CPU / 512Mi memory, no limit set, to avoid trading starvation for a new OOM
+  risk per issue `#101`'s PostgreSQL lesson) plus `livenessProbe`/`readinessProbe`
+  relaxed from 5s timeout / 5 failures to 15s / 8 failures; applied with
+  `helm upgrade` and verified live on the rolled-out pod spec, then confirmed by a
+  fresh manual `ingest_validate` run completing without an api-server restart
+- unplanned side effect worth knowing: changing only `apiServer.*` values also
+  rolled the `scheduler` deployment to a new pod generation (the chart stamps a
+  shared config-checksum annotation across every component's pod template, so any
+  values change restarts all of them together)
+
+### A Scheduler Restart Can Permanently Crash-Loop On A Stale Orphaned-Task Row (Resolved Operationally)
+
+- discovered during issue `#102`, while investigating the fragility issue `#101`'s
+  status entry had flagged (that entry misidentified the crashing container as the
+  `scheduler-log-groomer` sidecar; it is the `scheduler` container itself -- the
+  sidecar's own repeated `find: cannot delete '/opt/airflow/logs': Device or
+  resource busy` is a separate, harmless cosmetic issue, since it is trying to
+  delete its own mount point)
+- root cause is upstream apache/airflow issue
+  [#67813](https://github.com/apache/airflow/issues/67813), open and unfixed as of
+  Airflow 3.2.2 / `cncf-kubernetes` provider `10.17.1` (this deployment's exact
+  pins): `SchedulerJobRunner.adopt_or_reset_orphaned_tasks` crashes with
+  `sqlalchemy.orm.exc.DetachedInstanceError` while building a log message
+  (`repr(ti)` lazy-loads `TaskInstance.state` on a session-detached instance) for
+  any `TaskInstance` row a prior, now-dead scheduler left `running`/`queued`/
+  `scheduled`. Because the row persists in the metadata DB, every scheduler restart
+  re-runs the same path and re-crashes -- a deterministic poison pill (57 restarts
+  observed here), not a transient fault
+- the exact poison-pill row was identified, not assumed:
+  `ingest_validate.generate_synthetic_cvn`, run
+  `scheduled__2026-09-21T00:00:00+00:00`, state `running`, `hostname` naming one of
+  two pods that were stuck `Unknown` in the namespace (see the next entry)
+- no upstream fix exists yet, so the workaround is operational: mark the offending
+  `TaskInstance`/`DagRun` rows `failed` directly through Airflow's own ORM session
+  (from a healthy, non-scheduler pod) -- the same mutation the Airflow UI's "mark
+  failed" action performs -- then delete the pod it names, if still present, and
+  force-restart the scheduler pod. It came up immediately with 0 restarts
+- expected follow-up: if this recurs, recognize the signature quickly
+  (`DetachedInstanceError` inside `adopt_or_reset_orphaned_tasks`/
+  `reset_tis_message`) and apply the same workaround; re-check whether apache/
+  airflow#67813 has an upstream fix before the next Airflow version bump
+
+### A Crashed Scheduler Can Leave `KubernetesExecutor` Worker Pods Stuck `Unknown`
+
+- discovered during issue `#102`, alongside the entry above
+- Airflow's `KubernetesExecutor` deliberately keeps a *failed* worker pod around
+  for debugging (`delete_worker_pods_on_failure` defaults `False`), but that
+  decision is only reached once the scheduler processes the pod's terminal event;
+  a scheduler that crash-loops before ever reaching that point (as in the entry
+  above) leaves the pod stuck `Unknown` instead, indistinguishable at a glance from
+  a genuine leak
+- two of the three pods found stale in issue `#102` were exactly this
+  (`generate-synthetic-cvn-1v0ocudn`, `ingest-validate-generate-synthetic-cvn-02rg8jb7`);
+  the third (`issue93-spark-submit-launcher`, `Completed`) is unrelated, benign
+  leftover from issue `#93`'s smoke-test `KubernetesPodOperator`
+- handling: once the underlying `TaskInstance` row is resolved (previous entry),
+  `kubectl delete pod` the stale pod; documented as an operational step in
+  `docs/development/tfm_lakehouse_workflow.md`
 
 ### Unpausing A Cron-Scheduled Airflow 3 DAG Creates The Latest Missed Run At Once
 
@@ -1017,6 +1085,32 @@ do not need to rediscover them.
 - this also benefits production: the `gold` schema `#99`/`#100` publish to shares the same
   PostgreSQL instance and was previously exposed to the same undersized default as data volume
   grows
+
+### An Interrupted PostgreSQL First Boot Never Creates The `gold` Role, And The Container Never Retries
+
+- discovered during issue `#102`, Phase B (an isolated k3d rebuild of the whole platform from
+  nothing, deliberately not touching the real cluster)
+- on a genuinely fresh cluster, MinIO, PostgreSQL, and Airflow's own embedded PostgreSQL all cold-start
+  and pull images at once; that contention was enough to kill the `postgresql` pod's very first
+  `initdb` partway through (`kubectl logs postgresql-0 --previous` stopped right after "Generating
+  local authentication configuration", before ever reaching the `CREATE ROLE`/`CREATE DATABASE` step
+  for `gold`)
+- the Bitnami image does not detect or retry an interrupted first-boot init: on restart it sees a
+  non-empty data directory and starts serving connections anyway, permanently missing whatever the
+  interrupted run had not yet created. This surfaced two steps downstream, as `publish_gold_to_postgres`
+  failing with `FATAL: password authentication failed for user "gold" ... Role "gold" does not exist`
+  -- an authentication error, not an obviously init-related one, and only after `bronze_to_silver` and
+  `silver_to_gold` had both already run successfully
+  (`transform_publish`'s tasks do not share a database connection check up front)
+- recovery: delete the pod and its PVC (`data-<postgresql-release-name>-0`) to force a genuinely clean
+  reinitialization, then re-run whatever depended on it; verified with a throwaway `psql` pod that the
+  `gold` role authenticates correctly afterward, and with a fresh `transform_publish` run completing
+  end to end
+- no config change prevents this outright (it is upstream container behavior, not something this
+  repository's values files control); the recovery step is documented in
+  `docs/development/tfm_lakehouse_workflow.md`'s Known Limitations To Preserve so a future from-scratch
+  run recognizes the symptom quickly instead of debugging the Spark job for a authentication problem
+  that started in PostgreSQL two steps upstream
 
 ## Documentation Rule
 

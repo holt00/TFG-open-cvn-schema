@@ -96,7 +96,7 @@ to work out of sequence (per the Roadmap Rules above).
 | `#99` | Silver -> gold: indicators & `transform_publish` DAG | Completed | `docs/roadmap/tfm/issues/issue-99-silver-to-gold-indicators-and-transform-publish-dag.md`; epic phase 3; depends on `#98` |
 | `#100` | Superset dashboard | Completed | `docs/roadmap/tfm/issues/issue-100-superset-dashboard.md`; epic phase 4; depends on `#91`, `#99` |
 | `#101` | Spark performance benchmark | Completed | `docs/roadmap/tfm/issues/issue-101-spark-performance-benchmark.md`; epic phase 4; depends on `#98` |
-| `#102` | Hardening | Planned | `docs/roadmap/tfm/issues/issue-102-hardening.md`; epic phase 5; depends on `#90`-`#101` |
+| `#102` | Hardening | Completed | `docs/roadmap/tfm/issues/issue-102-hardening.md`; epic phase 5; depends on `#90`-`#101` |
 | `#103` | Memoria assembly | Planned | `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md`; epic phase 6; closing issue |
 
 ## Required Companion Documents

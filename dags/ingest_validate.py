@@ -20,6 +20,8 @@ secret is in this file.
 
 from __future__ import annotations
 
+import os
+
 import pendulum
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
 from airflow.sdk import DAG, Param
@@ -27,8 +29,12 @@ from kubernetes.client import models as k8s
 
 NAMESPACE = "tfm-lakehouse"
 INGEST_IMAGE = "tfm-lakehouse/ingest:py3.14"
-# Path of the repository checkout on the machine that runs k3s.
-REPO_ROOT = "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema"
+# Path of the repository checkout on the machine that runs k3s. Override with
+# TFM_REPO_ROOT (set on the dag-processor/scheduler pods, e.g. via a Helm
+# values env entry) on a checkout other than this development machine's;
+# issue #102 found this had to be hand-edited otherwise (see
+# docs/development/tfm_lakehouse_workflow.md, Canonical Prerequisites).
+REPO_ROOT = os.environ.get("TFM_REPO_ROOT", "/mnt/e/Carlos/unii/tfg/repo/TFG-open-cvn-schema")
 TASKS_MODULE = "python -m tfm_lakehouse.bronze.tasks"
 RUN_ID_ARG = "--run-id '{{ run_id }}'"
 

@@ -178,6 +178,8 @@ Every new session should read these files in order before making changes:
 ### Development Reference
 
 - setup and commands: `docs/development/setup.md`
+- TFM lakehouse reproducibility quickstart (issue `#102`):
+  `docs/development/tfm_lakehouse_workflow.md`
 - complete regeneration workflow: `docs/development/regeneration_workflow.md`
 - parser workflow: `docs/development/parser_workflow.md`
 - application MVP workflow: `docs/development/application_mvp_workflow.md`
