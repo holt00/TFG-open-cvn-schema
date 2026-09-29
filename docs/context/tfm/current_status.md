@@ -63,7 +63,7 @@ The TFG (issues `#11` through `#71`, roadmap in
    `docs/development/latex_export_workflow.md`,
    `docs/development/pdf_generation_workflow.md`, and
    `docs/development/llm_import_workflow.md`.
-9. **The written and defended TFG memoria**: `docs/memoria/TFG.pdf` /
+9. **The written and defended TFG memoria**: `docs/memoria/TFG/TFG.pdf` /
    `TFG_signed.pdf`, covering the full academic writeup (motivation, state of
    the art, CVN ecosystem analysis, architecture, methodology, pipeline
    walkthrough, evaluation, conclusions), plus the defense slides in
@@ -93,10 +93,605 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-26 (issue `#102`, hardening, completed: both verification phases passed,
-  including a real bug found and fixed during the fresh-cluster rebuild; the epic's phase 5 is done)
+- Last updated: 2026-09-29 (TFM memoria chapter 5, "Procesamiento
+  distribuido: transformación, resolución de entidades e indicadores",
+  drafted and compiled clean; `#102` remains the last completed
+  implementation issue)
 
 ## Entries
+
+### TFM Memoria Chapter 5 ("Procesamiento Distribuido") Drafted, Issue #103
+
+- read issues `#98` and `#99` in full, including their `Adjustments Made During Implementation`,
+  `Verification`, `Findings` and `Known Limitations` sections, before citing any figure: the
+  three-layer CVN validation and rule-based ORCID validation, the deterministic R1/R2/R3 entity
+  resolution rules and the real measured precision/recall at the 10,000-document verification scale
+  (R1 100%, R2 95.8% precision / 74.2% recall on 186 evaluable documents, against a 99% precision
+  target that analysis showed could not be met without an unacceptable recall cost), the three gold
+  indicators and the publication-deduplication finding (543,879 rows collapse to 516,396 distinct
+  works), the collaboration indicator's self-collaboration gate (25 of 9,540 pairs, 0.26%), the
+  staging-table-plus-atomic-swap publish mechanism verified by killing the process mid-load, and the
+  R2-sensitivity check on the gold indicators (at most 0.58% movement)
+- wrote `docs/memoria/TFM/chapters/ch5.tex` in five sections: arquitectura de la transformación,
+  validación y normalización de bronze a silver, resolución de identidad entre fuentes (adapting the
+  draft prose already sitting in the chapter's planning guide, with the real figures replacing its
+  placeholder), cálculo de indicadores y publicación en PostgreSQL, and verificación de extremo a
+  extremo, following the same two-independent-checks pattern established in chapters 3-4
+- proactively fixed `splink_docs` in `docs/memoria/TFM/bib/ref.bib` before citing it for the first
+  time: its author field carried a long name with parentheses inside double braces, the exact pattern
+  that caused the 211-230pt citation overflow in chapter 4's `figshare_docs` entry. Shortened to
+  `{{UK Ministry of Justice}}` before the bug could recur, and swept the rest of the bibliography for
+  the same pattern, finding no other match
+- hit one new overflow, 99.6pt, not from a citation this time: three `\texttt{}` job names
+  (`bronze_to_silver`, `silver_to_gold`, `publish_gold_to_postgres`) chained in one sentence with no
+  words between them. Fixed by giving each job its own short sentence instead of listing all three
+  together
+- compiled with `xelatex` + `bibtex` + `xelatex` ×2, in that order: the first attempt ran `bibtex`
+  before the first `xelatex` pass had recorded the chapter's three new citation keys in the `.aux`
+  file, so `bibtex` built a `.bbl` without them and they showed as undefined. Recompiling in the
+  correct order fixed it, a reminder to keep for any future chapter that introduces new citations.
+  Final state: zero `Overfull`/`Underfull` boxes in the chapter, zero undefined citations, zero
+  parentheses, zero semicolons
+- updated `docs/memoria/TFM/ch5_procesamiento_distribuido.md` (status to `EN_PROCESO`, with a
+  redaction-history note) and `docs/memoria/TFM/estructura_memoria_tfm.md`'s chapter table.
+  Uncommented `\input{chapters/ch5}` in `docs/memoria/TFM/TFM.tex`. Body page count is now 35 pages
+  across five chapters, chapter 5 itself about 7 pages, leaving roughly 15 pages for chapters 6-7
+  against the 50-page cap
+
+### Issue #91 Bucket Layout Corrected: MinIO's `silver`/`gold` Raw Prefixes Dropped
+
+- follow-up to the previous entry's finding that MinIO's bucket-root `silver`/`gold` prefixes were
+  provisioned but never populated: the user asked to check whether removing them is easy and
+  plausible, and to do it if so
+- confirmed a bucket "prefix" in S3-compatible object storage is not a real, separately created
+  resource, it is only an implicit grouping that appears the moment an object is written under
+  that key. `defaultBuckets: "lakehouse"` in `infra/helm-values/minio-values.yaml` creates the
+  bucket itself, nothing else; no script, Job, or chart parameter anywhere in `infra/` ever
+  pre-created `bronze`/`silver`/`gold` as folders. `silver` and `gold` therefore held no data on
+  the running cluster to delete: the correction is entirely a documentation fix, not a live
+  infrastructure change
+- updated `infra/helm-values/minio-values.yaml`'s comment and `infra/spark-conf/README.md` to
+  describe the single `bronze` raw-landing prefix that is actually used, and added a dated
+  "Adjustments Made During Implementation" bullet to
+  `docs/roadmap/tfm/issues/issue-91-core-services-deployment.md` recording the correction and its
+  reasoning, without rewriting the original Task 0 decision table, which stays as the historical
+  record of the reasoning available when the bucket was first provisioned
+- rewrote the MinIO/Iceberg paragraphs of `docs/memoria/TFM/chapters/ch3.tex` to narrate this as
+  the design evolution it was: the bucket was provisioned up front with three raw-landing prefixes
+  mirroring the target medallion architecture, and once the ingestion and transformation design
+  was worked out, `silver` and `gold` turned out to need no raw-landing step of their own, since
+  they are produced directly as Iceberg tables, so the bucket layout was simplified to the single
+  `bronze` prefix that is actually used. The Iceberg warehouse's own `bronze`/`silver`/`gold`
+  namespaces under `warehouse/`, which are genuinely used by all three layers, are unaffected and
+  kept exactly as before
+- recompiled with `xelatex` + `bibtex` + `xelatex` ×2: zero parentheses, zero semicolons, no new
+  `Overfull`/`Underfull` boxes, no undefined citations, body page count unchanged
+- also updated `docs/memoria/TFM/ch3_infraestructura_cluster.md`'s planning note, which still
+  described the bucket as having three prefixes
+
+### TFM Memoria Chapters 3-4: MinIO Silver/Gold Prefix Justified, Rejected-Zone Wording Clarified, Issue #103
+
+- the user asked two direct questions after reading chapter 4: why does MinIO have `silver` and
+  `gold` bucket prefixes when only Iceberg's own layers seem to be used, and do records that fail
+  the landing check and used to be described as invalid now get deleted, or are they kept
+  somewhere
+- investigated rather than assumed: reread issue `#91` (creates the `lakehouse` bucket with
+  `bronze`/`silver`/`gold` prefixes "for pre-Iceberg file landing"), issue `#92` (the Iceberg
+  warehouse root `s3a://lakehouse/warehouse` is a deliberately separate prefix, with
+  `bronze`/`silver`/`gold` as Iceberg namespaces underneath it, not the bucket-root prefixes), and
+  issues `#98`/`#99` (silver and gold are always produced by Spark jobs reading bronze and writing
+  straight into Iceberg tables under `warehouse/lakehouse.silver.*` and `lakehouse.gold.*`, never
+  through an intermediate raw-file landing step). A grep across `src/`, `dags/` and `infra/` found
+  no code anywhere that writes to a raw `lakehouse/silver/` or `lakehouse/gold/` bucket path,
+  confirming the two bucket-root prefixes are provisioned but never populated by any built or
+  planned component
+- fixed in `docs/memoria/TFM/chapters/ch3.tex`: the "Servicios base" paragraph now states the
+  bucket is provisioned up front with all three prefixes to mirror the target medallion
+  architecture, and points to the Iceberg section for why only one is actually used. A new
+  paragraph in "Catálogo Iceberg sobre MinIO" states plainly that `bronze` is the only prefix this
+  work populates, that ingestion needs a raw landing point because its data arrives from outside
+  the platform, and that silver and gold are computed entirely inside the platform and written
+  directly as Iceberg tables, so their bucket-root prefixes stay empty by design, kept only for
+  symmetry with the target architecture
+- fixed in `docs/memoria/TFM/chapters/ch4.tex`: the verification section's sentence about the
+  cleanup-on-failure fix was ambiguous about which objects get deleted. Split into three sentences
+  that state explicitly that only the run's already-landed *valid* objects are deleted on failure,
+  that the run's rejected zone is never touched, and that rejected records stay available for
+  diagnosis in every run, failed or not, matching issue `#97`'s actual behavior exactly
+- recompiled with `xelatex` + `bibtex` + `xelatex` ×2: zero parentheses, zero semicolons, no new
+  `Overfull`/`Underfull` boxes, no undefined citations, and the body page count is unchanged, both
+  additions fit within the existing page breaks of chapters 3 and 4
+
+### TFM Memoria Chapter 4 ("Ingesta Y Fusión De Fuentes Heterogéneas") Drafted, Issue #103
+
+- read issues `#94`-`#97` in full to gather every fact and figure the chapter cites, none reused
+  from the earlier planning guide's draft prose without re-verifying it against the issue
+  documents first: the dual ORCID mechanism (public API at the anonymous tier, capped at 25,000
+  reads/day and 12 requests/s per IP, and the annual Public Data File hosted on Figshare, of which
+  only the ~46 GB summaries file is used), the real filtering run (26,078,951 records scanned,
+  301,763 Spain-affiliated matches, 81.6 minutes after switching from network streaming to a local
+  byte-level prefilter), the synthetic CVN generator's two-layer validation finding (179 of 200
+  documents in the first test run failed the strict per-entity layer that the document schema
+  alone would have missed), the 70% ORCID-linkage ratio and its ground-truth manifest as the
+  deliberate fusion key for chapter 5's entity resolution, and the `ingest_validate` Airflow DAG's
+  four-task order, bronze provenance envelope, rejection zone with its 5% threshold, and the
+  cleanup-on-failure fix found through an independent Spark read
+- wrote `docs/memoria/TFM/chapters/ch4.tex` in five sections: arquitectura de la ingesta,
+  adquisición de datos de ORCID (the two mechanisms in `itemize`, both cited), generación de
+  currículos CVN sintéticos, aterrizaje en bronze con procedencia, and verificación de extremo a
+  extremo, following the same two-independent-checks verification pattern chapter 3 established.
+  Applied every standing rule from the start rather than fixing it after review: zero parentheses,
+  zero semicolons, no repeated "ya justificado" references, `itemize` reserved for true parallel
+  enumerations, every named technology cited, and Spain-formatted decimal commas and thousands
+  separators throughout
+- added three bibliography entries to `docs/memoria/TFM/bib/ref.bib`: `orcid_public_api_docs`,
+  `figshare_docs`, `json_schema_org`
+- hit the same citation line-break bug documented in earlier chapters, twice, while placing the
+  `figshare_docs` citation: a citation glued to the end of a bold `itemize` label overflowed the
+  box by 7.9pt; moving it next to a second citation with no words between them made it far worse,
+  211-230pt overflow, because `figshare_docs`'s author field was wrapped in double braces as one
+  long indivisible string, the exact pattern that caused the PostgreSQL-citation overflow in the
+  prior audit entry. Fixed by separating the two citations into their own sentences with real
+  words around each, and by shortening the `figshare_docs` author field to `{{Figshare}}`, matching
+  the short-name convention every other working bibliography entry already uses
+- compiled with `xelatex` + `bibtex` + `xelatex` ×2 after each fix: the chapter has zero
+  `Overfull`/`Underfull` boxes of its own and zero undefined citations. Undefined cross-references
+  to `cap:procesamiento` and `cap:visualizacion` are expected, chapters 5-6 are not written yet,
+  same as chapter 3's still-open reference to the same labels. Body page count is now 29 pages
+  across chapters 1-4, chapter 4 itself about 7 pages, leaving roughly 21 pages for the three
+  remaining chapters against the 50-page cap
+- uncommented `\input{chapters/ch4}` in `docs/memoria/TFM/TFM.tex`; updated
+  `docs/memoria/TFM/ch4_ingesta_fusion_datos.md` (status to `EN_PROCESO`, with a redaction-history
+  note) and `docs/memoria/TFM/estructura_memoria_tfm.md`'s chapter table
+
+### TFM Memoria Chapters 1-3: Full Compliance Audit, Issue #103
+
+- the user asked directly whether every TFG-inherited and user-given rule had actually been
+  applied across the whole document so far, not just the parts explicitly targeted in each prior
+  revision. Ran a fresh, systematic grep-based audit of `ch1.tex`, `ch2.tex` and `ch3.tex` against
+  every standing rule accumulated this session: no ECTS/day/hour/page-cap mentions, no
+  self-reference to the user's instructions, zero parentheses, zero semicolons, no repeated
+  "already justified" backward references, no leftover `elimina-marcas-ia` patterns (em-dashes,
+  accumulated "no X sino Y", marketing language, gerund chains, Latin American Spanish
+  vocabulary), and that every named technology is cited
+- found and fixed two real gaps: (1) PostgreSQL, one of the platform's own chosen core services,
+  was named seven times across chapters 2-3 but never cited; added `postgresql_docs` to
+  `docs/memoria/TFM/bib/ref.bib` and cited it at its first substantive introduction in chapter 3's
+  "Servicios base" section, after an initial placement in the dense architecture-overview
+  paragraph caused the same citation-overflow bug documented earlier and had to be moved; (2) one
+  residual "no por carencia técnica, sino porque..." negation survived in chapter 2's catalog
+  section from before the explicit no-parentheses/no-semicolons revision; reworded to state the
+  point directly
+- everything else audited came back clean: zero parentheses, zero semicolons, and zero
+  "ya justificado" references confirmed by direct grep count, not a visual skim
+- recompiled `docs/memoria/TFM/TFM.tex` with a full xelatex/bibtex/xelatex/xelatex cycle after
+  each fix; body page count unchanged at 24 pages, no undefined citations, no visible margin
+  overflow on the affected pages (verified via page-image extraction)
+
+### TFM Memoria Chapters 1-3: Punctuation And Sentence-Structure Sweep, Issue #103
+
+- follow-up revision across all three drafted chapters on `issue-103-memoria-assembly`, triggered
+  by the user quoting one specific sentence from chapter 3 as long and confusing, then generalizing
+  the fix into three standing rules for the rest of the memoria's final text: no parentheses
+  anywhere, no semicolons, and no repeated mentions that something "was already justified" in
+  another section once it has been. The user also pointed at
+  `docs/memoria/TFG/estructura_memoria_tfg.md`'s redaction principles as the reference to internalize
+- rewrote `docs/memoria/TFM/chapters/ch1.tex`, `ch2.tex` and `ch3.tex` in full. Acronym definitions
+  (TFM, TFG, ORCID, CRIS) reformulated with "en adelante X" or "siglas de X" instead of parentheses.
+  Technical asides and examples integrated into their sentence or split into a new, shorter
+  sentence instead of parenthesized. Every semicolon replaced with a period and a new sentence.
+  Backward references like "ya justificado en la Sección X" removed -- the underlying fact is now
+  just stated directly, with a bare `Sección~\ref{}` cross-reference kept only where it adds real
+  navigation, not as a reminder that justification happened elsewhere
+- added `estructura_memoria_tfm.md`'s "Principios de redacción" with these three rules so they
+  apply automatically to chapters 4-7 without the user having to repeat them per chapter
+- **the citation line-break bug from the previous two revisions reappeared while rewriting**, in
+  two spots in chapter 2's Spark and Airflow `itemize` items (`~\cite{}` unable to break before a
+  long "Apache Software Foundation, 2026x"-style citation). Caught by checking the compile log's
+  overfull-hbox warnings after every rewrite, not just once at the end, and fixed the same way as
+  before. All remaining sub-15pt overfull warnings were checked visually via page-image extraction
+  and confirmed to render with no visible margin overflow, so left as-is rather than chased further
+- verified zero parentheses and zero semicolons remain in all three chapter files by direct
+  character count, not just a visual skim
+- recompiled `docs/memoria/TFM/TFM.tex` with a full xelatex/bibtex/xelatex/xelatex cycle; body page
+  count unchanged at 24 pages for the three chapters, so the rewrite improved clarity without
+  costing page budget
+
+### TFM Memoria Chapter 3 ("Infraestructura: Despliegue Del Clúster Y Servicios Base") Drafted, Issue #103
+
+- third chapter drafted on `issue-103-memoria-assembly`, from issues `#90`-`#93`
+  (`Implementation Performed`/`Verification`/`Findings`) and
+  `docs/development/tfm_lakehouse_workflow.md`, applying every standing rule from the previous
+  chapters: no ECTS/day/hour/page-cap mentions, no self-reference to user instructions, real
+  alternative comparisons already done in chapter 2 not repeated (referenced instead),
+  multi-item lists as `itemize`, every named technology cited
+- `docs/memoria/TFM/chapters/ch3.tex` written: six sections -- deployment architecture (with a
+  deployed-services-and-versions table), the k3s cluster, the three base services
+  (MinIO/PostgreSQL/Airflow), the Iceberg catalog on MinIO, Spark execution from Airflow, and
+  end-to-end verification. Includes real operational findings surfaced during implementation, not
+  just the happy path: Bitnami's 2025 free-catalog collapse forcing a pin against the frozen
+  `bitnamilegacy` registry; three distinct Spark-from-Airflow bugs found and fixed (driver-side
+  credential config being a silent no-op in `client` deploy mode, bypassing the Spark image's
+  entrypoint breaking user-resolution, and the RBAC `Role` missing the `deletecollection` verb
+  needed for the driver's own cleanup); and the two-step verification pattern (the job's own
+  success plus an independent pod re-querying the same table) that recurs in later chapters
+- added 3 new entries to `docs/memoria/TFM/bib/ref.bib` (Docker, Helm, and the primary source for
+  the Bitnami finding), verified against their own origin like every prior entry
+- **caught the same citation line-break bug as chapter 2, before it could reappear**: `~\cite{}`
+  inside the services table overflowed several columns (fixed by dropping citations from that
+  table, since the same technologies are already cited in the surrounding prose) and two adjacent
+  citations in one sentence produced a 94pt margin overflow (fixed by splitting into two
+  sentences). Verified visually via page-image extraction, not just the compile log
+- recompiled `docs/memoria/TFM/TFM.tex` with a full xelatex/bibtex/xelatex/xelatex cycle; body now
+  24 pages for 3 chapters (chapter 3 itself only ~5 pages), no undefined citations, no orphaned
+  headings or tables, 26 pages of budget remaining for the 4 chapters still to write
+- `docs/memoria/TFM/ch3_infraestructura_cluster.md` and `estructura_memoria_tfm.md`'s chapter
+  table updated from `PENDIENTE` to `EN_PROCESO`
+
+### TFM Memoria Chapter 2: Orphaned Section Heading Fixed (Template-Level), Issue #103
+
+- section 2.8's heading ("Síntesis y arquitectura resultante") was landing alone at the bottom of
+  a page, with its `[H]`-placed table starting fresh on the next page -- an orphaned heading, since
+  `[H]` floats can't split and the whole table got pushed forward once there wasn't room left after
+  the heading and intro sentence
+- fixed by adding `\usepackage{needspace}` to `docs/memoria/TFM/include/configuracion.tex`
+  (template-level, available to every future chapter) and `\Needspace{9cm}` immediately before
+  that `\section`, so the page break now happens before the heading when the heading-plus-table
+  wouldn't fit together, instead of after it
+- verified visually via page-image extraction: heading, intro sentence, and table now render
+  together on the same page
+- recompiled `docs/memoria/TFM/TFM.tex` with a full xelatex/bibtex/xelatex/xelatex cycle; 44 pages
+  total (the fix intentionally trades a page of blank space at the bottom of the prior page for a
+  correctly-grouped section)
+
+### TFM Memoria Chapters 1-2: Sentence-Embedded Enumerations Converted To Itemized Lists, Citation Line-Break Bug Fixed, Issue #103
+
+- follow-up to chapter 1-2 drafting on `issue-103-memoria-assembly`, requested by the user:
+  replace enumerations packed into a single sentence or paragraph with separate `itemize` points
+- `docs/memoria/TFM/chapters/ch1.tex`: the two comma-separated lists in "Problema de partida y
+  motivación" (the architectural requirements integrating CVN and ORCID demands; the actions the
+  platform demonstrates) converted to `itemize`
+- `docs/memoria/TFM/chapters/ch2.tex`: every alternative-comparison section that didn't already
+  have a dedicated table converted to `itemize`, one `\item` per alternative -- Iceberg's catalog
+  (4 options), the container-orchestration substrate (3), the distributed-processing engine (3),
+  the ETL orchestrator (4), and the visualization layer (4). The two comparisons that already had
+  a dedicated table (table format; the closing synthesis) were left as short prose, since the
+  table already separates each option there
+- **caught and fixed a real rendering bug while doing this**: several `~\cite{...}` citations
+  inside the new `\item`s couldn't break to a new line (the `~` is a non-breaking space), and
+  combined with the unusually long citations sharing the `{Apache Software Foundation}` author
+  name (e.g. `[Apache Software Foundation, 2026h]`), one line in the Spark section overflowed the
+  page margin by almost 4.5cm, with the citation text visibly clipped. Fixed by replacing
+  `~\cite{` with a regular breakable space before `\cite{` throughout `ch2.tex` (28 occurrences),
+  not just at the one affected spot, to remove the same risk from every other citation in the
+  chapter. Verified visually, via page-image extraction, that no line overflows the margin
+  afterward
+- net cost accepted explicitly: itemized lists take more vertical space than dense prose even
+  with tight item spacing, so the body grew back from ~14 to ~16 pages (chapter 1 by under a page,
+  chapter 2 more) after the previous trim-for-length pass brought it down to ~14; the user's
+  clarity request took priority over the page count for this change
+- recompiled `docs/memoria/TFM/TFM.tex` with a full xelatex/bibtex/xelatex/xelatex cycle; 42 pages
+  total, no undefined citations, no visible margin overflow on any page
+
+### TFM Memoria Chapters 1-2 Trimmed For Length, Issue #103
+
+- with chapters 1-2 drafted, the memoria's body ran to roughly 20 pages against the 50-page
+  maximum; proportionally that is already more than 2/7 of the full budget for 2 of the planned
+  7 chapters, and the user asked to summarize before continuing to chapter 3
+- `docs/memoria/TFM/chapters/ch2.tex` absorbed most of the cut (the most compressible of the two,
+  being comparative literature rather than the project's own results): from roughly 13 to roughly
+  8 body pages. Method: kept the paragraph-per-alternative structure from the previous revision,
+  but shortened each paragraph (one standout technical property instead of three, shorter
+  parenthetical asides), folded the "Modo de red en el entorno de desarrollo" subsection into the
+  k3s decision paragraph instead of keeping it as its own subsection, and compressed each "opción
+  adoptada" paragraph to a single concluding sentence instead of re-explaining the comparison.
+  No alternative, citation, or table was removed -- only the prose around them
+- `docs/memoria/TFM/chapters/ch1.tex` trimmed more lightly (already close to its natural minimum,
+  covering objectives/ethics/outcomes/structure it can't drop): from 7 to roughly 6 body pages, by
+  tightening the context and motivation paragraphs, condensing the ethics/privacy paragraphs
+  without losing the argument, and reducing each chapter's description in "Estructura del
+  documento" to one sentence
+- re-checked both chapters for the AI-writing-tell patterns caught in the previous revision
+  (em-dash asides, accumulated "no X sino Y" negations) to confirm the trim didn't reintroduce
+  them
+- net result: chapters 1-2 now occupy roughly 14 body pages instead of ~20, leaving roughly 36
+  pages for the remaining 5 chapters (~7 pages average each) before the 50-page ceiling
+- recompiled `docs/memoria/TFM/TFM.tex` with a full xelatex/bibtex/xelatex/xelatex cycle; 40 pages
+  total, no undefined citations
+
+### TFM Memoria Chapter 2 Revised: Restructured, Scope Narrowed, Bibliography Completed, Template Fixed, Issue #103
+
+- follow-up revision to chapter 2 on `issue-103-memoria-assembly`, driven entirely by the user's
+  reading of the first draft; five distinct problems raised, each addressed
+- **prose structure**: the first draft compared several technologies inside single dense
+  paragraphs, hard to follow. Rewritten so every alternative gets its own developed paragraph
+  (definition, citation, strength, limitation), mirroring the pattern `docs/memoria/TFG/chapters/ch2.tex`
+  uses for CERIF/VIVO/ROH and for XML/JSON/JSON-LD -- prose, not bullet lists, one idea per
+  paragraph, closed with a comparison table
+- **table-format section justification deepened**: the Iceberg-vs-Delta-vs-Hudi section previously
+  just named technologies with cursory reasons; rewritten so each technical property (hidden
+  partitioning, snapshot isolation, schema evolution without rewrite) is explained together with
+  why it matters for this specific project, not asserted as a bare adjective
+- **scope narrowed**: three sections -- entity resolution, ORCID/CVN data-source strategy,
+  observability -- covered *development strategy* decisions, not platform state-of-the-art; the
+  user identified they belong in the chapters where that development is actually described.
+  Removed from `docs/memoria/TFM/chapters/ch2.tex` and moved, as ready-to-adapt draft prose, into
+  `ch5_procesamiento_distribuido.md`, `ch4_ingesta_fusion_datos.md` and
+  `ch6_visualizacion_evaluacion_endurecimiento.md` respectively, so the already-written text isn't
+  lost, only relocated. Chapter 2 is now eight sections instead of eleven, and its synthesis table
+  trimmed to match
+- **bibliography completeness**: the user pointed out every named technology, including rejected
+  alternatives, must be referenced -- not just the ones adopted. Verified and added 15 new entries
+  to `docs/memoria/TFM/bib/ref.bib`: HDFS, Hive Metastore, Docker Swarm, Apache Flink, Dask, Ray,
+  the Spark Kubernetes Operator, Prefect, Dagster, Luigi, Trino, Grafana, Power BI, Tableau,
+  Metabase, each checked against its own official source the same way the previous session's
+  bibliography was
+- **template-level typesetting fixes, applying to every future chapter, not just this one**:
+  (1) a table (Iceberg/Delta/Hudi comparison) was floating many pages past its first mention,
+  landing right before the bibliography and looking broken -- root cause was `\cite{}` calls
+  inside narrow table cells blowing up apalike's rendered citation width to the point of
+  overflowing the column into the next one; citations removed from both tables (they're already in
+  the surrounding prose) and `\usepackage{float}` added to `docs/memoria/TFM/include/configuracion.tex`
+  so short, immediately-referenced tables can use `[H]` (exact placement) instead of drifting;
+  (2) `\clubpenalty`/`\widowpenalty` set to 10000 to eliminate orphan/widow lines, which in turn
+  caused a second problem -- `\flushbottom` (the `book` class's twoside default) was stretching
+  inter-paragraph spacing into visibly ugly vertical gaps to satisfy that constraint on tight
+  pages; fixed by switching to `\raggedbottom`. Verified visually by extracting and comparing PDF
+  pages before and after each fix, not just checking the compile log
+- recompiled `docs/memoria/TFM/TFM.tex` with a full xelatex/bibtex/xelatex/xelatex cycle after
+  every change in this revision; final build has no undefined citations and no remaining
+  underfull-vbox warnings (46 pages total)
+
+### TFM Memoria Chapter 2 ("Estado Del Arte Y Decisiones Arquitectónicas") Drafted, Issue #103
+
+- second chapter drafted on `issue-103-memoria-assembly`, following the same process as chapter 1:
+  read `docs/memoria/TFM/ch2_estado_del_arte_y_decisiones.md`'s content guide and
+  `docs/research/tfm/estado_del_arte_tfm.md` (the prepared research source, now with its verified
+  bibliography), invoked `.claude/skills/tfg-mapi-style` for register, and applied every standing
+  rule recorded from chapter 1: no ECTS/day/hour/page-cap mentions in the final text, no
+  self-reference to user instructions, objectives stated in chapter 1 stay technology-agnostic
+  (chapter 2 is precisely where the deferred technology justifications land)
+- `docs/memoria/TFM/chapters/ch2.tex` written: eleven sections (the lakehouse-vs-warehouse-vs-lake
+  framing citing Armbrust et al.; Iceberg vs. Delta Lake vs. Hudi with a comparison table, plus its
+  own catalog sub-decision; MinIO vs. HDFS vs. cloud-native storage; container orchestration and
+  the deployment environment; Spark vs. Flink/Dask-Ray plus the Spark-submit-vs-Operator choice;
+  Airflow vs. Prefect/Dagster/Luigi; the interactive-query and BI layers together; entity
+  resolution citing Fellegi & Sunter, Splink and `dedupe`; the ORCID/CRIS data-source discussion;
+  observability) closed with a synthesis section and a full decision table, all using the
+  `docs/memoria/TFM/bib/ref.bib` keys verified in the previous session
+- **delivered the deferred local-vs-cloud justification** from chapter 1: the "Sustrato de
+  orquestación de contenedores y entorno de despliegue" section justifies deploying on a single
+  local node, versus a real cloud cluster, purely on its technical merits -- avoiding the cost of
+  keeping cloud infrastructure running while the system is still under active development, and the
+  Helm-based deployment being directly replicable onto a real cloud cluster later -- with no
+  mention of the day/hour/ECTS budget that drove this decision during actual planning
+  (that framing stays in `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md` and the
+  research doc, per the standing scope rule)
+- **`elimina-marcas-ia` review caught a real, repeated tic**: the first draft used an em-dash
+  parenthetical (`-- ... --`) as a connector 18 times across the chapter, and the negation pattern
+  "no es X, sino Y" three times -- a pattern absent from the TFG's own reference style. All 18
+  dash-asides converted to parentheses or commas, and all three negations rewritten to state the
+  point directly, before the chapter was considered done
+- recompiled `docs/memoria/TFM/TFM.tex` with a full xelatex/bibtex/xelatex/xelatex cycle after
+  drafting, and again after the style cleanup pass; confirmed no undefined citations and, via
+  `pdftotext` page extraction, that both new tables (table formats, decision synthesis) render
+  within their own section, not drifting into the next one -- 45 pages total
+- `docs/memoria/TFM/ch2_estado_del_arte_y_decisiones.md` and `estructura_memoria_tfm.md`'s chapter
+  table updated from `PENDIENTE` to `EN_PROCESO`
+
+### TFM Memoria Bibliography Reviewed And Verified, Issue #103
+
+- not an implementation issue; requested explicitly by the user: review what bibliography
+  applies to chapter 1, and prepare it for the rest of the memoria
+- **chapter 1**: `docs/memoria/TFM/chapters/ch1.tex`'s "Problema de partida y motivación"
+  section now cites four sources where it previously asserted uncited claims: ORCID's own "What
+  Is ORCID?" page for the ORCID definition and its privacy-by-design/researcher-controlled
+  profile framing; the ORCID Public Data File 2025 (DOI `10.6084/m9.figshare.30375589`) for the
+  scale claim, replaced from a vague "decenas de millones de registros" to the precise,
+  already-verified figure from this project's own pipeline (26,078,951 records scanned, issue
+  `#95`); and euroCRIS/CERIF and VIVO as concrete examples of existing CRIS (Current Research
+  Information Systems) infrastructure, to ground the "no open platform integrates this" claim
+  against what actually exists instead of leaving it unsupported
+- **the rest of the memoria**: converted `docs/research/tfm/estado_del_arte_tfm.md`'s 18-item
+  reference list (prepared ahead of drafting as this chapter's primary source) into 20 real
+  BibTeX entries in `docs/memoria/TFM/bib/ref.bib`, ready for when chapters 2-6 actually cite
+  them (Iceberg, Spark on Kubernetes, Airflow's Kubernetes provider, Superset, Delta Lake, Hudi,
+  Nessie, k3s, CNCF/Kubernetes, MinIO, Splink, `dedupe`, plus the three academic papers below)
+- **verified every source against its primary origin before citing it, catching two real errors
+  in the process** (not transcribed from memory): (1) the Armbrust et al. Lakehouse paper's
+  title in `estado_del_arte_tfm.md` was wrong -- "Lakehouse: A New Generation of Open *Source
+  Systems and Architecture for Data Warehousing and Data Analytics*" does not match the actual
+  CIDR '21 paper, titled "Lakehouse: A New Generation of Open *Platforms that Unify Data
+  Warehousing and Advanced Analytics*" (confirmed by reading the official PDF from
+  `cidrdb.org`); (2) the Zaharia et al. Spark CACM paper was missing its full 14-author list and
+  exact page numbers (56-65), filled in from Crossref's metadata API for DOI `10.1145/2934664`.
+  Also independently confirmed, via Crossref's API, the exact citation for Fellegi & Sunter's
+  1969 record-linkage paper (JASA 64(328), pp. 1183-1210, DOI `10.1080/01621459.1969.10501049`).
+  Both corrections applied to `estado_del_arte_tfm.md`'s own reference list, which also now
+  cross-references each entry to its new `docs/memoria/TFM/bib/ref.bib` BibTeX key
+- **one finding worth flagging for future citing of MinIO**: MinIO's own documentation site
+  (`min.io/docs`) has restructured around their commercial "AIStor" product as of this
+  verification (September 2026), redirecting most former open-source object-storage doc paths
+  there; cited the MinIO GitHub repository instead (`github.com/minio/minio`), which still
+  carries a clean, stable description of the open-source project itself
+- recompiled `docs/memoria/TFM/TFM.tex` with a full xelatex/bibtex/xelatex/xelatex cycle;
+  confirmed no undefined-citation warnings and that the bibliography page renders only the five
+  sources chapter 1 actually cites (apalike style only emits `\cite`d entries, not the full
+  `.bib` file) -- 31 pages total
+
+### TFM Memoria Chapter 1 Revised: Synthetic-CVN Objective Reframed, Float-Placement Bug Fixed, Issue #103
+
+- not an implementation issue; third same-day follow-up correction to chapter 1 on
+  `issue-103-memoria-assembly`, requested explicitly by the user, in two parts
+- **objectives content**: generating synthetic CVN documents was listed as its own specific
+  objective (old OE4); the user pointed out that synthetic generation is a *consequence* of not
+  having access to real CVN documents and needing to work only with public data without
+  compromising anyone's privacy, not a goal in itself -- that reasoning already lived correctly
+  in the "Aspectos éticos y de privacidad" section, the objectives list just duplicated it as if
+  it were a purpose of its own. `docs/memoria/TFM/chapters/ch1.tex` OE4 reworded to "incorporar
+  currículos CVN a la plataforma, validados frente a Open CVN" (the *what*), with the synthetic
+  sourcing kept only as a one-clause cross-reference to the ethics section, not restated as the
+  point of the objective. OE5 reworded to state explicitly "integrar ORCID con CVN por medio de
+  Open CVN, resolviendo la identidad de los registros que corresponden a la misma persona" --
+  the user's own exact framing for what the real fusion objective is. The objectives table and
+  `docs/memoria/TFM/ch1_introduccion.md`'s drafting notes updated to match
+- **float-placement bug, fixed at the template level**: Table 1.2 (learning outcomes) was
+  floating past its own section (1.5) into the middle of section 1.6's bullet list, because nothing
+  constrained `[htbp]` floats to stay within the section that references them. Root cause and fix
+  confirmed visually by rendering the compiled PDF pages before and after. Fixed by enabling
+  `\usepackage[section]{placeins}` in `docs/memoria/TFM/include/configuracion.tex` (present in the
+  official template but commented out), which forces every pending float to resolve before a new
+  `\section` starts. This is a template-level fix, not a one-off table tweak, so it prevents the
+  same drift in every future chapter, not just this one
+- recompiled `docs/memoria/TFM/TFM.tex` twice after the changes (`placeins` needs a rerun to take
+  effect) and confirmed visually, via page-image extraction, that Table 1.2 now renders entirely
+  within section 1.5, before section 1.6 begins
+
+### TFM Memoria Chapter 1 Revised: Objectives Made Technology-Agnostic, Issue #103
+
+- not an implementation issue; second same-day follow-up correction to chapter 1 on
+  `issue-103-memoria-assembly`, requested explicitly by the user: objectives (general and
+  specific) must describe only the *what*, never the *how* -- no architecture, no named
+  technologies. Which technology satisfies each objective, and why over its alternatives, is
+  decided and justified later, in chapter 2, not asserted up front in chapter 1
+- `docs/memoria/TFM/chapters/ch1.tex`'s "Objetivos" section rewritten: the general objective no
+  longer names "lakehouse", "Kubernetes", or the bronze/silver/gold layering; all nine specific
+  objectives and their chapter-correspondence table reworded to drop every named technology
+  (k3s, Iceberg, Spark, Airflow, MinIO, PostgreSQL, Superset) and the bronze/silver/gold labels,
+  describing each step functionally instead (e.g. OE2 went from "integrar un catálogo Iceberg...
+  y validar Spark orquestada por Airflow" to "validar el mecanismo central de almacenamiento y
+  procesamiento distribuido"); a one-sentence forward pointer to Chapter 2 added for where the
+  technology choices actually get justified
+- `docs/memoria/TFM/ch1_introduccion.md` updated with a note recording this second revision
+- clarified scope, also requested by the user: the "no ECTS/days/hours/pages in the memoria"
+  rule from the previous entry applies only to the final chapter text
+  (`docs/memoria/TFM/chapters/*.tex`); every other TFM memoria document (the per-chapter planning
+  guides, `estructura_memoria_tfm.md`) may keep citing those figures freely, since they are
+  internal planning aids, not the academic document itself. Restored the ECTS/page-count
+  language in `estructura_memoria_tfm.md` and `ch7_conclusiones.md`, and the time-budget framing
+  in `ch2_estado_del_arte_y_decisiones.md`'s catalog-choice bullet, that had been over-eagerly
+  generalised away in the previous entry's edits, each now paired with a note on how the
+  corresponding final-text passage should be phrased instead
+- recompiled `docs/memoria/TFM/TFM.tex` after the objectives rewrite to confirm it still builds
+  cleanly (29 pages)
+
+### TFM Memoria Chapter 1 Revised: Academic-Constraints Section Removed, Issue #103
+
+- not an implementation issue; follow-up correction to chapter 1 on the same branch
+  (`issue-103-memoria-assembly`), requested explicitly by the user: the memoria's text must not
+  mention ECTS credits, the day/hour development budget, or the document's page cap, since those
+  are project-management conditions imposed on the author, not academic content the memoria
+  should argue from
+- `docs/memoria/TFM/chapters/ch1.tex`'s "Restricciones académicas y alcance del proyecto" section
+  removed entirely (it was the section carrying all four of those mentions), and the chapter's
+  opening roadmap paragraph updated to match; the objectives, ethics/privacy, learning-outcomes
+  and document-structure sections were unaffected
+- that removed section was also where the single-local-node-vs-real-cloud-cluster deployment
+  decision got justified (previously by time budget); since that justification is now gone, a
+  drafting note was added to `docs/memoria/TFM/ch2_estado_del_arte_y_decisiones.md` (chapter 2's
+  planning guide) spelling out the replacement argument to use when chapter 2 is actually
+  drafted: a local machine avoids the cost of keeping cloud infrastructure running while the
+  system is still under active development, and the Helm-based deployment used is directly
+  replicable onto a real cloud Kubernetes cluster later, not a redesign
+- same corrections applied to the planning docs that described the now-removed content:
+  `docs/memoria/TFM/ch1_introduccion.md` (its "Estado de redacción" note and its own copy of the
+  academic-constraints bullet), `docs/memoria/TFM/ch7_conclusiones.md` and
+  `docs/memoria/TFM/estructura_memoria_tfm.md` (ECTS/page-count framing generalised or removed),
+  `docs/memoria/TFM/TFM.tex` (a LaTeX comment mentioning the page cap), and
+  `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md`'s own "Implementation Performed" record
+  of what chapter 1 contains
+- this repository's own project-management documents (this file, the epic `issue-89`, the other
+  TFM issue files) were deliberately left untouched: they exist to track real planning
+  constraints for this repository's own engineering process, which is a different concern from
+  what the memoria itself, as an academic document, should argue from
+- recompiled `docs/memoria/TFM/TFM.tex` after the edits to confirm it still builds cleanly
+
+### TFM Memoria Chapter 1 ("Introducción, motivación y objetivos") Drafted, Issue #103
+
+- not an implementation issue; first drafting pass of the TFM memoria itself, on a new branch
+  `issue-103-memoria-assembly` created off `issue-102-hardening` (which still carries every
+  TFM implementation commit not yet merged to `main`)
+- `docs/memoria/TFM/chapters/ch1.tex` rewritten from the official template's placeholder
+  (`lipsum` filler) into a full draft chapter, styled with the `.claude/skills/tfg-mapi-style`
+  skill (analysed against `docs/memoria/TFG/chapters/ch1.tex` for register and structure) and
+  grounded in `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md` and
+  `docs/memoria/TFM/ch1_introduccion.md`'s content guide: continuity with the closed TFG,
+  problem statement, explicit academic constraints (6 ECTS, 20 days, single-node k3s, 50-page
+  cap), general and nine specific objectives with a chapter-correspondence table, the CVN
+  synthetic-vs-ORCID-real ethics/privacy note, the six learning-outcome-to-chapter table, and
+  the document structure
+- template personalised for the TFM: `docs/memoria/TFM/include/opciones.tex` (author, epic
+  `#89`'s provisional title, master's programme name, date) and
+  `docs/memoria/TFM/elements/portada.tex` (programme name on the cover) filled in;
+  `docs/memoria/TFM/bib/ref.bib`'s leftover template demo entries (`RUSSELL`, `AlphaZero`,
+  unrelated to this domain) replaced with a real citation to the closed TFG memoria; the
+  template's tutorial chapters 2/3 ("Algunos elementos", "Marcas y ayudas") removed from
+  `docs/memoria/TFM/TFM.tex`'s `\input` list and replaced with the real seven-chapter list
+  (chapter 1 active, chapters 2-7 commented out pending, mirroring how the TFG's own `TFG.tex`
+  grew one chapter at a time)
+- `docs/memoria/TFM/ch1_introduccion.md` and `estructura_memoria_tfm.md`'s chapter table updated
+  from `PENDIENTE` to `EN_PROCESO` for chapter 1
+
+### `docs/memoria/` Split Into `TFG/`/`TFM/`, TFM Memoria Planning Guides Created For Issue #103
+
+- not an implementation issue; documentation-structure work requested directly by the user, in the
+  same spirit as the state-of-the-art document below: preparation for the TFM memoria (issue `#103`,
+  still `Planned`), not the memoria itself
+- `docs/memoria/` split into `docs/memoria/TFG/` (every existing TFG memoria file: `TFG.tex` and its
+  build artifacts, both PDFs, `estructura_memoria_tfg.md`, `bib/`, `chapters/`, `elements/`, `figs/`,
+  `include/`, moved with `git mv` where tracked) and a new `docs/memoria/TFM/`, mirroring the
+  `docs/roadmap`/`docs/context` tfg/tfm split hotfix `#10` already applied elsewhere; recorded as
+  `docs/roadmap/tfm/hotfixes/hotfix-11-tfg-tfm-memoria-folder-separation.md`
+- `docs/memoria/TFM/` now holds `estructura_memoria_tfm.md` (the TFM equivalent of the TFG's
+  structure/tracking document: purpose, redaction principles inherited from the TFG plus TFM-specific
+  notes, a 7-chapter table, and chapter-to-issue and chapter-to-learning-outcome correspondence
+  tables) and one guide file per chapter (`ch1_introduccion.md` through `ch7_conclusiones.md`), each
+  with objective, recommended content grounded in issues `#89`-`#102` and the state-of-the-art
+  document, recommended elements, learning outcomes covered, sources, and an empty drafting-status
+  section meant to be filled in place as redaction happens
+- the TFM's proposed structure is seven chapters, not the TFG's eight, merged differently: the TFG's
+  separate "Antecedentes" and "Analisis del ecosistema CVN" chapters become one "Estado del arte y
+  decisiones arquitectonicas" chapter (the TFM does not redefine CVN or Open CVN, it consumes them as
+  an already-closed TFG deliverable), and evaluation and hardening are merged into one closing
+  technical chapter, proportional to the TFM's smaller ECTS/page budget
+- every live cross-reference to the old bare `docs/memoria/...` path was updated repository-wide
+  (`AGENTS.md`, `PROJECT_GUIDE.md`, `README.md`, `docs/context/project_context_index.md`, this file's
+  own "what the TFG delivered" list item, `tfm_roadmap.md`, the epic, issue `#103`, and the
+  state-of-the-art document); the closed-TFG frozen documents this repository's rules forbid editing
+  (`docs/context/tfg/current_status.md`, `docs/roadmap/tfg/issues/issue-71-...md`, hotfixes `#9`/`#10`)
+  were left untouched, and `estructura_memoria_tfg.md`'s own roughly fifty internal historical path
+  mentions were deliberately preserved rather than rewritten, with a short relocation note added under
+  its existing closure banner instead -- the same principle hotfix-10 already applied to hotfix-9
+- finding: the university-template `Léeme.txt` inside the old `docs/memoria/` had never actually been
+  committed to git (discovered only because `git mv` refused it), and its accented filename stores the
+  character in NFD (decomposed) form, which silently breaks a naive shell-glob match on the visually
+  identical string
+- full detail in `docs/roadmap/tfm/hotfixes/hotfix-11-tfg-tfm-memoria-folder-separation.md` and in
+  issue `#103`'s own "Adjustments Made During Implementation"/"Implementation Performed" sections
+
+### State-Of-The-Art And Technology-Justification Document Produced For Issue #103
+
+- not an implementation issue; a research document requested directly by the user to support the
+  upcoming "Estado del arte" chapter of the TFM memoria (issue `#103`, still `Planned`)
+- new file `docs/research/tfm/estado_del_arte_tfm.md`: extends the epic's (`#89`) "Technology Stack
+  Decision Record" table with full comparative rationale against real ecosystem alternatives for every
+  layer of the stack (lakehouse vs data warehouse/data lake; Iceberg vs Delta Lake vs Hudi and their
+  catalog options; MinIO vs HDFS vs cloud-native object storage; Kubernetes/k3s vs Docker Swarm; Spark
+  vs Flink/Dask/Ray and the Spark Kubernetes Operator; Airflow vs Prefect/Dagster/Luigi and its executor
+  choice; Trino vs Spark SQL; Superset vs Metabase/Grafana/proprietary BI; deterministic vs
+  probabilistic/ML entity resolution; the ORCID/CRIS ecosystem context behind the synthetic-CVN
+  decision; Spark logs vs Prometheus/Grafana for the benchmark), plus a reference list ready to become
+  the memoria's bibliography
+- placed under `docs/research/tfm/` rather than directly in `docs/research/`, extending the existing
+  `docs/roadmap`/`docs/context` tfg/tfm folder split (hotfix `#10`) to this directory without touching
+  the TFG's own `docs/research/draft.txt` / `docs/research/latex_project/`
+- referenced from `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md` (new bullet in its "Original
+  Plan") and from `docs/roadmap/tfm/tfm_roadmap.md` (issue `#103`'s row and "Required Companion
+  Documents"), so the memoria issue picks it up as its primary state-of-the-art source instead of the
+  chapter being reconstructed from memory later
+- no code changed; no new limitation; issue `#103` status unchanged (`Planned`)
+- next: issue `#103` itself (memoria assembly), which can now draft its "Estado del arte" chapter
+  directly from this document
 
 ### Issue #102 Completed: Hardening
 

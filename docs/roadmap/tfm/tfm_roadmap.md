@@ -27,7 +27,7 @@ continues directly on top of the TFG deliverables:
 - the local CLI CV management application: SQLite storage, master/derived
   curriculum versions, LaTeX export, optional PDF generation, and opt-in
   LLM-assisted PDF import (`src/open_cvn_app/`)
-- the written, signed, and defended TFG memoria (`docs/memoria/TFG.pdf`)
+- the written, signed, and defended TFG memoria (`docs/memoria/TFG/TFG.pdf`)
 
 A full walkthrough of how that foundation actually works, stage by stage, is
 in `docs/pipeline/cvn_pydantic_generation_pipeline.md` and
@@ -97,7 +97,7 @@ to work out of sequence (per the Roadmap Rules above).
 | `#100` | Superset dashboard | Completed | `docs/roadmap/tfm/issues/issue-100-superset-dashboard.md`; epic phase 4; depends on `#91`, `#99` |
 | `#101` | Spark performance benchmark | Completed | `docs/roadmap/tfm/issues/issue-101-spark-performance-benchmark.md`; epic phase 4; depends on `#98` |
 | `#102` | Hardening | Completed | `docs/roadmap/tfm/issues/issue-102-hardening.md`; epic phase 5; depends on `#90`-`#101` |
-| `#103` | Memoria assembly | Planned | `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md`; epic phase 6; closing issue |
+| `#103` | Memoria assembly | In Progress | `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md`; epic phase 6; closing issue; chapter 1 drafted on branch `issue-103-memoria-assembly`; state-of-the-art input ready in `docs/research/tfm/estado_del_arte_tfm.md` |
 
 ## Required Companion Documents
 
@@ -105,5 +105,7 @@ to work out of sequence (per the Roadmap Rules above).
   `docs/pipeline/cvn_pydantic_generation_pipeline.md`
 - TFG limitations register: `docs/pipeline/known_limitations.md`
 - TFM current state: `docs/context/tfm/current_status.md`
+- TFM state-of-the-art and technology-justification research document (input
+  for issue `#103`'s memoria chapter): `docs/research/tfm/estado_del_arte_tfm.md`
 - TFG closed roadmap (historical): `docs/roadmap/tfg/cvn_generation_roadmap.md`
 - TFG closed status log (historical): `docs/context/tfg/current_status.md`

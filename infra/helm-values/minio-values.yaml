@@ -37,8 +37,12 @@ auth:
   rootUserSecretKey: root-user
   rootPasswordSecretKey: root-password
 
-# Single bucket with bronze/silver/gold prefixes (Task 0 decision), matching
-# the Iceberg warehouse path convention issue #92 will build on.
+# Single bucket, `lakehouse` (Task 0 decision). Raw pre-Iceberg landing uses
+# only the `bronze` prefix; `silver`/`gold` prefixes were dropped from this
+# layout once issues #98/#99 showed those layers are written directly as
+# Iceberg tables under the separate `warehouse/` root issue #92 configures,
+# with no raw-file landing step of their own. See issue #91's "Adjustments
+# Made During Implementation" for the full record.
 defaultBuckets: "lakehouse"
 
 persistence:

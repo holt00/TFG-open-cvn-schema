@@ -1,0 +1,365 @@
+@mastersthesis{tfg_open_cvn,
+  author = {Carlos Martínez Jaén},
+  title  = {Especificación de formato y desarrollo de herramientas para el procesamiento de currículum vitae en el ámbito académico universitario},
+  school = {Universidad de Castilla-La Mancha, Escuela Superior de Ingeniería Informática de Albacete},
+  year   = {2026},
+  type   = {Trabajo Fin de Grado},
+}
+
+% -------------------------------------------------------------------
+% Capítulo 1: ORCID, CRIS y contexto del problema
+% -------------------------------------------------------------------
+
+@misc{orcid_about,
+  author       = {{ORCID}},
+  title        = {What Is {ORCID}?},
+  year         = {2026},
+  howpublished = {\url{https://info.orcid.org/what-is-orcid/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{orcid_public_data_file_2025,
+  author       = {{ORCID}},
+  title        = {{ORCID} Public Data File 2025},
+  year         = {2025},
+  howpublished = {\url{https://doi.org/10.6084/m9.figshare.30375589}},
+  note         = {Accedido: 2026-09-28. Volumen verificado empíricamente en
+                  este proyecto: 26\,078\,951 registros escaneados
+                  (`docs/roadmap/tfm/issues/issue-95-orcid-bulk-data-file-pipeline.md`)}
+}
+
+@misc{eurocris_cerif,
+  author       = {{euroCRIS}},
+  title        = {Main Features of {CERIF}},
+  year         = {2026},
+  howpublished = {\url{https://eurocris.org/services/main-features-cerif/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{vivo_project,
+  author       = {{VIVO Project}},
+  title        = {{VIVO}: Connect, Share, Discover},
+  year         = {2026},
+  howpublished = {\url{https://www.vivoweb.org/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+% -------------------------------------------------------------------
+% Capítulo 2: estado del arte y decisiones arquitectónicas
+% -------------------------------------------------------------------
+
+@inproceedings{armbrust_lakehouse_2021,
+  author    = {Armbrust, Michael and Ghodsi, Ali and Xin, Reynold and Zaharia, Matei},
+  title     = {Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics},
+  booktitle = {11th Annual Conference on Innovative Data Systems Research (CIDR '21)},
+  year      = {2021},
+  address   = {Online},
+  howpublished = {\url{https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf}},
+  note      = {11--15 de enero de 2021}
+}
+
+@article{zaharia_spark_2016,
+  author  = {Zaharia, Matei and Xin, Reynold S. and Wendell, Patrick and Das, Tathagata and Armbrust, Michael and Dave, Ankur and Meng, Xiangrui and Rosen, Josh and Venkataraman, Shivaram and Franklin, Michael J. and Ghodsi, Ali and Gonzalez, Joseph and Shenker, Scott and Stoica, Ion},
+  title   = {Apache Spark: A Unified Engine for Big Data Processing},
+  journal = {Communications of the ACM},
+  volume  = {59},
+  number  = {11},
+  pages   = {56--65},
+  year    = {2016},
+  doi     = {10.1145/2934664}
+}
+
+@article{fellegi_sunter_1969,
+  author  = {Fellegi, Ivan P. and Sunter, Alan B.},
+  title   = {A Theory for Record Linkage},
+  journal = {Journal of the American Statistical Association},
+  volume  = {64},
+  number  = {328},
+  pages   = {1183--1210},
+  year    = {1969},
+  doi     = {10.1080/01621459.1969.10501049}
+}
+
+@misc{apache_iceberg_docs,
+  author       = {{Apache Software Foundation}},
+  title        = {Apache Iceberg Documentation},
+  year         = {2026},
+  howpublished = {\url{https://iceberg.apache.org/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{apache_spark_k8s_docs,
+  author       = {{Apache Software Foundation}},
+  title        = {Running Spark on {Kubernetes}},
+  year         = {2026},
+  howpublished = {\url{https://spark.apache.org/docs/latest/running-on-kubernetes.html}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{apache_airflow_k8s_docs,
+  author       = {{Apache Software Foundation}},
+  title        = {Apache Airflow Providers -- {CNCF} {Kubernetes} ({KubernetesExecutor})},
+  year         = {2026},
+  howpublished = {\url{https://airflow.apache.org/docs/apache-airflow-providers-cncf-kubernetes/stable/index.html}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{apache_superset_docs,
+  author       = {{Apache Software Foundation}},
+  title        = {Apache Superset},
+  year         = {2026},
+  howpublished = {\url{https://superset.apache.org/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{delta_lake_docs,
+  author       = {{Delta Lake Project, Linux Foundation}},
+  title        = {Delta Lake},
+  year         = {2026},
+  howpublished = {\url{https://delta.io/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{apache_hudi_docs,
+  author       = {{Apache Software Foundation}},
+  title        = {Apache Hudi},
+  year         = {2026},
+  howpublished = {\url{https://hudi.apache.org/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{project_nessie_docs,
+  author       = {{Project Nessie}},
+  title        = {Project Nessie: Transactional Catalog for Data Lakes with {Git}-Like Semantics},
+  year         = {2026},
+  howpublished = {\url{https://projectnessie.org/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{k3s_docs,
+  author       = {{K3s Project Authors}},
+  title        = {{k3s}: Lightweight {Kubernetes}},
+  year         = {2026},
+  howpublished = {\url{https://docs.k3s.io/}},
+  note         = {Accedido: 2026-09-28. Proyecto originado en Rancher Labs (SUSE)}
+}
+
+@misc{cncf_kubernetes,
+  author       = {{Cloud Native Computing Foundation}},
+  title        = {{Kubernetes}},
+  year         = {2026},
+  howpublished = {\url{https://www.cncf.io/projects/kubernetes/}},
+  note         = {Accedido: 2026-09-28. Proyecto graduado de la CNCF desde el 6 de marzo de 2018}
+}
+
+@misc{minio_github,
+  author       = {{MinIO, Inc.}},
+  title        = {{MinIO}: High-Performance, {S3} Compatible Object Store},
+  year         = {2026},
+  howpublished = {\url{https://github.com/minio/minio}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{splink_docs,
+  author       = {{UK Ministry of Justice}},
+  title        = {Splink: Probabilistic Record Linkage at Scale},
+  year         = {2026},
+  howpublished = {\url{https://moj-analytical-services.github.io/splink/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+@misc{dedupe_docs,
+  author       = {{DataMade}},
+  title        = {dedupe: A Python Library for Accurate and Scalable Fuzzy Matching, Record Deduplication and Entity Resolution},
+  year         = {2026},
+  howpublished = {\url{https://docs.dedupe.io/en/latest/}},
+  note         = {Accedido: 2026-09-28}
+}
+
+% -------------------------------------------------------------------
+% Capítulo 2: alternativas descartadas, citadas también para autocontención
+% -------------------------------------------------------------------
+
+@misc{apache_hadoop_docs,
+  author       = {{Apache Software Foundation}},
+  title        = {Apache Hadoop},
+  year         = {2026},
+  howpublished = {\url{https://hadoop.apache.org/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{apache_hive_metastore_docs,
+  author       = {{Apache Software Foundation}},
+  title        = {Apache Hive: Design -- Metastore},
+  year         = {2026},
+  howpublished = {\url{https://cwiki.apache.org/confluence/display/hive/design}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{docker_swarm_docs,
+  author       = {{Docker, Inc.}},
+  title        = {Swarm Mode Overview},
+  year         = {2026},
+  howpublished = {\url{https://docs.docker.com/engine/swarm/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{apache_flink_docs,
+  author       = {{Apache Software Foundation}},
+  title        = {Apache Flink: Stateful Computations over Data Streams},
+  year         = {2026},
+  howpublished = {\url{https://flink.apache.org/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{dask_docs,
+  author       = {{Dask Development Team}},
+  title        = {Dask: Scale the {Python} Tools You Love},
+  year         = {2026},
+  howpublished = {\url{https://www.dask.org/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{ray_docs,
+  author       = {{Anyscale, Inc.}},
+  title        = {{Ray}},
+  year         = {2026},
+  howpublished = {\url{https://www.ray.io/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{spark_kubernetes_operator_docs,
+  author       = {{Kubeflow}},
+  title        = {Kubernetes Operator for Apache Spark},
+  year         = {2026},
+  howpublished = {\url{https://github.com/kubeflow/spark-operator}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{prefect_docs,
+  author       = {{Prefect Technologies, Inc.}},
+  title        = {Prefect: Workflow Orchestration for Data, {ML} and Agents},
+  year         = {2026},
+  howpublished = {\url{https://www.prefect.io/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{dagster_docs,
+  author       = {{Dagster Labs}},
+  title        = {{Dagster}},
+  year         = {2026},
+  howpublished = {\url{https://dagster.io/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{luigi_github,
+  author       = {{Spotify}},
+  title        = {Luigi},
+  year         = {2026},
+  howpublished = {\url{https://github.com/spotify/luigi}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{trino_docs,
+  author       = {{Trino Software Foundation}},
+  title        = {Trino: Distributed {SQL} Query Engine for Big Data},
+  year         = {2026},
+  howpublished = {\url{https://trino.io/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{grafana_docs,
+  author       = {{Grafana Labs}},
+  title        = {Grafana {OSS}},
+  year         = {2026},
+  howpublished = {\url{https://grafana.com/oss/grafana/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{microsoft_power_bi_docs,
+  author       = {{Microsoft}},
+  title        = {{Power BI}},
+  year         = {2026},
+  howpublished = {\url{https://www.microsoft.com/en-us/power-platform/products/power-bi}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{tableau_docs,
+  author       = {{Salesforce, Inc.}},
+  title        = {{Tableau}},
+  year         = {2026},
+  howpublished = {\url{https://www.tableau.com/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{metabase_docs,
+  author       = {{Metabase, Inc.}},
+  title        = {{Metabase}},
+  year         = {2026},
+  howpublished = {\url{https://www.metabase.com/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+% -------------------------------------------------------------------
+% Capítulo 3: infraestructura y servicios base
+% -------------------------------------------------------------------
+
+@misc{docker_docs,
+  author       = {{Docker, Inc.}},
+  title        = {{Docker}},
+  year         = {2026},
+  howpublished = {\url{https://www.docker.com/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{helm_docs,
+  author       = {{The Helm Authors}},
+  title        = {{Helm}: The Package Manager for {Kubernetes}},
+  year         = {2026},
+  howpublished = {\url{https://helm.sh/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{bitnami_charts_issue_35164,
+  author       = {{Broadcom Inc. / Bitnami Charts Contributors}},
+  title        = {Regarding the Bitnami Deprecation and Migration Plan (Issue \#35164)},
+  year         = {2025},
+  howpublished = {\url{https://github.com/bitnami/charts/issues/35164}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{postgresql_docs,
+  author       = {{The PostgreSQL Global Development Group}},
+  title        = {{PostgreSQL}},
+  year         = {2026},
+  howpublished = {\url{https://www.postgresql.org/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+% -------------------------------------------------------------------
+% Capítulo 4: ingesta y fusión de fuentes heterogéneas
+% -------------------------------------------------------------------
+
+@misc{orcid_public_api_docs,
+  author       = {{ORCID}},
+  title        = {{ORCID} Public {API}},
+  year         = {2026},
+  howpublished = {\url{https://info.orcid.org/documentation/features/public-api/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{figshare_docs,
+  author       = {{Figshare}},
+  title        = {Figshare: Online Open Access Research Data Repository},
+  year         = {2026},
+  howpublished = {\url{https://figshare.com/}},
+  note         = {Accedido: 2026-09-29}
+}
+
+@misc{json_schema_org,
+  author       = {{JSON Schema Organization}},
+  title        = {{JSON} Schema: A Media Type for Describing {JSON} Documents},
+  year         = {2026},
+  howpublished = {\url{https://json-schema.org/}},
+  note         = {Accedido: 2026-09-29}
+}

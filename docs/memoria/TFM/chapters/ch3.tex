@@ -1,0 +1,215 @@
+\chapter{Infraestructura: despliegue del clúster y servicios base}
+\label{cap:infraestructura}
+
+El presente capítulo describe cómo se construye, en la práctica, la base
+de infraestructura sobre la que corre el resto del sistema. Se recorren el
+clúster Kubernetes local, los servicios centrales que se despliegan sobre
+él, el catálogo Iceberg configurado sobre el almacenamiento de objetos y
+la ejecución de Spark orquestada por Airflow. Esta última demuestra, de
+extremo a extremo, que el mecanismo central de la plataforma funciona
+antes de construir ningún flujo de negocio sobre él. El
+Capítulo~\ref{cap:estado_arte} justifica cada una de estas decisiones
+frente a sus alternativas. Este capítulo describe cómo se llevaron a la
+práctica, con los hallazgos operativos reales que surgieron al hacerlo.
+
+\section{Arquitectura de despliegue}
+\label{sec:infraestructura_arquitectura}
+
+La plataforma se organiza en una cadena de capas. Un orquestador de
+flujos, Airflow, dispara trabajos de cómputo distribuido con Spark sobre
+Kubernetes. Estos trabajos leen y escriben contra un almacenamiento de
+objetos con formato de tabla, MinIO con Iceberg. Los resultados agregados
+se publican en una capa relacional, PostgreSQL. Finalmente, esos
+resultados se consumen desde una capa de visualización, Superset, que se
+describe en el Capítulo~\ref{cap:visualizacion}. Todos estos servicios se
+despliegan como \textit{charts} de Helm~\cite{helm_docs}.
+
+El clúster subyacente es Kubernetes~\cite{cncf_kubernetes}. Corre en un
+único nodo local, con un espacio de nombres dedicado llamado
+\texttt{tfm-lakehouse}. La Tabla~\ref{tab:tfm_servicios_desplegados}
+resume los servicios desplegados y su papel en esta cadena.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.16\textwidth} p{0.26\textwidth} p{0.14\textwidth} p{0.34\textwidth}}
+    \hline
+    \textbf{Servicio} & \textbf{Tecnología} & \textbf{Versión} & \textbf{Rol} \\
+    \hline
+    Clúster & k3s & v1.36.4+k3s1 & Sustrato Kubernetes de un único nodo \\
+    Almacenamiento & MinIO & \textit{chart} 17.0.21 & Objetos S3, cubo \texttt{lakehouse} \\
+    Base relacional & PostgreSQL & \textit{chart} 18.11.3 & Capa \textit{gold} publicada \\
+    Orquestación & Airflow & \textit{chart} 1.22.0 & Flujos ETL, ejecutor de Kubernetes \\
+    Catálogo de tablas & Iceberg & 1.11.0, \textit{runtime} Spark 3.5 & Catálogo Hadoop sobre MinIO \\
+    Procesamiento & Spark & 3.5.9 & Trabajos distribuidos lanzados desde Airflow \\
+    \hline
+  \end{tabular}
+  \caption{Servicios desplegados en el clúster local.}
+  \label{tab:tfm_servicios_desplegados}
+\end{table}
+
+\section{Clúster Kubernetes local}
+\label{sec:infraestructura_k3s}
+
+El clúster se instaló como distribución k3s, en modo de un único nodo. Se
+configuró con el modo de red \texttt{host-gw} en lugar del
+\textit{backend} VXLAN por defecto, que evita un problema conocido de
+encapsulado UDP bajo el entorno de desarrollo WSL2 empleado. k3s se
+instala como servicio \texttt{systemd}, lo que exige que dicho gestor de
+servicios esté habilitado en el entorno. Bajo WSL2 esto no viene activado
+por defecto y requiere un paso de configuración explícito antes de
+instalar el clúster.
+
+Sobre el nodo así preparado se creó el espacio de nombres dedicado
+\texttt{tfm-lakehouse}. También se añadieron los repositorios oficiales de
+Helm de Apache Airflow y Apache Superset. Los \textit{charts} de MinIO y
+PostgreSQL, en cambio, se consumen por referencia OCI directa en lugar de
+mediante un repositorio Helm clásico, tal y como se detalla en la
+Sección~\ref{sec:infraestructura_servicios}.
+
+\section{Servicios base: MinIO, PostgreSQL y Airflow}
+\label{sec:infraestructura_servicios}
+
+Los tres servicios centrales se despliegan mediante Helm sobre el clúster.
+MinIO se configura con un único cubo llamado \texttt{lakehouse}, con un
+único prefijo de aterrizaje de ficheros crudos, \texttt{bronze}. La
+Sección~\ref{sec:infraestructura_iceberg} explica por qué el cubo no
+necesita ningún otro prefijo. PostgreSQL~\cite{postgresql_docs} se despliega
+como una instancia dedicada a la futura capa \textit{gold}. Esta instancia
+se mantiene
+deliberadamente separada de la base de datos de metadatos que el propio
+\textit{chart} de Airflow ya incorpora de forma integrada, para no acoplar
+dos sistemas con ciclos de vida distintos. Airflow se despliega con el
+ejecutor de Kubernetes, \texttt{KubernetesExecutor}, y con persistencia de
+sus DAG en un volumen propio. Los ficheros de flujo se entregan
+copiándolos directamente a dicho volumen, en lugar de mediante
+sincronización continua con un repositorio Git.
+
+Durante el despliegue se constató un hallazgo operativo real, no
+anticipado en el planteamiento inicial. El catálogo gratuito de Bitnami,
+proveedor de los \textit{charts} de MinIO y PostgreSQL empleados, redujo
+drásticamente su oferta de imágenes públicas a lo largo de 2025. Todas las
+imágenes anteriores al recorte se movieron a un registro congelado,
+\texttt{bitnamilegacy}, que sigue siendo público y sin autenticación pero
+que no recibe ya ninguna actualización de
+seguridad~\cite{bitnami_charts_issue_35164}. Este hallazgo obligó a fijar
+explícitamente, para cada imagen de MinIO y PostgreSQL, tanto el registro
+como la etiqueta exacta. Cada una se verificó como descargable en el
+momento del despliegue, en lugar de asumirse de la documentación de cada
+\textit{chart}. Se acepta como una limitación conocida, razonable para un
+clúster local sin exposición a Internet, pero que exigiría revisarse antes
+de cualquier despliegue real.
+
+\section{Catálogo Iceberg sobre MinIO}
+\label{sec:infraestructura_iceberg}
+
+El catálogo Hadoop de Iceberg se configura mediante un único catálogo de
+Spark, llamado \texttt{lakehouse}, con su raíz de almacén en
+\texttt{s3a://lakehouse/warehouse}. Esta ruta se mantiene deliberadamente
+distinta del prefijo \texttt{bronze} que aloja los ficheros crudos
+aterrizados directamente. Mezclar ambos bajo el mismo prefijo arriesgaría
+que la lógica interna de listado y \textit{commit} de Iceberg tropezase
+con objetos ajenos a sus propias tablas. Dentro de ese almacén, las capas
+\textit{bronze}, \textit{silver} y \textit{gold} se representan como
+espacios de nombres de Iceberg, es decir \texttt{lakehouse.bronze},
+\texttt{lakehouse.silver} y \texttt{lakehouse.gold}, no como catálogos
+independientes. Esto evita triplicar la superficie de configuración sin
+necesidad funcional alguna.
+
+El cubo se aprovisionó al principio con tres prefijos de aterrizaje,
+\texttt{bronze}, \texttt{silver} y \texttt{gold}, a semejanza de esos
+mismos tres espacios de nombres. La ingesta del
+Capítulo~\ref{cap:ingesta} aterriza en \texttt{bronze} los ficheros crudos
+de ORCID y los CVN sintéticos, porque son datos que entran a la
+plataforma desde fuera y necesitan un primer punto de aterrizaje antes de
+cualquier procesamiento. Las capas \textit{silver} y \textit{gold}, en
+cambio, no llegan a aterrizar ningún fichero crudo propio. Se calculan
+enteramente dentro de la plataforma, mediante trabajos de Spark que leen
+\textit{bronze} y escriben su resultado directamente como tablas Iceberg
+bajo el espacio de nombres correspondiente de \texttt{warehouse/}. Al
+quedar claro esto durante el diseño de la ingesta y la transformación, los
+prefijos \texttt{silver} y \texttt{gold} del cubo se retiraron del diseño
+por no cumplir ninguna función, y el cubo quedó con el único prefijo de
+aterrizaje que sí se usa, \texttt{bronze}.
+
+La configuración de acceso exigió, además, fijar una cadena de versiones
+mutuamente compatibles entre Spark, el \textit{runtime} de Iceberg para
+Spark y las bibliotecas de acceso a S3 de Hadoop. Esta configuración
+incluye el punto de conexión S3, el direccionamiento por ruta en lugar de
+por subdominio, y las credenciales inyectadas por variable de entorno
+desde el mismo secreto de Kubernetes que usa MinIO. Una combinación
+incorrecta de las versiones de Spark, Iceberg y Hadoop es una fuente bien
+documentada de errores de \textit{classpath} difíciles de diagnosticar.
+Esta cadena de versiones se verificó de dos formas antes de darla por
+buena. Primero, que cada artefacto se pudiera descargar realmente desde su
+origen oficial. Después, extrayendo la propia distribución de Spark para
+comprobar qué versión de los clientes de Hadoop incluía en la práctica, en
+lugar de asumirla de la documentación.
+
+\section{Ejecución de Spark desde Airflow}
+\label{sec:infraestructura_spark}
+
+Cada trabajo de Spark se lanza desde una tarea de Airflow que usa
+\texttt{KubernetesPodOperator} y ejecuta \texttt{spark-submit} en modo
+Kubernetes \textit{client}, contra una imagen de Spark propia que ya
+incorpora las dependencias de Iceberg y S3A verificadas en la
+Sección~\ref{sec:infraestructura_iceberg}. El propio pod de la tarea de
+Airflow actúa así como el proceso controlador de Spark, llamado
+\textit{driver}. Este proceso crea y destruye sus propios pods ejecutores
+en el mismo espacio de nombres. Para ello se creó una cuenta de servicio
+dedicada de Kubernetes con permisos explícitos, limitados a ese espacio de
+nombres, en lugar de un permiso de alcance global.
+
+La verificación de este mecanismo, antes de construir ningún flujo de
+negocio sobre él, se hizo con un trabajo mínimo. Este trabajo crea un
+espacio de nombres y una tabla Iceberg de prueba, inserta unas pocas filas
+y las relee. Este primer intento reveló varios problemas reales que no
+eran evidentes desde el diseño:
+
+\begin{itemize}
+  \item \textbf{Credenciales del controlador.} La configuración de Spark
+  para inyectar credenciales en el controlador y en los ejecutores solo
+  tiene efecto real sobre los ejecutores en modo \textit{client}. En ese
+  modo, el controlador es el propio pod que ya lanzó
+  \texttt{spark-submit}, así que esas propiedades se ignoran de forma
+  silenciosa sobre él. Las credenciales del controlador se resolvieron
+  fijándolas directamente sobre la especificación del propio pod de
+  Airflow, no mediante configuración de Spark.
+  \item \textbf{Punto de entrada de la imagen.} Sustituir por completo el
+  punto de entrada de la imagen oficial de Spark para ejecutar
+  \texttt{spark-submit} directamente evita un paso interno de dicha
+  imagen que adapta el sistema de usuarios del contenedor al
+  identificador de usuario arbitrario con el que se ejecuta el pod. Omitir
+  ese paso produce errores de bajo nivel en la resolución del directorio
+  de usuario y en el inicio de sesión de Hadoop, que no delatan su causa
+  real. La solución consiste en invocar \texttt{spark-submit} como
+  argumento del punto de entrada original, no en sustituirlo.
+  \item \textbf{Permisos de limpieza.} Los permisos concedidos a la cuenta
+  de servicio cubrían la creación y el borrado individual de pods, pero no
+  el borrado por lotes que Spark efectúa al finalizar un trabajo para
+  limpiar sus propios ejecutores. Sin ese permiso adicional, el trabajo en
+  sí terminaba correctamente, pero el pod controlador quedaba en estado de
+  error por el fallo de limpieza posterior.
+\end{itemize}
+
+\section{Verificación de extremo a extremo}
+\label{sec:infraestructura_verificacion}
+
+Una vez corregidos los tres puntos anteriores, la prueba se completó con
+dos verificaciones independientes. Este patrón de comprobación se repite
+en los capítulos siguientes cada vez que se demuestra un resultado nuevo.
+En primer lugar, el propio trabajo debía terminar con éxito y su registro
+debía confirmar el número de filas esperado. En segundo lugar, un pod
+completamente distinto, sin relación con el trabajo que escribió los
+datos, debía poder leer la misma tabla a través del mismo catálogo y
+obtener el mismo resultado. Ambas verificaciones se cumplieron. Esto
+confirma que el mecanismo central de almacenamiento y procesamiento
+distribuido de la plataforma funciona de extremo a extremo, antes de
+construir sobre él ningún flujo de ingesta o transformación real.
+
+Esta forma de verificar, y no solo la corrección puntual de cada fallo,
+sostiene el objetivo de reproducibilidad de todo el sistema. La
+plataforma se diseñó para poder reconstruirse desde cero siguiendo una
+guía escrita, y esa guía se valida en la práctica, no solo se redacta,
+como se retoma en el Capítulo~\ref{cap:visualizacion}.

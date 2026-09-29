@@ -1,0 +1,356 @@
+\chapter{Estado del arte y decisiones arquitectónicas}
+\label{cap:estado_arte}
+
+El presente capítulo desarrolla el marco tecnológico necesario para
+justificar la arquitectura de la plataforma construida en este Trabajo Fin
+de Máster. Se recorre cada capa en el orden en que se despliega:
+almacenamiento y formato de tabla, sustrato de cómputo, procesamiento
+distribuido, orquestación de flujos, y consulta y visualización. Para cada
+una se presentan las alternativas reales del ecosistema y se justifica la
+opción adoptada frente a ellas. El capítulo cierra con una síntesis que
+reúne todas las decisiones en una tabla y sirve de puente hacia el
+Capítulo~\ref{cap:infraestructura}, donde esta arquitectura se despliega
+efectivamente.
+
+\section{De los sistemas de almacenamiento analítico al lakehouse}
+\label{sec:estado_arte_lakehouse}
+
+Un sistema que integra currículos CVN y perfiles de investigador ORCID
+necesita almacenar datos con dos exigencias que tradicionalmente se han
+resuelto con arquitecturas distintas: la escala y variedad propias de un
+\textit{data lake}, y las garantías transaccionales de un \textit{data
+warehouse}.
+
+Un almacén de datos clásico, o \textit{data warehouse}, define el esquema
+antes de cargar los datos, una disciplina conocida como
+\textit{schema-on-write}. Esto aporta consistencia y consultas analíticas
+fiables, justo lo que necesita este proyecto para publicar indicadores. Su
+inconveniente aparece antes: ingerir una fuente nueva exige transformarla
+primero para que encaje en ese esquema, un proceso costoso cuando CVN y
+ORCID llegan en formatos semiestructurados que no coinciden entre sí.
+
+Un lago de datos clásico, o \textit{data lake}, resuelve el problema
+contrario. Almacena cualquier fuente tal cual llega y solo interpreta su
+esquema al leerla, una práctica conocida como \textit{schema-on-read}. Sin
+metadatos transaccionales, sin embargo, corre el riesgo documentado del
+\textit{data swamp}: lecturas inconsistentes durante escrituras
+concurrentes, y ninguna forma de auditar cómo estaban los datos en un
+momento anterior.
+
+El \textit{lakehouse} combina ambas exigencias añadiendo una capa de
+metadatos transaccionales, un formato de tabla abierto, sobre
+almacenamiento de objetos barato. Esa capa aporta transacciones ACID,
+evolución de esquema controlada y \textit{time travel}, sin mover los
+datos a un motor relacional cerrado. Armbrust et al.~\cite{armbrust_lakehouse_2021}
+formulan esta convergencia como respuesta directa a las limitaciones de
+los dos modelos anteriores. La presentan como la arquitectura de
+referencia cuando conviven fuentes documentales y de volumen masivo,
+exactamente la situación de este proyecto.
+
+La arquitectura adoptada es, por tanto, un \textit{lakehouse} organizado
+en tres capas: \textit{bronze}, \textit{silver} y \textit{gold}. La capa
+\textit{bronze} conserva la procedencia de cada fuente. La capa
+\textit{silver} aplica resolución de identidad y control de calidad. La
+capa \textit{gold} deja agregados listos para consumo. Este es el patrón
+de fusión multi-fuente que exige el problema planteado en el
+Capítulo~\ref{cap:introduccion}. Mantener un único sistema para ambas
+exigencias, en lugar de un lago para ingesta y un almacén separado para
+publicación, evita además duplicar la superficie operativa del proyecto.
+
+\section{Formato de tabla: Apache Iceberg frente a sus alternativas}
+\label{sec:estado_arte_iceberg}
+
+El formato de tabla es la pieza que hace posible un \textit{lakehouse}:
+una capa de metadatos sobre ficheros en almacenamiento de objetos que los
+convierte en algo que se comporta como una tabla, con transacciones y
+evolución de esquema. Tres formatos tienen adopción real en el ecosistema
+actual.
+
+Apache Iceberg~\cite{apache_iceberg_docs} nació en Netflix para superar
+los límites de las tablas Hive a escala de petabytes, y hoy es un proyecto
+de la Apache Software Foundation con gobierno multi-vendedor. Aporta
+evolución de esquema y de partición sin reescribir los datos existentes, y
+aislamiento de \textit{snapshots} que permite leer una tabla de forma
+consistente mientras otro proceso escribe en ella. Cuenta además con
+soporte amplio en varios motores de consulta, entre ellos Spark, Trino y
+Flink, lo que significa que el mismo catálogo podría consultarse en el
+futuro desde un motor distinto sin cambiar el formato de tabla.
+
+Delta Lake~\cite{delta_lake_docs} nació en Databricks y fue donado a la
+Linux Foundation. Su integración con el ecosistema Spark de Databricks es
+muy pulida, pero sus funciones más avanzadas alcanzan su rendimiento
+completo sobre el \textit{runtime} propietario de Databricks. Fuera de ese
+entorno, su soporte multi-motor ha sido históricamente más limitado.
+Apache Hudi~\cite{apache_hudi_docs} nació en Uber y optimiza
+actualizaciones incrementales de baja latencia sobre flujos continuos,
+mediante \textit{upserts} y captura de cambios de datos, o CDC. Esta
+ventaja no aplica a este proyecto: es un \textit{pipeline} por lotes que
+reconstruye \textit{silver} y \textit{gold} por completo en cada
+ejecución.
+
+La Tabla~\ref{tab:tfm_formatos_tabla} resume las tres opciones.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.16\textwidth} p{0.4\textwidth} p{0.36\textwidth}}
+    \hline
+    \textbf{Formato} & \textbf{Origen y gobierno} & \textbf{Ajuste con este proyecto} \\
+    \hline
+    Apache Iceberg &
+      Netflix, hoy proyecto Apache, gobierno multi-vendedor &
+      Sin dependencia de un proveedor, consultable desde otros motores sin
+      cambiar el formato de tabla \\
+    Delta Lake &
+      Databricks, donado a la Linux Foundation &
+      Funciones avanzadas afinadas para el \textit{runtime} de Databricks,
+      menor soporte multi-motor fuera de él \\
+    Apache Hudi &
+      Uber, orientado a actualizaciones incrementales de baja latencia &
+      Optimizado para CDC y \textit{streaming}, este proyecto es un
+      \textit{pipeline} por lotes \\
+    \hline
+  \end{tabular}
+  \caption{Comparación de formatos de tabla abierta para arquitecturas \textit{lakehouse}.}
+  \label{tab:tfm_formatos_tabla}
+\end{table}
+
+La opción adoptada es Apache Iceberg. Al no depender de un
+\textit{runtime} comercial, las tablas creadas aquí seguirían siendo
+consultables sin cambios si, como trabajo futuro, la plataforma migrase a
+un motor de consulta interactivo como Trino, tratado en la
+Sección~\ref{sec:estado_arte_bi}, o a un clúster gestionado en la nube.
+Delta Lake queda como alternativa razonable, pero condicionada a un
+entorno Databricks que este proyecto no usa. Hudi se descarta por no
+encajar con un \textit{pipeline} por lotes.
+
+\subsection{Catálogo de Iceberg}
+\label{sec:estado_arte_catalogo}
+
+Iceberg necesita además un catálogo que resuelva el nombre de una tabla a
+la ubicación de su metadato raíz. Las opciones habituales son:
+
+\begin{itemize}
+  \item \textbf{Hive Metastore~\cite{apache_hive_metastore_docs}}:
+  servicio centralizado que almacena la estructura de tablas y
+  particiones. Exige desplegar y operar un servicio adicional únicamente
+  para esa resolución de nombres.
+  \item \textbf{Catálogo REST~\cite{apache_iceberg_docs}}: la vía que el
+  propio proyecto Iceberg promueve como estándar de interoperabilidad
+  entre motores. Resuelve el mismo problema mediante una API HTTP común,
+  pero exige igualmente un servicio adicional.
+  \item \textbf{Project Nessie~\cite{project_nessie_docs}}: catálogo
+  versionado al estilo Git, con ramas y \textit{commits} sobre el catálogo
+  completo. Muy atractivo para múltiples escritores que necesitan aislar
+  sus cambios, pero comparte la misma exigencia operativa.
+  \item \textbf{Catálogo Hadoop}, basado en rutas: resuelve el nombre de
+  tabla directamente contra una convención de directorios en el propio
+  almacenamiento de objetos, sin ningún servicio adicional.
+\end{itemize}
+
+La opción adoptada es el catálogo Hadoop. Con un único escritor por capa y
+sin necesidad de versionar el catálogo a nivel de repositorio, el coste
+operativo de un servicio adicional no se compensa con ninguna capacidad
+que el proyecto vaya a usar. El versionado de Nessie y la
+interoperabilidad de un catálogo REST quedan como trabajo futuro. Ningún
+escenario del proyecto las necesita todavía, no por ninguna carencia
+técnica de esas dos opciones.
+
+\section{Almacenamiento de objetos: MinIO frente a sus alternativas}
+\label{sec:estado_arte_minio}
+
+HDFS~\cite{apache_hadoop_docs}, la opción clásica de Big Data, acopla
+almacenamiento y cómputo en los mismos nodos, lo que contradice el propio
+patrón \textit{lakehouse} y añade una pieza operativa adicional sin
+aportar ventaja alguna aquí. El almacenamiento nativo de un proveedor de
+nube pública es la opción de producción real, pero es incompatible con un
+despliegue autoalojado y de coste cero. MinIO~\cite{minio_github}, un
+servidor de objetos autoalojado compatible con la API de Amazon S3,
+resuelve ambos problemas a la vez: el mismo protocolo, \texttt{s3a://},
+que usarían los trabajos de procesamiento contra un proveedor real
+funciona sin cambios contra MinIO.
+
+La opción adoptada es MinIO, precisamente por esa compatibilidad de
+protocolo. El código de acceso a almacenamiento escrito contra MinIO no
+necesitaría cambios para apuntar a un proveedor de nube real.
+
+\section{Sustrato de orquestación de contenedores y entorno de despliegue}
+\label{sec:estado_arte_kubernetes}
+
+Los servicios de la plataforma pueden desplegarse de tres formas:
+
+\begin{itemize}
+  \item \textbf{Sin orquestador}: cada servicio como proceso o contenedor
+  suelto en la máquina. Es la opción más simple de depurar, pero renuncia
+  al modelo declarativo de infraestructura versionada y no ejercita
+  ninguna competencia de computación en la nube.
+  \item \textbf{Docker Swarm~\cite{docker_swarm_docs}}: orquestador más
+  simple que Kubernetes, pero prácticamente ausente del soporte oficial
+  del ecosistema Big Data. Ni Spark, ni Airflow, ni Superset publican un
+  camino de despliegue nativo equivalente al que sí publican para
+  Kubernetes.
+  \item \textbf{Kubernetes~\cite{cncf_kubernetes}}: el estándar de facto,
+  con soporte de primera clase en el resto de la pila elegida.
+\end{itemize}
+
+La opción adoptada es Kubernetes, y dentro de él, k3s~\cite{k3s_docs}: una
+distribución certificada, empaquetada como binario único con huella de
+recursos reducida, apta para una sola máquina de desarrollo sin dejar de
+ser Kubernetes real. Esa condición hace posible desplegar sobre una única
+máquina local durante el desarrollo, en lugar de sobre un clúster real en
+la nube. Evita así el coste de mantener infraestructura en la nube
+encendida mientras el sistema todavía cambia con frecuencia.
+
+La arquitectura no depende de esa máquina concreta, porque todos los
+servicios se despliegan con \textit{charts} de Helm sobre Kubernetes
+estándar. La única excepción es el modo de red \texttt{host-gw}, necesario
+bajo WSL2 para evitar un problema conocido de encapsulado UDP en el
+\textit{backend} por defecto, una decisión de compatibilidad con el
+entorno de desarrollo, no una limitación de Kubernetes. El mismo
+despliegue es, por tanto, replicable sobre un clúster real en la nube
+cambiando la infraestructura subyacente, no la definición de los
+servicios. Ese paso queda documentado como trabajo futuro.
+
+\section{Procesamiento distribuido: Apache Spark frente a sus alternativas}
+\label{sec:estado_arte_spark}
+
+El procesamiento de este proyecto tiene forma de lotes programados, no de
+flujo continuo de eventos, lo que orienta la elección entre los motores
+disponibles:
+
+\begin{itemize}
+  \item \textbf{Apache Flink~\cite{apache_flink_docs}}: pensado ante todo
+  para baja latencia sobre flujos continuos. Añadiría la complejidad
+  operativa de su propia topología de coordinación sin que el proyecto
+  llegue a explotar esa ventaja.
+  \item \textbf{Dask~\cite{dask_docs} y Ray~\cite{ray_docs}}: motores
+  nativos de Python, con curva de adopción más suave. Su soporte de
+  Iceberg es bastante menos maduro, y su presencia en arquitecturas
+  \textit{lakehouse} de referencia es minoritaria.
+  \item \textbf{Apache Spark \cite{zaharia_spark_2016}}: descrito por sus
+  autores como un motor unificado para lotes, flujos, SQL y aprendizaje
+  automático. Cuenta con la integración más madura del ecosistema con
+  Iceberg y con un \textit{backend} nativo sobre Kubernetes
+  \cite{apache_spark_k8s_docs}.
+\end{itemize}
+
+La opción adoptada es Apache Spark, lanzado con \texttt{spark-submit} en
+modo Kubernetes \textit{client} desde el propio orquestador, en lugar de
+mediante el \textit{Spark Kubernetes Operator}~\cite{spark_kubernetes_operator_docs}.
+Este último exige instalar y depurar un controlador adicional, mientras
+que \texttt{spark-submit} en modo \textit{client} sigue programando los
+ejecutores como pods reales sin esa pieza extra. Ciertas propiedades de
+configuración del controlador de Spark resultaron no operativas en modo
+\textit{client} y tuvieron que trasladarse a la especificación del propio
+pod, un ajuste documentado en el Capítulo~\ref{cap:infraestructura}.
+
+\section{Orquestación de flujos ETL: Apache Airflow frente a sus alternativas}
+\label{sec:estado_arte_airflow}
+
+Cuatro herramientas cubren la orquestación de flujos ETL en el ecosistema
+actual:
+
+\begin{itemize}
+  \item \textbf{Prefect~\cite{prefect_docs}}: ergonomía de desarrollo
+  local moderna, con los flujos definidos como código Python idiomático,
+  pero una madurez de despliegue nativo en Kubernetes menor que la de
+  Airflow.
+  \item \textbf{Dagster~\cite{dagster_docs}}: modelo de activos de datos
+  con linaje explícito entre pasos, atractivo para un lago de datos, pero
+  no crítico para un \textit{pipeline} de solo tres etapas cuya
+  procedencia ya resuelve el propio formato Iceberg.
+  \item \textbf{Luigi~\cite{luigi_github}}: simplicidad orientada a
+  tareas con dependencias, pero sin interfaz de administración ni un
+  ejecutor de Kubernetes nativo comparable.
+  \item \textbf{Apache Airflow \cite{apache_airflow_k8s_docs}}: el
+  orquestador incumbente, con \textit{chart} de Helm oficial y un
+  ejecutor de Kubernetes de primera clase, el \texttt{KubernetesExecutor},
+  en el que cada tarea se ejecuta como su propio pod.
+\end{itemize}
+
+La opción adoptada es Apache Airflow con su ejecutor de Kubernetes. Frente
+a su alternativa madura, el \texttt{CeleryExecutor}, basado en un
+intermediario de colas, reutiliza el propio clúster como sustrato de
+ejecución en lugar de exigir levantar una cola de mensajes y un almacén
+de resultados adicionales.
+
+\section{Capa de consulta interactiva y capa de visualización}
+\label{sec:estado_arte_bi}
+
+Trino~\cite{trino_docs}, un motor de consulta SQL federado de baja
+latencia sobre tablas Iceberg, sería útil si el proyecto necesitase una
+vía de consulta independiente del panel de visualización. No es el caso,
+porque todo el acceso a los datos ya se hace desde los propios trabajos de
+procesamiento, así que queda como trabajo futuro.
+
+Para la visualización, cuatro opciones son relevantes:
+
+\begin{itemize}
+  \item \textbf{Grafana~\cite{grafana_docs}}: la referencia para paneles
+  de observabilidad y series temporales, pero encaja peor con gráficos
+  analíticos agregados sobre un esquema relacional, la forma real de los
+  indicadores de este proyecto.
+  \item \textbf{Power BI~\cite{microsoft_power_bi_docs} y
+  Tableau~\cite{tableau_docs}}: las herramientas de BI propietarias de
+  referencia del mercado, incompatibles con la naturaleza autoalojada y
+  de coste cero de la plataforma.
+  \item \textbf{Metabase~\cite{metabase_docs}}: alternativa de código
+  abierto comparable a Superset, de entrada más simple, pero con un
+  modelo de panel menos expresivo para versionar el panel completo como
+  código.
+  \item \textbf{Apache Superset~\cite{apache_superset_docs}}: permite
+  exportar y reconstruir el panel completo desde el repositorio, en lugar
+  de depender de un artefacto manual imposible de versionar.
+\end{itemize}
+
+La opción adoptada es Apache Superset, conectado a una base de datos
+relacional y no a Iceberg. Con Trino ya descartado, materializar las
+tablas de \textit{gold}, ya agregadas y pequeñas, en una base de datos
+relacional como último paso del \textit{pipeline} da a Superset un
+conector nativo sin necesitar ningún servicio intermedio. El
+\textit{chart} de Helm oficial de Superset resultó estar obsoleto frente
+a la vía de despliegue que el proyecto promueve actualmente. Se gestionó
+fijando su versión y construyendo una imagen propia, en lugar de adoptar
+un operador todavía en maduración, una decisión que se retoma en el
+Capítulo~\ref{cap:visualizacion}.
+
+\Needspace{9cm}
+\section{Síntesis y arquitectura resultante}
+\label{sec:estado_arte_sintesis}
+
+La Tabla~\ref{tab:tfm_sintesis_decisiones} reúne, para cada capa, la
+decisión adoptada, la alternativa principal descartada y el motor de su
+justificación.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.24\textwidth} p{0.28\textwidth} p{0.4\textwidth}}
+    \hline
+    \textbf{Decisión} & \textbf{Alternativa principal descartada} & \textbf{Motor de la justificación} \\
+    \hline
+    Arquitectura \textit{lakehouse} & Almacén y lago separados & Un único sistema para ambas exigencias, sin duplicar operación \\
+    Apache Iceberg & Delta Lake, Apache Hudi & Sin dependencia de proveedor, consultable desde otros motores sin cambios \\
+    Catálogo Hadoop & Hive Metastore, REST, Nessie & Un único escritor por capa, sin necesidad de versionado de catálogo \\
+    MinIO & HDFS, nube pública real & Mismo protocolo que un proveedor real, sin coste ni dependencia externa \\
+    Kubernetes k3s, nodo local & Docker Swarm, clúster real en la nube & Soporte de primera clase en el resto de la pila, coste y reproducibilidad durante el desarrollo \\
+    Apache Spark, \texttt{spark-submit} sin operador & Apache Flink, Dask, Ray, \textit{Spark Kubernetes Operator} & Patrón por lotes del proyecto, integración madura con Iceberg, menor superficie operativa \\
+    Apache Airflow, ejecutor de Kubernetes & Prefect, Dagster, Luigi, \texttt{CeleryExecutor} & Despliegue Kubernetes-nativo maduro, sin servicios adicionales \\
+    Superset sobre base de datos relacional, sin Trino & Trino, Grafana, Metabase, BI propietario & Panel como código, sin servicio intermedio adicional \\
+    \hline
+  \end{tabular}
+  \caption{Síntesis de las decisiones arquitectónicas de la plataforma.}
+  \label{tab:tfm_sintesis_decisiones}
+\end{table}
+
+En conjunto, estas decisiones configuran una arquitectura \textit{lakehouse}
+coherente, autoalojada y reproducible desde cero, con soporte de primera
+clase entre todos sus componentes y con cada alternativa descartada
+documentada como trabajo futuro explícito. El
+Capítulo~\ref{cap:infraestructura} describe cómo se despliega
+efectivamente. Los Capítulos~\ref{cap:ingesta},~\ref{cap:procesamiento}
+y~\ref{cap:visualizacion} retoman, cada uno en su lugar, las decisiones de
+estrategia de datos, resolución de identidad y observabilidad propias del
+desarrollo de cada capa.

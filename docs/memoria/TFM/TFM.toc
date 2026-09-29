@@ -1,0 +1,41 @@
+\xpginauxfiletrue 
+\selectlanguage *{spanish}
+\contentsline {chapter}{\numberline {1}Introducción, motivación y objetivos}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Contexto y continuidad con el Trabajo Fin de Grado}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Problema de partida y motivación}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objetivos}{3}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Aspectos éticos y de privacidad en el tratamiento de datos}{5}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Resultados de aprendizaje del máster}{6}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Estructura del documento}{6}{section.1.6}%
+\contentsline {chapter}{\numberline {2}Estado del arte y decisiones arquitectónicas}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}De los sistemas de almacenamiento analítico al lakehouse}{9}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Formato de tabla: Apache Iceberg frente a sus alternativas}{10}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Catálogo de Iceberg}{11}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.3}Almacenamiento de objetos: MinIO frente a sus alternativas}{12}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Sustrato de orquestación de contenedores y entorno de despliegue}{12}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Procesamiento distribuido: Apache Spark frente a sus alternativas}{13}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Orquestación de flujos ETL: Apache Airflow frente a sus alternativas}{14}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Capa de consulta interactiva y capa de visualización}{15}{section.2.7}%
+\contentsline {section}{\numberline {2.8}Síntesis y arquitectura resultante}{16}{section.2.8}%
+\contentsline {chapter}{\numberline {3}Infraestructura: despliegue del clúster y servicios base}{19}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Arquitectura de despliegue}{19}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Clúster Kubernetes local}{20}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Servicios base: MinIO, PostgreSQL y Airflow}{20}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Catálogo Iceberg sobre MinIO}{21}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Ejecución de Spark desde Airflow}{22}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Verificación de extremo a extremo}{23}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Ingesta y fusión de fuentes heterogéneas}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Arquitectura de la ingesta}{25}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Adquisición de datos de ORCID}{26}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Generación de currículos CVN sintéticos}{27}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Aterrizaje en bronze con procedencia}{28}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Verificación de extremo a extremo}{29}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Procesamiento distribuido: transformación, resolución de entidades e indicadores}{31}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Arquitectura de la transformación}{31}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Validación y normalización de bronze a silver}{32}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Resolución de identidad entre fuentes}{33}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Cálculo de indicadores y publicación en PostgreSQL}{34}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Verificación de extremo a extremo}{35}{section.5.5}%
+\contentsline {chapter}{Referencia bibliográfica}{40}{chapter*.13}%
+\xpginauxfilefalse 
+\contentsfinish 

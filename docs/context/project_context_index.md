@@ -70,8 +70,9 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/reporte_proceso_desarrollo_tfg.md`: consolidated TFG development process
   report, including initial research, key technical decisions, implementation
   flow, and limitations
-- `docs/memoria/estructura_memoria_tfg.md`: TFG final-memory structure and
+- `docs/memoria/TFG/estructura_memoria_tfg.md`: TFG final-memory structure and
   per-chapter status, now completed
+- `docs/memoria/TFM/`: TFM memoria planning, per-chapter guide files (active)
 - `docs/context/tfm/current_status.md`: active TFM project state, next
   actions, and a summary of how the inherited TFG foundation works
 - `docs/context/tfg/current_status.md`: closed TFG implementation log, historical
@@ -110,6 +111,10 @@ Agents should also read `AGENTS.md` before this file.
   "Issue Status Overview"
 - `docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`:
   record of the TFG closure and TFM reorientation itself
+- `docs/research/tfm/estado_del_arte_tfm.md`: TFM state-of-the-art and
+  technology-justification research document, extending the epic's
+  Technology Stack Decision Record with comparative rationale against real
+  ecosystem alternatives; primary input for issue `#103`'s memoria chapter
 - `docs/roadmap/tfg/cvn_generation_roadmap.md`: closed TFG roadmap, issue `#8`
   through `#71`, all completed
 - `docs/roadmap/tfg/issues/issue-08-epic-cvn-automation.md`: epic summary and
@@ -214,9 +219,9 @@ Agents should also read `AGENTS.md` before this file.
 - `docs/reporte_proceso_desarrollo_tfg.md`: narrative report for explaining the
   full TFG process to a tutor, from `docs/research/` state-of-the-art analysis to
   the implemented Open CVN pipeline and CLI application
-- `docs/memoria/estructura_memoria_tfg.md`: planning and traceability document
-  for drafting the final TFG memory, with the agreed eight-chapter structure,
-  chapter content guidance, annex plan, and status markers
+- `docs/memoria/TFG/estructura_memoria_tfg.md`: planning and traceability
+  document for drafting the final TFG memory, with the agreed eight-chapter
+  structure, chapter content guidance, annex plan, and status markers
 - `docs/informe_estructura_cvnxml_v1.4.3.md`: structural analysis background
 - `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the
   auxiliary `Entity`, `ReferenceTables/Subtypes`, and `Thesaurus` families in

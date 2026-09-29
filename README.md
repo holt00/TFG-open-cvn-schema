@@ -43,7 +43,7 @@ mismo repositorio, un pipeline completo por capas:
    importacion opcional asistida por LLM (`src/open_cvn_app/`)
 
 La memoria del TFG esta escrita, firmada y defendida
-(`docs/memoria/TFG.pdf` / `TFG_signed.pdf`). El registro completo de su
+(`docs/memoria/TFG/TFG.pdf` / `TFG_signed.pdf`). El registro completo de su
 desarrollo (issues `#11` a `#71`) esta cerrado y archivado en
 `docs/context/tfg/current_status.md` y
 `docs/roadmap/tfg/cvn_generation_roadmap.md`; no se anaden nuevas entradas ahi.
@@ -89,6 +89,7 @@ Para obtener el contexto del proyecto y el estado real de implementacion, leer:
 - reporte del proceso de desarrollo del TFG:
   `docs/reporte_proceso_desarrollo_tfg.md`
 - estructura y trazabilidad de la memoria del TFG (completada):
-  `docs/memoria/estructura_memoria_tfg.md`
+  `docs/memoria/TFG/estructura_memoria_tfg.md`
+- planificacion de la memoria del TFM (activa): `docs/memoria/TFM/`
 - limitaciones conocidas heredadas: `docs/pipeline/known_limitations.md`
 

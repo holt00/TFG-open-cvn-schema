@@ -9,6 +9,15 @@ registro historico de planificacion y trazabilidad del TFG y no debe
 modificarse salvo para corregir una errata puntual detectada despues del
 cierre.
 
+**Nota de reubicacion**: todo el contenido de la memoria del TFG (este
+fichero incluido) se traslado de `docs/memoria/` a `docs/memoria/TFG/` para
+separarlo de la planificacion de la memoria del TFM en `docs/memoria/TFM/`
+(ver `docs/roadmap/tfm/hotfixes/` para el registro de ese cambio). Las rutas
+`docs/memoria/...` citadas en el resto de este documento (por ejemplo
+`docs/memoria/TFG.tex`, `docs/memoria/chapters/ch1.tex`) describen la
+disposicion vigente en cada momento historico narrado y no se han
+reescrito; hoy esas mismas rutas viven bajo `docs/memoria/TFG/`.
+
 El trabajo que continua a partir de aqui es el TFM (Trabajo de Fin de Master),
 que se construye sobre la base tecnica entregada por el TFG (el pipeline de
 generacion, el formato Open CVN JSON, el contrato de parser/validador y la

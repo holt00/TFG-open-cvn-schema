@@ -15,7 +15,7 @@ anything, know which one you are in:
 - the TFG is closed: issues `#11`-`#71`, hotfixes `#1`-`#8`, roadmap
   `docs/roadmap/tfg/cvn_generation_roadmap.md`, status log
   `docs/context/tfg/current_status.md`, and the signed/defended memoria under
-  `docs/memoria/`. Do not add new entries to the TFG status log or roadmap.
+  `docs/memoria/TFG/`. Do not add new entries to the TFG status log or roadmap.
 - the TFM is active and its epic is defined: roadmap
   `docs/roadmap/tfm/tfm_roadmap.md`, status log
   `docs/context/tfm/current_status.md`, epic
@@ -72,7 +72,8 @@ Every new session should read these files in order before making changes:
 - current state (TFM, active): `docs/context/tfm/current_status.md`
 - current state (TFG, closed): `docs/context/tfg/current_status.md`
 - TFG memory structure and chapter status traceability (completed):
-  `docs/memoria/estructura_memoria_tfg.md`
+  `docs/memoria/TFG/estructura_memoria_tfg.md`
+- TFM memoria planning (chapter guide files, active): `docs/memoria/TFM/`
 
 ### Architecture And Limits
 
@@ -109,6 +110,8 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/tfm/issues/issue-101-spark-performance-benchmark.md`
 - issue `#102`: `docs/roadmap/tfm/issues/issue-102-hardening.md`
 - issue `#103`: `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md`
+- TFM state-of-the-art research (primary input for issue `#103`'s "Estado
+  del arte" chapter): `docs/research/tfm/estado_del_arte_tfm.md`
 - roadmap overview (TFG, closed): `docs/roadmap/tfg/cvn_generation_roadmap.md`
 - epic summary (TFG): `docs/roadmap/tfg/issues/issue-08-epic-cvn-automation.md`
 - issue `#11`: `docs/roadmap/tfg/issues/issue-11-project-infrastructure.md`
@@ -174,6 +177,10 @@ Every new session should read these files in order before making changes:
   `docs/roadmap/tfg/hotfixes/hotfix-8-wrapper-type-traceability-in-normalized-handoff.md`
 - hotfix `#9`:
   `docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`
+- hotfix `#10`:
+  `docs/roadmap/tfm/hotfixes/hotfix-10-tfg-tfm-documentation-folder-separation.md`
+- hotfix `#11`:
+  `docs/roadmap/tfm/hotfixes/hotfix-11-tfg-tfm-memoria-folder-separation.md`
 
 ### Development Reference
 

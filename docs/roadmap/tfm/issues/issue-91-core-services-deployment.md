@@ -200,6 +200,28 @@ Files to modify: this assistant, all of the above.
   while verifying; Airflow 3's CLI differs in places from the Airflow 2
   CLI examples found during initial research (e.g. `webserver` component
   renamed to `api-server`).
+- **`silver`/`gold` dropped from the bucket's raw-landing prefixes.** Task 0
+  provisioned the `lakehouse` bucket with three raw-landing prefixes,
+  `bronze`, `silver`, `gold`, reasoning that this would match "the Iceberg
+  warehouse path convention issue `#92` will build on". Once issue `#92`
+  actually built that convention, it rooted the Iceberg warehouse at the
+  separate `s3a://lakehouse/warehouse` path precisely to keep raw landed
+  files away from Iceberg's own table directories, and once issues `#97`,
+  `#98` and `#99` were implemented, the raw landing step (`#97`) turned out
+  to write only to `bronze`: `silver` and `gold` are computed entirely
+  inside the platform by Spark jobs that read `bronze` and write straight
+  into Iceberg tables under `warehouse/lakehouse.silver.*` and
+  `lakehouse.gold.*`, with no raw file of their own ever landing first. No
+  code anywhere in the repository ever wrote to a raw `lakehouse/silver/`
+  or `lakehouse/gold/` object key. Since a bucket "prefix" is not a real
+  resource in S3-compatible storage, only an implicit grouping that appears
+  the moment an object is written under it, there was nothing to delete
+  from the running cluster: the correction is `infra/helm-values/minio-
+  values.yaml`'s documentation comment, updated to describe the single
+  `bronze` raw-landing prefix that is actually used, plus the matching note
+  in `infra/spark-conf/README.md`. The Task 0 table above is left as
+  originally written, since it records the reasoning available at the time,
+  not the final state; this bullet is the correction.
 
 ## Implementation Performed
 

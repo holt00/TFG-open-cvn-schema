@@ -47,7 +47,7 @@ partial technical base. In order, it built:
    opt-in, deterministic-first LLM-assisted PDF import fallback
    (`src/open_cvn_app/`)
 8. the TFG memoria itself, written, signed, and defended
-   (`docs/memoria/TFG.pdf` / `TFG_signed.pdf`)
+   (`docs/memoria/TFG/TFG.pdf` / `TFG_signed.pdf`)
 
 The full TFG issue-by-issue record (`#11` through `#71`) is closed and
 archived at `docs/roadmap/tfg/cvn_generation_roadmap.md` and
@@ -125,8 +125,9 @@ files in order:
 - `docs/reporte_proceso_desarrollo_tfg.md`: narrative report of the TFG
   development process, initial research, key decisions, implementation flow, and
   limitations
-- `docs/memoria/estructura_memoria_tfg.md`: agreed memory structure and chapter
-  status traceability for drafting the final TFG report
+- `docs/memoria/TFG/estructura_memoria_tfg.md`: agreed memory structure and
+  chapter status traceability for drafting the final TFG report
+- `docs/memoria/TFM/`: TFM memoria planning (per-chapter guide files, active)
 
 ### Architecture And Limits
 
@@ -241,6 +242,20 @@ files in order:
 - `docs/roadmap/tfm/hotfixes/hotfix-9-tfg-completion-and-tfm-reorientation.md`:
   implemented record of closing out the TFG documentation and creating the
   active TFM documentation set alongside it
+- `docs/roadmap/tfm/hotfixes/hotfix-10-tfg-tfm-documentation-folder-separation.md`:
+  implemented record of splitting `docs/roadmap/` and `docs/context/` into
+  `tfg/`/`tfm/` subfolders
+- `docs/roadmap/tfm/hotfixes/hotfix-11-tfg-tfm-memoria-folder-separation.md`:
+  implemented record of splitting `docs/memoria/` into `TFG/` (the closed,
+  signed memoria) and `TFM/` (active per-chapter planning guides)
+- `docs/research/tfm/estado_del_arte_tfm.md`: TFM state-of-the-art and
+  technology-justification research document, extending the epic's
+  Technology Stack Decision Record with comparative rationale against real
+  ecosystem alternatives (lakehouse vs data warehouse/lake, Iceberg vs Delta
+  Lake/Hudi, Kubernetes vs Swarm, Spark vs Flink/Dask, Airflow vs
+  Prefect/Dagster, Superset vs alternatives, deterministic vs
+  probabilistic/ML entity resolution) and a reference list; primary input
+  for issue `#103`'s memoria chapter
 
 ### Infrastructure (TFM)
 
@@ -351,9 +366,9 @@ files in order:
 - `docs/reporte_proceso_desarrollo_tfg.md`: consolidated process report for
   explaining the TFG development, including the initial research in
   `docs/research/` and the later implementation phases
-- `docs/memoria/estructura_memoria_tfg.md`: planning and traceability document
-  for the final TFG memory, including the eight-chapter structure, expected
-  content, annexes, and per-chapter drafting status
+- `docs/memoria/TFG/estructura_memoria_tfg.md`: planning and traceability
+  document for the final TFG memory, including the eight-chapter structure,
+  expected content, annexes, and per-chapter drafting status
 - `docs/informe_estructura_cvnxml_v1.4.3.md`: detailed analysis of the core CVN
   package structure and usage
 - `docs/cvn_source_package_auxiliary_artifacts.md`: detailed explanation of the

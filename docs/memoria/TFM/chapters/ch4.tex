@@ -1,0 +1,228 @@
+\chapter{Ingesta y fusión de fuentes heterogéneas}
+\label{cap:ingesta}
+
+El presente capítulo describe cómo se adquieren, generan y aterrizan las
+dos fuentes de datos del sistema. Se recorren la doble adquisición de
+datos de ORCID, la generación de currículos CVN sintéticos sembrados con
+esos mismos datos, el aterrizaje en bronze con procedencia y la
+verificación de extremo a extremo del flujo de Airflow que encadena las
+cuatro tareas. El enlace deliberado entre el CVN sintético y su semilla
+ORCID, introducido en este capítulo, es la clave de unión que la
+resolución de identidad del Capítulo~\ref{cap:procesamiento} explota.
+
+\section{Arquitectura de la ingesta}
+\label{sec:ingesta_arquitectura}
+
+La ingesta se implementa como un único flujo de Airflow,
+\texttt{ingest\_validate}, con cuatro tareas encadenadas: obtención del
+subconjunto ORCID masivo, generación de CVN sintético, enriquecimiento vía
+la API de ORCID y validación con aterrizaje en bronze. Este orden no es
+arbitrario. La tarea de enriquecimiento consulta la API por los
+identificadores ORCID que los CVN sintéticos ya declaran, por lo que no
+puede ejecutarse antes de que existan. Ese acoplamiento deliberado entre tareas
+es la propia demostración de fusión dirigida entre fuentes: el
+identificador que une un CVN sintético con su semilla real es el mismo que
+la tarea de enriquecimiento usa para pedir datos frescos a la API.
+
+Cada tarea corre en un pod independiente lanzado con
+\texttt{KubernetesPodOperator}, sobre una imagen propia con Python 3.14 y
+las dependencias del proyecto. El propio Airflow corre sobre Python 3.13,
+así que la lógica de negocio del proyecto no puede ejecutarse en sus
+\textit{workers} y necesita, igual que la ejecución de Spark del
+Capítulo~\ref{cap:infraestructura}, un pod dedicado por tarea. El código
+del proyecto, los esquemas y los datos llegan a cada pod montados
+directamente desde el disco del nodo, sin necesidad de reconstruir la
+imagen en cada cambio de código. Las tareas se comunican entre sí a través
+de ese mismo directorio de datos compartido, con un subdirectorio por
+ejecución. El mecanismo nativo de paso de mensajes de Airflow se reserva
+para resúmenes pequeños, como recuentos y rutas, y nunca para los propios
+datos, que alcanzan varios gigabytes por ejecución.
+
+\section{Adquisición de datos de ORCID}
+\label{sec:ingesta_orcid}
+
+ORCID~\cite{orcid_about} ofrece dos mecanismos públicos y oficiales para
+obtener datos, y el sistema usa ambos porque cubren necesidades
+distintas y complementarias. Ninguno de los dos sustituye al otro.
+
+\begin{itemize}
+  \item \textbf{API pública de ORCID~\cite{orcid_public_api_docs}.}
+  Resuelve consultas puntuales por identificador y da acceso al registro
+  más reciente de una persona concreta. Su límite de tasa, en el nivel
+  anónimo sin autenticación, es de 25\,000 lecturas al día y 12 peticiones
+  por segundo por dirección IP. Durante la implementación se encontró una
+  discrepancia entre la documentación pública sobre el registro de
+  aplicaciones cliente, que describe el nivel autenticado como accesible a
+  cualquier investigador individual, y el formulario de registro real, que
+  exige describir la aplicación como herramienta de una organización
+  miembro. Ese requisito no encaja con un proyecto académico personal, de
+  modo que el sistema usa el nivel anónimo, sin que ello afecte a la
+  demostración de fusión dirigida entre fuentes.
+  \item \textbf{Fichero público de datos de ORCID.} ORCID publica
+  anualmente un volcado completo de sus perfiles públicos en la
+  plataforma de datos abiertos Figshare~\cite{figshare_docs}. Este
+  fichero da volumen real en lugar de tener que sintetizar también los
+  datos de ORCID. El fichero completo se distribuye en doce archivos, de
+  los cuales solo se usa el de resúmenes de perfil, de unos 46 GB, y no
+  los once de actividades detalladas, de unos 191 GB en conjunto, que
+  exceden lo que este trabajo necesita. El sistema recorre el fichero de
+  resúmenes completo, sin detenerse al alcanzar un volumen objetivo, para
+  no introducir un sesgo de muestreo hacia los primeros registros del
+  archivo, y filtra los perfiles con afiliación declarada en
+  España~\cite{orcid_public_data_file_2025}. La integridad del fichero
+  descargado se verifica contra la suma de comprobación que la propia
+  Figshare publica junto a él.
+\end{itemize}
+
+El filtrado del fichero completo, sobre 26\,078\,951 registros escaneados,
+dejó 301\,763 perfiles con afiliación española, un 1,157\% del total. La
+primera implementación, que procesaba el archivo en flujo directamente
+desde la red, proyectaba unas siete horas de ejecución. El cuello de
+botella no estaba en la red sino en el análisis de XML de cada registro,
+así que la solución fue descargar antes el archivo al disco local y
+aplicar un filtro previo a nivel de bytes que descarta un registro sin
+analizarlo completamente cuando resulta evidente que no puede coincidir.
+Con ese cambio, la extracción completa tardó 81,6 minutos. El resultado se
+guarda como un fichero XML por perfil, organizado en subdirectorios por
+prefijo del identificador, que sirve de semillero a la generación de CVN
+sintéticos descrita a continuación.
+
+\section{Generación de currículos CVN sintéticos}
+\label{sec:ingesta_sintetico}
+
+El sistema necesita un volumen realista de currículos CVN para demostrar
+la plataforma a escala, y ese volumen no puede provenir de currículos
+reales por las razones de privacidad expuestas en el
+Capítulo~\ref{cap:introduccion}. La solución adoptada genera documentos
+Open CVN sintéticos, válidos contra el mismo esquema JSON
+Schema~\cite{json_schema_org} que define el formato oficial del proyecto,
+y los siembra con campos públicos reales tomados del subconjunto ORCID
+descrito en la Sección~\ref{sec:ingesta_orcid}: nombre, afiliaciones,
+títulos de obras y palabras clave. Nunca se copian de ORCID la biografía,
+el correo electrónico ni las URL de investigador de un perfil, porque
+ORCID pide explícitamente no presentar datos modificados como genuinos,
+aunque su fichero de datos se publique bajo licencia CC0. El resto de la
+identidad de cada documento, como el teléfono o la fecha del documento,
+se inventa por completo, con valores que no pueden confundirse con datos
+reales, y cada documento generado queda marcado como sintético en sus
+propios metadatos.
+
+Una parte configurable de los documentos generados, un 70\% en la
+configuración de referencia, declara el identificador ORCID de su
+semilla en el campo del esquema reservado a identificadores digitales de
+autor, con el código de fuente que las tablas de referencia del CVN
+asignan a ORCID. El resto conserva el nombre y las afiliaciones de su
+semilla, con variaciones realistas, pero sin ese identificador. Un fichero
+de control aparte, no aterrizado en el almacenamiento de objetos, registra
+para cada documento generado el identificador de su semilla y el tipo de
+enlace aplicado. Esa combinación de documentos con enlace declarado,
+documentos con coincidencia solo por nombre y afiliación, y documentos sin
+relación entre sí, es precisamente la variedad de casos que la resolución
+de identidad del Capítulo~\ref{cap:procesamiento} necesita para
+verificarse, y el fichero de control es su verdad de referencia. Cuando el
+volumen solicitado supera el número de semillas disponibles, una semilla
+se reutiliza para varios documentos, con una selección distinta de sus
+obras y una identidad inventada distinta en cada uno, pero sin alterar
+fechas, organizaciones ni otros hechos tomados de ORCID.
+
+La validación de cada documento generado ocurre en dos capas. La primera
+reutiliza el validador Open CVN del TFG~\cite{tfg_open_cvn} sobre el
+documento completo. La segunda, propia de este generador, valida además
+cada entrada contra la definición estricta de su propio tipo de entidad
+dentro del esquema. Esta segunda capa resultó necesaria en la práctica y
+no solo en el diseño. El esquema del documento completo deja el contenido
+de cada entrada sin restricciones de campos, por lo que un documento con
+campos inventados pasaría la primera capa sin problema. La primera
+ejecución de prueba generó 200 documentos con solo dos errores de
+construcción, y aun así 179 de ellos resultaron inválidos frente a la
+segunda capa, por dos campos con nombre incorrecto y una fecha vacía en un
+campo obligatorio. Corregidos ambos errores, las ejecuciones posteriores
+no descartaron ningún documento. Una ejecución de 10\,000 documentos, con
+semilla fija y el mismo reparto de enlace del 70\%, generó 7\,000
+documentos enlazados y 3\,000 sin enlazar, sin ningún documento inválido,
+en 169 segundos.
+
+\section{Aterrizaje en bronze con procedencia}
+\label{sec:ingesta_bronze}
+
+Las tres fuentes de datos, el subconjunto ORCID masivo, el enriquecimiento
+por API y los CVN sintéticos, aterrizan como objetos de texto plano en
+formato JSON Lines bajo el prefijo \texttt{bronze} del cubo de MinIO
+configurado en el Capítulo~\ref{cap:infraestructura}, organizados por
+fuente y por fecha de ingesta. No se escriben como tablas Iceberg en esta
+fase: mantener el aterrizaje crudo separado del catálogo de tablas evita
+que la lógica interna de Iceberg tropiece con objetos ajenos a sus propias
+tablas, y deja la creación de las tablas bronze de Iceberg como parte del
+trabajo de transformación del Capítulo~\ref{cap:procesamiento}.
+
+Cada registro aterrizado se envuelve en un sobre de procedencia común a
+las tres fuentes, con un identificador de registro, la fuente de origen,
+una referencia al origen concreto dentro de esa fuente, el momento en que
+el dato se obtuvo, el momento en que se aterrizó, el identificador de la
+ejecución y el resultado de la comprobación de calidad descrita a
+continuación. El propio contenido original, ya sea el XML de ORCID sin
+modificar, el JSON que devuelve la API o el documento CVN sintético, viaja
+como carga útil dentro de ese sobre. Este vocabulario de procedencia
+extiende el mismo utilizado por el bloque de trazabilidad del formato
+Open CVN del TFG, en lugar de inventar una convención nueva.
+
+Antes de aterrizar, cada registro pasa una comprobación de calidad ligera,
+deliberadamente más simple que la resolución de identidad del
+Capítulo~\ref{cap:procesamiento}. Para ORCID exige un XML bien formado, un
+identificador con dígito de control válido y al menos un nombre. Para el
+CVN sintético exige que el documento pase el validador Open CVN del TFG.
+Los registros que no superan esta comprobación se separan a una zona de
+rechazados, con sus errores adjuntos, en lugar de descartarse sin dejar
+rastro, y la propia tarea de aterrizaje falla si la proporción de
+rechazados de una ejecución supera un umbral del 5\%, para convertir un
+fallo sistemático de origen en un error visible en vez de en un aterrizaje
+silenciosamente incompleto. Sobre los primeros 20\,000 registros ORCID
+reales, la tasa de rechazo medida fue del 2,66\%, y su causa casi
+exclusiva fue la ausencia de un apellido público en el perfil.
+
+Aterrizar el fichero masivo completo cada día no tiene sentido: su
+contenido no cambia entre ejecuciones y ocupa varias decenas de gigabytes.
+Por ello, el subconjunto masivo solo se aterriza una vez por instantánea
+del fichero de origen, con un límite de 20\,000 registros por defecto que
+mantiene cada ejecución diaria en un tamaño manejable. Ese límite es un
+parámetro de la propia ejecución, así que puede elevarse para obtener un
+volumen mayor cuando haga falta, como en el trabajo de rendimiento del
+Capítulo~\ref{cap:visualizacion}.
+
+\section{Verificación de extremo a extremo}
+\label{sec:ingesta_verificacion}
+
+Igual que en el Capítulo~\ref{cap:infraestructura}, la verificación del
+flujo completo se apoya en dos comprobaciones independientes. La primera
+es el propio resultado de cada tarea del flujo de Airflow, con sus
+recuentos de registros generados, aceptados y rechazados. La segunda es
+una lectura de los mismos datos desde un proceso Spark ajeno a la
+ejecución que los produjo, que debe coincidir exactamente con esos
+recuentos.
+
+Una ejecución con los parámetros por defecto aterrizó 19\,469 registros
+del subconjunto ORCID masivo en cuarenta fragmentos, junto con 531
+registros rechazados, 1\,000 documentos CVN sintéticos y 200 respuestas de
+la API de enriquecimiento, con todos los registros aterrizados portando
+los doce campos de su sobre de procedencia y sin ningún identificador de
+registro duplicado. Una lectura independiente con Spark de esos mismos
+objetos, ejecutada desde un pod distinto, contó exactamente esas mismas
+cifras. Esa misma lectura reveló un problema real de diseño: Spark lee
+todos los objetos bajo un prefijo, tenga o no fichero de manifiesto, así
+que una ejecución que había fallado el umbral de rechazo dejaba sus
+registros ya aterrizados visibles para cualquier lector que ignorase el
+manifiesto. La regla de que un fichero de manifiesto ausente señala una
+partición incompleta era, hasta entonces, solo una convención. La corrección
+aplicada borra los objetos válidos ya aterrizados de una ejecución que
+falla. La zona de rechazados de esa misma ejecución no se toca, y sus
+registros descartados quedan disponibles para diagnóstico igual que en
+cualquier ejecución que no falla. Una repetición de la misma prueba, tras
+el cambio, no dejó ningún objeto huérfano en el almacenamiento.
+
+Esta forma de trabajar deja una limitación conocida y aceptada para este
+alcance. La semilla de generación sintética se mantiene fija entre
+ejecuciones para dar una base de comparación reproducible, así que cada
+ejecución diaria del flujo aterriza los mismos documentos sintéticos en
+una nueva partición por fecha, y corresponde a la transformación del
+Capítulo~\ref{cap:procesamiento} deduplicar por identificador de registro
+o leer solo la partición más reciente.

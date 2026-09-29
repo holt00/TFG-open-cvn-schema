@@ -57,7 +57,7 @@ feeding generated PlantUML diagrams and a generated JSON Schema
 CVN JSON** document format with a unified parser/validator contract
 supporting PDF, XML, and JSON import (`src/open_cvn/`), and (7) a local CLI
 application on top of all of that (`src/open_cvn_app/`). The TFG memoria is
-written, signed, and defended (`docs/memoria/TFG.pdf`).
+written, signed, and defended (`docs/memoria/TFG/TFG.pdf`).
 
 Specific TFG artifacts the TFM reuses directly, not rebuilds:
 
@@ -93,7 +93,8 @@ silently relaxed by a future session:
   larger, even though the subject matter (a lakehouse platform) sounds more
   ambitious on paper. Any scope addition must be matched by an equivalent
   cut elsewhere in this document's "Scope Priority / Cut List" section.
-- **Programme**: Master's degree in "Big Data and Cloud Computing." The
+- **Programme**: Master's degree in "Big Data y Computación en la Nube"
+  (Spanish official name; English gloss: Big Data and Cloud Computing). The
   "Learning Outcomes Targeted" section below maps this epic's technical
   choices to the programme's own outcome codes.
 - **Deadline**: the TFM, **implementation and memoria included**, must be
@@ -110,11 +111,11 @@ silently relaxed by a future session:
   (session-by-session entries in `docs/context/tfm/current_status.md`, this
   epic, and its child issue documents), later converted into the LaTeX
   memoria, rather than writing the memoria as a separate late-stage task.
-  See `docs/memoria/estructura_memoria_tfg.md` for how the TFG structured
-  this same living-documentation-to-LaTeX process; a TFM-equivalent
-  structure document should be created under `docs/memoria/` (or a
-  TFM-specific subfolder, decide at that time) once memoria drafting starts,
-  but is not needed before implementation begins.
+  See `docs/memoria/TFG/estructura_memoria_tfg.md` for how the TFG structured
+  this same living-documentation-to-LaTeX process. The TFG's own memoria
+  content was later moved to `docs/memoria/TFG/` and a sibling
+  `docs/memoria/TFM/` created for this TFM's own per-chapter planning guides
+  (see `docs/roadmap/tfm/hotfixes/` for the folder-separation record).
 
 ## Learning Outcomes Targeted
 

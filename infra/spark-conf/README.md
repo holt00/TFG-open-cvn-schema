@@ -15,9 +15,12 @@ infra/spark-conf/iceberg-catalog.conf ...`) configuring:
 
 - one Iceberg Hadoop catalog, `lakehouse`, rooted at
   `s3a://lakehouse/warehouse` -- deliberately separate from the
-  `lakehouse/bronze|silver|gold` raw file-landing prefixes created in issue
-  `#91`, so Iceberg's own namespace/table directory layout never mixes with
-  raw landed files. Iceberg tables are addressed as
+  `lakehouse/bronze` raw file-landing prefix created in issue `#91`, so
+  Iceberg's own namespace/table directory layout never mixes with raw
+  landed files. `silver`/`gold` raw prefixes were dropped from issue `#91`'s
+  layout once `#98`/`#99` showed those layers are written directly as
+  Iceberg tables under this warehouse, with no raw-landing step of their
+  own. Iceberg tables are addressed as
   `lakehouse.bronze.<table>`, `lakehouse.silver.<table>`,
   `lakehouse.gold.<table>` (namespaces created on first `CREATE NAMESPACE`,
   not pre-created by hand).

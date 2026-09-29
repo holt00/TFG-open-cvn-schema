@@ -1,0 +1,207 @@
+\chapter{Procesamiento distribuido: transformación, resolución de entidades e indicadores}
+\label{cap:procesamiento}
+
+El presente capítulo describe la parte computacionalmente más densa del
+sistema. Se recorren la validación y normalización de bronze a silver, la
+resolución de identidad entre un mismo investigador presente en ORCID y en
+un CVN sintético, y el cálculo de indicadores de investigación publicados
+en gold. Es el capítulo donde más se demuestra el procesamiento distribuido
+y donde el enlace por identificador ORCID sembrado en el
+Capítulo~\ref{cap:ingesta} rinde su fruto, al convertirse en la evidencia
+que permite fusionar los registros de una misma persona.
+
+\section{Arquitectura de la transformación}
+\label{sec:procesamiento_arquitectura}
+
+La transformación se implementa como tres trabajos de Spark, encadenados
+en un único flujo de Airflow llamado \texttt{transform\_publish}. El
+primero, \texttt{bronze\_to\_silver}, valida y normaliza bronze a silver.
+El segundo, \texttt{silver\_to\_gold}, calcula los indicadores de
+investigación. El tercero, \texttt{publish\_gold\_to\_postgres}, publica
+gold en una base de datos relacional. Cada uno corre en su propio pod,
+igual que la ejecución de Spark verificada en el
+Capítulo~\ref{cap:infraestructura} y la ingesta del
+Capítulo~\ref{cap:ingesta}. Una restricción nueva condiciona todo el
+código de este capítulo. La distribución de Spark empleada trae su propio
+intérprete de Python, en la versión 3.10, distinta de la versión 3.14 que
+exige el resto del proyecto. El código de este capítulo debe, por tanto,
+ser compatible con Python 3.10, comprobado mediante una prueba dedicada
+que analiza la sintaxis de cada módulo contra esa versión antes de
+ejecutarlo.
+
+Las dos primeras etapas escriben directamente tablas Iceberg bajo los
+espacios de nombres \texttt{lakehouse.silver} y \texttt{lakehouse.gold},
+sin aterrizaje intermedio de ficheros crudos, como quedó establecido en la
+Sección~\ref{sec:infraestructura_iceberg}. La tercera etapa publica gold en
+una base de datos PostgreSQL dedicada, para que el panel de visualización
+del Capítulo~\ref{cap:visualizacion} nunca necesite consultar Iceberg ni
+Spark directamente. Las tres etapas comparten una única imagen de Spark,
+construida añadiendo a la imagen del Capítulo~\ref{cap:infraestructura}
+las dependencias de validación del proyecto y el controlador JDBC de
+PostgreSQL. El número de ejecutores, su memoria y el número de particiones
+de mezcla de cada trabajo son parámetros explícitos del flujo, que el
+Capítulo~\ref{cap:visualizacion} reutiliza como variable de su prueba de
+rendimiento.
+
+\section{Validación y normalización de bronze a silver}
+\label{sec:procesamiento_silver}
+
+El primer trabajo lee cada fuente de bronze por separado como líneas de
+texto, para preservar el documento original y evitar que la inferencia de
+esquema de Spark colapse el contenido heterogéneo de un CVN. Cada línea
+se deduplica por identificador de registro, conservando la copia con la
+fecha de aterrizaje más reciente, antes de analizar su contenido, así que
+ningún trabajador llega a analizar dos veces un documento repetido entre
+particiones de ingesta.
+
+La validación de cada fuente se hace por capas, con severidad creciente.
+Un documento CVN pasa tres comprobaciones. La primera repite la validación
+estructural del formato Open CVN ya usada en el aterrizaje del
+Capítulo~\ref{cap:ingesta}, como defensa adicional frente a otro posible
+productor de bronze en el futuro. La segunda valida cada entrada contra la
+definición estricta de su propio tipo de entidad, el mismo mecanismo que
+demostró su necesidad en la generación sintética. La tercera comprueba
+reglas de negocio propias de esta etapa, como que todo identificador ORCID
+declarado tenga un dígito de control válido y que las fechas de cada
+periodo respeten su orden. Un registro de ORCID pasa una validación
+paralela basada en reglas, con el dígito de control del identificador y la
+presencia de nombre y de al menos una afiliación u obra. Los registros que
+no superan sus reglas se separan a una tabla de rechazados con la regla
+concreta que fallaron, siguiendo el mismo principio de conservar el
+rastro ya aplicado al aterrizaje en bronze, y el trabajo falla si la
+proporción de rechazados de una fuente supera un umbral del 5\%.
+
+Los registros válidos se normalizan a una forma común antes de la
+resolución de identidad. Los nombres se pliegan sin acentos y en
+minúsculas, y las partículas de apellido como «de» o «del» se descartan al
+construir la clave de bloqueo, para que «de la Torre» quede indexado por
+«torre» y no por la partícula. Las organizaciones se reducen a su conjunto
+de palabras significativas, ordenado y sin las de relleno, de forma que el
+orden en que aparecen dentro del nombre deje de importar y pueda calcularse
+una similitud por solapamiento de conjuntos. Sobre el subconjunto real
+verificado con 10\,000 CVN sintéticos generados, esta etapa produjo
+30\,868 registros de persona válidos, 99\,979 afiliaciones y 543\,879
+publicaciones, sin ningún registro rechazado.
+
+\section{Resolución de identidad entre fuentes}
+\label{sec:procesamiento_resolucion}
+
+Fusionar el registro de un mismo investigador presente tanto en ORCID como
+en un documento CVN es el núcleo del problema de fusión planteado en el
+Capítulo~\ref{cap:introduccion}. El estado del arte de la resolución de
+entidades ofrece, a grandes rasgos, tres familias de enfoque. La primera es
+la coincidencia determinista por reglas explícitas, como un identificador
+único compartido y, en su ausencia, nombre normalizado y afiliación
+compartida. La segunda es la vinculación probabilística de registros,
+formalizada por Fellegi y Sunter~\cite{fellegi_sunter_1969} y disponible en
+herramientas como Splink~\cite{splink_docs}, que calcula una probabilidad
+de coincidencia combinando varios campos con pesos calibrados. La tercera
+es la resolución basada en aprendizaje automático o representaciones
+vectoriales, disponible por ejemplo en la biblioteca
+\texttt{dedupe}~\cite{dedupe_docs}, que aprende una función de similitud a
+partir de ejemplos etiquetados.
+
+La opción adoptada es la coincidencia determinista, en tres reglas
+aplicadas por orden de fuerza de evidencia. La regla R1 fusiona todo
+registro que declare el mismo identificador ORCID válido, evidencia fuerte
+porque desambiguar autores de forma inequívoca es el objetivo fundacional
+de ORCID. La regla R2 es la de repliegue para un CVN que no declara ese
+identificador. Exige que su clave de bloqueo, apellido normalizado más
+inicial del nombre, coincida con la de una entidad ya anclada por R1, que
+el nombre sea compatible permitiendo relajar como mucho una de las dos
+partes, apellido o nombre, nunca las dos a la vez, que alguna organización
+de esa entidad coincida tras la normalización, y que exactamente una
+entidad cumpla las tres condiciones. La regla R3 deja como entidad propia
+todo registro que ninguna de las dos anteriores fusiona. Este diseño
+favorece la precisión sobre la cobertura de forma deliberada. Una fusión
+equivocada corrompe todo indicador que dependa de ella más adelante,
+mientras que una fusión no realizada solo divide una entidad en dos.
+
+Frente a la vinculación probabilística o el aprendizaje automático, un
+enfoque determinista con evidencia explícita por tipo de enlace produce
+resultados auditables campo a campo, una propiedad valiosa en un trabajo
+académico donde cada decisión debe poder justificarse de forma directa. La
+alternativa probabilística o de aprendizaje automático queda documentada
+como trabajo futuro.
+
+El resultado se midió contra un conjunto de verdad de referencia que el
+propio generador sintético produce, no contra una anotación externa. Sobre
+la ejecución de 10\,000 documentos CVN, la regla R1 fusionó correctamente
+7\,098 de 7\,098 documentos que declaran su identificador. La regla R2
+fusionó 144 documentos, de los cuales 138 eran correctos y 6 falsos, una
+precisión del 95,8\% sobre 186 documentos evaluables, con una cobertura del
+74,2\%. Esa cobertura está en su techo real y no en un defecto de la regla.
+Una cuarta parte de los documentos evaluables no declara ninguna afiliación,
+y sin afiliación la regla no tiene evidencia posible por diseño. Un umbral
+de precisión del 99\% se había fijado como objetivo antes de medir, y no se
+alcanza. Exigir más de una organización compartida para aceptar un nombre
+acortado sube la precisión al 98,5\% pero baja la cobertura al 70,4\%, y
+ningún ajuste del umbral de similitud entre organizaciones cambia el
+resultado. Los seis falsos positivos restantes comparten nombre y una única
+organización con la persona correcta, indistinguibles con esta evidencia de
+una coincidencia real. La cifra que se retiene, por tanto, es 95,8\% de
+precisión y 74,2\% de cobertura, aceptada como el límite honesto de este
+diseño en lugar de perseguirse artificialmente con más reglas.
+
+\section{Cálculo de indicadores y publicación en PostgreSQL}
+\label{sec:procesamiento_gold}
+
+El segundo trabajo calcula tres indicadores de investigación sobre silver.
+El primero cuenta publicaciones por investigador y año. El segundo
+construye la línea temporal de afiliaciones de cada entidad, con su rango
+de años de carrera. El tercero detecta pares de colaboración entre
+entidades que comparten el identificador de una misma obra. Antes de
+calcular el primero, es necesario deduplicar las publicaciones por
+entidad, porque una misma obra puede aparecer en varios registros
+fusionados en una entidad, un CVN y su registro ORCID enlazado, por
+ejemplo. Sobre los datos reales verificados, deduplicar redujo 543\,879
+filas de publicación a 516\,396 obras distintas, una inflación del 5,1\%
+que contar sin deduplicar habría introducido en el indicador.
+
+El indicador de colaboración exige una comprobación previa, porque el
+mismo problema de cobertura de la Sección~\ref{sec:procesamiento_resolucion}
+puede producir pares de colaboración falsos. Una persona cuyo CVN no llegó
+a fusionarse con su propio registro ORCID reportaría las mismas obras
+desde dos entidades distintas, y aparecería colaborando consigo misma.
+Sobre los 9\,540 pares de entidades que comparten alguna obra en los datos
+reales, solo 25, un 0,26\%, resultaron ser ese artefacto, medido contra el
+mismo conjunto de verdad de referencia de la sección anterior. El
+indicador se construye igualmente, con una marca por par que indica si
+alguna de las dos entidades procede de un CVN, para poder restringir el
+análisis a colaboraciones solo entre datos reales de ORCID cuando se desee
+esa lectura más estricta.
+
+Gold se publica en PostgreSQL a través de tablas de preproducción y un
+intercambio atómico. El trabajo crea cada tabla final vacía con su
+definición explícita, carga sus filas mediante una escritura JDBC
+ordinaria, y solo entonces sustituye la tabla publicada por la nueva
+dentro de una única transacción, de forma que el panel de visualización
+nunca ve una tabla a medio cargar. Antes de esa sustitución se reconcilia
+el número de filas entre Iceberg y PostgreSQL, y cualquier discrepancia
+aborta la publicación sin tocar lo ya publicado. Este mecanismo se
+verificó deliberadamente matando el proceso de publicación a mitad de
+carga. Las tablas ya publicadas permanecieron intactas, y una repetición
+posterior del mismo trabajo limpió los restos de la carga interrumpida y
+completó la publicación con normalidad.
+
+\section{Verificación de extremo a extremo}
+\label{sec:procesamiento_verificacion}
+
+Siguiendo el mismo patrón de doble comprobación de los capítulos
+anteriores, el resultado de cada trabajo se contrastó con un cálculo
+independiente. Para gold, ese cálculo fue un script en Python normal,
+escrito deliberadamente con estructuras de datos distintas a las de Spark,
+que recalculó cada tabla a partir de una exportación de silver. Comparado
+fila a fila contra el resultado real del flujo, no encontró ninguna
+discrepancia sobre 306\,599 filas publicadas en PostgreSQL. Una segunda
+ejecución completa del flujo, sobre el mismo bronze, produjo un contenido
+idéntico fila a fila en PostgreSQL, lo que confirma que la reconstrucción
+completa en cada ejecución es determinista.
+
+La última comprobación midió cuánto dependen los indicadores de los
+errores conocidos de la resolución de identidad. Deshacer las 75 fusiones
+de la regla R2 que se apoyan en una única organización compartida, el
+subconjunto de evidencia más débil, desplaza cada indicador como mucho un
+0,58\%. Los indicadores de gold son, por tanto, insensibles en la práctica
+a la precisión del 95,8\% medida para la regla R2, aunque esa precisión no
+alcance el objetivo inicial del 99\%.

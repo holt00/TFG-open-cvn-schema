@@ -1,0 +1,282 @@
+\chapter{Introducción, motivación y objetivos}
+\label{cap:introduccion}
+
+El presente capítulo introduce el contexto en el que se enmarca este
+Trabajo Fin de Máster, en adelante TFM, describe la motivación que
+justifica su desarrollo y delimita los objetivos que guían la solución
+propuesta. Para ello, en primer lugar se sitúa el trabajo con respecto al
+Trabajo Fin de Grado, en adelante TFG, previo del mismo autor, del que
+parte directamente. A continuación, se expone el problema de partida y la
+motivación que lo sustenta, se establecen los objetivos general y
+específicos, se recogen los aspectos éticos y de privacidad que afectan al
+tratamiento de los datos empleados y se relacionan los objetivos con los
+resultados de aprendizaje del máster. Finalmente, se presenta la
+estructura seguida por el resto del documento.
+
+\section{Contexto y continuidad con el Trabajo Fin de Grado}
+\label{sec:introduccion_contexto}
+
+Este TFM se construye directamente sobre el trabajo ya cerrado y defendido
+en el TFG del mismo autor~\cite{tfg_open_cvn}, del que hereda el punto de
+partida técnico: una capa estructural reproducible generada a partir de
+los esquemas oficiales de CVN, una normalización trazable de sus
+metadatos, y un formato abierto, validable y extensible, Open CVN JSON,
+con su propio contrato de parseo y validación.
+
+El presente trabajo reutiliza ese resultado como una de sus dos fuentes de
+datos, no como objeto de estudio: se reutilizan directamente el esquema
+JSON Schema de Open CVN, su contrato de validación ya implementado, y las
+convenciones de trazabilidad de procedencia, en inglés
+\textit{provenance}, establecidas en la capa semántica del TFG. Por ello,
+este documento no vuelve a definir qué es CVN ni qué es Open CVN,
+remitiendo esa exposición al TFG anterior, y se limita a describir cómo
+dicho formato, ya cerrado, se ingiere, valida y procesa dentro de la
+plataforma distribuida que aquí se construye.
+
+Este cambio de perspectiva, de un formato y una herramienta de un único
+usuario a una plataforma que ingiere, fusiona y procesa datos a escala,
+responde también a un cambio de programa académico. Mientras que el TFG se
+enmarcaba en la intensificación de Computación, este TFM pertenece al
+Máster en Big Data y Computación en la Nube, cuyos resultados de
+aprendizaje se detallan en la Sección~\ref{sec:introduccion_outcomes}.
+
+\section{Problema de partida y motivación}
+\label{sec:introduccion_motivacion}
+
+La información curricular y de trayectoria investigadora se encuentra
+dispersa en fuentes heterogéneas, de distinta naturaleza y de distinto
+volumen. Por un lado, documentos curriculares como CVN describen la
+actividad de un investigador de forma estructurada pero unitaria, pensada
+para su presentación individual ante convocatorias, evaluaciones o
+acreditaciones. Por otro lado, registros públicos como los perfiles de
+ORCID, siglas en inglés de \textit{Open Researcher and Contributor
+ID}~\cite{orcid_about}, agregan identificadores, filiaciones y producción
+científica de investigadores de todo el mundo a escala global. Solo el
+fichero público de datos de ORCID de 2025 reúne más de 26 millones de
+registros~\cite{orcid_public_data_file_2025}.
+
+Los sistemas de información de investigación, conocidos por sus siglas en
+inglés como CRIS, de \textit{Current Research Information Systems},
+interoperan datos de este tipo entre instituciones mediante modelos
+comunes como CERIF~\cite{eurocris_cerif} o plataformas como
+VIVO~\cite{vivo_project}. Sin embargo, lo hacen sobre infraestructura
+institucional cerrada, sin publicar una plataforma de referencia abierta,
+autoalojada y reproducible que combine específicamente currículos
+normalizados como CVN con perfiles públicos como ORCID. Estas dos
+naturalezas de dato, documental y de registro masivo público, rara vez se
+integran, procesan conjuntamente y publican como indicadores agregados
+dentro de una misma plataforma de este tipo.
+
+Esta ausencia responde a un problema de arquitectura. Integrar fuentes de
+esta naturaleza exige:
+
+\begin{itemize}
+  \item \textbf{Almacenamiento escalable}, capaz de crecer con el volumen
+  real de ORCID.
+  \item \textbf{Un formato de tabla que preserve evolución de esquema y
+  trazabilidad}, dado que CVN y ORCID no comparten esquema.
+  \item \textbf{Procesamiento distribuido tolerante a fallos}, para
+  transformar ese volumen en un tiempo razonable.
+  \item \textbf{Orquestación de flujos de trabajo}, que encadene ingesta,
+  transformación y publicación de forma reproducible.
+  \item \textbf{Una capa de resolución de identidad}, capaz de fusionar
+  registros de fuentes distintas que describen a la misma persona.
+\end{itemize}
+
+Ninguno de estos elementos formaba parte del alcance del TFG, centrado
+deliberadamente en un único documento curricular.
+
+La motivación de este trabajo consiste, por tanto, en demostrar, mediante
+una plataforma real desplegada y no mediante un diseño exclusivamente
+documental, las competencias propias de un perfil de Big Data y
+Computación en la Nube:
+
+\begin{itemize}
+  \item Levantar infraestructura distribuida.
+  \item Ingerir y fusionar fuentes heterogéneas.
+  \item Procesar los datos a escala con tolerancia a fallos.
+  \item Evaluar el sistema con datos y cifras reales obtenidos de su
+  propia ejecución, en lugar de resultados simulados o proyectados.
+\end{itemize}
+
+\section{Objetivos}
+\label{sec:introduccion_objetivos}
+
+El objetivo general de este Trabajo Fin de Máster es \textit{diseñar,
+desplegar y evaluar una plataforma que integre datos curriculares de CVN
+sintético y datos de investigación de ORCID real, los procese de forma
+distribuida con resolución de identidad entre fuentes, y publique un
+conjunto reducido de indicadores de investigación en un panel de
+visualización, evaluando el sistema mediante un \textit{benchmark} de
+rendimiento acotado}. Los objetivos que siguen se formulan de forma
+agnóstica respecto a la arquitectura y las tecnologías concretas que los
+satisfacen. Esa elección se presenta y se justifica frente a sus
+alternativas en el Capítulo~\ref{cap:estado_arte}.
+
+Para alcanzar esta meta global se han definido los siguientes objetivos
+específicos:
+
+\begin{enumerate}
+  \item \textbf{Desplegar la infraestructura base de la plataforma.}
+  Comprende la puesta en marcha del entorno de cómputo y de los servicios
+  de almacenamiento, persistencia y orquestación sobre los que se apoya el
+  resto del sistema.
+
+  \item \textbf{Validar el mecanismo central de almacenamiento y
+  procesamiento distribuido.} Antes de construir cualquier flujo de datos
+  de negocio sobre la plataforma, se comprueba de forma aislada que dicho
+  mecanismo funciona de extremo a extremo.
+
+  \item \textbf{Incorporar datos ORCID reales a la plataforma.} Combina el
+  enriquecimiento puntual de registros concretos con la incorporación de un
+  volumen real de datos, ambos obtenidos de fuentes públicas de ORCID.
+
+  \item \textbf{Incorporar currículos CVN a la plataforma, validados frente
+  al formato Open CVN.} Estos currículos se obtienen por generación
+  sintética a partir de datos públicos, no por recolección de currículos
+  reales, tal y como se justifica en la Sección~\ref{sec:introduccion_etica}.
+
+  \item \textbf{Integrar los datos de ORCID con los datos CVN por medio del
+  formato Open CVN, resolviendo la identidad de los registros que
+  corresponden a la misma persona.} Constituye la fusión efectiva entre las
+  dos fuentes de datos del sistema.
+
+  \item \textbf{Calcular indicadores de investigación agregados y
+  publicarlos de forma consistente.} Los indicadores deben quedar
+  disponibles para su consumo posterior sin estados intermedios ni
+  publicaciones parciales.
+
+  \item \textbf{Visualizar los indicadores publicados en un panel
+  accesible.} Permite comprobar que los indicadores calculados son
+  consumibles más allá del propio sistema que los produce.
+
+  \item \textbf{Medir el efecto del grado de paralelismo del procesamiento
+  distribuido sobre el tiempo de ejecución y la fiabilidad, a distintas
+  escalas de datos.} Constituye el \textit{benchmark} de rendimiento
+  acotado exigido por el planteamiento del proyecto.
+
+  \item \textbf{Encontrar y corregir defectos de robustez operativa mediante
+  el uso real del sistema completo.} Este objetivo, sin equivalente directo
+  en el TFG anterior, exige documentar una guía de reproducción del entorno
+  desde cero y registrar los fallos de infraestructura detectados y
+  corregidos como parte de la evaluación del sistema.
+\end{enumerate}
+
+La Tabla~\ref{tab:tfm_objetivos_capitulos} relaciona estos objetivos con
+los capítulos principales en los que se desarrollan. Es en esos capítulos,
+no aquí, donde cada objetivo se concreta en una arquitectura y unas
+tecnologías determinadas.
+
+\begin{table}[htbp]
+  \centering
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.12\textwidth} p{0.58\textwidth} p{0.18\textwidth}}
+    \hline
+    \textbf{Objetivo} & \textbf{Descripción resumida} & \textbf{Capítulos} \\
+    \hline
+    OE1 & Despliegue de la infraestructura base de la plataforma & 3 \\
+    OE2 & Validación del mecanismo central de almacenamiento y procesamiento & 3 \\
+    OE3 & Incorporación de datos ORCID reales & 4 \\
+    OE4 & Incorporación de currículos CVN, validados frente a Open CVN & 4 \\
+    OE5 & Integración de ORCID con CVN por medio de Open CVN & 5 \\
+    OE6 & Cálculo y publicación consistente de indicadores & 5 \\
+    OE7 & Visualización de los indicadores en un panel accesible & 6 \\
+    OE8 & Benchmark de rendimiento por grado de paralelismo y escala de datos & 6 \\
+    OE9 & Robustez operativa mediante uso real y guía de reproducción & 6 \\
+    \hline
+  \end{tabular}
+  \caption{Relación entre objetivos específicos y capítulos del documento.}
+  \label{tab:tfm_objetivos_capitulos}
+\end{table}
+
+\section{Aspectos éticos y de privacidad en el tratamiento de datos}
+\label{sec:introduccion_etica}
+
+El tratamiento de datos personales de investigadores exige distinguir
+entre las dos fuentes empleadas. Los perfiles de ORCID se usan como dato
+real porque su naturaleza es, por diseño, pública: un identificador ORCID
+existe precisamente para ser consultado de forma abierta e interoperable
+entre sistemas de gestión de la investigación, así que su uso aquí no
+introduce ningún tratamiento distinto del que la propia infraestructura de
+ORCID habilita.
+
+Los documentos CVN, en cambio, no disfrutan de esa misma naturaleza
+pública: un currículo completo es información personal habitualmente
+empleada en solicitudes o evaluaciones privadas, sin un corpus público
+legítimo del que obtener volumen. Recolectarlos supondría tratar datos
+personales de terceros sin su consentimiento, un problema de privacidad
+real para un repositorio público y un trabajo defendido públicamente. Por
+ello, este documento descarta recolectar CVN reales a volumen y opta por
+generar currículos sintéticos, válidos frente al esquema oficial y
+sembrados con campos públicos reales de ORCID, como nombres, obras,
+filiaciones y fechas, de forma que resulten realistas sin representar a
+ninguna persona real. Esa misma siembra crea el vínculo por identificador
+ORCID que la resolución de identidad entre fuentes necesita como clave de
+fusión.
+
+\section{Resultados de aprendizaje del máster}
+\label{sec:introduccion_outcomes}
+
+El desarrollo de este proyecto se alinea con los resultados de aprendizaje
+del Máster en Big Data y Computación en la Nube, y no con las
+competencias de la intensificación de Computación bajo las que se evaluó
+el TFG anterior. La Tabla~\ref{tab:tfm_learning_outcomes} recoge los seis
+resultados de aprendizaje sobre los que este trabajo aporta evidencia
+concreta, junto con los capítulos en los que dicha evidencia se desarrolla.
+
+\begin{table}[htbp]
+  \centering
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{p{0.1\textwidth} p{0.58\textwidth} p{0.2\textwidth}}
+    \hline
+    \textbf{Resultado} & \textbf{Descripción} & \textbf{Capítulos} \\
+    \hline
+    CN02 & Arquitecturas de tratamiento masivo, almacenamiento y \textit{pipelines} & 2, 3 \\
+    HA01 & Adquisición, fusión y análisis de múltiples fuentes & 4, 5 \\
+    HA02 & Procesamiento distribuido y optimización de recursos & 5, 6 \\
+    HA03 & Orquestación ETL y almacenamiento escalable & 3, 5 \\
+    CP01 & Planificación y despliegue de una solución Big Data & 2, 3, 6 \\
+    CP04 & Proyecto profesional original de Big Data & 6, 7 \\
+    \hline
+  \end{tabular}
+  \caption{Relación entre resultados de aprendizaje del máster y capítulos del documento.}
+  \label{tab:tfm_learning_outcomes}
+\end{table}
+
+Ninguno de estos resultados se demuestra de forma primaria en el presente
+capítulo introductorio. Su cumplimiento efectivo se retomará, con
+evidencia concreta extraída del sistema desarrollado, en el
+Capítulo~\ref{cap:conclusiones}.
+
+\section{Estructura del documento}
+\label{sec:introduccion_estructura}
+
+El resto del documento se organiza en seis capítulos adicionales, desde la
+justificación tecnológica hasta la evaluación y las conclusiones:
+
+\begin{itemize}
+  \item \textbf{Capítulo 2: Estado del arte y decisiones arquitectónicas.}
+  Alternativas tecnológicas consideradas para cada componente de la
+  plataforma y justificación de las decisiones adoptadas.
+
+  \item \textbf{Capítulo 3: Infraestructura: despliegue del clúster y
+  servicios base.} Despliegue del clúster Kubernetes local y de los
+  servicios sobre los que se apoya el resto del sistema.
+
+  \item \textbf{Capítulo 4: Ingesta y fusión de fuentes heterogéneas.}
+  Ingesta de datos ORCID reales, generación de CVN sintéticos y su
+  aterrizaje con procedencia en la capa \textit{bronze}.
+
+  \item \textbf{Capítulo 5: Procesamiento distribuido: transformación,
+  resolución de entidades e indicadores.} Validación, normalización y
+  resolución de identidad entre fuentes, y cálculo y publicación de
+  indicadores agregados.
+
+  \item \textbf{Capítulo 6: Visualización, evaluación de rendimiento y
+  endurecimiento.} Panel de indicadores, \textit{benchmark} de rendimiento
+  y defectos de robustez encontrados y corregidos mediante uso real.
+
+  \item \textbf{Capítulo 7: Conclusiones, competencias y trabajo futuro.}
+  Cumplimiento de objetivos, resultados de aprendizaje demostrados,
+  limitaciones y líneas futuras.
+\end{itemize}
