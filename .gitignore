@@ -237,3 +237,10 @@ docs/memoria/PLANTILLA*.zip
 .DS_Store
 Thumbs.db
 .~lock.*
+
+# LaTeX build artefacts (compiled renders embed the DNI declaration)
+*.xdv
+*.dvi
+*.fls
+*.fdb_latexmk
+*.synctex.gz
