@@ -41,23 +41,23 @@ Agents should also read `AGENTS.md` before this file.
   versioning, JSON import/export, curriculum editing/selection, LaTeX
   export, optional PDF generation), LLM-assisted PDF import fallback,
   semantic partial CVN XML import, and issue `#71` limitations hardening.
-  The memoria is written, signed, and defended.
+  The memoria is written, signed, and defended (compiled PDFs are not
+  published in the repository).
 - TFG documented issues: `#11`-`#17`, `#25`, `#42`-`#50`, `#60`-`#71`
 - TFG documented hotfix records: `#1`-`#8`
-- TFM status: active, epic defined and broken down into filed child issues
-  `#90`-`#103`. See
+- TFM status: implementation complete (`#90`-`#102`), memoria assembly
+  (`#103`) in progress; epic broken down into filed child issues `#90`-`#103`. See
   `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md` (GitHub
   issue `#89`) and `docs/roadmap/tfm/tfm_roadmap.md`'s "Issue Status
   Overview" for the full list with dependencies.
 - Latest hotfix records: `#9` (TFG closure/TFM reorientation) and `#10`
   (TFG/TFM documentation folder separation), both under
   `docs/roadmap/tfm/hotfixes/`
-- Current implementation issue: TFM issues `#90`-`#101` are `Completed`
-  (cluster, core services, Iceberg/Spark, all of epic phase 2, ingestion, all
-  of epic phase 3, bronze to silver to gold, the Superset dashboard and the
-  Spark performance benchmark of epic phase 4); the next one is `#102`
-  (hardening). See `docs/roadmap/tfm/tfm_roadmap.md` for the live status of
-  every issue
+- Current implementation issue: TFM issues `#90`-`#102` are `Completed` (the
+  whole platform: cluster, Iceberg/Spark, ingestion, bronze to silver to gold,
+  the Superset dashboard, the Spark benchmark and hardening); the current one is
+  `#103` (memoria assembly), with chapters 1-7 and annexes A-F drafted. See
+  `docs/roadmap/tfm/tfm_roadmap.md` for the live status of every issue
 - Canonical source package: `docs/CvnXML_v1.4.3_2.1_17012025/`
 
 ## Documentation Map
@@ -72,7 +72,7 @@ Agents should also read `AGENTS.md` before this file.
   flow, and limitations
 - `docs/memoria/TFG/estructura_memoria_tfg.md`: TFG final-memory structure and
   per-chapter status, now completed
-- `docs/memoria/TFM/`: TFM memoria planning, per-chapter guide files (active)
+- `docs/memoria/TFM/`: TFM memoria, per-chapter guide files and LaTeX source (active)
 - `docs/context/tfm/current_status.md`: active TFM project state, next
   actions, and a summary of how the inherited TFG foundation works
 - `docs/context/tfg/current_status.md`: closed TFG implementation log, historical

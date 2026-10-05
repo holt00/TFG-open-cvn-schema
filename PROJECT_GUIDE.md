@@ -11,8 +11,8 @@ and maintainers.
 
 This repository contains two successive academic projects on the same
 system: a Trabajo de Fin de Grado (TFG), now finished, defended, and
-delivered, and a Trabajo de Fin de Master (TFM) that is starting now on top
-of it. Both are focused on defining an open data schema for representing
+delivered, and a Trabajo de Fin de Master (TFM) built on top of it, whose
+implementation is complete and whose memoria is being finalized. Both are focused on defining an open data schema for representing
 academic and research CVs in Spain, taking the CVN format as the starting
 point.
 
@@ -46,8 +46,9 @@ partial technical base. In order, it built:
    storage, master/derived curriculum versions, LaTeX/PDF export, and an
    opt-in, deterministic-first LLM-assisted PDF import fallback
    (`src/open_cvn_app/`)
-8. the TFG memoria itself, written, signed, and defended
-   (`docs/memoria/TFG/TFG.pdf` / `TFG_signed.pdf`)
+8. the TFG memoria itself, written, signed, and defended (LaTeX source in
+   `docs/memoria/TFG/`; the compiled and signed PDFs are not published in the
+   repository)
 
 The full TFG issue-by-issue record (`#11` through `#71`) is closed and
 archived at `docs/roadmap/tfg/cvn_generation_roadmap.md` and
@@ -63,6 +64,17 @@ Its scope is defined in the epic at
 Iceberg, Spark, Airflow, PostgreSQL, Superset), ingesting synthetic CVN and
 real ORCID data. That document is self-contained; read it before starting
 any implementation rather than relying on this summary.
+
+Status: issues `#90`-`#102` are completed (cluster, Iceberg/Spark, ingestion,
+bronze/silver/gold, Superset dashboard, benchmark, hardening); issue `#103`
+(memoria assembly) is in progress, with all seven chapters and six annexes
+drafted in `docs/memoria/TFM/` and the final review pending.
+
+The compiled memoria PDFs are not versioned. The declaration of authorship reads
+the author's DNI from `docs/memoria/<TFG|TFM>/include/datos_personales.tex`, a
+local git-ignored file (copy `datos_personales.example.tex` to create it);
+without it the memoria builds with a placeholder value. Never commit personal
+data or compiled artefacts that embed it.
 
 ## Recommended Reading Order For Humans
 
@@ -127,7 +139,8 @@ files in order:
   limitations
 - `docs/memoria/TFG/estructura_memoria_tfg.md`: agreed memory structure and
   chapter status traceability for drafting the final TFG report
-- `docs/memoria/TFM/`: TFM memoria planning (per-chapter guide files, active)
+- `docs/memoria/TFM/`: TFM memoria (per-chapter guide files plus the LaTeX
+  source of the drafted chapters and annexes, active)
 
 ### Architecture And Limits
 

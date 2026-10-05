@@ -44,6 +44,10 @@ Every new session should read these files in order before making changes:
 
 - Treat `docs/CvnXML_v1.4.3_2.1_17012025/` as the canonical source package for
   the CVN generation roadmap
+- Never commit personal data (DNI, personal emails) or compiled memoria artefacts
+  (`*.pdf`, `*.xdv`, `*.synctex.gz`); the author's DNI lives only in the git-ignored
+  `docs/memoria/*/include/datos_personales.tex`. Do not add AI co-author or
+  session trailers to commits
 - Do not edit `src/generated/` manually
 - Keep hand-maintained pipeline logic in `src/cvn_codegen/`
 - Keep future semantic or domain models in `src/models/cvn/`

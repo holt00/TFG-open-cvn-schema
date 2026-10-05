@@ -27,7 +27,8 @@ continues directly on top of the TFG deliverables:
 - the local CLI CV management application: SQLite storage, master/derived
   curriculum versions, LaTeX export, optional PDF generation, and opt-in
   LLM-assisted PDF import (`src/open_cvn_app/`)
-- the written, signed, and defended TFG memoria (`docs/memoria/TFG/TFG.pdf`)
+- the written, signed, and defended TFG memoria (LaTeX source in
+  `docs/memoria/TFG/`; the compiled PDF is not published)
 
 A full walkthrough of how that foundation actually works, stage by stage, is
 in `docs/pipeline/cvn_pydantic_generation_pipeline.md` and
@@ -83,7 +84,7 @@ to work out of sequence (per the Roadmap Rules above).
 
 | Issue | Title | Status | Notes |
 | --- | --- | --- | --- |
-| `#89` | Epic: TFM lakehouse platform for curricular data integration and analysis | Planned | See `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`; scope and stack defined, implementation not started |
+| `#89` | Epic: TFM lakehouse platform for curricular data integration and analysis | In Progress | See `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`; scope and stack defined, phases 0-5 implemented (`#90`-`#102`), closes with `#103` |
 | `#90` | k3s cluster bring-up | Completed | `docs/roadmap/tfm/issues/issue-90-k3s-cluster-bring-up.md`; epic phase 0 |
 | `#91` | Core services deployment (MinIO, PostgreSQL, Airflow) | Completed | `docs/roadmap/tfm/issues/issue-91-core-services-deployment.md`; epic phase 0; depends on `#90` |
 | `#92` | Iceberg catalog on MinIO | Completed | `docs/roadmap/tfm/issues/issue-92-iceberg-catalog-on-minio.md`; epic phase 1; depends on `#91`; end-to-end proof supplied by `#93` |
@@ -97,7 +98,7 @@ to work out of sequence (per the Roadmap Rules above).
 | `#100` | Superset dashboard | Completed | `docs/roadmap/tfm/issues/issue-100-superset-dashboard.md`; epic phase 4; depends on `#91`, `#99` |
 | `#101` | Spark performance benchmark | Completed | `docs/roadmap/tfm/issues/issue-101-spark-performance-benchmark.md`; epic phase 4; depends on `#98` |
 | `#102` | Hardening | Completed | `docs/roadmap/tfm/issues/issue-102-hardening.md`; epic phase 5; depends on `#90`-`#101` |
-| `#103` | Memoria assembly | In Progress | `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md`; epic phase 6; closing issue; chapter 1 drafted on branch `issue-103-memoria-assembly`; state-of-the-art input ready in `docs/research/tfm/estado_del_arte_tfm.md` |
+| `#103` | Memoria assembly | In Progress | `docs/roadmap/tfm/issues/issue-103-memoria-assembly.md`; epic phase 6; closing issue; chapters 1-7 and annexes A-F drafted, final review and page-cap check pending; state-of-the-art input ready in `docs/research/tfm/estado_del_arte_tfm.md` |
 
 ## Required Companion Documents
 

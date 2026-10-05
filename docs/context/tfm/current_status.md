@@ -93,13 +93,34 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-30 (TFM memoria chapter 7, "Conclusiones,
+- Last updated: 2026-10-05 (repository prepared for public release: personal data
+  and compiled artefacts removed from tree and history, entry documents refreshed);
+  previous: 2026-09-30 (TFM memoria chapter 7, "Conclusiones,
   competencias y trabajo futuro", drafted and compiled clean, the last
   chapter of the memoria; body page count 51, one page over the 50-page
   target despite genuine compression; `#102` remains the last completed
   implementation issue)
 
 ## Entries
+
+### Repository Prepared For Public Release: Personal Data And Attribution Removed
+
+- the author's DNI (declaration of authorship in `docs/memoria/{TFG,TFM}/elements/preambulo.tex`)
+  now comes from `\dniautor`, defined in the git-ignored `include/datos_personales.tex`;
+  `include/datos_personales.example.tex` is tracked and the memoria builds with a placeholder
+  when the real file is absent
+- compiled or personal artefacts were untracked and ignored: `preambulo.pdf`, `*.synctex.gz`,
+  `*.xdv`, `*.dvi`, `*.fls`, `*.fdb_latexmk`, `*_signed.pdf`, `.DS_Store`, lock files, the
+  university template zip
+- git history was rewritten (`git filter-repo`) so none of the above, nor the DNI, exists in any
+  commit; commit hashes changed. All AI co-author and session trailers were stripped, every
+  commit carries a single identity (GitHub noreply address), and the generated `Initial commit`
+  root was dropped so history starts at the first real commit
+- `README.md`, `PROJECT_GUIDE.md`, `docs/context/project_context_index.md` and
+  `docs/roadmap/tfm/tfm_roadmap.md` were refreshed: implementation `#90`-`#102` complete, `#103`
+  in progress, memoria PDFs not published
+- known leftover: the memoria annexes and TFG docs still cite the previous GitHub URL; update it
+  once the new repository exists
 
 ### TFM Memoria Annexes A-F Drafted, Issue #103
 
