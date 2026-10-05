@@ -1,0 +1,148 @@
+\chapter*{Anexo C: Modelo de datos de la plataforma}
+\addcontentsline{toc}{chapter}{Anexo C: Modelo de datos de la plataforma}
+\label{cap:anexo_modelo}
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{C.\arabic{section}}
+
+Este anexo describe las estructuras de datos que atraviesan la plataforma,
+desde el sobre de procedencia de bronze hasta las tablas publicadas en
+PostgreSQL. Las definiciones proceden del código del repositorio, de los
+ficheros \path{src/tfm_lakehouse/silver/schemas.py} y
+\path{src/tfm_lakehouse/gold/schemas.py}, que las declaran como datos y no
+como tipos de Spark para poder comprobarlas sin ejecutar Spark.
+
+\section{Organización del almacenamiento}
+\label{sec:anexo_modelo_almacenamiento}
+
+Bronze guarda ficheros de texto en formato JSON Lines bajo el prefijo
+\path{bronze/} del cubo \texttt{lakehouse}. Cada fuente tiene su propia
+ruta, y cada ejecución escribe en una partición con su fecha y su
+identificador, con un fichero de manifiesto que marca la partición como
+completa:
+
+\begin{center}
+\small\path{bronze/source=<fuente>/ingestion_date=<fecha>/run_id=<ejecución>/part-NNNNN.jsonl}
+\end{center}
+
+Los registros que no superan la comprobación de aterrizaje se guardan en
+una ruta paralela de rechazados con los mismos niveles. Silver y gold son
+tablas Iceberg bajo la raíz \path{warehouse/} del mismo cubo, en los espacios
+de nombres \path{lakehouse.silver} y \path{lakehouse.gold}.
+
+\section{Sobre de procedencia de bronze}
+\label{sec:anexo_modelo_sobre}
+
+Cada línea aterrizada es un sobre con los campos de la
+Tabla~\ref{tab:anexo_sobre}. El contenido original de la fuente viaja sin
+modificar en el campo de carga útil, como texto XML para ORCID masivo y como
+objeto JSON para la API y para el CVN sintético.
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{
+    >{\raggedright\arraybackslash}p{0.3\textwidth}
+    >{\raggedright\arraybackslash}p{0.58\textwidth}}
+    \hline
+    \textbf{Campo} & \textbf{Contenido} \\
+    \hline
+    \texttt{record\_id} & Identificador único del registro, base de la deduplicación. \\
+    \texttt{source} & Fuente de origen: \texttt{orcid\_bulk}, \texttt{orcid\_api} o \texttt{synthetic\_cvn}. \\
+    \texttt{source\_ref} & Referencia dentro de la fuente, como un identificador ORCID o un identificador de documento CVN. \\
+    \texttt{source\_snapshot} & Identificador de la instantánea de origen, que incluye el límite de registros aterrizados. \\
+    \texttt{source\_files}, \texttt{source\_artifacts} & Ficheros y artefactos de origen, con el vocabulario del bloque de trazabilidad de Open CVN. \\
+    \texttt{retrieved\_at} & Momento en que se obtuvo el dato de su fuente. \\
+    \texttt{landed\_at}, \texttt{ingestion\_date} & Momento y fecha de la ejecución que lo aterrizó. \\
+    \texttt{ingestion\_run\_id} & Identificador de la ejecución, válido como segmento de ruta. \\
+    \texttt{landing\_check} & Estado de la comprobación de aterrizaje y sus errores. \\
+    \texttt{payload\_format} & Formato de la carga útil, \texttt{xml} o \texttt{json}. \\
+    \texttt{payload} & Contenido original de la fuente. \\
+    \hline
+  \end{tabular}
+  \caption{Campos del sobre de procedencia de bronze.}
+  \label{tab:anexo_sobre}
+\end{table}
+
+\section{Tablas de silver}
+\label{sec:anexo_modelo_silver}
+
+Silver tiene seis tablas Iceberg. Todas se reconstruyen por completo en cada
+ejecución, y dos ejecuciones sobre la misma entrada producen el mismo
+contenido, incluidos los identificadores de entidad. La
+Tabla~\ref{tab:anexo_silver} resume sus columnas. Las columnas de
+procedencia de \texttt{person\_record} y de \texttt{rejected} copian las del
+sobre.
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{
+    >{\raggedright\arraybackslash}p{0.19\textwidth}
+    >{\raggedright\arraybackslash}p{0.69\textwidth}}
+    \hline
+    \textbf{Tabla} & \textbf{Columnas principales} \\
+    \hline
+    \texttt{person\_record} & Una fila por registro válido de cualquier fuente: \texttt{record\_id}, \texttt{source}, \texttt{source\_ref}, nombres y apellidos con sus formas normalizadas, clave de bloqueo, inicial del nombre, \texttt{orcid\_id}, fecha de última modificación, columnas de procedencia y avisos de validación. \\
+    \texttt{affiliation} & Una fila por empleo o formación: tipo, organización y su forma normalizada, cargo, departamento, ciudad, país y año y mes de inicio y de fin. \\
+    \texttt{publication} & Una fila por obra: título y su forma normalizada, año, mes, DOI, tipo de obra y autores, que solo existen en los CVN. \\
+    \texttt{entity\_link} & Una fila por registro: entidad asignada, regla de fusión, evidencia en JSON y los indicadores de ambigüedad y de conflicto de nombre. \\
+    \texttt{entity} & Una fila por persona resuelta: identificador, identificador ORCID, nombre, número de registros, fuentes, reglas usadas y si tiene CVN y ORCID. \\
+    \texttt{rejected} & Una fila por registro rechazado: reglas incumplidas, errores y columnas de procedencia. \\
+    \hline
+  \end{tabular}
+  \caption{Tablas de silver.}
+  \label{tab:anexo_silver}
+\end{table}
+
+Los registros rechazados indican siempre la regla concreta que incumplieron.
+Las reglas son once, seis propias del CVN y cinco de ORCID:
+
+\begin{itemize}
+  \item \textbf{CVN:} análisis del JSON, esquema del documento, esquema de cada
+  entidad, dígito de control del identificador ORCID declarado, presencia de
+  los campos obligatorios y orden de las fechas.
+  \item \textbf{ORCID:} análisis del XML, forma del JSON de la API, dígito de
+  control del identificador, presencia de los campos obligatorios y
+  existencia de alguna actividad.
+\end{itemize}
+
+Una línea que no es un sobre válido se rechaza antes con una regla propia.
+
+\section{Tablas de gold y su espejo en PostgreSQL}
+\label{sec:anexo_modelo_gold}
+
+Gold tiene cinco tablas, escritas en Iceberg y copiadas una a una al esquema
+\texttt{gold} de PostgreSQL. La Tabla~\ref{tab:anexo_gold} las describe junto
+con sus claves y sus índices secundarios. El mapeo de tipos es directo, y
+solo los instantes de tiempo pasan a un tipo con zona horaria.
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{
+    >{\raggedright\arraybackslash}p{0.25\textwidth}
+    >{\raggedright\arraybackslash}p{0.34\textwidth}
+    >{\raggedright\arraybackslash}p{0.2\textwidth}}
+    \hline
+    \textbf{Tabla} & \textbf{Contenido} & \textbf{Clave e índices} \\
+    \hline
+    \path{dim_researcher} & Una fila por entidad, con nombre, fuentes, número de obras distintas, primer y último año de publicación y rango de años de carrera. & Clave por entidad \\
+    \path{publications_per_researcher_year} & Número de obras distintas por entidad y año. & Clave por entidad y año, índice por año \\
+    \path{affiliation_timeline} & Periodos de afiliación por entidad, con organización, cargo y años. & Índices por entidad y por organización \\
+    \path{collaboration_pairs} & Pares de entidades con obras compartidas, años extremos y marca de miembro con CVN. & Clave por par, índice por segunda entidad \\
+    \path{gold_run} & Una fila por ejecución, con sus recuentos y las instantáneas de silver leídas. & Clave por ejecución \\
+    \hline
+  \end{tabular}
+  \caption{Tablas de gold publicadas en PostgreSQL.}
+  \label{tab:anexo_gold}
+\end{table}
+
+La tabla de ejecución se escribe la última, y la publicación se niega a
+funcionar si no existe. Su presencia marca así una escritura completa y
+permite atribuir cada cifra publicada a las instantáneas exactas de silver
+de las que procede. En la ejecución de referencia las cinco tablas tenían
+29\,767, 172\,861, 94\,431, 9\,540 y 1 filas, en el orden de la tabla.

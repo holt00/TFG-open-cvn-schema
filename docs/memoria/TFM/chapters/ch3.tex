@@ -22,7 +22,33 @@ objetos con formato de tabla, MinIO con Iceberg. Los resultados agregados
 se publican en una capa relacional, PostgreSQL. Finalmente, esos
 resultados se consumen desde una capa de visualización, Superset, que se
 describe en el Capítulo~\ref{cap:visualizacion}. Todos estos servicios se
-despliegan como \textit{charts} de Helm~\cite{helm_docs}.
+despliegan como \textit{charts} de Helm~\cite{helm_docs}. La
+Figura~\ref{fig:tfm_arquitectura_cadena} resume esta cadena.
+
+\begin{figure}[H]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tikzpicture}[
+    font=\small,
+    node distance=6mm,
+    stage/.style={rectangle, draw=azul, thick, rounded corners, fill=gris95,
+      text width=2.7cm, align=center, inner sep=5pt, minimum height=1.6cm},
+    >=Stealth
+  ]
+    \node[stage] (airflow) {Airflow\\orquestación};
+    \node[stage, right=of airflow] (spark) {Spark\\sobre Kubernetes};
+    \node[stage, right=of spark] (minio) {MinIO + Iceberg\\almacenamiento};
+    \node[stage, right=of minio] (postgres) {PostgreSQL\\capa \textit{gold}};
+    \node[stage, right=of postgres] (superset) {Superset\\visualización};
+
+    \draw[->] (airflow) -- (spark);
+    \draw[->] (spark) -- (minio);
+    \draw[->] (minio) -- (postgres);
+    \draw[->] (postgres) -- (superset);
+  \end{tikzpicture}}
+  \caption{Cadena de capas de la plataforma.}
+  \label{fig:tfm_arquitectura_cadena}
+\end{figure}
 
 El clúster subyacente es Kubernetes~\cite{cncf_kubernetes}. Corre en un
 único nodo local, con un espacio de nombres dedicado llamado
@@ -115,7 +141,37 @@ con objetos ajenos a sus propias tablas. Dentro de ese almacén, las capas
 espacios de nombres de Iceberg, es decir \texttt{lakehouse.bronze},
 \texttt{lakehouse.silver} y \texttt{lakehouse.gold}, no como catálogos
 independientes. Esto evita triplicar la superficie de configuración sin
-necesidad funcional alguna.
+necesidad funcional alguna. La Figura~\ref{fig:tfm_bucket_layout} muestra
+esta separación dentro del mismo cubo.
+
+\begin{figure}[H]
+  \centering
+  \resizebox{0.8\textwidth}{!}{%
+  \begin{tikzpicture}[
+    font=\small,
+    level distance=16mm,
+    sibling distance=38mm,
+    bucket/.style={rectangle, draw=gris50, thick, rounded corners,
+      text width=4cm, align=center, inner sep=6pt},
+    rawprefix/.style={rectangle, draw=azul, thick, rounded corners,
+      fill=gris95, text width=3.6cm, align=center, inner sep=5pt},
+    ns/.style={rectangle, draw=azul, thick, rounded corners,
+      text width=3.4cm, align=center, inner sep=4pt},
+    edge from parent/.style={draw=gris50, thick},
+    >=Stealth
+  ]
+    \node[bucket] {Cubo \texttt{lakehouse}}
+      child { node[rawprefix] {\texttt{bronze/}\\aterrizaje crudo} }
+      child { node[rawprefix] (wh) {\texttt{warehouse/}\\catálogo Iceberg}
+        child { node[ns] {\texttt{lakehouse.bronze}} }
+        child { node[ns] {\texttt{lakehouse.silver}} }
+        child { node[ns] {\texttt{lakehouse.gold}} }
+      };
+  \end{tikzpicture}}
+  \caption{Separación, dentro del mismo cubo, entre el prefijo de
+  aterrizaje crudo y las tablas Iceberg del catálogo.}
+  \label{fig:tfm_bucket_layout}
+\end{figure}
 
 El cubo se aprovisionó al principio con tres prefijos de aterrizaje,
 \texttt{bronze}, \texttt{silver} y \texttt{gold}, a semejanza de esos

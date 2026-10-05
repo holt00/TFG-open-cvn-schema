@@ -7,7 +7,46 @@
 \setforeignlanguage {spanish}
 \addvspace {10\p@ }
 \setforeignlanguage {spanish}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Cadena de capas de la plataforma.}}{20}{figure.caption.12}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Separación, dentro del mismo cubo, entre el prefijo de aterrizaje crudo y las tablas Iceberg del catálogo.}}{22}{figure.caption.14}%
 \addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Orden de tareas del flujo \texttt {ingest\_validate}.}}{26}{figure.caption.15}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
 \addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Orden de aplicación de las reglas de resolución de identidad.}}{36}{figure.caption.18}%
+\setforeignlanguage {spanish}
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Panel de indicadores de investigación en Apache Superset, con los tres indicadores y la tabla de procedencia de la ejecución.}}{42}{figure.caption.20}%
+\setforeignlanguage {spanish}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Tiempo de ejecución y aceleración del trabajo de validación y normalización, sobre el volumen de datos base.}}{44}{figure.caption.21}%
+\setforeignlanguage {spanish}
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Tiempo de ejecución y aceleración del cálculo de indicadores.}}{69}{figure.caption.39}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
 \xpginauxfilefalse 
 \contentsfinish 

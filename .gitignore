@@ -223,3 +223,17 @@ docs/memoria/TFM/TFM_signed.pdf
 # TFM bulk data working directories (large downloaded/filtered datasets,
 # kept locally only; issue #95's ORCID bulk data file pipeline)
 data/
+
+# --- Sensitive / personal data (never commit) ---
+# Author personal data used by the memoria declaration of authorship (DNI)
+docs/memoria/*/include/datos_personales.tex
+# Compiled/auxiliary memoria artefacts (preambulo.pdf is a compiled declaration with the DNI)
+docs/memoria/*/elements/preambulo.pdf
+docs/memoria/*/elements/preambulo.synctex.gz
+# Signed/personal PDFs and office files
+*_signed.pdf
+docs/memoria/PLANTILLA*.zip
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.~lock.*

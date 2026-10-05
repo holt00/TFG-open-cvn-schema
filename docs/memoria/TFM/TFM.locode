@@ -3,5 +3,11 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {code}{\numberline {A.1}{\ignorespaces Instalación del clúster y de los tres servicios base.}}{63}{code.caption.30}%
+\contentsline {code}{\numberline {A.2}{\ignorespaces Construcción e importación de las imágenes de la plataforma.}}{63}{code.caption.31}%
+\contentsline {code}{\numberline {A.3}{\ignorespaces Entrega y lanzamiento de los dos flujos de Airflow.}}{64}{code.caption.32}%
+\contentsline {code}{\numberline {A.4}{\ignorespaces Verificación del repositorio y del estado del clúster.}}{65}{code.caption.33}%
 \contentsfinish 
 \contentsfinish 

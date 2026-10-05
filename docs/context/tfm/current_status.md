@@ -93,12 +93,232 @@ end.
 
 ## Status Date
 
-- Last updated: 2026-09-29 (TFM memoria chapter 5, "Procesamiento
-  distribuido: transformación, resolución de entidades e indicadores",
-  drafted and compiled clean; `#102` remains the last completed
+- Last updated: 2026-09-30 (TFM memoria chapter 7, "Conclusiones,
+  competencias y trabajo futuro", drafted and compiled clean, the last
+  chapter of the memoria; body page count 51, one page over the 50-page
+  target despite genuine compression; `#102` remains the last completed
   implementation issue)
 
 ## Entries
+
+### TFM Memoria Annexes A-F Drafted, Issue #103
+
+- the user chose "proposal 2" (evidence-oriented annexes) plus a repository annex. Six annexes
+  were written under `docs/memoria/TFM/chapters/` and wired into `TFM.tex` after the
+  bibliography, as in the TFG (`\chapter*`, lettered, with an introductory paragraph):
+  - **A** reproducibility guide (pinned versions table, cluster and services, images, DAG
+    delivery and triggering, verification, recovery of two known failures), from
+    `docs/development/tfm_lakehouse_workflow.md`
+  - **B** full benchmark results (data per scale, the three timing tables, excluded runs,
+    output-correctness check, gold chart `figs/benchmark_gold.png`), from `docs/benchmark/`
+  - **C** data model (bronze layout and provenance envelope, six silver tables with the eleven
+    rejection rules, five gold tables and their PostgreSQL mirror), from `silver/schemas.py`,
+    `gold/schemas.py` and `bronze/envelope.py`
+  - **D** entity resolution in detail (normalization, name compatibility, evidence and flags,
+    threshold sweep, error analysis, stricter variants, coverage by name variant, evaluation
+    method), from issue `#98` Task 8.5
+  - **E** limitations register grouped in four families, from `docs/pipeline/known_limitations.md`
+  - **F** repository and usage guide
+- every figure was checked against its source after drafting: the timing tables against
+  `docs/benchmark/results.md`, the resolution figures against issue `#98`, versions against
+  `infra/` and the issue documents, and the rejection rules against the code. Corrections made
+  during that check: the first draft of annex E used an invented origin classification (replaced
+  by the registry's own families), an unverified claim about the default 1,000-document run
+  (now "16 of 288 evaluable", as the registry states), "five name variants" (four plus the exact
+  name), and the scheduler-recovery description
+- layout: the annexes add 27 physical pages after the bibliography. The body is unchanged at
+  51 pages; whether annexes count toward the 50-page cap is still to be confirmed
+- the annex-F `\sloppy` leaves one 8 pt overfull box in the repository itemize; annex-A
+  listings show the template's usual 2 pt
+
+### TFM Memoria Chapter 7 ("Conclusiones, Competencias Y Trabajo Futuro") Drafted, Issue #103 -- Last Chapter
+
+- read `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`'s scope-priority/cut-list
+  section to confirm, rather than assume, that none of the epic's planned cuts (Superset, fewer
+  indicators, a smaller benchmark) were ever actually applied, so the chapter presents every
+  scope-related item as a decision made from the start, not a late-stage reduction. Re-verified the
+  entity-resolution precision and recall figures against chapter 5 rather than restating them from
+  memory
+- wrote `docs/memoria/TFM/chapters/ch7.tex` following the six-section structure the chapter's own
+  planning guide set out and the style precedent of the TFG's own closing chapter
+  (`docs/memoria/TFM/../TFG/chapters/ch8.tex`): resumen, cumplimiento de objetivos (with a table
+  marking the entity-resolution objective as fulfilled with measured partial guarantees, not hidden),
+  contribuciones principales, resultados de aprendizaje (with its own table), limitaciones y trabajo
+  futuro (distinguishing the one third-party-origin limitation, the Airflow bug, from five deliberate
+  scope decisions, each with its own future-work line), and a closing conclusion
+- **deviated once from the planning guide, recorded with its reason**: the guide asked for narrative
+  prose, not a list, for the five main contributions, matching the TFG's own six-paragraph precedent.
+  The chapter was first drafted that way, but the whole document then measured 2 pages over the
+  50-page body cap. Converted the five contributions to `itemize`, with the same bold labels and no
+  content cut, and recorded this deviation in the chapter's own planning guide
+- hit the citation line-break bug a further time while listing the scope-decision limitations
+  (Trino, Prometheus, Grafana, Terraform named together): first inside one dense sentence, which was
+  also a reintroduction of the sentence-embedded-enumeration pattern flagged repeatedly earlier this
+  session, fixed by converting to `itemize`; the itemize version then hit the bug again on its own,
+  fixed with the same `\sloppy` scoped to that list that resolved it in chapters 5 and 7's earlier
+  limitations itemize
+- added one new bibliography entry, `terraform_docs`, verified before citing; reused `trino_docs`,
+  `prometheus_docs` and `grafana_docs` from earlier chapters in this chapter's own distinct
+  justification context (limitations, not the original architecture decision)
+- spent real effort closing the remaining page-budget gap without cutting substantive content:
+  shrank three tables from `\small`/`arraystretch 1.2` to `\footnotesize`/tighter row spacing and
+  widened their columns so most rows fit one line instead of two, which alone closed one of the two
+  excess pages. Tried `\enlargethispage` to reclaim the second page's worth of apparent slack on one
+  specific page, discovered that slack was an illusion, in `\raggedbottom` layout a page that looks
+  like it has room left may already be at its true content limit, and enlarging it produced text
+  visibly overlapping the footer rule. Reverted that attempt rather than ship a layout defect
+- **the chapter still compiles at 51 body pages, one page over the 50-page target**, after every
+  compression attempt that did not visibly break the layout. Left for the user to decide: accept the
+  one-page overage, or identify specific content to cut further. Not resolved unilaterally by cutting
+  more substantive analysis
+- recompiled with `xelatex` + `bibtex` + `xelatex` ×2 after every change: zero parentheses and
+  semicolons outside itemize/table markup, zero `Overfull` boxes (a few harmless `Underfull` ones
+  from `\sloppy` and narrow table columns), zero undefined citations. This is the memoria's seventh
+  and final planned chapter
+- updated `docs/memoria/TFM/ch7_conclusiones.md` (status to `EN_PROCESO`, with a redaction-history
+  note covering the page-budget situation) and `docs/memoria/TFM/estructura_memoria_tfm.md`'s chapter
+  table. Uncommented `\input{chapters/ch7}` in `docs/memoria/TFM/TFM.tex`
+
+### TFM Memoria Chapter 6 ("Visualización, Evaluación De Rendimiento Y Endurecimiento") Drafted, Issue #103
+
+- read issues `#100` (Superset dashboard), `#101` (Spark performance benchmark) and `#102`
+  (hardening) in full, plus `docs/benchmark/results.md` for the campaign's real figures, before
+  citing anything: the read-only role and cache-disabled connection behind the dashboard, the
+  dashboard-as-code export/reimport proof, the live poll during a real `transform_publish` run
+  (238 samples, 0 errors, 0 empty results over 1,040 s), the benchmark's isolation and
+  warm-up/repetition/content-digest methodology, the central finding that executor count is a
+  reliability lever before a speed lever (a deterministic memory ceiling at 1 executor from 2x
+  volume onward, and at 2 executors from 4x onward), the size-up exponents showing silver scales
+  near-linearly with volume while gold and publish do not, the object-store-bottleneck hypothesis
+  stated as consistent-with-evidence rather than proven, and the two real Airflow incidents plus
+  the from-scratch k3d rebuild that found and fixed a real PostgreSQL cold-start race
+- wrote `docs/memoria/TFM/chapters/ch6.tex` in four sections: panel de indicadores, metodología y
+  resultados del banco de pruebas de rendimiento, endurecimiento, and verificación de extremo a
+  extremo, applying every standing rule accumulated this session from the start: zero parentheses,
+  zero semicolons, itemize reserved for true parallel enumerations, named technologies cited,
+  Spain-formatted numbers, and explicit nouns instead of ambiguous pronouns
+- included one real generated artifact rather than a redrawn diagram: `docs/benchmark/benchmark_silver.png`
+  (a matplotlib chart the benchmark itself produced) was copied into `docs/memoria/TFM/figs/` and
+  included directly, since it is the measured evidence itself, not an explanatory diagram TikZ
+  should redraw
+- retrieved a piece of planned content this chapter's own guide had flagged as not yet integrated,
+  a paragraph on why a dedicated observability stack (Prometheus/Grafana) was not deployed for the
+  benchmark campaign in favor of Spark's own event log, and wrote it into section 6.2. Added a new
+  bibliography entry for `prometheus_docs` and reused the existing `grafana_docs` entry, first cited
+  in chapter 2 for a different reason, in this chapter's own distinct justification context
+- added `k3d_docs` to `docs/memoria/TFM/bib/ref.bib` for the isolated-cluster rebuild tool, verified
+  against its own site before citing
+- recompiled with `xelatex` + `bibtex` + `xelatex` ×2 after every addition: zero `Overfull`/`Underfull`
+  boxes introduced by the chapter, zero undefined citations, both new citations (Prometheus next to
+  Grafana) rendered cleanly with no recurrence of the citation line-break bug this time. Verified the
+  chart and the two tables visually by rendering PDF pages to PNG, not just by a clean compile
+- updated `docs/memoria/TFM/ch6_visualizacion_evaluacion_endurecimiento.md` (status to `EN_PROCESO`,
+  with a redaction-history note) and `docs/memoria/TFM/estructura_memoria_tfm.md`'s chapter table.
+  Uncommented `\input{chapters/ch6}` in `docs/memoria/TFM/TFM.tex`. Body page count is now 46 pages
+  across six chapters, chapter 6 itself 6 pages, leaving 4 pages for chapter 7 against the 50-page
+  cap
+
+### TFM Theme Color Switched To Match The TFG's, Using The Template's Own Presets
+
+- the user asked to change the TFM's theme color to match the TFG's, using the color presets already
+  defined in `include/colores.tex` rather than picking a new value
+- `docs/memoria/TFG/include/colores.tex` has its `tema` color set to the "Azul del esquema" preset,
+  customized to RGB(0, 69, 134), with the template's other preset lines (black, grey, UCLM red, the
+  scheme's own red) commented out. `docs/memoria/TFM/include/colores.tex` still had the original
+  template's Negro preset active (RGB(0,0,0)) with the same five preset lines, but its own "Azul del
+  esquema" comment line carried a different value, RGB(31, 78, 121), the template's stock default
+  rather than the TFG's customized one
+- commented out the TFM's active Negro line and uncommented its Azul del esquema line, setting it to
+  the TFG's exact RGB(0, 69, 134) rather than the template's stock blue, so both memorias render in
+  the identical tone, not just the same named preset
+- recompiled and verified visually, not just by a clean compile: rendered the TFM's cover page and a
+  chapter heading to PNG and compared side by side with the equivalent page of the actual, defended
+  `docs/memoria/TFG/TFG.pdf`. The chapter-title blue, the section-title blue and the underline rule
+  match exactly. Zero new `Overfull`/`Underfull` boxes, zero undefined citations, page count
+  unchanged at 72 physical PDF pages
+
+### TFM Memoria Chapters 3-4: Diagrams And Tables Added After Cross-Chapter Analysis
+
+- the user asked to analyze whether the remaining chapters (1-4, chapter 5 already had a diagram
+  and a table added in the previous turn) could also benefit from diagrams or tables. Read all four
+  chapters in full and reported a ranked analysis per chapter rather than assuming: chapter 4 had
+  zero tables or diagrams and the clearest gaps (the DAG order, the two ORCID mechanisms, and an
+  enumeration inside one sentence that repeated the exact pattern already fixed twice in chapter 5),
+  chapter 3 had a natural home for one architecture-overview figure and one figure visualizing the
+  bronze-raw-prefix-versus-warehouse split corrected in the previous session, and chapters 1 and 2
+  were judged to already have adequate tables and itemized comparisons, with only optional,
+  lower-value additions possible. The user confirmed implementing every item from the ranked list
+- implemented, all with TikZ, consistent with the tool decision made for chapter 5: Figure 3.1 (the
+  platform's layer chain, Airflow -> Spark on Kubernetes -> MinIO/Iceberg -> PostgreSQL -> Superset),
+  Figure 3.2 (a tree diagram of the `lakehouse` bucket showing `bronze/` separate from `warehouse/`
+  and its three Iceberg namespaces), Figure 4.1 (the `ingest_validate` DAG's four-task order, with
+  the dependency between the synthetic-CVN and API-enrichment tasks labeled on the arrow), Table 4.1
+  (the two ORCID mechanisms, complementing the existing `itemize` rather than replacing it, as the
+  chapter's own planning guide had recommended since it was first drafted), and Table 4.2 (the
+  provenance envelope's seven fields, replacing a sentence that listed all seven inline, the same
+  long-enumeration-in-one-sentence pattern the user had flagged twice in chapter 5 and that had gone
+  unnoticed in chapter 4 until this review)
+- hit two new TikZ issues, both fixed: the tree diagram's node style was named `prefix`, which
+  collides with an internal TikZ/pgfkeys key of the same name and produced a hard compile error
+  rather than a warning, renamed to `rawprefix`; and the DAG figure's edge label, three lines of
+  text placed on a 7mm gap between two nodes, visually overlapped both adjacent boxes, fixed by
+  widening that one gap to 18mm. Both were caught by visually inspecting rendered page images before
+  considering the figures finished, not just by a clean compile
+- recompiled with `xelatex` + `bibtex` + `xelatex` ×2 after every fix: zero parentheses and
+  semicolons outside TikZ code, zero `Overfull`/`Underfull` boxes introduced by the new content, zero
+  undefined citations. Body page count grew from 35 to 39 pages across five chapters, leaving
+  roughly 11 pages for chapters 6-7 against the 50-page cap, tighter than before but still
+  comfortable
+- updated `docs/memoria/TFM/ch3_infraestructura_cluster.md` and
+  `docs/memoria/TFM/ch4_ingesta_fusion_datos.md` with redaction-history notes recording every figure
+  and table added and the two bugs fixed
+
+
+### TFM Memoria Chapter 5: Diagrams Introduced, Section 5.3 Restructured, Pronoun Clarity Fixed
+
+- the user pointed out that section 5.3 had the same long-single-sentence-enumeration problem
+  section 5.2 was fixed for in the previous turn, and separately asked that tables or diagrams be
+  added anywhere in the memoria where they would clarify a concept better than prose or a table
+  would communicate the same information more directly, naming a requirement that the diagram
+  technology be reliable and reasonably good looking, and asking to be notified of any such change
+- investigated the diagram tooling already available: the TFG memoria's own diagrams
+  (`docs/diagrams/*.puml`) use PlantUML, rendered externally with a `plantuml` binary. That binary is
+  not installed in this environment, and installing it would need either `sudo apt-get install` or
+  downloading an external `.jar`, neither done without asking first. TikZ, by contrast, was already
+  loading transitively through the `todonotes` package the template pulls in, needs no external
+  tool, renders in the same `xelatex` pass as the rest of the document, and can reuse the color
+  palette `docs/memoria/TFM/include/colores.tex` already defines. Declared it explicitly in
+  `docs/memoria/TFM/include/configuracion.tex` with the `positioning`, `arrows.meta`,
+  `shapes.geometric` and `calc` libraries, rather than relying on the indirect load
+- converted the three-families-of-approach paragraph and the R1/R2/R3 rules paragraph in
+  `docs/memoria/TFM/chapters/ch5.tex` section 5.3 to `itemize`, matching the fix already applied to
+  5.2. Added a new TikZ decision-flow figure visualizing the R1 -> R2 -> R3 order, and a table
+  summarizing the measured precision and recall of R1 and R2, replacing figures that previously only
+  appeared scattered through running prose
+- hit the citation line-break bug a further time while placing the Fellegi-and-Sunter and Splink
+  citations inside the narrower itemize column, and this time neither separating the citations into
+  their own sentences nor removing the non-breaking space before `\cite{}` changed the overflow at
+  all, byte-for-byte identical overflow amount both times, suggesting the narrow itemize column
+  itself, not the citation glue, was the real constraint. Fixed with `\sloppy` scoped to that one
+  `itemize`, the standard LaTeX escape hatch for a paragraph that has no good break points within
+  its tolerance. Also fixed an overfull table header ("Cobertura") by widening its column, and an
+  ugly stretched-justification table cell ("Evidencia") with `\raggedright` on that column
+  specifically
+- verified the new figure and table visually, not just by a clean compile: extracted PDF pages 56-57
+  to PNG and confirmed both render clearly, with the same azul/gris color scheme as the rest of the
+  document
+- separately, the user flagged a confusing sentence in section 5.4 about publication deduplication
+  and, later in the same turn, flagged excessive and sometimes unclear pronoun use across chapter 5
+  more broadly. Fixed the confusing sentence by splitting it into two shorter, more direct ones.
+  Audited every "su"/"sus"/"esta"/"ese"/"ella" in the chapter and replaced the ones that did not bind
+  clearly to an obvious antecedent with the explicit noun, including "su memoria" of the executors,
+  "su necesidad" of the entity-level validation mechanism, "sus reglas" of ORCID records, "su clave
+  de bloqueo" of the R2 rule's CVN, and the bare "ella" at the end of the false-merge-cost sentence.
+  Added this as a standing rule to `docs/memoria/TFM/estructura_memoria_tfm.md`'s "Principios de
+  redacción", applicable to every remaining chapter
+- recompiled with `xelatex` + `bibtex` + `xelatex` ×2 after each fix: zero parentheses and
+  semicolons outside the TikZ figure's own code, zero `Overfull`/`Underfull` boxes of the chapter's
+  own content, zero undefined citations, body page count unchanged at 35 pages across five chapters
 
 ### TFM Memoria Chapter 5 ("Procesamiento Distribuido") Drafted, Issue #103
 

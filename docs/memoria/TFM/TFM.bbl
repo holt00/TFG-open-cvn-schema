@@ -134,6 +134,12 @@ Fellegi, I.~P. and Sunter, A.~B. (1969).
 \newblock \url{https://grafana.com/oss/grafana/}.
 \newblock Accedido: 2026-09-29.
 
+\bibitem[{HashiCorp, Inc.}, 2026]{terraform_docs}
+{HashiCorp, Inc.} (2026).
+\newblock {Terraform}.
+\newblock \url{https://www.terraform.io/}.
+\newblock Accedido: 2026-09-30.
+
 \bibitem[Jaén, 2026]{tfg_open_cvn}
 Jaén, C.~M. (2026).
 \newblock Especificación de formato y desarrollo de herramientas para el
@@ -146,6 +152,12 @@ Jaén, C.~M. (2026).
 \newblock {JSON} schema: A media type for describing {JSON} documents.
 \newblock \url{https://json-schema.org/}.
 \newblock Accedido: 2026-09-29.
+
+\bibitem[{k3d Authors}, 2026]{k3d_docs}
+{k3d Authors} (2026).
+\newblock {k3d}: {k3s} in {Docker}.
+\newblock \url{https://k3d.io/}.
+\newblock Accedido: 2026-09-30.
 
 \bibitem[{K3s Project Authors}, 2026]{k3s_docs}
 {K3s Project Authors} (2026).
@@ -210,6 +222,12 @@ Jaén, C.~M. (2026).
   semantics.
 \newblock \url{https://projectnessie.org/}.
 \newblock Accedido: 2026-09-28.
+
+\bibitem[{Prometheus Authors}, 2026]{prometheus_docs}
+{Prometheus Authors} (2026).
+\newblock Prometheus: Monitoring system \& time series database.
+\newblock \url{https://prometheus.io/}.
+\newblock Accedido: 2026-09-30.
 
 \bibitem[{Salesforce, Inc.}, 2026]{tableau_docs}
 {Salesforce, Inc.} (2026).

@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: TFM.aux
 The style file: apalike.bst
 Database file #1: bib/ref.bib
-You've used 41 entries,
+You've used 44 entries,
             1935 wiz_defined-function locations,
-            645 strings with 8999 characters,
-and the built_in function-call counts, 11266 in all, are:
-= -- 1208
-> -- 375
-< -- 39
-+ -- 126
-- -- 116
-* -- 726
-:= -- 2223
-add.period$ -- 161
-call.type$ -- 41
-change.case$ -- 264
-chr.to.int$ -- 33
-cite$ -- 41
-duplicate$ -- 427
-empty$ -- 662
-format.name$ -- 159
-if$ -- 2085
+            658 strings with 9274 characters,
+and the built_in function-call counts, 12028 in all, are:
+= -- 1292
+> -- 396
+< -- 42
++ -- 132
+- -- 122
+* -- 771
+:= -- 2376
+add.period$ -- 173
+call.type$ -- 44
+change.case$ -- 282
+chr.to.int$ -- 36
+cite$ -- 44
+duplicate$ -- 457
+empty$ -- 707
+format.name$ -- 168
+if$ -- 2226
 int.to.chr$ -- 9
 int.to.str$ -- 0
 missing$ -- 3
-newline$ -- 246
-num.names$ -- 123
-pop$ -- 112
+newline$ -- 264
+num.names$ -- 132
+pop$ -- 118
 preamble$ -- 1
-purify$ -- 263
+purify$ -- 281
 quote$ -- 0
-skip$ -- 370
+skip$ -- 397
 stack$ -- 0
-substring$ -- 544
+substring$ -- 580
 swap$ -- 3
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 246
+type$ -- 264
 warning$ -- 0
-while$ -- 86
+while$ -- 92
 width$ -- 0
-write$ -- 574
+write$ -- 616

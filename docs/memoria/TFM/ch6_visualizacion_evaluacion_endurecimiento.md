@@ -1,6 +1,6 @@
 # Capítulo 6: Visualización, evaluación de rendimiento y endurecimiento
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
 
 ## Objetivo del capítulo
 
@@ -115,3 +115,52 @@ metodológico propio de este capítulo (variables del benchmark, aislamiento
 de la campaña, verificación de resultados idénticos entre
 configuraciones), no dejarlo al nivel resumido en que se escribió para el
 capítulo 2.
+
+## Historial de redacción
+
+Redactado el capítulo completo en `docs/memoria/TFM/chapters/ch6.tex` a
+partir de los issues `#100`, `#101` y `#102`, releídos en su totalidad
+antes de citar ninguna cifra, incluidas sus secciones `Adjustments Made
+During Implementation`/`Verification`/`Findings`. Las cifras del banco de
+pruebas se tomaron de `docs/benchmark/results.md`, no reconstruidas de
+memoria.
+
+Estructura final, cuatro secciones: panel de indicadores (Superset sobre
+un rol de solo lectura dedicado, agregados sin nombres de personas, panel
+como código verificado mediante borrado y reimportación completos,
+verificación en directo durante una ejecución real del flujo de
+transformación), metodología y resultados del banco de pruebas de
+rendimiento (el borrador de partida sobre observabilidad integrado y
+desarrollado, el hallazgo principal de que el número de ejecutores es una
+palanca de fiabilidad antes que de velocidad, con la Figura 6.1 tomada
+directamente de `docs/benchmark/benchmark_silver.png` y la Tabla 6.1 con
+los exponentes de escalado de los tres trabajos), endurecimiento (los dos
+hallazgos operativos reales del bloqueo del orquestador de flujos y del
+cierre del servidor de su interfaz bajo carga, ambos reconfirmados de
+forma independiente durante la propia redacción de la memoria, no solo
+encontrados una vez), y verificación de extremo a extremo (la
+reconstrucción completa en un clúster Kubernetes aislado y desechable, que
+encontró y corrigió un nuevo fallo real de arranque concurrente de
+PostgreSQL).
+
+La gráfica del banco de pruebas es la única figura de este capítulo que no
+se dibujó con TikZ. Es una figura real ya generada por el propio banco de
+pruebas, copiada a `docs/memoria/TFM/figs/benchmark_silver.png`, y no una
+reconstrucción, porque es la evidencia medida en sí misma, no un diagrama
+explicativo.
+
+Bibliografía: se retomó el borrador de partida sobre observabilidad,
+originalmente descartado sin integrar, y se añadieron las entradas
+`prometheus_docs` y `k3d_docs` a `docs/memoria/TFM/bib/ref.bib`,
+verificadas contra su origen antes de citarlas. `grafana_docs` ya existía,
+citada por primera vez en el capítulo 2 como alternativa de visualización
+descartada, y se reutiliza aquí en un contexto de justificación distinto,
+la observabilidad de la campaña de rendimiento y no el panel de
+indicadores.
+
+Compilación verificada con `xelatex` + `bibtex` + `xelatex` ×2: sin cajas
+`Overfull`/`Underfull` propias del capítulo, sin citas sin definir, cero
+paréntesis y cero punto y coma fuera del código TikZ. El capítulo ocupa 6
+páginas de cuerpo, páginas 41 a 46, y deja el cuerpo total del documento
+en 46 páginas tras seis capítulos, con 4 páginas de margen para el
+capítulo 7 dentro del límite de 50.

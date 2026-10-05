@@ -181,3 +181,67 @@ correcto, sin cajas `Overfull`/`Underfull` propias del capítulo y sin
 citas sin definir. El capítulo ocupa unas 7 páginas de cuerpo, y el total
 del documento queda en 35 páginas de cuerpo tras cinco capítulos, dentro
 del presupuesto restante de la memoria para los capítulos 6 y 7.
+
+**Revisión de enumeraciones**: el usuario señaló que la sección 5.2 volvía
+a caer en enumeraciones largas dentro de la misma frase, el mismo patrón
+ya corregido en el capítulo 2. Se convirtieron a `itemize` las tres capas
+de validación del documento CVN y los dos frentes de normalización,
+manteniendo la validación de ORCID, el umbral de rechazo y las cifras de
+cierre como prosa porque no son una enumeración paralela. Recompilado sin
+cajas nuevas y con el número de páginas del documento sin cambios.
+
+**Mismo problema en 5.3, más diagramas y tablas donde aclaran el texto**:
+el usuario señaló que la sección 5.3 tenía el mismo problema de
+enumeraciones largas, y pidió además que, en cualquier punto de la
+memoria donde ayude a aclarar un concepto, se añadan tablas o diagramas,
+con una tecnología de diagramas fiable y estéticamente cuidada, avisando
+de cualquier cambio de este tipo.
+
+- se convirtieron a `itemize` las tres familias de enfoque de resolución
+  de entidades y las tres reglas R1/R2/R3, antes en dos párrafos densos
+- tecnología de diagramas elegida: TikZ, ya cargado transitivamente en la
+  plantilla a través de `todonotes` pero ahora declarado explícitamente en
+  `docs/memoria/TFM/include/configuracion.tex` junto con las librerías
+  `positioning`, `arrows.meta`, `shapes.geometric` y `calc`. Se descartó
+  PlantUML, la tecnología que usa la memoria del TFG para sus diagramas
+  conceptuales, porque el binario `plantuml` no está instalado en este
+  entorno y instalarlo exigiría `sudo` o descargar un `.jar` externo. TikZ
+  no necesita ninguna herramienta nueva, compila en la misma pasada de
+  `xelatex` que el resto del documento, y hereda automáticamente la
+  paleta de colores ya definida en `include/colores.tex`
+- se añadió la Figura 5.1, un diagrama de flujo de decisión con TikZ que
+  resume visualmente el orden R1 -> R2 -> R3, y la Tabla 5.1, que resume
+  en forma tabular las cifras de precisión y cobertura que antes solo
+  aparecían dispersas en el texto corrido
+- verificado visualmente extrayendo las páginas 56 y 57 del PDF compilado
+  a imagen: el diagrama y la tabla se renderizan con claridad, con el
+  mismo esquema de color azul/gris del resto de la memoria
+- corregidos dos problemas de compilación al añadir el contenido nuevo:
+  una cita pegada a una etiqueta en negrita dentro de un `itemize` volvió
+  a desbordar la caja, esta vez de forma persistente pese a separar la
+  cita en su propia frase y a quitar el espacio no divisible antes de
+  `\cite{}`. Se resolvió con `\sloppy` aplicado localmente a ese
+  `itemize`, el mecanismo estándar de LaTeX para estas cajas
+  particularmente tercas. La cabecera «Cobertura» de la tabla también
+  desbordaba por una columna demasiado estrecha, corregida ampliándola, y
+  la columna «Evidencia» mostraba un espaciado feo por justificación en
+  una columna estrecha, corregida con `\raggedright` en esa columna
+- el usuario señaló además, en un mensaje aparte, un uso excesivo y a
+  veces ambiguo de pronombres posesivos y demostrativos en el capítulo 5.
+  Se revisaron todos los usos de «su», «sus», «esta», «ese» y «ella» del
+  capítulo y se sustituyeron por el sustantivo explícito los que no
+  ataban con claridad a su antecedente, entre ellos «su memoria» de los
+  ejecutores, «su necesidad» del mecanismo de validación por entidad,
+  «sus reglas» de los registros de ORCID, «su clave de bloqueo» del CVN
+  de la regla R2, y el pronombre suelto «ella» al final del párrafo sobre
+  el coste de una fusión equivocada. Regla añadida a la sección
+  "Principios de redacción" de `estructura_memoria_tfm.md`, aplicable al
+  resto de capítulos
+- se corrigió también una frase confusa en la sección 5.4 sobre la
+  deduplicación de publicaciones, señalada aparte por el usuario, dividida
+  en dos frases más cortas y directas
+- recompilado con `xelatex` + `bibtex` + `xelatex` ×2 tras cada corrección:
+  sin cajas `Overfull`/`Underfull` propias del capítulo, sin citas sin
+  definir, cuerpo del documento sin cambios en 35 páginas tras cinco
+  capítulos, el diagrama y la tabla nuevos no empujaron ninguna sección a
+  una página adicional

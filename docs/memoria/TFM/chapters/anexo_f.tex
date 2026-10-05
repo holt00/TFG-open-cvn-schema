@@ -1,0 +1,68 @@
+\chapter*{Anexo F: Repositorio del proyecto y guía de uso}
+\addcontentsline{toc}{chapter}{Anexo F: Repositorio del proyecto y guía de uso}
+\label{cap:anexo_repositorio}
+
+El código fuente completo de la plataforma, junto con este documento, está
+disponible públicamente en el siguiente repositorio, que es el mismo que
+contiene el Trabajo Fin de Grado sobre el que se construye este trabajo:
+
+\begin{center}
+\url{https://github.com/holt00/TFG-open-cvn-schema}
+\end{center}
+
+Este anexo describe la organización del repositorio y orienta a quien quiera
+consultarlo o ejecutarlo, sin repetir los comandos del
+Anexo~\ref{cap:anexo_reproduccion}.
+
+\section*{Estructura del repositorio}
+
+\begin{itemize}
+  \sloppy
+  \item \path{src/tfm_lakehouse/}: código propio de la plataforma, con un
+  subpaquete por etapa. \path{orcid_client} y \path{orcid_bulk} acceden a las
+  dos fuentes de ORCID, \path{synthetic_cvn} genera los currículos
+  sintéticos, \path{bronze} aterriza los registros, \path{silver} valida,
+  normaliza y resuelve entidades, \path{gold} calcula los indicadores y
+  genera el SQL de publicación, \path{spark_jobs} contiene los puntos de
+  entrada de los trabajos de Spark y \path{benchmark} contiene el banco de
+  pruebas.
+  \item \path{dags/}: definición de los flujos \texttt{ingest\_validate} y
+  \texttt{transform\_publish} de Airflow.
+  \item \path{infra/}: todo lo necesario para desplegar la plataforma. Los
+  valores de Helm de los servicios están en \path{helm-values/}, las
+  imágenes y la configuración de Iceberg y de Spark en \path{spark-conf/} e
+  \path{ingest/}, y el panel de Superset, su rol de solo lectura y su
+  importación en \path{superset/}. Cada subdirectorio tiene su propio
+  \path{README.md}.
+  \item \path{tests/}: batería automatizada, que incluye las pruebas de los
+  trabajos de Spark ejecutadas dentro de la imagen del clúster.
+  \item \path{docs/benchmark/}: resultados completos del banco de pruebas, con
+  los registros de cada ejecución en formato CSV y JSON, las gráficas y el
+  procedimiento para repetir la campaña.
+  \item \path{docs/roadmap/tfm/}: un documento por tarea, con su plan, las
+  decisiones tomadas y las desviaciones respecto a lo planeado.
+  \item \path{docs/pipeline/known_limitations.md}: registro de limitaciones
+  resumido en el Anexo~\ref{cap:anexo_limitaciones}.
+  \item \path{docs/memoria/TFM/}: código fuente de este documento.
+  \item \path{src/open_cvn/}, \path{src/open_cvn_app/} y \path{schemas/}:
+  formato Open CVN, herramienta local y esquema JSON del trabajo anterior, de
+  los que la plataforma toma el contrato de validación del currículo.
+\end{itemize}
+
+\section*{Cómo orientarse en el repositorio}
+
+El punto de entrada es el fichero \path{README.md} de la raíz, que resume el
+objetivo y el alcance. El fichero \path{PROJECT_GUIDE.md} añade un mapa de la
+documentación bajo \path{docs/}. Para estudiar el desarrollo en orden
+cronológico sirve el registro de estado en
+\path{docs/context/tfm/current_status.md}, que recoge cada tarea con sus
+cifras medidas, y para entender una decisión concreta conviene abrir el
+documento de la tarea correspondiente, cuyas tablas de decisiones enumeran
+cada alternativa descartada con su motivo.
+
+Para reproducir la plataforma, la guía mantenida es
+\path{docs/development/tfm_lakehouse_workflow.md}, que el
+Anexo~\ref{cap:anexo_reproduccion} resume. Para repetir solo la campaña de
+rendimiento, el procedimiento está en \path{docs/benchmark/README.md}, y
+trabaja sobre espacios de nombres aislados que no alteran las tablas de
+producción.

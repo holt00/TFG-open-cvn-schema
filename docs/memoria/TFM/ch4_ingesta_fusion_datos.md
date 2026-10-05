@@ -158,3 +158,34 @@ de organización ya usados en la bibliografía.
 
 El capítulo ocupa aproximadamente 7 páginas de cuerpo, en línea con el
 presupuesto restante de la memoria repartido entre los capítulos 4-7.
+
+**Diagrama y tablas añadidos con TikZ**: a petición del usuario, que pidió
+analizar en qué capítulos un diagrama o una tabla aclararían mejor el
+texto que la prosa sola. Añadidos tres elementos:
+
+- Figura 4.1, en la Sección 4.1, el orden de las cuatro tareas del flujo
+  `ingest_validate`, con la dependencia entre la generación de CVN
+  sintético y el enriquecimiento por API rotulada sobre la propia flecha
+- Tabla 4.1, en la Sección 4.2, resume los dos mecanismos de ORCID
+  (mecanismo, uso, volumen, límite de tasa), complementando el `itemize`
+  existente en vez de sustituirlo, tal y como se recomendaba en la guía de
+  este capítulo desde su redacción inicial
+- Tabla 4.2, en la Sección 4.4: la frase que enumeraba los siete campos
+  del sobre de procedencia dentro de una misma oración tenía exactamente
+  el mismo problema que el usuario señaló dos veces en el capítulo 5, no
+  detectado hasta esta revisión. Convertida a tabla en lugar de `itemize`
+  porque son nombres de campo con su significado, un caso más tabular que
+  enumerativo
+
+La primera versión del diagrama del flujo tenía un problema de
+composición: la etiqueta de tres líneas sobre la flecha entre
+`generate_synthetic_cvn` y `fetch_orcid_api_enrichment` se solapaba con
+las dos cajas adyacentes, porque la separación vertical entre esos dos
+nodos era demasiado pequeña para el texto de la etiqueta. Corregido
+ampliando esa separación de forma específica para ese par de nodos,
+verificado visualmente extrayendo la página a imagen antes de darlo por
+bueno.
+
+Con estas adiciones y las del capítulo 3, el cuerpo del documento pasa de
+35 a 39 páginas tras cinco capítulos, dejando unas 11 páginas para los
+capítulos 6 y 7 dentro del límite de 50.

@@ -1,0 +1,185 @@
+\chapter*{Anexo A: Guía de reproducibilidad de la plataforma}
+\addcontentsline{toc}{chapter}{Anexo A: Guía de reproducibilidad de la plataforma}
+\label{cap:anexo_reproduccion}
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{A.\arabic{section}}
+\setcounter{code}{0}
+\renewcommand{\thecode}{A.\arabic{code}}
+
+Este anexo recoge los pasos con los que se reconstruyó la plataforma desde
+cero en el Capítulo~\ref{cap:visualizacion}. No introduce ninguna decisión
+de diseño nueva. Es una referencia operativa que complementa con la sintaxis
+exacta de los comandos el despliegue descrito en el
+Capítulo~\ref{cap:infraestructura}, y su versión completa y mantenida vive
+en \path{docs/development/tfm_lakehouse_workflow.md}.
+
+\section{Prerrequisitos y versiones fijadas}
+\label{sec:anexo_reproduccion_prerrequisitos}
+
+La plataforma necesita WSL2 con systemd activado, Docker, \texttt{kubectl},
+\texttt{helm} y \texttt{uv} para el entorno Python del propio repositorio.
+Todas las versiones de los servicios se fijan de forma explícita, de modo
+que dos despliegues distintos produzcan el mismo sistema. La
+Tabla~\ref{tab:anexo_versiones} las reúne.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{
+    >{\raggedright\arraybackslash}p{0.3\textwidth}
+    >{\raggedright\arraybackslash}p{0.3\textwidth}
+    >{\raggedright\arraybackslash}p{0.26\textwidth}}
+    \hline
+    \textbf{Componente} & \textbf{Versión fijada} & \textbf{Origen} \\
+    \hline
+    Kubernetes con k3s & v1.36.4+k3s1 & Instalador oficial de k3s \\
+    MinIO & \textit{chart} 17.0.21 & Referencia OCI de Bitnami \\
+    PostgreSQL & \textit{chart} 18.11.3 & Referencia OCI de Bitnami \\
+    Airflow & \textit{chart} 1.22.0 & Repositorio de Apache Airflow \\
+    Superset & \textit{chart} 0.22.8, aplicación 6.1.0 & Repositorio de Apache Superset \\
+    Spark & 3.5.9 & Distribución oficial con Hadoop 3 \\
+    Iceberg & \textit{runtime} 1.11.0 para Spark 3.5 & Maven Central \\
+    Acceso a S3 & \texttt{hadoop-aws} 3.3.4 y SDK 1.12.262 & Maven Central \\
+    \hline
+  \end{tabular}
+  \caption{Versiones fijadas de los componentes desplegados.}
+  \label{tab:anexo_versiones}
+\end{table}
+
+Las rutas de código y de datos se montan en los pods desde el directorio de
+trabajo del nodo. Por eso los dos ficheros de flujo contienen la ruta
+absoluta del repositorio en la máquina de desarrollo, y esa ruta debe
+editarse antes de entregarlos desde cualquier otra máquina. Es una carencia
+de portabilidad conocida, recogida en el Anexo~\ref{cap:anexo_limitaciones}.
+
+\section{Clúster y servicios base}
+\label{sec:anexo_reproduccion_servicios}
+
+El Código~\ref{cod:anexo_cluster} instala k3s con el modo de red
+\texttt{host-gw}, necesario bajo WSL2, y crea el espacio de nombres
+dedicado. Los servicios se instalan después con los valores versionados bajo
+\path{infra/helm-values/}, tras crear sus credenciales como secretos de
+Kubernetes que nunca se guardan en el repositorio.
+
+\begin{code}[H]
+\begin{lstlisting}[language=bash, basicstyle=\footnotesize\ttfamily, breaklines=true]
+curl -sfL https://get.k3s.io | \
+  INSTALL_K3S_EXEC="--flannel-backend=host-gw --write-kubeconfig-mode=644" sh -
+kubectl create namespace tfm-lakehouse
+
+helm install minio oci://registry-1.docker.io/bitnamicharts/minio \
+  --version 17.0.21 -f infra/helm-values/minio-values.yaml -n tfm-lakehouse
+helm install postgresql oci://registry-1.docker.io/bitnamicharts/postgresql \
+  --version 18.11.3 -f infra/helm-values/postgresql-values.yaml -n tfm-lakehouse
+helm install airflow apache-airflow/airflow \
+  --version 1.22.0 -f infra/helm-values/airflow-values.yaml -n tfm-lakehouse
+\end{lstlisting}
+\caption{Instalación del clúster y de los tres servicios base.}
+\label{cod:anexo_cluster}
+\end{code}
+
+\section{Imágenes de Spark y de ingesta}
+\label{sec:anexo_reproduccion_imagenes}
+
+El flujo de transformación ejecuta sus tres trabajos sobre una única
+imagen, construida por capas a partir de la imagen oficial de Spark. El
+Código~\ref{cod:anexo_imagenes} muestra la construcción y la importación de
+esa imagen y de la imagen de ingesta. La importación en k3s es el único paso
+que exige privilegios de administrador.
+
+\begin{code}[H]
+\begin{lstlisting}[language=bash, basicstyle=\footnotesize\ttfamily, breaklines=true]
+docker build -f infra/spark-conf/Dockerfile.gold \
+  -t tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-gold .
+docker save tfm-lakehouse/spark-py:3.5.9-iceberg1.11.0-gold | \
+  sudo k3s ctr images import -
+
+docker build -f infra/ingest/Dockerfile -t tfm-lakehouse/ingest:py3.14 .
+docker save tfm-lakehouse/ingest:py3.14 | sudo k3s ctr images import -
+
+kubectl apply -f infra/spark-conf/spark-rbac.yaml
+\end{lstlisting}
+\caption{Construcción e importación de las imágenes de la plataforma.}
+\label{cod:anexo_imagenes}
+\end{code}
+
+\section{Ejecución de los flujos}
+\label{sec:anexo_reproduccion_flujos}
+
+El subconjunto masivo de ORCID exige descargar una sola vez el archivo de
+resúmenes de perfil, de unos 46 GB, y verificar su suma de comprobación. La
+tarea de ingesta lo extrae después por su cuenta y nunca lo descarga. Los
+dos flujos se entregan copiando su fichero al volumen de definiciones de
+Airflow y se lanzan con la línea de órdenes de Airflow, como muestra el
+Código~\ref{cod:anexo_flujos}.
+
+\begin{code}[H]
+\begin{lstlisting}[language=bash, basicstyle=\footnotesize\ttfamily, breaklines=true]
+P=$(kubectl get pod -n tfm-lakehouse -l component=dag-processor -o name | head -1)
+kubectl cp dags/ingest_validate.py \
+  tfm-lakehouse/${P#pod/}:/opt/airflow/dags/ingest_validate.py -c dag-processor
+kubectl exec -n tfm-lakehouse ${P#pod/} -c dag-processor -- \
+  airflow dags trigger ingest_validate --run-id run-1 \
+  --conf '{"count": 1000, "bulk_max_records": 20000}'
+
+kubectl cp dags/transform_publish.py \
+  tfm-lakehouse/${P#pod/}:/opt/airflow/dags/transform_publish.py -c dag-processor
+kubectl exec -n tfm-lakehouse ${P#pod/} -c dag-processor -- \
+  airflow dags trigger transform_publish --run-id run-1
+\end{lstlisting}
+\caption{Entrega y lanzamiento de los dos flujos de Airflow.}
+\label{cod:anexo_flujos}
+\end{code}
+
+Una ejecución con los parámetros por defecto tarda entre seis y diez
+minutos con el entorno ya caliente. Los parámetros del flujo de ingesta
+controlan el número de currículos sintéticos, la semilla, la proporción de
+currículos enlazados, el tamaño de la muestra de la API y el límite de
+registros masivos aterrizados. Los del flujo de transformación controlan el
+número de ejecutores, su memoria, las particiones de mezcla y los umbrales
+de rechazo y de similitud entre organizaciones.
+
+\section{Panel de indicadores y verificación}
+\label{sec:anexo_reproduccion_panel}
+
+El panel se instala con la imagen propia de Superset, un rol de solo lectura
+sobre la base de datos de gold y la importación del panel exportado, todo
+ello descrito en \path{infra/superset/README.md}. El acceso se hace con una
+redirección de puerto local. La verificación del conjunto combina la batería
+de pruebas del repositorio, que se lanza con el comando documentado del
+Código~\ref{cod:anexo_verificacion}, y la comprobación del estado real de
+los pods y de los dos flujos.
+
+\begin{code}[H]
+\begin{lstlisting}[language=bash, basicstyle=\footnotesize\ttfamily, breaklines=true]
+uv sync --group codegen --group testing
+uv run pytest -n auto tests
+
+kubectl get pods -n tfm-lakehouse
+kubectl port-forward -n tfm-lakehouse svc/superset 8088:8088
+\end{lstlisting}
+\caption{Verificación del repositorio y del estado del clúster.}
+\label{cod:anexo_verificacion}
+\end{code}
+
+\section{Recuperación de los fallos conocidos}
+\label{sec:anexo_reproduccion_recuperacion}
+
+Dos fallos requieren una intervención manual documentada, ambos recogidos en
+el registro del Anexo~\ref{cap:anexo_limitaciones}.
+
+\begin{itemize}
+  \item \textbf{Reinicio bloqueado del planificador de Airflow.} Una fila de
+  tarea huérfana que dejó un planificador caído hace fallar todos los reinicios
+  posteriores. Se resuelve marcando como fallidas esa tarea y su ejecución
+  desde un pod sano, borrando el pod que nombra si aún existe y reiniciando el
+  pod del planificador.
+  \item \textbf{Usuario de PostgreSQL sin crear.} Si la publicación falla
+  con un error de autenticación del usuario de gold tras un arranque en
+  frío, el primer arranque de la base de datos quedó interrumpido. Se
+  confirma revisando el registro del contenedor anterior y se resuelve
+  borrando el pod y su volumen persistente para forzar una inicialización
+  limpia.
+\end{itemize}

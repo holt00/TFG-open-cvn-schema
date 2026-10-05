@@ -1,0 +1,197 @@
+\chapter*{Anexo D: Resolución de identidad en detalle}
+\addcontentsline{toc}{chapter}{Anexo D: Resolución de identidad en detalle}
+\label{cap:anexo_resolucion}
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{D.\arabic{section}}
+
+Este anexo amplía la Sección~\ref{sec:procesamiento_resolucion} con el
+detalle de las reglas, el análisis de errores que llevó a fijar su diseño
+final y la sensibilidad de los resultados a sus parámetros. Todas las cifras
+proceden de la ejecución de 10\,000 documentos CVN descrita en el
+Capítulo~\ref{cap:procesamiento}, evaluada contra el fichero de control que
+genera el propio generador sintético.
+
+\section{Normalización previa a la comparación}
+\label{sec:anexo_resolucion_normalizacion}
+
+La comparación no opera sobre los textos originales sino sobre formas
+normalizadas, que se guardan en silver junto a ellos.
+
+\begin{itemize}
+  \item \textbf{Nombres.} Se pliegan sin acentos, en minúsculas y sin
+  puntuación. Las partículas de apellido, como «de», «del» o «la», se omiten
+  al elegir la clave de bloqueo, que combina el primer apellido significativo
+  y la inicial del nombre.
+  \item \textbf{Organizaciones.} Se reducen a su conjunto ordenado de palabras
+  significativas, sin las de relleno y sin las direcciones web que algunos
+  perfiles incluyen en el nombre. El orden de las palabras deja de importar
+  y se puede calcular un solape de conjuntos.
+  \item \textbf{Obras.} El DOI pierde sus prefijos y pasa a minúsculas, y el
+  título se normaliza igual que los nombres.
+\end{itemize}
+
+\section{Compatibilidad de nombres}
+\label{sec:anexo_resolucion_nombres}
+
+La regla de repliegue acepta una coincidencia de nombre en tres formas, que
+se clasifican y se guardan en la evidencia de cada enlace.
+
+\begin{itemize}
+  \item \textbf{Completa.} Apellido y nombre coinciden tras la normalización.
+  \item \textbf{Nombre relajado.} El apellido coincide y el nombre difiere en
+  que una parte es solo una inicial o en que un nombre compuesto aparece
+  abreviado, como «Ana M» frente a «Ana María». Un nombre que pierde una
+  parte entera sigue sin ser compatible.
+  \item \textbf{Apellido acortado.} El nombre coincide y un apellido es el
+  primer apellido del otro, porque muchas personas omiten el segundo.
+\end{itemize}
+
+Un nombre que difiere por ambos lados a la vez no es compatible. Esta
+restricción nació del análisis de errores de la
+Sección~\ref{sec:anexo_resolucion_errores}.
+
+\section{Evidencia guardada en cada enlace}
+\label{sec:anexo_resolucion_evidencia}
+
+Cada fila de la tabla de enlaces conserva la regla aplicada y una evidencia en
+JSON con la forma de coincidencia de nombre y las organizaciones compartidas.
+Dos indicadores marcan los casos dudosos. El de ambigüedad se activa cuando
+un registro sin identificador tiene más de una entidad candidata, y en ese
+caso queda como entidad propia. El de conflicto de nombre se activa cuando
+un CVN cuyo nombre no es compatible con el de ninguno de los registros de
+ORCID que comparten su identificador se fusiona con ellos. La fusión se
+mantiene, porque el identificador es la clave autoritativa, y el indicador
+permite revisarla.
+
+\section{Umbral de similitud entre organizaciones}
+\label{sec:anexo_resolucion_umbral}
+
+La regla de repliegue exige que alguna organización coincida. El umbral por
+defecto exige igualdad de las formas normalizadas, y se fijó con datos
+reales y no por preferencia. Un solape de conjuntos de palabras no separa
+bien los casos. La misma universidad con un sufijo de campus o de facultad
+puntúa entre 0,40 y 0,60, mientras que dos universidades distintas de la
+misma ciudad puntúan 0,67. Ningún umbral intermedio acepta lo primero y
+rechaza lo segundo, y las traducciones de una misma institución entre
+español e inglés puntúan 0,00 y no se detectan. La
+Tabla~\ref{tab:anexo_umbral} muestra el efecto de bajarlo sobre la ejecución
+de referencia.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{p{0.22\textwidth} p{0.14\textwidth} p{0.14\textwidth} p{0.14\textwidth} p{0.14\textwidth}}
+    \hline
+    \textbf{Umbral} & \textbf{Fusiones} & \textbf{Correctas} & \textbf{Falsas} & \textbf{Ambiguas} \\
+    \hline
+    1,0 a 0,6 & 144 & 138 & 6 & 0 \\
+    0,5 & 147 & 136 & 11 & 2 \\
+    0,34 & 149 & 136 & 13 & 2 \\
+    \hline
+  \end{tabular}
+  \caption{Efecto del umbral de similitud entre organizaciones.}
+  \label{tab:anexo_umbral}
+\end{table}
+
+\section{Análisis de errores y decisión final}
+\label{sec:anexo_resolucion_errores}
+
+La primera medición a gran escala dio una precisión de la regla de repliegue
+del 90,8\%, por debajo del objetivo del 99\% fijado antes de medir. Antes de
+cambiar nada se analizaron los casos, y el análisis encontró dos efectos
+distintos.
+
+\begin{itemize}
+  \item \textbf{Una evaluación demasiado estricta.} Se consideraba evaluable
+  un documento solo si su semilla tenía un registro de ORCID, de modo que una
+  fusión correcta con una entidad anclada por otro CVN que declaraba el mismo
+  identificador contaba como fusión sin contraparte. Se corrigió la
+  definición y los documentos evaluables pasaron de 180 a 186.
+  \item \textbf{Una combinación de evidencia débil.} Los 14 falsos positivos
+  compartían exactamente una organización, mientras que las 78 fusiones con dos
+  organizaciones compartidas o más fueron correctas sin excepción. Por tipo
+  de coincidencia, la de nombre completo dio 79 aciertos y 2 errores, la de
+  nombre relajado 47 y 0, la de apellido acortado 12 y 4, y la que relajaba
+  ambas partes a la vez 0 aciertos y 8 errores.
+\end{itemize}
+
+Prohibir relajar ambas partes del nombre a la vez eliminó los 8 errores sin
+perder ningún acierto, y es la decisión que quedó en el diseño final. El
+resultado fue una precisión del 95,8\% y una cobertura del 74,2\%, medida en
+los 186 documentos evaluables.
+
+\section{Alternativas más estrictas}
+\label{sec:anexo_resolucion_alternativas}
+
+Se midieron variantes que exigen más evidencia. Ninguna alcanza el 99\% y
+todas cuestan cobertura, por lo que no se adoptaron por defecto. La
+evidencia de cada enlace permite aplicarlas en una consulta posterior sin
+repetir la ejecución. La Tabla~\ref{tab:anexo_estrictas} las compara.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{
+    >{\raggedright\arraybackslash}p{0.44\textwidth}
+    p{0.14\textwidth} p{0.14\textwidth}}
+    \hline
+    \textbf{Exigencia adicional} & \textbf{Precisión} & \textbf{Cobertura} \\
+    \hline
+    Ninguna, diseño adoptado & 95,8\% & 74,2\% \\
+    Dos organizaciones si el apellido está acortado & 98,5\% & 70,4\% \\
+    Dos organizaciones si el nombre no es idéntico & 98,3\% & 62,9\% \\
+    Dos organizaciones en cualquier fusión & 100\% & 41,9\% \\
+    \hline
+  \end{tabular}
+  \caption{Variantes más estrictas de la regla de repliegue.}
+  \label{tab:anexo_estrictas}
+\end{table}
+
+\section{Cobertura por variante de nombre}
+\label{sec:anexo_resolucion_variantes}
+
+El generador sintético escribe el nombre de los documentos sin identificador
+como nombre exacto o con una de cuatro variantes, y la Tabla~\ref{tab:anexo_variantes} da la cobertura de la
+regla en cada una. Los documentos que quedan sin fusionar son sobre todo los
+que no declaran ninguna afiliación, 47 de los 186 evaluables, para los que la
+regla no tiene evidencia por diseño. Esa condición fija un techo del 74,7\%
+a la cobertura alcanzable, y la regla alcanza el 99,3\% de ese techo.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{
+    >{\raggedright\arraybackslash}p{0.4\textwidth}
+    p{0.2\textwidth} p{0.2\textwidth}}
+    \hline
+    \textbf{Variante de nombre} & \textbf{Fusionados} & \textbf{Evaluables} \\
+    \hline
+    Nombre exacto & 43 & 59 \\
+    Inicial del nombre & 47 & 60 \\
+    Apellido en mayúsculas & 26 & 31 \\
+    Solo el primer apellido & 12 & 19 \\
+    Sin acentos & 10 & 17 \\
+    \hline
+  \end{tabular}
+  \caption{Cobertura de la regla de repliegue por variante de nombre.}
+  \label{tab:anexo_variantes}
+\end{table}
+
+\section{Método de evaluación}
+\label{sec:anexo_resolucion_evaluacion}
+
+El generador escribe, para cada documento, el identificador ORCID de su
+semilla y el tipo de enlace que se le dio. Con ese fichero se conoce la
+entidad correcta de cada documento. La evaluación cuenta como evaluable todo
+documento cuya semilla tiene algún registro en silver, ya sea de ORCID o de otro CVN
+que declara el mismo identificador. Una fusión de un
+documento cuya semilla no está presente cuenta como falsa, porque nada
+correcto podía fusionarse con él, y es la medida directa de que los
+registros sin relación permanecen separados. Con la ejecución por defecto de 1\,000 documentos solo 16 de 288 tenían contraparte, frente a los 186 de la ejecución de 10\,000, porque el solapamiento entre las dos fuentes depende de cuánto de ORCID se aterrizó. Este método mide la
+resolución contra los datos sintéticos de la plataforma y no contra datos
+reales anotados, una limitación recogida en el
+Anexo~\ref{cap:anexo_limitaciones}.

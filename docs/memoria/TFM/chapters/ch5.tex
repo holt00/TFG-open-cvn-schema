@@ -38,10 +38,10 @@ del Capítulo~\ref{cap:visualizacion} nunca necesite consultar Iceberg ni
 Spark directamente. Las tres etapas comparten una única imagen de Spark,
 construida añadiendo a la imagen del Capítulo~\ref{cap:infraestructura}
 las dependencias de validación del proyecto y el controlador JDBC de
-PostgreSQL. El número de ejecutores, su memoria y el número de particiones
-de mezcla de cada trabajo son parámetros explícitos del flujo, que el
-Capítulo~\ref{cap:visualizacion} reutiliza como variable de su prueba de
-rendimiento.
+PostgreSQL. El número de ejecutores, la memoria de cada ejecutor y el
+número de particiones de mezcla de cada trabajo son parámetros explícitos
+del flujo. El Capítulo~\ref{cap:visualizacion} reutiliza esos parámetros
+como variable de la prueba de rendimiento que allí se describe.
 
 \section{Validación y normalización de bronze a silver}
 \label{sec:procesamiento_silver}
@@ -55,33 +55,47 @@ ningún trabajador llega a analizar dos veces un documento repetido entre
 particiones de ingesta.
 
 La validación de cada fuente se hace por capas, con severidad creciente.
-Un documento CVN pasa tres comprobaciones. La primera repite la validación
-estructural del formato Open CVN ya usada en el aterrizaje del
-Capítulo~\ref{cap:ingesta}, como defensa adicional frente a otro posible
-productor de bronze en el futuro. La segunda valida cada entrada contra la
-definición estricta de su propio tipo de entidad, el mismo mecanismo que
-demostró su necesidad en la generación sintética. La tercera comprueba
-reglas de negocio propias de esta etapa, como que todo identificador ORCID
-declarado tenga un dígito de control válido y que las fechas de cada
-periodo respeten su orden. Un registro de ORCID pasa una validación
-paralela basada en reglas, con el dígito de control del identificador y la
-presencia de nombre y de al menos una afiliación u obra. Los registros que
-no superan sus reglas se separan a una tabla de rechazados con la regla
-concreta que fallaron, siguiendo el mismo principio de conservar el
-rastro ya aplicado al aterrizaje en bronze, y el trabajo falla si la
-proporción de rechazados de una fuente supera un umbral del 5\%.
+Un documento CVN pasa tres comprobaciones, cada una más estricta que la
+anterior:
+
+\begin{itemize}
+  \item \textbf{Estructural.} Repite la validación del formato Open CVN ya
+  usada en el aterrizaje del Capítulo~\ref{cap:ingesta}, como defensa
+  adicional frente a otro posible productor de bronze en el futuro.
+  \item \textbf{Por entidad.} Valida cada entrada contra la definición
+  estricta de su propio tipo de entidad, el mismo mecanismo que ya
+  demostró ser necesario durante la generación sintética.
+  \item \textbf{Reglas de negocio.} Comprueba reglas propias de esta
+  etapa, como que todo identificador ORCID declarado tenga un dígito de
+  control válido y que las fechas de cada periodo respeten su orden.
+\end{itemize}
+
+Un registro de ORCID pasa una validación paralela basada en reglas, con el
+dígito de control del identificador y la presencia de nombre y de al
+menos una afiliación u obra. Los registros de cualquiera de las dos
+fuentes que no superan sus reglas de validación se separan a una tabla de
+rechazados con la regla concreta que fallaron,
+siguiendo el mismo principio de conservar el rastro ya aplicado al
+aterrizaje en bronze, y el trabajo falla si la proporción de rechazados de
+una fuente supera un umbral del 5\%.
 
 Los registros válidos se normalizan a una forma común antes de la
-resolución de identidad. Los nombres se pliegan sin acentos y en
-minúsculas, y las partículas de apellido como «de» o «del» se descartan al
-construir la clave de bloqueo, para que «de la Torre» quede indexado por
-«torre» y no por la partícula. Las organizaciones se reducen a su conjunto
-de palabras significativas, ordenado y sin las de relleno, de forma que el
-orden en que aparecen dentro del nombre deje de importar y pueda calcularse
-una similitud por solapamiento de conjuntos. Sobre el subconjunto real
-verificado con 10\,000 CVN sintéticos generados, esta etapa produjo
-30\,868 registros de persona válidos, 99\,979 afiliaciones y 543\,879
-publicaciones, sin ningún registro rechazado.
+resolución de identidad, en dos frentes:
+
+\begin{itemize}
+  \item \textbf{Nombres.} Se pliegan sin acentos y en minúsculas, y las
+  partículas de apellido como «de» o «del» se descartan al construir la
+  clave de bloqueo, para que «de la Torre» quede indexado por «torre» y no
+  por la partícula.
+  \item \textbf{Organizaciones.} Se reducen a su conjunto de palabras
+  significativas, ordenado y sin las de relleno, de forma que el orden en
+  que aparecen dentro del nombre deje de importar y pueda calcularse una
+  similitud por solapamiento de conjuntos.
+\end{itemize}
+
+Sobre el subconjunto real verificado con 10\,000 CVN sintéticos generados,
+esta etapa produjo 30\,868 registros de persona válidos, 99\,979
+afiliaciones y 543\,879 publicaciones, sin ningún registro rechazado.
 
 \section{Resolución de identidad entre fuentes}
 \label{sec:procesamiento_resolucion}
@@ -89,33 +103,79 @@ publicaciones, sin ningún registro rechazado.
 Fusionar el registro de un mismo investigador presente tanto en ORCID como
 en un documento CVN es el núcleo del problema de fusión planteado en el
 Capítulo~\ref{cap:introduccion}. El estado del arte de la resolución de
-entidades ofrece, a grandes rasgos, tres familias de enfoque. La primera es
-la coincidencia determinista por reglas explícitas, como un identificador
-único compartido y, en su ausencia, nombre normalizado y afiliación
-compartida. La segunda es la vinculación probabilística de registros,
-formalizada por Fellegi y Sunter~\cite{fellegi_sunter_1969} y disponible en
-herramientas como Splink~\cite{splink_docs}, que calcula una probabilidad
-de coincidencia combinando varios campos con pesos calibrados. La tercera
-es la resolución basada en aprendizaje automático o representaciones
-vectoriales, disponible por ejemplo en la biblioteca
-\texttt{dedupe}~\cite{dedupe_docs}, que aprende una función de similitud a
-partir de ejemplos etiquetados.
+entidades ofrece, a grandes rasgos, tres familias de enfoque:
+
+\begin{itemize}
+  \sloppy
+  \item \textbf{Coincidencia determinista por reglas explícitas.} Un
+  identificador único compartido y, en su ausencia, nombre normalizado y
+  afiliación compartida.
+  \item \textbf{Vinculación probabilística de registros.} Calcula una
+  probabilidad de coincidencia combinando varios campos con pesos
+  calibrados, en lugar de una decisión binaria. La formalización clásica
+  es de Fellegi y Sunter \cite{fellegi_sunter_1969}. Splink
+  \cite{splink_docs} es una herramienta que la implementa.
+  \item \textbf{Resolución basada en aprendizaje automático o
+  representaciones vectoriales.} Aprende una función de similitud a
+  partir de ejemplos etiquetados. La biblioteca \texttt{dedupe}
+  \cite{dedupe_docs} es un ejemplo disponible.
+\end{itemize}
 
 La opción adoptada es la coincidencia determinista, en tres reglas
-aplicadas por orden de fuerza de evidencia. La regla R1 fusiona todo
-registro que declare el mismo identificador ORCID válido, evidencia fuerte
-porque desambiguar autores de forma inequívoca es el objetivo fundacional
-de ORCID. La regla R2 es la de repliegue para un CVN que no declara ese
-identificador. Exige que su clave de bloqueo, apellido normalizado más
-inicial del nombre, coincida con la de una entidad ya anclada por R1, que
-el nombre sea compatible permitiendo relajar como mucho una de las dos
-partes, apellido o nombre, nunca las dos a la vez, que alguna organización
-de esa entidad coincida tras la normalización, y que exactamente una
-entidad cumpla las tres condiciones. La regla R3 deja como entidad propia
-todo registro que ninguna de las dos anteriores fusiona. Este diseño
-favorece la precisión sobre la cobertura de forma deliberada. Una fusión
-equivocada corrompe todo indicador que dependa de ella más adelante,
-mientras que una fusión no realizada solo divide una entidad en dos.
+aplicadas por orden de fuerza de evidencia:
+
+\begin{itemize}
+  \item \textbf{Regla R1.} Fusiona todo registro que declare el mismo
+  identificador ORCID válido, evidencia fuerte porque desambiguar autores
+  de forma inequívoca es el objetivo fundacional de ORCID.
+  \item \textbf{Regla R2.} La regla de repliegue para un CVN que no
+  declara ese identificador. Exige que la clave de bloqueo del CVN,
+  apellido normalizado más inicial del nombre, coincida con la de una
+  entidad ya anclada por R1, que el nombre del CVN sea compatible
+  permitiendo relajar como mucho una de las dos partes, apellido o nombre,
+  nunca las dos a la vez, que alguna organización de esa entidad coincida
+  tras la normalización, y que exactamente una entidad cumpla las tres
+  condiciones.
+  \item \textbf{Regla R3.} Deja como entidad propia todo registro que
+  ninguna de las dos anteriores fusiona.
+\end{itemize}
+
+La Figura~\ref{fig:tfm_resolucion_flujo} resume el orden de aplicación. El
+diseño favorece la precisión sobre la cobertura de forma deliberada. Una
+fusión equivocada corrompe todo indicador que dependa de esa fusión más
+adelante, mientras que una fusión no realizada solo divide una entidad en
+dos.
+
+\begin{figure}[H]
+  \centering
+  \resizebox{0.92\textwidth}{!}{%
+  \begin{tikzpicture}[
+    font=\small,
+    node distance=9mm and 12mm,
+    decision/.style={rectangle, draw=azul, thick, dashed, rounded corners,
+      text width=4.6cm, align=center, inner sep=5pt},
+    outcome/.style={rectangle, draw=azul, thick, rounded corners,
+      fill=gris95, text width=4cm, align=center, inner sep=5pt},
+    start/.style={rectangle, draw=gris50, text width=4cm, align=center,
+      inner sep=5pt},
+    >=Stealth
+  ]
+    \node[start] (inicio) {Registro sin entidad asignada};
+    \node[decision, below=of inicio] (d1) {¿Declara un identificador ORCID válido?};
+    \node[outcome, right=of d1] (r1) {R1: fusiona con la entidad de ese identificador};
+    \node[decision, below=of d1] (d2) {¿Clave de bloqueo, nombre y organización coinciden con una única entidad anclada por R1?};
+    \node[outcome, right=of d2] (r2) {R2: fusiona con esa entidad};
+    \node[outcome, below=of d2] (r3) {R3: entidad propia, singleton};
+
+    \draw[->] (inicio) -- (d1);
+    \draw[->] (d1) -- node[above]{sí} (r1);
+    \draw[->] (d1) -- node[left]{no} (d2);
+    \draw[->] (d2) -- node[above]{sí} (r2);
+    \draw[->] (d2) -- node[left]{no} (r3);
+  \end{tikzpicture}}
+  \caption{Orden de aplicación de las reglas de resolución de identidad.}
+  \label{fig:tfm_resolucion_flujo}
+\end{figure}
 
 Frente a la vinculación probabilística o el aprendizaje automático, un
 enfoque determinista con evidencia explícita por tipo de enlace produce
@@ -125,23 +185,41 @@ alternativa probabilística o de aprendizaje automático queda documentada
 como trabajo futuro.
 
 El resultado se midió contra un conjunto de verdad de referencia que el
-propio generador sintético produce, no contra una anotación externa. Sobre
-la ejecución de 10\,000 documentos CVN, la regla R1 fusionó correctamente
-7\,098 de 7\,098 documentos que declaran su identificador. La regla R2
-fusionó 144 documentos, de los cuales 138 eran correctos y 6 falsos, una
-precisión del 95,8\% sobre 186 documentos evaluables, con una cobertura del
-74,2\%. Esa cobertura está en su techo real y no en un defecto de la regla.
-Una cuarta parte de los documentos evaluables no declara ninguna afiliación,
-y sin afiliación la regla no tiene evidencia posible por diseño. Un umbral
-de precisión del 99\% se había fijado como objetivo antes de medir, y no se
-alcanza. Exigir más de una organización compartida para aceptar un nombre
-acortado sube la precisión al 98,5\% pero baja la cobertura al 70,4\%, y
-ningún ajuste del umbral de similitud entre organizaciones cambia el
-resultado. Los seis falsos positivos restantes comparten nombre y una única
-organización con la persona correcta, indistinguibles con esta evidencia de
-una coincidencia real. La cifra que se retiene, por tanto, es 95,8\% de
-precisión y 74,2\% de cobertura, aceptada como el límite honesto de este
-diseño en lugar de perseguirse artificialmente con más reglas.
+propio generador sintético produce, no contra una anotación externa, sobre
+la ejecución de 10\,000 documentos CVN. La Tabla~\ref{tab:tfm_resolucion_resultados}
+resume el resultado de cada regla.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{
+    p{0.06\textwidth}
+    >{\raggedright\arraybackslash}p{0.26\textwidth}
+    p{0.13\textwidth} p{0.13\textwidth} p{0.12\textwidth} p{0.12\textwidth}}
+    \hline
+    \textbf{Regla} & \textbf{Evidencia} & \textbf{Evaluables} & \textbf{Correctas} & \textbf{Precisión} & \textbf{Cobertura} \\
+    \hline
+    R1 & Identificador ORCID compartido & 7\,098 & 7\,098 & 100\% & 100\% \\
+    R2 & Nombre y afiliación normalizados & 186 & 138 & 95,8\% & 74,2\% \\
+    \hline
+  \end{tabular}
+  \caption{Resolución de identidad sobre la ejecución de 10\,000 documentos CVN.}
+  \label{tab:tfm_resolucion_resultados}
+\end{table}
+
+Esa cobertura del 74,2\% está en su techo real y no en un defecto de la
+regla. Una cuarta parte de los documentos evaluables no declara ninguna
+afiliación, y sin afiliación la regla no tiene evidencia posible por
+diseño. Un umbral de precisión del 99\% se había fijado como objetivo
+antes de medir, y no se alcanza. Exigir más de una organización compartida
+para aceptar un nombre acortado sube la precisión al 98,5\% pero baja la
+cobertura al 70,4\%, y ningún ajuste del umbral de similitud entre
+organizaciones cambia el resultado. Los seis falsos positivos de la tabla
+comparten nombre y una única organización con la persona correcta,
+indistinguibles con esta evidencia de una coincidencia real. La cifra que
+se retiene, por tanto, es la de la tabla, aceptada como el límite honesto
+de este diseño en lugar de perseguirse artificialmente con más reglas.
 
 \section{Cálculo de indicadores y publicación en PostgreSQL}
 \label{sec:procesamiento_gold}
@@ -155,8 +233,8 @@ calcular el primero, es necesario deduplicar las publicaciones por
 entidad, porque una misma obra puede aparecer en varios registros
 fusionados en una entidad, un CVN y su registro ORCID enlazado, por
 ejemplo. Sobre los datos reales verificados, deduplicar redujo 543\,879
-filas de publicación a 516\,396 obras distintas, una inflación del 5,1\%
-que contar sin deduplicar habría introducido en el indicador.
+filas de publicación a 516\,396 obras distintas. Sin esa deduplicación, el
+indicador habría contado un 5,1\% de publicaciones de más.
 
 El indicador de colaboración exige una comprobación previa, porque el
 mismo problema de cobertura de la Sección~\ref{sec:procesamiento_resolucion}

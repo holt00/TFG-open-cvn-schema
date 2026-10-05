@@ -127,3 +127,22 @@ aterrizaje, `bronze`, y se dejó constancia del ajuste en
 `docs/roadmap/tfm/issues/issue-91-core-services-deployment.md`. El
 capítulo se reescribió para narrarlo como la evolución de diseño que fue,
 no como un hallazgo de la propia redacción de la memoria.
+
+**Diagramas añadidos con TikZ**: a petición del usuario, que pidió
+analizar en qué capítulos un diagrama o una tabla aclararían mejor el
+texto que la prosa sola. Se añadieron dos figuras:
+
+- Figura 3.1, en la Sección 3.1, la cadena de capas de la plataforma
+  (Airflow -> Spark sobre Kubernetes -> MinIO/Iceberg -> PostgreSQL ->
+  Superset), como resumen visual del primer párrafo del capítulo
+- Figura 3.2, en la Sección 3.4, un árbol que muestra la separación dentro
+  del cubo `lakehouse` entre el prefijo `bronze/` de aterrizaje crudo y
+  `warehouse/`, con sus tres espacios de nombres Iceberg, visualizando de
+  un vistazo la corrección de diseño descrita en la entrada anterior
+
+Un error de compilación durante la segunda figura: el nombre de estilo
+`prefix` usado para los nodos del árbol colisiona con una clave interna
+de TikZ (`/tikz/prefix`), lo que producía un error de `pgfkeys` en lugar
+de una advertencia. Corregido renombrando el estilo a `rawprefix`. También
+se corrigió un desbordamiento mínimo, menor a 1 punto, en dos nodos de la
+tercera fila del árbol, ampliando ligeramente su ancho de texto.

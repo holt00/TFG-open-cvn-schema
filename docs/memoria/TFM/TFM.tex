@@ -81,21 +81,13 @@
 \input{chapters/ch5}
 
 % Visualización, evaluación de rendimiento y endurecimiento
-% \input{chapters/ch6}
+\input{chapters/ch6}
 
 % Conclusiones, competencias y trabajo futuro
-% \input{chapters/ch7}
+\input{chapters/ch7}
 
 % Capítulos pendientes de redacción.
 % Se incorporarán cuando su contenido esté preparado.
-
-% -------------------------------
-% Apéndices
-% -------------------------------
-% \appendix
-% Pendientes de definir; se incorporarán, si procede, cuando el contenido
-% principal esté redactado y se sepa qué material de referencia conviene
-% mover fuera del cuerpo principal.
 
 \cleardoublepage
 \thispagestyle{empty}
@@ -107,5 +99,26 @@
 \bibliographystyle{apalike}
 \bibliography{bib/ref} 
 \addcontentsline{toc}{chapter}{Referencia bibliográfica} % Añade a la tabla de contenidos
+
+% -------------------------------
+% Anexos
+% -------------------------------
+\cleardoublepage
+\chapter*{Anexos}
+\addcontentsline{toc}{chapter}{Anexos}
+
+Los siguientes anexos recogen información de referencia complementaria al
+cuerpo principal del documento, demasiado extensa para incluirse en los
+capítulos anteriores. Detallan los pasos para reproducir la plataforma, los
+resultados completos del banco de pruebas, el modelo de datos de cada capa,
+las reglas de resolución de identidad con su análisis de errores, el registro
+de limitaciones y la organización del repositorio.
+
+\input{chapters/anexo_a}
+\input{chapters/anexo_b}
+\input{chapters/anexo_c}
+\input{chapters/anexo_d}
+\input{chapters/anexo_e}
+\input{chapters/anexo_f}
 
 \end{document}

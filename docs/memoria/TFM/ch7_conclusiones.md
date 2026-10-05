@@ -1,6 +1,6 @@
 # Capítulo 7: Conclusiones, competencias y trabajo futuro
 
-Estado: `PENDIENTE`
+Estado: `EN_PROCESO`
 
 ## Objetivo del capítulo
 
@@ -82,3 +82,52 @@ Los seis, de forma consolidada (capítulo de cierre).
 Sin empezar. Depende de que los capítulos 1-6 estén al menos en borrador
 para poder referenciarlos con `\ref{}` en vez de texto literal, siguiendo la
 misma convención que usó el TFG mientras redactaba capítulos fuera de orden.
+
+## Historial de redacción
+
+Redactado el capítulo completo en `docs/memoria/TFM/chapters/ch7.tex`,
+siguiendo la estructura de la guía anterior y el precedente estilístico de
+`docs/memoria/TFG/chapters/ch8.tex`. Seis secciones: resumen del trabajo,
+cumplimiento de los nueve objetivos del capítulo 1 con su tabla, las cinco
+contribuciones principales, los seis resultados de aprendizaje con su
+tabla, limitaciones y trabajo futuro distinguiendo origen externo de
+alcance deliberado, y la conclusión final.
+
+Las cifras citadas, la precisión y cobertura de la resolución de
+identidad del capítulo 5, se verificaron contra ese mismo capítulo antes
+de citarlas aquí, no se repitieron de memoria. `docs/roadmap/tfm/issues/issue-89-epic-tfm-lakehouse-platform.md`
+confirmó que la lista de corte de alcance nunca llegó a aplicarse, ningún
+indicador ni escala del banco de pruebas se redujo, así que las
+limitaciones de alcance se presentan como decisiones deliberadas desde el
+principio, no como recortes de última hora.
+
+Bibliografía: se añadió `terraform_docs`, verificada contra su origen,
+para nombrar la infraestructura como código que la plataforma no usa
+todavía. `trino_docs`, `prometheus_docs` y `grafana_docs` ya existían de
+capítulos anteriores y se reutilizan aquí en su propio contexto de
+justificación, el de las limitaciones de alcance, no repetido del
+capítulo donde se citaron por primera vez.
+
+**Ajuste de estilo respecto a la guía original**: la guía de este
+capítulo pedía prosa narrativa, no una lista, para las contribuciones
+principales, seis párrafos en la memoria del TFG. Se redactó primero así,
+pero el capítulo completo superaba el límite de 50 páginas del cuerpo del
+documento en dos páginas. Las cinco contribuciones se convirtieron a
+`itemize`, cada una con su etiqueta en negrita, sin perder ninguna frase
+de contenido, solo el formato. Esto es una desviación deliberada de la
+guía, registrada aquí con su razón, no una vuelta atrás silenciosa sobre
+la recomendación "en prosa narrativa, no solo una lista" de la propia
+guía.
+
+**Presupuesto de páginas: el capítulo se compiló a 51 páginas de cuerpo,
+una página por encima del límite de 50**, pese a una revisión activa de
+compresión: las cinco contribuciones pasadas a `itemize`, las tres tablas
+reducidas de `\small` a `\footnotesize` con menor interlineado, y varias
+frases acortadas en las secciones 7.1 y 7.2. Se probó además
+`\enlargethispage` para aprovechar el margen inferior de una página
+concreta, pero el resultado solapaba visiblemente el pie de página, así
+que se revirtió: preferible una página de más que un defecto de
+maquetación visible. La página 51 sí es aprovechable, no queda en blanco,
+solo una línea que la separa del límite exacto. Devuelto al usuario como
+una decisión pendiente, no resuelto unilateralmente recortando más
+contenido sustantivo.

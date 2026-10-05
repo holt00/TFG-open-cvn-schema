@@ -8,7 +8,7 @@
 \@writefile{toc}{\selectlanguage *{spanish}}
 \HyPL@Entry{2<</S/r>>}
 \citation{tfg_open_cvn}
-\HyPL@Entry{22<</S/D>>}
+\HyPL@Entry{24<</S/D>>}
 \@writefile{toc}{\contentsline {chapter}{\numberline {1}Introducción, motivación y objetivos}{1}{chapter.1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -101,7 +101,6 @@
 \@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces Síntesis de las decisiones arquitectónicas de la plataforma.}}{16}{table.caption.11}\protected@file@percent }
 \newlabel{tab:tfm_sintesis_decisiones}{{2.2}{16}{Síntesis de las decisiones arquitectónicas de la plataforma}{table.caption.11}{}}
 \citation{helm_docs}
-\citation{cncf_kubernetes}
 \@writefile{toc}{\contentsline {chapter}{\numberline {3}Infraestructura: despliegue del clúster y servicios base}{19}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -110,22 +109,31 @@
 \newlabel{cap:infraestructura}{{3}{19}{Infraestructura: despliegue del clúster y servicios base}{chapter.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}Arquitectura de despliegue}{19}{section.3.1}\protected@file@percent }
 \newlabel{sec:infraestructura_arquitectura}{{3.1}{19}{Arquitectura de despliegue}{section.3.1}{}}
-\citation{postgresql_docs}
+\citation{cncf_kubernetes}
 \@writefile{lof}{\setforeignlanguage {spanish}}
 \@writefile{lot}{\setforeignlanguage {spanish}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Servicios desplegados en el clúster local.}}{20}{table.caption.12}\protected@file@percent }
-\newlabel{tab:tfm_servicios_desplegados}{{3.1}{20}{Servicios desplegados en el clúster local}{table.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Cadena de capas de la plataforma.}}{20}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:tfm_arquitectura_cadena}{{3.1}{20}{Cadena de capas de la plataforma}{figure.caption.12}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Servicios desplegados en el clúster local.}}{20}{table.caption.13}\protected@file@percent }
+\newlabel{tab:tfm_servicios_desplegados}{{3.1}{20}{Servicios desplegados en el clúster local}{table.caption.13}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}Clúster Kubernetes local}{20}{section.3.2}\protected@file@percent }
 \newlabel{sec:infraestructura_k3s}{{3.2}{20}{Clúster Kubernetes local}{section.3.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Servicios base: MinIO, PostgreSQL y Airflow}{20}{section.3.3}\protected@file@percent }
-\newlabel{sec:infraestructura_servicios}{{3.3}{20}{Servicios base: MinIO, PostgreSQL y Airflow}{section.3.3}{}}
+\citation{postgresql_docs}
 \citation{bitnami_charts_issue_35164}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Servicios base: MinIO, PostgreSQL y Airflow}{21}{section.3.3}\protected@file@percent }
+\newlabel{sec:infraestructura_servicios}{{3.3}{21}{Servicios base: MinIO, PostgreSQL y Airflow}{section.3.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Catálogo Iceberg sobre MinIO}{21}{section.3.4}\protected@file@percent }
 \newlabel{sec:infraestructura_iceberg}{{3.4}{21}{Catálogo Iceberg sobre MinIO}{section.3.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Ejecución de Spark desde Airflow}{22}{section.3.5}\protected@file@percent }
-\newlabel{sec:infraestructura_spark}{{3.5}{22}{Ejecución de Spark desde Airflow}{section.3.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.6}Verificación de extremo a extremo}{23}{section.3.6}\protected@file@percent }
-\newlabel{sec:infraestructura_verificacion}{{3.6}{23}{Verificación de extremo a extremo}{section.3.6}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Separación, dentro del mismo cubo, entre el prefijo de aterrizaje crudo y las tablas Iceberg del catálogo.}}{22}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:tfm_bucket_layout}{{3.2}{22}{Separación, dentro del mismo cubo, entre el prefijo de aterrizaje crudo y las tablas Iceberg del catálogo}{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Ejecución de Spark desde Airflow}{23}{section.3.5}\protected@file@percent }
+\newlabel{sec:infraestructura_spark}{{3.5}{23}{Ejecución de Spark desde Airflow}{section.3.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Verificación de extremo a extremo}{24}{section.3.6}\protected@file@percent }
+\newlabel{sec:infraestructura_verificacion}{{3.6}{24}{Verificación de extremo a extremo}{section.3.6}{}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Ingesta y fusión de fuentes heterogéneas}{25}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -136,37 +144,121 @@
 \newlabel{sec:ingesta_arquitectura}{{4.1}{25}{Arquitectura de la ingesta}{section.4.1}{}}
 \citation{orcid_about}
 \citation{orcid_public_api_docs}
-\citation{figshare_docs}
-\citation{orcid_public_data_file_2025}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Orden de tareas del flujo \texttt  {ingest\_validate}.}}{26}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:tfm_ingest_dag}{{4.1}{26}{Orden de tareas del flujo \texttt {ingest\_validate}}{figure.caption.15}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.2}Adquisición de datos de ORCID}{26}{section.4.2}\protected@file@percent }
 \newlabel{sec:ingesta_orcid}{{4.2}{26}{Adquisición de datos de ORCID}{section.4.2}{}}
+\citation{figshare_docs}
+\citation{orcid_public_data_file_2025}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Los dos mecanismos públicos de adquisición de datos de ORCID.}}{27}{table.caption.16}\protected@file@percent }
+\newlabel{tab:tfm_mecanismos_orcid}{{4.1}{27}{Los dos mecanismos públicos de adquisición de datos de ORCID}{table.caption.16}{}}
 \citation{json_schema_org}
 \citation{tfg_open_cvn}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Generación de currículos CVN sintéticos}{27}{section.4.3}\protected@file@percent }
-\newlabel{sec:ingesta_sintetico}{{4.3}{27}{Generación de currículos CVN sintéticos}{section.4.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Aterrizaje en bronze con procedencia}{28}{section.4.4}\protected@file@percent }
-\newlabel{sec:ingesta_bronze}{{4.4}{28}{Aterrizaje en bronze con procedencia}{section.4.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Verificación de extremo a extremo}{29}{section.4.5}\protected@file@percent }
-\newlabel{sec:ingesta_verificacion}{{4.5}{29}{Verificación de extremo a extremo}{section.4.5}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Procesamiento distribuido: transformación, resolución de entidades e indicadores}{31}{chapter.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Generación de currículos CVN sintéticos}{28}{section.4.3}\protected@file@percent }
+\newlabel{sec:ingesta_sintetico}{{4.3}{28}{Generación de currículos CVN sintéticos}{section.4.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Aterrizaje en bronze con procedencia}{29}{section.4.4}\protected@file@percent }
+\newlabel{sec:ingesta_bronze}{{4.4}{29}{Aterrizaje en bronze con procedencia}{section.4.4}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Campos del sobre de procedencia, comunes a las tres fuentes.}}{30}{table.caption.17}\protected@file@percent }
+\newlabel{tab:tfm_sobre_procedencia}{{4.2}{30}{Campos del sobre de procedencia, comunes a las tres fuentes}{table.caption.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Verificación de extremo a extremo}{30}{section.4.5}\protected@file@percent }
+\newlabel{sec:ingesta_verificacion}{{4.5}{30}{Verificación de extremo a extremo}{section.4.5}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Procesamiento distribuido: transformación, resolución de entidades e indicadores}{33}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loalgorithm}{\addvspace {10\p@ }}
 \@writefile{locode}{\addvspace {10\p@ }}
-\newlabel{cap:procesamiento}{{5}{31}{Procesamiento distribuido: transformación, resolución de entidades e indicadores}{chapter.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Arquitectura de la transformación}{31}{section.5.1}\protected@file@percent }
-\newlabel{sec:procesamiento_arquitectura}{{5.1}{31}{Arquitectura de la transformación}{section.5.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Validación y normalización de bronze a silver}{32}{section.5.2}\protected@file@percent }
-\newlabel{sec:procesamiento_silver}{{5.2}{32}{Validación y normalización de bronze a silver}{section.5.2}{}}
+\newlabel{cap:procesamiento}{{5}{33}{Procesamiento distribuido: transformación, resolución de entidades e indicadores}{chapter.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Arquitectura de la transformación}{33}{section.5.1}\protected@file@percent }
+\newlabel{sec:procesamiento_arquitectura}{{5.1}{33}{Arquitectura de la transformación}{section.5.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Validación y normalización de bronze a silver}{34}{section.5.2}\protected@file@percent }
+\newlabel{sec:procesamiento_silver}{{5.2}{34}{Validación y normalización de bronze a silver}{section.5.2}{}}
 \citation{fellegi_sunter_1969}
 \citation{splink_docs}
 \citation{dedupe_docs}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}Resolución de identidad entre fuentes}{33}{section.5.3}\protected@file@percent }
-\newlabel{sec:procesamiento_resolucion}{{5.3}{33}{Resolución de identidad entre fuentes}{section.5.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}Cálculo de indicadores y publicación en PostgreSQL}{34}{section.5.4}\protected@file@percent }
-\newlabel{sec:procesamiento_gold}{{5.4}{34}{Cálculo de indicadores y publicación en PostgreSQL}{section.5.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}Verificación de extremo a extremo}{35}{section.5.5}\protected@file@percent }
-\newlabel{sec:procesamiento_verificacion}{{5.5}{35}{Verificación de extremo a extremo}{section.5.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Resolución de identidad entre fuentes}{35}{section.5.3}\protected@file@percent }
+\newlabel{sec:procesamiento_resolucion}{{5.3}{35}{Resolución de identidad entre fuentes}{section.5.3}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Orden de aplicación de las reglas de resolución de identidad.}}{36}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:tfm_resolucion_flujo}{{5.1}{36}{Orden de aplicación de las reglas de resolución de identidad}{figure.caption.18}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Resolución de identidad sobre la ejecución de 10\,000 documentos CVN.}}{37}{table.caption.19}\protected@file@percent }
+\newlabel{tab:tfm_resolucion_resultados}{{5.1}{37}{Resolución de identidad sobre la ejecución de 10\,000 documentos CVN}{table.caption.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Cálculo de indicadores y publicación en PostgreSQL}{37}{section.5.4}\protected@file@percent }
+\newlabel{sec:procesamiento_gold}{{5.4}{37}{Cálculo de indicadores y publicación en PostgreSQL}{section.5.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Verificación de extremo a extremo}{38}{section.5.5}\protected@file@percent }
+\newlabel{sec:procesamiento_verificacion}{{5.5}{38}{Verificación de extremo a extremo}{section.5.5}{}}
+\citation{apache_superset_docs}
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Visualización, evaluación de rendimiento y endurecimiento}{41}{chapter.6}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loalgorithm}{\addvspace {10\p@ }}
+\@writefile{locode}{\addvspace {10\p@ }}
+\newlabel{cap:visualizacion}{{6}{41}{Visualización, evaluación de rendimiento y endurecimiento}{chapter.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Panel de indicadores}{41}{section.6.1}\protected@file@percent }
+\newlabel{sec:visualizacion_panel}{{6.1}{41}{Panel de indicadores}{section.6.1}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces Panel de indicadores de investigación en Apache Superset, con los tres indicadores y la tabla de procedencia de la ejecución.}}{42}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:tfm_panel_superset}{{6.1}{42}{Panel de indicadores de investigación en Apache Superset, con los tres indicadores y la tabla de procedencia de la ejecución}{figure.caption.20}{}}
+\citation{prometheus_docs}
+\citation{grafana_docs}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Metodología y resultados del banco de pruebas de rendimiento}{43}{section.6.2}\protected@file@percent }
+\newlabel{sec:visualizacion_benchmark}{{6.2}{43}{Metodología y resultados del banco de pruebas de rendimiento}{section.6.2}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces Tiempo de ejecución y aceleración del trabajo de validación y normalización, sobre el volumen de datos base.}}{44}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:tfm_benchmark_silver}{{6.2}{44}{Tiempo de ejecución y aceleración del trabajo de validación y normalización, sobre el volumen de datos base}{figure.caption.21}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {6.1}{\ignorespaces Exponente de crecimiento del tiempo de ejecución frente al volumen de datos, por trabajo y número de ejecutores.}}{45}{table.caption.22}\protected@file@percent }
+\newlabel{tab:tfm_benchmark_exponentes}{{6.1}{45}{Exponente de crecimiento del tiempo de ejecución frente al volumen de datos, por trabajo y número de ejecutores}{table.caption.22}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Endurecimiento: fallos operativos reales encontrados y corregidos}{45}{section.6.3}\protected@file@percent }
+\newlabel{sec:visualizacion_endurecimiento}{{6.3}{45}{Endurecimiento: fallos operativos reales encontrados y corregidos}{section.6.3}{}}
+\citation{k3d_docs}
+\@writefile{toc}{\contentsline {section}{\numberline {6.4}Verificación de extremo a extremo: reconstrucción desde cero}{46}{section.6.4}\protected@file@percent }
+\newlabel{sec:visualizacion_verificacion}{{6.4}{46}{Verificación de extremo a extremo: reconstrucción desde cero}{section.6.4}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Conclusiones, competencias y trabajo futuro}{49}{chapter.7}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loalgorithm}{\addvspace {10\p@ }}
+\@writefile{locode}{\addvspace {10\p@ }}
+\newlabel{cap:conclusiones}{{7}{49}{Conclusiones, competencias y trabajo futuro}{chapter.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}Resumen del trabajo}{49}{section.7.1}\protected@file@percent }
+\newlabel{sec:conclusiones_resumen}{{7.1}{49}{Resumen del trabajo}{section.7.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}Cumplimiento de los objetivos}{50}{section.7.2}\protected@file@percent }
+\newlabel{sec:conclusiones_objetivos}{{7.2}{50}{Cumplimiento de los objetivos}{section.7.2}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces Grado de cumplimiento de los objetivos específicos.}}{50}{table.caption.23}\protected@file@percent }
+\newlabel{tab:tfm_conclusiones_objetivos}{{7.1}{50}{Grado de cumplimiento de los objetivos específicos}{table.caption.23}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.3}Contribuciones principales}{50}{section.7.3}\protected@file@percent }
+\newlabel{sec:conclusiones_contribuciones}{{7.3}{50}{Contribuciones principales}{section.7.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.4}Resultados de aprendizaje desarrollados}{51}{section.7.4}\protected@file@percent }
+\newlabel{sec:conclusiones_outcomes}{{7.4}{51}{Resultados de aprendizaje desarrollados}{section.7.4}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.2}{\ignorespaces Resultados de aprendizaje del máster y evidencia concreta de cada uno.}}{51}{table.caption.24}\protected@file@percent }
+\newlabel{tab:tfm_conclusiones_outcomes}{{7.2}{51}{Resultados de aprendizaje del máster y evidencia concreta de cada uno}{table.caption.24}{}}
+\citation{trino_docs}
+\citation{prometheus_docs}
+\citation{grafana_docs}
+\citation{terraform_docs}
+\@writefile{toc}{\contentsline {section}{\numberline {7.5}Limitaciones y trabajo futuro}{52}{section.7.5}\protected@file@percent }
+\newlabel{sec:conclusiones_limitaciones}{{7.5}{52}{Limitaciones y trabajo futuro}{section.7.5}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.3}{\ignorespaces Limitaciones documentadas y trabajo futuro asociado.}}{53}{table.caption.25}\protected@file@percent }
+\newlabel{tab:tfm_conclusiones_limitaciones}{{7.3}{53}{Limitaciones documentadas y trabajo futuro asociado}{table.caption.25}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.6}Conclusiones}{53}{section.7.6}\protected@file@percent }
+\newlabel{sec:conclusiones_finales}{{7.6}{53}{Conclusiones}{section.7.6}{}}
 \bibstyle{apalike}
 \bibdata{bib/ref}
 \bibcite{ray_docs}{{Anyscale, Inc.}, 2026}
@@ -190,8 +282,10 @@
 \bibcite{fellegi_sunter_1969}{Fellegi and Sunter, 1969}
 \bibcite{figshare_docs}{{Figshare}, 2026}
 \bibcite{grafana_docs}{{Grafana Labs}, 2026}
+\bibcite{terraform_docs}{{HashiCorp, Inc.}, 2026}
 \bibcite{tfg_open_cvn}{Jaén, 2026}
 \bibcite{json_schema_org}{{JSON Schema Organization}, 2026}
+\bibcite{k3d_docs}{{k3d Authors}, 2026}
 \bibcite{k3s_docs}{{K3s Project Authors}, 2026}
 \bibcite{spark_kubernetes_operator_docs}{{Kubeflow}, 2026}
 \bibcite{metabase_docs}{{Metabase, Inc.}, 2026}
@@ -202,6 +296,7 @@
 \bibcite{orcid_about}{{ORCID}, 2026b}
 \bibcite{prefect_docs}{{Prefect Technologies, Inc.}, 2026}
 \bibcite{project_nessie_docs}{{Project Nessie}, 2026}
+\bibcite{prometheus_docs}{{Prometheus Authors}, 2026}
 \bibcite{tableau_docs}{{Salesforce, Inc.}, 2026}
 \bibcite{luigi_github}{{Spotify}, 2026}
 \bibcite{helm_docs}{{The Helm Authors}, 2026}
@@ -210,9 +305,142 @@
 \bibcite{splink_docs}{{UK Ministry of Justice}, 2026}
 \bibcite{vivo_project}{{VIVO Project}, 2026}
 \bibcite{zaharia_spark_2016}{Zaharia et~al., 2016}
-\@writefile{toc}{\contentsline {chapter}{Referencia bibliográfica}{40}{chapter*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Referencia bibliográfica}{58}{chapter*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Anexos}{59}{chapter*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Anexo A: Guía de reproducibilidad de la plataforma}{61}{chapter*.28}\protected@file@percent }
+\newlabel{cap:anexo_reproduccion}{{7.6}{61}{Anexo A: Guía de reproducibilidad de la plataforma}{chapter*.28}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Prerrequisitos y versiones fijadas}{61}{section.7.1}\protected@file@percent }
+\newlabel{sec:anexo_reproduccion_prerrequisitos}{{A.1}{61}{Prerrequisitos y versiones fijadas}{section.7.1}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.4}{\ignorespaces Versiones fijadas de los componentes desplegados.}}{62}{table.caption.29}\protected@file@percent }
+\newlabel{tab:anexo_versiones}{{7.4}{62}{Versiones fijadas de los componentes desplegados}{table.caption.29}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Clúster y servicios base}{62}{section.7.2}\protected@file@percent }
+\newlabel{sec:anexo_reproduccion_servicios}{{A.2}{62}{Clúster y servicios base}{section.7.2}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{locode}{\contentsline {code}{\numberline {A.1}{\ignorespaces Instalación del clúster y de los tres servicios base.}}{63}{code.caption.30}\protected@file@percent }
+\newlabel{cod:anexo_cluster}{{A.1}{63}{Instalación del clúster y de los tres servicios base}{code.caption.30}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Imágenes de Spark y de ingesta}{63}{section.7.3}\protected@file@percent }
+\newlabel{sec:anexo_reproduccion_imagenes}{{A.3}{63}{Imágenes de Spark y de ingesta}{section.7.3}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{locode}{\contentsline {code}{\numberline {A.2}{\ignorespaces Construcción e importación de las imágenes de la plataforma.}}{63}{code.caption.31}\protected@file@percent }
+\newlabel{cod:anexo_imagenes}{{A.2}{63}{Construcción e importación de las imágenes de la plataforma}{code.caption.31}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.4}Ejecución de los flujos}{64}{section.7.4}\protected@file@percent }
+\newlabel{sec:anexo_reproduccion_flujos}{{A.4}{64}{Ejecución de los flujos}{section.7.4}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{locode}{\contentsline {code}{\numberline {A.3}{\ignorespaces Entrega y lanzamiento de los dos flujos de Airflow.}}{64}{code.caption.32}\protected@file@percent }
+\newlabel{cod:anexo_flujos}{{A.3}{64}{Entrega y lanzamiento de los dos flujos de Airflow}{code.caption.32}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.5}Panel de indicadores y verificación}{64}{section.7.5}\protected@file@percent }
+\newlabel{sec:anexo_reproduccion_panel}{{A.5}{64}{Panel de indicadores y verificación}{section.7.5}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{locode}{\contentsline {code}{\numberline {A.4}{\ignorespaces Verificación del repositorio y del estado del clúster.}}{65}{code.caption.33}\protected@file@percent }
+\newlabel{cod:anexo_verificacion}{{A.4}{65}{Verificación del repositorio y del estado del clúster}{code.caption.33}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.6}Recuperación de los fallos conocidos}{65}{section.7.6}\protected@file@percent }
+\newlabel{sec:anexo_reproduccion_recuperacion}{{A.6}{65}{Recuperación de los fallos conocidos}{section.7.6}{}}
+\@writefile{toc}{\contentsline {chapter}{Anexo B: Resultados completos del banco de pruebas}{67}{chapter*.34}\protected@file@percent }
+\newlabel{cap:anexo_benchmark}{{A.6}{67}{Anexo B: Resultados completos del banco de pruebas}{chapter*.34}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}Volumen de datos por escala}{67}{section.7.1}\protected@file@percent }
+\newlabel{sec:anexo_benchmark_datos}{{B.1}{67}{Volumen de datos por escala}{section.7.1}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.5}{\ignorespaces Datos aterrizados en cada escala del banco de pruebas.}}{67}{table.caption.35}\protected@file@percent }
+\newlabel{tab:anexo_benchmark_escalas}{{7.5}{67}{Datos aterrizados en cada escala del banco de pruebas}{table.caption.35}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}Tiempos, aceleración y eficiencia por trabajo}{68}{section.7.2}\protected@file@percent }
+\newlabel{sec:anexo_benchmark_tiempos}{{B.2}{68}{Tiempos, aceleración y eficiencia por trabajo}{section.7.2}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.6}{\ignorespaces Validación y normalización de bronze a silver.}}{68}{table.caption.36}\protected@file@percent }
+\newlabel{tab:anexo_benchmark_silver}{{7.6}{68}{Validación y normalización de bronze a silver}{table.caption.36}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.7}{\ignorespaces Cálculo de indicadores de silver a gold.}}{68}{table.caption.37}\protected@file@percent }
+\newlabel{tab:anexo_benchmark_gold}{{7.7}{68}{Cálculo de indicadores de silver a gold}{table.caption.37}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.8}{\ignorespaces Publicación de gold en PostgreSQL.}}{69}{table.caption.38}\protected@file@percent }
+\newlabel{tab:anexo_benchmark_publish}{{7.8}{69}{Publicación de gold en PostgreSQL}{table.caption.38}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.1}{\ignorespaces Tiempo de ejecución y aceleración del cálculo de indicadores.}}{69}{figure.caption.39}\protected@file@percent }
+\newlabel{fig:anexo_benchmark_gold}{{7.1}{69}{Tiempo de ejecución y aceleración del cálculo de indicadores}{figure.caption.39}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.3}Ejecuciones excluidas}{70}{section.7.3}\protected@file@percent }
+\newlabel{sec:anexo_benchmark_excluidas}{{B.3}{70}{Ejecuciones excluidas}{section.7.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.4}Corrección del resultado entre configuraciones}{70}{section.7.4}\protected@file@percent }
+\newlabel{sec:anexo_benchmark_correccion}{{B.4}{70}{Corrección del resultado entre configuraciones}{section.7.4}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.9}{\ignorespaces Comprobación de igualdad de contenido entre configuraciones.}}{70}{table.caption.40}\protected@file@percent }
+\newlabel{tab:anexo_benchmark_digest}{{7.9}{70}{Comprobación de igualdad de contenido entre configuraciones}{table.caption.40}{}}
+\@writefile{toc}{\contentsline {chapter}{Anexo C: Modelo de datos de la plataforma}{71}{chapter*.41}\protected@file@percent }
+\newlabel{cap:anexo_modelo}{{B.4}{71}{Anexo C: Modelo de datos de la plataforma}{chapter*.41}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.1}Organización del almacenamiento}{71}{section.7.1}\protected@file@percent }
+\newlabel{sec:anexo_modelo_almacenamiento}{{C.1}{71}{Organización del almacenamiento}{section.7.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.2}Sobre de procedencia de bronze}{71}{section.7.2}\protected@file@percent }
+\newlabel{sec:anexo_modelo_sobre}{{C.2}{71}{Sobre de procedencia de bronze}{section.7.2}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.10}{\ignorespaces Campos del sobre de procedencia de bronze.}}{72}{table.caption.42}\protected@file@percent }
+\newlabel{tab:anexo_sobre}{{7.10}{72}{Campos del sobre de procedencia de bronze}{table.caption.42}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.3}Tablas de silver}{72}{section.7.3}\protected@file@percent }
+\newlabel{sec:anexo_modelo_silver}{{C.3}{72}{Tablas de silver}{section.7.3}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.11}{\ignorespaces Tablas de silver.}}{73}{table.caption.43}\protected@file@percent }
+\newlabel{tab:anexo_silver}{{7.11}{73}{Tablas de silver}{table.caption.43}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C.4}Tablas de gold y su espejo en PostgreSQL}{73}{section.7.4}\protected@file@percent }
+\newlabel{sec:anexo_modelo_gold}{{C.4}{73}{Tablas de gold y su espejo en PostgreSQL}{section.7.4}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.12}{\ignorespaces Tablas de gold publicadas en PostgreSQL.}}{74}{table.caption.44}\protected@file@percent }
+\newlabel{tab:anexo_gold}{{7.12}{74}{Tablas de gold publicadas en PostgreSQL}{table.caption.44}{}}
+\@writefile{toc}{\contentsline {chapter}{Anexo D: Resolución de identidad en detalle}{75}{chapter*.45}\protected@file@percent }
+\newlabel{cap:anexo_resolucion}{{C.4}{75}{Anexo D: Resolución de identidad en detalle}{chapter*.45}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.1}Normalización previa a la comparación}{75}{section.7.1}\protected@file@percent }
+\newlabel{sec:anexo_resolucion_normalizacion}{{D.1}{75}{Normalización previa a la comparación}{section.7.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.2}Compatibilidad de nombres}{75}{section.7.2}\protected@file@percent }
+\newlabel{sec:anexo_resolucion_nombres}{{D.2}{75}{Compatibilidad de nombres}{section.7.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.3}Evidencia guardada en cada enlace}{76}{section.7.3}\protected@file@percent }
+\newlabel{sec:anexo_resolucion_evidencia}{{D.3}{76}{Evidencia guardada en cada enlace}{section.7.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.4}Umbral de similitud entre organizaciones}{76}{section.7.4}\protected@file@percent }
+\newlabel{sec:anexo_resolucion_umbral}{{D.4}{76}{Umbral de similitud entre organizaciones}{section.7.4}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.13}{\ignorespaces Efecto del umbral de similitud entre organizaciones.}}{77}{table.caption.46}\protected@file@percent }
+\newlabel{tab:anexo_umbral}{{7.13}{77}{Efecto del umbral de similitud entre organizaciones}{table.caption.46}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.5}Análisis de errores y decisión final}{77}{section.7.5}\protected@file@percent }
+\newlabel{sec:anexo_resolucion_errores}{{D.5}{77}{Análisis de errores y decisión final}{section.7.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.6}Alternativas más estrictas}{77}{section.7.6}\protected@file@percent }
+\newlabel{sec:anexo_resolucion_alternativas}{{D.6}{77}{Alternativas más estrictas}{section.7.6}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.14}{\ignorespaces Variantes más estrictas de la regla de repliegue.}}{78}{table.caption.47}\protected@file@percent }
+\newlabel{tab:anexo_estrictas}{{7.14}{78}{Variantes más estrictas de la regla de repliegue}{table.caption.47}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.7}Cobertura por variante de nombre}{78}{section.7.7}\protected@file@percent }
+\newlabel{sec:anexo_resolucion_variantes}{{D.7}{78}{Cobertura por variante de nombre}{section.7.7}{}}
+\@writefile{lof}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\setforeignlanguage {spanish}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.15}{\ignorespaces Cobertura de la regla de repliegue por variante de nombre.}}{78}{table.caption.48}\protected@file@percent }
+\newlabel{tab:anexo_variantes}{{7.15}{78}{Cobertura de la regla de repliegue por variante de nombre}{table.caption.48}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.8}Método de evaluación}{78}{section.7.8}\protected@file@percent }
+\newlabel{sec:anexo_resolucion_evaluacion}{{D.8}{78}{Método de evaluación}{section.7.8}{}}
+\@writefile{toc}{\contentsline {chapter}{Anexo E: Registro de limitaciones}{81}{chapter*.49}\protected@file@percent }
+\newlabel{cap:anexo_limitaciones}{{D.8}{81}{Anexo E: Registro de limitaciones}{chapter*.49}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E.1}Infraestructura y cadena de suministro}{81}{section.7.1}\protected@file@percent }
+\newlabel{sec:anexo_limitaciones_infra}{{E.1}{81}{Infraestructura y cadena de suministro}{section.7.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E.2}Alcance de los datos y de la ingesta}{83}{section.7.2}\protected@file@percent }
+\newlabel{sec:anexo_limitaciones_datos}{{E.2}{83}{Alcance de los datos y de la ingesta}{section.7.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E.3}Resolución de identidad e indicadores}{83}{section.7.3}\protected@file@percent }
+\newlabel{sec:anexo_limitaciones_resolucion}{{E.3}{83}{Resolución de identidad e indicadores}{section.7.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E.4}Escalabilidad y medición}{84}{section.7.4}\protected@file@percent }
+\newlabel{sec:anexo_limitaciones_escala}{{E.4}{84}{Escalabilidad y medición}{section.7.4}{}}
+\@writefile{toc}{\contentsline {chapter}{Anexo F: Repositorio del proyecto y guía de uso}{85}{chapter*.50}\protected@file@percent }
+\newlabel{cap:anexo_repositorio}{{E.4}{85}{Anexo F: Repositorio del proyecto y guía de uso}{chapter*.50}{}}
 \@writefile{toc}{\xpginauxfilefalse }
 \@writefile{lof}{\xpginauxfilefalse }
 \@writefile{lot}{\xpginauxfilefalse }
 \ttl@finishall
-\gdef \@abspage@last{62}
+\gdef \@abspage@last{110}

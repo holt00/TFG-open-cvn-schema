@@ -11,8 +11,59 @@
 \contentsline {table}{\numberline {2.2}{\ignorespaces Síntesis de las decisiones arquitectónicas de la plataforma.}}{16}{table.caption.11}%
 \addvspace {10\p@ }
 \setforeignlanguage {spanish}
-\contentsline {table}{\numberline {3.1}{\ignorespaces Servicios desplegados en el clúster local.}}{20}{table.caption.12}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Servicios desplegados en el clúster local.}}{20}{table.caption.13}%
+\setforeignlanguage {spanish}
 \addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Los dos mecanismos públicos de adquisición de datos de ORCID.}}{27}{table.caption.16}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Campos del sobre de procedencia, comunes a las tres fuentes.}}{30}{table.caption.17}%
 \addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {5.1}{\ignorespaces Resolución de identidad sobre la ejecución de 10\,000 documentos CVN.}}{37}{table.caption.19}%
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {6.1}{\ignorespaces Exponente de crecimiento del tiempo de ejecución frente al volumen de datos, por trabajo y número de ejecutores.}}{45}{table.caption.22}%
+\addvspace {10\p@ }
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.1}{\ignorespaces Grado de cumplimiento de los objetivos específicos.}}{50}{table.caption.23}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.2}{\ignorespaces Resultados de aprendizaje del máster y evidencia concreta de cada uno.}}{51}{table.caption.24}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.3}{\ignorespaces Limitaciones documentadas y trabajo futuro asociado.}}{53}{table.caption.25}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.4}{\ignorespaces Versiones fijadas de los componentes desplegados.}}{62}{table.caption.29}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.5}{\ignorespaces Datos aterrizados en cada escala del banco de pruebas.}}{67}{table.caption.35}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.6}{\ignorespaces Validación y normalización de bronze a silver.}}{68}{table.caption.36}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.7}{\ignorespaces Cálculo de indicadores de silver a gold.}}{68}{table.caption.37}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.8}{\ignorespaces Publicación de gold en PostgreSQL.}}{69}{table.caption.38}%
+\setforeignlanguage {spanish}
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.9}{\ignorespaces Comprobación de igualdad de contenido entre configuraciones.}}{70}{table.caption.40}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.10}{\ignorespaces Campos del sobre de procedencia de bronze.}}{72}{table.caption.42}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.11}{\ignorespaces Tablas de silver.}}{73}{table.caption.43}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.12}{\ignorespaces Tablas de gold publicadas en PostgreSQL.}}{74}{table.caption.44}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.13}{\ignorespaces Efecto del umbral de similitud entre organizaciones.}}{77}{table.caption.46}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.14}{\ignorespaces Variantes más estrictas de la regla de repliegue.}}{78}{table.caption.47}%
+\setforeignlanguage {spanish}
+\contentsline {table}{\numberline {7.15}{\ignorespaces Cobertura de la regla de repliegue por variante de nombre.}}{78}{table.caption.48}%
 \xpginauxfilefalse 
 \contentsfinish 

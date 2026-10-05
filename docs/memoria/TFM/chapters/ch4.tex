@@ -22,7 +22,36 @@ identificadores ORCID que los CVN sintéticos ya declaran, por lo que no
 puede ejecutarse antes de que existan. Ese acoplamiento deliberado entre tareas
 es la propia demostración de fusión dirigida entre fuentes: el
 identificador que une un CVN sintético con su semilla real es el mismo que
-la tarea de enriquecimiento usa para pedir datos frescos a la API.
+la tarea de enriquecimiento usa para pedir datos frescos a la API. La
+Figura~\ref{fig:tfm_ingest_dag} resume el orden de las cuatro tareas.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    font=\small,
+    node distance=7mm,
+    task/.style={rectangle, draw=azul, thick, rounded corners, fill=gris95,
+      text width=7.4cm, align=center, inner sep=5pt},
+    >=Stealth
+  ]
+    \node[task] (t1) {\texttt{fetch\_orcid\_bulk\_subset}\\
+      obtención del subconjunto ORCID masivo};
+    \node[task, below=of t1] (t2) {\texttt{generate\_synthetic\_cvn}\\
+      generación de CVN sintético};
+    \node[task, below=18mm of t2] (t3) {\texttt{fetch\_orcid\_api\_enrichment}\\
+      enriquecimiento vía la API de ORCID};
+    \node[task, below=of t3] (t4) {\texttt{validate\_and\_land\_bronze}\\
+      validación y aterrizaje en bronze};
+
+    \draw[->] (t1) -- (t2);
+    \draw[->] (t2) -- node[right, text width=4cm, align=left, font=\scriptsize]
+      {usa los identificadores ORCID que los CVN sintéticos ya declaran}
+      (t3);
+    \draw[->] (t3) -- (t4);
+  \end{tikzpicture}
+  \caption{Orden de tareas del flujo \texttt{ingest\_validate}.}
+  \label{fig:tfm_ingest_dag}
+\end{figure}
 
 Cada tarea corre en un pod independiente lanzado con
 \texttt{KubernetesPodOperator}, sobre una imagen propia con Python 3.14 y
@@ -73,6 +102,32 @@ distintas y complementarias. Ninguno de los dos sustituye al otro.
   descargado se verifica contra la suma de comprobación que la propia
   Figshare publica junto a él.
 \end{itemize}
+
+La Tabla~\ref{tab:tfm_mecanismos_orcid} resume los dos mecanismos.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{
+    p{0.18\textwidth}
+    >{\raggedright\arraybackslash}p{0.28\textwidth}
+    >{\raggedright\arraybackslash}p{0.22\textwidth}
+    >{\raggedright\arraybackslash}p{0.18\textwidth}}
+    \hline
+    \textbf{Mecanismo} & \textbf{Uso} & \textbf{Volumen} & \textbf{Límite} \\
+    \hline
+    API pública & Enriquecimiento dirigido por identificador &
+      Un registro por consulta &
+      25\,000 lecturas/día, 12 peticiones/s \\
+    Fichero de datos & Volumen real de siembra para la generación sintética &
+      301\,763 perfiles con afiliación española filtrados &
+      Instantánea anual, sin límite de tasa \\
+    \hline
+  \end{tabular}
+  \caption{Los dos mecanismos públicos de adquisición de datos de ORCID.}
+  \label{tab:tfm_mecanismos_orcid}
+\end{table}
 
 El filtrado del fichero completo, sobre 26\,078\,951 registros escaneados,
 dejó 301\,763 perfiles con afiliación española, un 1,157\% del total. La
@@ -156,15 +211,35 @@ tablas, y deja la creación de las tablas bronze de Iceberg como parte del
 trabajo de transformación del Capítulo~\ref{cap:procesamiento}.
 
 Cada registro aterrizado se envuelve en un sobre de procedencia común a
-las tres fuentes, con un identificador de registro, la fuente de origen,
-una referencia al origen concreto dentro de esa fuente, el momento en que
-el dato se obtuvo, el momento en que se aterrizó, el identificador de la
-ejecución y el resultado de la comprobación de calidad descrita a
-continuación. El propio contenido original, ya sea el XML de ORCID sin
-modificar, el JSON que devuelve la API o el documento CVN sintético, viaja
-como carga útil dentro de ese sobre. Este vocabulario de procedencia
-extiende el mismo utilizado por el bloque de trazabilidad del formato
-Open CVN del TFG, en lugar de inventar una convención nueva.
+las tres fuentes, resumido en la Tabla~\ref{tab:tfm_sobre_procedencia}. El
+propio contenido original, ya sea el XML de ORCID sin modificar, el JSON
+que devuelve la API o el documento CVN sintético, viaja como carga útil
+dentro de ese sobre. Este vocabulario de procedencia extiende el mismo
+utilizado por el bloque de trazabilidad del formato Open CVN del TFG, en
+lugar de inventar una convención nueva.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{
+    p{0.28\textwidth}
+    >{\raggedright\arraybackslash}p{0.58\textwidth}}
+    \hline
+    \textbf{Campo} & \textbf{Contenido} \\
+    \hline
+    Identificador de registro & Identifica el registro de forma única dentro de su fuente \\
+    Fuente de origen & Cuál de las tres fuentes produjo el registro \\
+    Referencia al origen & Referencia concreta dentro de esa fuente, por ejemplo un identificador ORCID \\
+    Momento de obtención & Cuándo se obtuvo el dato de su fuente original \\
+    Momento de aterrizaje & Cuándo se aterrizó el registro en bronze \\
+    Identificador de ejecución & Qué ejecución del flujo aterrizó el registro \\
+    Resultado de la comprobación & Estado de la validación descrita a continuación \\
+    \hline
+  \end{tabular}
+  \caption{Campos del sobre de procedencia, comunes a las tres fuentes.}
+  \label{tab:tfm_sobre_procedencia}
+\end{table}
 
 Antes de aterrizar, cada registro pasa una comprobación de calidad ligera,
 deliberadamente más simple que la resolución de identidad del

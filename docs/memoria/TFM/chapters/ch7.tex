@@ -1,0 +1,225 @@
+\chapter{Conclusiones, competencias y trabajo futuro}
+\label{cap:conclusiones}
+
+El Capítulo~\ref{cap:introduccion} planteó el problema de partida y un
+objetivo general acompañado de nueve objetivos específicos. Los capítulos
+intermedios han desplegado, capa a capa, la plataforma que responde a ese
+planteamiento, y el Capítulo~\ref{cap:visualizacion} ha aportado evidencia
+reproducible de su comportamiento. Este capítulo cierra el documento
+retomando esos objetivos, relacionando el trabajo con los resultados de
+aprendizaje del máster, y señalando las limitaciones y el trabajo futuro
+que se derivan de todo lo anterior.
+
+\section{Resumen del trabajo}
+\label{sec:conclusiones_resumen}
+
+\textbf{Problema y motivación.} La información curricular y de trayectoria
+investigadora está dispersa entre documentos individuales, como CVN, y
+registros públicos a escala masiva, como ORCID, sin una plataforma
+abierta y autoalojada que combine ambas naturalezas de dato, tal y como se
+planteó en el Capítulo~\ref{cap:introduccion}.
+
+\textbf{Arquitectura desplegada.} Este trabajo construye una plataforma
+\textit{lakehouse}, justificada en el Capítulo~\ref{cap:estado_arte} y
+desplegada en el Capítulo~\ref{cap:infraestructura}: Kubernetes, MinIO con
+Iceberg, Spark orquestado por Airflow y PostgreSQL. El
+Capítulo~\ref{cap:ingesta} ingiere y fusiona ORCID real y CVN sintético, y
+el Capítulo~\ref{cap:procesamiento} resuelve su identidad y calcula los
+indicadores.
+
+\textbf{Resultados.} El Capítulo~\ref{cap:visualizacion} publica esos
+indicadores en un panel verificado en directo, mide el efecto del
+paralelismo sobre el rendimiento, y documenta fallos operativos reales
+corregidos, incluida una reconstrucción completa desde cero.
+
+\section{Cumplimiento de los objetivos}
+\label{sec:conclusiones_objetivos}
+
+El objetivo general planteado en el Capítulo~\ref{cap:introduccion} era
+diseñar, desplegar y evaluar una plataforma que integrase CVN sintético y
+ORCID real, los procesase con resolución de identidad entre fuentes, y
+publicase indicadores en un panel evaluado mediante un banco de pruebas de
+rendimiento. Se considera cumplido. La Tabla~\ref{tab:tfm_conclusiones_objetivos}
+detalla cada objetivo específico, en el mismo orden del
+Capítulo~\ref{cap:introduccion}.
+
+Uno de los objetivos se cumple con garantías parciales, de forma medida y
+no oculta: la integración de ORCID con CVN alcanza una precisión del
+95,8\% y una cobertura del 74,2\% en su regla de repliegue por nombre y
+afiliación, por debajo del objetivo de precisión fijado antes de medir. El
+Capítulo~\ref{cap:procesamiento} explicó por qué perseguirla
+artificialmente con más reglas empeoraría, no mejoraría, la fiabilidad del
+sistema.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{
+    p{0.08\textwidth}
+    >{\raggedright\arraybackslash}p{0.66\textwidth}
+    p{0.16\textwidth}}
+    \hline
+    \textbf{Obj.} & \textbf{Descripción resumida} & \textbf{Cumplimiento} \\
+    \hline
+    OE1 & Despliegue de la infraestructura base de la plataforma & Cumplido \\
+    OE2 & Validación del mecanismo central de almacenamiento y procesamiento & Cumplido \\
+    OE3 & Incorporación de datos ORCID reales & Cumplido \\
+    OE4 & Incorporación de currículos CVN validados frente a Open CVN & Cumplido \\
+    OE5 & Integración de ORCID con CVN por medio de Open CVN & Cumplido con garantías parciales \\
+    OE6 & Cálculo y publicación consistente de indicadores & Cumplido \\
+    OE7 & Visualización de los indicadores en un panel accesible & Cumplido \\
+    OE8 & Banco de pruebas de rendimiento por paralelismo y escala & Cumplido \\
+    OE9 & Robustez operativa mediante uso real y guía de reproducción & Cumplido \\
+    \hline
+  \end{tabular}
+  \caption{Grado de cumplimiento de los objetivos específicos.}
+  \label{tab:tfm_conclusiones_objetivos}
+\end{table}
+
+\section{Contribuciones principales}
+\label{sec:conclusiones_contribuciones}
+
+Las contribuciones de este trabajo quedan demostradas, con evidencia
+concreta, a lo largo del documento:
+
+\begin{itemize}
+  \item \textbf{Plataforma \textit{lakehouse} verificada de extremo a
+  extremo}: el Capítulo~\ref{cap:infraestructura} demuestra con dos
+  comprobaciones independientes que el mecanismo central de
+  almacenamiento y procesamiento funciona antes de construir ningún flujo
+  de negocio sobre él.
+  \item \textbf{Mecanismo de fusión entre ORCID y CVN diseñado desde el
+  origen del dato}: el Capítulo~\ref{cap:ingesta} siembra los currículos
+  sintéticos con el identificador ORCID de su semilla real desde su
+  propia generación, sin enlazar dos fuentes independientes a posteriori.
+  \item \textbf{Resolución de identidad determinista con evidencia
+  auditable}: el Capítulo~\ref{cap:procesamiento} fusiona registros de
+  fuentes distintas mediante reglas explícitas, cada una con su propia
+  evidencia, y mide su precisión y su cobertura.
+  \item \textbf{Hallazgo del banco de pruebas de rendimiento}: el
+  Capítulo~\ref{cap:visualizacion} demuestra que el número de ejecutores
+  de Spark es una palanca de fiabilidad, no solo de velocidad.
+  \item \textbf{Guía de reproducibilidad validada por una reconstrucción
+  real}: la plataforma se reconstruyó desde cero sobre un clúster aislado
+  siguiendo únicamente esa guía, en el Capítulo~\ref{cap:visualizacion}.
+\end{itemize}
+
+\section{Resultados de aprendizaje desarrollados}
+\label{sec:conclusiones_outcomes}
+
+El Capítulo~\ref{cap:introduccion} identificó seis resultados de
+aprendizaje del máster trabajados en este proyecto. La
+Tabla~\ref{tab:tfm_conclusiones_outcomes} recoge su evidencia concreta.
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{1.05}
+  \begin{tabular}{
+    p{0.1\textwidth}
+    >{\raggedright\arraybackslash}p{0.8\textwidth}}
+    \hline
+    \textbf{Resultado} & \textbf{Evidencia concreta} \\
+    \hline
+    CN02 & Arquitectura \textit{lakehouse} justificada en el
+    Capítulo~\ref{cap:estado_arte}, desplegada en el
+    Capítulo~\ref{cap:infraestructura}. \\
+    HA01 & Adquisición y generación de fuentes enlazadas por diseño en el
+    Capítulo~\ref{cap:ingesta}, fusionadas en el
+    Capítulo~\ref{cap:procesamiento}. \\
+    HA02 & Procesamiento distribuido del Capítulo~\ref{cap:procesamiento},
+    evaluado cuantitativamente en el Capítulo~\ref{cap:visualizacion}. \\
+    HA03 & Orquestación de flujos ETL de los
+    Capítulos~\ref{cap:infraestructura} y~\ref{cap:procesamiento}, con su
+    almacenamiento escalable. \\
+    CP01 & Planificación y despliegue de una solución Big Data, de los
+    Capítulos~\ref{cap:estado_arte},~\ref{cap:infraestructura}
+    y~\ref{cap:visualizacion}. \\
+    CP04 & Proyecto profesional original de la plataforma completa,
+    evaluada en el Capítulo~\ref{cap:visualizacion} y cerrada aquí. \\
+    \hline
+  \end{tabular}
+  \caption{Resultados de aprendizaje del máster y evidencia concreta de cada uno.}
+  \label{tab:tfm_conclusiones_outcomes}
+\end{table}
+
+\section{Limitaciones y trabajo futuro}
+\label{sec:conclusiones_limitaciones}
+
+Los capítulos anteriores han documentado limitaciones concretas sin
+ocultarlas, distinguiendo las que proceden de un componente de terceros de
+las que son una decisión deliberada de alcance. Esta sección las
+consolida junto con el trabajo futuro que se deriva de cada una.
+
+La única de origen externo es el \textbf{fallo conocido del orquestador de
+flujos}, sin corrección oficial disponible, documentado con su receta
+operativa de recuperación en el Capítulo~\ref{cap:visualizacion}. El
+trabajo futuro solo puede consistir en incorporar la corrección oficial
+cuando exista.
+
+El resto son decisiones deliberadas de alcance, cada una ya justificada en
+su capítulo:
+
+\begin{itemize}
+  \sloppy
+  \item sin capa de consulta interactiva independiente como
+  Trino~\cite{trino_docs}
+  \item sin observabilidad centralizada como Prometheus~\cite{prometheus_docs}
+  y Grafana~\cite{grafana_docs}
+  \item un único nodo local, sin infraestructura como código mediante
+  Terraform~\cite{terraform_docs}, en vez de un clúster real en la nube
+  \item reconstrucción completa de silver y gold en cada ejecución, en
+  lugar de procesamiento incremental
+  \item resolución de identidad determinista, frente a las alternativas
+  probabilísticas ya citadas en el Capítulo~\ref{cap:procesamiento}
+\end{itemize}
+
+La Tabla~\ref{tab:tfm_conclusiones_limitaciones} consolida cada una con su
+trabajo futuro asociado.
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{1.0}
+  \begin{tabular}{
+    >{\raggedright\arraybackslash}p{0.44\textwidth}
+    >{\raggedright\arraybackslash}p{0.44\textwidth}}
+    \hline
+    \textbf{Limitación} & \textbf{Trabajo futuro asociado} \\
+    \hline
+    Fallo del orquestador de flujos, sin corrección oficial & Incorporar la corrección oficial cuando esté disponible \\
+    Sin capa de consulta interactiva independiente & Incorporar un motor de consulta federado si surge esa necesidad \\
+    Sin observabilidad centralizada & Desplegar una pila de observabilidad continua para producción \\
+    Único nodo local, sin infraestructura como código para la nube & Automatizar el despliegue en la nube sobre la misma definición \\
+    Reconstrucción completa en cada ejecución & Procesar de forma incremental sobre los \textit{snapshots} de Iceberg \\
+    Resolución de identidad determinista, sin aprendizaje automático & Explorar vinculación probabilística o basada en aprendizaje automático \\
+    \hline
+  \end{tabular}
+  \caption{Limitaciones documentadas y trabajo futuro asociado.}
+  \label{tab:tfm_conclusiones_limitaciones}
+\end{table}
+
+\section{Conclusiones}
+\label{sec:conclusiones_finales}
+
+El resumen, el cumplimiento de objetivos y las contribuciones ya
+presentados permiten cerrar el documento con una valoración conjunta. El
+objetivo general se considera cumplido y, con él, los nueve objetivos
+específicos, con la única salvedad medida de la cobertura de la
+resolución de identidad, una limitación de evidencia y no una afirmación
+sin respaldo. Las limitaciones recogidas no comprometen esta conclusión.
+Delimitan, con precisión y sin ocultamiento, hasta dónde llega la
+propuesta actual. Algunas son ajenas al sistema desarrollado y otras son
+decisiones deliberadas de alcance, propias de un Trabajo Fin de Máster y
+no de un producto cerrado, y el sistema las documenta en lugar de
+disimularlas.
+
+En conjunto, este trabajo demuestra que es posible construir, a partir de
+CVN y ORCID, una plataforma \textit{lakehouse} autoalojada que fusiona
+información curricular documental con registros públicos a escala masiva,
+conserva procedencia verificable en cada capa, y ofrece garantías
+reproducibles allí donde el proceso es determinista. Esa plataforma
+completa, más que el panel de indicadores o cualquier componente aislado
+que la demuestra, es la aportación principal de este Trabajo Fin de
+Máster.

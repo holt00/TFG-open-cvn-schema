@@ -80,6 +80,11 @@ afirmación técnica respaldada). Matices específicos del TFM:
     solo se mantiene cuando aporta navegación real
   - cuidado con la puntuación de las comas, especialmente en frases con
     varias cláusulas encadenadas
+  - no abusar de pronombres posesivos ("su", "sus") ni demostrativos
+    ("esta", "ese", "ella") cuando el antecedente no queda inmediato y
+    evidente. Nombrar explícitamente el sustantivo en lugar del pronombre
+    siempre que la frase se aleje del antecedente, mezcle varios sujetos
+    posibles, o el pronombre pueda leerse apuntando a más de una cosa
 - a diferencia del TFG, el TFM sí debe presentar hallazgos operativos reales
   de un sistema desplegado y sometido a carga (fallos de infraestructura
   encontrados y corregidos, no solo limitaciones de diseño), porque forma
@@ -94,12 +99,25 @@ afirmación técnica respaldada). Matices específicos del TFM:
 | 3 | Infraestructura: despliegue del clúster y servicios base | `ch3_infraestructura_cluster.md` | `EN_PROCESO` |
 | 4 | Ingesta y fusión de fuentes heterogéneas | `ch4_ingesta_fusion_datos.md` | `EN_PROCESO` |
 | 5 | Procesamiento distribuido: transformación, resolución de entidades e indicadores | `ch5_procesamiento_distribuido.md` | `EN_PROCESO` |
-| 6 | Visualización, evaluación de rendimiento y endurecimiento | `ch6_visualizacion_evaluacion_endurecimiento.md` | `PENDIENTE` |
-| 7 | Conclusiones, competencias y trabajo futuro | `ch7_conclusiones.md` | `PENDIENTE` |
+| 6 | Visualización, evaluación de rendimiento y endurecimiento | `ch6_visualizacion_evaluacion_endurecimiento.md` | `EN_PROCESO` |
+| 7 | Conclusiones, competencias y trabajo futuro | `ch7_conclusiones.md` | `EN_PROCESO` |
 
 Estados permitidos, mismo convenio que el TFG: `PENDIENTE` (planificado, sin
 redactar), `EN_PROCESO` (en redacción o revisión), `COMPLETADO` (redactado y
 revisado para la versión actual).
+
+### Anexos
+
+Situados tras la bibliografía, como en el TFG. Cada anexo respalda una afirmación de los capítulos.
+
+| Anexo | Título | Fuente principal | Estado |
+| --- | --- | --- | --- |
+| A | Guía de reproducibilidad de la plataforma | `docs/development/tfm_lakehouse_workflow.md` | `EN_PROCESO` |
+| B | Resultados completos del banco de pruebas | `docs/benchmark/` | `EN_PROCESO` |
+| C | Modelo de datos de la plataforma | `silver/schemas.py`, `gold/schemas.py` | `EN_PROCESO` |
+| D | Resolución de identidad en detalle | issue `#98` | `EN_PROCESO` |
+| E | Registro de limitaciones | `docs/pipeline/known_limitations.md` | `EN_PROCESO` |
+| F | Repositorio del proyecto y guía de uso | repositorio | `EN_PROCESO` |
 
 ## Por qué esta estructura y no la del TFG calcada
 

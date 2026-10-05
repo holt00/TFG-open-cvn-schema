@@ -20,6 +20,8 @@
 % -------------------------------
 % Comandos específicos
 % -------------------------------
+% Datos personales (DNI): fichero local no versionado; si falta, valor ficticio.
+\InputIfFileExists{include/datos_personales}{}{\newcommand{\dniautor}{00000000X}}
 \newcommand{\autor}{Carlos Martínez Jaén\,}
 \newcommand{\titulo}{Diseño de una arquitectura lakehouse escalable para la integración y análisis de información curricular académica\,}
 \newcommand{\director}{Luis De La Ossa Jiménez\,}

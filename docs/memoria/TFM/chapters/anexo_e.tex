@@ -1,0 +1,142 @@
+\chapter*{Anexo E: Registro de limitaciones}
+\addcontentsline{toc}{chapter}{Anexo E: Registro de limitaciones}
+\label{cap:anexo_limitaciones}
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{E.\arabic{section}}
+
+Este anexo recoge las limitaciones que el desarrollo de la plataforma dejó
+documentadas, de las que la Sección~\ref{sec:conclusiones_limitaciones} del
+Capítulo~\ref{cap:conclusiones} consolida solo las de mayor alcance. El
+registro mantenido en el repositorio, en
+\path{docs/pipeline/known_limitations.md}, es la fuente autoritativa y
+describe de cada limitación su impacto, su tratamiento actual y su estado.
+Este anexo las agrupa en cuatro familias y indica, cuando existe, cómo se
+resolvió o se acotó cada una.
+
+\section{Infraestructura y cadena de suministro}
+\label{sec:anexo_limitaciones_infra}
+
+\begin{itemize}
+  \item \textbf{Imágenes de Bitnami congeladas.} Las imágenes de MinIO, de
+  las dos instancias de PostgreSQL y de los subgráficos de Superset se fijan
+  al registro congelado de Bitnami y no reciben parches de seguridad. Se
+  acepta porque el clúster nunca se expone a Internet.
+  \item \textbf{Chart de Superset obsoleto.} Sus mantenedores lo han marcado
+  como obsoleto y la vía oficial es ahora un operador de Kubernetes. Se
+  acepta, y el operador queda como trabajo futuro.
+  \item \textbf{Superset local y sin endurecer.} Tiene una réplica de cada
+  componente, sin TLS ni inicio de sesión único, y sus metadatos no tienen
+  copia de seguridad. Se acepta para un clúster local.
+  \item \textbf{Montajes del nodo e imagen importada a mano.} Los flujos de
+  ingesta y transformación montan código y datos desde el repositorio y
+  contienen la ruta absoluta de la máquina de desarrollo. Es una decisión
+  deliberada que evita reconstruir imágenes al editar código, y limita los
+  flujos a un único nodo.
+  \item \textbf{Python 3.10 en el trabajo de silver.} El trabajo corre con el
+  intérprete de la imagen de Spark y no con el 3.14 del repositorio, de modo
+  que el código compartido debe seguir siendo compatible con 3.10.
+  \item \textbf{Registro de cliente en la API de ORCID bloqueado.} Un
+  proyecto individual no puede registrar una aplicación cliente. La
+  plataforma usa el nivel anónimo, con un límite diario menor.
+  \item \textbf{Propiedades del controlador de Spark sin efecto.} En modo
+  cliente, la configuración de pod del controlador no se aplica y
+  \texttt{spark-submit} no avisa. La configuración se fija en el propio pod
+  que lanza el trabajo.
+  \item \textbf{Borrado por lotes como permiso aparte.} Un rol que concede
+  borrado pero no borrado de colección deja al controlador de Spark sin poder
+  limpiar sus pods. El rol del repositorio concede ambos.
+  \item \textbf{Servidor de API de Airflow cerrado por su sonda de vida.}
+  Bajo carga, la sonda mataba el servidor y las tareas que arrancaban en ese
+  intervalo fallaban. Resuelta con recursos y sondas explícitos.
+  \item \textbf{Reinicio bloqueado del planificador de Airflow.} Una fila de
+  tarea huérfana, dejada por un planificador caído, hace fallar todos los
+  reinicios siguientes por un error aún abierto en Airflow. Resuelta
+  operativamente marcando como fallidas esa tarea y su ejecución.
+  \item \textbf{Pods ejecutores en estado desconocido.} Un planificador caído
+  puede dejar pods sin limpiar. Se documenta junto con la limitación anterior.
+  \item \textbf{Ejecución perdida al activar un flujo.} Activar un flujo con
+  planificación diaria crea de inmediato la ejecución más reciente que se
+  perdió. Es inocuo porque los flujos son idempotentes por identificador de
+  ejecución.
+  \item \textbf{Primer arranque de PostgreSQL interrumpido.} Si se interrumpe
+  durante su inicialización, nunca crea el rol de gold y no se recupera solo.
+  Resuelta operativamente borrando el pod y su volumen.
+  \item \textbf{Memoria insuficiente de PostgreSQL.} El perfil mínimo del
+  \textit{chart} mataba el contenedor al preparar las tablas de mayor
+  volumen. Resuelta con recursos explícitos.
+  \item \textbf{Pruebas de Spark en contenedores.} Con demasiados
+  contenedores a la vez, la batería fallaba por tiempo agotado. Resuelta
+  limitando a cuatro los contenedores simultáneos.
+\end{itemize}
+
+\section{Alcance de los datos y de la ingesta}
+\label{sec:anexo_limitaciones_datos}
+
+\begin{itemize}
+  \item \textbf{Subconjunto de ORCID puntual.} Es una instantánea filtrada
+  por país de afiliación, con supuestos de serialización.
+  \item \textbf{Muestra acotada del subconjunto.} Por defecto se aterrizan
+  los primeros 20\,000 registros en orden de cubo, que ocupan 2,7 GB, y no
+  el subconjunto completo. El parámetro del flujo permite ampliarlo.
+  \item \textbf{Datos sintéticos mixtos.} Los CVN sintéticos combinan datos
+  públicos reales de ORCID con datos personales inventados.
+  \item \textbf{Cobertura estrecha del generador.} Solo produce cuatro tipos
+  de entrada, que son identidad, experiencia profesional, formación y
+  publicaciones.
+  \item \textbf{Extracción parcial en silver.} Solo se extraen esos cuatro
+  tipos. Las demás secciones se validan sin extraerse, solo se traduce el
+  código numérico de país de España y las obras de ORCID no traen autores.
+  \item \textbf{Esquema JSON permisivo.} No impone la forma de cada entrada y
+  difiere del importador XML en el tratamiento de las fechas. Se hereda del
+  trabajo anterior.
+  \item \textbf{Lectura conjunta de bronze.} Leerlo como un solo conjunto
+  mezcla cargas útiles de texto y de objeto. Cada fuente se lee por su propia
+  ruta.
+  \item \textbf{Cifras de carrera como cotas inferiores.} El 18\% de las
+  afiliaciones no tiene año de inicio y el 33\% no tiene año de fin, y una
+  estancia nunca se extiende hasta hoy.
+\end{itemize}
+
+\section{Resolución de identidad e indicadores}
+\label{sec:anexo_limitaciones_resolucion}
+
+\begin{itemize}
+  \item \textbf{Resolución conservadora.} La regla de nombre y afiliación
+  alcanza una precisión del 95,8\% y una cobertura del 74,2\%, por debajo del
+  objetivo del 99\% de precisión. Una persona con dos identificadores ORCID
+  cuenta como dos entidades.
+  \item \textbf{Calidad medida solo contra datos sintéticos.} La verdad de
+  referencia es el identificador de la semilla y solo hay cuatro variantes de
+  nombre, de modo que las cifras son optimistas para currículos reales.
+  \item \textbf{Colaboración como cota inferior.} Silver no tiene entidades
+  de coautor, de modo que dos entidades solo se enlazan si declaran el mismo
+  DOI. Los 9\,540 pares incluyen 25 que son una misma persona vista dos
+  veces.
+  \item \textbf{Deduplicación por tipo de clave.} Una obra con DOI en un
+  registro y sin él en otro cuenta dos veces. El 1,2\% de las obras no tiene
+  año útil y queda fuera del indicador por año.
+  \item \textbf{Errores de resolución heredados.} Una fusión falsa mezcla las
+  publicaciones de dos personas. Deshacer las 75 fusiones de una sola
+  organización cambia las entidades un 0,25\% y los pares de colaboración un
+  0,58\%.
+  \item \textbf{Panel sobre agregados parciales.} Deja fuera 443 obras
+  anteriores a 1980 y 16\,231 de 94\,431 estancias sin año de inicio o fuera
+  del intervalo 1970-2026, y desactiva su caché de datos.
+\end{itemize}
+
+\section{Escalabilidad y medición}
+\label{sec:anexo_limitaciones_escala}
+
+\begin{itemize}
+  \item \textbf{Reconstrucción completa.} Silver y gold se recalculan por
+  entero en cada ejecución y PostgreSQL conserva solo la última publicación.
+  Es adecuado para 20\,000 registros masivos y no para los 301\,763 del
+  subconjunto completo.
+  \item \textbf{Techo de memoria con pocos ejecutores.} Con el tamaño de
+  memoria fijo, un ejecutor, y a cuádruple volumen también dos, agotan la
+  memoria del trabajo de silver de forma determinista.
+  \item \textbf{Aceleración limitada en un solo nodo.} Más ejecutores no
+  reducen de forma fiable el tiempo, porque el nodo no está limitado por el
+  procesador.
+\end{itemize}
