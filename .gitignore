@@ -244,3 +244,9 @@ Thumbs.db
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+
+# Local agent tooling (not published)
+.claude/
+.opencode/
+initial_prompt.md
+TODO.md
