@@ -11,6 +11,9 @@
 [![Licencia](https://img.shields.io/badge/licencia-GPL--3.0-blue?style=flat-square)](LICENSE)
 ![Estado](https://img.shields.io/badge/estado-TFG%20y%20TFM%20defendidos-success?style=flat-square)
 
+[Solo TFG](TFG.md) ·
+[Solo TFM](TFM.md) ·
+[Memorias (PDF)](#memorias) ·
 [Puesta en marcha](#puesta-en-marcha) ·
 [Arquitectura](#arquitectura-del-tfm) ·
 [Resultados](#resultados) ·
@@ -38,7 +41,13 @@ Castilla-La Mancha (ESIIAB):
 | **TFM** | Trabajo de Fin de Master | Plataforma **lakehouse** sobre Kubernetes que integra CVN sintetico y datos reales de ORCID y calcula indicadores de investigacion | Terminado y defendido |
 
 El TFM construye sobre el TFG sin sustituirlo: reutiliza su esquema, su
-validador y sus modelos de dominio.
+validador y sus modelos de dominio. Cada trabajo tiene su propio punto de
+entrada y se puede usar por separado:
+
+- **[`TFG.md`](TFG.md)**: esquema, parser/validador y aplicacion CLI. Solo
+  necesita Python y `uv`.
+- **[`TFM.md`](TFM.md)**: plataforma lakehouse. El codigo y las pruebas se
+  usan sin cluster; la plataforma completa necesita Kubernetes.
 
 ## Caracteristicas
 
@@ -199,14 +208,18 @@ Las limitaciones conocidas estan en
 [`docs/pipeline/known_limitations.md`](docs/pipeline/known_limitations.md); la
 mas visible es la ruta fija `REPO_ROOT` de los DAGs.
 
-## Memoria del TFG
+## Memorias
 
-El PDF de la memoria **no se publica** en este repositorio. Su fuente LaTeX esta
-en `docs/memoria/TFG/`. La declaracion de autoria lee un DNI de
-`include/datos_personales.tex`, fichero local ignorado por git; sin el, la
-memoria compila con un valor ficticio. Para usar el propio, copiar
+| Trabajo | PDF | Fuente LaTeX |
+| --- | --- | --- |
+| TFG | [`docs/memoria/pdf/TFG.pdf`](docs/memoria/pdf/TFG.pdf) | `docs/memoria/TFG/` |
+| TFM | [`docs/memoria/pdf/TFM.pdf`](docs/memoria/pdf/TFM.pdf) | `docs/memoria/TFM/` |
+
+Los PDF se compilan con un DNI ficticio (`00000000X`). La declaracion de autoria
+lee el DNI de `include/datos_personales.tex`, fichero local ignorado por git; sin
+el, la memoria compila con ese valor. Para usar el propio, copiar
 `include/datos_personales.example.tex` a `include/datos_personales.tex` y
-editarlo.
+editarlo, y no subir el PDF resultante.
 
 ## Contribuir
 
