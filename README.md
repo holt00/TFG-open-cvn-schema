@@ -18,7 +18,7 @@
 [Documentacion](#documentacion) ·
 [Contribuir](CONTRIBUTING.md)
 
-<img src="docs/memoria/TFM/figs/panel_superset.png" alt="Panel de Superset con los indicadores de investigacion calculados por la plataforma" width="860">
+<img src="docs/benchmark/benchmark_silver.png" alt="Tiempo de ejecucion del trabajo bronze a silver segun numero de ejecutores y escala de datos" width="760">
 
 </div>
 
@@ -149,7 +149,7 @@ infra/              k3s, Helm values, configuracion de Spark y Superset
 schemas/            JSON Schema de Open CVN
 examples/           ejemplos de documentos Open CVN
 tests/              suite de pruebas
-docs/               arquitectura, workflows, roadmap, benchmark y memorias
+docs/               arquitectura, workflows, roadmap y benchmark
 ```
 
 ## Documentacion
@@ -193,20 +193,18 @@ Su registro (issues `#11` a `#71`) esta cerrado en
 ## Estado del proyecto
 
 - **TFG**: cerrado (issues `#11`-`#71`).
-- **TFM**: cerrado y defendido (issues `#90`-`#103`). La memoria esta en
-  `docs/memoria/TFM/` y el material de defensa (presentacion y preguntas del
-  tribunal) en `docs/defensa/tfm/`.
+- **TFM**: cerrado y defendido (issues `#90`-`#103`).
 
 Las limitaciones conocidas estan en
 [`docs/pipeline/known_limitations.md`](docs/pipeline/known_limitations.md); la
 mas visible es la ruta fija `REPO_ROOT` de los DAGs.
 
-## Memorias
+## Memoria del TFG
 
-Los PDF de las memorias **no se publican** en este repositorio. Su fuente LaTeX
-esta en `docs/memoria/TFG/` y `docs/memoria/TFM/`. La declaracion de autoria lee
-un DNI de `include/datos_personales.tex`, fichero local ignorado por git; sin
-el, la memoria compila con un valor ficticio. Para usar el propio, copiar
+El PDF de la memoria **no se publica** en este repositorio. Su fuente LaTeX esta
+en `docs/memoria/TFG/`. La declaracion de autoria lee un DNI de
+`include/datos_personales.tex`, fichero local ignorado por git; sin el, la
+memoria compila con un valor ficticio. Para usar el propio, copiar
 `include/datos_personales.example.tex` a `include/datos_personales.tex` y
 editarlo.
 
