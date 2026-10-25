@@ -46,7 +46,10 @@ Every new session should read these files in order before making changes:
   the CVN generation roadmap
 - Never commit personal data (DNI, personal emails) or compiled memoria artefacts
   (`*.pdf`, `*.xdv`, `*.synctex.gz`); the author's DNI lives only in the git-ignored
-  `docs/memoria/*/include/datos_personales.tex`. Do not add AI co-author or
+  `docs/memoria/*/include/datos_personales.tex`. The one exception is
+  `docs/memoria/pdf/TFG.pdf` and `docs/memoria/pdf/TFM.pdf`, which are compiled
+  from a clean copy without that file, so they carry the fictitious DNI
+  `00000000X`; check them with `pdftotext` before committing a rebuild. Do not add AI co-author or
   session trailers to commits
 - Do not edit `src/generated/` manually
 - Keep hand-maintained pipeline logic in `src/cvn_codegen/`
@@ -71,6 +74,8 @@ Every new session should read these files in order before making changes:
 
 ### Entry Points
 
+- TFG entry point (closed): `TFG.md`
+- TFM entry point: `TFM.md`
 - human project guide: `PROJECT_GUIDE.md`
 - context index: `docs/context/project_context_index.md`
 - current state (TFM, active): `docs/context/tfm/current_status.md`
